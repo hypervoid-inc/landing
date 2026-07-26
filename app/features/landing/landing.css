@@ -57,24 +57,6 @@
   will-change: transform;
 }
 
-.workflow-placeholder {
-  background:
-    radial-gradient(circle at 82% 20%, rgb(76 216 255 / 22%), transparent 30%),
-    radial-gradient(circle at 16% 82%, rgb(22 143 229 / 12%), transparent 34%),
-    linear-gradient(145deg, #fff 0%, #f3fcff 52%, #e8faff 100%);
-}
-
-.workflow-placeholder::before {
-  position: absolute;
-  width: 72%;
-  aspect-ratio: 1;
-  border: 1px dashed rgb(1 180 200 / 20%);
-  border-radius: 50%;
-  content: "";
-  right: -20%;
-  bottom: -52%;
-}
-
 .hero-portal {
   top: 48%;
   left: 50%;

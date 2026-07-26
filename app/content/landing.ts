@@ -133,13 +133,10 @@ export const workflowDemos = [
       "Describe the tool your team needs. Construct writes, validates, and publishes a working internal app directly into your cloud desktop.",
     cta: "Build an Internal Tool",
     mutedAction: "Watch Construct Ship an App",
-    placeholder: {
-      label: "Internal app builder",
-      steps: ["Describe the tool", "Build and validate", "Open the app"],
-      kind: "apps",
-    },
+    video: "/assets/landing/workflows/apps.mp4",
+    poster: "/assets/landing/workflows/apps-poster.jpg",
     ariaLabel:
-      "Placeholder for a recording of Construct building and opening an internal app",
+      "Construct building and opening an internal app in the product interface",
   },
   {
     id: "scheduling",

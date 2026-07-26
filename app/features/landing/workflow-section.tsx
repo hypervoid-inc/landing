@@ -1,9 +1,3 @@
-import {
-  AppWindow,
-  Play,
-  // UsersRound,
-  type LucideIcon,
-} from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { workflowDemos, type WorkflowDemo } from "~/content/landing";
@@ -46,70 +40,6 @@ function useMobileWorkflowViewportMode() {
   return mode;
 }
 
-const placeholderIcons: Record<
-  Extract<WorkflowDemo, { placeholder: unknown }>["placeholder"]["kind"],
-  LucideIcon
-> = {
-  // agents: UsersRound,
-  apps: AppWindow,
-};
-
-function WorkflowPlaceholder({
-  demo,
-}: {
-  demo: Extract<WorkflowDemo, { placeholder: unknown }>;
-}) {
-  const Icon = placeholderIcons[demo.placeholder.kind];
-  return (
-    <div className="workflow-placeholder absolute inset-0 overflow-hidden bg-[#fafdff]">
-      <div className="workflow-placeholder-chrome flex h-12 items-center border-b border-[#dceef3] px-5 text-xs text-[#78909a]">
-        <span className="flex gap-1.5" aria-hidden>
-          <i className="size-2.5 rounded-full bg-[#ff7369]" />
-          <i className="size-2.5 rounded-full bg-[#ffd34e]" />
-          <i className="size-2.5 rounded-full bg-[#55c95a]" />
-        </span>
-        <span className="mx-auto pr-10">Construct Computer</span>
-      </div>
-      <div className="workflow-placeholder-stage absolute inset-x-[8%] bottom-[9%] top-[16%] flex items-center justify-center">
-        <div className="workflow-placeholder-card relative w-full max-w-[620px] rounded-[20px] border border-[#d8eef4] bg-white/90 p-3 shadow-[0_28px_80px_rgba(77,173,198,.16)] sm:rounded-[28px] sm:p-6 lg:p-9">
-          <div className="flex items-center gap-3">
-            <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#e7faff] text-[#01a8c0] shadow-[inset_0_0_0_1px_rgba(1,180,200,.12)] sm:size-11 sm:rounded-2xl lg:size-13">
-              <Icon aria-hidden className="size-4 sm:size-6" />
-            </span>
-            <div>
-              <p className="text-[8px] font-semibold uppercase tracking-[.16em] text-[#64afc1] sm:text-[11px] sm:tracking-[.18em]">
-                Demo recording slot
-              </p>
-              <p className="mt-0.5 text-sm font-semibold text-[#4e5558] sm:mt-1 sm:text-base lg:text-xl">
-                {demo.placeholder.label}
-              </p>
-            </div>
-          </div>
-          <ol className="mt-3 grid grid-cols-3 gap-1.5 sm:mt-5 sm:gap-2.5 lg:mt-7 lg:gap-3">
-            {demo.placeholder.steps.map((step, index) => (
-              <li
-                key={step}
-                className="flex min-h-12 flex-col items-start justify-center gap-1 rounded-lg border border-[#e0f0f4] bg-[#f8fdff] px-2 text-[9px] leading-tight text-[#627c86] sm:min-h-14 sm:gap-2 sm:rounded-xl sm:px-3 sm:text-xs lg:min-h-20 lg:text-sm"
-              >
-                <span className="flex size-4 shrink-0 items-center justify-center rounded-full bg-[#4cd8ff] text-[8px] font-bold text-white sm:size-5 sm:text-[10px]">
-                  {index + 1}
-                </span>
-                <span>{step}</span>
-              </li>
-            ))}
-          </ol>
-          <span
-            aria-hidden
-            className="absolute -bottom-5 right-5 flex size-11 items-center justify-center rounded-full border border-white bg-[#168fe5] text-white shadow-[0_10px_24px_rgba(22,143,229,.28)] lg:-right-5 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2"
-          >
-            <Play className="ml-0.5 size-4 fill-current" />
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function WorkflowMedia({
   demo,
   distance,
@@ -121,7 +51,6 @@ function WorkflowMedia({
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const wasDominant = useRef(false);
-  const hasVideo = "video" in demo;
 
   useEffect(() => {
     const video = ref.current;
@@ -141,7 +70,7 @@ function WorkflowMedia({
       observer.disconnect();
       video.pause();
     };
-  }, [dominant, hasVideo]);
+  }, [dominant]);
 
   const exiting = smoothStep(clamp(-distance));
   const entering = smoothStep(clamp(1 - distance));
@@ -151,20 +80,6 @@ function WorkflowMedia({
     transform: `translateY(${distance < 0 ? lerp(0, 10, exiting) : lerp(-10, 0, entering)}px)`,
     zIndex: Math.round(20 - Math.abs(distance) * 10),
   };
-
-  if (!hasVideo) {
-    return (
-      <div
-        role={dominant ? "img" : undefined}
-        aria-label={dominant ? demo.ariaLabel : undefined}
-        aria-hidden={!dominant}
-        style={style}
-        className="absolute inset-0"
-      >
-        <WorkflowPlaceholder demo={demo} />
-      </div>
-    );
-  }
 
   return (
     <video
@@ -323,17 +238,13 @@ function StaticWorkflow() {
             className="overflow-hidden rounded-[12px] bg-white/75 shadow-sm lg:rounded-[16px]"
           >
             <div className="relative aspect-[3/2] w-full overflow-hidden">
-              {"video" in demo ? (
-                <img
-                  src={demo.poster}
-                  alt={demo.ariaLabel}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <WorkflowPlaceholder demo={demo} />
-              )}
+              <img
+                src={demo.poster}
+                alt={demo.ariaLabel}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
             </div>
             <div className="p-6 lg:p-8">
               <h3 className="text-[25px] leading-8 text-[#4e4646] lg:text-[28px]">
