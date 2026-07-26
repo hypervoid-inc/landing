@@ -113,6 +113,19 @@ export const landingFaq = [
 
 export const workflowDemos = [
   {
+    id: "workflows",
+    title: "Turn Any Process",
+    accent: "Into A Workflow",
+    description:
+      "Combine agent steps, connected apps, and notifications into a reusable procedure that anyone—or any schedule—can run again.",
+    cta: "Build a Workflow",
+    mutedAction: "See a Complete Run",
+    video: "/assets/landing/workflows/workflow.mp4",
+    poster: "/assets/landing/workflows/workflow-poster.jpg",
+    ariaLabel:
+      "Construct building and running a reusable workflow in the product interface",
+  },
+  {
     id: "internal-tools",
     title: "Build Tools",
     accent: "For Your Work",
@@ -129,22 +142,6 @@ export const workflowDemos = [
       "Placeholder for a recording of Construct building and opening an internal app",
   },
   {
-    id: "workflows",
-    title: "Turn Any Process",
-    accent: "Into A Workflow",
-    description:
-      "Combine agent steps, connected apps, and notifications into a reusable procedure that anyone—or any schedule—can run again.",
-    cta: "Build a Workflow",
-    mutedAction: "See a Complete Run",
-    placeholder: {
-      label: "Visual workflow builder",
-      steps: ["Add agent steps", "Connect business apps", "Test and publish"],
-      kind: "workflows",
-    },
-    ariaLabel:
-      "Placeholder for a recording of Construct building and running a reusable workflow",
-  },
-  {
     id: "scheduling",
     title: "Schedule Outcomes",
     accent: "Not Reminders",
@@ -152,13 +149,10 @@ export const workflowDemos = [
       "Schedule an agent prompt, connected-app action, or complete workflow. Construct runs it once or repeatedly and keeps the result history.",
     cta: "Schedule a Job",
     mutedAction: "View Automation History",
-    placeholder: {
-      label: "Calendar automation",
-      steps: ["Choose a workflow", "Set the recurrence", "Review every run"],
-      kind: "calendar",
-    },
+    video: "/assets/landing/workflows/calendar.mp4",
+    poster: "/assets/landing/workflows/calendar-poster.jpg",
     ariaLabel:
-      "Placeholder for a recording of a recurring Construct workflow scheduled in Calendar",
+      "Construct Calendar showing scheduled agent jobs and workflow runs",
   },
   /* Temporarily hidden until the parallel-agent demo is ready.
   {
@@ -190,13 +184,10 @@ export const workflowDemos = [
       "Bring people, agents, files, apps, and shared conversations together—with invitations, roles, and precise access controls.",
     cta: "Explore Workspaces",
     mutedAction: "See Shared Work in Action",
-    placeholder: {
-      label: "Shared team workspace",
-      steps: ["Invite the team", "Share files and agents", "Control access"],
-      kind: "workspace",
-    },
+    video: "/assets/landing/workflows/workspace.mp4",
+    poster: "/assets/landing/workflows/workspace-poster.jpg",
     ariaLabel:
-      "Placeholder for a recording of people and agents working inside a shared Construct workspace",
+      "Construct workspace settings for inviting teammates and controlling access",
   },
   {
     id: "memory",
@@ -206,13 +197,10 @@ export const workflowDemos = [
       "Construct remembers preferences, decisions, and project context with evidence and history. Review, correct, or forget anything it learns.",
     cta: "Inspect Agent Memory",
     mutedAction: "See Why It Remembered",
-    placeholder: {
-      label: "Inspectable memory",
-      steps: ["Review the evidence", "Correct the context", "Keep the history"],
-      kind: "memory",
-    },
+    video: "/assets/landing/workflows/memories.mp4",
+    poster: "/assets/landing/workflows/memories-poster.jpg",
     ariaLabel:
-      "Placeholder for a recording of evidence-backed memories in Construct",
+      "Construct Memories showing evidence-backed preferences and procedures",
   },
   {
     id: "channels",

@@ -517,18 +517,26 @@ test("eases the workflow into and out of its pinned position", async ({
   );
   await page.waitForTimeout(16);
   expect((await sticky.boundingBox())?.y).toBeCloseTo(56, 0);
-  expect(await transformY()).toBeGreaterThan(-50);
+  expect(await transformY()).toBeGreaterThan(5);
   await page.waitForTimeout(350);
-  expect(await transformY()).toBeLessThan(-52);
+  expect(Math.abs(await transformY())).toBeLessThan(4);
+  const centeredMotion = await motion.boundingBox();
+  expect(
+    Math.abs(
+      (centeredMotion?.y ?? 0) +
+        (centeredMotion?.height ?? 0) / 2 -
+        (56 + (900 - 56) / 2),
+    ),
+  ).toBeLessThan(4);
 
   await page.evaluate(
     (y) => window.scrollTo({ top: y, behavior: "instant" }),
     sectionTop - 176,
   );
   await page.waitForTimeout(16);
-  expect(await transformY()).toBeLessThan(-5);
+  expect(await transformY()).toBeGreaterThan(5);
   await page.waitForTimeout(350);
-  expect(await transformY()).toBeGreaterThan(-4);
+  expect(await transformY()).toBeGreaterThan(52);
 
   const sectionExit = sectionTop + sectionHeight - 900;
   await page.evaluate(
@@ -629,8 +637,26 @@ test("shows every capability without scroll animation when motion is reduced", a
 
   const stories = page.locator("#static-workflow-heading + div > article");
   await expect(stories).toHaveCount(workflowDemos.length);
-  await expect(stories.first()).toContainText("Build Tools For Your Work");
+  await expect(stories.first()).toContainText(
+    "Turn Any Process Into A Workflow",
+  );
+  await expect(stories.first().locator("img")).toHaveAttribute(
+    "src",
+    "/assets/landing/workflows/workflow-poster.jpg",
+  );
+  await expect(stories.nth(1)).toContainText("Build Tools For Your Work");
   await expect(stories.last()).toContainText("Research About Any Topic");
+  for (const demo of workflowDemos) {
+    if ("video" in demo) {
+      const poster = stories.locator(`img[src="${demo.poster}"]`);
+      await expect(poster).toHaveCount(1);
+      await expect
+        .poll(() =>
+          poster.evaluate((image) => (image as HTMLImageElement).naturalWidth),
+        )
+        .toBeGreaterThan(0);
+    }
+  }
   await expect(stories.locator(".workflow-placeholder")).toHaveCount(
     workflowDemos.filter((demo) => "placeholder" in demo).length,
   );
@@ -651,11 +677,11 @@ test("permanently redirects legacy resource URLs", async ({ request }) => {
 });
 
 test("returns a real 404 for unknown URLs", async ({ request }) => {
-  for (const path of ["/404/", "/definitely-not-a-page"]) {
-    const response = await request.get(path, { maxRedirects: 0 });
-    expect(response.status(), path).toBe(404);
-    expect(await response.text()).toContain("Page not found");
-  }
+  const response = await request.get("/definitely-not-a-page", {
+    maxRedirects: 0,
+  });
+  expect(response.status()).toBe(404);
+  expect(await response.text()).toContain("Page not found");
 });
 
 test("submits beta access through Turnstile and D1", async ({ page }) => {

@@ -1,11 +1,7 @@
 import {
   AppWindow,
-  BrainCircuit,
-  CalendarClock,
-  FolderKanban,
   Play,
   // UsersRound,
-  Workflow,
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
@@ -56,10 +52,6 @@ const placeholderIcons: Record<
 > = {
   // agents: UsersRound,
   apps: AppWindow,
-  calendar: CalendarClock,
-  memory: BrainCircuit,
-  workflows: Workflow,
-  workspace: FolderKanban,
 };
 
 function WorkflowPlaceholder({
@@ -328,9 +320,9 @@ function StaticWorkflow() {
         {workflowDemos.map((demo) => (
           <article
             key={demo.id}
-            className="overflow-hidden rounded-[28px] bg-white/75 shadow-sm lg:rounded-[32px]"
+            className="overflow-hidden rounded-[12px] bg-white/75 shadow-sm lg:rounded-[16px]"
           >
-            <div className="relative aspect-[964/694] w-full overflow-hidden">
+            <div className="relative aspect-[3/2] w-full overflow-hidden">
               {"video" in demo ? (
                 <img
                   src={demo.poster}
@@ -401,7 +393,8 @@ export function WorkflowSection() {
         1,
       );
       targetProgress = clamp((pinOffset - rect.top) / distance);
-      targetPin = getSoftPinOffset(targetProgress, distance, pinOffset);
+      targetPin =
+        pinOffset + getSoftPinOffset(targetProgress, distance, pinOffset);
     };
     const animate = (time: number) => {
       const elapsed = Math.min(time - (previousTime || time - 16), 64);
@@ -484,7 +477,7 @@ export function WorkflowSection() {
           ref={contentRef}
           className="workflow-motion mx-auto grid w-full max-w-[1400px] grid-cols-1 items-center gap-4 lg:grid-cols-[minmax(300px,.95fr)_minmax(0,2.6fr)] lg:gap-7 xl:grid-cols-[minmax(320px,1fr)_minmax(0,3fr)] xl:gap-10"
         >
-          <div className="order-1 relative mx-auto aspect-[964/694] w-full max-w-[440px] overflow-hidden rounded-[32px] bg-white lg:order-2 lg:max-w-none lg:rounded-[53px]">
+          <div className="order-1 relative mx-auto aspect-[3/2] w-full max-w-[440px] overflow-hidden rounded-[12px] bg-white lg:order-2 lg:max-w-none lg:rounded-[16px]">
             {workflowDemos.map((demo, index) => {
               const distance = index - position;
               return distance <= -1.05 || distance >= 1.05 ? null : (
