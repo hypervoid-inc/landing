@@ -378,81 +378,83 @@ export function WorkflowSection() {
 
   useEffect(() => {
     if (reducedMotion) return;
-    let cleanup: (() => void) | undefined;
-    let cancelled = false;
+    const section = sectionRef.current;
+    const content = contentRef.current;
+    if (!section || !content) return;
+    const pinOffset = desktop ? 56 : 48;
+    let currentProgress = 0;
+    let targetProgress = 0;
+    let currentPin = 0;
+    let targetPin = 0;
+    let animationFrame = 0;
+    let restoreFrame = 0;
+    let previousTime = 0;
 
-    void import("gsap").then(({ default: gsap }) => {
-      if (cancelled || !sectionRef.current) return;
-      const pinOffset = desktop ? 56 : 48;
-      const progressMotion = { value: 0 };
-      const pinMotion = { y: 0 };
-      const renderProgress = () => setProgress(clamp(progressMotion.value));
-      const renderPin = () => {
-        if (contentRef.current) {
-          contentRef.current.style.transform = `translate3d(0, ${pinMotion.y}px, 0)`;
-        }
-      };
-      const easeProgress = gsap.quickTo(progressMotion, "value", {
-        duration: 0.4,
-        ease: "power2.out",
-        onUpdate: renderProgress,
-      });
-      const easePin = gsap.quickTo(pinMotion, "y", {
-        duration: 0.3,
-        ease: "power2.out",
-        onUpdate: renderPin,
-      });
-      let restoreFrame = 0;
-      const getTargets = () => {
-        const rect = sectionRef.current!.getBoundingClientRect();
-        const distance = Math.max(
-          rect.height - window.innerHeight + pinOffset,
-          1,
-        );
-        const nextProgress = clamp((pinOffset - rect.top) / distance);
-        return {
-          progress: nextProgress,
-          pin: getSoftPinOffset(nextProgress, distance, pinOffset),
-        };
-      };
-      const updateFromScroll = () => {
-        const targets = getTargets();
-        easeProgress(targets.progress);
-        easePin(targets.pin);
-      };
-      const syncRestoredScroll = () => {
-        if (cancelled) return;
-        const targets = getTargets();
-        gsap.killTweensOf(progressMotion);
-        gsap.killTweensOf(pinMotion);
-        progressMotion.value = targets.progress;
-        pinMotion.y = targets.pin;
-        renderProgress();
-        renderPin();
-      };
-      window.addEventListener("scroll", updateFromScroll, { passive: true });
-      window.addEventListener("resize", syncRestoredScroll);
-      window.addEventListener("pageshow", syncRestoredScroll);
-      window.addEventListener("load", syncRestoredScroll);
-      syncRestoredScroll();
-      restoreFrame = requestAnimationFrame(() => {
-        restoreFrame = requestAnimationFrame(syncRestoredScroll);
-      });
-      cleanup = () => {
-        cancelAnimationFrame(restoreFrame);
-        window.removeEventListener("scroll", updateFromScroll);
-        window.removeEventListener("resize", syncRestoredScroll);
-        window.removeEventListener("pageshow", syncRestoredScroll);
-        window.removeEventListener("load", syncRestoredScroll);
-        gsap.killTweensOf(progressMotion);
-        gsap.killTweensOf(pinMotion);
-        if (contentRef.current) contentRef.current.style.transform = "";
-      };
+    const render = () => {
+      setProgress(clamp(currentProgress));
+      content.style.transform = `translate3d(0, ${currentPin}px, 0)`;
+    };
+    const readTargets = () => {
+      const rect = section.getBoundingClientRect();
+      const distance = Math.max(
+        rect.height - window.innerHeight + pinOffset,
+        1,
+      );
+      targetProgress = clamp((pinOffset - rect.top) / distance);
+      targetPin = getSoftPinOffset(targetProgress, distance, pinOffset);
+    };
+    const animate = (time: number) => {
+      const elapsed = Math.min(time - (previousTime || time - 16), 64);
+      previousTime = time;
+      currentProgress +=
+        (targetProgress - currentProgress) * (1 - Math.exp(-elapsed / 100));
+      currentPin += (targetPin - currentPin) * (1 - Math.exp(-elapsed / 75));
+      render();
+
+      if (
+        Math.abs(targetProgress - currentProgress) > 0.0001 ||
+        Math.abs(targetPin - currentPin) > 0.05
+      ) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        currentProgress = targetProgress;
+        currentPin = targetPin;
+        animationFrame = 0;
+        previousTime = 0;
+        render();
+      }
+    };
+    const updateFromScroll = () => {
+      readTargets();
+      if (!animationFrame) animationFrame = requestAnimationFrame(animate);
+    };
+    const syncRestoredScroll = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+      previousTime = 0;
+      readTargets();
+      currentProgress = targetProgress;
+      currentPin = targetPin;
+      render();
+    };
+
+    window.addEventListener("scroll", updateFromScroll, { passive: true });
+    window.addEventListener("resize", syncRestoredScroll);
+    window.addEventListener("pageshow", syncRestoredScroll);
+    window.addEventListener("load", syncRestoredScroll);
+    syncRestoredScroll();
+    restoreFrame = requestAnimationFrame(() => {
+      restoreFrame = requestAnimationFrame(syncRestoredScroll);
     });
 
     return () => {
-      cancelled = true;
-      cleanup?.();
+      cancelAnimationFrame(animationFrame);
+      cancelAnimationFrame(restoreFrame);
+      window.removeEventListener("scroll", updateFromScroll);
+      window.removeEventListener("resize", syncRestoredScroll);
+      window.removeEventListener("pageshow", syncRestoredScroll);
+      window.removeEventListener("load", syncRestoredScroll);
+      content.style.transform = "";
     };
   }, [desktop, reducedMotion, scrollScreens]);
 

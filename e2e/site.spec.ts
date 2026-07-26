@@ -586,7 +586,39 @@ test("keeps workflow progress interactive after restoring a reload", async ({
   expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(
     scrollBeforeWheel + 1000,
   );
-  expect(await activeTitle()).not.toBe(afterReload);
+  const afterForwardScroll = await activeTitle();
+  expect(afterForwardScroll).not.toBe(afterReload);
+
+  await page.mouse.wheel(0, -1400);
+  await page.waitForTimeout(700);
+  expect(await activeTitle()).not.toBe(afterForwardScroll);
+
+  const liveSectionTop = await section.evaluate(
+    (element) => element.getBoundingClientRect().top + window.scrollY,
+  );
+  const liveSectionHeight = await section.evaluate(
+    (element) => element.getBoundingClientRect().height,
+  );
+  const videoRestoreY =
+    liveSectionTop - 56 + (liveSectionHeight - 900 + 56) * 0.92;
+  await page.evaluate((y) => window.scrollTo(0, y), videoRestoreY);
+  await page.waitForTimeout(700);
+  await page.reload();
+  await page.waitForTimeout(700);
+
+  const restoredVideoTitle = await activeTitle();
+  expect([
+    "Work Together Across Channels",
+    "Research About Any Topic",
+  ]).toContain(restoredVideoTitle);
+  const activeVideo = page.locator(
+    '.workflow-motion video[aria-hidden="false"]',
+  );
+  await expect(activeVideo).toHaveCount(1);
+
+  await page.mouse.wheel(0, -1400);
+  await page.waitForTimeout(700);
+  expect(await activeTitle()).not.toBe(restoredVideoTitle);
 });
 
 test("shows every capability without scroll animation when motion is reduced", async ({
