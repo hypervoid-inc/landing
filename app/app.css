@@ -1,0 +1,38 @@
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/inter";
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-geist: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-display: Georgia, "Times New Roman", serif;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: white;
+  color: #4e4646;
+}
+
+button,
+a,
+input {
+  outline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 2px solid #01b4c8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

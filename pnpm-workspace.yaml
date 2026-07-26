@@ -1,0 +1,9 @@
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  # Babel still depends on this established release, published before npm provenance.
+  - semver@6.3.1
+minimumReleaseAgeExclude:
+  # Security fix for GHSA-qwww-vcr4-c8h2; reviewed before the normal maturity window.
+  - react-router@8.3.0
+  - "@react-router/dev@8.3.0"
+  - "@react-router/node@8.3.0"

@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "construct-landing",
+  "pages_build_output_dir": "./build/client",
+  "compatibility_date": "2026-07-17",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "construct-landing",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "vars": {
+    "TURNSTILE_EXPECTED_HOSTNAME": "construct.computer",
+    "TURNSTILE_EXPECTED_ACTION": "beta_signup",
+    "TURNSTILE_TEST_MODE": "false",
+    "ALLOWED_ORIGIN_HOSTNAME": "construct.computer",
+  },
+}

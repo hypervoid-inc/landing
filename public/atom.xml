@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Construct Computer Blog</title>
+  <id>https://construct.computer/blog/</id>
+  <link href="https://construct.computer/atom.xml" rel="self"/>
+  <updated>2026-07-26T00:00:00Z</updated>
+  <entry>
+    <title>AI Agent vs Zapier Automation</title>
+    <id>https://construct.computer/blog/ai-agent-vs-zapier/</id>
+    <link href="https://construct.computer/blog/ai-agent-vs-zapier/"/>
+    <updated>2026-07-26T00:00:00Z</updated>
+    <summary>Zapier runs a fixed trigger-action recipe. See how an AI agent plans its own steps instead, with a side-by-side of the same recurring workflow built both ways.</summary>
+  </entry>
+  <entry>
+    <title>AI Agent vs Virtual Assistant: Cost and Capabilities</title>
+    <id>https://construct.computer/blog/ai-agent-vs-virtual-assistant/</id>
+    <link href="https://construct.computer/blog/ai-agent-vs-virtual-assistant/"/>
+    <updated>2026-07-25T00:00:00Z</updated>
+    <summary>AI agent vs virtual assistant: compare monthly cost, response speed, and inspectable work records before you replace a human VA with a supervised AI employee.</summary>
+  </entry>
+  <entry>
+    <title>AI Employee for Real Business Work</title>
+    <id>https://construct.computer/blog/ai-employee/</id>
+    <link href="https://construct.computer/blog/ai-employee/"/>
+    <updated>2026-07-20T00:00:00Z</updated>
+    <summary>Meet the AI employee that researches, operates tools, creates files, and runs recurring work from a persistent, supervised workspace.</summary>
+  </entry>
+  <entry>
+    <title>AI Workflow Automation</title>
+    <id>https://construct.computer/blog/ai-workflow-automation/</id>
+    <link href="https://construct.computer/blog/ai-workflow-automation/"/>
+    <updated>2026-07-20T00:00:00Z</updated>
+    <summary>Create reusable linear AI workflows, run them on demand, or schedule recurring work across files, live browser runs, native email, and connected business apps.</summary>
+  </entry>
+  <entry>
+    <title>AI Agent Memory You Can Control</title>
+    <id>https://construct.computer/blog/ai-agent-memory/</id>
+    <link href="https://construct.computer/blog/ai-agent-memory/"/>
+    <updated>2026-07-20T00:00:00Z</updated>
+    <summary>Give an AI agent persistent memory with provenance, corrections, temporal context, and controls to inspect, update, forget, or restore what it knows.</summary>
+  </entry>
+  <entry>
+    <title>Construct vs chat assistants</title>
+    <id>https://construct.computer/blog/construct-vs-chatgpt/</id>
+    <link href="https://construct.computer/blog/construct-vs-chatgpt/"/>
+    <updated>2026-07-20T00:00:00Z</updated>
+    <summary>Compare Construct with chat assistants such as ChatGPT, Claude, and Gemini across workspace, tools, memory, schedules, and workflows.</summary>
+  </entry>
+  <entry>
+    <title>Construct vs Microsoft Copilot</title>
+    <id>https://construct.computer/blog/construct-vs-copilot/</id>
+    <link href="https://construct.computer/blog/construct-vs-copilot/"/>
+    <updated>2026-07-20T00:00:00Z</updated>
+    <summary>Compare Construct with Microsoft Copilot and Google Workspace AI. See how one vendor-neutral AI employee works across apps from a persistent workspace.</summary>
+  </entry>
+  <entry>
+    <title>Construct vs Zapier</title>
+    <id>https://construct.computer/blog/construct-vs-zapier/</id>
+    <link href="https://construct.computer/blog/construct-vs-zapier/"/>
+    <updated>2026-07-20T00:00:00Z</updated>
+    <summary>Automation builders need predefined flows. Construct handles ambiguous, multi-step goals where the path is not known upfront — an AI employee, not a flowchart.</summary>
+  </entry>
+  <entry>
+    <title>Construct vs coding agents</title>
+    <id>https://construct.computer/blog/construct-vs-coding-agents/</id>
+    <link href="https://construct.computer/blog/construct-vs-coding-agents/"/>
+    <updated>2026-07-20T00:00:00Z</updated>
+    <summary>Compare Construct with coding agents. See when a generalist AI employee for email, research, calendar, CRM, and code is the better fit.</summary>
+  </entry>
+  <entry>
+    <title>Construct vs building your own agent</title>
+    <id>https://construct.computer/blog/construct-vs-diy/</id>
+    <link href="https://construct.computer/blog/construct-vs-diy/"/>
+    <updated>2026-07-20T00:00:00Z</updated>
+    <summary>Building your own agent means wiring sandbox, apps, channels, memory, schedules, and user-facing activity summaries yourself. Construct provides those pieces as a hosted product.</summary>
+  </entry>
+  <entry>
+    <title>What is an AI employee?</title>
+    <id>https://construct.computer/blog/what-is-an-ai-employee/</id>
+    <link href="https://construct.computer/blog/what-is-an-ai-employee/"/>
+    <updated>2026-07-02T00:00:00Z</updated>
+    <summary>Learn what an AI employee is, how it differs from a chatbot, and how Construct completes work across email, Slack, browser, and connected apps.</summary>
+  </entry>
+  <entry>
+    <title>Chat Assistants vs AI Employees</title>
+    <id>https://construct.computer/blog/chat-assistants-vs-ai-employees/</id>
+    <link href="https://construct.computer/blog/chat-assistants-vs-ai-employees/"/>
+    <updated>2026-06-15T00:00:00Z</updated>
+    <summary>ChatGPT and Claude are great at drafting — but autonomous ops need execution, persistence, and inspectable work. See how Construct compares to chat assistants.</summary>
+  </entry>
+</feed>

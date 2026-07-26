@@ -1,0 +1,33 @@
+# Construct Computer — full product context
+
+> Construct Computer is a supervised workspace for an AI employee that researches, operates tools, creates files, and runs recurring work through supported apps from a live integration catalog.
+
+## Pages
+- [AI Employee with a Persistent Work OS | Construct](https://construct.computer/): Construct is a supervised AI workspace with persistent files and memory, live browser runs, a sandbox terminal, schedules, linear workflows, native email, and connected apps.
+- [About - Construct Computer](https://construct.computer/about/): Meet the team building a persistent work OS for an AI employee with files, memory, schedules, linear workflows, live browser and terminal tools, and connected apps.
+- [Careers - Construct Computer](https://construct.computer/careers/): Construct isn't actively hiring, but we'd love to hear from people who want to build AI agents, work interfaces, memory systems, and reliable execution tools.
+- [Editorial Policy - Construct Computer](https://construct.computer/editorial-policy/): How Construct reviews AI-assisted drafts, verifies sources and comparisons, handles publication dates, and corrects errors in its resource library.
+- [Support - Construct Computer](https://construct.computer/support/): Get help with your Construct Computer account, billing, integrations, and data requests. Report issues, review bounded Activity summaries, or contact the team.
+- [Privacy Policy - Construct Computer](https://construct.computer/privacy/): How Construct Computer collects, stores, encrypts, and shares data across the agent workspace, memory system, integrations, and billing provider.
+- [Terms & Conditions - Construct Computer](https://construct.computer/terms/): Terms of service for Construct Computer: subscription plans, acceptable use, agent actions, model BYOK, and proprietary platform licensing.
+- [AI Employee Resources - Construct Computer](https://construct.computer/blog/): Explore AI employee guides, practical articles, and comparisons with chat assistants, copilots, automation tools, coding agents, and DIY stacks.
+- [AI Agent vs Zapier Automation - Construct Computer](https://construct.computer/blog/ai-agent-vs-zapier/): Zapier runs a fixed trigger-action recipe. See how an AI agent plans its own steps instead, with a side-by-side of the same recurring workflow built both ways.
+- [AI Agent vs Virtual Assistant: Cost and Capabilities - Construct Computer](https://construct.computer/blog/ai-agent-vs-virtual-assistant/): AI agent vs virtual assistant: compare monthly cost, response speed, and inspectable work records before you replace a human VA with a supervised AI employee.
+- [AI Employee for Real Business Work - Construct Computer](https://construct.computer/blog/ai-employee/): Meet the AI employee that researches, operates tools, creates files, and runs recurring work from a persistent, supervised workspace.
+- [AI Workflow Automation - Construct Computer](https://construct.computer/blog/ai-workflow-automation/): Create reusable linear AI workflows, run them on demand, or schedule recurring work across files, live browser runs, native email, and connected business apps.
+- [AI Agent Memory You Can Control - Construct Computer](https://construct.computer/blog/ai-agent-memory/): Give an AI agent persistent memory with provenance, corrections, temporal context, and controls to inspect, update, forget, or restore what it knows.
+- [Construct vs chat assistants - Construct Computer](https://construct.computer/blog/construct-vs-chatgpt/): Compare Construct with chat assistants such as ChatGPT, Claude, and Gemini across workspace, tools, memory, schedules, and workflows.
+- [Construct vs Microsoft Copilot - Construct Computer](https://construct.computer/blog/construct-vs-copilot/): Compare Construct with Microsoft Copilot and Google Workspace AI. See how one vendor-neutral AI employee works across apps from a persistent workspace.
+- [Construct vs Zapier - Construct Computer](https://construct.computer/blog/construct-vs-zapier/): Automation builders need predefined flows. Construct handles ambiguous, multi-step goals where the path is not known upfront — an AI employee, not a flowchart.
+- [Construct vs coding agents - Construct Computer](https://construct.computer/blog/construct-vs-coding-agents/): Compare Construct with coding agents. See when a generalist AI employee for email, research, calendar, CRM, and code is the better fit.
+- [Construct vs building your own agent - Construct Computer](https://construct.computer/blog/construct-vs-diy/): Building your own agent means wiring sandbox, apps, channels, memory, schedules, and user-facing activity summaries yourself. Construct provides those pieces as a hosted product.
+- [What is an AI employee? - Construct Computer](https://construct.computer/blog/what-is-an-ai-employee/): Learn what an AI employee is, how it differs from a chatbot, and how Construct completes work across email, Slack, browser, and connected apps.
+- [Chat Assistants vs AI Employees - Construct Computer](https://construct.computer/blog/chat-assistants-vs-ai-employees/): ChatGPT and Claude are great at drafting — but autonomous ops need execution, persistence, and inspectable work. See how Construct compares to chat assistants.
+
+## Capabilities
+
+- Persistent files, inspectable memory, native email, schedules, and linear workflows
+- Live browser runs and a sandbox terminal with durable workspace files
+- Bounded Activity summaries and chat tool records for supervised execution
+- Web, Slack, Telegram, and Discord slash-command access
+- Custom MCP servers and private agent-authored workspace apps

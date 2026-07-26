@@ -1,0 +1,4 @@
+Contact: mailto:security@construct.computer
+Expires: 2027-07-26T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://construct.computer/.well-known/security.txt

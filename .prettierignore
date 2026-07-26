@@ -1,0 +1,6 @@
+build
+.react-router
+.wrangler
+node_modules
+pnpm-lock.yaml
+public/assets
