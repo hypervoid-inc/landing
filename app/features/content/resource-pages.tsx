@@ -1,5 +1,13 @@
 import { Link } from "react-router";
 import type { ReactNode } from "react";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import {
+  DiscordIcon,
+  GithubIcon,
+  GlobeIcon,
+  Linkedin01Icon,
+  NewTwitterIcon,
+} from "@hugeicons/core-free-icons";
 
 import {
   ContentShell,
@@ -9,13 +17,26 @@ import {
 import { mdxComponents } from "../../components/content/mdx-components";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 import { getBlogPost } from "../../content/blog";
-import type { Author } from "../../content/authors";
+import {
+  getAuthor,
+  listedAuthors,
+  type Author,
+  type AuthorId,
+  type AuthorLinkIcon,
+} from "../../content/authors";
+import { getResourceFaqs } from "../../content/faqs";
 import {
   getResource,
   resourceEntries,
   type ResourceEntry,
 } from "../../content/resources";
-import { getRoute } from "../../lib/route-manifest";
+import {
+  getRoute,
+  hubTags,
+  resourcesByAuthor,
+  resourcesByTag,
+  tagLabel,
+} from "../../lib/route-manifest";
 
 const blogBreadcrumbs = [
   { label: "Home", to: "/" },
@@ -44,6 +65,20 @@ export function BlogIndexPage() {
           ))}
         </ol>
       </section>
+      <nav aria-label="Browse" className="flex flex-wrap gap-x-6 gap-y-2">
+        <Link to="/authors/" className="text-[#017b89] hover:underline">
+          Meet the authors
+        </Link>
+        {hubTags.map((tag) => (
+          <Link
+            key={tag}
+            to={`/blog/tag/${tag}/`}
+            className="text-[#017b89] hover:underline"
+          >
+            {tagLabel(tag)}
+          </Link>
+        ))}
+      </nav>
     </ContentShell>
   );
 }
@@ -72,7 +107,8 @@ function ResourceCard({ entry }: { entry: ResourceEntry }) {
           </Link>
         </h3>
         <p className="resource-card-meta mt-2 overflow-hidden text-ellipsis whitespace-nowrap text-[12px] capitalize text-[#526b75]">
-          {entry.kind} · {formatShortDate(entry.published)} · {entry.author.name}
+          {entry.kind} · {formatShortDate(entry.published)} ·{" "}
+          {entry.author.name}
         </p>
         <p className="mt-3 line-clamp-3 text-[15px] leading-6">
           {entry.description}
@@ -111,6 +147,213 @@ export function ResourcePage({ slug }: { slug: string }) {
       }
     >
       <post.Content components={mdxComponents} />
+      <ResourceFaq slug={entry.slug} />
+    </ContentShell>
+  );
+}
+
+/**
+ * Visible counterpart to the `FAQPage` JSON-LD in `routeJsonLd`. Both read the
+ * same `resourceFaqs` entry, so the rendered answers always match the markup.
+ */
+function ResourceFaq({ slug }: { slug: string }) {
+  const faqs = getResourceFaqs(slug);
+  if (!faqs.length) return null;
+  return (
+    <section aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Frequently asked questions</h2>
+      <dl className="mt-6 space-y-6">
+        {faqs.map((faq) => (
+          <div key={faq.question}>
+            <dt className="font-medium text-[#4e4646]">{faq.question}</dt>
+            <dd className="mt-2">{faq.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
+
+const linkIcons: Record<AuthorLinkIcon, IconSvgElement> = {
+  website: GlobeIcon,
+  x: NewTwitterIcon,
+  linkedin: Linkedin01Icon,
+  github: GithubIcon,
+  discord: DiscordIcon,
+};
+
+/**
+ * Off-site profiles for one author. `rel="me"` states the identity claim these
+ * same URLs make as schema.org `sameAs`. The icon is decorative — the visible
+ * label carries the accessible name.
+ */
+function AuthorLinks({
+  author,
+  className,
+}: {
+  author: Author;
+  className?: string;
+}) {
+  if (!author.links.length) return null;
+  return (
+    <ul
+      aria-label={`${author.name} elsewhere`}
+      className={`flex flex-wrap items-center gap-x-4 gap-y-1 ${className ?? ""}`}
+    >
+      {author.links.map((link) => (
+        <li key={link.href}>
+          <a
+            href={link.href}
+            target="_blank"
+            rel="me noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-[#017b89] hover:underline"
+          >
+            <HugeiconsIcon
+              icon={linkIcons[link.icon]}
+              size={16}
+              strokeWidth={1.8}
+              className="shrink-0"
+              aria-hidden
+            />
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function AuthorsIndexPage() {
+  return (
+    <ContentShell
+      title="Authors"
+      metadata="The people and team writing Construct's articles, guides, and comparisons."
+    >
+      <ul className="grid list-none gap-6 p-0 sm:grid-cols-2">
+        {listedAuthors.map((author) => {
+          const count = resourcesByAuthor(author.id).length;
+          return (
+            <li key={author.id}>
+              <article className="h-full rounded-2xl border border-[#e5e7eb] bg-white p-6 transition-colors hover:border-[#8adcdf]">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={author.image}
+                    alt={author.name}
+                    width="56"
+                    height="56"
+                    loading="lazy"
+                    className="h-14 w-14 rounded-full object-cover"
+                  />
+                  <div className="min-w-0">
+                    <h2 className="font-geist text-[22px] italic leading-tight text-[#4e4646]">
+                      <Link
+                        to={author.profileUrl}
+                        className="hover:text-[#01b4c8]"
+                      >
+                        {author.name}
+                      </Link>
+                    </h2>
+                    <p className="text-[12px] text-[#526b75]">
+                      {author.role} · {count}{" "}
+                      {count === 1 ? "resource" : "resources"}
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-3 text-[15px] leading-6">{author.bio}</p>
+                <AuthorLinks author={author} className="mt-4 text-[13px]" />
+              </article>
+            </li>
+          );
+        })}
+      </ul>
+    </ContentShell>
+  );
+}
+
+export function AuthorPage({ id }: { id: string }) {
+  const author = getAuthor(id as AuthorId);
+  if (!author) return <NotFoundPage />;
+  const entries = resourcesByAuthor(author.id);
+  return (
+    <ContentShell
+      title={author.name}
+      breadcrumbs={[
+        { label: "Home", to: "/" },
+        { label: "Authors", to: "/authors/" },
+      ]}
+      metadata={
+        <div className="flex items-center gap-3">
+          <img
+            src={author.image}
+            alt={author.name}
+            width="64"
+            height="64"
+            className="h-16 w-16 rounded-full object-cover"
+          />
+          <div>
+            <p className="font-medium text-[#4e4646]">{author.role}</p>
+            <p>{author.bio}</p>
+            <AuthorLinks author={author} className="mt-2" />
+          </div>
+        </div>
+      }
+    >
+      <section aria-labelledby="author-resources-heading">
+        <h2 id="author-resources-heading">
+          {entries.length} {entries.length === 1 ? "resource" : "resources"} by{" "}
+          {author.name}
+        </h2>
+        <ol className="mt-6 grid list-none gap-6 p-0 sm:grid-cols-2">
+          {entries.map((entry) => (
+            <li key={entry.slug}>
+              <ResourceCard entry={entry} />
+            </li>
+          ))}
+        </ol>
+      </section>
+    </ContentShell>
+  );
+}
+
+export function TagPage({ tag }: { tag: string }) {
+  if (!hubTags.includes(tag)) return <NotFoundPage />;
+  const entries = resourcesByTag(tag);
+  const label = tagLabel(tag);
+  return (
+    <ContentShell
+      title={`Writing tagged ${label}`}
+      breadcrumbTitle={label}
+      breadcrumbs={blogBreadcrumbs}
+      metadata={`${entries.length} Construct resources on ${label}.`}
+    >
+      <section aria-labelledby="tag-resources-heading">
+        <h2 id="tag-resources-heading" className="sr-only">
+          Resources tagged {label}
+        </h2>
+        <ol className="grid list-none gap-6 p-0 sm:grid-cols-2">
+          {entries.map((entry) => (
+            <li key={entry.slug}>
+              <ResourceCard entry={entry} />
+            </li>
+          ))}
+        </ol>
+      </section>
+      <nav aria-label="All topics">
+        <h2>Browse all topics</h2>
+        <ul className="mt-4 flex list-none flex-wrap gap-2 p-0">
+          {hubTags.map((item) => (
+            <li key={item}>
+              <Link
+                to={`/blog/tag/${item}/`}
+                aria-current={item === tag ? "page" : undefined}
+                className={`inline-block rounded-full px-3 py-1 text-[13px] ${item === tag ? "bg-[#01b4c8] text-white" : "bg-[#effbfc] text-[#016d79] hover:bg-[#d9f6f5]"}`}
+              >
+                {tagLabel(item)}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </ContentShell>
   );
 }
@@ -129,11 +372,19 @@ function TagList({
       className={`flex flex-wrap gap-2 ${className ?? ""}`}
     >
       {tags.map((tag) => (
-        <li
-          key={tag}
-          className="rounded-full bg-[#effbfc] px-2.5 py-1 text-[11px] leading-4 text-[#016d79]"
-        >
-          {tag}
+        <li key={tag}>
+          {hubTags.includes(tag) ? (
+            <Link
+              to={`/blog/tag/${tag}/`}
+              className="inline-block rounded-full bg-[#effbfc] px-2.5 py-1 text-[11px] leading-4 text-[#016d79] hover:bg-[#d9f6f5]"
+            >
+              {tag}
+            </Link>
+          ) : (
+            <span className="inline-block rounded-full bg-[#effbfc] px-2.5 py-1 text-[11px] leading-4 text-[#016d79]">
+              {tag}
+            </span>
+          )}
         </li>
       ))}
     </ul>
@@ -163,14 +414,23 @@ function AuthorByline({
       />
       <div className="min-w-0">
         <p>
-          <a
-            href={author.profileUrl}
-            target={externalProfile ? "_blank" : undefined}
-            rel={externalProfile ? "noopener noreferrer" : undefined}
-            className="font-medium text-[#4e4646] hover:text-[#01b4c8]"
-          >
-            {author.name}
-          </a>{" "}
+          {externalProfile ? (
+            <a
+              href={author.profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-[#4e4646] hover:text-[#01b4c8]"
+            >
+              {author.name}
+            </a>
+          ) : (
+            <Link
+              to={author.profileUrl}
+              className="font-medium text-[#4e4646] hover:text-[#01b4c8]"
+            >
+              {author.name}
+            </Link>
+          )}{" "}
           · {author.role}
         </p>
         <p>{author.bio}</p>

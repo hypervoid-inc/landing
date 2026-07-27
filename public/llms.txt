@@ -24,3 +24,14 @@
 - [Construct vs Zapier, Make, and n8n](https://construct.computer/blog/construct-vs-zapier/): Compare Construct with Zapier, Make, and n8n for deterministic workflows, agentic steps, scheduling, and ambiguous multi-step work.
 - [What is an AI employee?](https://construct.computer/blog/what-is-an-ai-employee/): Learn what an AI employee is, how it differs from a chatbot, and how Construct completes work across email, Slack, browser, and connected apps.
 - [Chat Assistants vs AI Employees](https://construct.computer/blog/chat-assistants-vs-ai-employees/): ChatGPT and Claude are great at drafting — but autonomous ops need execution, persistence, and inspectable work. See how Construct compares to chat assistants.
+- [Authors](https://construct.computer/authors/): The people and team writing Construct's articles, guides, and comparisons on AI agents, workflows, memory, and getting real work done.
+- [Ankush](https://construct.computer/authors/ankush/): Writes about Construct, AI agents, and developer tools. Read every article, guide, and comparison written by Ankush for Construct Computer.
+- [Nischal](https://construct.computer/authors/nischal/): Writes about Construct, AI agents, and building useful software. Read every article, guide, and comparison written by Nischal for Construct Computer.
+- [Construct Team](https://construct.computer/authors/construct-team/): The team building and documenting Construct Computer. Read every article, guide, and comparison written by Construct Team for Construct Computer.
+- [Writing tagged AI agent](https://construct.computer/blog/tag/ai-agent/): 7 Construct articles, guides, and comparisons tagged AI agent, covering AI agents and how they get work done.
+- [Writing tagged AI employee](https://construct.computer/blog/tag/ai-employee/): 7 Construct articles, guides, and comparisons tagged AI employee, covering AI agents and how they get work done.
+- [Writing tagged ChatGPT](https://construct.computer/blog/tag/chatgpt/): 2 Construct articles, guides, and comparisons tagged ChatGPT, covering AI agents and how they get work done.
+- [Writing tagged comparison](https://construct.computer/blog/tag/comparison/): 8 Construct articles, guides, and comparisons tagged comparison, covering AI agents and how they get work done.
+- [Writing tagged product](https://construct.computer/blog/tag/product/): 2 Construct articles, guides, and comparisons tagged product, covering AI agents and how they get work done.
+- [Writing tagged workflow automation](https://construct.computer/blog/tag/workflow-automation/): 2 Construct articles, guides, and comparisons tagged workflow automation, covering AI agents and how they get work done.
+- [Writing tagged zapier](https://construct.computer/blog/tag/zapier/): 2 Construct articles, guides, and comparisons tagged zapier, covering AI agents and how they get work done.

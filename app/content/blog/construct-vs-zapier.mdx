@@ -30,40 +30,60 @@ This is an editorial capability comparison using the linked public vendor docume
 
 Automation platforms center on configured triggers, actions, and visual workflows, with agentic features varying by product. Construct can instead start from an outcome — "every Monday, summarize competitor pricing and post to Slack" — and work out the browser, app, and file steps at runtime.
 
+The distinction shows up in where the thinking happens. On an automation platform, the thinking is done at build time by the person wiring the flow, and the runtime is deterministic execution of that plan. With an agent, some of the thinking moves to run time. That is an advantage when inputs vary and a disadvantage when they do not, which is why the choice depends far more on the shape of the work than on the capability of either tool.
+
 ## Handles ambiguity
 
 When inbox review needs judgment or research spans multiple sites, a fixed mapping can become brittle. Construct can use an agent step to interpret the situation, then continue through connected-app actions, live browser work, files, or in-app notifications. That flexibility is useful when inputs vary but the desired outcome stays consistent.
+
+The practical test is what happens on an unusual input. A trigger-action flow handles cases its builder anticipated and drops or mishandles the rest, which is correct behaviour for a system meant to be predictable. An agent step attempts to interpret the unusual case, which is useful when a dropped item would otherwise sit unnoticed, and less useful when a silently-handled edge case would have been better escalated.
 
 ## Reusable workflows without pretending everything is fixed
 
 Construct also supports durable workflows. A workflow can combine agent reasoning, connected-app tools, and in-app notifications, then run on demand or from the native Calendar. Current workflows are intentionally linear; branching, delays, approval steps, fan-out, and subworkflows are not yet supported.
 
-## When deterministic automation is better
+That linearity is a real constraint worth weighing directly. Automation platforms offer branching, routers, delays, and error paths as first-class building blocks. If a procedure genuinely depends on those primitives today, they are available there and not in Construct. The Construct pattern is to put conditional logic inside an agent step rather than to express it as workflow structure.
 
-A traditional automation platform is usually better for high-volume trigger-action flows where every input and transformation is known, predictable, and easy to test. Construct is better when the task requires reading, judgment, research, file creation, or recovery through a browser or terminal before the next step can be chosen.
+## A concrete scenario: onboarding a new customer
 
-## When to choose Construct
+Consider a post-sale process: a deal closes, and the customer needs a welcome email, a project workspace, a kickoff meeting, and an internal handoff note.
 
-- Goals are clear but steps are not
-- Tasks need judgment or research
-- You want one agent instead of many fixed workflows
+**Built on an automation platform.** A trigger fires on the CRM stage change. Action steps create the workspace, send a templated welcome, create the calendar event, and post the handoff. It runs in seconds, costs very little per execution, and does the same thing every time. When a deal closes with missing contact details or an unusual plan configuration, a filter or router has to have been built for it.
 
-## When to choose an automation platform
+**Run by Construct.** A scheduled job or an assigned outcome checks for newly closed deals. The agent reads the deal record, notices the missing contact detail, checks prior email history to fill it, writes a welcome that reflects what the customer actually bought, and drafts a handoff note in its own words. It leaves the files, sent messages, and Activity summary in the workspace.
 
-- Trigger-action pairs are fixed and repeatable
-- No AI planning needed
-- You prefer visual flow builders
+Neither is strictly better. The first is faster, cheaper, and more predictable for the common case. The second absorbs the variance that would otherwise land on a person's desk. Teams running both usually put the deterministic spine on the automation platform and hand the judgment-heavy edges to an agent.
+
+## Cost models differ more than prices
+
+Comparing monthly figures directly tends to mislead, because the two categories meter different things. Automation platforms typically price on task or operation volume: predictable per-run cost, scaling with throughput. Construct's plans meter task depth and capacity — Lite at $9 with up to 50 steps per task, Starter at $59, and Pro at $299 with deep runs up to 1,000 steps per task — with storage and command runtime rising alongside. Pricing is current as of this post's publish date and can change; check both vendors' current pricing before deciding.
+
+The useful comparison is cost per completed outcome on your actual work. A high-volume, low-complexity flow is almost always cheaper on an automation platform. A low-volume job that would otherwise take a person an hour of cross-app judgment is where per-step metering can come out ahead.
+
+## Using both together
+
+Most teams that adopt an agent do not retire their automation platform, and there is no reason they should. A reasonable division:
+
+- **Keep on the automation platform:** high-volume record syncing, notifications with fixed templates, webhook plumbing, anything needing sub-minute reaction time.
+- **Move to Construct:** research, inbox triage requiring judgment, recurring reports assembled from several systems, cross-app work whose steps vary week to week.
+- **Watch for:** procedures where a fixed flow has grown a dozen branches to cover edge cases. That growth is usually the signal a judgment step belongs in the middle.
+
+## When each wins
+
+Choose an automation platform when the trigger, the transformation, and the action are all known in advance and the volume is high. Choose Construct when the outcome is clear, the steps are not, and the job needs to leave an inspectable record.
+
+For a deeper walkthrough of the same workflow built both ways, read [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/). For how Construct's own workflows and scheduling work, see [AI workflow automation](/blog/ai-workflow-automation/).
 
 ## Sources
 
-- [Construct: AI workflow automation guide](https://construct.computer/blog/ai-workflow-automation/)
+- [Construct: AI employee product guide](https://construct.computer/blog/ai-employee/)
 - [Zapier: Zap limits](https://help.zapier.com/hc/en-us/articles/8496181445261-Zap-limits)
-- [Make: Product overview](https://www.make.com/en/product)
-- [n8n: Build your first workflow](https://docs.n8n.io/build-your-first-workflow.md)
+- [Zapier: pricing](https://zapier.com/pricing)
+- [Zapier: Agents](https://zapier.com/agents)
 
 ## Related resources
 
 - [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/)
 - [AI workflow automation guide](/blog/ai-workflow-automation/)
-- [AI employee product guide](/blog/ai-employee/)
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
 - [All AI employee resources](/blog/)

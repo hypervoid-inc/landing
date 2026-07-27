@@ -30,9 +30,25 @@ This is an editorial capability comparison using the linked public vendor docume
 
 A production DIY stack may need compute isolation, credential storage, channel integrations, and a UI humans can trust, depending on the components and deployment you choose. Construct bundles these operating surfaces so you assign tasks instead of assembling them.
 
+## The parts people underestimate
+
+Getting an agent to complete a task in a notebook is a weekend. The gap between that and something colleagues rely on is where DIY projects usually stall, and it is rarely the model layer.
+
+- **Sandboxed execution.** Running agent-authored code needs isolation, resource limits, and timeouts. Deciding what a shell can reach is a security design problem, not a library choice.
+- **Credential custody.** Every connected app means storing and rotating tokens, handling OAuth refresh, and scoping access per user.
+- **Durable state.** Files, conversation state, and long-term memory need storage with a lifecycle, not just a vector index.
+- **Memory correction.** Storing context is easy; superseding a stale assertion, keeping provenance, and letting a user forget something is a data model.
+- **Scheduling.** A scheduler that reconciles missed and delayed runs is meaningfully harder than a cron entry.
+- **A human-facing surface.** People need to see what happened, interrupt a run, and answer a question mid-task. This is often the largest single piece of work.
+- **Ongoing maintenance.** Model deprecations, connector API changes, and browser breakage arrive continuously.
+
+None of these are unsolvable. The question is whether solving them is the work your team should be doing.
+
 ## Still flexible
 
 Bring your own model key on Pro, connect supported applications, or add a custom MCP server. The agent can use browser and sandbox tools when a structured integration is not enough. It can also build a constrained workspace application and add it to the desktop for a recurring internal process.
+
+MCP matters most here. Because Construct can consume custom MCP servers, an internal system with no public integration can still be reached without waiting for first-party support — you implement the tool interface and the hosted agent uses it. That path preserves much of DIY's extensibility while leaving the operating layers managed.
 
 ## What you would otherwise operate
 
@@ -42,17 +58,27 @@ A production agent needs more than a prompt and model API. Depending on the stac
 
 A DIY stack can match a precise security model, deployment environment, or internal platform. It also makes your team responsible for every model change, connector failure, browser timeout, queue, migration, and support surface. Construct is the shorter path when the goal is to operate an AI employee rather than build the infrastructure around one.
 
+The cost comparison that matters is not licence fees against zero. It is licence fees against engineering time plus the infrastructure the stack runs on plus the ongoing maintenance nobody schedules. Construct's plans run $9, $59, and $299 per month as of this post's publish date. Against a fraction of an engineer's time indefinitely, the arithmetic is usually straightforward unless control is itself the requirement.
+
+## A reasonable hybrid
+
+The choice is not always all-or-nothing. Teams with real platform capability often use a hosted agent for general operating work while building bespoke agents only where differentiation justifies it. Custom MCP servers make that split practical: shared internal tools are implemented once and consumed by whichever agent needs them.
+
+The signal that DIY is genuinely warranted is usually a hard constraint rather than a preference — an air-gapped deployment, a specific certification, or an agent whose behaviour is itself the product.
+
 ## When to choose Construct
 
 - Want production-ready agent infrastructure now
 - Need integrations and channels without building them
 - Prefer metered SaaS over ops burden
+- Want a supervision UI you do not have to design
 
 ## When to choose a DIY stack
 
 - Full control over every layer is mandatory
 - Air-gapped or on-prem only
 - You have a platform team to run it
+- The agent's behaviour is your product
 
 ## Sources
 

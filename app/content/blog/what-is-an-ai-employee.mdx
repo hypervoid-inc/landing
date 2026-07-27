@@ -13,6 +13,21 @@ Most AI assistants begin and end in a chat window. You ask a question, get an an
 
 Construct is the work OS around that employee. It combines persistent files, inspectable memory, schedules, linear workflows, and a native inbox with web research, live browser runs, a sandbox terminal, and connected applications in one web desktop.
 
+## The four rungs of the ladder
+
+"AI employee" is a marketing term until you can say what separates it from the tools underneath it. The useful distinction is how much of a job the software can carry, and what survives afterwards.
+
+| Category        | Given                 | Returns                     | Persists between jobs     |
+| --------------- | --------------------- | --------------------------- | ------------------------- |
+| **Chatbot**     | A question            | An answer                   | Little or nothing         |
+| **Copilot**     | A document in context | An inline suggestion        | The host document         |
+| **Agent**       | A task and tools      | A completed task            | Varies by product         |
+| **AI employee** | An outcome            | Finished work and artifacts | Files, memory, procedures |
+
+Each rung adds something the one below lacks. A copilot knows the document you are in; a chatbot does not. An agent can act on tools; a copilot mostly suggests. An AI employee keeps a workspace, so the work does not evaporate when the session ends.
+
+The line that matters most in practice is the last column. Plenty of products can execute a task once. Far fewer leave behind a workspace where the output, the reasoning, and the procedure are all still there next week.
+
 ## Chat assistant vs AI employee
 
 |                | Chat assistant                            | AI employee (Construct)                            |
@@ -37,6 +52,14 @@ Construct works from a purpose-built web desktop with Chat, Files, Browser, Term
 
 The agent plans the steps, uses live browser runs, the sandbox terminal, files, or supported applications from the live integration catalog, and leaves persistent outputs in your workspace. Activity keeps bounded action summaries and best-effort reasons; bounded tool details remain in chat.
 
+## Following one job end to end
+
+An abstract definition is less useful than watching a single request resolve. Take: "find out which of our five competitors changed pricing this month, and put a summary in the shared folder."
+
+The agent works out that this needs public research rather than an internal system, uses web search and fetch for the pricing pages, and opens a live browser run for the one page that hides its pricing behind an interaction. It compares what it finds against a file saved during a previous run. It writes a summary, saves it to the workspace, and notifies you.
+
+What makes this an employee-shaped job rather than a chatbot-shaped one is not the research. It is that the comparison depended on last month's file, the output landed somewhere durable, and next month's run will start from this month's result. The job has a before and an after.
+
 ## Work that persists and repeats
 
 Persistence makes an AI employee more useful than a one-off task runner. Construct keeps workspace files and long-term memory across conversations. Memories can be inspected, corrected, forgotten, or restored, so continuity does not require accepting an opaque record forever.
@@ -50,6 +73,27 @@ Read more about [AI workflow automation](/blog/ai-workflow-automation/) and [AI 
 An AI employee should not become invisible simply because it works independently. Construct exposes files, live browser activity, a terminal transcript, workflows, memories, chat tool records, and bounded Activity summaries in the same web desktop. You can inspect results, interrupt a running turn, and answer questions when the agent needs missing information.
 
 Construct can also delegate bounded subtasks to temporary agents. Plans allow 2, 4, or 8 temporary jobs to run concurrently; additional jobs queue, while browser and terminal work may still contend for shared execution surfaces.
+
+## How to evaluate one
+
+If you are comparing products in this category, most of the marketing sounds identical. These questions separate them quickly.
+
+1. **Where does work live afterwards?** If the answer is "in the chat history", persistence is thin.
+2. **Which surfaces can it actually act on?** Connected apps, a real browser, a terminal, and email are different capabilities, and many products have only some.
+3. **Can it run when nobody is watching?** Scheduling that depends on an open browser tab is not scheduling.
+4. **What evidence does it leave?** You should be able to reconstruct what happened without taking the summary on faith.
+5. **Can you correct what it believes?** Memory you cannot inspect or fix becomes a liability as facts change.
+6. **What are the stated limits?** A product that names its boundaries is easier to trust than one that implies it has none.
+
+## Common misconceptions
+
+**"It replaces a person."** It completes bounded, tool-driven, repeatable work. Relationship-heavy and judgment-heavy responsibilities do not transfer, which is covered in [AI agent vs virtual assistant](/blog/ai-agent-vs-virtual-assistant/).
+
+**"It runs unsupervised from day one."** Autonomy is earned per job. The sensible path is on-demand runs first, scheduled runs once the output is reliably right.
+
+**"More integrations means more capable."** Integration counts say little about whether a product can carry a job that spans several of them and remember what happened.
+
+**"It is just ChatGPT with plugins."** The difference is the workspace: files, memory, schedules, and run history that outlive a thread. See [chat assistants vs AI employees](/blog/chat-assistants-vs-ai-employees/).
 
 ## When an AI employee makes sense
 

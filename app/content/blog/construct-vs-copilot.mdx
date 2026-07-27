@@ -30,28 +30,46 @@ This is an editorial capability comparison using the linked public vendor docume
 
 Suite copilots optimize for Microsoft 365 or Google Workspace. Construct can link supported tools such as Gmail, Linear, GitHub, Notion, and HubSpot through its live integration catalog, while Slack is also available as a messaging channel.
 
+The structural difference is where the assistant's context boundary sits. A suite copilot has deep, privileged access to everything inside its own ecosystem and limited reach beyond it. Construct has broader but shallower reach: it connects to many vendors through their integration surfaces, without the native document-level intimacy a first-party copilot has inside its own suite. Which trade is better depends entirely on how concentrated your work already is.
+
 ## Execution beyond suite suggestions
 
 Construct gives the agent a sandbox terminal, live browser runs, persistent files, a native inbox, schedules, and workflows. The user sees these surfaces together in a purpose-built web desktop. Workspace files persist, while live browser runs and shell state are bounded execution surfaces.
+
+The categories of work this opens up are the ones that fall between products: pulling numbers from a system with no suite integration, driving a vendor portal that only exists as a website, running a transformation script over an exported file, or assembling a report whose inputs live in four places.
 
 ## Memory and procedures across tools
 
 Suite copilots can use the context available in their ecosystem. Construct is designed to carry context across the wider job: a customer message, a workspace file, a CRM update, a browser research step, and a scheduled follow-up. Useful context can be stored in inspectable memory, while repeatable work can become a versioned workflow.
 
+## A concrete scenario: the monthly board pack
+
+A board pack is a good test because its inputs are rarely in one place: financials in an accounting system, pipeline in a CRM, product metrics in an analytics tool, and commentary in a document.
+
+**With a suite copilot.** Drafting, formatting, summarizing, and chart generation inside the document are well supported, and if the numbers are already in suite spreadsheets it can work with them directly. Getting figures out of the accounting system, CRM, and analytics tool into that spreadsheet is generally still a person's job, month after month.
+
+**With Construct.** The agent reads what it can through connected-app actions, uses a live browser run for a system with no integration, saves the collected figures to workspace files, compares against last month's saved file, and drafts the commentary. The assembly step is the part that becomes repeatable, and it can be scheduled.
+
+The honest caveat: if the final document must be a polished, on-template Microsoft or Google file, the native copilot is better at producing it. A reasonable division is to let Construct assemble and reconcile the inputs and let the suite copilot do the final document craft.
+
 ## Where suite copilots still win
 
 If nearly all work happens inside Microsoft 365 or Google Workspace and the main need is inline drafting, summarization, or spreadsheet help, the native copilot may be the shortest path. Construct becomes more useful when execution crosses vendors or needs live browser work, a sandbox terminal, scheduling, and an inspectable work record.
+
+There are also non-capability reasons a suite copilot may be right: it inherits your existing identity, permissions, data-residency, and compliance posture, and it adds no new vendor review. For organisations where that review is a significant hurdle, native tooling has a real advantage that a feature table does not show.
 
 ## When to choose Construct
 
 - Work spans multiple SaaS vendors
 - Need scripts, terminal, or custom browser flows
 - Want one agent across Slack, email, and issue trackers
+- Recurring assembly of data from systems with no suite integration
 
 ## When to choose a suite copilot
 
 - Entire workflow lives inside Microsoft 365 or Google Workspace
 - Inline drafting inside Office or Docs is enough
+- Adding a new vendor is a significant procurement hurdle
 
 ## Sources
 

@@ -23,6 +23,24 @@ That gap shows up in three places:
 2. **Execution surfaces** — available chat tools vary by product and plan, while Construct combines connected apps with live browser runs, a sandbox terminal, native email, and workspace files.
 3. **Inspectable work** — Construct keeps bounded Activity summaries, chat tool records, sent messages, connected-app updates, and workspace artifacts together after execution.
 
+## The same request, handled two ways
+
+Take a request that sounds simple: "Check whether any of our top ten accounts have gone quiet this month, and draft follow-ups for the ones that have."
+
+**In a chat assistant.** You export account activity yourself, paste it in, and get back a well-written analysis and draft follow-ups. The drafting is genuinely good. But you did the data gathering, you will do the sending, and next month the whole exchange starts over from an empty thread. The assistant contributed the middle of the job.
+
+**In Construct.** The agent reads the accounts through a connected-app action, compares against the figures saved in workspace files from last month, drafts the follow-ups, and either sends them from its native inbox or leaves them for review. The files, the sent messages, and the Activity summary stay in the workspace. Next month, the same job can run from the Calendar.
+
+The drafted text might be comparable in both cases. The difference is how much of the surrounding work a person still has to do, and whether anything is left behind that makes the next run cheaper.
+
+| Stage                 | Chat assistant         | Construct                            |
+| --------------------- | ---------------------- | ------------------------------------ |
+| Gather the data       | You export and paste   | Connected-app action reads it        |
+| Compare to last month | You supply the history | Workspace files from the prior run   |
+| Draft the message     | The assistant drafts   | The agent drafts                     |
+| Send it               | You send               | Native inbox, or held for review     |
+| Next month            | Start the thread again | Run the saved workflow on a schedule |
+
 ## A workspace changes the relationship
 
 A chat thread is a good place to discuss work. A persistent workspace is where the rest of the job can live. Construct brings persistent Files, Memories, Calendar items, and Workflows together with live Browser runs, a sandbox Terminal, native Email, connected apps, and Activity summaries in one web desktop.
@@ -40,6 +58,17 @@ For deterministic, high-volume trigger-action automation, a traditional platform
 Construct's goal is supervised execution, not invisible autonomy. You can inspect outputs, interrupt a running turn, answer a question when the agent needs a decision, and review or correct long-term memory. Activity keeps bounded action summaries and best-effort reasons; bounded tool inputs and outputs remain in chat.
 
 Large jobs can also be split into bounded parallel subtasks. Plans allow 2, 4, or 8 temporary-agent jobs to run concurrently; additional jobs queue, and browser or terminal work may still contend for shared execution surfaces.
+
+## Where chat assistants remain the better tool
+
+This is not a case where one category wins outright, and pretending otherwise would be unhelpful.
+
+- **Thinking through a problem.** Conversation is the right interface for exploring an idea before any work begins.
+- **One-shot drafting.** A single email, a summary of a pasted document, or a rewritten paragraph needs no workspace.
+- **Questions with no side effects.** If nothing needs to be executed or preserved, execution surfaces add nothing.
+- **Work already covered by available chat tools.** If the product's built-in tools finish the job, the extra machinery is unnecessary.
+
+Many teams reasonably use both: a chat assistant for thinking and drafting, an AI employee for work that has to execute, recur, and leave a record.
 
 ## Read the full comparison
 

@@ -2,6 +2,7 @@
 title: "AI Employee for Real Business Work"
 description: "Meet the AI employee that researches, operates tools, creates files, and runs recurring work from a persistent, supervised workspace."
 published: "2026-07-20"
+updated: "2026-07-27"
 author: "nischal"
 tags: ["ai-employee", "ai-agent", "business-automation"]
 kind: "guide"
@@ -26,17 +27,69 @@ Construct is designed for jobs that cross tools or continue beyond one conversat
 - Update connected apps and record what changed
 - Run recurring reports from a saved workflow
 
+## A worked example: the weekly operating report
+
+The clearest way to see the difference is to follow one recurring job from request to durable output.
+
+**The request.** "Every Friday, pull last week's numbers from the CRM, check which deals moved stage, summarize what changed, and email it to the team."
+
+**What Construct does.** It uses a connected-app action to read the CRM rather than scraping it, because structured actions are more reliable for record data. It compares against last week's saved figures, which are in workspace files from the previous run. It writes the summary, saves it as a file, and sends it from its native inbox.
+
+**What is left behind.** A dated report file in the workspace, a sent message, a connected-app read recorded in Activity, and a chat session that can be reopened to see how a particular figure was derived. Next Friday's run starts from those files rather than from scratch.
+
+**Where supervision fits.** For the first few runs you read the report before it goes out, running the job on demand rather than on a schedule. Once the output is consistently right, it moves to the Calendar. The agent can still interrupt itself to ask a question when something is genuinely ambiguous.
+
+Nothing here is exotic. It is the ordinary shape of operational work: pull from a system, compare against last time, write it up, send it, and be able to explain it later.
+
+## What each plan can actually run
+
+An AI employee is bounded by real capacity, and the limits determine which jobs are practical. Construct's published plans differ mostly along task depth, runtime, and storage.
+
+| Plan    | Price | Steps per task | Command runtime | Storage |
+| ------- | ----- | -------------- | --------------- | ------- |
+| Lite    | $9    | Up to 50       | 5 minutes       | 100 MB  |
+| Starter | $59   | 6× Lite usage  | 30 minutes      | 1 GB    |
+| Pro     | $299  | Up to 1,000    | 1 hour          | 3 GB    |
+
+Lite includes 2 parallel background jobs. Background and scheduled tasks are available from Starter upward, native agent email starts on Starter, and Pro adds bring-your-own-key support for supported model providers. Pricing and limits are current as of this post's publish date; check the pricing section on the [Construct homepage](/) before purchasing.
+
+The practical reading: step count governs how deep a single job can go before it must be split, and command runtime governs how long a script or browser sequence can run. A research job that touches thirty sources and a data job that runs a long transformation are constrained by different numbers.
+
 ## Persistent, but still supervised
 
 Persistence matters because real work rarely fits inside one prompt. Construct keeps workspace files, conversation state, workflows, schedules, and long-term memory available for later tasks. Its memory is inspectable: you can review what it remembers, correct stale information, or forget it entirely.
 
 Autonomy does not have to mean invisible work. The Activity feed keeps bounded action summaries and, when available, a short reason. Chat tool records retain bounded inputs and outputs. You can inspect results, interrupt a running turn, and answer questions when Construct needs a decision.
 
+Worth being precise about what this is and is not: Activity provides bounded action summaries rather than a forensic audit log. It is designed to answer "what did the agent do, and roughly why" for an operator reviewing work. A regulated environment needing complete immutable records of every operation should evaluate that boundary directly rather than assume it.
+
 ## One workspace, many applications
 
-Construct discovers supported applications from its live integration catalog. The agent can find available actions, ask you to connect an account when necessary, and then execute the action through the integration. Slack and Telegram accept direct messages; Discord currently uses slash commands to reach the same workspace away from the web desktop.
+Construct discovers supported applications from its live integration catalog, including tools such as Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable. The agent can find available actions, ask you to connect an account when necessary, and then execute the action through the integration. Slack and Telegram accept direct messages; Discord currently uses slash commands to reach the same workspace away from the web desktop.
 
-When an off-the-shelf connection is not enough, Construct can use its browser or terminal. It can also create a small workspace application for a recurring internal process, publish it to your desktop, and keep the last working build available if a later edit fails.
+When an off-the-shelf connection is not enough, Construct can use its browser or terminal. It can also create a small workspace application for a recurring internal process, publish it to your desktop, and keep the last working build available if a later edit fails. That path is covered in detail in [how Construct builds internal tools](/blog/build-internal-tools-with-construct/).
+
+## What to delegate first
+
+Adoption tends to go better when the first jobs are chosen for reviewability rather than ambition.
+
+1. **Start with read-and-summarize work.** Research, inbox digests, and file analysis produce an output you can check at a glance, and a wrong result costs nothing.
+2. **Move to work that writes to systems you control.** Updating your own records or drafting into your own workspace keeps mistakes contained.
+3. **Then add recurring runs.** Once a job has produced good output several times on demand, put it on the Calendar.
+4. **Add outward-facing work last.** Anything that emails customers or posts publicly deserves several supervised runs first.
+
+The reverse order is where people get burned: scheduling an unsupervised, outward-facing job before knowing how it behaves on an unusual week.
+
+## When an AI employee is the wrong fit
+
+Construct is not the shortest path to every outcome.
+
+- **A single question with a single answer** is faster in a chat assistant.
+- **High-volume deterministic mappings** belong on a trigger-action platform; see [Construct vs Zapier](/blog/construct-vs-zapier/).
+- **Work living entirely inside one office suite** may be better served by that suite's own assistant; see [Construct vs Copilot](/blog/construct-vs-copilot/).
+- **Repository-centric software engineering** is the specialty of coding agents; see [Construct vs coding agents](/blog/construct-vs-coding-agents/).
+
+The fit is strongest when a job crosses several tools, recurs, needs context that outlives a conversation, and has to leave evidence of what happened.
 
 ## Related resources
 

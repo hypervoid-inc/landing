@@ -46,7 +46,9 @@ test("shows every resource once in one ordered image grid", async ({
   await expect(cards.first().locator("img")).toBeVisible();
   await expect(cards.first()).toContainText(resourceEntries[0]!.title);
   const firstCard = cards.first();
-  const title = await firstCard.getByRole("heading", { level: 3 }).boundingBox();
+  const title = await firstCard
+    .getByRole("heading", { level: 3 })
+    .boundingBox();
   const metadata = firstCard.locator(".resource-card-meta");
   const metadataBox = await metadata.boundingBox();
   expect(metadataBox?.y).toBeGreaterThan(
@@ -83,9 +85,9 @@ test("shows MDX tags on article cards and article pages", async ({ page }) => {
   );
 
   await page.goto("/blog/ai-agent-vs-zapier/");
-  await expect(
-    page.getByRole("list", { name: "Resource tags" }),
-  ).toContainText("ai-agent");
+  await expect(page.getByRole("list", { name: "Resource tags" })).toContainText(
+    "ai-agent",
+  );
 });
 
 test("shows the complete author profile on editorial resources", async ({
@@ -108,6 +110,17 @@ test("shows the complete author profile on editorial resources", async ({
       twitter: "https://x.com/naik_nischal",
       handle: "@naik_nischal",
       tag: "ai-employee",
+      updated: true,
+    },
+    // Keeps the "never revised" byline branch covered: this post has no
+    // `updated` frontmatter, so it must not render an Updated date.
+    {
+      path: "/blog/build-internal-tools-with-construct/",
+      name: "Ankush",
+      image: "/authors/ankush.webp",
+      twitter: "https://x.com/ankushKun_",
+      handle: "@ankushKun_",
+      tag: "product",
       updated: false,
     },
     {
@@ -249,9 +262,11 @@ test("serves responsive atmosphere images with stable chip dimensions", async ({
     /clouds-768\.webp 768w.+clouds-1280\.webp 1280w.+clouds\.webp 1728w/,
   );
   expect(
-    await page.locator(".landing-clouds").evaluate((image) =>
-      (image as HTMLImageElement).currentSrc.endsWith("clouds-768.webp"),
-    ),
+    await page
+      .locator(".landing-clouds")
+      .evaluate((image) =>
+        (image as HTMLImageElement).currentSrc.endsWith("clouds-768.webp"),
+      ),
   ).toBe(true);
 
   const chips = page.locator(".hero-workflow img");

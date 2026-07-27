@@ -2,12 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://construct.computer/</loc>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/about/</loc>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/careers/</loc>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/editorial-policy/</loc>
@@ -15,6 +18,7 @@
   </url>
   <url>
     <loc>https://construct.computer/support/</loc>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/privacy/</loc>
@@ -26,9 +30,11 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/</loc>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/build-internal-tools-with-construct/</loc>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/ai-agent-vs-zapier/</loc>
@@ -40,9 +46,11 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/ai-agent-memory/</loc>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/ai-employee/</loc>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/ai-workflow-automation/</loc>
@@ -74,6 +82,50 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/chat-assistants-vs-ai-employees/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/authors/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/authors/ankush/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/authors/nischal/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/authors/construct-team/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/tag/ai-agent/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/tag/ai-employee/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/tag/chatgpt/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/tag/comparison/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/tag/product/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/tag/workflow-automation/</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/tag/zapier/</loc>
     <lastmod>2026-07-27</lastmod>
   </url>
 </urlset>

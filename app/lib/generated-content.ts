@@ -1,6 +1,26 @@
+import { readFileSync } from "node:fs";
+
 import { resourceEntries } from "../content/resources";
+import { getResourceFaqs } from "../content/faqs";
+import { landingFaq } from "../content/landing";
 import type { CanonicalRoute } from "./route-manifest";
 import { canonicalRoutes, siteUrl } from "./route-manifest";
+
+/**
+ * Reads raw MDX to inline real article text into `llms-full.txt`. Uses `fs`
+ * rather than a `?raw` glob because the MDX plugin compiles those imports
+ * before the query is honoured. This module is only ever loaded in Node (the
+ * build script and Vitest), so it never reaches a client bundle.
+ */
+function bodyForSlug(slug: string): string {
+  return readFileSync(
+    new URL(`../content/blog/${slug}.mdx`, import.meta.url),
+    "utf8",
+  )
+    .replace(/^---\n[\s\S]*?\n---\n/, "")
+    .replaceAll(/<[^>]+>/g, "")
+    .trim();
+}
 
 function xml(value: string): string {
   return value
@@ -54,22 +74,105 @@ function atomXml(): string {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom">\n  <title>Construct Computer Blog</title>\n  <id>${siteUrl}/blog/</id>\n  <link href="${siteUrl}/atom.xml" rel="self"/>\n  <updated>${updated}T00:00:00Z</updated>\n${entries}\n</feed>\n`;
 }
 
-function llms(full = false): string {
+const summary =
+  "Construct Computer is a supervised workspace for an AI employee that researches, operates tools, creates files, and runs recurring work through supported apps from a live integration catalog.";
+
+const capabilities = [
+  "Persistent files, inspectable memory, native email, schedules, and linear workflows",
+  "Live browser runs and a sandbox terminal with durable workspace files",
+  "Bounded Activity summaries and chat tool records for supervised execution",
+  "Web, Slack, Telegram, and Discord slash-command access",
+  "Custom MCP servers and private agent-authored workspace apps",
+];
+
+function llmsIndex(): string {
   const pages = canonicalRoutes
     .map(
       (route) =>
         `- [${route.displayTitle ?? route.title}](${route.canonical}): ${route.description}`,
     )
     .join("\n");
-  return `# Construct Computer${full ? " — full product context" : ""}\n\n> Construct Computer is a supervised workspace for an AI employee that researches, operates tools, creates files, and runs recurring work through supported apps from a live integration catalog.\n\n## Pages\n${pages}\n${full ? "\n## Capabilities\n\n- Persistent files, inspectable memory, native email, schedules, and linear workflows\n- Live browser runs and a sandbox terminal with durable workspace files\n- Bounded Activity summaries and chat tool records for supervised execution\n- Web, Slack, Telegram, and Discord slash-command access\n- Custom MCP servers and private agent-authored workspace apps\n" : ""}`;
+  return `# Construct Computer\n\n> ${summary}\n\n## Pages\n${pages}\n`;
+}
+
+/**
+ * Unlike `llms.txt`, this inlines the full text of every resource so a model
+ * that fetches one file gets the actual arguments rather than a link list.
+ */
+function llmsFull(): string {
+  const sections = resourceEntries.map((entry) => {
+    const url = `${siteUrl}/blog/${entry.slug}/`;
+    const faqs = getResourceFaqs(entry.slug);
+    const faqBlock = faqs.length
+      ? `\n\n### Frequently asked questions\n\n${faqs
+          .map((faq) => `**${faq.question}**\n\n${faq.answer}`)
+          .join("\n\n")}`
+      : "";
+    return [
+      `## ${entry.title}`,
+      "",
+      `URL: ${url}`,
+      `Type: ${entry.kind}`,
+      `Author: ${entry.author.name}`,
+      `Published: ${entry.published}${entry.updated ? ` (updated ${entry.updated})` : ""}`,
+      `Tags: ${entry.tags.join(", ")}`,
+      "",
+      bodyForSlug(entry.slug) + faqBlock,
+    ].join("\n");
+  });
+
+  return [
+    "# Construct Computer — full product context",
+    "",
+    `> ${summary}`,
+    "",
+    "## Capabilities",
+    "",
+    ...capabilities.map((item) => `- ${item}`),
+    "",
+    "## Product FAQ",
+    "",
+    ...landingFaq.map((item) => `**${item.question}**\n\n${item.answer}\n`),
+    "## Company pages",
+    "",
+    ...canonicalRoutes
+      .filter(({ kind }) => kind === "home" || kind === "page")
+      .map(
+        (route) =>
+          `- [${route.displayTitle ?? route.title}](${route.canonical}): ${route.description}`,
+      ),
+    "",
+    "# Resources",
+    "",
+    ...sections,
+  ].join("\n");
 }
 
 export const crawlerFiles = {
   "sitemap.xml": sitemapXml(canonicalRoutes),
   "rss.xml": rssXml(),
   "atom.xml": atomXml(),
-  "robots.txt": `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`,
-  "llms.txt": llms(),
-  "llms-full.txt": llms(true),
+  "robots.txt": [
+    "User-agent: *",
+    "Allow: /",
+    "",
+    "# Answer engines and AI crawlers are welcome on all public content.",
+    ...[
+      "GPTBot",
+      "OAI-SearchBot",
+      "ChatGPT-User",
+      "ClaudeBot",
+      "Claude-User",
+      "PerplexityBot",
+      "Google-Extended",
+      "Applebot-Extended",
+      "Bingbot",
+      "CCBot",
+    ].flatMap((agent) => [`User-agent: ${agent}`, "Allow: /", ""]),
+    `Sitemap: ${siteUrl}/sitemap.xml`,
+    "",
+  ].join("\n"),
+  "llms.txt": llmsIndex(),
+  "llms-full.txt": llmsFull(),
   ".well-known/security.txt": `Contact: mailto:security@construct.computer\nExpires: 2027-07-26T00:00:00.000Z\nPreferred-Languages: en\nCanonical: ${siteUrl}/.well-known/security.txt\n`,
 } as const;

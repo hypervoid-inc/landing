@@ -8,7 +8,15 @@ import {
   routeMeta,
   softwareApplicationJsonLd,
 } from "../app/lib/seo";
-import { canonicalRoutes } from "../app/lib/route-manifest";
+import {
+  canonicalRoutes,
+  hubTags,
+  resourcesByTag,
+  siteUrl,
+} from "../app/lib/route-manifest";
+import { resourceEntries } from "../app/content/resources";
+import { resourceFaqs } from "../app/content/faqs";
+import { authorSameAs, authors, listedAuthors } from "../app/content/authors";
 
 describe("generated discovery content", () => {
   it("preserves the custom homepage OG image", () => {
@@ -48,12 +56,47 @@ describe("generated discovery content", () => {
     expect(crawlerFiles["rss.xml"]).toContain(
       "<dc:creator>Ankush</dc:creator>",
     );
-    expect(crawlerFiles["rss.xml"]).toContain("<category>comparison</category>");
-    expect(crawlerFiles["atom.xml"]).toContain("<name>Ankush</name>");
-    expect(crawlerFiles["atom.xml"]).toContain("<published>2026-07-26T00:00:00Z</published>");
-    expect(crawlerFiles["atom.xml"]).toContain(
-      '<category term="comparison"/>',
+    expect(crawlerFiles["rss.xml"]).toContain(
+      "<category>comparison</category>",
     );
+    expect(crawlerFiles["atom.xml"]).toContain("<name>Ankush</name>");
+    expect(crawlerFiles["atom.xml"]).toContain(
+      "<published>2026-07-26T00:00:00Z</published>",
+    );
+    expect(crawlerFiles["atom.xml"]).toContain('<category term="comparison"/>');
+  });
+
+  it("inlines full resource text into llms-full.txt", () => {
+    const full = crawlerFiles["llms-full.txt"];
+
+    // A body sentence that exists only in the MDX, never in a description.
+    expect(full).toContain(
+      "Zapier, Make, and n8n excel when you know every trigger and action upfront",
+    );
+    expect(full).toContain("### Frequently asked questions");
+    for (const entry of resourceEntries) {
+      expect(full).toContain(`## ${entry.title}`);
+    }
+    // The index stays a link list; only the full variant carries bodies.
+    expect(crawlerFiles["llms.txt"]).not.toContain(
+      "Zapier, Make, and n8n excel when you know",
+    );
+    expect(full.length).toBeGreaterThan(crawlerFiles["llms.txt"].length * 5);
+  });
+
+  it("explicitly welcomes answer-engine crawlers", () => {
+    const robots = crawlerFiles["robots.txt"];
+
+    for (const agent of ["GPTBot", "ClaudeBot", "PerplexityBot", "Bingbot"]) {
+      expect(robots).toContain(`User-agent: ${agent}`);
+    }
+    expect(robots).not.toContain("Disallow:");
+  });
+
+  it("gives every sitemap URL a lastmod", () => {
+    const sitemap = sitemapXml(canonicalRoutes);
+
+    expect(sitemap.match(/<lastmod>/g)).toHaveLength(canonicalRoutes.length);
   });
 
   it("publishes guides and comparisons in the same blog feeds", () => {
@@ -138,7 +181,7 @@ describe("route metadata", () => {
     const json = JSON.stringify(routeJsonLd(route));
 
     expect(json).toContain(
-      '"author":{"@type":"Person","name":"Ankush","url":"https://x.com/ankushKun_","image":"https://construct.computer/authors/ankush.webp","sameAs":["https://x.com/ankushKun_"]}',
+      '"author":{"@type":"Person","name":"Ankush","url":"https://construct.computer/authors/ankush/","image":"https://construct.computer/authors/ankush.webp","sameAs":["https://x.com/ankushKun_","https://ankush.one","https://linkedin.com/in/ankushKun"]}',
     );
     expect(routeMeta(route)).toContainEqual({
       name: "twitter:creator",
@@ -156,19 +199,152 @@ describe("route metadata", () => {
       ({ path }) => path === "/blog/ai-employee",
     )!;
     expect(JSON.stringify(routeJsonLd(guide))).toContain(
-      '"author":{"@type":"Person","name":"Nischal","url":"https://x.com/naik_nischal","image":"https://construct.computer/authors/nischal.webp","sameAs":["https://x.com/naik_nischal"]}',
+      '"author":{"@type":"Person","name":"Nischal","url":"https://construct.computer/authors/nischal/","image":"https://construct.computer/authors/nischal.webp","sameAs":["https://x.com/naik_nischal","https://linkedin.com/in/nischal-naik-a188b0288"]}',
     );
 
     const comparison = canonicalRoutes.find(
       ({ path }) => path === "/blog/construct-vs-chatgpt",
     )!;
     expect(JSON.stringify(routeJsonLd(comparison))).toContain(
-      '"author":{"@type":"Organization","name":"Construct Team","url":"https://construct.computer/about/","image":"https://construct.computer/icon-192.png","sameAs":["https://x.com/use_construct"]}',
+      '"author":{"@type":"Organization","name":"Construct Team","url":"https://construct.computer/authors/construct-team/","image":"https://construct.computer/icon-192.png","sameAs":["https://x.com/use_construct","https://linkedin.com/company/construct-computer","https://github.com/construct-computer","https://discord.gg/puArEQHYN9"]}',
     );
 
     expect(() => routeJsonLd({ ...route, author: undefined })).toThrow(
       "Missing author for /blog/ai-agent-vs-zapier",
     );
+  });
+
+  it("emits FAQPage markup that matches the rendered answers", () => {
+    const route = canonicalRoutes.find(
+      ({ path }) => path === "/blog/construct-vs-zapier",
+    )!;
+    const faqPage = routeJsonLd(route).find(
+      (node) => node["@type"] === "FAQPage",
+    )!;
+
+    expect(faqPage).toBeDefined();
+    expect(faqPage.mainEntity).toHaveLength(
+      resourceFaqs["construct-vs-zapier"]!.length,
+    );
+    expect(JSON.stringify(faqPage)).toContain(
+      "Is Construct a replacement for Zapier?",
+    );
+
+    // Posts without curated FAQs must not emit an empty FAQPage.
+    const noFaq = canonicalRoutes.find(({ kind }) => kind === "page")!;
+    expect(routeJsonLd(noFaq).some((node) => node["@type"] === "FAQPage")).toBe(
+      false,
+    );
+  });
+
+  it("every FAQ key maps to a real resource", () => {
+    const slugs = new Set(resourceEntries.map((entry) => entry.slug));
+
+    for (const slug of Object.keys(resourceFaqs)) {
+      expect(slugs).toContain(slug);
+    }
+  });
+
+  it("gives editorial pages a dateModified and article section", () => {
+    const posting = (path: string) => {
+      const route = canonicalRoutes.find((entry) => entry.path === path)!;
+      return {
+        route,
+        node: routeJsonLd(route).find(
+          (entry) => entry["@type"] === "BlogPosting",
+        )!,
+      };
+    };
+
+    // No `updated` frontmatter, so dateModified must fall back to published.
+    const unrevised = posting("/blog/build-internal-tools-with-construct");
+    expect(unrevised.route.published).toBe("2026-07-27");
+    expect(unrevised.node.dateModified).toBe(unrevised.route.published);
+
+    // Revised post: dateModified tracks the update, not the publish date.
+    const revised = posting("/blog/ai-agent-memory");
+    expect(revised.route.published).toBe("2026-07-20");
+    expect(revised.node.dateModified).toBe("2026-07-27");
+
+    expect(revised.node.inLanguage).toBe("en-US");
+    expect(revised.node.articleSection).toBe("Guide");
+    expect(posting("/blog/construct-vs-zapier").node.articleSection).toBe(
+      "Comparison",
+    );
+  });
+
+  it("publishes every author profile link as sameAs", () => {
+    for (const author of listedAuthors) {
+      const sameAs = authorSameAs(author);
+
+      // The X handle must lead, and must not be duplicated by a links entry.
+      expect(sameAs[0]).toBe(author.twitter);
+      expect(new Set(sameAs).size).toBe(sameAs.length);
+      for (const link of author.links) {
+        expect(sameAs).toContain(link.href);
+        expect(link.href).toMatch(/^https:\/\//);
+      }
+    }
+
+    expect(authorSameAs(authors.ankush)).toContain("https://ankush.one");
+    expect(authorSameAs(authors.nischal)).toContain(
+      "https://linkedin.com/in/nischal-naik-a188b0288",
+    );
+    // Nischal has no personal site, so nothing should be invented for one.
+    expect(authors.nischal.links.some(({ label }) => label === "Website")).toBe(
+      false,
+    );
+  });
+
+  it("lists every author on the authors index", () => {
+    const route = canonicalRoutes.find(({ path }) => path === "/authors")!;
+    const json = JSON.stringify(routeJsonLd(route));
+
+    expect(listedAuthors).toHaveLength(3);
+    for (const author of listedAuthors) {
+      expect(json).toContain(author.name);
+      expect(json).toContain(
+        new URL(author.profileUrl, "https://construct.computer").toString(),
+      );
+      // Every listed author owns a profile page, including the org byline.
+      expect(author.profileUrl).toBe(`/authors/${author.id}/`);
+      expect(
+        canonicalRoutes.some(({ path }) => path === `/authors/${author.id}`),
+      ).toBe(true);
+    }
+  });
+
+  it("builds author and tag hubs with list markup", () => {
+    const author = canonicalRoutes.find(
+      ({ path }) => path === "/authors/ankush",
+    )!;
+    const authorJson = routeJsonLd(author);
+
+    expect(authorJson.some((node) => node["@type"] === "ProfilePage")).toBe(
+      true,
+    );
+    expect(authorJson.some((node) => node["@type"] === "Person")).toBe(true);
+
+    // The organizational byline must not masquerade as a Person.
+    const team = routeJsonLd(
+      canonicalRoutes.find(({ path }) => path === "/authors/construct-team")!,
+    );
+    const entity = team.find(
+      (node) => node["@id"] === `${siteUrl}/authors/construct-team/#team`,
+    )!;
+    expect(entity["@type"]).toBe("Organization");
+    expect(entity).not.toHaveProperty("jobTitle");
+    expect(entity).not.toHaveProperty("worksFor");
+    expect(team.some((node) => node["@type"] === "Person")).toBe(false);
+
+    // Tag hubs only exist where they are not thin.
+    for (const tag of hubTags) {
+      expect(resourcesByTag(tag).length).toBeGreaterThanOrEqual(2);
+    }
+    const tagRoute = canonicalRoutes.find(({ kind }) => kind === "tag")!;
+    expect(
+      routeJsonLd(tagRoute).some((node) => node["@type"] === "CollectionPage"),
+    ).toBe(true);
   });
 
   it("keeps display titles separate from SEO titles and honest update dates", () => {
@@ -177,9 +353,7 @@ describe("route metadata", () => {
     )!;
     const meta = routeMeta(route);
 
-    expect(route.title).toBe(
-      "AI Agent vs Virtual Assistant: Cost Comparison",
-    );
+    expect(route.title).toBe("AI Agent vs Virtual Assistant: Cost Comparison");
     expect(JSON.stringify(routeJsonLd(route))).toContain(
       '"headline":"AI Agent vs Virtual Assistant: Cost and Capabilities"',
     );

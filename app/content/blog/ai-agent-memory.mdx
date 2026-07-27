@@ -2,6 +2,7 @@
 title: "AI Agent Memory You Can Control"
 description: "Give an AI agent persistent memory with provenance, corrections, temporal context, and controls to inspect, update, forget, or restore what it knows."
 published: "2026-07-20"
+updated: "2026-07-27"
 author: "nischal"
 tags: ["ai-agent-memory", "persistent-memory", "ai-agent"]
 kind: "guide"
@@ -14,13 +15,60 @@ Construct remembers useful context across tasks without turning memory into an o
 
 A useful work agent needs more than the messages currently visible in chat. It should remember stable preferences, ongoing projects, important people, and prior decisions when they are relevant to a new task. Without that continuity, every recurring workflow begins with the same explanation and the same avoidable mistakes.
 
-Construct recalls relevant context before a turn and ingests useful information after successful work. Source episodes remain separate from the assertions the memory system derives from them, so remembered information can retain its origin rather than becoming an unexplained fact. Automatic learning currently uses conversation episodes and successful public web search or fetch evidence; it does not automatically index uploaded files, private app results, terminal output, or live browser runs.
+Construct recalls relevant context before a turn and ingests useful information after successful work. Source episodes remain separate from the assertions the memory system derives from them, so remembered information can retain its origin rather than becoming an unexplained fact.
+
+That separation is the part most worth understanding. An **episode** is the raw thing that happened: a conversation turn, a web search, a fetched page. An **assertion** is the durable claim derived from it, such as a preferred report format or a customer's current role. Keeping the two apart means a remembered fact can be traced back to the moment it was learned, which is what makes a correction meaningful rather than cosmetic.
+
+## Three kinds of memory, often confused
+
+"Memory" gets used for three different mechanisms, and the distinction decides what you can actually rely on.
+
+| Mechanism            | What it holds                                   | How long it lasts                         |
+| -------------------- | ----------------------------------------------- | ----------------------------------------- |
+| **Context window**   | The current turn and recent messages            | One conversation, then gone               |
+| **Retrieval**        | Documents fetched to answer a specific question | Only for that lookup                      |
+| **Long-term memory** | Durable assertions with provenance and validity | Across tasks until corrected or forgotten |
+
+A chat product with a long history is not the same as an agent with long-term memory. History preserves what was said; memory preserves what is currently true, and can be changed when it stops being true. Construct's Memories app manages the third row.
+
+## What Construct learns automatically, and what it does not
+
+Automatic learning currently uses conversation episodes and successful public web search or fetch evidence. It does not automatically index uploaded files, private app results, terminal output, or live browser runs.
+
+This boundary is deliberate, and it is worth planning around rather than working against. Private surfaces frequently contain credentials, customer data, and half-finished work that nobody intended to promote into durable memory. Excluding them by default keeps memory smaller and more trustworthy, at the cost of one explicit step when something genuinely should carry forward.
+
+| Source                             | Automatically remembered |
+| ---------------------------------- | ------------------------ |
+| Conversation episodes              | Yes                      |
+| Successful public web search/fetch | Yes                      |
+| Uploaded files                     | No — add explicitly      |
+| Private connected-app results      | No — add explicitly      |
+| Terminal output                    | No — add explicitly      |
+| Live browser runs                  | No — add explicitly      |
+
+The practical rule: if a fact arrived through a private surface and a future task depends on it, add it as an explicit memory rather than assuming it was captured.
+
+## A worked example: the recurring client report
+
+A concrete case shows how the pieces fit. Suppose a monthly performance report goes to a client's operations lead.
+
+**First run.** You explain the audience, the sections they care about, and that figures should be quoted to two decimal places. Construct produces the report, and the useful parts of that exchange become assertions with their originating episode attached.
+
+**Second run.** You assign the same job without repeating the setup. Construct recalls the format and audience before starting, so the run begins from context rather than from explanation.
+
+**Something changes.** The client's operations lead moves on and a new contact takes over. You correct the assertion about who receives the report. The old assertion is superseded and its history remains visible, so a later question about why earlier reports were addressed differently still has an answer.
+
+**Something needs to go.** A pricing detail shared in confidence should not persist. You forget that assertion. If it turns out to have been removed in error, it can be restored.
+
+The durable output here is not just the reports. It is a small set of inspectable assertions that make each subsequent run cheaper to start, plus a record of how those assertions changed.
 
 ## Corrections instead of silent overwrites
 
 Facts change. A customer changes roles, a project gets renamed, or a preference that was once correct stops applying. Construct versions memory assertions and tracks when information is valid. A correction can supersede an older assertion without erasing the history that explains how the system learned it.
 
 This temporal model helps the agent distinguish current context from old context. It also makes a correction auditable: you can see the updated assertion instead of hoping a new embedding happens to outrank the old one.
+
+The failure mode this avoids is worth naming. In a system that stores memories as undifferentiated text and retrieves by similarity, a corrected fact and its outdated predecessor both remain in the store, competing for retrieval. The agent may surface either one depending on how a question is phrased, and there is no reliable way to tell which it used. Versioned assertions with validity windows make the current value explicit rather than probabilistic.
 
 ## Memory controls for people
 
@@ -31,11 +79,26 @@ The Memories app lets you search and inspect what Construct remembers. You can a
 - Forget information that should no longer be recalled
 - Restore previously forgotten information
 
+Reviewing memory occasionally is worth the few minutes it takes, particularly after a project changes shape. Assertions learned during a since-abandoned approach are the most common source of confidently wrong recall.
+
 ## Memory connects work across time
 
 Memory becomes more valuable when it works with the rest of the workspace. During a task, Construct can combine recalled context with files, scheduled jobs, workflows, inbox threads, and connected applications. A weekly report can remember the audience and preferred format; an inbox task can use an explicitly remembered customer preference; a research job can build on earlier remembered findings without starting over.
 
+This is also why memory and [reusable workflows](/blog/ai-workflow-automation/) complement each other. A workflow encodes the steps of a procedure; memory carries the context those steps assume. A workflow without memory needs its assumptions restated every run, and remembered context without a workflow leaves the sequence to be reconstructed each time.
+
 The result is continuity with a control surface. Construct can become more useful over time while the user retains the ability to inspect and change what carries forward.
+
+## When memory is the wrong tool
+
+Memory is not the right home for everything that needs to persist.
+
+- **Large documents** belong in workspace files, which persist and can be reopened directly. Memory holds the fact that a document matters, not its contents.
+- **Secrets and credentials** should go through connected-app authentication rather than being stated in a conversation that may become an episode.
+- **Fast-changing values** such as live metrics are better fetched at run time, since a remembered figure is correct only until the next change.
+- **One-off context** that will not recur does not need to be durable, and an uncluttered memory recalls better than a crowded one.
+
+Memory earns its cost when a fact is stable, reused, and expensive to restate. For anything else, the workspace already has a better place to put it.
 
 ## Related resources
 
