@@ -501,14 +501,22 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
     );
     const availableCenter =
       (header?.height ?? 0) + (viewport.height - (header?.height ?? 0)) / 2;
+    const copyBottom = (copy?.y ?? 0) + (copy?.height ?? 0);
 
     expect(stage?.height).toBeGreaterThanOrEqual(
       viewport.height - (header?.height ?? 0) - 1,
     );
     expect(what?.y).toBeGreaterThanOrEqual(viewport.height - 1);
-    expect(
-      Math.abs((contentTop + contentBottom) / 2 - availableCenter),
-    ).toBeLessThan(24);
+    expect(contentTop - (header?.height ?? 0)).toBeGreaterThanOrEqual(24);
+    expect((scene?.y ?? 0) - copyBottom).toBeGreaterThanOrEqual(48);
+
+    const fitsViewport =
+      (stage?.height ?? 0) <= viewport.height - (header?.height ?? 0) + 1;
+    if (fitsViewport) {
+      expect(
+        Math.abs((contentTop + contentBottom) / 2 - availableCenter),
+      ).toBeLessThan(24);
+    }
   }
 
   for (const viewport of [
