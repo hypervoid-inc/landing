@@ -3,13 +3,27 @@ import type { BlogFrontmatter } from "../schema";
 
 export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
   {
+    slug: "ai-agent-memory",
+    title: "AI Agent Memory You Can Control",
+    description:
+      "Give an AI agent persistent memory with provenance, corrections, temporal context, and controls to inspect, update, forget, or restore what it knows.",
+    published: "2026-07-20",
+    author: "nischal",
+    tags: ["ai-agent-memory", "persistent-memory", "ai-agent"],
+    kind: "guide",
+    draft: false,
+  },
+  {
     slug: "ai-agent-vs-virtual-assistant",
     title: "AI Agent vs Virtual Assistant: Cost and Capabilities",
     description:
-      "AI agent vs virtual assistant: compare monthly cost, response speed, and inspectable work records before you replace a human VA with a supervised AI employee.",
-    date: "2026-07-25",
-    author: "Construct Team",
+      "AI agent vs virtual assistant: compare monthly cost, availability, and inspectable work records before you replace suitable VA tasks with a supervised AI employee.",
+    published: "2026-07-25",
+    updated: "2026-07-27",
+    seoTitle: "AI Agent vs Virtual Assistant: Cost Comparison",
+    author: "ankush",
     tags: ["ai-agent", "virtual-assistant", "pricing", "comparison"],
+    kind: "article",
     draft: false,
   },
   {
@@ -17,9 +31,45 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "AI Agent vs Zapier Automation",
     description:
       "Zapier runs a fixed trigger-action recipe. See how an AI agent plans its own steps instead, with a side-by-side of the same recurring workflow built both ways.",
-    date: "2026-07-26",
-    author: "Construct Team",
+    published: "2026-07-26",
+    updated: "2026-07-27",
+    author: "ankush",
     tags: ["comparison", "zapier", "ai-agent", "automation"],
+    kind: "article",
+    draft: false,
+  },
+  {
+    slug: "ai-employee",
+    title: "AI Employee for Real Business Work",
+    description:
+      "Meet the AI employee that researches, operates tools, creates files, and runs recurring work from a persistent, supervised workspace.",
+    published: "2026-07-20",
+    author: "nischal",
+    tags: ["ai-employee", "ai-agent", "business-automation"],
+    kind: "guide",
+    draft: false,
+  },
+  {
+    slug: "ai-workflow-automation",
+    title: "AI Workflow Automation",
+    description:
+      "Create reusable linear AI workflows, run them on demand, or schedule recurring work across files, live browser runs, native email, and connected business apps.",
+    published: "2026-07-20",
+    updated: "2026-07-27",
+    author: "nischal",
+    tags: ["workflow-automation", "ai-agent", "scheduling"],
+    kind: "guide",
+    draft: false,
+  },
+  {
+    slug: "build-internal-tools-with-construct",
+    title: "How Construct Builds Internal Tools in Your Workspace",
+    description:
+      "Turn a repeated process into a private workspace app that Construct can build, validate, debug, and update while preserving the last successful build.",
+    published: "2026-07-27",
+    author: "ankush",
+    tags: ["internal-tools", "workspace-apps", "ai-agent", "product"],
+    kind: "article",
     draft: false,
   },
   {
@@ -27,9 +77,71 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Chat Assistants vs AI Employees",
     description:
       "ChatGPT and Claude are great at drafting — but autonomous ops need execution, persistence, and inspectable work. See how Construct compares to chat assistants.",
-    date: "2026-06-15",
-    author: "Construct Team",
-    tags: ["comparison", "chatgpt", "seo"],
+    published: "2026-06-15",
+    updated: "2026-07-27",
+    author: "ankush",
+    tags: ["comparison", "chatgpt", "ai-employee"],
+    kind: "article",
+    draft: false,
+  },
+  {
+    slug: "construct-vs-chatgpt",
+    title: "Construct vs ChatGPT, Claude, and Gemini",
+    description:
+      "Compare Construct with chat assistants such as ChatGPT, Claude, and Gemini across workspace, tools, memory, schedules, and workflows.",
+    published: "2026-07-20",
+    updated: "2026-07-27",
+    author: "construct-team",
+    tags: ["comparison", "chat-assistants", "chatgpt", "ai-employee"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
+    slug: "construct-vs-coding-agents",
+    title: "Construct vs coding-focused agents",
+    description:
+      "Compare Construct with coding agents. See when a generalist AI employee for email, research, calendar, CRM, and code is the better fit.",
+    published: "2026-07-20",
+    updated: "2026-07-27",
+    author: "construct-team",
+    tags: ["comparison", "coding-agents", "ai-employee"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
+    slug: "construct-vs-copilot",
+    title: "Construct vs Microsoft Copilot and Google Workspace AI",
+    description:
+      "Compare Construct with Microsoft Copilot and Google Workspace AI. See how one vendor-neutral AI employee works across apps from a persistent workspace.",
+    published: "2026-07-20",
+    updated: "2026-07-27",
+    author: "construct-team",
+    tags: ["comparison", "copilot", "google-workspace", "ai-employee"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
+    slug: "construct-vs-diy",
+    title: "Construct vs building your own AI agent",
+    description:
+      "Building your own agent means wiring sandbox, apps, channels, memory, schedules, and user-facing activity summaries yourself. Construct provides those pieces as a hosted product.",
+    published: "2026-07-20",
+    updated: "2026-07-27",
+    author: "construct-team",
+    tags: ["comparison", "agent-frameworks", "diy", "ai-employee"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
+    slug: "construct-vs-zapier",
+    title: "Construct vs Zapier, Make, and n8n",
+    description:
+      "Compare Construct with Zapier, Make, and n8n for deterministic workflows, agentic steps, scheduling, and ambiguous multi-step work.",
+    published: "2026-07-20",
+    updated: "2026-07-27",
+    author: "construct-team",
+    tags: ["comparison", "zapier", "make", "n8n", "workflow-automation"],
+    kind: "comparison",
     draft: false,
   },
   {
@@ -37,9 +149,11 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "What is an AI employee?",
     description:
       "Learn what an AI employee is, how it differs from a chatbot, and how Construct completes work across email, Slack, browser, and connected apps.",
-    date: "2026-07-02",
-    author: "Construct Team",
+    published: "2026-07-02",
+    updated: "2026-07-27",
+    author: "ankush",
     tags: ["ai-agent", "product", "ai-employee"],
+    kind: "article",
     draft: false,
   },
 ];

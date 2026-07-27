@@ -85,6 +85,8 @@ function WorkflowChip({
       <img
         src={image}
         alt=""
+        width="256"
+        height="256"
         className="h-7 w-7 rounded-[20px] object-contain"
       />
       <span>{label}</span>
@@ -127,7 +129,7 @@ function Hero() {
             className="hero-link hero-report absolute z-20"
           >
             <img
-              src="/assets/landing/hero/research-report.png"
+              src="/assets/landing/hero/research-report.webp"
               alt="Generated PDF research report produced by the Construct AI agent"
               width="1272"
               height="705"
@@ -140,7 +142,7 @@ function Hero() {
             className="hero-link hero-chat absolute z-20"
           >
             <img
-              src="/assets/landing/hero/agent-chat.png"
+              src="/assets/landing/hero/agent-chat.webp"
               alt="Construct agent chat window handling an inbound email autonomously"
               width="825"
               height="459"
@@ -295,7 +297,7 @@ function WorkSection() {
         className="work-grass-wrap pointer-events-none absolute inset-x-0 top-[-92px] z-0 h-[390px]"
       >
         <img
-          src="/assets/landing/atmosphere/grass.png"
+          src="/assets/landing/atmosphere/grass.webp"
           alt=""
           width="1728"
           height="1062"
@@ -422,7 +424,7 @@ function EnterprisePanel() {
       className="enterprise-panel relative isolate mx-auto mt-5 w-full max-w-[430px] overflow-hidden rounded-[26px] border border-[#b3d6f6] bg-white px-6 pb-7 pt-8 xl:mt-7 xl:max-w-none xl:px-[clamp(32px,3.4vw,54px)] xl:pt-[clamp(32px,2.8vw,45px)]"
     >
       <img
-        src="/assets/landing/pricing/enterprise-rings.png"
+        src="/assets/landing/pricing/enterprise-rings.webp"
         alt=""
         aria-hidden
         width="819"
@@ -446,23 +448,22 @@ function EnterprisePanel() {
           </p>
         </div>
         <p className="mt-8 text-base leading-6 text-[#787878] xl:mt-[clamp(36px,3.6vw,57px)] xl:max-w-[min(58vw,825px)] xl:text-[clamp(17px,1.5vw,24px)] xl:leading-[1.5]">
-          For Business with{" "}
+          For businesses with{" "}
           <span className="font-display italic text-[#2978b9]">
-            Specific MCP
+            specific MCP
           </span>{" "}
-          requirement we offer the{" "}
+           requirements, we offer the{" "}
           <span className="font-display italic text-[#2978b9]">
-            Enterprise Plan
+            Enterprise plan
           </span>
-          . We discuss the custom mcp with your organization and deliver
-          construct built to meet your{" "}
+           . We discuss your custom MCP needs and tailor Construct to your{" "}
           <span className="font-display italic text-[#2978b9]">
-            Business Needs.
+            business needs.
           </span>
         </p>
         <div className="enterprise-art mt-7 flex justify-center xl:mt-0">
           <img
-            src="/assets/landing/pricing/enterprise-agent.png"
+            src="/assets/landing/pricing/enterprise-agent.webp"
             alt="Construct enterprise agent with beams of light"
             width="854"
             height="810"
@@ -604,18 +605,22 @@ export function LandingPage() {
         <WhatConstructIs />
         <div className="landing-atmosphere relative w-full bg-[linear-gradient(to_bottom,#fff_0%,#fff_4%,#ddfaff_15%,#ddfaff_45%,#fefefe_75%,#fff_100%)]">
           <img
-            src="/assets/landing/atmosphere/light-beams.png"
+            src="/assets/landing/atmosphere/light-beams.webp"
+            srcSet="/assets/landing/atmosphere/light-beams-768.webp 768w, /assets/landing/atmosphere/light-beams-1280.webp 1280w, /assets/landing/atmosphere/light-beams.webp 1728w"
+            sizes="100vw"
             alt=""
             aria-hidden
             width="1728"
             height="2437"
             loading="lazy"
             decoding="async"
-            className="pointer-events-none absolute left-0 top-[5%] z-0 w-full"
+            className="landing-light-beams pointer-events-none absolute left-0 top-[5%] z-0 w-full"
           />
           <div className="relative z-10">
             <img
-              src="/assets/landing/atmosphere/clouds.png"
+              src="/assets/landing/atmosphere/clouds.webp"
+              srcSet="/assets/landing/atmosphere/clouds-768.webp 768w, /assets/landing/atmosphere/clouds-1280.webp 1280w, /assets/landing/atmosphere/clouds.webp 1728w"
+              sizes="100vw"
               alt=""
               aria-hidden
               width="1728"

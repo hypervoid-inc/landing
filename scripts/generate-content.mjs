@@ -10,6 +10,7 @@ import { z } from "zod";
 
 const root = process.cwd();
 const blogDirectory = path.join(root, "app/content/blog");
+const authorIds = ["construct-team", "ankush", "nischal"];
 
 const date = z.string().refine((value) => {
   const parsed = new Date(`${value}T00:00:00Z`);
@@ -24,17 +25,18 @@ const frontmatterSchema = z
   .object({
     title: z.string().min(1),
     description: z.string().min(1),
-    date,
+    published: date,
     updated: date.optional(),
     seoTitle: z.string().min(1).optional(),
-    author: z.string().min(1),
+    author: z.enum(authorIds),
     tags: z.array(z.string().min(1)).min(1),
+    kind: z.enum(["article", "guide", "comparison"]),
     draft: z.boolean(),
   })
   .strict()
   .refine(
-    ({ date, updated }) => !updated || updated >= date,
-    "Updated date cannot precede publication date",
+    ({ published, updated }) => !updated || updated > published,
+    "Updated date must be later than publication date",
   );
 
 function parseFrontmatter(source, filename) {
@@ -99,7 +101,9 @@ try {
   await mkdir(ogDirectory, { recursive: true });
   for (const route of canonicalRoutes) {
     const filename = new URL(route.image).pathname.split("/").at(-1);
-    const title = wrapTitle(route.title.replace(" - Construct Computer", ""));
+    const title = wrapTitle(
+      route.displayTitle ?? route.title.replace(" - Construct Computer", ""),
+    );
     const lines = title
       .map(
         (line, index) =>

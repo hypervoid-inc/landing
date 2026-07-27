@@ -1,0 +1,45 @@
+---
+title: "AI Workflow Automation"
+description: "Create reusable linear AI workflows, run them on demand, or schedule recurring work across files, live browser runs, native email, and connected business apps."
+published: "2026-07-20"
+updated: "2026-07-27"
+author: "nischal"
+tags: ["workflow-automation", "ai-agent", "scheduling"]
+kind: "guide"
+draft: false
+---
+
+Turn a successful AI task into a durable procedure that can run again without rebuilding the process from scratch.
+
+## From one good run to a reusable procedure
+
+Traditional automation works best when every trigger and action is known before the flow is built. AI workflow automation is useful when a procedure contains research, judgment, writing, or tool use that cannot be reduced to a fixed data mapping. Construct combines durable workflow steps with an agent that can handle those less predictable parts.
+
+A workflow can include agent work, connected-app actions, and in-app notifications. Published versions are preserved so a future edit does not silently change a run that already started. Run history makes the procedure easier to inspect and improve over time. Current workflows are linear: branching, delays, approval steps, fan-out, and subworkflows are not yet supported.
+
+## Run now or put it on the Calendar
+
+Construct's Calendar is a scheduler for agent work and workflows. Create a one-time job, define a recurring schedule, run it immediately, or cancel it from the same workspace. The scheduler reconciles missed or delayed work instead of depending on an open browser tab.
+
+This makes recurring operating work practical: weekly market research, an inbox summary, a customer follow-up list, or a report assembled from several connected systems. Google Calendar can be connected as an external app, but Construct's native Calendar controls when agent jobs run.
+
+Current workflow runs start on demand or from Construct's Calendar. Event-triggered email workflow plugins are not currently part of the workflow runner.
+
+## Use the right execution surface
+
+Each step can use the surface that fits the job. Structured app actions are best for reliable updates. Web search and fetch handle public research. A live browser covers interactive sites, including logins completed during that run. The sandbox terminal can process files, run scripts, and generate artifacts; files saved under the workspace persist after shell state is gone.
+
+- Collect sources and create a cited brief
+- Read messages and update a connected system
+- Process a file and save the transformed output
+- Create an in-app notification, or post through a connected app
+
+## Inspect every run
+
+Workflow automation should be debuggable. Construct keeps run state, step results, retry information, and Activity summaries. You can open resulting files and review connected-app actions; agent steps also link to their chat sessions. During interactive work the agent can ask for missing information, but workflows do not add a mandatory approval before every external action.
+
+## Related resources
+
+- [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/)
+- [Construct vs Zapier](/blog/construct-vs-zapier/)
+- [AI agent memory](/blog/ai-agent-memory/)

@@ -27,13 +27,129 @@ test("shows every resource once in one ordered image grid", async ({
 }) => {
   await page.goto("/blog/");
 
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Construct insights and guides",
+  );
+  await expect(page.locator("main")).toContainText(
+    "Practical writing from Construct on AI agents, workflows, memory, and tools that get work done.",
+  );
+  await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toHaveText(
+    "Home/Blog",
+  );
+  expect(
+    (await page.getByRole("heading", { level: 1 }).boundingBox())?.height,
+  ).toBeLessThan(116);
+  await expect(page.locator("main")).not.toContainText("AI Employee Resources");
+
   const cards = page.locator("#all-resources-heading + ol > li");
   await expect(cards).toHaveCount(resourceEntries.length);
   await expect(cards.first().locator("img")).toBeVisible();
   await expect(cards.first()).toContainText(resourceEntries[0]!.title);
+  const firstCard = cards.first();
+  const title = await firstCard.getByRole("heading", { level: 3 }).boundingBox();
+  const metadata = firstCard.locator(".resource-card-meta");
+  const metadataBox = await metadata.boundingBox();
+  expect(metadataBox?.y).toBeGreaterThan(
+    (title?.y ?? 0) + (title?.height ?? 0),
+  );
+  await expect(metadata).toHaveText("article · Jul 27, 2026 · Ankush");
+  await expect(metadata).toHaveCSS("white-space", "nowrap");
+  await expect(metadata).toHaveCSS("overflow", "hidden");
+
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto("/blog/");
+  const longestMetadata = page
+    .getByRole("heading", { name: "Construct vs building your own AI agent" })
+    .locator("..")
+    .locator(".resource-card-meta");
+  expect(
+    await longestMetadata.evaluate(
+      (element) => element.scrollWidth <= element.clientWidth,
+    ),
+  ).toBe(true);
   await expect(page.getByRole("navigation", { name: "Primary" })).toHaveText(
     "Blog",
   );
+});
+
+test("shows MDX tags on article cards and article pages", async ({ page }) => {
+  await page.goto("/blog/");
+  const card = page
+    .getByRole("heading", { name: "AI Agent vs Zapier Automation" })
+    .locator("..")
+    .locator("..");
+  await expect(card.getByRole("list", { name: "Resource tags" })).toContainText(
+    "zapier",
+  );
+
+  await page.goto("/blog/ai-agent-vs-zapier/");
+  await expect(
+    page.getByRole("list", { name: "Resource tags" }),
+  ).toContainText("ai-agent");
+});
+
+test("shows the complete author profile on editorial resources", async ({
+  page,
+}) => {
+  for (const profile of [
+    {
+      path: "/blog/ai-agent-vs-zapier/",
+      name: "Ankush",
+      image: "/authors/ankush.webp",
+      twitter: "https://x.com/ankushKun_",
+      handle: "@ankushKun_",
+      tag: "ai-agent",
+      updated: true,
+    },
+    {
+      path: "/blog/ai-employee/",
+      name: "Nischal",
+      image: "/authors/nischal.webp",
+      twitter: "https://x.com/naik_nischal",
+      handle: "@naik_nischal",
+      tag: "ai-employee",
+      updated: false,
+    },
+    {
+      path: "/blog/construct-vs-chatgpt/",
+      name: "Construct Team",
+      image: "/icon-192.png",
+      twitter: "https://x.com/use_construct",
+      handle: "@use_construct",
+      tag: "comparison",
+      updated: true,
+    },
+  ]) {
+    await page.goto(profile.path);
+    const author = page.getByRole("group", { name: "About the author" });
+    await expect(
+      author.getByRole("img", { name: profile.name }),
+    ).toHaveAttribute("src", profile.image);
+    await expect(
+      author.getByRole("link", { name: profile.handle }),
+    ).toHaveAttribute("href", profile.twitter);
+    await expect(author).toContainText("Published");
+    if (profile.updated) {
+      await expect(author).toContainText("Updated July 27, 2026");
+    } else {
+      await expect(author).not.toContainText("Updated");
+    }
+    await expect(
+      page.getByRole("list", { name: "Resource tags" }),
+    ).toContainText(profile.tag);
+  }
+});
+
+test("renders resource summaries as readable intro copy", async ({ page }) => {
+  for (const path of [
+    "/blog/ai-workflow-automation/",
+    "/blog/construct-vs-chatgpt/",
+  ]) {
+    await page.goto(path);
+    const summary = page.locator(".resource-content > p").first();
+    await expect(summary).toHaveCSS("font-size", "16px");
+    await expect(summary).toHaveCSS("line-height", "27.2px");
+  }
 });
 
 test("uses one shared header, footer, and favicon across page types", async ({
@@ -116,6 +232,34 @@ test("keeps the mobile footer compact and aligned", async ({ page }) => {
   await expect(
     page.getByRole("link", { name: "Request beta access" }),
   ).toHaveCSS("width", "350px");
+});
+
+test("serves responsive atmosphere images with stable chip dimensions", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  await expect(page.locator(".landing-light-beams")).toHaveAttribute(
+    "srcset",
+    /light-beams-768\.webp 768w.+light-beams-1280\.webp 1280w.+light-beams\.webp 1728w/,
+  );
+  await expect(page.locator(".landing-clouds")).toHaveAttribute(
+    "srcset",
+    /clouds-768\.webp 768w.+clouds-1280\.webp 1280w.+clouds\.webp 1728w/,
+  );
+  expect(
+    await page.locator(".landing-clouds").evaluate((image) =>
+      (image as HTMLImageElement).currentSrc.endsWith("clouds-768.webp"),
+    ),
+  ).toBe(true);
+
+  const chips = page.locator(".hero-workflow img");
+  await expect(chips).toHaveCount(3);
+  for (let index = 0; index < 3; index += 1) {
+    await expect(chips.nth(index)).toHaveAttribute("width", "256");
+    await expect(chips.nth(index)).toHaveAttribute("height", "256");
+  }
 });
 
 test("keeps lower landing sections proportional across desktop widths", async ({
@@ -485,14 +629,14 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
     await expect(page.locator(layer)).toBeVisible();
   }
   await expect(
-    page.locator('.feature-grid img[src$="schedules.png"]'),
+    page.locator('.feature-grid img[src$="schedules.webp"]'),
   ).toHaveAttribute("width", "346");
   await expect(
-    page.locator('.feature-grid img[src$="integrations.png"]'),
+    page.locator('.feature-grid img[src$="integrations.webp"]'),
   ).toHaveAttribute("width", "712");
   const grid = await page.locator(".feature-grid").boundingBox();
   const wideCard = await page
-    .locator('.feature-grid img[src$="integrations.png"]')
+    .locator('.feature-grid img[src$="integrations.webp"]')
     .boundingBox();
   expect(grid?.height).toBeLessThan(600);
   expect(wideCard?.height).toBeLessThan(200);

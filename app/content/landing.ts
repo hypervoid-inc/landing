@@ -72,7 +72,7 @@ export const landingFaq = [
   {
     question: "What is an AI employee?",
     answer:
-      "An AI employee is an agent that can accept an outcome, choose tools, and complete multi-step work. Construct gives that agent persistent files, memory, schedules, linear workflows, a native inbox, connected apps, live browser runs, and a sandbox terminal.",
+      "An AI employee is an agent that can accept an outcome, choose tools, and complete multi-step work. Construct gives that agent a persistent workspace for files, memory, and schedules. It also provides reusable workflows, a native inbox, connected apps, live browser runs, and a sandbox terminal.",
   },
   {
     question: "How is Construct different from ChatGPT or Claude?",
@@ -87,7 +87,7 @@ export const landingFaq = [
   {
     question: "Can Construct run recurring work?",
     answer:
-      "Yes. Construct's native Calendar schedules one-time or recurring agent jobs and workflow runs. You or the agent can encode a repeatable process as a reusable, versioned linear workflow containing agent steps, connected-app actions, and in-app notifications.",
+      "Yes. Construct's native Calendar schedules one-time or recurring agent jobs and workflow runs. You or the agent can encode a repeatable process as a reusable, versioned workflow. Each workflow can contain agent steps, connected-app actions, and in-app notifications.",
   },
   {
     question: "Which apps can Construct connect to?",
@@ -97,12 +97,12 @@ export const landingFaq = [
   {
     question: "Can I see and control what the agent does?",
     answer:
-      "Yes. The web desktop exposes files, live browser activity, a terminal transcript, workflows, memories, notifications, chat tool records, and bounded Activity summaries. You can inspect results, interrupt a running turn, answer questions, and correct or forget long-term memory.",
+      "Yes. The web desktop exposes files, live browser activity, terminal transcripts, workflows, memories, notifications, and chat tool records. It also provides bounded Activity summaries. You can inspect results, interrupt a running turn, answer questions, and correct or forget long-term memory.",
   },
   {
     question: "Is my data private and secure?",
     answer:
-      "Personal and team workspaces use scoped file, memory, and sandbox resources; team members intentionally share team resources. Construct-stored model keys and Slack or Discord bot credentials are encrypted, while Composio manages its own OAuth connections. Activity provides bounded action summaries rather than a forensic audit log.",
+      "Personal and team workspaces use scoped file, memory, and sandbox resources. Team members intentionally share team resources. Construct-stored model keys and Slack or Discord bot credentials are encrypted, while Composio manages its own OAuth connections. Activity provides bounded action summaries rather than a forensic audit log.",
   },
   {
     question: "How is Construct priced?",
@@ -230,27 +230,27 @@ export type WorkflowDemo = (typeof workflowDemos)[number];
 
 export const featureCards = [
   {
-    src: "/assets/landing/features/schedules.png",
+    src: "/assets/landing/features/schedules.webp",
     alt: "Schedules repeating agent jobs and workflow runs with calendar-based automation",
     wide: false,
   },
   {
-    src: "/assets/landing/features/integrations.png",
+    src: "/assets/landing/features/integrations.webp",
     alt: "Live connected-app catalog with tools such as Drive, Gmail, GitHub, and messaging channels",
     wide: true,
   },
   {
-    src: "/assets/landing/features/social-manager.png",
+    src: "/assets/landing/features/social-manager.webp",
     alt: "Uses supported connected social applications when the required actions are available",
     wide: false,
   },
   {
-    src: "/assets/landing/features/cloud-control.png",
+    src: "/assets/landing/features/cloud-control.webp",
     alt: "Cloud workspace available through a responsive mobile web interface",
     wide: false,
   },
   {
-    src: "/assets/landing/features/automations.png",
+    src: "/assets/landing/features/automations.webp",
     alt: "Runs linear workflows and delegates bounded parallel work to temporary agents",
     wide: false,
   },

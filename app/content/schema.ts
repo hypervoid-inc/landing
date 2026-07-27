@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { authorIds } from "./authors";
 
 const isoDate = z.string().refine((value) => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
@@ -12,16 +13,17 @@ export const blogFrontmatterSchema = z
   .object({
     title: z.string().min(1),
     description: z.string().min(1),
-    date: isoDate,
+    published: isoDate,
     updated: isoDate.optional(),
     seoTitle: z.string().min(1).optional(),
-    author: z.string().min(1),
+    author: z.enum(authorIds),
     tags: z.array(z.string().min(1)).min(1),
+    kind: z.enum(["article", "guide", "comparison"]),
     draft: z.boolean(),
   })
   .strict()
-  .refine(({ date, updated }) => !updated || updated >= date, {
-    message: "Updated date cannot precede publication date",
+  .refine(({ published, updated }) => !updated || updated > published, {
+    message: "Updated date must be later than publication date",
     path: ["updated"],
   });
 

@@ -1,27 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0"><channel>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>
     <title>Construct Computer Blog</title>
     <link>https://construct.computer/blog/</link>
     <description>AI employee guides, practical articles, and comparisons from Construct Computer.</description>
+    <item>
+      <title>How Construct Builds Internal Tools in Your Workspace</title>
+      <link>https://construct.computer/blog/build-internal-tools-with-construct/</link>
+      <guid>https://construct.computer/blog/build-internal-tools-with-construct/</guid>
+      <description>Turn a repeated process into a private workspace app that Construct can build, validate, debug, and update while preserving the last successful build.</description>
+      <dc:creator>Ankush</dc:creator>
+      <category>internal-tools</category>
+      <category>workspace-apps</category>
+      <category>ai-agent</category>
+      <category>product</category>
+      <pubDate>Mon, 27 Jul 2026 00:00:00 GMT</pubDate>
+    </item>
     <item>
       <title>AI Agent vs Zapier Automation</title>
       <link>https://construct.computer/blog/ai-agent-vs-zapier/</link>
       <guid>https://construct.computer/blog/ai-agent-vs-zapier/</guid>
       <description>Zapier runs a fixed trigger-action recipe. See how an AI agent plans its own steps instead, with a side-by-side of the same recurring workflow built both ways.</description>
+      <dc:creator>Ankush</dc:creator>
+      <category>comparison</category>
+      <category>zapier</category>
+      <category>ai-agent</category>
+      <category>automation</category>
       <pubDate>Sun, 26 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>AI Agent vs Virtual Assistant: Cost and Capabilities</title>
       <link>https://construct.computer/blog/ai-agent-vs-virtual-assistant/</link>
       <guid>https://construct.computer/blog/ai-agent-vs-virtual-assistant/</guid>
-      <description>AI agent vs virtual assistant: compare monthly cost, response speed, and inspectable work records before you replace a human VA with a supervised AI employee.</description>
+      <description>AI agent vs virtual assistant: compare monthly cost, availability, and inspectable work records before you replace suitable VA tasks with a supervised AI employee.</description>
+      <dc:creator>Ankush</dc:creator>
+      <category>ai-agent</category>
+      <category>virtual-assistant</category>
+      <category>pricing</category>
+      <category>comparison</category>
       <pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>AI Agent Memory You Can Control</title>
+      <link>https://construct.computer/blog/ai-agent-memory/</link>
+      <guid>https://construct.computer/blog/ai-agent-memory/</guid>
+      <description>Give an AI agent persistent memory with provenance, corrections, temporal context, and controls to inspect, update, forget, or restore what it knows.</description>
+      <dc:creator>Nischal</dc:creator>
+      <category>ai-agent-memory</category>
+      <category>persistent-memory</category>
+      <category>ai-agent</category>
+      <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>AI Employee for Real Business Work</title>
       <link>https://construct.computer/blog/ai-employee/</link>
       <guid>https://construct.computer/blog/ai-employee/</guid>
       <description>Meet the AI employee that researches, operates tools, creates files, and runs recurring work from a persistent, supervised workspace.</description>
+      <dc:creator>Nischal</dc:creator>
+      <category>ai-employee</category>
+      <category>ai-agent</category>
+      <category>business-automation</category>
       <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
@@ -29,48 +66,70 @@
       <link>https://construct.computer/blog/ai-workflow-automation/</link>
       <guid>https://construct.computer/blog/ai-workflow-automation/</guid>
       <description>Create reusable linear AI workflows, run them on demand, or schedule recurring work across files, live browser runs, native email, and connected business apps.</description>
+      <dc:creator>Nischal</dc:creator>
+      <category>workflow-automation</category>
+      <category>ai-agent</category>
+      <category>scheduling</category>
       <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>AI Agent Memory You Can Control</title>
-      <link>https://construct.computer/blog/ai-agent-memory/</link>
-      <guid>https://construct.computer/blog/ai-agent-memory/</guid>
-      <description>Give an AI agent persistent memory with provenance, corrections, temporal context, and controls to inspect, update, forget, or restore what it knows.</description>
-      <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
-    </item>
-    <item>
-      <title>Construct vs chat assistants</title>
+      <title>Construct vs ChatGPT, Claude, and Gemini</title>
       <link>https://construct.computer/blog/construct-vs-chatgpt/</link>
       <guid>https://construct.computer/blog/construct-vs-chatgpt/</guid>
       <description>Compare Construct with chat assistants such as ChatGPT, Claude, and Gemini across workspace, tools, memory, schedules, and workflows.</description>
+      <dc:creator>Construct Team</dc:creator>
+      <category>comparison</category>
+      <category>chat-assistants</category>
+      <category>chatgpt</category>
+      <category>ai-employee</category>
       <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Construct vs Microsoft Copilot</title>
-      <link>https://construct.computer/blog/construct-vs-copilot/</link>
-      <guid>https://construct.computer/blog/construct-vs-copilot/</guid>
-      <description>Compare Construct with Microsoft Copilot and Google Workspace AI. See how one vendor-neutral AI employee works across apps from a persistent workspace.</description>
-      <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
-    </item>
-    <item>
-      <title>Construct vs Zapier</title>
-      <link>https://construct.computer/blog/construct-vs-zapier/</link>
-      <guid>https://construct.computer/blog/construct-vs-zapier/</guid>
-      <description>Automation builders need predefined flows. Construct handles ambiguous, multi-step goals where the path is not known upfront — an AI employee, not a flowchart.</description>
-      <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
-    </item>
-    <item>
-      <title>Construct vs coding agents</title>
+      <title>Construct vs coding-focused agents</title>
       <link>https://construct.computer/blog/construct-vs-coding-agents/</link>
       <guid>https://construct.computer/blog/construct-vs-coding-agents/</guid>
       <description>Compare Construct with coding agents. See when a generalist AI employee for email, research, calendar, CRM, and code is the better fit.</description>
+      <dc:creator>Construct Team</dc:creator>
+      <category>comparison</category>
+      <category>coding-agents</category>
+      <category>ai-employee</category>
       <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Construct vs building your own agent</title>
+      <title>Construct vs Microsoft Copilot and Google Workspace AI</title>
+      <link>https://construct.computer/blog/construct-vs-copilot/</link>
+      <guid>https://construct.computer/blog/construct-vs-copilot/</guid>
+      <description>Compare Construct with Microsoft Copilot and Google Workspace AI. See how one vendor-neutral AI employee works across apps from a persistent workspace.</description>
+      <dc:creator>Construct Team</dc:creator>
+      <category>comparison</category>
+      <category>copilot</category>
+      <category>google-workspace</category>
+      <category>ai-employee</category>
+      <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Construct vs building your own AI agent</title>
       <link>https://construct.computer/blog/construct-vs-diy/</link>
       <guid>https://construct.computer/blog/construct-vs-diy/</guid>
       <description>Building your own agent means wiring sandbox, apps, channels, memory, schedules, and user-facing activity summaries yourself. Construct provides those pieces as a hosted product.</description>
+      <dc:creator>Construct Team</dc:creator>
+      <category>comparison</category>
+      <category>agent-frameworks</category>
+      <category>diy</category>
+      <category>ai-employee</category>
+      <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Construct vs Zapier, Make, and n8n</title>
+      <link>https://construct.computer/blog/construct-vs-zapier/</link>
+      <guid>https://construct.computer/blog/construct-vs-zapier/</guid>
+      <description>Compare Construct with Zapier, Make, and n8n for deterministic workflows, agentic steps, scheduling, and ambiguous multi-step work.</description>
+      <dc:creator>Construct Team</dc:creator>
+      <category>comparison</category>
+      <category>zapier</category>
+      <category>make</category>
+      <category>n8n</category>
+      <category>workflow-automation</category>
       <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
@@ -78,6 +137,10 @@
       <link>https://construct.computer/blog/what-is-an-ai-employee/</link>
       <guid>https://construct.computer/blog/what-is-an-ai-employee/</guid>
       <description>Learn what an AI employee is, how it differs from a chatbot, and how Construct completes work across email, Slack, browser, and connected apps.</description>
+      <dc:creator>Ankush</dc:creator>
+      <category>ai-agent</category>
+      <category>product</category>
+      <category>ai-employee</category>
       <pubDate>Thu, 02 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
@@ -85,6 +148,10 @@
       <link>https://construct.computer/blog/chat-assistants-vs-ai-employees/</link>
       <guid>https://construct.computer/blog/chat-assistants-vs-ai-employees/</guid>
       <description>ChatGPT and Claude are great at drafting — but autonomous ops need execution, persistence, and inspectable work. See how Construct compares to chat assistants.</description>
+      <dc:creator>Ankush</dc:creator>
+      <category>comparison</category>
+      <category>chatgpt</category>
+      <category>ai-employee</category>
       <pubDate>Mon, 15 Jun 2026 00:00:00 GMT</pubDate>
     </item>
   </channel></rss>

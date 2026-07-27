@@ -8,12 +8,14 @@ export function ContentShell({
   title,
   metadata,
   breadcrumbs = [{ label: "Home", to: "/" }],
+  breadcrumbTitle,
   article = false,
   children,
 }: {
   title: string;
   metadata?: ReactNode;
   breadcrumbs?: readonly Breadcrumb[];
+  breadcrumbTitle?: string;
   article?: boolean;
   children: ReactNode;
 }) {
@@ -38,7 +40,7 @@ export function ContentShell({
                 <span aria-hidden>/</span>
               </li>
             ))}
-            <li aria-current="page">{title}</li>
+            <li aria-current="page">{breadcrumbTitle ?? title}</li>
           </ol>
         </nav>
         <Content>
@@ -46,11 +48,11 @@ export function ContentShell({
             {title}
           </h1>
           {metadata && (
-            <p className="mt-3 text-[13px] leading-5 text-[#8a9aa2]">
+            <div className="mt-4 text-[13px] leading-5 text-[#526b75]">
               {metadata}
-            </p>
+            </div>
           )}
-          <div className="mt-12 space-y-10 text-[15px] leading-[1.7] text-[#627c86] lg:text-[16px]">
+          <div className="resource-content mt-12 space-y-10 text-[15px] leading-[1.7] text-[#627c86] lg:text-[16px]">
             {children}
           </div>
         </Content>
@@ -124,6 +126,13 @@ export function InlineLink({
 export function formatDate(iso: string): string {
   return new Intl.DateTimeFormat("en-US", {
     dateStyle: "long",
+    timeZone: "UTC",
+  }).format(new Date(`${iso}T00:00:00Z`));
+}
+
+export function formatShortDate(iso: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
     timeZone: "UTC",
   }).format(new Date(`${iso}T00:00:00Z`));
 }

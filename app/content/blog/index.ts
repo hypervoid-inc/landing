@@ -1,43 +1,34 @@
-import AiAgentVsVirtualAssistant, {
-  frontmatter as aiAgentVsVirtualAssistantMeta,
-} from "./ai-agent-vs-virtual-assistant.mdx";
-import AiAgentVsZapier, {
-  frontmatter as aiAgentVsZapierMeta,
-} from "./ai-agent-vs-zapier.mdx";
-import ChatAssistantsVsAiEmployees, {
-  frontmatter as chatAssistantsVsAiEmployeesMeta,
-} from "./chat-assistants-vs-ai-employees.mdx";
-import WhatIsAnAiEmployee, {
-  frontmatter as whatIsAnAiEmployeeMeta,
-} from "./what-is-an-ai-employee.mdx";
-import { blogFrontmatterSchema } from "../schema";
+import type { useMDXComponents } from "@mdx-js/react";
+import type { ComponentType } from "react";
+
+import {
+  blogFrontmatterSchema,
+  validateContent,
+  type BlogFrontmatter,
+} from "../schema";
 import { blogMetadata } from "./metadata.generated";
 
-const posts = [
-  [
-    "ai-agent-vs-virtual-assistant",
-    aiAgentVsVirtualAssistantMeta,
-    AiAgentVsVirtualAssistant,
-  ],
-  ["ai-agent-vs-zapier", aiAgentVsZapierMeta, AiAgentVsZapier],
-  [
-    "chat-assistants-vs-ai-employees",
-    chatAssistantsVsAiEmployeesMeta,
-    ChatAssistantsVsAiEmployees,
-  ],
-  ["what-is-an-ai-employee", whatIsAnAiEmployeeMeta, WhatIsAnAiEmployee],
-] as const;
+type BlogModule = {
+  default: ComponentType<{
+    components?: ReturnType<typeof useMDXComponents>;
+  }>;
+  frontmatter: BlogFrontmatter;
+};
 
-export const blogPosts = posts.map(([slug, frontmatter, Content]) => ({
-  slug,
-  ...blogFrontmatterSchema.parse(frontmatter),
-  Content,
-}));
+const modules = import.meta.glob<BlogModule>("./*.mdx", { eager: true });
+
+export const blogPosts = Object.entries(modules)
+  .map(([path, module]) => ({
+    slug: path.slice(2, -4),
+    ...blogFrontmatterSchema.parse(module.frontmatter),
+    Content: module.default,
+  }))
+  .sort((left, right) => left.slug.localeCompare(right.slug));
+
+validateContent(blogMetadata);
 
 if (blogPosts.length !== blogMetadata.length) {
-  throw new Error(
-    "Generated blog metadata and imported MDX posts differ; update app/content/blog/index.ts",
-  );
+  throw new Error("Generated blog metadata and imported MDX posts differ");
 }
 
 for (const [index, post] of blogPosts.entries()) {

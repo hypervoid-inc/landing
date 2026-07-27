@@ -1,0 +1,45 @@
+---
+title: "AI Agent Memory You Can Control"
+description: "Give an AI agent persistent memory with provenance, corrections, temporal context, and controls to inspect, update, forget, or restore what it knows."
+published: "2026-07-20"
+author: "nischal"
+tags: ["ai-agent-memory", "persistent-memory", "ai-agent"]
+kind: "guide"
+draft: false
+---
+
+Construct remembers useful context across tasks without turning memory into an opaque, permanent transcript you cannot inspect or correct.
+
+## Why long-term agent memory matters
+
+A useful work agent needs more than the messages currently visible in chat. It should remember stable preferences, ongoing projects, important people, and prior decisions when they are relevant to a new task. Without that continuity, every recurring workflow begins with the same explanation and the same avoidable mistakes.
+
+Construct recalls relevant context before a turn and ingests useful information after successful work. Source episodes remain separate from the assertions the memory system derives from them, so remembered information can retain its origin rather than becoming an unexplained fact. Automatic learning currently uses conversation episodes and successful public web search or fetch evidence; it does not automatically index uploaded files, private app results, terminal output, or live browser runs.
+
+## Corrections instead of silent overwrites
+
+Facts change. A customer changes roles, a project gets renamed, or a preference that was once correct stops applying. Construct versions memory assertions and tracks when information is valid. A correction can supersede an older assertion without erasing the history that explains how the system learned it.
+
+This temporal model helps the agent distinguish current context from old context. It also makes a correction auditable: you can see the updated assertion instead of hoping a new embedding happens to outrank the old one.
+
+## Memory controls for people
+
+The Memories app lets you search and inspect what Construct remembers. You can add an explicit memory, correct an existing one, forget information, or restore something removed by mistake. Pending or unreviewed information can be excluded from automatic recall until it is safe to use.
+
+- Search memories and inspect supporting context
+- Correct stale or inaccurate assertions
+- Forget information that should no longer be recalled
+- Restore previously forgotten information
+
+## Memory connects work across time
+
+Memory becomes more valuable when it works with the rest of the workspace. During a task, Construct can combine recalled context with files, scheduled jobs, workflows, inbox threads, and connected applications. A weekly report can remember the audience and preferred format; an inbox task can use an explicitly remembered customer preference; a research job can build on earlier remembered findings without starting over.
+
+The result is continuity with a control surface. Construct can become more useful over time while the user retains the ability to inspect and change what carries forward.
+
+## Related resources
+
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [AI workflow automation](/blog/ai-workflow-automation/)
+- [Construct vs chat assistants](/blog/construct-vs-chatgpt/)
+- [AI employee product guide](/blog/ai-employee/)

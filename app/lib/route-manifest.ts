@@ -1,4 +1,5 @@
 import { resourceEntries } from "../content/resources";
+import type { Author } from "../content/authors";
 
 export const siteUrl = "https://construct.computer";
 
@@ -9,11 +10,13 @@ export type CanonicalRoute = {
   readonly path: string;
   readonly canonical: string;
   readonly title: string;
+  readonly displayTitle?: string;
   readonly description: string;
   readonly kind: RouteKind;
   readonly lastModified?: string;
   readonly published?: string;
-  readonly author?: string;
+  readonly author?: Author;
+  readonly tags?: readonly string[];
   readonly image: string;
 };
 
@@ -34,7 +37,7 @@ export const canonicalRoutes: readonly CanonicalRoute[] = [
     path: "/",
     title: "AI Employee with a Persistent Work OS | Construct",
     description:
-      "Construct is a supervised AI workspace with persistent files and memory, live browser runs, a sandbox terminal, schedules, linear workflows, native email, and connected apps.",
+      "Construct is a supervised AI workspace with persistent files and memory, live browser runs, schedules, reusable workflows, native email, and connected apps.",
     kind: "home",
   }),
   route({
@@ -84,20 +87,23 @@ export const canonicalRoutes: readonly CanonicalRoute[] = [
   }),
   route({
     path: "/blog",
-    title: "AI Employee Resources - Construct Computer",
+    title: "Insights and Guides - Construct Computer",
+    displayTitle: "Construct insights and guides",
     description:
-      "Explore AI employee guides, practical articles, and comparisons with chat assistants, copilots, automation tools, coding agents, and DIY stacks.",
+      "Practical writing from Construct on AI agents, workflows, memory, and tools that get work done.",
     kind: "blog-index",
   }),
   ...resourceEntries.map((entry) =>
     route({
       path: `/blog/${entry.slug}`,
       title: entry.seoTitle ?? `${entry.title} - Construct Computer`,
+      displayTitle: entry.title,
       description: entry.description,
       kind: entry.kind === "article" ? "blog-post" : entry.kind,
       published: entry.published,
-      lastModified: entry.date,
+      lastModified: entry.updated,
       author: entry.author,
+      tags: entry.tags,
     }),
   ),
 ];

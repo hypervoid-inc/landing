@@ -1,9 +1,19 @@
 import type { MetaDescriptor } from "react-router";
 import { landingFaq } from "../content/landing";
+import type { Author } from "../content/authors";
 import type { CanonicalRoute } from "./route-manifest";
 import { siteUrl } from "./route-manifest";
 
 type JsonLd = Record<string, unknown>;
+
+function displayTitle(route: CanonicalRoute): string {
+  return route.displayTitle ?? route.title.replace(" - Construct Computer", "");
+}
+
+function editorialAuthor(route: CanonicalRoute): Author {
+  if (!route.author) throw new Error(`Missing author for ${route.path}`);
+  return route.author;
+}
 
 export function organizationJsonLd(): JsonLd {
   return {
@@ -13,6 +23,12 @@ export function organizationJsonLd(): JsonLd {
     name: "Construct Computer",
     alternateName: "Construct",
     url: siteUrl,
+    logo: {
+      "@type": "ImageObject",
+      url: `${siteUrl}/icon-512.png`,
+      width: 512,
+      height: 512,
+    },
     sameAs: [
       "https://x.com/use_construct",
       "https://github.com/construct-computer",
@@ -56,7 +72,7 @@ function breadcrumbs(route: CanonicalRoute): JsonLd {
       ? [{ name: parent.name, url: `${siteUrl}${parent.path}/` }]
       : []),
     {
-      name: route.title.replace(" - Construct Computer", ""),
+      name: displayTitle(route),
       url: route.canonical,
     },
   ];
@@ -86,18 +102,22 @@ export function routeJsonLd(route: CanonicalRoute): JsonLd[] {
     });
   } else values.push(breadcrumbs(route));
   if (["blog-post", "guide", "comparison"].includes(route.kind)) {
+    const author = editorialAuthor(route);
     values.push({
       "@context": "https://schema.org",
       "@type": "BlogPosting",
-      headline: route.title.replace(" - Construct Computer", ""),
+      headline: displayTitle(route),
       description: route.description,
       ...(route.published ? { datePublished: route.published } : {}),
       ...(route.lastModified ? { dateModified: route.lastModified } : {}),
       author: {
-        "@type": "Organization",
-        name: route.author ?? "Construct Team",
-        url: `${siteUrl}/about/`,
+        "@type": author.schemaType,
+        name: author.name,
+        url: new URL(author.profileUrl, siteUrl).toString(),
+        image: new URL(author.image, siteUrl).toString(),
+        sameAs: [author.twitter],
       },
+      keywords: route.tags,
       publisher: { "@id": `${siteUrl}/#organization` },
       image: route.image,
       mainEntityOfPage: { "@type": "WebPage", "@id": route.canonical },
@@ -108,6 +128,7 @@ export function routeJsonLd(route: CanonicalRoute): JsonLd[] {
 
 export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
   const article = ["blog-post", "guide", "comparison"].includes(route.kind);
+  const author = article ? editorialAuthor(route) : undefined;
   return [
     { title: route.title },
     { name: "description", content: route.description },
@@ -124,7 +145,7 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
     { property: "og:image:height", content: "630" },
     {
       property: "og:image:alt",
-      content: `${route.title} — Construct Computer`,
+      content: displayTitle(route),
     },
     ...(article && route.published
       ? [{ property: "article:published_time", content: route.published }]
@@ -132,8 +153,17 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
     ...(article && route.lastModified
       ? [{ property: "article:modified_time", content: route.lastModified }]
       : []),
+    ...(article
+      ? (route.tags ?? []).map((tag) => ({
+          property: "article:tag",
+          content: tag,
+        }))
+      : []),
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:site", content: "@use_construct" },
+    ...(author
+      ? [{ name: "twitter:creator", content: author.twitterHandle }]
+      : []),
     { name: "twitter:title", content: route.title },
     { name: "twitter:description", content: route.description },
     { name: "twitter:image", content: route.image },

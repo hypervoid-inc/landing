@@ -1,20 +1,15 @@
 import { Link } from "react-router";
+import type { ReactNode } from "react";
 
-import {
-  ComparisonTable,
-  WhenToChoose,
-} from "../../components/content/comparison-table";
 import {
   ContentShell,
   formatDate,
-  List,
-  Section,
+  formatShortDate,
 } from "../../components/content/content-shell";
 import { mdxComponents } from "../../components/content/mdx-components";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 import { getBlogPost } from "../../content/blog";
-import { getComparison } from "../../content/comparisons";
-import { getGuide } from "../../content/guides";
+import type { Author } from "../../content/authors";
 import {
   getResource,
   resourceEntries,
@@ -30,28 +25,16 @@ const blogBreadcrumbs = [
 export function BlogIndexPage() {
   return (
     <ContentShell
-      title="AI Employee Resources"
-      metadata="Articles, guides, and comparisons for choosing and operating AI that completes real work."
+      title="Construct insights and guides"
+      breadcrumbTitle="Blog"
+      metadata="Practical writing from Construct on AI agents, workflows, memory, and tools that get work done."
     >
-      <div className="space-y-4">
-        <p>
-          An AI employee accepts an outcome, chooses tools, and completes
-          multi-step work from a persistent workspace. This library explains
-          that model and compares it with chat assistants, coding agents,
-          copilots, and fixed automations.
-        </p>
-        <p>
-          Every resource is listed below in publication order. Labels identify
-          practical guides, editorial articles, and product comparisons without
-          splitting them across separate URL trees.
-        </p>
-      </div>
       <section aria-labelledby="all-resources-heading">
         <h2
           id="all-resources-heading"
           className="font-geist mb-6 text-[28px] italic text-[#4e4646]"
         >
-          All resources
+          Latest
         </h2>
         <ol className="grid list-none gap-6 p-0 sm:grid-cols-2">
           {resourceEntries.map((entry) => (
@@ -83,15 +66,18 @@ function ResourceCard({ entry }: { entry: ResourceEntry }) {
         </Link>
       )}
       <div className="p-6">
-        <p className="text-[12px] uppercase tracking-[0.08em] text-[#8a9aa2]">
-          {entry.kind} · {formatDate(entry.date)}
-        </p>
-        <h3 className="font-geist mt-2 text-[24px] italic leading-tight text-[#4e4646]">
+        <h3 className="font-geist text-[24px] italic leading-tight text-[#4e4646]">
           <Link to={path} className="group-hover:text-[#01b4c8]">
             {entry.title}
           </Link>
         </h3>
-        <p className="mt-3 text-[15px] leading-6">{entry.description}</p>
+        <p className="resource-card-meta mt-2 overflow-hidden text-ellipsis whitespace-nowrap text-[12px] capitalize text-[#526b75]">
+          {entry.kind} · {formatShortDate(entry.published)} · {entry.author.name}
+        </p>
+        <p className="mt-3 line-clamp-3 text-[15px] leading-6">
+          {entry.description}
+        </p>
+        <TagList tags={entry.tags} className="mt-4" />
       </div>
     </article>
   );
@@ -100,13 +86,7 @@ function ResourceCard({ entry }: { entry: ResourceEntry }) {
 export function ResourcePage({ slug }: { slug: string }) {
   const entry = getResource(slug);
   if (!entry) return <NotFoundPage />;
-  if (entry.kind === "article") return <ArticlePage entry={entry} />;
-  if (entry.kind === "guide") return <GuidePage entry={entry} />;
-  return <ComparisonPage entry={entry} />;
-}
-
-function ArticlePage({ entry }: { entry: ResourceEntry }) {
-  const post = getBlogPost(entry.sourceSlug);
+  const post = getBlogPost(entry.slug);
   if (!post) return <NotFoundPage />;
   return (
     <ContentShell
@@ -115,15 +95,18 @@ function ArticlePage({ entry }: { entry: ResourceEntry }) {
       breadcrumbs={blogBreadcrumbs}
       metadata={
         <>
-          Published <time dateTime={post.date}>{formatDate(post.date)}</time>
-          {post.updated && (
-            <>
-              {" "}
-              · Updated{" "}
-              <time dateTime={post.updated}>{formatDate(post.updated)}</time>
-            </>
-          )}{" "}
-          · {post.author}
+          <AuthorByline author={entry.author}>
+            Published{" "}
+            <time dateTime={post.published}>{formatDate(post.published)}</time>
+            {post.updated && (
+              <>
+                {" "}
+                · Updated{" "}
+                <time dateTime={post.updated}>{formatDate(post.updated)}</time>
+              </>
+            )}
+          </AuthorByline>
+          <TagList tags={entry.tags} className="mt-4" />
         </>
       }
     >
@@ -132,123 +115,78 @@ function ArticlePage({ entry }: { entry: ResourceEntry }) {
   );
 }
 
-function GuidePage({ entry }: { entry: ResourceEntry }) {
-  const page = getGuide(entry.sourceSlug);
-  if (!page) return <NotFoundPage />;
-  return (
-    <ContentShell
-      title={page.title}
-      article
-      breadcrumbs={blogBreadcrumbs}
-      metadata={
-        <>
-          Updated{" "}
-          <time dateTime={page.updated}>{formatDate(page.updated)}</time>
-          {" · "}
-          {page.summary}
-        </>
-      }
-    >
-      {page.sections.map((section) => (
-        <Section key={section.title} title={section.title}>
-          {section.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-          {section.bullets && (
-            <List>
-              {section.bullets.map((bullet) => (
-                <li key={bullet}>{bullet}</li>
-              ))}
-            </List>
-          )}
-        </Section>
-      ))}
-      <RelatedResources resources={page.relatedResources} />
-    </ContentShell>
-  );
-}
-
-function ComparisonPage({ entry }: { entry: ResourceEntry }) {
-  const page = getComparison(entry.sourceSlug);
-  if (!page) return <NotFoundPage />;
-  return (
-    <ContentShell
-      title={page.title}
-      article
-      breadcrumbs={blogBreadcrumbs}
-      metadata={
-        <>
-          Updated{" "}
-          <time dateTime={page.updated}>{formatDate(page.updated)}</time>
-          {" · "}
-          {page.summary}
-        </>
-      }
-    >
-      <Section title="Comparison basis">
-        <p>{page.methodology}</p>
-      </Section>
-      <Section title="Side by side">
-        <ComparisonTable
-          competitor={page.competitor}
-          rows={page.comparisonTable}
-        />
-      </Section>
-      {page.sections.map((section) => (
-        <Section key={section.title} title={section.title}>
-          <p>{section.body}</p>
-        </Section>
-      ))}
-      <Section title="When to choose">
-        <WhenToChoose
-          competitor={page.competitor}
-          construct={page.whenToChoose.construct}
-          competitorReasons={page.whenToChoose.competitor}
-        />
-      </Section>
-      <Section title="Sources">
-        <List>
-          {page.sources.map((source) => (
-            <li key={source.url}>
-              <a
-                href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#01b4c8] hover:underline"
-              >
-                {source.label}
-              </a>
-            </li>
-          ))}
-        </List>
-      </Section>
-      <RelatedResources
-        resources={[
-          ...page.relatedResources,
-          { label: "All AI employee resources", path: "/blog/" },
-        ]}
-      />
-    </ContentShell>
-  );
-}
-
-function RelatedResources({
-  resources,
+function TagList({
+  tags,
+  className,
 }: {
-  resources: readonly { label: string; path: string }[];
+  tags?: readonly string[];
+  className?: string;
 }) {
+  if (!tags?.length) return null;
   return (
-    <Section title="Related resources">
-      <List>
-        {resources.map((resource) => (
-          <li key={resource.path}>
-            <Link to={resource.path} className="text-[#01b4c8] hover:underline">
-              {resource.label}
-            </Link>
-          </li>
-        ))}
-      </List>
-    </Section>
+    <ul
+      aria-label="Resource tags"
+      className={`flex flex-wrap gap-2 ${className ?? ""}`}
+    >
+      {tags.map((tag) => (
+        <li
+          key={tag}
+          className="rounded-full bg-[#effbfc] px-2.5 py-1 text-[11px] leading-4 text-[#016d79]"
+        >
+          {tag}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function AuthorByline({
+  author,
+  children,
+}: {
+  author: Author;
+  children: ReactNode;
+}) {
+  const externalProfile = author.profileUrl.startsWith("http");
+  return (
+    <div
+      role="group"
+      aria-label="About the author"
+      className="flex items-center gap-3"
+    >
+      <img
+        src={author.image}
+        alt={author.name}
+        width="48"
+        height="48"
+        className="h-12 w-12 rounded-full object-cover"
+      />
+      <div className="min-w-0">
+        <p>
+          <a
+            href={author.profileUrl}
+            target={externalProfile ? "_blank" : undefined}
+            rel={externalProfile ? "noopener noreferrer" : undefined}
+            className="font-medium text-[#4e4646] hover:text-[#01b4c8]"
+          >
+            {author.name}
+          </a>{" "}
+          · {author.role}
+        </p>
+        <p>{author.bio}</p>
+        <p>
+          {children} ·{" "}
+          <a
+            href={author.twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#017b89] hover:underline"
+          >
+            {author.twitterHandle}
+          </a>
+        </p>
+      </div>
+    </div>
   );
 }
 

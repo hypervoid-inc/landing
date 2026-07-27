@@ -6,7 +6,7 @@ The public Construct Computer website. It preserves the established landing-page
 
 - React Router framework mode with Vite and React 19
 - Tailwind CSS 4 and shadcn/Radix primitives
-- Repository-authored MDX and typed editorial content
+- Repository-authored MDX editorial content
 - Cloudflare Pages, Pages Functions, D1, Turnstile, and WAF
 - PostHog analytics and masked session replay
 - Vitest, Playwright, axe, ESLint, Prettier, and strict TypeScript
@@ -38,7 +38,7 @@ Cloudflare's published Turnstile test keys are intentionally included in the exa
 
 - `app/features/landing/` owns the homepage sections, motion, media, and beta modal.
 - `app/content/` is the editorial source of truth.
-- `app/content/resources.ts` combines articles, guides, and comparisons into one ordered collection.
+- `app/content/resources.ts` maps generated MDX metadata into one ordered collection.
 - Every editorial resource uses `/blog/<slug>/`; company and legal utilities remain top-level.
 - `app/lib/route-manifest.ts` drives prerendering, canonical metadata, sitemap entries, feeds, crawler files, and OG images.
 - `functions/api/beta-signup.ts` is the only application endpoint.
@@ -48,9 +48,9 @@ See `docs/decisions/001-static-prerendered-react.md` for the architectural ratio
 
 ## Content
 
-Add normal articles as MDX under `app/content/blog/`. Guides and comparisons currently retain typed source records because their specialized tables and layouts are easier to maintain that way, but they share the same route, metadata, feed, card, and structured-data model as every other blog resource.
+Add articles, guides, and comparisons as MDX under `app/content/blog/`. The filename is the canonical `/blog/<slug>/` slug, and every file is discovered automatically.
 
-Every resource needs a unique lowercase slug, title, description, author, publication date, modified date, and content type. The build fails on invalid or stale MDX metadata.
+Frontmatter requires `title`, `description`, `published` (`YYYY-MM-DD`), a registered `author` ID, nonempty `tags`, `kind` (`article`, `guide`, or `comparison`), and `draft`. `seoTitle` is optional. Add `updated` only after a substantive update and use a date later than `published`. Run `pnpm generate:content`; the build fails on invalid or stale metadata.
 
 ## Verification
 
