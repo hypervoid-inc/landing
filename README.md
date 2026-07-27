@@ -52,6 +52,8 @@ Add articles, guides, and comparisons as MDX under `app/content/blog/`. The file
 
 Frontmatter requires `title`, `description`, `published` (`YYYY-MM-DD`), a registered `author` ID, nonempty `tags`, `kind` (`article`, `guide`, or `comparison`), and `draft`. `seoTitle` is optional. Add `updated` only after a substantive update and use a date later than `published`. Run `pnpm generate:content`; the build fails on invalid or stale metadata.
 
+The homepage social image source is `assets/og/home.png`. Generation copies it to `public/og/home.png` after rebuilding other OG images, so replace the source file rather than editing the generated copy.
+
 ## Verification
 
 `pnpm check && pnpm test:e2e` is the release gate. It verifies all canonical pages, legacy redirects, the real 404 response, the ordered resource grid, Turnstile plus D1 signup, and automated accessibility checks.

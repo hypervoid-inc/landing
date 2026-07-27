@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 import { crawlerFiles, sitemapXml } from "../app/lib/generated-content";
@@ -10,6 +11,12 @@ import {
 import { canonicalRoutes } from "../app/lib/route-manifest";
 
 describe("generated discovery content", () => {
+  it("preserves the custom homepage OG image", () => {
+    expect(
+      readFileSync(new URL("../public/og/home.png", import.meta.url)),
+    ).toEqual(readFileSync(new URL("../assets/og/home.png", import.meta.url)));
+  });
+
   it("includes only canonical 200 routes in the sitemap", () => {
     const sitemap = sitemapXml(canonicalRoutes);
 

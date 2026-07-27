@@ -1,5 +1,12 @@
 import { Buffer } from "node:buffer";
-import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import {
+  copyFile,
+  mkdir,
+  readFile,
+  readdir,
+  rm,
+  writeFile,
+} from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { URL } from "node:url";
@@ -115,6 +122,10 @@ try {
       .png()
       .toFile(path.join(ogDirectory, filename));
   }
+  await copyFile(
+    path.join(root, "assets/og/home.png"),
+    path.join(ogDirectory, "home.png"),
+  );
 } finally {
   await vite.close();
 }
