@@ -7,3 +7,8 @@ minimumReleaseAgeExclude:
   - react-router@8.3.0
   - "@react-router/dev@8.3.0"
   - "@react-router/node@8.3.0"
+  # Security fix for GHSA-mh99-v99m-4gvg; pinned by the override below.
+  - brace-expansion@5.0.8
+overrides:
+  brace-expansion: 5.0.8
+  sharp: 0.35.3

@@ -172,7 +172,7 @@ function WorkflowCopy({
   return (
     <>
       <div
-        className="absolute inset-x-0 top-0"
+        className="pointer-events-none absolute inset-x-0 top-0"
         style={{
           opacity,
           transform: `translateY(${y}px)`,

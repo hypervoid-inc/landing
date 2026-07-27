@@ -3,6 +3,7 @@ import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { URL } from "node:url";
+import { format } from "prettier";
 import sharp from "sharp";
 import { createServer } from "vite";
 import { z } from "zod";
@@ -65,7 +66,10 @@ const posts = await Promise.all(
   })),
 );
 
-const metadataSource = `// Generated from the MDX frontmatter by scripts/generate-content.mjs.\nimport type { BlogFrontmatter } from "../schema";\n\nexport const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = ${JSON.stringify(posts, null, 2)};\n`;
+const metadataSource = await format(
+  `// Generated from the MDX frontmatter by scripts/generate-content.mjs.\nimport type { BlogFrontmatter } from "../schema";\n\nexport const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = ${JSON.stringify(posts, null, 2)};\n`,
+  { parser: "typescript" },
+);
 await writeFile(
   path.join(blogDirectory, "metadata.generated.ts"),
   metadataSource,

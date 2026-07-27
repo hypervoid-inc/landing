@@ -8,13 +8,13 @@
       "binding": "DB",
       "database_name": "construct-landing",
       "database_id": "c108070e-5e0e-40c6-96e5-01a4d8777df6",
-      "migrations_dir": "migrations"
-    }
+      "migrations_dir": "migrations",
+    },
   ],
   "vars": {
     "TURNSTILE_EXPECTED_HOSTNAME": "construct.computer",
     "TURNSTILE_EXPECTED_ACTION": "beta_signup",
     "TURNSTILE_TEST_MODE": "false",
-    "ALLOWED_ORIGIN_HOSTNAME": "construct.computer"
-  }
+    "ALLOWED_ORIGIN_HOSTNAME": "construct.computer",
+  },
 }

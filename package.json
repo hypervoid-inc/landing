@@ -9,6 +9,7 @@
   "scripts": {
     "build": "pnpm generate:content && react-router build && node scripts/finalize-build.mjs",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "deploy": "pnpm check && pnpm test:e2e && pnpm build && wrangler pages deploy build/client --project-name landing-new --branch main",
     "dev": "react-router dev --host 127.0.0.1",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

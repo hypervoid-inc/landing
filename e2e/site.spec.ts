@@ -2,7 +2,11 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 import { resourceEntries } from "../app/content/resources";
-import { workflowDemos } from "../app/content/landing";
+import {
+  landingFaq,
+  pricingPlans,
+  workflowDemos,
+} from "../app/content/landing";
 import { canonicalRoutes } from "../app/lib/route-manifest";
 
 test("serves every canonical page with matching metadata", async ({
@@ -43,6 +47,7 @@ test("uses one shared header, footer, and favicon across page types", async ({
     );
     await expect(page.locator("footer")).toContainText("Request beta access");
     await expect(page.locator("footer")).toContainText("vs ChatGPT");
+    await expect(page.locator("footer")).not.toContainText("Guides");
     await expect(
       page.locator('link[rel="icon"][sizes="32x32"]'),
     ).toHaveAttribute("href", "/favicon-32.png?v=3");
@@ -293,6 +298,32 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
   page,
 }) => {
   for (const viewport of [
+    { width: 320, height: 568 },
+    { width: 390, height: 667 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+
+    const stage = await page.locator(".hero-stage").boundingBox();
+    const cta = await page
+      .getByRole("link", { name: "Enter Experience" })
+      .boundingBox();
+    const scene = await page.locator(".hero-scene").boundingBox();
+
+    expect(
+      (scene?.y ?? 0) - ((cta?.y ?? 0) + (cta?.height ?? 0)),
+    ).toBeGreaterThanOrEqual(40);
+    expect(scene?.height).toBeGreaterThanOrEqual(430);
+    expect(
+      Math.abs(
+        (cta?.x ?? 0) +
+          (cta?.width ?? 0) / 2 -
+          ((stage?.x ?? 0) + (stage?.width ?? 0) / 2),
+      ),
+    ).toBeLessThan(2);
+  }
+
+  for (const viewport of [
     { width: 390, height: 844 },
     { width: 390, height: 1365 },
   ]) {
@@ -472,6 +503,104 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
   await expect(page.locator("#pricing")).toHaveCSS("scroll-margin-top", "64px");
 });
 
+test("every landing button responds to a real click", async ({
+  context,
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const betaActions = [
+    "Request early beta access",
+    "Enter Experience",
+    "Get beta access — Construct AI workspace",
+    "Get beta access — research report",
+    "Get beta access — agent chat",
+    "Get beta access — workspace search",
+    "Get beta access — Researched the Topic",
+    "Get beta access — Replied to the Mails",
+    "Get beta access — Prepared the Report",
+    ...workflowDemos.map((demo) => demo.cta),
+    "Request beta access",
+  ];
+
+  for (const name of betaActions) {
+    await page.getByRole("link", { name, exact: true }).click();
+    await expect(
+      page.getByRole("dialog").getByRole("heading", {
+        name: "Get beta access",
+      }),
+      name,
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Close dialog" }).click();
+  }
+
+  await context.route("https://beta.construct.computer/", (route) =>
+    route.fulfill({ body: "ok" }),
+  );
+  for (const plan of pricingPlans) {
+    const popupPromise = page.waitForEvent("popup");
+    await page.getByRole("link", { name: plan.cta, exact: true }).click();
+    const popup = await popupPromise;
+    await expect(popup).toHaveURL("https://beta.construct.computer/");
+    await popup.close();
+  }
+
+  await context.route("https://cal.com/construct/15min", (route) =>
+    route.fulfill({ body: "ok" }),
+  );
+  const callPopupPromise = page.waitForEvent("popup");
+  await page.getByRole("link", { name: "Book A Call", exact: true }).click();
+  const callPopup = await callPopupPromise;
+  await expect(callPopup).toHaveURL("https://cal.com/construct/15min");
+  await callPopup.close();
+
+  await expect(
+    page.getByRole("link", { name: "or send us an email", exact: true }),
+  ).toHaveAttribute("href", "mailto:enterprise@construct.computer");
+  await expect(
+    page.getByRole("link", { name: "Send Us Hello", exact: true }),
+  ).toHaveAttribute("href", "mailto:hello@construct.computer");
+
+  for (const [name, href] of [
+    ["X (Twitter)", "https://x.com/use_construct"],
+    ["GitHub", "https://github.com/construct-computer"],
+    ["Discord", "https://discord.gg/puArEQHYN9"],
+    ["LinkedIn", "https://linkedin.com/company/construct-computer"],
+  ] as const) {
+    await context.route(href, (route) => route.fulfill({ body: "ok" }));
+    const popupPromise = page.waitForEvent("popup");
+    await page.getByRole("link", { name, exact: true }).click();
+    const popup = await popupPromise;
+    await expect(popup).toHaveURL(href);
+    await popup.close();
+  }
+
+  const internalLinks = await page
+    .locator('a[href^="/"]')
+    .evaluateAll((links) => [
+      ...new Set(
+        links.map((link) => link.getAttribute("href")).filter(Boolean),
+      ),
+    ]);
+  for (const href of internalLinks) {
+    if (!href || href === "/") continue;
+    await page.locator(`a[href="${href}"]`).first().click();
+    await expect(page).toHaveURL(new URL(href, "http://localhost:8788").href);
+    await page.goBack();
+  }
+
+  for (const item of landingFaq) {
+    const trigger = page.getByRole("button", {
+      name: item.question,
+      exact: true,
+    });
+    await trigger.click();
+    await expect(trigger).toHaveAttribute("data-state", "open");
+    await expect(page.getByText(item.answer, { exact: true })).toBeVisible();
+  }
+});
+
 test("eases the workflow into and out of its pinned position", async ({
   page,
 }) => {
@@ -549,6 +678,36 @@ test("eases the workflow into and out of its pinned position", async ({
     sectionExit + 24,
   );
   expect((await sticky.boundingBox())?.y).toBeCloseTo(32, 0);
+});
+
+test("opens beta access from the animated workflow CTA", async ({ page }) => {
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1440, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+
+    const section = page.locator(".workflow-section");
+    const sectionTop = await section.evaluate(
+      (element) => element.getBoundingClientRect().top + window.scrollY,
+    );
+    await page.evaluate(
+      (y) => window.scrollTo({ top: y, behavior: "instant" }),
+      sectionTop + 120,
+    );
+    await page.waitForTimeout(500);
+
+    await page
+      .getByRole("link", { name: workflowDemos[0]!.cta, exact: true })
+      .click();
+    await expect(
+      page.getByRole("dialog").getByRole("heading", {
+        name: "Get beta access",
+      }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Close dialog" }).click();
+  }
 });
 
 test("keeps workflow progress interactive after restoring a reload", async ({
