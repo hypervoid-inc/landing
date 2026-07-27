@@ -135,23 +135,34 @@
 @media (max-width: 767px) {
   .hero-stage {
     min-height: calc(100svh - 49px);
-    align-content: center;
-    row-gap: clamp(40px, 6svh, 64px);
-    padding-top: 0;
+    align-content: space-evenly;
+    row-gap: clamp(52px, 14vw, 72px);
+    padding-top: clamp(28px, 8vw, 44px);
+    padding-bottom: clamp(32px, 9vw, 48px);
+  }
+
+  .hero-headline > div {
+    line-height: 1.18;
+  }
+
+  .hero-headline > p {
+    max-width: 340px;
+    margin-top: clamp(30px, 9vw, 42px);
+    font-size: 15.5px;
+    line-height: 25px;
+  }
+
+  .hero-headline .landing-cta {
+    margin-top: clamp(40px, 12vw, 54px);
   }
 
   .hero-scene {
+    height: clamp(480px, max(136vw, 48svh), 620px);
     margin-top: 0;
   }
 
   .what-section {
     margin-top: 0;
-  }
-}
-
-@media (max-width: 767px) and (max-height: 700px) {
-  .hero-stage {
-    padding-block: clamp(24px, 5svh, 36px);
   }
 }
 
