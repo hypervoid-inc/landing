@@ -169,6 +169,13 @@ export function PrivacyPage() {
           browser Do Not Track signal where supported. Analytics retention and
           processing region are configured in our PostHog project.
         </p>
+        <p>
+          PartnerStack records referral identifiers in first-party cookies. If
+          you sign up after a partner referral, we send PartnerStack your name,
+          email address, and Construct customer ID. Successful subscription
+          payments may also be reported with the amount, currency, and plan so
+          the referring partner can receive commission.
+        </p>
       </Section>
 
       <Section title="3. How We Use Your Information">
@@ -387,10 +394,11 @@ export function PrivacyPage() {
           The Construct product stores authentication tokens in your browser’s
           local storage rather than a regular-user session cookie. The public
           website may use PostHog cookies or local storage for analytics and
-          replay as described above. The beta-access gate stores only a granted
-          flag and timestamp, never your email address. An HTTP-only session
-          cookie is used for administrative access to internal dashboards and
-          does not apply to regular users.
+          replay, and PartnerStack first-party cookies for referral attribution,
+          as described above. The beta-access gate stores only a granted flag
+          and timestamp, never your email address. An HTTP-only session cookie is
+          used for administrative access to internal dashboards and does not
+          apply to regular users.
         </p>
       </Section>
       <Section title="9. Your Rights">
