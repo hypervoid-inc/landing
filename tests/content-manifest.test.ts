@@ -49,6 +49,19 @@ const expectedPaths = [
   "/blog/construct-vs-zapier",
   "/blog/construct-vs-coding-agents",
   "/blog/construct-vs-diy",
+  "/authors",
+  "/authors/ankush",
+  "/authors/nischal",
+  "/authors/construct-team",
+  // Tag hubs are generated only for tags with two or more resources, so this
+  // list changes when tag usage crosses that threshold.
+  "/blog/tag/ai-agent",
+  "/blog/tag/ai-employee",
+  "/blog/tag/chatgpt",
+  "/blog/tag/comparison",
+  "/blog/tag/product",
+  "/blog/tag/workflow-automation",
+  "/blog/tag/zapier",
 ];
 
 describe("content validation", () => {

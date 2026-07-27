@@ -17,17 +17,43 @@ Traditional automation works best when every trigger and action is known before 
 
 A workflow can include agent work, connected-app actions, and in-app notifications. Published versions are preserved so a future edit does not silently change a run that already started. Run history makes the procedure easier to inspect and improve over time. Current workflows are linear: branching, delays, approval steps, fan-out, and subworkflows are not yet supported.
 
+The sequence that tends to work is to do the job once conversationally, confirm the output is right, and only then encode it. A workflow written before the job has ever succeeded is a guess about the steps. A workflow written afterwards is a record of steps already known to produce the result you wanted.
+
+## A worked example: the Monday competitor digest
+
+Consider a recurring task: every Monday, check five competitors' pricing pages, note anything that changed since last week, and post a summary to Slack.
+
+**Run it once.** Ask Construct to gather the current pricing for each competitor and summarize it. It uses web search and fetch for public pages, and a live browser run for any page that needs interaction. You review the output and correct the framing.
+
+**Encode it.** Save the procedure as a workflow: an agent step that gathers and compares pricing, a connected-app action that posts to Slack, and an in-app notification so the run is visible in the workspace even if nobody is watching Slack.
+
+**Schedule it.** Add it to Construct's Calendar as a recurring Monday job. The scheduler reconciles missed or delayed work rather than depending on an open browser tab.
+
+**Inspect it.** Each run leaves step results, retry information, and Activity summaries. Agent steps link back to their chat sessions, so a week where the summary looked wrong can be opened and read rather than guessed at.
+
+The durable output is a versioned procedure, a Slack post each week, and a run history that makes the procedure improvable. When a competitor redesigns a pricing page and the step starts returning less useful results, the run history is where that shows up.
+
 ## Run now or put it on the Calendar
 
 Construct's Calendar is a scheduler for agent work and workflows. Create a one-time job, define a recurring schedule, run it immediately, or cancel it from the same workspace. The scheduler reconciles missed or delayed work instead of depending on an open browser tab.
 
 This makes recurring operating work practical: weekly market research, an inbox summary, a customer follow-up list, or a report assembled from several connected systems. Google Calendar can be connected as an external app, but Construct's native Calendar controls when agent jobs run.
 
-Current workflow runs start on demand or from Construct's Calendar. Event-triggered email workflow plugins are not currently part of the workflow runner.
+Current workflow runs start on demand or from Construct's Calendar. Event-triggered email workflow plugins are not currently part of the workflow runner. In practice this means a workflow that should react to incoming mail is built as a scheduled inbox check on a chosen interval, rather than as something that fires the moment a message arrives. For a job where reacting within seconds matters, a dedicated trigger-based platform remains the better fit.
 
 ## Use the right execution surface
 
 Each step can use the surface that fits the job. Structured app actions are best for reliable updates. Web search and fetch handle public research. A live browser covers interactive sites, including logins completed during that run. The sandbox terminal can process files, run scripts, and generate artifacts; files saved under the workspace persist after shell state is gone.
+
+| Step needs                        | Best surface         | Persists afterwards       |
+| --------------------------------- | -------------------- | ------------------------- |
+| Update a record in a business app | Connected-app action | Yes, in that app          |
+| Research a public topic           | Web search and fetch | As saved files or memory  |
+| Use a site that needs interaction | Live browser run     | No — save output to files |
+| Transform a file or run a script  | Sandbox terminal     | Files yes, shell state no |
+| Tell someone the run happened     | In-app notification  | Yes, in the workspace     |
+
+The distinction in the right-hand column matters more than it first appears. Live browser runs and shell state are bounded execution surfaces: they exist for the duration of the run. Anything a later step or a later week depends on needs to be written to workspace files while the run is still in progress.
 
 - Collect sources and create a cited brief
 - Read messages and update a connected system
@@ -38,8 +64,32 @@ Each step can use the surface that fits the job. Structured app actions are best
 
 Workflow automation should be debuggable. Construct keeps run state, step results, retry information, and Activity summaries. You can open resulting files and review connected-app actions; agent steps also link to their chat sessions. During interactive work the agent can ask for missing information, but workflows do not add a mandatory approval before every external action.
 
+That last point deserves emphasis when a workflow writes to systems other people read. Because there is no mandatory approval gate before each external side effect, a workflow that posts publicly, emails customers, or updates shared records should be run manually a few times before it goes on a schedule. Reviewing the first several runs is the cheapest way to catch a step that behaves differently than intended.
+
+## Working within linear runs
+
+Current workflows are linear, and a few patterns follow from that constraint.
+
+- **Conditional work** belongs inside an agent step rather than across branches. An agent step can read a situation and decide what to do; the workflow itself does not fork.
+- **Multi-stage procedures** can be split into separate workflows scheduled at different times, with workspace files carrying state between them.
+- **Approval-gated work** is better left as an on-demand workflow that a person triggers after reviewing, rather than a scheduled run with no gate.
+
+If a procedure genuinely needs branching, delays, or fan-out today, a traditional automation platform handles those directly. The [Construct vs Zapier comparison](/blog/construct-vs-zapier/) covers where each model fits, and [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/) walks the same workflow built both ways.
+
+## When a workflow is not the answer
+
+Not every repeated task should become a workflow.
+
+- **Jobs that run once** are cheaper to assign conversationally than to encode.
+- **Procedures still changing weekly** will spend more time being edited than run; wait until the shape settles.
+- **Purely deterministic, high-volume mappings** with no judgment step are what trigger-action platforms are built for.
+- **Work needing sub-minute reaction time** does not fit a scheduled runner.
+
+A workflow pays off when a procedure is stable, repeated, and involves enough judgment that a fixed mapping would be brittle. That is a narrower set of tasks than "everything I do twice", and the narrower set is where it works well.
+
 ## Related resources
 
 - [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/)
 - [Construct vs Zapier](/blog/construct-vs-zapier/)
 - [AI agent memory](/blog/ai-agent-memory/)
+- [AI employee product guide](/blog/ai-employee/)

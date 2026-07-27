@@ -185,12 +185,27 @@ function WorkflowCopy({
         >
           Up Next
         </p>
-        <h3 className={headlineClass}>
-          {demo.title}{" "}
-          <span className="font-display italic text-[#01b4c8]">
-            {demo.accent}
-          </span>
-        </h3>
+        {/*
+          Both the mobile and desktop copies of this block stay in the DOM so
+          the right one paints before hydration. Only the mobile copy is a real
+          heading — the desktop twin is demoted to avoid emitting every workflow
+          title twice, and Google indexes the mobile DOM anyway.
+        */}
+        {desktop ? (
+          <p className={headlineClass}>
+            {demo.title}{" "}
+            <span className="font-display italic text-[#01b4c8]">
+              {demo.accent}
+            </span>
+          </p>
+        ) : (
+          <h3 className={headlineClass}>
+            {demo.title}{" "}
+            <span className="font-display italic text-[#01b4c8]">
+              {demo.accent}
+            </span>
+          </h3>
+        )}
         <p className={descriptionClass} style={{ opacity: descriptionOpacity }}>
           {demo.description}
         </p>

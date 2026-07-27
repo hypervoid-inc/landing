@@ -2,29 +2,6 @@
 
 > Construct Computer is a supervised workspace for an AI employee that researches, operates tools, creates files, and runs recurring work through supported apps from a live integration catalog.
 
-## Pages
-- [AI Employee with a Persistent Work OS | Construct](https://construct.computer/): Construct is a supervised AI workspace with persistent files and memory, live browser runs, schedules, reusable workflows, native email, and connected apps.
-- [About - Construct Computer](https://construct.computer/about/): Meet the team building a persistent work OS for an AI employee with files, memory, schedules, linear workflows, live browser and terminal tools, and connected apps.
-- [Careers - Construct Computer](https://construct.computer/careers/): Construct isn't actively hiring, but we'd love to hear from people who want to build AI agents, work interfaces, memory systems, and reliable execution tools.
-- [Editorial Policy - Construct Computer](https://construct.computer/editorial-policy/): How Construct reviews AI-assisted drafts, verifies sources and comparisons, handles publication dates, and corrects errors in its resource library.
-- [Support - Construct Computer](https://construct.computer/support/): Get help with your Construct Computer account, billing, integrations, and data requests. Report issues, review bounded Activity summaries, or contact the team.
-- [Privacy Policy - Construct Computer](https://construct.computer/privacy/): How Construct Computer collects, stores, encrypts, and shares data across the agent workspace, memory system, integrations, and billing provider.
-- [Terms & Conditions - Construct Computer](https://construct.computer/terms/): Terms of service for Construct Computer: subscription plans, acceptable use, agent actions, model BYOK, and proprietary platform licensing.
-- [Construct insights and guides](https://construct.computer/blog/): Practical writing from Construct on AI agents, workflows, memory, and tools that get work done.
-- [How Construct Builds Internal Tools in Your Workspace](https://construct.computer/blog/build-internal-tools-with-construct/): Turn a repeated process into a private workspace app that Construct can build, validate, debug, and update while preserving the last successful build.
-- [AI Agent vs Zapier Automation](https://construct.computer/blog/ai-agent-vs-zapier/): Zapier runs a fixed trigger-action recipe. See how an AI agent plans its own steps instead, with a side-by-side of the same recurring workflow built both ways.
-- [AI Agent vs Virtual Assistant: Cost and Capabilities](https://construct.computer/blog/ai-agent-vs-virtual-assistant/): AI agent vs virtual assistant: compare monthly cost, availability, and inspectable work records before you replace suitable VA tasks with a supervised AI employee.
-- [AI Agent Memory You Can Control](https://construct.computer/blog/ai-agent-memory/): Give an AI agent persistent memory with provenance, corrections, temporal context, and controls to inspect, update, forget, or restore what it knows.
-- [AI Employee for Real Business Work](https://construct.computer/blog/ai-employee/): Meet the AI employee that researches, operates tools, creates files, and runs recurring work from a persistent, supervised workspace.
-- [AI Workflow Automation](https://construct.computer/blog/ai-workflow-automation/): Create reusable linear AI workflows, run them on demand, or schedule recurring work across files, live browser runs, native email, and connected business apps.
-- [Construct vs ChatGPT, Claude, and Gemini](https://construct.computer/blog/construct-vs-chatgpt/): Compare Construct with chat assistants such as ChatGPT, Claude, and Gemini across workspace, tools, memory, schedules, and workflows.
-- [Construct vs coding-focused agents](https://construct.computer/blog/construct-vs-coding-agents/): Compare Construct with coding agents. See when a generalist AI employee for email, research, calendar, CRM, and code is the better fit.
-- [Construct vs Microsoft Copilot and Google Workspace AI](https://construct.computer/blog/construct-vs-copilot/): Compare Construct with Microsoft Copilot and Google Workspace AI. See how one vendor-neutral AI employee works across apps from a persistent workspace.
-- [Construct vs building your own AI agent](https://construct.computer/blog/construct-vs-diy/): Building your own agent means wiring sandbox, apps, channels, memory, schedules, and user-facing activity summaries yourself. Construct provides those pieces as a hosted product.
-- [Construct vs Zapier, Make, and n8n](https://construct.computer/blog/construct-vs-zapier/): Compare Construct with Zapier, Make, and n8n for deterministic workflows, agentic steps, scheduling, and ambiguous multi-step work.
-- [What is an AI employee?](https://construct.computer/blog/what-is-an-ai-employee/): Learn what an AI employee is, how it differs from a chatbot, and how Construct completes work across email, Slack, browser, and connected apps.
-- [Chat Assistants vs AI Employees](https://construct.computer/blog/chat-assistants-vs-ai-employees/): ChatGPT and Claude are great at drafting — but autonomous ops need execution, persistence, and inspectable work. See how Construct compares to chat assistants.
-
 ## Capabilities
 
 - Persistent files, inspectable memory, native email, schedules, and linear workflows
@@ -32,3 +9,1371 @@
 - Bounded Activity summaries and chat tool records for supervised execution
 - Web, Slack, Telegram, and Discord slash-command access
 - Custom MCP servers and private agent-authored workspace apps
+
+## Product FAQ
+
+**What is an AI employee?**
+
+An AI employee is an agent that can accept an outcome, choose tools, and complete multi-step work. Construct gives that agent a persistent workspace for files, memory, and schedules. It also provides reusable workflows, a native inbox, connected apps, live browser runs, and a sandbox terminal.
+
+**How is Construct different from ChatGPT or Claude?**
+
+Chat assistants are excellent for answers and drafts. Construct is built for execution that persists beyond a thread: it can create files, run scheduled jobs, reuse linear workflows, and keep inspectable memory, chat tool records, and bounded Activity summaries in one web desktop.
+
+**What work can Construct complete?**
+
+Construct can research and write cited reports, analyze workspace files, read and send native email, use connected Gmail actions, update supported applications, run scripts, create artifacts, and delegate bounded subtasks to temporary agents. It is most useful when a job crosses several tools or needs to run again later.
+
+**Can Construct run recurring work?**
+
+Yes. Construct's native Calendar schedules one-time or recurring agent jobs and workflow runs. You or the agent can encode a repeatable process as a reusable, versioned workflow. Each workflow can contain agent steps, connected-app actions, and in-app notifications.
+
+**Which apps can Construct connect to?**
+
+Construct discovers supported applications from its live integration catalog, including tools such as Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable. You can also connect custom MCP tools. Slack and Telegram accept direct messages; Discord currently uses slash commands.
+
+**Can I see and control what the agent does?**
+
+Yes. The web desktop exposes files, live browser activity, terminal transcripts, workflows, memories, notifications, and chat tool records. It also provides bounded Activity summaries. You can inspect results, interrupt a running turn, answer questions, and correct or forget long-term memory.
+
+**Is my data private and secure?**
+
+Personal and team workspaces use scoped file, memory, and sandbox resources. Team members intentionally share team resources. Construct-stored model keys and Slack or Discord bot credentials are encrypted, while Composio manages its own OAuth connections. Activity provides bounded action summaries rather than a forensic audit log.
+
+**How is Construct priced?**
+
+Construct offers Lite ($9/month), Starter ($59/month), and Pro ($299/month). Plans increase task steps, concurrent temporary-agent jobs, storage, and scheduled-job capacity. Native agent email starts on Starter, while Pro adds BYOK for supported model providers. Check the current pricing page before purchasing.
+
+## Company pages
+
+- [AI Employee with a Persistent Work OS | Construct](https://construct.computer/): Construct is a supervised AI workspace with persistent files and memory, live browser runs, schedules, reusable workflows, native email, and connected apps.
+- [About - Construct Computer](https://construct.computer/about/): Meet the team building a persistent work OS for an AI employee with files, memory, schedules, linear workflows, live browser and terminal tools, and connected apps.
+- [Careers - Construct Computer](https://construct.computer/careers/): Construct isn't actively hiring, but we'd love to hear from people who want to build AI agents, work interfaces, memory systems, and reliable execution tools.
+- [Editorial Policy - Construct Computer](https://construct.computer/editorial-policy/): How Construct reviews AI-assisted drafts, verifies sources and comparisons, handles publication dates, and corrects errors in its resource library.
+- [Support - Construct Computer](https://construct.computer/support/): Get help with your Construct Computer account, billing, integrations, and data requests. Report issues, review bounded Activity summaries, or contact the team.
+- [Privacy Policy - Construct Computer](https://construct.computer/privacy/): How Construct Computer collects, stores, encrypts, and shares data across the agent workspace, memory system, integrations, and billing provider.
+- [Terms & Conditions - Construct Computer](https://construct.computer/terms/): Terms of service for Construct Computer: subscription plans, acceptable use, agent actions, model BYOK, and proprietary platform licensing.
+
+# Resources
+
+## How Construct Builds Internal Tools in Your Workspace
+
+URL: https://construct.computer/blog/build-internal-tools-with-construct/
+Type: article
+Author: Ankush
+Published: 2026-07-27
+Tags: internal-tools, workspace-apps, ai-agent, product
+
+Internal tools often begin as a spreadsheet, a checklist, or a prompt someone runs every week. The process works, but the interface does not: people copy values between tabs, remember status in their heads, and repeat the same setup each time. Construct can turn that repeated process into a small private app that lives inside the same workspace as the files and agent doing the work.
+
+This is not a one-click path to a public SaaS product. A Construct workspace app is a focused internal interface for one workspace. You describe the job, the agent writes the app, checks that it builds, opens it in the desktop, and keeps the source available for inspection and later changes.
+
+## Start with the repeated process
+
+The best request describes the work rather than prescribing a software architecture. For example:
+
+- “Build a research request tracker with an owner, priority, status, and link to the finished report.”
+- “Turn this recurring launch checklist into an app the team can update.”
+- “Create a dashboard for the JSON reports stored in this workspace.”
+- “Build an intake form for customer-review requests and keep the queue in one place.”
+
+Construct can start from a list, form, dashboard, or blank interface. The agent creates the app package, writes the React and TypeScript source, declares the capabilities it needs, and validates the result. A successful build opens directly in the Construct web desktop instead of sending you to a separate hosting project.
+
+The request still matters. “Build an operations dashboard” leaves important choices unresolved. “Show open research requests, let an operator assign an owner, and mark the linked report as reviewed” gives the agent a bounded workflow and a clear way to tell whether the app is useful.
+
+## The app lives beside the work
+
+A workspace app is not a hidden artifact. Its source lives under an `Apps//` folder in Files, where it can be inspected and edited. After a successful build, the app appears as a private workspace install that can be reopened from the desktop, Launchpad, or Spotlight.
+
+The app's durable state is kept separately under `AppData//`. That separation is important: changing the interface should not require overwriting the records the app already manages. Rebuilding can update the code while existing app data remains in the workspace and continues to count against the normal workspace storage quota.
+
+This model also makes the surrounding agent useful after launch. The same workspace contains the source, relevant files, conversations, and diagnostics. If the interface needs another field or a runtime error appears, the next task can start with the actual app rather than a screenshot and a vague bug report.
+
+## What a workspace app can do
+
+The current runtime is intentionally narrower than a general web-hosting platform. That keeps an internal tool close to its workspace purpose.
+
+| Capability | Current workspace-app support |
+| --- | --- |
+| React interface | Yes |
+| TypeScript and TSX | Yes |
+| Read or write workspace files | With declared permission |
+| App-scoped JSON state | With declared Files permission |
+| Call an allowed connected app | With an explicit app allowlist |
+| Make direct network requests | Only to declared HTTPS origins |
+| Install arbitrary npm packages | No |
+| Run terminal or agent orchestration from the app UI | No |
+| Publish automatically to the public app registry | No |
+
+The app UI receives a small Construct SDK for workspace files, app-scoped storage, notifications, window controls, and explicitly permitted calls. It does not inherit every tool available to the agent that authored it. The agent can use broader execution surfaces while building, but the finished interface runs with its own narrower contract.
+
+## Permissions are part of the design
+
+An internal tool should not gain broad access simply because it was generated inside a trusted workspace. A workspace app declares the native capabilities, connected apps, and network origins it intends to use. Calls outside those allowlists are denied at runtime.
+
+The platform also rechecks current workspace membership and permissions when the app makes a gateway call. File operations remain subject to the user's workspace access, and an app cannot use its file access to rewrite another app's package. Direct network access is limited to exact HTTPS origins rather than wildcard domains.
+
+For a request tracker that only reads and writes workspace files, that can mean declaring Files access and nothing else. A tool that posts an approved record to a connected service needs that specific app target as well. The useful default is the smallest permission set that completes the job.
+
+## Validation creates a build, not a guarantee
+
+Before launch, Construct checks the package structure and manifest, follows relative imports, enforces package boundaries, compiles the TypeScript and JSX, and reports design findings. A successful validation creates an immutable artifact with a deterministic build ID and opens the app.
+
+That proves the package can be built under the workspace runtime. It does not prove that every button, data shape, connected service, or edge case behaves correctly. Runtime verification still matters, especially after changing permissions, storage behavior, or an external call.
+
+Construct captures bounded console, network, gateway, and runtime-error diagnostics from workspace apps. The agent can inspect recent errors, repair the source, validate again, and ask you to verify the changed behavior. The loop is closer to maintaining a small internal product than generating a disposable code snippet.
+
+## Draft changes do not replace the last good build
+
+The reliability model is deliberately conservative. A successful build becomes the current runtime artifact. Later source edits mark the app as having draft changes, but opening the app continues to run the last successful build until the new source validates.
+
+If validation fails, the working artifact is not replaced. Cancelling an edit also leaves both the source and prior build in place. The desktop can show whether an app is ready, has draft changes, or has never built successfully.
+
+This is a last-good-build fallback, not full version history. It protects the working tool while a repair is in progress; it does not promise browsing or restoring every historical build.
+
+## Internal tool or workflow?
+
+Not every repeated process needs an interface. Use a workspace app when people need to view, enter, filter, or review state. Use a Construct workflow when the main value is running a known sequence of agent steps, connected-app actions, and notifications. Use a scheduled agent job when the process should run in the background without waiting for someone to open a screen.
+
+The two can support the same operation. A workspace app can provide the queue and review surface, while files hold durable records and a scheduled job prepares new work. The important boundary is that the app UI does not secretly become an unrestricted agent: automation still runs through the execution surfaces and permissions designed for it.
+
+## Where workspace apps fit
+
+Good fits are narrow tools with a clear operator and a durable workspace context:
+
+- Intake forms and review queues
+- Checklists for repeated operations
+- Lightweight trackers over workspace records
+- Dashboards for files or app-scoped JSON data
+- Focused interfaces over an explicitly allowed connected service
+- Small utilities that make an existing workflow easier to run and inspect
+
+Poor fits include public customer-facing sites, products that require an arbitrary npm ecosystem, complex multi-service systems, or workloads that need independently operated infrastructure and security controls. Public registry apps also follow a separate developer and review workflow; a private workspace build is not automatically promoted to the public app registry.
+
+## Build the smallest useful interface
+
+The shortest path is to start with one repeated process and one person who needs to operate it. Name the records the app should manage, the actions the operator should take, the files or services it may access, and what a successful result looks like. Then ask Construct to build the smallest interface that makes that process easier to run and supervise.
+
+Once the first build opens, use it. The missing field, unclear status, or unnecessary screen becomes obvious faster in a working tool than in a long specification. Construct can revise the source while the previous good build remains available, giving the internal tool room to improve without turning every edit into a fresh software project.
+
+## Related resources
+
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [AI workflow automation](/blog/ai-workflow-automation/)
+- [Construct vs coding-focused agents](/blog/construct-vs-coding-agents/)
+- [AI agent memory](/blog/ai-agent-memory/)
+
+### Frequently asked questions
+
+**What kind of internal tools can Construct build?**
+
+Constrained workspace applications for a repeated process — the kind of small private app a team would otherwise maintain by hand. Construct writes, validates, and publishes it into your cloud desktop.
+
+**What happens if a build breaks?**
+
+Construct preserves the last successful build, so a failed update does not take the working tool offline while it debugs and retries.
+
+**Do I need to be a developer to use it?**
+
+No. You describe the tool your team needs in plain language; Construct handles writing, validating, and publishing the app, and can update it later as the process changes.
+## AI Agent vs Zapier Automation
+
+URL: https://construct.computer/blog/ai-agent-vs-zapier/
+Type: article
+Author: Ankush
+Published: 2026-07-26 (updated 2026-07-27)
+Tags: comparison, zapier, ai-agent, automation
+
+Search for a Zapier alternative and most results turn into feature tables: more apps, more steps, a lower price per task. That misses the real difference between the two approaches. Zapier runs a fixed trigger-action recipe every time it fires. An AI agent reads the situation in front of it, decides which steps and tools the job needs, and can change course mid-run. The comparison below is about that difference, not integration counts.
+
+## Where Zapier's model breaks down
+
+A **Zap** starts with a trigger: a new row in a spreadsheet, a new email in Gmail, a new deal in a CRM. From there, optional filter steps decide whether the run continues, and action steps carry out each following task, such as creating a record or sending a message. Every step in that chain is wired in advance. The Zap does not decide what happens next; it does what it was built to do, in the order it was built to do it.
+
+That model holds up well for a fixed, high-volume, one-way task. It runs into a ceiling once a job needs to scale past what was anticipated or requires judgment partway through. Zap workflows cap out at 100 steps total, including every step nested inside Paths, and Zapier does not support two-way syncing between apps: workflows only run in one direction ([Zapier, Zap limits](https://help.zapier.com/hc/en-us/articles/8496181445261-Zap-limits)). A workflow that needs to read a reply, weigh a few possible responses, and pick among them has to be pre-built as a tree of Paths and filters for every case its builder thought to include. A case outside that tree, a lead that does not match the qualification rules, an email that needs a judgment call, falls through instead of getting handled.
+
+Zapier also provides a **Human in the Loop** step type that pauses a running Zap to request approval, an edit, or missing data from a reviewer before the workflow continues ([Zapier, Human in the Loop](https://help.zapier.com/hc/en-us/articles/38733184458765-Use-Human-in-the-Loop-to-pause-Zaps-pending-human-review)). It is useful when a sensitive or ambiguous step should remain explicitly human-controlled; after the reviewer responds, the configured workflow resumes.
+
+## Planning steps at runtime
+
+An **AI agent** inverts the build order. Instead of wiring trigger, filter, and action steps in advance, you give it an outcome and it works out the path. Zapier's own agentic feature, Zapier Agents, is built around this idea: rather than following a fixed trigger-action script, an agent is pointed at business data and a goal, then works across connected apps and the web to reach it ([Zapier, Agents](https://zapier.com/agents)). Construct works the same way: you assign a goal, and the agent chooses among live browser runs, a sandbox terminal, files, and supported applications from its live integration catalog, deciding the order of operations as the job unfolds.
+
+Runtime planning does not have to mean invisible autonomy. Construct's **Activity** feed keeps bounded action summaries and best-effort reasons, while chat retains bounded tool records. You can interrupt a job mid-run, and the agent can ask for missing information. Construct does not currently insert a mandatory approval before every external side effect, so important connected-app actions still require an appropriate level of supervision.
+
+**Persistence** is another difference. Construct keeps workspace files and selected long-term memories across sessions, so an agent can recall approved context from an earlier exchange. Automatic memory does not currently index uploaded files, private app results, terminal output, or live browser runs, so important context should be stored explicitly when it needs to carry forward.
+
+## The same recurring workflow, two ways
+
+A concrete example makes the difference easier to see: a new lead lands in Gmail, needs to be qualified, gets logged in the CRM, and the team gets notified in Slack. It is a common enough workflow that both platforms can run it, but building it looks different.
+
+| Stage         | Built in Zapier                                                                                                             | Run by Construct                                                                                                                            |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Trigger       | A Zap watches Gmail for new messages matching a label or search filter                                                      | An agent job is assigned to check the inbox for new leads                                                                                   |
+| Qualification | A Filter step and a Paths branch encode the qualification rules in advance: company size field, keyword match, domain check | The agent reads the email in context and judges whether the lead qualifies, including cases the rules did not anticipate                    |
+| CRM update    | A CRM action step maps fields from the trigger payload; a missing or unrecognized field needs its own Path to handle        | The agent updates the CRM directly, and can check the sender's site or prior email history to fill a gap the message itself does not answer |
+| Notification  | A Slack action step posts a fixed message template to a channel                                                             | The agent posts a Slack summary in its own words, including why it judged the lead qualified                                                |
+| Build effort  | One multi-step Zap with Paths for anticipated cases, tested and maintained as its rules change                              | One job description after the inbox, CRM, Slack connection, schedule, and permissions are configured                                        |
+
+The Zapier version is not a bad build. It is fast and cheap to run once it is wired correctly, and it does exactly the same thing every time, which is often exactly what you want. The Construct version trades some of that predictability for the ability to handle leads that do not fit the pattern. This example uses a scheduled inbox-check job; event-triggered email workflow plugins are not currently part of Construct's workflow runner.
+
+## Where agent-based automation is headed
+
+The gap this closes shows up in how much unstructured coordination work still sits on people's calendars. Knowledge workers spend about 60% of their time on "work about work," communicating about tasks, hunting for information, and switching between apps, rather than on the skilled work itself, according to Asana's Anatomy of Work Index, based on a global survey of more than 10,000 knowledge workers ([Asana, Anatomy of Work Index](https://asana.com/resources/why-work-about-work-is-bad)). Much of that time goes to exactly the kind of judgment calls and cross-app handoffs a fixed trigger-action recipe cannot absorb.
+
+Analyst research points the same direction. Gartner predicts that 40% of enterprise applications will feature task-specific AI agents by the end of 2026, up from less than 5% in 2025. "AI agents are evolving rapidly, progressing from basic assistants embedded in enterprise applications today to task-specific agents by 2026 and ultimately multiagent ecosystems by 2029," said Anushree Verma, Sr Director Analyst at Gartner ([Gartner, press release](https://www.gartner.com/en/newsroom/press-releases/2025-08-26-gartner-predicts-40-percent-of-enterprise-apps-will-feature-task-specific-ai-agents-by-2026-up-from-less-than-5-percent-in-2025)). Zapier's own move toward Agents and Human in the Loop steps fits the same pattern: even a platform built on fixed automations is adding room for a system to plan and for a person to check its work.
+
+## When rule-based automation still wins
+
+Zapier remains a good choice for high-volume, fully deterministic flows: the same trigger, the same transformation, the same action, every time, with no judgment call in between. It connects to more than 9,000 apps, and its Professional plan starts at $29.99 a month for 750 tasks with unlimited multi-step Zaps, while Team starts at $103.50 a month for 2,000 tasks ([Zapier, pricing](https://zapier.com/pricing); [Zapier, apps](https://zapier.com/apps)). Pricing is current as of this post's publish date and can change; check Zapier's pricing page for the latest figures.
+
+Reach for an agent instead when the inputs vary, a step requires reading or judgment rather than a fixed rule, or the job spans research and several apps in a way that is hard to pre-wire as Paths and filters. Read the full [Construct vs Zapier comparison](/blog/construct-vs-zapier/) for a deeper look at flows versus goals, or start with [what an AI employee is](/blog/what-is-an-ai-employee/) if the underlying idea is new. For related reading, see [chat assistants vs AI employees](/blog/chat-assistants-vs-ai-employees/), [AI workflow automation](/blog/ai-workflow-automation/), and [AI agent memory](/blog/ai-agent-memory/).
+
+### Frequently asked questions
+
+**What is the difference between an AI agent and a Zap?**
+
+A Zap runs a fixed trigger-action recipe that you define in advance. An AI agent is given a goal and plans its own steps at runtime, which matters when the inputs vary but the desired outcome stays the same.
+
+**Which is more reliable?**
+
+For deterministic, high-volume work with known inputs, a configured automation is more predictable. An agent trades some of that predictability for the ability to handle ambiguity and recover from situations no one mapped ahead of time.
+
+**Do AI agents cost more to run than automation platforms?**
+
+Pricing models differ: automation platforms typically meter task or operation counts, while agent products meter steps, jobs, and capacity. Compare against the work each one can actually complete rather than on unit price alone.
+## AI Agent vs Virtual Assistant: Cost and Capabilities
+
+URL: https://construct.computer/blog/ai-agent-vs-virtual-assistant/
+Type: article
+Author: Ankush
+Published: 2026-07-25 (updated 2026-07-27)
+Tags: ai-agent, virtual-assistant, pricing, comparison
+
+Hiring a virtual assistant used to mean one decision: which agency or freelancer. Now it means a second one first - human VA, or a supervised AI agent for suitable parts of the job at a fraction of the monthly bill. This post puts real numbers next to each option, concedes where the human still wins, and explains how inspectable work records improve supervision beyond a chat-based "AI VA."
+
+## What a virtual assistant does vs what an AI employee does
+
+A human virtual assistant handles inbox triage, calendar management, data entry, light research, travel booking, and customer or client communication. The value is judgment applied to a known playbook: a good VA learns your preferences, catches exceptions, and represents you in conversations that require tone and tact.
+
+An **AI employee** takes on many of the same tasks but executes them directly inside available tools instead of describing the steps back to you. For a scheduled inbox-review job, Construct can read and search its native inbox, draft or send replies, and report uncertain cases for a human decision. Connected Gmail actions may provide additional organization features when available. The Activity feed records bounded action summaries and best-effort reasons, while chat retains bounded tool records. If you have not seen the term before, [what is an AI employee](/blog/what-is-an-ai-employee/) covers the concept in full.
+
+It is worth separating this from a plain chat assistant, too. A tool that only answers questions in a chat window is not doing a VA's job, no matter how good the answers are; see [chat assistants vs AI employees](/blog/chat-assistants-vs-ai-employees/) if that is the comparison you actually meant to make. And if the "VA" work you are trying to replace is really a fixed sequence of triggers and actions rather than judgment calls, a deterministic automation platform may fit better than either option here, which is the case made in [Construct vs Zapier](/blog/construct-vs-zapier/).
+
+## Cost comparison: monthly VA spend vs a supervised AI agent
+
+### What a human VA actually costs in 2026
+
+Human VA pricing varies by where the person is based and how the engagement is structured. Hourly rates run $5 to $75 depending on location and skill level, and a part-time arrangement covering daily email and calendar management typically runs $1,000 to $3,000 a month, according to Tendem's breakdown of virtual assistant costs (source: [tendem.ai](https://tendem.ai/blog/virtual-assistant-vs-ai-agent-which-do-you-need)).
+
+Full-time engagements show a wide domestic-versus-offshore split. Cherry Assistant puts an offshore managed agency at $640 to $2,400 a month full-time, against $4,700 to $8,300 a month as the realistic total cost of a US-based in-house assistant once salary, benefits, payroll taxes, and recruiting are included (source: [cherryassistant.com](https://www.cherryassistant.com/blog/how-much-does-a-virtual-assistant-cost)). Stealth Agents' research on Filipino VA agencies lands in a similar range: $700 to $2,500 a month all-in for a managed agency hire, versus $4,800 to $12,000 a month for a comparable US-based hire (source: [stealthagents.com](https://stealthagents.com/research/cost-of-hiring-a-virtual-assistant-in-the-philippines-2026)).
+
+Two more numbers matter beyond the sticker price. A structured offshore executive VA onboarding typically reaches full productivity between day 14 and day 30, and a rushed one can take 60 to 90 days or end in early turnover (source: [outsourcedscale.com](https://www.outsourcedscale.com/blog/how-to-onboard-an-offshore-executive-virtual-assistant-so-they-perform-from-day-one/)). Once someone is up to speed, outsourced VA teams still see about 18% annual turnover, and each replacement costs an estimated $3,600 to $5,400 in lost productivity and rehiring (source: [365outsource.com](https://www.365outsource.com/virtual-assistance/virtual-assistant-retention-hiring-strategy/)).
+
+### What a supervised AI agent costs (Construct's plans)
+
+Construct's published plans, current as of this post's date and subject to change, are:
+
+| Plan    | Price      | Steps per task | Concurrent temporary-agent jobs | Notable                                |
+| ------- | ---------- | -------------- | ------------------------------- | -------------------------------------- |
+| Lite    | $9/month   | 50             | 2                               | 3 scheduled jobs                       |
+| Starter | $59/month  | 150            | 4                               | Native email address, background tasks |
+| Pro     | $299/month | 1,000          | 8                               | Model BYOK, background execution       |
+
+Even the Pro plan, built for heavy recurring workloads across up to eight concurrent temporary-agent jobs, costs less than the low end of a single full-time human VA's monthly rate. Check [construct.computer](https://construct.computer) for current prices and limits before budgeting, since commercial terms can change.
+
+### Where the gap comes from, and where it narrows
+
+Customer-service benchmarks illustrate part of the structural cost difference. The cited analysis estimates a routine AI-handled customer interaction at under $0.50, against $4 to $8 for a human agent (source: [stealthagents.com](https://stealthagents.com/research/ai-virtual-assistant-vs-human-virtual-assistant-statistics-2026)). Those figures do not establish the cost of unrelated VA work, but they show why narrow, repeatable interactions are commonly considered for automation first.
+
+The gap narrows on anything that needs relationship context, negotiation, or judgment calls a playbook cannot fully specify, which is exactly the work covered in the next section. Cost-per-interaction estimates should not be read as evidence that a supervised agent can replace the full scope of a human VA role.
+
+## Where a human VA still wins
+
+Concede this plainly: for customer-service interactions that depend on tone, empathy, or reading a client's mood, people still report a strong preference for human help. The cited analysis reports 88% satisfaction for human-handled customer-service interactions against 60% for AI-handled ones, while 93.4% of US consumers say they prefer a human for customer service work (source: [stealthagents.com](https://stealthagents.com/research/ai-virtual-assistant-vs-human-virtual-assistant-statistics-2026)).
+
+That preference tracks with how the executive assistant role is actually evolving, not disappearing. As Oana Manolache, founder and CEO of Sequel.io, put it: "it doesn't replace what an executive assistant does now as the role has evolved" (source: [fortune.com](https://fortune.com/2026/07/05/ai-displacement-executive-assistants-secretaries-skills-adaptation/)). High-stakes client calls, sensitive HR conversations, in-person coordination, and any relationship where the other party specifically wants to be talking to a person are still a human VA's territory, and no pricing table changes that.
+
+## Where a supervised AI agent wins: speed, availability, and inspectable work
+
+A supervised AI agent can run scheduled work while you are offline and does not carry employee turnover or replacement cost. Construct's inspectable memory can retain selected context across tasks, but it is not a complete record of institutional knowledge and does not automatically index files, private app results, terminal output, or live browser runs; see [AI agent memory](/blog/ai-agent-memory/) for how it works.
+
+The wedge a chat-based "AI VA" cannot match is an inspectable work record. A chatbot that drafts a reply for you to copy and send does not itself record what happened in your inbox, calendar, or CRM. Construct's Activity feed keeps bounded action summaries and best-effort reasons across its tools, while chat stores bounded tool records and resulting files or messages remain in the workspace. Activity is a rolling product-observability feed, not a forensic audit log.
+
+This is also a realistic moment to size the category correctly rather than oversell it. McKinsey's 2025 State of AI survey found that no more than 10% of organizations report scaling agentic AI within any single business function, while 23% are actively scaling in at least one function and 39% are still experimenting (source: [forbes.com](https://www.forbes.com/sites/josipamajic/2026/03/22/10-of-enterprise-functions-use-ai-agents-mckinsey-finds/)). Supervised, bounded use on specific recurring tasks is where the category actually is in 2026, not full autonomous replacement of a VA's entire job.
+
+## Choosing between the two, or running both together
+
+Match the tool to the task rather than the category. Recurring, cross-app work with a clear procedure is where a supervised AI agent's cost and speed advantage is largest: inbox review, CRM updates, scheduled research pulls, status reporting. That is also where inspectable outputs and action summaries matter most. Client-facing judgment calls, sensitive conversations, and anything that depends on a relationship built over time are still better handled by a person.
+
+Many teams end up running both: a human VA for relationship-dependent work, and an AI employee handling the recurring execution around it. If you want to see what that looks like day to day, start with [what is an AI employee](/blog/what-is-an-ai-employee/), or compare the underlying execution model in [Construct vs ChatGPT](/blog/construct-vs-chatgpt/) if you are still deciding whether you need an agent or a chat assistant at all.
+
+### Frequently asked questions
+
+**Can an AI agent fully replace a virtual assistant?**
+
+Not for everything. An AI agent suits well-scoped, repeatable, tool-driven work that runs at any hour. Relationship-heavy, judgment-heavy, and physical-world tasks remain a better fit for a human VA.
+
+**How does the monthly cost compare?**
+
+A virtual assistant is billed for hours worked, while an AI agent is billed on a subscription with capacity limits. The useful comparison is cost per completed task on the specific work you would delegate, not the headline monthly figure.
+
+**How do I verify the work was done correctly?**
+
+Construct keeps inspectable work records: bounded Activity summaries, chat tool records, workspace files, and sent messages. That record is what makes delegated agent work auditable in a way an unstructured task list is not.
+## AI Agent Memory You Can Control
+
+URL: https://construct.computer/blog/ai-agent-memory/
+Type: guide
+Author: Nischal
+Published: 2026-07-20 (updated 2026-07-27)
+Tags: ai-agent-memory, persistent-memory, ai-agent
+
+Construct remembers useful context across tasks without turning memory into an opaque, permanent transcript you cannot inspect or correct.
+
+## Why long-term agent memory matters
+
+A useful work agent needs more than the messages currently visible in chat. It should remember stable preferences, ongoing projects, important people, and prior decisions when they are relevant to a new task. Without that continuity, every recurring workflow begins with the same explanation and the same avoidable mistakes.
+
+Construct recalls relevant context before a turn and ingests useful information after successful work. Source episodes remain separate from the assertions the memory system derives from them, so remembered information can retain its origin rather than becoming an unexplained fact.
+
+That separation is the part most worth understanding. An **episode** is the raw thing that happened: a conversation turn, a web search, a fetched page. An **assertion** is the durable claim derived from it, such as a preferred report format or a customer's current role. Keeping the two apart means a remembered fact can be traced back to the moment it was learned, which is what makes a correction meaningful rather than cosmetic.
+
+## Three kinds of memory, often confused
+
+"Memory" gets used for three different mechanisms, and the distinction decides what you can actually rely on.
+
+| Mechanism            | What it holds                                   | How long it lasts                         |
+| -------------------- | ----------------------------------------------- | ----------------------------------------- |
+| **Context window**   | The current turn and recent messages            | One conversation, then gone               |
+| **Retrieval**        | Documents fetched to answer a specific question | Only for that lookup                      |
+| **Long-term memory** | Durable assertions with provenance and validity | Across tasks until corrected or forgotten |
+
+A chat product with a long history is not the same as an agent with long-term memory. History preserves what was said; memory preserves what is currently true, and can be changed when it stops being true. Construct's Memories app manages the third row.
+
+## What Construct learns automatically, and what it does not
+
+Automatic learning currently uses conversation episodes and successful public web search or fetch evidence. It does not automatically index uploaded files, private app results, terminal output, or live browser runs.
+
+This boundary is deliberate, and it is worth planning around rather than working against. Private surfaces frequently contain credentials, customer data, and half-finished work that nobody intended to promote into durable memory. Excluding them by default keeps memory smaller and more trustworthy, at the cost of one explicit step when something genuinely should carry forward.
+
+| Source                             | Automatically remembered |
+| ---------------------------------- | ------------------------ |
+| Conversation episodes              | Yes                      |
+| Successful public web search/fetch | Yes                      |
+| Uploaded files                     | No — add explicitly      |
+| Private connected-app results      | No — add explicitly      |
+| Terminal output                    | No — add explicitly      |
+| Live browser runs                  | No — add explicitly      |
+
+The practical rule: if a fact arrived through a private surface and a future task depends on it, add it as an explicit memory rather than assuming it was captured.
+
+## A worked example: the recurring client report
+
+A concrete case shows how the pieces fit. Suppose a monthly performance report goes to a client's operations lead.
+
+**First run.** You explain the audience, the sections they care about, and that figures should be quoted to two decimal places. Construct produces the report, and the useful parts of that exchange become assertions with their originating episode attached.
+
+**Second run.** You assign the same job without repeating the setup. Construct recalls the format and audience before starting, so the run begins from context rather than from explanation.
+
+**Something changes.** The client's operations lead moves on and a new contact takes over. You correct the assertion about who receives the report. The old assertion is superseded and its history remains visible, so a later question about why earlier reports were addressed differently still has an answer.
+
+**Something needs to go.** A pricing detail shared in confidence should not persist. You forget that assertion. If it turns out to have been removed in error, it can be restored.
+
+The durable output here is not just the reports. It is a small set of inspectable assertions that make each subsequent run cheaper to start, plus a record of how those assertions changed.
+
+## Corrections instead of silent overwrites
+
+Facts change. A customer changes roles, a project gets renamed, or a preference that was once correct stops applying. Construct versions memory assertions and tracks when information is valid. A correction can supersede an older assertion without erasing the history that explains how the system learned it.
+
+This temporal model helps the agent distinguish current context from old context. It also makes a correction auditable: you can see the updated assertion instead of hoping a new embedding happens to outrank the old one.
+
+The failure mode this avoids is worth naming. In a system that stores memories as undifferentiated text and retrieves by similarity, a corrected fact and its outdated predecessor both remain in the store, competing for retrieval. The agent may surface either one depending on how a question is phrased, and there is no reliable way to tell which it used. Versioned assertions with validity windows make the current value explicit rather than probabilistic.
+
+## Memory controls for people
+
+The Memories app lets you search and inspect what Construct remembers. You can add an explicit memory, correct an existing one, forget information, or restore something removed by mistake. Pending or unreviewed information can be excluded from automatic recall until it is safe to use.
+
+- Search memories and inspect supporting context
+- Correct stale or inaccurate assertions
+- Forget information that should no longer be recalled
+- Restore previously forgotten information
+
+Reviewing memory occasionally is worth the few minutes it takes, particularly after a project changes shape. Assertions learned during a since-abandoned approach are the most common source of confidently wrong recall.
+
+## Memory connects work across time
+
+Memory becomes more valuable when it works with the rest of the workspace. During a task, Construct can combine recalled context with files, scheduled jobs, workflows, inbox threads, and connected applications. A weekly report can remember the audience and preferred format; an inbox task can use an explicitly remembered customer preference; a research job can build on earlier remembered findings without starting over.
+
+This is also why memory and [reusable workflows](/blog/ai-workflow-automation/) complement each other. A workflow encodes the steps of a procedure; memory carries the context those steps assume. A workflow without memory needs its assumptions restated every run, and remembered context without a workflow leaves the sequence to be reconstructed each time.
+
+The result is continuity with a control surface. Construct can become more useful over time while the user retains the ability to inspect and change what carries forward.
+
+## When memory is the wrong tool
+
+Memory is not the right home for everything that needs to persist.
+
+- **Large documents** belong in workspace files, which persist and can be reopened directly. Memory holds the fact that a document matters, not its contents.
+- **Secrets and credentials** should go through connected-app authentication rather than being stated in a conversation that may become an episode.
+- **Fast-changing values** such as live metrics are better fetched at run time, since a remembered figure is correct only until the next change.
+- **One-off context** that will not recur does not need to be durable, and an uncluttered memory recalls better than a crowded one.
+
+Memory earns its cost when a fact is stable, reused, and expensive to restate. For anything else, the workspace already has a better place to put it.
+
+## Related resources
+
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [AI workflow automation](/blog/ai-workflow-automation/)
+- [Construct vs chat assistants](/blog/construct-vs-chatgpt/)
+- [AI employee product guide](/blog/ai-employee/)
+
+### Frequently asked questions
+
+**How is agent memory different from chat history?**
+
+Chat history preserves messages. Memory stores durable facts with provenance and temporal context, so the agent knows what it learned, where it came from, and whether it is still current.
+
+**Can I correct something the agent remembers incorrectly?**
+
+Yes. Corrections are recorded rather than silently overwriting the previous value, so the history of what changed stays visible and a mistaken update can be reasoned about later.
+
+**Can I make the agent forget something?**
+
+Memory controls let you inspect, update, forget, or restore what the agent knows. Forgetting is an explicit operation rather than a side effect of the conversation ending.
+## AI Employee for Real Business Work
+
+URL: https://construct.computer/blog/ai-employee/
+Type: guide
+Author: Nischal
+Published: 2026-07-20 (updated 2026-07-27)
+Tags: ai-employee, ai-agent, business-automation
+
+An AI employee goes beyond answering questions. It keeps context, operates tools, produces artifacts, and returns with finished work you can inspect.
+
+## What is an AI employee?
+
+An AI employee is software that can accept an outcome, decide which tools are needed, and complete a multi-step job. Unlike a chat assistant, it has a persistent workspace for files, memory, schedules, and reusable procedures, plus live browser runs and a sandbox terminal. The result is not only an answer in a thread: it can be a report, an updated record, a sent message, or a completed workflow.
+
+Construct is the personal work OS around that employee. The agent can research the web, operate a live browser, run commands in a sandbox, manage workspace files, use its native inbox, and act through connected business applications. Files saved in the workspace persist; live browser runs and shell state do not. Its work remains visible through the web desktop, chat tool records, and Activity summaries.
+
+## What work can it complete?
+
+Construct is designed for jobs that cross tools or continue beyond one conversation. You can ask it to research a market and save a cited brief, analyze an uploaded file, read and reply from its native inbox, use connected Gmail actions, update a CRM, or prepare a recurring operating report. When a job is large, it can delegate bounded parts to temporary agents and combine their results. Plans allow 2, 4, or 8 temporary jobs to run concurrently; additional jobs queue.
+
+- Research a topic and deliver a cited report
+- Analyze files and attach a cleaned output
+- Read an inbox, draft replies, and schedule follow-up work
+- Update connected apps and record what changed
+- Run recurring reports from a saved workflow
+
+## A worked example: the weekly operating report
+
+The clearest way to see the difference is to follow one recurring job from request to durable output.
+
+**The request.** "Every Friday, pull last week's numbers from the CRM, check which deals moved stage, summarize what changed, and email it to the team."
+
+**What Construct does.** It uses a connected-app action to read the CRM rather than scraping it, because structured actions are more reliable for record data. It compares against last week's saved figures, which are in workspace files from the previous run. It writes the summary, saves it as a file, and sends it from its native inbox.
+
+**What is left behind.** A dated report file in the workspace, a sent message, a connected-app read recorded in Activity, and a chat session that can be reopened to see how a particular figure was derived. Next Friday's run starts from those files rather than from scratch.
+
+**Where supervision fits.** For the first few runs you read the report before it goes out, running the job on demand rather than on a schedule. Once the output is consistently right, it moves to the Calendar. The agent can still interrupt itself to ask a question when something is genuinely ambiguous.
+
+Nothing here is exotic. It is the ordinary shape of operational work: pull from a system, compare against last time, write it up, send it, and be able to explain it later.
+
+## What each plan can actually run
+
+An AI employee is bounded by real capacity, and the limits determine which jobs are practical. Construct's published plans differ mostly along task depth, runtime, and storage.
+
+| Plan    | Price | Steps per task | Command runtime | Storage |
+| ------- | ----- | -------------- | --------------- | ------- |
+| Lite    | $9    | Up to 50       | 5 minutes       | 100 MB  |
+| Starter | $59   | 6× Lite usage  | 30 minutes      | 1 GB    |
+| Pro     | $299  | Up to 1,000    | 1 hour          | 3 GB    |
+
+Lite includes 2 parallel background jobs. Background and scheduled tasks are available from Starter upward, native agent email starts on Starter, and Pro adds bring-your-own-key support for supported model providers. Pricing and limits are current as of this post's publish date; check the pricing section on the [Construct homepage](/) before purchasing.
+
+The practical reading: step count governs how deep a single job can go before it must be split, and command runtime governs how long a script or browser sequence can run. A research job that touches thirty sources and a data job that runs a long transformation are constrained by different numbers.
+
+## Persistent, but still supervised
+
+Persistence matters because real work rarely fits inside one prompt. Construct keeps workspace files, conversation state, workflows, schedules, and long-term memory available for later tasks. Its memory is inspectable: you can review what it remembers, correct stale information, or forget it entirely.
+
+Autonomy does not have to mean invisible work. The Activity feed keeps bounded action summaries and, when available, a short reason. Chat tool records retain bounded inputs and outputs. You can inspect results, interrupt a running turn, and answer questions when Construct needs a decision.
+
+Worth being precise about what this is and is not: Activity provides bounded action summaries rather than a forensic audit log. It is designed to answer "what did the agent do, and roughly why" for an operator reviewing work. A regulated environment needing complete immutable records of every operation should evaluate that boundary directly rather than assume it.
+
+## One workspace, many applications
+
+Construct discovers supported applications from its live integration catalog, including tools such as Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable. The agent can find available actions, ask you to connect an account when necessary, and then execute the action through the integration. Slack and Telegram accept direct messages; Discord currently uses slash commands to reach the same workspace away from the web desktop.
+
+When an off-the-shelf connection is not enough, Construct can use its browser or terminal. It can also create a small workspace application for a recurring internal process, publish it to your desktop, and keep the last working build available if a later edit fails. That path is covered in detail in [how Construct builds internal tools](/blog/build-internal-tools-with-construct/).
+
+## What to delegate first
+
+Adoption tends to go better when the first jobs are chosen for reviewability rather than ambition.
+
+1. **Start with read-and-summarize work.** Research, inbox digests, and file analysis produce an output you can check at a glance, and a wrong result costs nothing.
+2. **Move to work that writes to systems you control.** Updating your own records or drafting into your own workspace keeps mistakes contained.
+3. **Then add recurring runs.** Once a job has produced good output several times on demand, put it on the Calendar.
+4. **Add outward-facing work last.** Anything that emails customers or posts publicly deserves several supervised runs first.
+
+The reverse order is where people get burned: scheduling an unsupervised, outward-facing job before knowing how it behaves on an unusual week.
+
+## When an AI employee is the wrong fit
+
+Construct is not the shortest path to every outcome.
+
+- **A single question with a single answer** is faster in a chat assistant.
+- **High-volume deterministic mappings** belong on a trigger-action platform; see [Construct vs Zapier](/blog/construct-vs-zapier/).
+- **Work living entirely inside one office suite** may be better served by that suite's own assistant; see [Construct vs Copilot](/blog/construct-vs-copilot/).
+- **Repository-centric software engineering** is the specialty of coding agents; see [Construct vs coding agents](/blog/construct-vs-coding-agents/).
+
+The fit is strongest when a job crosses several tools, recurs, needs context that outlives a conversation, and has to leave evidence of what happened.
+
+## Related resources
+
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [Construct vs chat assistants](/blog/construct-vs-chatgpt/)
+- [AI workflow automation](/blog/ai-workflow-automation/)
+- [AI agent memory](/blog/ai-agent-memory/)
+
+### Frequently asked questions
+
+**What work can an AI employee complete?**
+
+Research, tool operation, file creation, and recurring work run from a persistent, supervised workspace — the kinds of tasks that span several apps rather than fitting in a single chat response.
+
+**How is the work kept accountable?**
+
+The workspace retains files, run history, and bounded Activity summaries, and long-term memory stays inspectable and correctable, so delegated work can be reviewed after the fact.
+## AI Workflow Automation
+
+URL: https://construct.computer/blog/ai-workflow-automation/
+Type: guide
+Author: Nischal
+Published: 2026-07-20 (updated 2026-07-27)
+Tags: workflow-automation, ai-agent, scheduling
+
+Turn a successful AI task into a durable procedure that can run again without rebuilding the process from scratch.
+
+## From one good run to a reusable procedure
+
+Traditional automation works best when every trigger and action is known before the flow is built. AI workflow automation is useful when a procedure contains research, judgment, writing, or tool use that cannot be reduced to a fixed data mapping. Construct combines durable workflow steps with an agent that can handle those less predictable parts.
+
+A workflow can include agent work, connected-app actions, and in-app notifications. Published versions are preserved so a future edit does not silently change a run that already started. Run history makes the procedure easier to inspect and improve over time. Current workflows are linear: branching, delays, approval steps, fan-out, and subworkflows are not yet supported.
+
+The sequence that tends to work is to do the job once conversationally, confirm the output is right, and only then encode it. A workflow written before the job has ever succeeded is a guess about the steps. A workflow written afterwards is a record of steps already known to produce the result you wanted.
+
+## A worked example: the Monday competitor digest
+
+Consider a recurring task: every Monday, check five competitors' pricing pages, note anything that changed since last week, and post a summary to Slack.
+
+**Run it once.** Ask Construct to gather the current pricing for each competitor and summarize it. It uses web search and fetch for public pages, and a live browser run for any page that needs interaction. You review the output and correct the framing.
+
+**Encode it.** Save the procedure as a workflow: an agent step that gathers and compares pricing, a connected-app action that posts to Slack, and an in-app notification so the run is visible in the workspace even if nobody is watching Slack.
+
+**Schedule it.** Add it to Construct's Calendar as a recurring Monday job. The scheduler reconciles missed or delayed work rather than depending on an open browser tab.
+
+**Inspect it.** Each run leaves step results, retry information, and Activity summaries. Agent steps link back to their chat sessions, so a week where the summary looked wrong can be opened and read rather than guessed at.
+
+The durable output is a versioned procedure, a Slack post each week, and a run history that makes the procedure improvable. When a competitor redesigns a pricing page and the step starts returning less useful results, the run history is where that shows up.
+
+## Run now or put it on the Calendar
+
+Construct's Calendar is a scheduler for agent work and workflows. Create a one-time job, define a recurring schedule, run it immediately, or cancel it from the same workspace. The scheduler reconciles missed or delayed work instead of depending on an open browser tab.
+
+This makes recurring operating work practical: weekly market research, an inbox summary, a customer follow-up list, or a report assembled from several connected systems. Google Calendar can be connected as an external app, but Construct's native Calendar controls when agent jobs run.
+
+Current workflow runs start on demand or from Construct's Calendar. Event-triggered email workflow plugins are not currently part of the workflow runner. In practice this means a workflow that should react to incoming mail is built as a scheduled inbox check on a chosen interval, rather than as something that fires the moment a message arrives. For a job where reacting within seconds matters, a dedicated trigger-based platform remains the better fit.
+
+## Use the right execution surface
+
+Each step can use the surface that fits the job. Structured app actions are best for reliable updates. Web search and fetch handle public research. A live browser covers interactive sites, including logins completed during that run. The sandbox terminal can process files, run scripts, and generate artifacts; files saved under the workspace persist after shell state is gone.
+
+| Step needs                        | Best surface         | Persists afterwards       |
+| --------------------------------- | -------------------- | ------------------------- |
+| Update a record in a business app | Connected-app action | Yes, in that app          |
+| Research a public topic           | Web search and fetch | As saved files or memory  |
+| Use a site that needs interaction | Live browser run     | No — save output to files |
+| Transform a file or run a script  | Sandbox terminal     | Files yes, shell state no |
+| Tell someone the run happened     | In-app notification  | Yes, in the workspace     |
+
+The distinction in the right-hand column matters more than it first appears. Live browser runs and shell state are bounded execution surfaces: they exist for the duration of the run. Anything a later step or a later week depends on needs to be written to workspace files while the run is still in progress.
+
+- Collect sources and create a cited brief
+- Read messages and update a connected system
+- Process a file and save the transformed output
+- Create an in-app notification, or post through a connected app
+
+## Inspect every run
+
+Workflow automation should be debuggable. Construct keeps run state, step results, retry information, and Activity summaries. You can open resulting files and review connected-app actions; agent steps also link to their chat sessions. During interactive work the agent can ask for missing information, but workflows do not add a mandatory approval before every external action.
+
+That last point deserves emphasis when a workflow writes to systems other people read. Because there is no mandatory approval gate before each external side effect, a workflow that posts publicly, emails customers, or updates shared records should be run manually a few times before it goes on a schedule. Reviewing the first several runs is the cheapest way to catch a step that behaves differently than intended.
+
+## Working within linear runs
+
+Current workflows are linear, and a few patterns follow from that constraint.
+
+- **Conditional work** belongs inside an agent step rather than across branches. An agent step can read a situation and decide what to do; the workflow itself does not fork.
+- **Multi-stage procedures** can be split into separate workflows scheduled at different times, with workspace files carrying state between them.
+- **Approval-gated work** is better left as an on-demand workflow that a person triggers after reviewing, rather than a scheduled run with no gate.
+
+If a procedure genuinely needs branching, delays, or fan-out today, a traditional automation platform handles those directly. The [Construct vs Zapier comparison](/blog/construct-vs-zapier/) covers where each model fits, and [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/) walks the same workflow built both ways.
+
+## When a workflow is not the answer
+
+Not every repeated task should become a workflow.
+
+- **Jobs that run once** are cheaper to assign conversationally than to encode.
+- **Procedures still changing weekly** will spend more time being edited than run; wait until the shape settles.
+- **Purely deterministic, high-volume mappings** with no judgment step are what trigger-action platforms are built for.
+- **Work needing sub-minute reaction time** does not fit a scheduled runner.
+
+A workflow pays off when a procedure is stable, repeated, and involves enough judgment that a fixed mapping would be brittle. That is a narrower set of tasks than "everything I do twice", and the narrower set is where it works well.
+
+## Related resources
+
+- [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/)
+- [Construct vs Zapier](/blog/construct-vs-zapier/)
+- [AI agent memory](/blog/ai-agent-memory/)
+- [AI employee product guide](/blog/ai-employee/)
+
+### Frequently asked questions
+
+**What is an AI workflow in Construct?**
+
+A reusable procedure combining agent steps, connected-app tools, and notifications. Once saved it can be run on demand by anyone, or scheduled to run again from the native Calendar.
+
+**Can workflows include branching or approval steps?**
+
+Not yet. Current workflows are intentionally linear and versioned. Branching, delays, approval steps, fan-out, and subworkflows are not supported today.
+
+**What can a workflow act on?**
+
+Workflows can operate across workspace files, live browser runs, native email, and connected business apps, so a single procedure can span the tools a process actually touches.
+## Construct vs ChatGPT, Claude, and Gemini
+
+URL: https://construct.computer/blog/construct-vs-chatgpt/
+Type: comparison
+Author: Construct Team
+Published: 2026-07-20 (updated 2026-07-27)
+Tags: comparison, chat-assistants, chatgpt, ai-employee
+
+Chat assistants combine conversation with product- and plan-dependent tools. Construct centers those capabilities in a persistent work OS for files, memory, schedules, workflows, terminal commands, live browser runs, and connected apps.
+
+## Methodology
+
+This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
+
+## Side by side
+
+| Feature        | Construct                                                       | Chat assistants                                                    |
+| -------------- | --------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Category       | AI employee in a persistent work OS                             | Conversational AI products with expanding tools                    |
+| Execution      | Browser, terminal, and connected-app actions                    | Tool and app actions vary by product and plan                      |
+| Continuity     | Workspace files and controlled memory                           | Chat history, projects, and memory vary by product and plan        |
+| Integrations   | Live integration catalog; agent can act directly                | Connected apps and actions vary by product, plan, and settings     |
+| Proof          | Activity summaries, chat tool records, files, and sent messages | Responses, citations, and activity controls vary by product        |
+| Recurring work | Native schedules and reusable workflows                         | Scheduling and automation are available in some products and plans |
+| Reach          | Web, Slack, Telegram, Discord slash commands, and email         | Web, desktop, and mobile; other channels vary by product           |
+
+## Conversation vs execution
+
+Chat assistants are centered on conversation, while their tools and actions vary by product and plan. Construct is centered on assigned outcomes — research a market and email a PDF, review its native inbox, or update Linear from Slack — using a persistent work OS, including scheduled work while you are offline.
+
+It is worth being fair about how fast this boundary is moving. Chat products have added file handling, connectors, scheduled tasks, and browsing, and several of those features overlap directly with what is described here. The durable distinction is not any single feature but the default unit of work: a chat product organizes around a conversation, and Construct organizes around a workspace that conversations happen inside.
+
+## Persistence and inspection
+
+A conversation can preserve messages, but business work also depends on files, procedures, schedules, and facts that change over time. Construct keeps those parts in one workspace. Its long-term memory is inspectable and correctable, while the Activity feed keeps bounded action summaries and best-effort reasons. Bounded tool details remain in chat.
+
+Correctability is the part most often overlooked when comparing memory features. Storing context is common; being able to see a stored assertion, supersede it when the fact changes, and forget it entirely is what makes memory safe to rely on for work. [AI agent memory you can control](/blog/ai-agent-memory/) covers that model in detail.
+
+## Recurring and cross-app work
+
+Chat is often the right interface for starting a job, but it should not be the only place the work can live. You or the agent can encode a repeatable process as a versioned linear workflow, schedule it through Construct's Calendar, and act through connected applications. The resulting files and run history remain available after the conversation ends.
+
+Construct discovers supported applications from its live integration catalog, including tools such as Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable, and custom MCP tools can be added. Slack and Telegram accept direct messages; Discord currently uses slash commands.
+
+## The same request in both
+
+Take: "Summarize what changed in our top accounts this week and send it to the team."
+
+A chat assistant can produce an excellent summary once the data is in front of it, and can often fetch some of that data depending on its connectors and plan. What generally remains with you is assembling inputs it cannot reach, sending the result through your own tools, and repeating the exchange next week.
+
+Construct treats the same request as a job: read the accounts through connected-app actions, compare against files saved by the previous run, write the summary, send it from the native inbox, and leave the files and Activity summary behind. Assigned to the Calendar, it repeats without being restated.
+
+The quality of the writing may be similar. The difference is the number of manual steps around it and whether next week starts from something.
+
+## The practical boundary
+
+Choose a chat assistant when conversation, drafting, research, or its available tools fit the job. Choose Construct when the request needs a persistent work OS, several execution surfaces, recurring operation, or a visible record of what was completed.
+
+## When to choose Construct
+
+- Recurring autonomous tasks
+- Cross-app workflows
+- Scheduled background work
+- Proof of what the agent did
+
+## When to choose a chat assistant
+
+- Drafting and brainstorming
+- One-shot Q&A
+- Available chat tools and actions cover the job
+- Exploring a problem before any work begins
+
+## Using both
+
+These are complementary more often than competitive. A common pattern is to think and draft in a chat assistant, then hand execution, recurrence, and record-keeping to Construct. Nothing about adopting one requires abandoning the other, and the cost of running both is usually small next to the time either saves.
+
+## Sources
+
+- [Construct: AI employee product guide](https://construct.computer/blog/ai-employee/)
+- [OpenAI: ChatGPT capabilities overview](https://help.openai.com/en/articles/9260256-chatgpt-capabilities-overview)
+- [OpenAI: Scheduled Tasks in ChatGPT](https://help.openai.com/en/articles/10291617-tasks-in-chatgpt)
+- [Anthropic: Get started with Claude](https://support.claude.com/en/articles/8114491-getting-started-with-claude)
+- [Google: Connect Workspace to Gemini Apps](https://support.google.com/gemini/answer/15229592)
+
+## Related resources
+
+- [Chat assistants vs AI employees](/blog/chat-assistants-vs-ai-employees/)
+- [AI employee product guide](/blog/ai-employee/)
+- [AI agent memory guide](/blog/ai-agent-memory/)
+- [All AI employee resources](/blog/)
+
+### Frequently asked questions
+
+**How is Construct different from ChatGPT or Claude?**
+
+Chat assistants center on conversation, with tools and actions that vary by product and plan. Construct centers on assigned outcomes in a persistent work OS with files, controlled memory, schedules, workflows, a sandbox terminal, live browser runs, and connected apps.
+
+**Can ChatGPT already schedule tasks?**
+
+Some chat products do offer scheduling and automation, depending on plan. The difference is where the work lives afterward: Construct keeps resulting files, run history, and bounded Activity summaries in a workspace that outlives the conversation.
+
+**When should I still use a chat assistant?**
+
+Choose a chat assistant for drafting, brainstorming, one-shot questions, and any job its available tools already cover. Choose Construct when the request needs several execution surfaces, recurring operation, or a visible record of completed work.
+
+**Can I see what the agent actually did?**
+
+Construct keeps bounded Activity summaries with best-effort reasons, plus chat tool records, workspace files, and sent messages. Its long-term memory is inspectable and correctable rather than opaque.
+## Construct vs coding-focused agents
+
+URL: https://construct.computer/blog/construct-vs-coding-agents/
+Type: comparison
+Author: Construct Team
+Published: 2026-07-20 (updated 2026-07-27)
+Tags: comparison, coding-agents, ai-employee
+
+Tools like Devin-style coding agents focus on repositories and terminals. Construct is a generalist AI employee for the whole business stack.
+
+## Methodology
+
+This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
+
+## Side by side
+
+| Feature     | Construct                                        | Coding agents                                         |
+| ----------- | ------------------------------------------------ | ----------------------------------------------------- |
+| Primary job | Cross-app business work                          | Software engineering                                  |
+| Tools       | Browser, terminal, files, inbox, apps, workflows | Repository, terminal, CI, pull requests               |
+| Audience    | Operators and technical teams                    | Software teams                                        |
+| Scheduling  | Recurring agent jobs and workflows               | Scheduled and event automation varies by product      |
+| Memory      | User-controlled long-term memory                 | Repository and task context                           |
+| Output      | Files, messages, app updates, and code           | Code changes and pull requests; tests depend on setup |
+
+## Beyond the repo
+
+Coding agents shine in pull requests and refactors. Construct can read and reply from its native inbox, update spreadsheets, schedule Construct jobs, create Google Calendar events when that app is connected, and post in Slack.
+
+## Different definitions of done
+
+The clearest way to separate the two categories is to ask what counts as a finished job.
+
+For a coding agent, done is a reviewable change: a branch, a diff, a passing test run, a pull request description. Everything in the product is organised around producing that artifact and making it easy to review. The repository is the context, and CI is the feedback loop.
+
+For Construct, done is a completed outcome that may include code but usually includes other things: a file saved, a message sent, a record updated, a summary posted. There is no single artifact type, which is why supervision runs through Activity summaries and workspace outputs rather than a diff.
+
+Neither definition is more advanced. They are optimisations for different jobs, and a team that needs both is better served using both than forcing either to cover the other.
+
+## A shared work desktop
+
+Construct exposes live browser work, a read-only terminal transcript, files, inbox, Calendar, workflows, memories, connected apps, notifications, and Activity summaries in one web desktop. Non-engineers can inspect outputs and interrupt a running turn without learning a repository-centric interface.
+
+That accessibility is a real difference in who can supervise the work. Reviewing a coding agent's output generally requires being able to read a diff. Reviewing a Construct job means opening a file, reading a summary, or checking a sent message, which is work an operations lead or founder can do directly.
+
+## Where the boundary matters
+
+A coding agent is the specialist when success means a tested pull request. Construct is the generalist when the same job also requires reading customer email, researching the market, updating a CRM, scheduling a follow-up, and sharing the result. It can still use a terminal and repository, but code is one step in a broader business workflow.
+
+## A scenario that crosses the line
+
+Consider a bug reported by a customer over email. The full job is: read and understand the report, reproduce it, fix it, tell the customer, and log it for the team.
+
+A coding agent owns the middle: reproduce and fix, with a tested pull request at the end. It typically does not read the customer's inbox, judge tone for the reply, or update the CRM record.
+
+Construct can take the ends: triage the inbox, extract the report, log the issue in the tracker, draft the customer reply, and schedule a follow-up once a fix ships. For the fix itself, a dedicated coding agent may well produce the better change.
+
+Run together, the division is natural: Construct handles intake, coordination, and communication; the coding agent handles the repository work. Trying to make either cover the whole span is where results get worse.
+
+## Parallel work beyond software delivery
+
+Construct can delegate bounded subtasks to temporary agents and synthesize their results. Plans allow 2, 4, or 8 temporary jobs to run concurrently; additional jobs queue, and browser or terminal work can still contend for shared execution surfaces. A dedicated coding agent may provide deeper repository-specific planning and development ergonomics.
+
+## When to choose Construct
+
+- Ops, research, email, and docs matter as much as code
+- Non-engineers need to supervise the agent
+- Cross-app business workflows
+- Intake and follow-up around engineering work
+
+## When to choose a coding agent
+
+- Primary job is software engineering in a repo
+- Team is all developers
+- Success is defined by a tested, reviewable change
+
+## Sources
+
+- [Construct: AI employee product guide](https://construct.computer/blog/ai-employee/)
+- [Cognition: Introducing Devin](https://docs.devin.ai/get-started/devin-intro)
+- [GitHub: About Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent)
+- [Anthropic: Claude Code overview](https://docs.anthropic.com/en/docs/claude-code/overview)
+
+## Related resources
+
+- [AI employee product guide](/blog/ai-employee/)
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [AI workflow automation guide](/blog/ai-workflow-automation/)
+- [All AI employee resources](/blog/)
+
+### Frequently asked questions
+
+**Can Construct write code like a coding agent?**
+
+It can use a terminal and repository, but code is one step in a broader business workflow. A dedicated coding agent may provide deeper repository-specific planning and development ergonomics when success means a tested pull request.
+
+**What does Construct do that a coding agent does not?**
+
+Construct can read and reply from its native inbox, update spreadsheets, schedule jobs, create Google Calendar events when that app is connected, and post in Slack — alongside repository work rather than instead of the rest of the business stack.
+
+**Can non-engineers supervise Construct?**
+
+Yes. Live browser work, a read-only terminal transcript, files, inbox, Calendar, workflows, memories, connected apps, notifications, and Activity summaries appear in one web desktop, so outputs can be inspected and a running turn interrupted without a repository-centric interface.
+
+**Can Construct run several tasks at once?**
+
+Construct can delegate bounded subtasks to temporary agents and synthesize their results. Plans allow 2, 4, or 8 temporary jobs concurrently; additional jobs queue, and browser or terminal work can still contend for shared execution surfaces.
+## Construct vs Microsoft Copilot and Google Workspace AI
+
+URL: https://construct.computer/blog/construct-vs-copilot/
+Type: comparison
+Author: Construct Team
+Published: 2026-07-20 (updated 2026-07-27)
+Tags: comparison, copilot, google-workspace, ai-employee
+
+Microsoft Copilot and Google Workspace AI are strongest inside their own suites. Construct provides a vendor-neutral workspace for jobs that cross applications, live browser runs, files, and scripts.
+
+## Methodology
+
+This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
+
+## Side by side
+
+| Feature     | Construct                                          | Suite copilots                           |
+| ----------- | -------------------------------------------------- | ---------------------------------------- |
+| Best fit    | Cross-vendor jobs and recurring operations         | Work inside its native suite             |
+| Workspace   | Files, browser, terminal, inbox, memory, workflows | Suite documents and applications         |
+| Execution   | Connected apps plus browser and sandbox tools      | Product- and plan-specific suite actions |
+| Memory      | Inspectable, correctable long-term memory          | Product- and plan-specific context       |
+| Scheduling  | Agent jobs and workflow runs                       | Product- and plan-specific automation    |
+| Supervision | Web-desktop outputs and bounded Activity summaries | Copilot interaction history              |
+
+## Vendor-neutral by design
+
+Suite copilots optimize for Microsoft 365 or Google Workspace. Construct can link supported tools such as Gmail, Linear, GitHub, Notion, and HubSpot through its live integration catalog, while Slack is also available as a messaging channel.
+
+The structural difference is where the assistant's context boundary sits. A suite copilot has deep, privileged access to everything inside its own ecosystem and limited reach beyond it. Construct has broader but shallower reach: it connects to many vendors through their integration surfaces, without the native document-level intimacy a first-party copilot has inside its own suite. Which trade is better depends entirely on how concentrated your work already is.
+
+## Execution beyond suite suggestions
+
+Construct gives the agent a sandbox terminal, live browser runs, persistent files, a native inbox, schedules, and workflows. The user sees these surfaces together in a purpose-built web desktop. Workspace files persist, while live browser runs and shell state are bounded execution surfaces.
+
+The categories of work this opens up are the ones that fall between products: pulling numbers from a system with no suite integration, driving a vendor portal that only exists as a website, running a transformation script over an exported file, or assembling a report whose inputs live in four places.
+
+## Memory and procedures across tools
+
+Suite copilots can use the context available in their ecosystem. Construct is designed to carry context across the wider job: a customer message, a workspace file, a CRM update, a browser research step, and a scheduled follow-up. Useful context can be stored in inspectable memory, while repeatable work can become a versioned workflow.
+
+## A concrete scenario: the monthly board pack
+
+A board pack is a good test because its inputs are rarely in one place: financials in an accounting system, pipeline in a CRM, product metrics in an analytics tool, and commentary in a document.
+
+**With a suite copilot.** Drafting, formatting, summarizing, and chart generation inside the document are well supported, and if the numbers are already in suite spreadsheets it can work with them directly. Getting figures out of the accounting system, CRM, and analytics tool into that spreadsheet is generally still a person's job, month after month.
+
+**With Construct.** The agent reads what it can through connected-app actions, uses a live browser run for a system with no integration, saves the collected figures to workspace files, compares against last month's saved file, and drafts the commentary. The assembly step is the part that becomes repeatable, and it can be scheduled.
+
+The honest caveat: if the final document must be a polished, on-template Microsoft or Google file, the native copilot is better at producing it. A reasonable division is to let Construct assemble and reconcile the inputs and let the suite copilot do the final document craft.
+
+## Where suite copilots still win
+
+If nearly all work happens inside Microsoft 365 or Google Workspace and the main need is inline drafting, summarization, or spreadsheet help, the native copilot may be the shortest path. Construct becomes more useful when execution crosses vendors or needs live browser work, a sandbox terminal, scheduling, and an inspectable work record.
+
+There are also non-capability reasons a suite copilot may be right: it inherits your existing identity, permissions, data-residency, and compliance posture, and it adds no new vendor review. For organisations where that review is a significant hurdle, native tooling has a real advantage that a feature table does not show.
+
+## When to choose Construct
+
+- Work spans multiple SaaS vendors
+- Need scripts, terminal, or custom browser flows
+- Want one agent across Slack, email, and issue trackers
+- Recurring assembly of data from systems with no suite integration
+
+## When to choose a suite copilot
+
+- Entire workflow lives inside Microsoft 365 or Google Workspace
+- Inline drafting inside Office or Docs is enough
+- Adding a new vendor is a significant procurement hurdle
+
+## Sources
+
+- [Construct: AI employee product guide](https://construct.computer/blog/ai-employee/)
+- [Microsoft: Microsoft 365 Copilot overview](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-overview)
+- [Google: AI tools for Google Workspace](https://workspace.google.com/solutions/ai/)
+
+## Related resources
+
+- [AI employee product guide](/blog/ai-employee/)
+- [AI workflow automation guide](/blog/ai-workflow-automation/)
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [All AI employee resources](/blog/)
+
+### Frequently asked questions
+
+**Should I use Construct instead of Microsoft 365 or Google Workspace AI?**
+
+If nearly all work happens inside one suite and the main need is inline drafting, summarization, or spreadsheet help, the native copilot is usually the shortest path. Construct becomes more useful when execution crosses vendors.
+
+**Which applications can Construct connect to?**
+
+Construct links supported tools such as Gmail, Linear, GitHub, Notion, and HubSpot through its live integration catalog. Slack is also available as a messaging channel.
+
+**What can Construct do that a suite copilot cannot?**
+
+Construct provides a sandbox terminal, live browser runs, persistent files, a native inbox, schedules, and workflows in one purpose-built web desktop. Workspace files persist, while live browser runs and shell state are bounded execution surfaces.
+
+**How does Construct handle context across different tools?**
+
+It is designed to carry context across a whole job — a customer message, a workspace file, a CRM update, a browser research step, and a scheduled follow-up. Useful context can be stored in inspectable memory and repeatable work saved as a versioned workflow.
+## Construct vs building your own AI agent
+
+URL: https://construct.computer/blog/construct-vs-diy/
+Type: comparison
+Author: Construct Team
+Published: 2026-07-20 (updated 2026-07-27)
+Tags: comparison, agent-frameworks, diy, ai-employee
+
+A DIY stack combines your chosen agent framework, models, tools, storage, runtime, and user interface. Construct ships those operating surfaces as one hosted product.
+
+## Methodology
+
+This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
+
+## Side by side
+
+| Feature       | Construct                                           | DIY agent stack                         |
+| ------------- | --------------------------------------------------- | --------------------------------------- |
+| Time to start | Hosted product                                      | Build and integrate components          |
+| Execution     | Browser, sandbox, files, apps                       | Your chosen runtimes                    |
+| Memory        | Built-in, inspectable, correctable                  | Design and operate it yourself          |
+| Channels      | Web, Slack, Telegram, Discord slash commands, email | Build each ingress                      |
+| Operations    | Managed scheduling and bounded Activity summaries   | Own queues, retries, logs, and upgrades |
+| Control       | Custom MCP, workspace apps, and model BYOK on Pro   | Complete architectural control          |
+
+## Hosted and integrated
+
+A production DIY stack may need compute isolation, credential storage, channel integrations, and a UI humans can trust, depending on the components and deployment you choose. Construct bundles these operating surfaces so you assign tasks instead of assembling them.
+
+## The parts people underestimate
+
+Getting an agent to complete a task in a notebook is a weekend. The gap between that and something colleagues rely on is where DIY projects usually stall, and it is rarely the model layer.
+
+- **Sandboxed execution.** Running agent-authored code needs isolation, resource limits, and timeouts. Deciding what a shell can reach is a security design problem, not a library choice.
+- **Credential custody.** Every connected app means storing and rotating tokens, handling OAuth refresh, and scoping access per user.
+- **Durable state.** Files, conversation state, and long-term memory need storage with a lifecycle, not just a vector index.
+- **Memory correction.** Storing context is easy; superseding a stale assertion, keeping provenance, and letting a user forget something is a data model.
+- **Scheduling.** A scheduler that reconciles missed and delayed runs is meaningfully harder than a cron entry.
+- **A human-facing surface.** People need to see what happened, interrupt a run, and answer a question mid-task. This is often the largest single piece of work.
+- **Ongoing maintenance.** Model deprecations, connector API changes, and browser breakage arrive continuously.
+
+None of these are unsolvable. The question is whether solving them is the work your team should be doing.
+
+## Still flexible
+
+Bring your own model key on Pro, connect supported applications, or add a custom MCP server. The agent can use browser and sandbox tools when a structured integration is not enough. It can also build a constrained workspace application and add it to the desktop for a recurring internal process.
+
+MCP matters most here. Because Construct can consume custom MCP servers, an internal system with no public integration can still be reached without waiting for first-party support — you implement the tool interface and the hosted agent uses it. That path preserves much of DIY's extensibility while leaving the operating layers managed.
+
+## What you would otherwise operate
+
+A production agent needs more than a prompt and model API. Depending on the stack, your team may need to operate compute, browser tasks, app connections, schedules, memory, interruptions, and activity records. Frameworks provide many useful primitives; Construct packages the operating layers into one product while retaining browser, terminal, supported model-key, and extension options.
+
+## The maintenance tradeoff
+
+A DIY stack can match a precise security model, deployment environment, or internal platform. It also makes your team responsible for every model change, connector failure, browser timeout, queue, migration, and support surface. Construct is the shorter path when the goal is to operate an AI employee rather than build the infrastructure around one.
+
+The cost comparison that matters is not licence fees against zero. It is licence fees against engineering time plus the infrastructure the stack runs on plus the ongoing maintenance nobody schedules. Construct's plans run $9, $59, and $299 per month as of this post's publish date. Against a fraction of an engineer's time indefinitely, the arithmetic is usually straightforward unless control is itself the requirement.
+
+## A reasonable hybrid
+
+The choice is not always all-or-nothing. Teams with real platform capability often use a hosted agent for general operating work while building bespoke agents only where differentiation justifies it. Custom MCP servers make that split practical: shared internal tools are implemented once and consumed by whichever agent needs them.
+
+The signal that DIY is genuinely warranted is usually a hard constraint rather than a preference — an air-gapped deployment, a specific certification, or an agent whose behaviour is itself the product.
+
+## When to choose Construct
+
+- Want production-ready agent infrastructure now
+- Need integrations and channels without building them
+- Prefer metered SaaS over ops burden
+- Want a supervision UI you do not have to design
+
+## When to choose a DIY stack
+
+- Full control over every layer is mandatory
+- Air-gapped or on-prem only
+- You have a platform team to run it
+- The agent's behaviour is your product
+
+## Sources
+
+- [Construct: AI employee product guide](https://construct.computer/blog/ai-employee/)
+- [OpenAI: Agents SDK](https://openai.github.io/openai-agents-python/)
+- [LangChain: LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview)
+- [Model Context Protocol: Introduction](https://modelcontextprotocol.io/docs/getting-started/intro)
+
+## Related resources
+
+- [AI employee product guide](/blog/ai-employee/)
+- [AI workflow automation guide](/blog/ai-workflow-automation/)
+- [AI agent memory guide](/blog/ai-agent-memory/)
+- [All AI employee resources](/blog/)
+
+### Frequently asked questions
+
+**Why not build my own agent on an open-source framework?**
+
+Frameworks provide many useful primitives, but a production stack may also need compute isolation, credential storage, channel integrations, schedules, memory, and a UI people trust. Construct packages those operating layers as one hosted product.
+
+**Do I lose control by using a hosted product?**
+
+Less than you might expect. You can bring your own model key on Pro, connect supported applications, add a custom MCP server, and have the agent build a constrained workspace application for a recurring internal process.
+
+**When is building your own stack the right call?**
+
+When full control over every layer is mandatory, when deployment must be air-gapped or on-premises, or when you have a platform team available to run it. A DIY stack can match a precise security model or internal platform.
+
+**What is the ongoing maintenance difference?**
+
+A DIY stack makes your team responsible for every model change, connector failure, browser timeout, queue, migration, and support surface. Construct is the shorter path when the goal is to operate an AI employee rather than build infrastructure around one.
+## Construct vs Zapier, Make, and n8n
+
+URL: https://construct.computer/blog/construct-vs-zapier/
+Type: comparison
+Author: Construct Team
+Published: 2026-07-20 (updated 2026-07-27)
+Tags: comparison, zapier, make, n8n, workflow-automation
+
+Zapier, Make, and n8n excel when you know every trigger and action upfront. Construct plans and executes when the goal is clear but the steps are not.
+
+## Methodology
+
+This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
+
+## Side by side
+
+| Feature        | Construct                                                 | Zapier, Make, and n8n                         |
+| -------------- | --------------------------------------------------------- | --------------------------------------------- |
+| Starting point | An outcome or reusable procedure                          | A configured trigger, schedule, or manual run |
+| Ambiguity      | Agent can interpret changing inputs                       | Best with deterministic mappings              |
+| Execution      | Apps, live browser, terminal, files, in-app notifications | Configured connectors and code steps          |
+| Scheduling     | Native Calendar for agent jobs and workflows              | Triggers and platform schedules               |
+| Workflow shape | Linear, versioned runs                                    | Visual workflows; branching varies by product |
+| Best use       | Knowledge work with judgment                              | Reliable high-volume automation               |
+
+## Flows vs goals
+
+Automation platforms center on configured triggers, actions, and visual workflows, with agentic features varying by product. Construct can instead start from an outcome — "every Monday, summarize competitor pricing and post to Slack" — and work out the browser, app, and file steps at runtime.
+
+The distinction shows up in where the thinking happens. On an automation platform, the thinking is done at build time by the person wiring the flow, and the runtime is deterministic execution of that plan. With an agent, some of the thinking moves to run time. That is an advantage when inputs vary and a disadvantage when they do not, which is why the choice depends far more on the shape of the work than on the capability of either tool.
+
+## Handles ambiguity
+
+When inbox review needs judgment or research spans multiple sites, a fixed mapping can become brittle. Construct can use an agent step to interpret the situation, then continue through connected-app actions, live browser work, files, or in-app notifications. That flexibility is useful when inputs vary but the desired outcome stays consistent.
+
+The practical test is what happens on an unusual input. A trigger-action flow handles cases its builder anticipated and drops or mishandles the rest, which is correct behaviour for a system meant to be predictable. An agent step attempts to interpret the unusual case, which is useful when a dropped item would otherwise sit unnoticed, and less useful when a silently-handled edge case would have been better escalated.
+
+## Reusable workflows without pretending everything is fixed
+
+Construct also supports durable workflows. A workflow can combine agent reasoning, connected-app tools, and in-app notifications, then run on demand or from the native Calendar. Current workflows are intentionally linear; branching, delays, approval steps, fan-out, and subworkflows are not yet supported.
+
+That linearity is a real constraint worth weighing directly. Automation platforms offer branching, routers, delays, and error paths as first-class building blocks. If a procedure genuinely depends on those primitives today, they are available there and not in Construct. The Construct pattern is to put conditional logic inside an agent step rather than to express it as workflow structure.
+
+## A concrete scenario: onboarding a new customer
+
+Consider a post-sale process: a deal closes, and the customer needs a welcome email, a project workspace, a kickoff meeting, and an internal handoff note.
+
+**Built on an automation platform.** A trigger fires on the CRM stage change. Action steps create the workspace, send a templated welcome, create the calendar event, and post the handoff. It runs in seconds, costs very little per execution, and does the same thing every time. When a deal closes with missing contact details or an unusual plan configuration, a filter or router has to have been built for it.
+
+**Run by Construct.** A scheduled job or an assigned outcome checks for newly closed deals. The agent reads the deal record, notices the missing contact detail, checks prior email history to fill it, writes a welcome that reflects what the customer actually bought, and drafts a handoff note in its own words. It leaves the files, sent messages, and Activity summary in the workspace.
+
+Neither is strictly better. The first is faster, cheaper, and more predictable for the common case. The second absorbs the variance that would otherwise land on a person's desk. Teams running both usually put the deterministic spine on the automation platform and hand the judgment-heavy edges to an agent.
+
+## Cost models differ more than prices
+
+Comparing monthly figures directly tends to mislead, because the two categories meter different things. Automation platforms typically price on task or operation volume: predictable per-run cost, scaling with throughput. Construct's plans meter task depth and capacity — Lite at $9 with up to 50 steps per task, Starter at $59, and Pro at $299 with deep runs up to 1,000 steps per task — with storage and command runtime rising alongside. Pricing is current as of this post's publish date and can change; check both vendors' current pricing before deciding.
+
+The useful comparison is cost per completed outcome on your actual work. A high-volume, low-complexity flow is almost always cheaper on an automation platform. A low-volume job that would otherwise take a person an hour of cross-app judgment is where per-step metering can come out ahead.
+
+## Using both together
+
+Most teams that adopt an agent do not retire their automation platform, and there is no reason they should. A reasonable division:
+
+- **Keep on the automation platform:** high-volume record syncing, notifications with fixed templates, webhook plumbing, anything needing sub-minute reaction time.
+- **Move to Construct:** research, inbox triage requiring judgment, recurring reports assembled from several systems, cross-app work whose steps vary week to week.
+- **Watch for:** procedures where a fixed flow has grown a dozen branches to cover edge cases. That growth is usually the signal a judgment step belongs in the middle.
+
+## When each wins
+
+Choose an automation platform when the trigger, the transformation, and the action are all known in advance and the volume is high. Choose Construct when the outcome is clear, the steps are not, and the job needs to leave an inspectable record.
+
+For a deeper walkthrough of the same workflow built both ways, read [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/). For how Construct's own workflows and scheduling work, see [AI workflow automation](/blog/ai-workflow-automation/).
+
+## Sources
+
+- [Construct: AI employee product guide](https://construct.computer/blog/ai-employee/)
+- [Zapier: Zap limits](https://help.zapier.com/hc/en-us/articles/8496181445261-Zap-limits)
+- [Zapier: pricing](https://zapier.com/pricing)
+- [Zapier: Agents](https://zapier.com/agents)
+
+## Related resources
+
+- [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/)
+- [AI workflow automation guide](/blog/ai-workflow-automation/)
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [All AI employee resources](/blog/)
+
+### Frequently asked questions
+
+**Is Construct a replacement for Zapier?**
+
+Not usually. Zapier, Make, and n8n remain strong for high-volume automation where every trigger and action is known upfront. Construct is a better fit when the outcome is clear but the steps are not, because it can plan the browser, app, and file work at runtime.
+
+**Can Construct run scheduled workflows like Zapier does?**
+
+Yes. Construct workflows run on demand or from its native Calendar. Workflows are intentionally linear today; branching, delays, approval steps, fan-out, and subworkflows are not yet supported.
+
+**What happens when inputs change unexpectedly?**
+
+A fixed trigger-action mapping can become brittle when inputs vary. Construct can use an agent step to interpret the situation, then continue through connected-app actions, live browser work, files, or in-app notifications.
+
+**Can I use Construct and Zapier together?**
+
+Yes. Deterministic, high-volume paths are well served by a traditional automation platform, while Construct handles the judgment-heavy work around them. The two address different halves of the same operation.
+## What is an AI employee?
+
+URL: https://construct.computer/blog/what-is-an-ai-employee/
+Type: article
+Author: Ankush
+Published: 2026-07-02 (updated 2026-07-27)
+Tags: ai-agent, product, ai-employee
+
+Most AI assistants begin and end in a chat window. You ask a question, get an answer, and carry the result into the rest of your work. An **AI employee** goes further: it can accept an outcome, choose tools, complete a multi-step job, and preserve the files and context behind that work for later.
+
+Construct is the work OS around that employee. It combines persistent files, inspectable memory, schedules, linear workflows, and a native inbox with web research, live browser runs, a sandbox terminal, and connected applications in one web desktop.
+
+## The four rungs of the ladder
+
+"AI employee" is a marketing term until you can say what separates it from the tools underneath it. The useful distinction is how much of a job the software can carry, and what survives afterwards.
+
+| Category        | Given                 | Returns                     | Persists between jobs     |
+| --------------- | --------------------- | --------------------------- | ------------------------- |
+| **Chatbot**     | A question            | An answer                   | Little or nothing         |
+| **Copilot**     | A document in context | An inline suggestion        | The host document         |
+| **Agent**       | A task and tools      | A completed task            | Varies by product         |
+| **AI employee** | An outcome            | Finished work and artifacts | Files, memory, procedures |
+
+Each rung adds something the one below lacks. A copilot knows the document you are in; a chatbot does not. An agent can act on tools; a copilot mostly suggests. An AI employee keeps a workspace, so the work does not evaporate when the session ends.
+
+The line that matters most in practice is the last column. Plenty of products can execute a task once. Far fewer leave behind a workspace where the output, the reasoning, and the procedure are all still there next week.
+
+## Chat assistant vs AI employee
+
+|                | Chat assistant                            | AI employee (Construct)                            |
+| -------------- | ----------------------------------------- | -------------------------------------------------- |
+| **Workspace**  | Primarily a conversation                  | Files, memory, tools, schedules, and workflows     |
+| **Work style** | Answers or drafts                         | Executes browser, terminal, files, and apps        |
+| **Continuity** | Depends on the current product and thread | Persistent workspace and correctable memory        |
+| **Output**     | Usually text in chat                      | Files, sent messages, app updates, and run history |
+
+The difference is not intelligence alone. It is whether the agent has a durable place for work to live and the execution surfaces needed to finish it.
+
+## What Construct does day to day
+
+Construct works from a purpose-built web desktop with Chat, Files, Browser, Terminal, Email, Calendar, Workflows, Memories, Activity, and connected apps. You assign outcomes such as:
+
+- Research a market and save a cited report
+- Read the native inbox and draft or send replies
+- Update Linear issues from Slack messages
+- Run a recurring Monday morning competitor scan
+- Analyze an uploaded spreadsheet and attach a cleaned result
+- Build a small workspace app for a repeated internal process
+
+The agent plans the steps, uses live browser runs, the sandbox terminal, files, or supported applications from the live integration catalog, and leaves persistent outputs in your workspace. Activity keeps bounded action summaries and best-effort reasons; bounded tool details remain in chat.
+
+## Following one job end to end
+
+An abstract definition is less useful than watching a single request resolve. Take: "find out which of our five competitors changed pricing this month, and put a summary in the shared folder."
+
+The agent works out that this needs public research rather than an internal system, uses web search and fetch for the pricing pages, and opens a live browser run for the one page that hides its pricing behind an interaction. It compares what it finds against a file saved during a previous run. It writes a summary, saves it to the workspace, and notifies you.
+
+What makes this an employee-shaped job rather than a chatbot-shaped one is not the research. It is that the comparison depended on last month's file, the output landed somewhere durable, and next month's run will start from this month's result. The job has a before and an after.
+
+## Work that persists and repeats
+
+Persistence makes an AI employee more useful than a one-off task runner. Construct keeps workspace files and long-term memory across conversations. Memories can be inspected, corrected, forgotten, or restored, so continuity does not require accepting an opaque record forever.
+
+You or the agent can encode repeatable procedures as reusable workflows. Construct workflows combine agent steps, connected-app actions, and in-app notifications in a versioned linear run. Branching, delays, approval steps, fan-out, and subworkflows are not yet supported. A workflow can start on demand, while the native Calendar can schedule an agent task or workflow once or on a recurring schedule.
+
+Read more about [AI workflow automation](/blog/ai-workflow-automation/) and [AI agent memory](/blog/ai-agent-memory/).
+
+## Work you can supervise
+
+An AI employee should not become invisible simply because it works independently. Construct exposes files, live browser activity, a terminal transcript, workflows, memories, chat tool records, and bounded Activity summaries in the same web desktop. You can inspect results, interrupt a running turn, and answer questions when the agent needs missing information.
+
+Construct can also delegate bounded subtasks to temporary agents. Plans allow 2, 4, or 8 temporary jobs to run concurrently; additional jobs queue, while browser and terminal work may still contend for shared execution surfaces.
+
+## How to evaluate one
+
+If you are comparing products in this category, most of the marketing sounds identical. These questions separate them quickly.
+
+1. **Where does work live afterwards?** If the answer is "in the chat history", persistence is thin.
+2. **Which surfaces can it actually act on?** Connected apps, a real browser, a terminal, and email are different capabilities, and many products have only some.
+3. **Can it run when nobody is watching?** Scheduling that depends on an open browser tab is not scheduling.
+4. **What evidence does it leave?** You should be able to reconstruct what happened without taking the summary on faith.
+5. **Can you correct what it believes?** Memory you cannot inspect or fix becomes a liability as facts change.
+6. **What are the stated limits?** A product that names its boundaries is easier to trust than one that implies it has none.
+
+## Common misconceptions
+
+**"It replaces a person."** It completes bounded, tool-driven, repeatable work. Relationship-heavy and judgment-heavy responsibilities do not transfer, which is covered in [AI agent vs virtual assistant](/blog/ai-agent-vs-virtual-assistant/).
+
+**"It runs unsupervised from day one."** Autonomy is earned per job. The sensible path is on-demand runs first, scheduled runs once the output is reliably right.
+
+**"More integrations means more capable."** Integration counts say little about whether a product can carry a job that spans several of them and remember what happened.
+
+**"It is just ChatGPT with plugins."** The difference is the workspace: files, memory, schedules, and run history that outlive a thread. See [chat assistants vs AI employees](/blog/chat-assistants-vs-ai-employees/).
+
+## When an AI employee makes sense
+
+Choose an AI employee when you need **recurring work**, **cross-app execution**, **persistent context**, or **inspectable outputs**. A chat assistant remains the simpler choice for quick drafting, brainstorming, and one-off questions that do not need tool execution.
+
+Explore the full [AI employee product guide](/blog/ai-employee/), read [Construct vs ChatGPT](/blog/construct-vs-chatgpt/), or browse [all AI employee resources](/blog/).
+
+### Frequently asked questions
+
+**What is an AI employee?**
+
+An AI employee is an agent given a persistent workspace and the tools to complete assigned work end to end — researching, operating tools, creating files, and running recurring jobs — rather than only answering questions in a chat window.
+
+**How is an AI employee different from a chatbot?**
+
+A chatbot responds. An AI employee executes: it acts across email, Slack, a live browser, and connected apps, keeps the resulting files and history, and can pick work back up on a schedule.
+
+**Does an AI employee work without supervision?**
+
+It runs autonomously but stays supervised. You can inspect outputs, review bounded Activity summaries, and interrupt a running turn, so autonomy does not mean losing visibility into what happened.
+## Chat Assistants vs AI Employees
+
+URL: https://construct.computer/blog/chat-assistants-vs-ai-employees/
+Type: article
+Author: Ankush
+Published: 2026-06-15 (updated 2026-07-27)
+Tags: comparison, chatgpt, ai-employee
+
+Chat assistants changed how we draft emails, summarize documents, and explore ideas. They are less useful when the job is **complete the work** across several tools, preserve the result, and run the same procedure again next week.
+
+Capabilities vary substantially by product and plan. OpenAI documents ChatGPT's available tools in its [capabilities overview](https://help.openai.com/en/articles/9260256-chatgpt-capabilities-overview), while Anthropic describes Claude's current product surfaces in [Getting started with Claude](https://support.claude.com/en/articles/8114491-getting-started-with-claude). This article compares the workspace model, not every feature of every chat product.
+
+## The execution gap
+
+A chat assistant can explain how to update a spreadsheet, prepare a report, and post a summary to Slack. Construct can use live browser runs, a sandbox terminal, workspace files, and connected applications to perform those steps and return with the resulting artifact, chat tool records, and Activity summaries.
+
+That gap shows up in three places:
+
+1. **Unified persistence** — chat products may offer history, projects, files, or memory depending on the product and plan; Construct keeps files, procedures, schedules, and inspectable memory in one work OS.
+2. **Execution surfaces** — available chat tools vary by product and plan, while Construct combines connected apps with live browser runs, a sandbox terminal, native email, and workspace files.
+3. **Inspectable work** — Construct keeps bounded Activity summaries, chat tool records, sent messages, connected-app updates, and workspace artifacts together after execution.
+
+## The same request, handled two ways
+
+Take a request that sounds simple: "Check whether any of our top ten accounts have gone quiet this month, and draft follow-ups for the ones that have."
+
+**In a chat assistant.** You export account activity yourself, paste it in, and get back a well-written analysis and draft follow-ups. The drafting is genuinely good. But you did the data gathering, you will do the sending, and next month the whole exchange starts over from an empty thread. The assistant contributed the middle of the job.
+
+**In Construct.** The agent reads the accounts through a connected-app action, compares against the figures saved in workspace files from last month, drafts the follow-ups, and either sends them from its native inbox or leaves them for review. The files, the sent messages, and the Activity summary stay in the workspace. Next month, the same job can run from the Calendar.
+
+The drafted text might be comparable in both cases. The difference is how much of the surrounding work a person still has to do, and whether anything is left behind that makes the next run cheaper.
+
+| Stage                 | Chat assistant         | Construct                            |
+| --------------------- | ---------------------- | ------------------------------------ |
+| Gather the data       | You export and paste   | Connected-app action reads it        |
+| Compare to last month | You supply the history | Workspace files from the prior run   |
+| Draft the message     | The assistant drafts   | The agent drafts                     |
+| Send it               | You send               | Native inbox, or held for review     |
+| Next month            | Start the thread again | Run the saved workflow on a schedule |
+
+## A workspace changes the relationship
+
+A chat thread is a good place to discuss work. A persistent workspace is where the rest of the job can live. Construct brings persistent Files, Memories, Calendar items, and Workflows together with live Browser runs, a sandbox Terminal, native Email, connected apps, and Activity summaries in one web desktop.
+
+That continuity matters for recurring operations. A weekly research report can reuse a saved workflow and remember the intended audience. An inbox task can refer to earlier customer context. A file-analysis job can save the transformed output beside the original instead of losing it when the conversation closes.
+
+## Repeating work without rebuilding it
+
+Construct's native Calendar schedules one-time or recurring agent jobs and workflow runs. A workflow can combine agent reasoning, connected-app actions, and in-app notifications, then preserve run history for inspection. Current workflows are linear; branching, delays, approval steps, fan-out, and subworkflows are not yet supported.
+
+For deterministic, high-volume trigger-action automation, a traditional platform may be a better fit. For a quick draft or explanation, a chat assistant may be enough. Construct is strongest when a job needs tools, persistence, recurring execution, or coordination across applications.
+
+## Control without constant monitoring
+
+Construct's goal is supervised execution, not invisible autonomy. You can inspect outputs, interrupt a running turn, answer a question when the agent needs a decision, and review or correct long-term memory. Activity keeps bounded action summaries and best-effort reasons; bounded tool inputs and outputs remain in chat.
+
+Large jobs can also be split into bounded parallel subtasks. Plans allow 2, 4, or 8 temporary-agent jobs to run concurrently; additional jobs queue, and browser or terminal work may still contend for shared execution surfaces.
+
+## Where chat assistants remain the better tool
+
+This is not a case where one category wins outright, and pretending otherwise would be unhelpful.
+
+- **Thinking through a problem.** Conversation is the right interface for exploring an idea before any work begins.
+- **One-shot drafting.** A single email, a summary of a pasted document, or a rewritten paragraph needs no workspace.
+- **Questions with no side effects.** If nothing needs to be executed or preserved, execution surfaces add nothing.
+- **Work already covered by available chat tools.** If the product's built-in tools finish the job, the extra machinery is unnecessary.
+
+Many teams reasonably use both: a chat assistant for thinking and drafting, an AI employee for work that has to execute, recur, and leave a record.
+
+## Read the full comparison
+
+Read the detailed [Construct vs ChatGPT comparison](/blog/construct-vs-chatgpt/) or start with [what an AI employee is](/blog/what-is-an-ai-employee/).
+
+For automation builders, see [Construct vs Zapier](/blog/construct-vs-zapier/). For suite copilots, see [Construct vs Copilot](/blog/construct-vs-copilot/). You can also explore [AI workflow automation](/blog/ai-workflow-automation/), [controllable agent memory](/blog/ai-agent-memory/), or [all resources](/blog/).
+
+### Frequently asked questions
+
+**Are chat assistants bad at autonomous work?**
+
+They are excellent at drafting, research, and one-shot questions. Autonomous operations additionally need execution surfaces, persistence between sessions, and an inspectable record of what was completed.
+
+**What should I look for when comparing the two?**
+
+Ask where the work lives after the conversation ends, which surfaces the tool can actually act on, whether it can run again on a schedule, and what evidence it leaves of the work it did.

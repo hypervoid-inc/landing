@@ -8,6 +8,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     description:
       "Give an AI agent persistent memory with provenance, corrections, temporal context, and controls to inspect, update, forget, or restore what it knows.",
     published: "2026-07-20",
+    updated: "2026-07-27",
     author: "nischal",
     tags: ["ai-agent-memory", "persistent-memory", "ai-agent"],
     kind: "guide",
@@ -44,6 +45,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     description:
       "Meet the AI employee that researches, operates tools, creates files, and runs recurring work from a persistent, supervised workspace.",
     published: "2026-07-20",
+    updated: "2026-07-27",
     author: "nischal",
     tags: ["ai-employee", "ai-agent", "business-automation"],
     kind: "guide",

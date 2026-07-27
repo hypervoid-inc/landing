@@ -31,13 +31,29 @@ This is an editorial capability comparison using the linked public vendor docume
 
 Chat assistants are centered on conversation, while their tools and actions vary by product and plan. Construct is centered on assigned outcomes — research a market and email a PDF, review its native inbox, or update Linear from Slack — using a persistent work OS, including scheduled work while you are offline.
 
+It is worth being fair about how fast this boundary is moving. Chat products have added file handling, connectors, scheduled tasks, and browsing, and several of those features overlap directly with what is described here. The durable distinction is not any single feature but the default unit of work: a chat product organizes around a conversation, and Construct organizes around a workspace that conversations happen inside.
+
 ## Persistence and inspection
 
 A conversation can preserve messages, but business work also depends on files, procedures, schedules, and facts that change over time. Construct keeps those parts in one workspace. Its long-term memory is inspectable and correctable, while the Activity feed keeps bounded action summaries and best-effort reasons. Bounded tool details remain in chat.
 
+Correctability is the part most often overlooked when comparing memory features. Storing context is common; being able to see a stored assertion, supersede it when the fact changes, and forget it entirely is what makes memory safe to rely on for work. [AI agent memory you can control](/blog/ai-agent-memory/) covers that model in detail.
+
 ## Recurring and cross-app work
 
 Chat is often the right interface for starting a job, but it should not be the only place the work can live. You or the agent can encode a repeatable process as a versioned linear workflow, schedule it through Construct's Calendar, and act through connected applications. The resulting files and run history remain available after the conversation ends.
+
+Construct discovers supported applications from its live integration catalog, including tools such as Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable, and custom MCP tools can be added. Slack and Telegram accept direct messages; Discord currently uses slash commands.
+
+## The same request in both
+
+Take: "Summarize what changed in our top accounts this week and send it to the team."
+
+A chat assistant can produce an excellent summary once the data is in front of it, and can often fetch some of that data depending on its connectors and plan. What generally remains with you is assembling inputs it cannot reach, sending the result through your own tools, and repeating the exchange next week.
+
+Construct treats the same request as a job: read the accounts through connected-app actions, compare against files saved by the previous run, write the summary, send it from the native inbox, and leave the files and Activity summary behind. Assigned to the Calendar, it repeats without being restated.
+
+The quality of the writing may be similar. The difference is the number of manual steps around it and whether next week starts from something.
 
 ## The practical boundary
 
@@ -55,6 +71,11 @@ Choose a chat assistant when conversation, drafting, research, or its available 
 - Drafting and brainstorming
 - One-shot Q&A
 - Available chat tools and actions cover the job
+- Exploring a problem before any work begins
+
+## Using both
+
+These are complementary more often than competitive. A common pattern is to think and draft in a chat assistant, then hand execution, recurrence, and record-keeping to Construct. Nothing about adopting one requires abandoning the other, and the cost of running both is usually small next to the time either saves.
 
 ## Sources
 

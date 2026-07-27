@@ -30,13 +30,35 @@ This is an editorial capability comparison using the linked public vendor docume
 
 Coding agents shine in pull requests and refactors. Construct can read and reply from its native inbox, update spreadsheets, schedule Construct jobs, create Google Calendar events when that app is connected, and post in Slack.
 
+## Different definitions of done
+
+The clearest way to separate the two categories is to ask what counts as a finished job.
+
+For a coding agent, done is a reviewable change: a branch, a diff, a passing test run, a pull request description. Everything in the product is organised around producing that artifact and making it easy to review. The repository is the context, and CI is the feedback loop.
+
+For Construct, done is a completed outcome that may include code but usually includes other things: a file saved, a message sent, a record updated, a summary posted. There is no single artifact type, which is why supervision runs through Activity summaries and workspace outputs rather than a diff.
+
+Neither definition is more advanced. They are optimisations for different jobs, and a team that needs both is better served using both than forcing either to cover the other.
+
 ## A shared work desktop
 
 Construct exposes live browser work, a read-only terminal transcript, files, inbox, Calendar, workflows, memories, connected apps, notifications, and Activity summaries in one web desktop. Non-engineers can inspect outputs and interrupt a running turn without learning a repository-centric interface.
 
+That accessibility is a real difference in who can supervise the work. Reviewing a coding agent's output generally requires being able to read a diff. Reviewing a Construct job means opening a file, reading a summary, or checking a sent message, which is work an operations lead or founder can do directly.
+
 ## Where the boundary matters
 
 A coding agent is the specialist when success means a tested pull request. Construct is the generalist when the same job also requires reading customer email, researching the market, updating a CRM, scheduling a follow-up, and sharing the result. It can still use a terminal and repository, but code is one step in a broader business workflow.
+
+## A scenario that crosses the line
+
+Consider a bug reported by a customer over email. The full job is: read and understand the report, reproduce it, fix it, tell the customer, and log it for the team.
+
+A coding agent owns the middle: reproduce and fix, with a tested pull request at the end. It typically does not read the customer's inbox, judge tone for the reply, or update the CRM record.
+
+Construct can take the ends: triage the inbox, extract the report, log the issue in the tracker, draft the customer reply, and schedule a follow-up once a fix ships. For the fix itself, a dedicated coding agent may well produce the better change.
+
+Run together, the division is natural: Construct handles intake, coordination, and communication; the coding agent handles the repository work. Trying to make either cover the whole span is where results get worse.
 
 ## Parallel work beyond software delivery
 
@@ -47,11 +69,13 @@ Construct can delegate bounded subtasks to temporary agents and synthesize their
 - Ops, research, email, and docs matter as much as code
 - Non-engineers need to supervise the agent
 - Cross-app business workflows
+- Intake and follow-up around engineering work
 
 ## When to choose a coding agent
 
 - Primary job is software engineering in a repo
 - Team is all developers
+- Success is defined by a tested, reviewable change
 
 ## Sources
 
