@@ -44,6 +44,28 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="theme-color" content="#01b4c8" />
         <Meta />
         <Links />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function () {
+  var gs = document.createElement("script");
+  gs.src = "https://join.construct.computer/pr/js";
+  gs.type = "text/javascript";
+  gs.async = true;
+
+  gs.onload = gs.onreadystatechange = function () {
+    var rs = this.readyState;
+    if (rs && rs !== "complete" && rs !== "loaded") return;
+    try {
+      growsumo._initialize("pk_oUN7pQqNLRLHP4dyTz9piNx5v6mxI7YM");
+      if (typeof growsumoInit === "function") growsumoInit();
+    } catch (e) {}
+  };
+
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(gs, s);
+})();`,
+          }}
+        />
       </head>
       <body>
         {children}
