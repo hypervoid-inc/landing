@@ -3,6 +3,11 @@ trustPolicyExclude:
   # Babel still depends on this established release, published before npm provenance.
   - semver@6.3.1
 minimumReleaseAgeExclude:
+  # PostHog SDK Health update; exact versions reviewed before normal maturity.
+  - posthog-js@1.407.3
+  - "@posthog/browser-common@0.2.2"
+  - "@posthog/core@1.45.1"
+  - "@posthog/types@1.398.0"
   # Security fix for GHSA-qwww-vcr4-c8h2; reviewed before the normal maturity window.
   - react-router@8.3.0
   - "@react-router/dev@8.3.0"
