@@ -34,9 +34,15 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm exec playwright install --with-deps chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-      - run: pnpm check
+      # Build once with dummy Turnstile for e2e (not thrice: check + e2e + deploy).
+      - run: pnpm lint && pnpm typecheck && pnpm test
+      - name: Build for e2e
+        run: pnpm build
+        env:
+          VITE_TURNSTILE_SITE_KEY: "1x00000000000000000000AA"
       - run: pnpm test:e2e
-      # e2e's webServer runs `pnpm build` with dummy Turnstile keys; rebuild for prod.
+        env:
+          E2E_SKIP_BUILD: "1"
       - name: Production build
         if: github.ref == 'refs/heads/main'
         run: pnpm build
