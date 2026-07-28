@@ -36,6 +36,14 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
       - run: pnpm check
       - run: pnpm test:e2e
+      # e2e's webServer runs `pnpm build` with dummy Turnstile keys; rebuild for prod.
+      - name: Production build
+        if: github.ref == 'refs/heads/main'
+        run: pnpm build
+        env:
+          VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
+          VITE_POSTHOG_KEY: ${{ vars.VITE_POSTHOG_KEY }}
+          VITE_POSTHOG_HOST: ${{ vars.VITE_POSTHOG_HOST }}
       - name: Deploy to Cloudflare Pages
         if: github.ref == 'refs/heads/main'
         run: npx wrangler pages deploy build/client --project-name landing-new --branch main
