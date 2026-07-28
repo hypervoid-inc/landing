@@ -86,49 +86,50 @@ await writeFile(
 
 const vite = await createServer({
   root,
-  server: { middlewareMode: true },
+  logLevel: "error",
+  server: { middlewareMode: true, watch: null },
   appType: "custom",
 });
+let crawlerFiles;
+let canonicalRoutes;
 try {
-  const { crawlerFiles } = await vite.ssrLoadModule(
-    "/app/lib/generated-content.ts",
-  );
-  const { canonicalRoutes } = await vite.ssrLoadModule(
+  ({ crawlerFiles } = await vite.ssrLoadModule("/app/lib/generated-content.ts"));
+  ({ canonicalRoutes } = await vite.ssrLoadModule(
     "/app/lib/route-manifest.ts",
-  );
-
-  for (const [relativePath, content] of Object.entries(crawlerFiles)) {
-    const destination = path.join(root, "public", relativePath);
-    await mkdir(path.dirname(destination), { recursive: true });
-    await writeFile(destination, content);
-  }
-
-  const ogDirectory = path.join(root, "public/og");
-  await rm(ogDirectory, { force: true, recursive: true });
-  await mkdir(ogDirectory, { recursive: true });
-  for (const route of canonicalRoutes) {
-    const filename = new URL(route.image).pathname.split("/").at(-1);
-    const title = wrapTitle(
-      route.displayTitle ?? route.title.replace(" - Construct Computer", ""),
-    );
-    const lines = title
-      .map(
-        (line, index) =>
-          `<tspan x="80" dy="${index === 0 ? 0 : 72}">${escapeHtml(line)}</tspan>`,
-      )
-      .join("");
-    const svg = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="630" fill="#f8fbfb"/><circle cx="1060" cy="90" r="230" fill="#d9f6f5"/><text x="80" y="120" font-family="Arial, sans-serif" font-size="34" font-style="italic" fill="#4e4646">Construct<tspan fill="#01b4c8">Computer</tspan></text><text x="80" y="270" font-family="Arial, sans-serif" font-size="62" font-style="italic" fill="#4e4646">${lines}</text><text x="80" y="555" font-family="Arial, sans-serif" font-size="24" fill="#627c86">construct.computer</text></svg>`;
-    await sharp(Buffer.from(svg))
-      .png()
-      .toFile(path.join(ogDirectory, filename));
-  }
-  await copyFile(
-    path.join(root, "assets/og/home.png"),
-    path.join(ogDirectory, "home.png"),
-  );
+  ));
 } finally {
   await vite.close();
 }
+
+for (const [relativePath, content] of Object.entries(crawlerFiles)) {
+  const destination = path.join(root, "public", relativePath);
+  await mkdir(path.dirname(destination), { recursive: true });
+  await writeFile(destination, content);
+}
+
+const ogDirectory = path.join(root, "public/og");
+await rm(ogDirectory, { force: true, recursive: true });
+await mkdir(ogDirectory, { recursive: true });
+for (const route of canonicalRoutes) {
+  const filename = new URL(route.image).pathname.split("/").at(-1);
+  const title = wrapTitle(
+    route.displayTitle ?? route.title.replace(" - Construct Computer", ""),
+  );
+  const lines = title
+    .map(
+      (line, index) =>
+        `<tspan x="80" dy="${index === 0 ? 0 : 72}">${escapeHtml(line)}</tspan>`,
+    )
+    .join("");
+  const svg = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="630" fill="#f8fbfb"/><circle cx="1060" cy="90" r="230" fill="#d9f6f5"/><text x="80" y="120" font-family="Arial, sans-serif" font-size="34" font-style="italic" fill="#4e4646">Construct<tspan fill="#01b4c8">Computer</tspan></text><text x="80" y="270" font-family="Arial, sans-serif" font-size="62" font-style="italic" fill="#4e4646">${lines}</text><text x="80" y="555" font-family="Arial, sans-serif" font-size="24" fill="#627c86">construct.computer</text></svg>`;
+  await sharp(Buffer.from(svg))
+    .png()
+    .toFile(path.join(ogDirectory, filename));
+}
+await copyFile(
+  path.join(root, "assets/og/home.png"),
+  path.join(ogDirectory, "home.png"),
+);
 
 function escapeHtml(value) {
   return value
