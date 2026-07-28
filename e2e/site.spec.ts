@@ -54,7 +54,15 @@ test("shows every resource once in one ordered image grid", async ({
   expect(metadataBox?.y).toBeGreaterThan(
     (title?.y ?? 0) + (title?.height ?? 0),
   );
-  await expect(metadata).toHaveText("article · Jul 27, 2026 · Ankush");
+  const formatDate = (d: string) =>
+    new Date(d).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  await expect(metadata).toHaveText(
+    `${resourceEntries[0]!.kind} · ${formatDate(resourceEntries[0]!.published)} · ${resourceEntries[0]!.author.name}`,
+  );
   await expect(metadata).toHaveCSS("white-space", "nowrap");
   await expect(metadata).toHaveCSS("overflow", "hidden");
 

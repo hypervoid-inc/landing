@@ -147,6 +147,17 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: false,
   },
   {
+    slug: "how-to-choose-an-ai-agent-platform-for-your-team",
+    title: "How to Choose an AI Agent Platform for Your Team",
+    description:
+      "A vendor-agnostic evaluation checklist for AI agent platforms: pilot-failure data, six evaluation criteria, governance pressure, and a scorecard you can reuse.",
+    published: "2026-07-28",
+    author: "nischal",
+    tags: ["ai-agent", "ai-employee", "governance", "product"],
+    kind: "guide",
+    draft: false,
+  },
+  {
     slug: "what-is-an-ai-employee",
     title: "What is an AI employee?",
     description:

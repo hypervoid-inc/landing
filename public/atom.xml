@@ -3,7 +3,20 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-07-27T00:00:00Z</updated>
+  <updated>2026-07-28T00:00:00Z</updated>
+  <entry>
+    <title>How to Choose an AI Agent Platform for Your Team</title>
+    <id>https://construct.computer/blog/how-to-choose-an-ai-agent-platform-for-your-team/</id>
+    <link href="https://construct.computer/blog/how-to-choose-an-ai-agent-platform-for-your-team/"/>
+    <author><name>Nischal</name></author>
+    <published>2026-07-28T00:00:00Z</published>
+    <updated>2026-07-28T00:00:00Z</updated>
+    <category term="ai-agent"/>
+    <category term="ai-employee"/>
+    <category term="governance"/>
+    <category term="product"/>
+    <summary>A vendor-agnostic evaluation checklist for AI agent platforms: pilot-failure data, six evaluation criteria, governance pressure, and a scorecard you can reuse.</summary>
+  </entry>
   <entry>
     <title>How Construct Builds Internal Tools in Your Workspace</title>
     <id>https://construct.computer/blog/build-internal-tools-with-construct/</id>

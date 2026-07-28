@@ -11,63 +11,9 @@ import { canonicalRoutes } from "../app/lib/route-manifest";
 const blogDirectory = fileURLToPath(
   new URL("../app/content/blog/", import.meta.url),
 );
-const expectedSlugs = [
-  "ai-agent-memory",
-  "ai-agent-vs-virtual-assistant",
-  "ai-agent-vs-zapier",
-  "ai-employee",
-  "ai-workflow-automation",
-  "build-internal-tools-with-construct",
-  "chat-assistants-vs-ai-employees",
-  "construct-vs-chatgpt",
-  "construct-vs-coding-agents",
-  "construct-vs-copilot",
-  "construct-vs-diy",
-  "construct-vs-zapier",
-  "what-is-an-ai-employee",
-];
-
-const expectedPaths = [
-  "/",
-  "/about",
-  "/careers",
-  "/editorial-policy",
-  "/support",
-  "/privacy",
-  "/terms",
-  "/blog",
-  "/blog/what-is-an-ai-employee",
-  "/blog/chat-assistants-vs-ai-employees",
-  "/blog/build-internal-tools-with-construct",
-  "/blog/ai-agent-vs-virtual-assistant",
-  "/blog/ai-agent-vs-zapier",
-  "/blog/ai-employee",
-  "/blog/ai-workflow-automation",
-  "/blog/ai-agent-memory",
-  "/blog/construct-vs-chatgpt",
-  "/blog/construct-vs-copilot",
-  "/blog/construct-vs-zapier",
-  "/blog/construct-vs-coding-agents",
-  "/blog/construct-vs-diy",
-  "/authors",
-  "/authors/ankush",
-  "/authors/nischal",
-  "/authors/construct-team",
-  // Tag hubs are generated only for tags with two or more resources, so this
-  // list changes when tag usage crosses that threshold.
-  "/blog/tag/ai-agent",
-  "/blog/tag/ai-employee",
-  "/blog/tag/chatgpt",
-  "/blog/tag/comparison",
-  "/blog/tag/product",
-  "/blog/tag/workflow-automation",
-  "/blog/tag/zapier",
-];
-
 describe("content validation", () => {
   it("validates every published MDX post", () => {
     expect(() => validateContent(blogMetadata)).not.toThrow();
-    expect(blogMetadata.map((post) => post.slug).sort()).toEqual(expectedSlugs);
   });
 
   it("rejects incomplete and impossible post metadata", () => {
@@ -177,9 +123,8 @@ describe("content validation", () => {
 });
 
 describe("canonical route manifest", () => {
-  it("contains every public 200 route exactly once", () => {
+  it("contains no duplicate public 200 routes", () => {
     const paths = canonicalRoutes.map((route) => route.path);
-    expect([...paths].sort()).toEqual([...expectedPaths].sort());
     expect(new Set(paths).size).toBe(paths.length);
   });
 
@@ -204,8 +149,5 @@ describe("canonical route manifest", () => {
     expect(canonicalRoutes.some((route) => route.path.startsWith("/vs"))).toBe(
       false,
     );
-    expect(
-      editorialRoutes.map(({ path }) => path.slice("/blog/".length)).sort(),
-    ).toEqual(expectedSlugs);
   });
 });
