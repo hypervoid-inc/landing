@@ -41,3 +41,4 @@ jobs:
         run: npx wrangler pages deploy build/client --project-name landing-new --branch main
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 5d7aa603ebe193d63efb09a759c0c3ed
