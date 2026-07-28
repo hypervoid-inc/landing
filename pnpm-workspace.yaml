@@ -1,7 +1,3 @@
-onlyBuiltDependencies:
-  - core-js
-  - esbuild
-  - workerd
 trustPolicy: no-downgrade
 trustPolicyExclude:
   # Babel still depends on this established release, published before npm provenance.
