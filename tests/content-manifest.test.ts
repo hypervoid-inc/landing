@@ -6,6 +6,7 @@ import { blogFrontmatterSchema, validateContent } from "../app/content/schema";
 import { blogMetadata } from "../app/content/blog/metadata.generated";
 import { landingFaq } from "../app/content/landing";
 import { authors } from "../app/content/authors";
+import { clippyCopy } from "../app/features/landing/clippy-state";
 import { canonicalRoutes } from "../app/lib/route-manifest";
 
 const blogDirectory = fileURLToPath(
@@ -96,6 +97,7 @@ describe("content validation", () => {
         .map((name) => [name, readFileSync(`${blogDirectory}/${name}`, "utf8")]),
       ["landing.ts", JSON.stringify(landingFaq)],
       ["route-manifest", JSON.stringify(canonicalRoutes)],
+      ["clippy-state.ts", clippyCopy.join("\n")],
     ] as const;
 
     for (const [name, text] of sources) {

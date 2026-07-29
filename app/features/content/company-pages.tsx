@@ -118,7 +118,7 @@ export function AboutPage() {
       <Section title="Say hello">
         <p>
           We’re a small team shipping fast and listening hard.{" "}
-          <InlineLink href="https://beta.construct.computer">
+          <InlineLink href="https://os.construct.computer">
             Try the beta
           </InlineLink>
           , join us on{" "}

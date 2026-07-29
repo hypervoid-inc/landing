@@ -18,7 +18,7 @@ import { captureAnalytics } from "../analytics/analytics.client";
 import { usePrefersReducedMotion } from "./media";
 import "./beta-access.css";
 
-const BETA_URL = "https://beta.construct.computer";
+const BETA_URL = "https://os.construct.computer";
 const STORAGE_KEY = "construct_beta_access_v1";
 const TURNSTILE_SITE_KEY =
   import.meta.env.VITE_TURNSTILE_SITE_KEY ||
@@ -37,7 +37,17 @@ const BetaAccessContext = createContext<(source: string) => void>(
   () => undefined,
 );
 
-function hasBetaAccess() {
+/**
+ * Read-only companion to BetaAccessContext. Kept separate so widening it never
+ * re-renders every BetaLink on the page each time the dialog opens.
+ */
+const BetaDialogOpenContext = createContext(false);
+
+export function useBetaDialogOpen() {
+  return useContext(BetaDialogOpenContext);
+}
+
+export function hasBetaAccess() {
   try {
     const value = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "null") as {
       granted?: unknown;
@@ -53,14 +63,18 @@ export function BetaLink({
   className = "",
   label,
   source = "unknown",
+  onClick: onBeforeClick,
 }: {
   children: ReactNode;
   className?: string;
   label?: string;
   source?: string;
+  /** Runs before the access branch, for callers that track their own funnel. */
+  onClick?: () => void;
 }) {
   const requestAccess = useContext(BetaAccessContext);
   const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    onBeforeClick?.();
     if (hasBetaAccess()) {
       captureAnalytics("beta_opened", { source });
       return;
@@ -458,8 +472,12 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
         setOpen(true);
       }}
     >
-      {children}
-      {open && <BetaAccessDialog open source={source} onOpenChange={setOpen} />}
+      <BetaDialogOpenContext.Provider value={open}>
+        {children}
+        {open && (
+          <BetaAccessDialog open source={source} onOpenChange={setOpen} />
+        )}
+      </BetaDialogOpenContext.Provider>
     </BetaAccessContext.Provider>
   );
 }
