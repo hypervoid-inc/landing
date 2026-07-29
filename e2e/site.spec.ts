@@ -397,7 +397,7 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     );
 
     for (const card of await cards.all()) {
-      await expect(card.locator(".pricing-image")).toHaveCSS("opacity", "0.75");
+      await expect(card.locator(".pricing-image")).toHaveCSS("opacity", "1");
       await expect(card.locator(".pricing-visual")).toHaveCSS(
         "background-color",
         "rgb(255, 255, 255)",

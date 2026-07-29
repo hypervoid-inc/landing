@@ -3,7 +3,12 @@ import { landingFaq } from "../content/landing";
 import { getResourceFaqs, type FaqItem } from "../content/faqs";
 import { authorSameAs, listedAuthors, type Author } from "../content/authors";
 import type { CanonicalRoute } from "./route-manifest";
-import { resourcesByAuthor, resourcesByTag, siteUrl } from "./route-manifest";
+import {
+  resourcesByAuthor,
+  resourcesByTag,
+  routeDisplayTitle as displayTitle,
+  siteUrl,
+} from "./route-manifest";
 
 type JsonLd = Record<string, unknown>;
 
@@ -62,10 +67,6 @@ function itemListJsonLd(
       url: `${siteUrl}/blog/${entry.slug}/`,
     })),
   };
-}
-
-function displayTitle(route: CanonicalRoute): string {
-  return route.displayTitle ?? route.title.replace(" - Construct Computer", "");
 }
 
 function editorialAuthor(route: CanonicalRoute): Author {
@@ -274,6 +275,7 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
     { property: "og:description", content: route.description },
     { property: "og:url", content: route.canonical },
     { property: "og:image", content: route.image },
+    { property: "og:image:type", content: "image/jpeg" },
     { property: "og:image:width", content: "1200" },
     { property: "og:image:height", content: "630" },
     {

@@ -360,13 +360,13 @@ function PricingCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
           decoding="async"
           className={`pricing-image h-full w-full object-cover ${plan.name === "Lite" ? "object-[84%_center] sm:object-center" : plan.name === "Starter" ? "object-[66%_center] sm:object-center" : "object-center"}`}
         />
-        <div className="pricing-summary absolute z-10 text-white">
+        <div className="pricing-summary absolute z-10 text-[#4e4646]">
           <div>
             <h3 className="font-display text-[29px] leading-none xl:text-[38px]">
               {plan.name}
             </h3>
             {plan.name === "Lite" ? (
-              <p className="mt-2 max-w-[150px] text-[10px] leading-[13px] text-white/90 xl:max-w-[190px] xl:text-xs xl:leading-4">
+              <p className="mt-2 max-w-[150px] text-[10px] leading-[13px] text-[#527079] xl:max-w-[190px] xl:text-xs xl:leading-4">
                 {plan.description}
               </p>
             ) : null}
@@ -375,7 +375,7 @@ function PricingCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
             <span className="font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]">
               {plan.price}
             </span>
-            <span className="mb-0.5 whitespace-nowrap text-xs text-white/90 xl:mb-1 xl:text-sm">
+            <span className="mb-0.5 whitespace-nowrap text-xs text-[#527079] xl:mb-1 xl:text-sm">
               / month
             </span>
           </div>

@@ -17,12 +17,23 @@ import {
 import { resourceEntries } from "../app/content/resources";
 import { resourceFaqs } from "../app/content/faqs";
 import { authorSameAs, authors, listedAuthors } from "../app/content/authors";
+import { encodeImage } from "../scripts/og/frame.mjs";
 
 describe("generated discovery content", () => {
-  it("preserves the custom homepage OG image", () => {
+  /**
+   * The homepage card is laid out by hand and carries its own type, so nothing
+   * may replace it with a generated frame. It is re-encoded rather than copied,
+   * so the published bytes are the source put through the same encoder every
+   * other card goes through — not the source verbatim.
+   */
+  it("preserves the custom homepage OG image", async () => {
     expect(
-      readFileSync(new URL("../public/og/home.png", import.meta.url)),
-    ).toEqual(readFileSync(new URL("../assets/og/home.png", import.meta.url)));
+      readFileSync(new URL("../public/og/home.jpg", import.meta.url)),
+    ).toEqual(
+      await encodeImage(
+        readFileSync(new URL("../assets/og/home.png", import.meta.url)),
+      ),
+    );
   });
 
   it("includes only canonical 200 routes in the sitemap", () => {

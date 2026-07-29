@@ -13,4 +13,17 @@ export default tseslint.config(
       "no-undef": "off",
     },
   },
+  {
+    // Build scripts run on Node directly. They import the builtins they can
+    // (Buffer, URL, process); these are the globals that have no module form.
+    files: ["scripts/**/*.mjs"],
+    languageOptions: {
+      globals: {
+        console: "readonly",
+        URL: "readonly",
+        fetch: "readonly",
+        setTimeout: "readonly",
+      },
+    },
+  },
 );
