@@ -10,6 +10,7 @@ import {
   Timer,
   type LucideIcon,
 } from "lucide-react";
+import { AffiliateLink } from "../../components/layout/affiliate-link";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 
 import {
@@ -57,12 +58,20 @@ function HeroHeadline() {
           inspect and control.
         </span>
       </p>
-      <BetaLink
-        source="hero"
-        className="landing-cta mt-7 min-h-[57px] w-[227px] px-5 text-[21px] xl:mt-8"
-      >
-        Enter Experience
-      </BetaLink>
+      <div className="flex items-center justify-center gap-5 xl:justify-start">
+        <BetaLink
+          source="hero"
+          className="landing-cta mt-7 min-h-[57px] w-[227px] px-5 text-[21px] xl:mt-8"
+        >
+          Enter Experience
+        </BetaLink>
+        <AffiliateLink
+          placement="hero"
+          className="hero-affiliate mt-8 hidden max-w-[150px] text-xs leading-4 text-[#627c86] transition-colors hover:text-[#01b4c8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] xl:block"
+        >
+          Affiliate program, earn 20% for a year <span aria-hidden>↗</span>
+        </AffiliateLink>
+      </div>
     </div>
   );
 }
@@ -457,11 +466,11 @@ function EnterprisePanel() {
           <span className="font-display italic text-[#2978b9]">
             specific MCP
           </span>{" "}
-           requirements, we offer the{" "}
+          requirements, we offer the{" "}
           <span className="font-display italic text-[#2978b9]">
             Enterprise plan
           </span>
-           . We discuss your custom MCP needs and tailor Construct to your{" "}
+          . We discuss your custom MCP needs and tailor Construct to your{" "}
           <span className="font-display italic text-[#2978b9]">
             business needs.
           </span>

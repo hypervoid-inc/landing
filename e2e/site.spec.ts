@@ -78,7 +78,7 @@ test("shows every resource once in one ordered image grid", async ({
     ),
   ).toBe(true);
   await expect(page.getByRole("navigation", { name: "Primary" })).toHaveText(
-    "Blog",
+    "BlogAffiliates",
   );
 });
 
@@ -180,11 +180,17 @@ test("uses one shared header, footer, and favicon across page types", async ({
   for (const path of ["/", "/blog/", "/privacy/"]) {
     await page.goto(path);
     await expect(page.getByRole("navigation", { name: "Primary" })).toHaveText(
-      "Blog",
+      "BlogAffiliates",
     );
     await expect(page.locator("footer")).toContainText("Request beta access");
     await expect(page.locator("footer")).toContainText("vs ChatGPT");
     await expect(page.locator("footer")).not.toContainText("Guides");
+    await expect(
+      page.locator("footer").getByRole("link", { name: /Become an affiliate/ }),
+    ).toHaveAttribute(
+      "href",
+      "https://dash.partnerstack.com/application?company=constructcomputer",
+    );
     await expect(
       page.locator('link[rel="icon"][sizes="32x32"]'),
     ).toHaveAttribute("href", "/favicon-32.png?v=3");
@@ -226,6 +232,9 @@ test("keeps the primary action usable in the compact mobile header", async ({
     );
     await expect(beta).toBeVisible();
     await expect(beta.locator(".sm\\:hidden")).toHaveText("Beta access");
+    await expect(
+      page.locator("header").getByRole("link", { name: "Affiliates" }),
+    ).toBeHidden();
   }
 });
 

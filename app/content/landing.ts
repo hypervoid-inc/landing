@@ -270,6 +270,9 @@ export const companyLinks = [
   ["Terms", "/terms/"],
 ] as const;
 
+export const affiliateProgramUrl =
+  "https://dash.partnerstack.com/application?company=constructcomputer";
+
 export const comparisonLinks = [
   ["vs ChatGPT", "/blog/construct-vs-chatgpt/"],
   ["vs Copilot", "/blog/construct-vs-copilot/"],

@@ -6,7 +6,8 @@ type AnalyticsEvent =
   | "beta_access_opened"
   | "beta_signup_submitted"
   | "beta_signup_granted"
-  | "beta_opened";
+  | "beta_opened"
+  | "affiliate_link_clicked";
 
 let postHogPromise: Promise<typeof import("posthog-js").default | null> | null =
   null;
