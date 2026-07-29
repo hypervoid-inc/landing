@@ -79,7 +79,7 @@ function WorkflowChip({
   return (
     <BetaLink
       source="hero-workflow"
-      label={`Get beta access — ${label}`}
+      label={`Get beta access - ${label}`}
       className={`hero-interactive flex h-[38px] w-[216px] items-center gap-[14px] rounded-lg border border-[#f0f0f0] bg-white px-2 text-xs text-[#0b0b0b] shadow-[0_4px_14px_-6px_rgba(15,23,42,.18),inset_0_4px_4px_rgba(255,255,255,.25)] ${className}`}
     >
       <img
@@ -111,7 +111,7 @@ function Hero() {
           <div className="hero-portal absolute aspect-square">
             <BetaLink
               source="hero-portal"
-              label="Get beta access — Construct AI workspace"
+              label="Get beta access - Construct AI workspace"
               className="hero-link block h-full w-full"
             >
               <span className="block h-full w-full">
@@ -125,7 +125,7 @@ function Hero() {
           </div>
           <BetaLink
             source="hero-report"
-            label="Get beta access — research report"
+            label="Get beta access - research report"
             className="hero-link hero-report absolute z-20"
           >
             <img
@@ -138,7 +138,7 @@ function Hero() {
           </BetaLink>
           <BetaLink
             source="hero-chat"
-            label="Get beta access — agent chat"
+            label="Get beta access - agent chat"
             className="hero-link hero-chat absolute z-20"
           >
             <img
@@ -151,7 +151,7 @@ function Hero() {
           </BetaLink>
           <BetaLink
             source="hero-search"
-            label="Get beta access — workspace search"
+            label="Get beta access - workspace search"
             className="hero-link hero-search absolute z-20"
           >
             <img
@@ -346,7 +346,7 @@ function PricingCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
         className="pricing-border pointer-events-none absolute inset-0 z-20 rounded-[26px] border border-[#35949a]/50"
       />
       {plan.badge ? (
-        <span className="pricing-badge absolute left-3 top-14 z-30 inline-flex items-center rounded-full bg-[#01b4c8] px-2.5 py-1 text-[8px] font-bold uppercase tracking-[.12em] text-white sm:left-auto sm:right-5 sm:top-5 sm:text-[9px]">
+        <span className="pricing-badge absolute left-3 top-14 z-30 inline-flex items-center rounded-full bg-[#01b4c8] px-2.5 py-1 text-[8px] font-black uppercase tracking-[.12em] text-white sm:left-auto sm:right-5 sm:top-5 sm:text-[9px]">
           {plan.badge}
         </span>
       ) : null}
@@ -360,13 +360,13 @@ function PricingCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
           decoding="async"
           className={`pricing-image h-full w-full object-cover ${plan.name === "Lite" ? "object-[84%_center] sm:object-center" : plan.name === "Starter" ? "object-[66%_center] sm:object-center" : "object-center"}`}
         />
-        <div className="pricing-summary absolute z-10 text-[#4e4646]">
+        <div className="pricing-summary absolute z-10 text-[#014e59]">
           <div>
             <h3 className="font-display text-[29px] leading-none xl:text-[38px]">
               {plan.name}
             </h3>
             {plan.name === "Lite" ? (
-              <p className="mt-2 max-w-[150px] text-[10px] leading-[13px] text-[#527079] xl:max-w-[190px] xl:text-xs xl:leading-4">
+              <p className="mt-2 max-w-[150px] text-[10px] leading-[13px] text-[#17707d] xl:max-w-[190px] xl:text-xs xl:leading-4">
                 {plan.description}
               </p>
             ) : null}
@@ -375,7 +375,7 @@ function PricingCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
             <span className="font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]">
               {plan.price}
             </span>
-            <span className="mb-0.5 whitespace-nowrap text-xs text-[#527079] xl:mb-1 xl:text-sm">
+            <span className="mb-0.5 whitespace-nowrap text-xs text-[#17707d] xl:mb-1 xl:text-sm">
               / month
             </span>
           </div>

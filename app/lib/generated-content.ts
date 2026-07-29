@@ -122,7 +122,7 @@ function llmsFull(): string {
   });
 
   return [
-    "# Construct Computer — full product context",
+    "# Construct Computer - full product context",
     "",
     `> ${summary}`,
     "",

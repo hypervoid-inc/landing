@@ -230,6 +230,8 @@ if (layoutOverride !== null) {
 
 const missing = [];
 for (const route of queue) {
+  // Author cards composite a real headshot, so there is no prompt to run.
+  if (route.kind === "author" && layoutOverride === null) continue;
   if (!route.subject) {
     throw new Error(
       `${route.name}: no art subject. Add one to app/content/og-art.ts.`,

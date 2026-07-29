@@ -13,7 +13,7 @@ export const ogArtSubjects: Record<string, string> = {
   home: "The mascot at the centre of a bright workspace, a tall glass panel behind it holding a calm stack of files and a schedule strip, small rounded app tiles orbiting on dashed rings. One desk that never resets.",
 
   about:
-    "Three glass panels of slightly different heights standing together on a soft cyan plinth, the mascot resting in front of them. Quiet and architectural — a company rather than a product.",
+    "Three glass panels of slightly different heights standing together on a soft cyan plinth, the mascot resting in front of them. Quiet and architectural, a company rather than a product.",
   careers:
     "An empty rounded glass seat-shaped panel beside the mascot, one warm cyan bloom lighting the space where someone would sit, and an open doorway of light behind it.",
   "editorial-policy":
@@ -34,7 +34,7 @@ export const ogArtSubjects: Record<string, string> = {
   "blog-ai-agent-vs-zapier":
     "A split scene: on the left a rigid chain of three identical chips running along one straight rail, on the right the mascot inside a soft bloom drawing its own branching path of light between scattered tiles. The right side is brighter.",
   "blog-ai-agent-vs-virtual-assistant":
-    "Two glass panels balanced on a beam of light — one stacked with coin-like discs and a clock face, the other holding a single luminous mascot with a continuous ribbon of activity trailing behind it.",
+    "Two glass panels balanced on a beam of light, one stacked with coin-like discs and a clock face, the other holding a single luminous mascot with a continuous ribbon of activity trailing behind it.",
   "blog-ai-agent-memory":
     "The mascot inside a shallow dome of concentric dashed rings with small frosted memory cards in orbit, two cards pulled forward and lit cyan, one dimmed and drifting outward. A mind that keeps, corrects, and forgets on purpose.",
   "blog-ai-employee":
@@ -48,7 +48,7 @@ export const ogArtSubjects: Record<string, string> = {
   "blog-construct-vs-copilot":
     "Two walled glass gardens, each sealed under its own tinted dome, and between them the mascot standing in open white light with connector traces reaching into both.",
   "blog-construct-vs-diy":
-    "On the left a heap of loose unconnected parts — cables, brackets, half-panels — under a dim haze; on the right those same parts assembled into one clean glass cabinet with the mascot lit inside it.",
+    "On the left a heap of loose unconnected parts, cables, brackets, half-panels, under a dim haze; on the right those same parts assembled into one clean glass cabinet with the mascot lit inside it.",
   "blog-construct-vs-zapier":
     "Three rigid parallel rails of identical linked chips running straight through the frame, and above them the mascot on a soft floating platform choosing which rail to touch. Determinism below, judgement above.",
   "blog-what-is-an-ai-employee":
@@ -63,7 +63,7 @@ export const ogArtSubjects: Record<string, string> = {
   "authors-nischal":
     "A frosted glass profile disc tilted three-quarters with two faint article cards fanned out behind it, the mascot hovering at its edge.",
   "authors-construct-team":
-    "Three overlapping glass discs merging into a single silhouette with the mascot centred inside them — a byline that is a team rather than a person.",
+    "Three overlapping glass discs merging into a single silhouette with the mascot centred inside them, a byline that is a team rather than a person.",
 
   "blog-tag-ai-agent":
     "A cluster of small frosted tag-shaped chips orbiting the mascot on dashed rings, the nearest chip pulled forward and lit cyan with a faint compass-needle glyph on it.",

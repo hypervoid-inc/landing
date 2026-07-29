@@ -286,6 +286,61 @@ async function tileBuffer(artwork) {
 }
 
 /**
+ * The author card: a real photograph on the branded background.
+ *
+ * Its own layout because the source headshots are 256px square. Full-bleed
+ * would upscale one nearly five times across a 1200x630 card; a 300px circle is
+ * a 1.2x upscale, which holds. A portrait is also simply the right image for a
+ * byline, where generated art would be a stand-in for the person.
+ */
+const PORTRAIT = 300;
+const PORTRAIT_X = Math.round(TILE_CENTER_X - PORTRAIT / 2);
+const PORTRAIT_Y = Math.round(TILE_CENTER_Y - PORTRAIT / 2);
+
+function portraitMaskSvg() {
+  return `<svg width="${PORTRAIT}" height="${PORTRAIT}" xmlns="http://www.w3.org/2000/svg"><circle cx="${PORTRAIT / 2}" cy="${PORTRAIT / 2}" r="${PORTRAIT / 2}" fill="#fff"/></svg>`;
+}
+
+/** Glow behind the portrait, then the white ring drawn back over its edge. */
+function portraitGlowSvg() {
+  return `<svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="halo">
+      <stop offset="0.62" stop-color="#7fe3f5" stop-opacity="0.55"/>
+      <stop offset="0.8" stop-color="#bff0f8" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="${TILE_CENTER_X}" cy="${TILE_CENTER_Y}" r="${PORTRAIT / 2 + 62}" fill="url(#halo)"/>
+</svg>`;
+}
+
+function portraitRingSvg() {
+  return `<svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="${TILE_CENTER_X}" cy="${TILE_CENTER_Y}" r="${PORTRAIT / 2 + 3}" fill="none" stroke="#ffffff" stroke-width="7"/>
+  <circle cx="${TILE_CENTER_X}" cy="${TILE_CENTER_Y}" r="${PORTRAIT / 2 + 7}" fill="none" stroke="${ACCENT}" stroke-opacity="0.3" stroke-width="1.5"/>
+</svg>`;
+}
+
+export async function renderPortrait({ title, kind, photo }) {
+  const circle = await sharp(photo)
+    .resize(PORTRAIT, PORTRAIT, { fit: "cover", position: "attention" })
+    .composite([{ input: Buffer.from(portraitMaskSvg()), blend: "dest-in" }])
+    .png()
+    .toBuffer();
+
+  return encode(
+    sharp(
+      Buffer.from(backgroundSvg({ title, eyebrow: eyebrowFor(kind) })),
+    ).composite([
+      { input: Buffer.from(portraitGlowSvg()), left: 0, top: 0 },
+      { input: circle, left: PORTRAIT_X, top: PORTRAIT_Y },
+      { input: Buffer.from(portraitRingSvg()), left: 0, top: 0 },
+    ]),
+  );
+}
+
+/**
  * Renders a card whose artwork fills the whole 1200x630, with the type set over
  * a scrim rather than beside a tile.
  */

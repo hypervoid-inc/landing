@@ -368,7 +368,7 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
       "Full desktop power + your own model keys",
     );
     await expect(cards.nth(2)).toContainText(
-      "Deep runs — up to 1,000 steps per task",
+      "Deep runs - up to 1,000 steps per task",
     );
     await expect(cards.nth(2)).toContainText(
       "Bring your own model keys (BYOK)",
@@ -575,7 +575,7 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
   }
   await expect(page.locator(".hero-scene a")).toHaveCount(7);
   await page
-    .getByRole("link", { name: "Get beta access — research report" })
+    .getByRole("link", { name: "Get beta access - research report" })
     .click();
   await expect(
     page.getByRole("dialog").getByRole("heading", { name: "Get beta access" }),
@@ -688,13 +688,13 @@ test("every landing button responds to a real click", async ({
   const betaActions = [
     "Request early beta access",
     "Enter Experience",
-    "Get beta access — Construct AI workspace",
-    "Get beta access — research report",
-    "Get beta access — agent chat",
-    "Get beta access — workspace search",
-    "Get beta access — Researched the Topic",
-    "Get beta access — Replied to the Mails",
-    "Get beta access — Prepared the Report",
+    "Get beta access - Construct AI workspace",
+    "Get beta access - research report",
+    "Get beta access - agent chat",
+    "Get beta access - workspace search",
+    "Get beta access - Researched the Topic",
+    "Get beta access - Replied to the Mails",
+    "Get beta access - Prepared the Report",
     ...workflowDemos.map((demo) => demo.cta),
     "Request beta access",
   ];

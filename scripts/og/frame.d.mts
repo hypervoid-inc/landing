@@ -11,6 +11,12 @@ export declare function encodeImage(
   input: Buffer | string,
 ): Promise<Buffer>;
 
+export declare function renderPortrait(input: {
+  title: string;
+  kind: string;
+  photo: Buffer | string;
+}): Promise<Buffer>;
+
 export declare function renderFullBleed(input: {
   title: string;
   kind: string;
