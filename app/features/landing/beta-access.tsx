@@ -132,6 +132,8 @@ function BetaAccessDialog({
   const errorId = useId();
   const otherId = useId();
   const turnstileRef = useRef<TurnstileInstance | null>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const otherRef = useRef<HTMLInputElement>(null);
   const reducedMotion = usePrefersReducedMotion();
   const [phase, setPhase] = useState<"form" | "granting" | "success">("form");
   const [email, setEmail] = useState("");
@@ -154,6 +156,26 @@ function BetaAccessDialog({
     );
     return () => timers.forEach(window.clearTimeout);
   }, [phase, reducedMotion]);
+
+  useEffect(() => {
+    if (phase !== "form") return;
+    const handler = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return;
+      if (e.ctrlKey || e.altKey || e.metaKey) return;
+      if (e.key === "Tab" || e.key === "Escape" || e.key === "Enter") return;
+      const filled = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+        email.trim().toLowerCase(),
+      );
+      if (referral === "other" && filled) {
+        otherRef.current?.focus();
+      } else {
+        emailRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [phase, email, referral]);
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
@@ -285,6 +307,7 @@ function BetaAccessDialog({
                   Email address
                 </label>
                 <input
+                  ref={emailRef}
                   id={emailId}
                   type="email"
                   name="email"
@@ -323,6 +346,7 @@ function BetaAccessDialog({
                         Where did you hear about us?
                       </label>
                       <input
+                        ref={otherRef}
                         id={otherId}
                         value={other}
                         onChange={(event) => setOther(event.target.value)}
