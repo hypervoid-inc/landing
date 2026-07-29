@@ -79,11 +79,7 @@ describe("betaSignupSchema", () => {
     expect(result.referralOther).toBe("A newsletter");
   });
 
-  it("rejects unknown CTA and referral values", () => {
-    expect(
-      betaSignupSchema.safeParse({ ...validBody, ctaSource: "somewhere" })
-        .success,
-    ).toBe(false);
+  it("rejects unknown referral values", () => {
     expect(
       betaSignupSchema.safeParse({ ...validBody, referral: "somewhere" })
         .success,

@@ -26,7 +26,7 @@ export const REFERRAL_SOURCES = [
 export const betaSignupSchema = z
   .object({
     email: z.string().trim().toLowerCase().email().max(254),
-    ctaSource: z.enum(CTA_SOURCES),
+    ctaSource: z.string().min(1),
     referral: z.enum(REFERRAL_SOURCES),
     referralOther: z.string().trim().min(2).max(120).optional(),
     turnstileToken: z.string().min(1).max(2048),
