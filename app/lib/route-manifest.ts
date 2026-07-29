@@ -88,15 +88,50 @@ function tagTitle(tag: string): string {
     : label;
 }
 
+/**
+ * The stem shared by a route's OG image, its source artwork, and its art
+ * subject. `scripts/generate-og.mjs` keys every file it reads and writes off
+ * this, so the naming rule lives here rather than being restated per script.
+ */
+export function ogName(path: string): string {
+  return path === "/" ? "home" : path.slice(1).replaceAll("/", "-");
+}
+
+/**
+ * The human title for a route, with the SEO suffix stripped. Used for
+ * breadcrumbs, OG image type, and the artwork prompts, which all want the
+ * headline rather than the search-results string.
+ */
+export function routeDisplayTitle(route: CanonicalRoute): string {
+  return (
+    route.displayTitle ??
+    route.title.replace(" - Construct Computer", "").replace(" | Construct", "")
+  );
+}
+
+/**
+ * The published OG filename without its extension. An MDX post may name its own
+ * source card in any format; the extension is dropped here because everything
+ * is re-encoded to one.
+ */
+export function ogStem(path: string, image?: string): string {
+  return image ? image.replace(/\.[^.]+$/, "") : ogName(path);
+}
+
+/**
+ * Every OG image is published under `/og/` as JPEG — the cards are gradient
+ * renders that PNG stores about nine times larger for no visible gain, and
+ * they double as blog thumbnails where that weight is paid fourteen times over.
+ */
 function route(
-  entry: Omit<CanonicalRoute, "canonical" | "image">,
+  entry: Omit<CanonicalRoute, "canonical" | "image"> & {
+    readonly image?: string;
+  },
 ): CanonicalRoute {
-  const name =
-    entry.path === "/" ? "home" : entry.path.slice(1).replaceAll("/", "-");
   return {
     ...entry,
     canonical: entry.path === "/" ? `${siteUrl}/` : `${siteUrl}${entry.path}/`,
-    image: `${siteUrl}/og/${name}.png`,
+    image: `${siteUrl}/og/${ogStem(entry.path, entry.image)}.jpg`,
   };
 }
 
@@ -177,6 +212,7 @@ export const canonicalRoutes: readonly CanonicalRoute[] = [
       lastModified: entry.updated ?? entry.published,
       author: entry.author,
       tags: entry.tags,
+      image: entry.image,
     }),
   ),
   route({

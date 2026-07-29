@@ -1,17 +1,7 @@
-import { Buffer } from "node:buffer";
-import {
-  copyFile,
-  mkdir,
-  readFile,
-  readdir,
-  rm,
-  writeFile,
-} from "node:fs/promises";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
-import { URL } from "node:url";
 import { format } from "prettier";
-import sharp from "sharp";
 import { createServer } from "vite";
 import { z } from "zod";
 
@@ -39,6 +29,11 @@ const frontmatterSchema = z
     tags: z.array(z.string().min(1)).min(1),
     kind: z.enum(["article", "guide", "comparison"]),
     draft: z.boolean(),
+    // Mirrors `ogImageOverride` in app/content/schema.ts.
+    image: z
+      .string()
+      .regex(/^[\w-]+\.(png|jpg|jpeg|webp)$/)
+      .optional(),
   })
   .strict()
   .refine(
@@ -91,11 +86,9 @@ const vite = await createServer({
   appType: "custom",
 });
 let crawlerFiles;
-let canonicalRoutes;
 try {
-  ({ crawlerFiles } = await vite.ssrLoadModule("/app/lib/generated-content.ts"));
-  ({ canonicalRoutes } = await vite.ssrLoadModule(
-    "/app/lib/route-manifest.ts",
+  ({ crawlerFiles } = await vite.ssrLoadModule(
+    "/app/lib/generated-content.ts",
   ));
 } finally {
   await vite.close();
@@ -107,44 +100,7 @@ for (const [relativePath, content] of Object.entries(crawlerFiles)) {
   await writeFile(destination, content);
 }
 
-const ogDirectory = path.join(root, "public/og");
-await rm(ogDirectory, { force: true, recursive: true });
-await mkdir(ogDirectory, { recursive: true });
-for (const route of canonicalRoutes) {
-  const filename = new URL(route.image).pathname.split("/").at(-1);
-  const title = wrapTitle(
-    route.displayTitle ?? route.title.replace(" - Construct Computer", ""),
-  );
-  const lines = title
-    .map(
-      (line, index) =>
-        `<tspan x="80" dy="${index === 0 ? 0 : 72}">${escapeHtml(line)}</tspan>`,
-    )
-    .join("");
-  const svg = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="630" fill="#f8fbfb"/><circle cx="1060" cy="90" r="230" fill="#d9f6f5"/><text x="80" y="120" font-family="Arial, sans-serif" font-size="34" font-style="italic" fill="#4e4646">Construct<tspan fill="#01b4c8">Computer</tspan></text><text x="80" y="270" font-family="Arial, sans-serif" font-size="62" font-style="italic" fill="#4e4646">${lines}</text><text x="80" y="555" font-family="Arial, sans-serif" font-size="24" fill="#627c86">construct.computer</text></svg>`;
-  await sharp(Buffer.from(svg))
-    .png()
-    .toFile(path.join(ogDirectory, filename));
-}
-await copyFile(
-  path.join(root, "assets/og/home.png"),
-  path.join(ogDirectory, "home.png"),
-);
-
-function escapeHtml(value) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
-
-function wrapTitle(value) {
-  const lines = [];
-  for (const word of value.split(" ")) {
-    const last = lines.at(-1);
-    if (!last || `${last} ${word}`.length > 31) lines.push(word);
-    else lines[lines.length - 1] = `${last} ${word}`;
-  }
-  return lines.slice(0, 3);
-}
+// OG images are committed artifacts built by `pnpm og`, not build output. They
+// depend on a display font and on hand-placed artwork, so rendering them per
+// build would make the deployed images differ from the reviewed ones.
+// `tests/og-images.test.ts` fails the build when they fall out of date.

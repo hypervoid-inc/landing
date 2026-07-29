@@ -9,6 +9,19 @@ const isoDate = z.string().refine((value) => {
   );
 }, "Expected a real YYYY-MM-DD date");
 
+/**
+ * A hand-made OG image used instead of the generated one: the filename of a
+ * finished 1200x630 image sitting in `assets/og/`, alongside the homepage's.
+ * `pnpm og` publishes it verbatim to `public/og/`, and
+ * `tests/og-images.test.ts` fails if the source file is missing.
+ */
+const ogImageOverride = z
+  .string()
+  .regex(
+    /^[\w-]+\.(png|jpg|jpeg|webp)$/,
+    'Expected a filename in assets/og/, such as "my-post.png"',
+  );
+
 export const blogFrontmatterSchema = z
   .object({
     title: z.string().min(1),
@@ -20,6 +33,7 @@ export const blogFrontmatterSchema = z
     tags: z.array(z.string().min(1)).min(1),
     kind: z.enum(["article", "guide", "comparison"]),
     draft: z.boolean(),
+    image: ogImageOverride.optional(),
   })
   .strict()
   .refine(({ published, updated }) => !updated || updated > published, {

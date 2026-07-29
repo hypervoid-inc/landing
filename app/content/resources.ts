@@ -14,6 +14,8 @@ export type ResourceEntry = {
   readonly updated?: string;
   readonly author: Author;
   readonly tags: readonly string[];
+  /** Hand-picked OG image; absent means the generated one is used. */
+  readonly image?: string;
 };
 
 export const resourceEntries: readonly ResourceEntry[] = blogMetadata
@@ -28,6 +30,7 @@ export const resourceEntries: readonly ResourceEntry[] = blogMetadata
     updated: post.updated,
     author: getAuthor(post.author),
     tags: post.tags,
+    image: post.image,
   }))
   .sort((left, right) => right.published.localeCompare(left.published));
 
