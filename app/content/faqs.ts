@@ -41,7 +41,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Can ChatGPT already schedule tasks?",
       answer:
-        "Some chat products do offer scheduling and automation, depending on plan. The difference is where the work lives afterward: Construct keeps resulting files, run history, and bounded Activity summaries in a workspace that outlives the conversation.",
+        "Some chat products do offer scheduling and automation, depending on plan. The difference is where the work lives afterward: Construct keeps resulting files, run history, and a full Activity audit log in a workspace that outlives the conversation.",
     },
     {
       question: "When should I still use a chat assistant?",
@@ -51,7 +51,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Can I see what the agent actually did?",
       answer:
-        "Construct keeps bounded Activity summaries with best-effort reasons, plus chat tool records, workspace files, and sent messages. Its long-term memory is inspectable and correctable rather than opaque.",
+        "Construct keeps an Activity audit log recording every action, what it affected, when it ran, and why, plus chat tool records, workspace files, and sent messages. Its long-term memory is inspectable and correctable rather than opaque.",
     },
   ],
   "construct-vs-copilot": [
@@ -152,7 +152,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How do I verify the work was done correctly?",
       answer:
-        "Construct keeps inspectable work records: bounded Activity summaries, chat tool records, workspace files, and sent messages. That record is what makes delegated agent work auditable in a way an unstructured task list is not.",
+        "Construct keeps inspectable work records: an Activity audit log of every action with what it affected, when it ran, and why, plus chat tool records, workspace files, and sent messages. That record is what makes delegated agent work auditable in a way an unstructured task list is not.",
     },
   ],
   "ai-agent-memory": [
@@ -186,7 +186,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Does an AI employee work without supervision?",
       answer:
-        "It runs autonomously but stays supervised. You can inspect outputs, review bounded Activity summaries, and interrupt a running turn, so autonomy does not mean losing visibility into what happened.",
+        "It runs autonomously but stays supervised. You can inspect outputs, review the Activity audit log covering what it did, when, and why, and interrupt a running turn, so autonomy does not mean losing visibility into what happened.",
     },
   ],
   "ai-workflow-automation": [
@@ -227,7 +227,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How is the work kept accountable?",
       answer:
-        "The workspace retains files, run history, and bounded Activity summaries, and long-term memory stays inspectable and correctable, so delegated work can be reviewed after the fact.",
+        "The workspace retains files, run history, and a full Activity audit log, and long-term memory stays inspectable and correctable, so delegated work can be reviewed after the fact.",
     },
   ],
   "build-internal-tools-with-construct": [
