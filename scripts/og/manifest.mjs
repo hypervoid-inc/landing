@@ -84,7 +84,7 @@ export async function readSources(name, stem = name) {
 }
 
 /** Every input that can change an output image, collapsed to one hash. */
-export function signature({ title, kind, stem, custom, full }) {
+export function signature({ title, kind, stem, custom, full, photo }) {
   return digest(
     JSON.stringify({
       title,
@@ -93,6 +93,7 @@ export function signature({ title, kind, stem, custom, full }) {
       frame: FRAME_VERSION,
       custom: custom && digest(custom),
       full: full && digest(full),
+      photo: photo && digest(photo),
     }),
   );
 }

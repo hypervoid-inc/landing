@@ -1,10 +1,15 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { URL } from "node:url";
 import { createServer } from "vite";
 
-import { encodeImage, renderFrame, renderFullBleed } from "./og/frame.mjs";
+import {
+  encodeImage,
+  renderFrame,
+  renderFullBleed,
+  renderPortrait,
+} from "./og/frame.mjs";
 import {
   manifestPath,
   outputDirectory,
@@ -56,6 +61,11 @@ async function loadRoutes() {
         // `/og/<stem>.jpg` — the route's own name unless MDX frontmatter named
         // a different image, in which case that name is published instead.
         stem: path.basename(new URL(route.image).pathname, ".jpg"),
+        // Author cards use the real headshot rather than generated art.
+        photo:
+          route.kind === "author" && route.author?.image
+            ? path.join(root, "public", route.author.image.replace(/^\//, ""))
+            : null,
       };
     });
   } finally {
@@ -79,7 +89,16 @@ async function renderOne(route) {
   // Hand-made cards are re-encoded rather than copied, so every published
   // image shares one format, one colour space, and no alpha channel.
   if (custom) await writeFile(output, await encodeImage(custom));
-  else if (full) {
+  else if (route.photo) {
+    await writeFile(
+      output,
+      await renderPortrait({
+        title: route.title,
+        kind: route.kind,
+        photo: route.photo,
+      }),
+    );
+  } else if (full) {
     await writeFile(
       output,
       await renderFullBleed({
@@ -107,8 +126,13 @@ async function renderOne(route) {
   }
 
   return {
-    signature: signature({ ...route, custom, full }),
-    placeholder: !custom && !full,
+    signature: signature({
+      ...route,
+      custom,
+      full,
+      photo: route.photo ? await readFile(route.photo) : null,
+    }),
+    placeholder: !custom && !full && !route.photo,
   };
 }
 

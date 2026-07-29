@@ -83,6 +83,29 @@ describe("content validation", () => {
     expect(content).not.toContain("browser sessions");
   });
 
+  /**
+   * House style: no em or en dashes in anything a reader sees. They are checked
+   * against rendered copy rather than the whole repo, so prose in code comments
+   * and docs is unaffected.
+   */
+  it("uses no em or en dashes in published copy", () => {
+    const offenders: string[] = [];
+    const sources = [
+      ...readdirSync(blogDirectory)
+        .filter((name) => name.endsWith(".mdx"))
+        .map((name) => [name, readFileSync(`${blogDirectory}/${name}`, "utf8")]),
+      ["landing.ts", JSON.stringify(landingFaq)],
+      ["route-manifest", JSON.stringify(canonicalRoutes)],
+    ] as const;
+
+    for (const [name, text] of sources) {
+      for (const match of text.matchAll(/[^\n]*[\u2013\u2014][^\n]*/g)) {
+        offenders.push(`${name}: ${match[0].trim().slice(0, 90)}`);
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
   it("keeps unified editorial metadata complete", () => {
     expect(blogMetadata.map(({ kind }) => kind)).toEqual(
       expect.arrayContaining(["article", "guide", "comparison"]),

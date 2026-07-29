@@ -18,6 +18,7 @@ export declare function signature(input: {
   stem: string;
   custom: Buffer | null;
   full: Buffer | null;
+  photo?: Buffer | null;
 }): string;
 
 export declare function readManifest(): Promise<Record<string, string>>;

@@ -297,7 +297,7 @@ function BetaAccessDialog({
                         aria-pressed={referral === id}
                         disabled={submitting}
                         onClick={() => setReferral(id)}
-                        className={`rounded-full border px-3 py-1.5 text-xs font-medium ${referral === id ? "border-[#4cd8ff] bg-[#4cd8ff] text-white" : "border-[#c5e8ef] bg-[#f8feff]"}`}
+                        className={`rounded-full border px-3 py-1.5 text-xs font-medium ${referral === id ? "border-[#4cd8ff] bg-[#4cd8ff] font-black text-white" : "border-[#c5e8ef] bg-[#f8feff]"}`}
                       >
                         {label}
                       </button>
@@ -406,7 +406,7 @@ function BetaAccessDialog({
                   >
                     <span
                       aria-hidden
-                      className={`grid h-6 w-6 place-items-center rounded-full text-xs ${steps > index ? "bg-[#4cd8ff] text-white" : "border border-[#c5e8ef]"}`}
+                      className={`grid h-6 w-6 place-items-center rounded-full text-xs ${steps > index ? "bg-[#4cd8ff] font-black text-white" : "border border-[#c5e8ef]"}`}
                     >
                       {steps > index ? "✓" : index + 1}
                     </span>

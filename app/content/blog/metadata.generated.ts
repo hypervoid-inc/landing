@@ -78,7 +78,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     slug: "chat-assistants-vs-ai-employees",
     title: "Chat Assistants vs AI Employees",
     description:
-      "ChatGPT and Claude are great at drafting — but autonomous ops need execution, persistence, and inspectable work. See how Construct compares to chat assistants.",
+      "ChatGPT and Claude are great at drafting, but autonomous ops need execution, persistence, and inspectable work. See how Construct compares to chat assistants.",
     published: "2026-06-15",
     updated: "2026-07-27",
     author: "ankush",

@@ -74,7 +74,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How does Construct handle context across different tools?",
       answer:
-        "It is designed to carry context across a whole job — a customer message, a workspace file, a CRM update, a browser research step, and a scheduled follow-up. Useful context can be stored in inspectable memory and repeatable work saved as a versioned workflow.",
+        "It is designed to carry context across a whole job: a customer message, a workspace file, a CRM update, a browser research step, and a scheduled follow-up. Useful context can be stored in inspectable memory and repeatable work saved as a versioned workflow.",
     },
   ],
   "construct-vs-diy": [
@@ -108,7 +108,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "What does Construct do that a coding agent does not?",
       answer:
-        "Construct can read and reply from its native inbox, update spreadsheets, schedule jobs, create Google Calendar events when that app is connected, and post in Slack — alongside repository work rather than instead of the rest of the business stack.",
+        "Construct can read and reply from its native inbox, update spreadsheets, schedule jobs, create Google Calendar events when that app is connected, and post in Slack, alongside repository work rather than instead of the rest of the business stack.",
     },
     {
       question: "Can non-engineers supervise Construct?",
@@ -176,7 +176,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "What is an AI employee?",
       answer:
-        "An AI employee is an agent given a persistent workspace and the tools to complete assigned work end to end — researching, operating tools, creating files, and running recurring jobs — rather than only answering questions in a chat window.",
+        "An AI employee is an agent given a persistent workspace and the tools to complete assigned work end to end, researching, operating tools, creating files, and running recurring jobs, rather than only answering questions in a chat window.",
     },
     {
       question: "How is an AI employee different from a chatbot?",
@@ -222,7 +222,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "What work can an AI employee complete?",
       answer:
-        "Research, tool operation, file creation, and recurring work run from a persistent, supervised workspace — the kinds of tasks that span several apps rather than fitting in a single chat response.",
+        "Research, tool operation, file creation, and recurring work run from a persistent, supervised workspace, the kinds of tasks that span several apps rather than fitting in a single chat response.",
     },
     {
       question: "How is the work kept accountable?",
@@ -234,7 +234,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "What kind of internal tools can Construct build?",
       answer:
-        "Constrained workspace applications for a repeated process — the kind of small private app a team would otherwise maintain by hand. Construct writes, validates, and publishes it into your cloud desktop.",
+        "Constrained workspace applications for a repeated process, the kind of small private app a team would otherwise maintain by hand. Construct writes, validates, and publishes it into your cloud desktop.",
     },
     {
       question: "What happens if a build breaks?",

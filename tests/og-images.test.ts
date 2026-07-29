@@ -1,4 +1,5 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -26,6 +27,14 @@ function imageFile(route: CanonicalRoute) {
 
 function publishedPath(route: CanonicalRoute) {
   return path.join(outputDirectory, imageFile(route));
+}
+
+const publicDirectory = fileURLToPath(new URL("../public/", import.meta.url));
+
+/** Author cards composite the real headshot, so it is part of their signature. */
+function portraitFor(route: CanonicalRoute) {
+  if (route.kind !== "author" || !route.author?.image) return null;
+  return readFileSync(path.join(publicDirectory, route.author.image.slice(1)));
 }
 
 const names = canonicalRoutes.map((route) => ogName(route.path));
@@ -160,6 +169,7 @@ describe("committed OG images", () => {
         stem,
         custom,
         full,
+        photo: portraitFor(route),
       });
       if (manifest[name] !== expected) stale.push(name);
     }

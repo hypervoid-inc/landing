@@ -13,7 +13,7 @@ export const pricingPlans = [
     imageAlt:
       "Construct mascot completing a focused task at a personal workspace",
     features: [
-      ["Entry plan — start exploring", "footprints"],
+      ["Entry plan - start exploring", "footprints"],
       ["1 AI agent", "workflow"],
       ["Up to 50 steps per task", "footprints"],
       ["2 parallel background jobs", "tabs"],
@@ -37,7 +37,7 @@ export const pricingPlans = [
       ["Background & scheduled tasks", "tabs"],
       ["30-minute command runtime", "timer"],
       ["1 GB cloud storage", "cloud"],
-      ["Up to 5 agents — coming soon", "workflow"],
+      ["Up to 5 agents - coming soon", "workflow"],
     ],
   },
   {
@@ -52,12 +52,12 @@ export const pricingPlans = [
       "Construct agents orchestrating browser, terminal, files, and schedules",
     features: [
       ["32× the usage of Lite", "footprints"],
-      ["Deep runs — up to 1,000 steps per task", "footprints"],
+      ["Deep runs - up to 1,000 steps per task", "footprints"],
       ["Background & scheduled tasks", "tabs"],
       ["1-hour command runtime", "timer"],
       ["3 GB cloud storage", "cloud"],
       ["Bring your own model keys (BYOK)", "key"],
-      ["Up to 15 agents — coming soon", "workflow"],
+      ["Up to 15 agents - coming soon", "workflow"],
     ],
   },
 ] as const satisfies ReadonlyArray<{
@@ -121,7 +121,7 @@ export const workflowDemos = [
     title: "Turn Any Process",
     accent: "Into A Workflow",
     description:
-      "Combine agent steps, connected apps, and notifications into a reusable procedure that anyone—or any schedule—can run again.",
+      "Combine agent steps, connected apps, and notifications into a reusable procedure that anyone, or any schedule, can run again.",
     cta: "Build a Workflow",
     mutedAction: "See a Complete Run",
     video: "/assets/landing/workflows/workflow.mp4",
@@ -182,7 +182,7 @@ export const workflowDemos = [
     title: "One Workspace",
     accent: "For The Whole Team",
     description:
-      "Bring people, agents, files, apps, and shared conversations together—with invitations, roles, and precise access controls.",
+      "Bring people, agents, files, apps, and shared conversations together, with invitations, roles, and precise access controls.",
     cta: "Explore Workspaces",
     mutedAction: "See Shared Work in Action",
     video: "/assets/landing/workflows/workspace.mp4",
