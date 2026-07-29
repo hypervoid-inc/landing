@@ -390,6 +390,11 @@ function PricingCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
         >
           {plan.cta}
         </a>
+        {plan.highlight ? (
+          <p className="mt-2.5 text-center text-[12px] font-semibold leading-[15px] text-[#129a5f] xl:text-[13px] xl:leading-4">
+            {plan.highlight}
+          </p>
+        ) : null}
         <div className="pricing-benefits">
           <p className="mb-3 text-[11px] font-medium uppercase leading-[14px] tracking-[.18em] text-[#63afc2]">
             Benefits

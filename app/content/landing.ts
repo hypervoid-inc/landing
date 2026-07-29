@@ -8,6 +8,7 @@ export const pricingPlans = [
     cta: "Start with Lite",
     description: "Try Construct for yourself",
     badge: null,
+    highlight: "1-day trial",
     image: "/assets/landing/pricing/lite-v3.webp",
     imageAlt:
       "Construct mascot completing a focused task at a personal workspace",
@@ -26,6 +27,7 @@ export const pricingPlans = [
     cta: "Put Starter to work",
     description: "Daily agent work with email & schedules",
     badge: "Recommended",
+    highlight: null,
     image: "/assets/landing/pricing/starter-v3.webp",
     imageAlt:
       "Construct mascot connecting report, schedule, and workflow surfaces",
@@ -44,6 +46,7 @@ export const pricingPlans = [
     cta: "Go Pro",
     description: "Full desktop power + your own model keys",
     badge: null,
+    highlight: null,
     image: "/assets/landing/pricing/pro-v3.webp",
     imageAlt:
       "Construct agents orchestrating browser, terminal, files, and schedules",
@@ -63,6 +66,7 @@ export const pricingPlans = [
   cta: string;
   description: string;
   badge: string | null;
+  highlight: string | null;
   image: string;
   imageAlt: string;
   features: ReadonlyArray<readonly [string, PricingIcon]>;
@@ -77,7 +81,7 @@ export const landingFaq = [
   {
     question: "How is Construct different from ChatGPT or Claude?",
     answer:
-      "Chat assistants are excellent for answers and drafts. Construct is built for execution that persists beyond a thread: it can create files, run scheduled jobs, reuse linear workflows, and keep inspectable memory, chat tool records, and bounded Activity summaries in one web desktop.",
+      "Chat assistants are excellent for answers and drafts. Construct is built for execution that persists beyond a thread: it can create files, run scheduled jobs, reuse linear workflows, and keep inspectable memory, chat tool records, and a full Activity audit log in one web desktop.",
   },
   {
     question: "What work can Construct complete?",
@@ -97,12 +101,12 @@ export const landingFaq = [
   {
     question: "Can I see and control what the agent does?",
     answer:
-      "Yes. The web desktop exposes files, live browser activity, terminal transcripts, workflows, memories, notifications, and chat tool records. It also provides bounded Activity summaries. You can inspect results, interrupt a running turn, answer questions, and correct or forget long-term memory.",
+      "Yes. The web desktop exposes files, live browser activity, terminal transcripts, workflows, memories, notifications, and chat tool records. Activity is a full audit log: every action the agent takes, what it affected, when it ran, and why. You can inspect results, interrupt a running turn, answer questions, and correct or forget long-term memory.",
   },
   {
     question: "Is my data private and secure?",
     answer:
-      "Personal and team workspaces use scoped file, memory, and sandbox resources. Team members intentionally share team resources. Construct-stored model keys and Slack or Discord bot credentials are encrypted, while Composio manages its own OAuth connections. Activity provides bounded action summaries rather than a forensic audit log.",
+      "Personal and team workspaces use scoped file, memory, and sandbox resources. Team members intentionally share team resources. Construct-stored model keys and Slack or Discord bot credentials are encrypted, while Composio manages its own OAuth connections. Activity keeps an audit log of every agent action with what it affected, when it ran, and why.",
   },
   {
     question: "How is Construct priced?",
