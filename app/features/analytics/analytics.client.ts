@@ -7,7 +7,14 @@ type AnalyticsEvent =
   | "beta_signup_submitted"
   | "beta_signup_granted"
   | "beta_opened"
-  | "affiliate_link_clicked";
+  | "affiliate_link_clicked"
+  | "clippy_shown"
+  | "clippy_advanced"
+  | "clippy_cta_clicked"
+  | "clippy_collapsed"
+  | "clippy_reopened"
+  | "clippy_hidden"
+  | "clippy_dragged";
 
 let postHogPromise: Promise<typeof import("posthog-js").default | null> | null =
   null;

@@ -9,6 +9,25 @@ import {
 } from "../app/content/landing";
 import { canonicalRoutes } from "../app/lib/route-manifest";
 
+/**
+ * The Clippy CTA is fixed to the corner and would intercept clicks in any test
+ * that runs past its arming delay. Seeding a dismissal makes that structural
+ * rather than a bet on every spec finishing inside the dwell delay. That bet
+ * would already be lost: several specs run well past 15 seconds.
+ */
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    try {
+      sessionStorage.setItem(
+        "construct_clippy_v1",
+        JSON.stringify({ state: "hidden", beat: 0, position: null }),
+      );
+    } catch {
+      // Storage is unavailable, and the widget is equally unavailable with it.
+    }
+  });
+});
+
 test("serves every canonical page with matching metadata", async ({
   request,
 }) => {
@@ -358,7 +377,7 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     for (const cta of ["Start with Lite", "Put Starter to work", "Go Pro"]) {
       await expect(page.getByRole("link", { name: cta })).toHaveAttribute(
         "href",
-        "https://beta.construct.computer",
+        "https://os.construct.computer",
       );
     }
 
@@ -719,14 +738,14 @@ test("every landing button responds to a real click", async ({
     await page.getByRole("button", { name: "Close dialog" }).click();
   }
 
-  await context.route("https://beta.construct.computer/", (route) =>
+  await context.route("https://os.construct.computer/", (route) =>
     route.fulfill({ body: "ok" }),
   );
   for (const plan of pricingPlans) {
     const popupPromise = page.waitForEvent("popup");
     await page.getByRole("link", { name: plan.cta, exact: true }).click();
     const popup = await popupPromise;
-    await expect(popup).toHaveURL("https://beta.construct.computer/");
+    await expect(popup).toHaveURL("https://os.construct.computer/");
     await popup.close();
   }
 

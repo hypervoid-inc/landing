@@ -10,6 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import { Analytics } from "./features/analytics/analytics";
 import { BetaAccessProvider } from "./features/landing/beta-access";
+import { ClippyCta } from "./features/landing/clippy-cta";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -81,6 +82,7 @@ export default function App() {
   return (
     <BetaAccessProvider>
       <Outlet />
+      <ClippyCta />
     </BetaAccessProvider>
   );
 }

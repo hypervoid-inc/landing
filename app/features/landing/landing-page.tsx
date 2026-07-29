@@ -392,7 +392,7 @@ function PricingCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
       </div>
       <div className="pricing-content relative z-10 flex flex-1 flex-col">
         <a
-          href="https://beta.construct.computer"
+          href="https://os.construct.computer"
           target="_blank"
           rel="noreferrer"
           className="pricing-button"

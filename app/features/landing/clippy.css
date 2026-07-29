@@ -1,0 +1,487 @@
+/*
+ * Ported from the v2 desktop app's Clippy widget (v2 globals.css 107-506), minus
+ * the agent-state glows and plus a conversation, a dismiss affordance, and a
+ * mobile card. The sprite crop percentages and the 9.6s/13.1s ambient pair are
+ * verbatim from v2 and should not be "tidied": the mismatched periods are what
+ * stop the motion looking looped.
+ */
+
+.clippy-widget {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60; /* header 50 < 60 < beta dialog overlay 100 */
+  pointer-events: none; /* only the controls take clicks */
+  transition:
+    transform 280ms cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 180ms ease;
+  will-change: transform;
+}
+
+.clippy-widget[data-dragging="true"] {
+  transition: none; /* 1:1 with the pointer */
+}
+
+/* Yield entirely while the beta dialog owns the screen. */
+.clippy-widget[data-beta-open="true"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Desktop placement waits on a real measurement, so stay invisible until then. */
+.clippy-widget[data-placed="false"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.clippy-frame {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: auto;
+  animation: clippy-enter 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.clippy-sprite {
+  position: relative;
+  flex: none;
+  width: clamp(84px, 9vw, 116px);
+  transform-origin: 50% 86%;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.clippy-widget[data-variant="desktop"][data-open="true"] .clippy-sprite {
+  cursor: grab;
+}
+
+.clippy-widget[data-dragging="true"] .clippy-sprite {
+  cursor: grabbing;
+}
+
+.clippy-sprite-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-user-drag: none;
+}
+
+/* Crops the CRT glass out of the sprite. Percentages are v2's, verified against
+   the converted art: they land exactly on the blue screen. */
+.clippy-screen {
+  position: absolute;
+  top: 14%;
+  left: 15.5%;
+  width: 49%;
+  height: 38.4%;
+  overflow: hidden;
+}
+
+/*
+ * The mascot logo carries its own eyes, so the screen just shows it and leans on
+ * the cursor gaze for life. v2 cross-faded this with a separate 78 frame eyes.gif
+ * (1.7MB, 121KB even as animated webp); drawing bare capsules instead looked
+ * cheap next to the rendered art, so neither survives here.
+ */
+.clippy-screen-logo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* never crop or squash the mascot */
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Covers the sprite while collapsed, so the whole thing is one re-open target. */
+.clippy-reopen {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ---------- desktop speech bubble ---------- */
+
+/*
+ * The bubble art is nine sliced rather than stretched over a fixed box. Its
+ * rounded corners and the tail nub at the bottom right ride in the corner
+ * slices, which border-image renders at their own scale, so only the smooth
+ * gradient middle stretches and the bubble is free to hug whatever the beat
+ * happens to say. Painting it as an <img> meant either a fixed aspect box or a
+ * visibly squashed bubble.
+ */
+.clippy-bubble {
+  position: relative;
+  width: fit-content;
+  max-width: clamp(228px, 23vw, 288px);
+  /*
+   * Rides up so the tail lands on the mascot's screen rather than its keyboard,
+   * and tucks under the sprite so the two read as one object. Both track the
+   * sprite, which is itself clamp(84px, 9vw, 116px) wide.
+   */
+  margin-right: -6px; /* tail just meets the sprite, without hiding behind it */
+  margin-bottom: clamp(52px, 5.6vw, 72px);
+  border: 20px solid transparent;
+  border-image: url("/assets/landing/clippy/bubble.webp") 100 fill;
+  border-image-width: 20px;
+}
+
+.clippy-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  text-align: center;
+  animation: clippy-beat 220ms ease-out both;
+}
+
+.clippy-line {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 650;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgb(0 60 130 / 65%);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.clippy-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Both actions are plain white pills. Weight is the only hierarchy. */
+.clippy-chip {
+  height: 30px;
+  padding: 0 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.clippy-chip:hover {
+  background: #f3f3f3;
+}
+
+/*
+ * Deliberately not .landing-cta. That class is code split into the home-seo
+ * chunk and does not exist on blog pages at all, and a white pill reads better
+ * than brand cyan against the blue bubble.
+ */
+.clippy-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 0 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.clippy-pill:hover {
+  background: #f3f3f3;
+}
+
+/* ---------- mobile card ---------- */
+
+.clippy-widget[data-variant="mobile"] {
+  top: auto;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  left: max(12px, env(safe-area-inset-left));
+  transform: none !important; /* drag is desktop only */
+}
+
+/*
+ * The sprite peeks over the card's corner rather than standing beside it. Side
+ * by side leaves roughly 250px of inner card width at 390px wide, which is not
+ * enough for the chip and the CTA on one row.
+ */
+.clippy-widget[data-variant="mobile"] .clippy-frame {
+  display: block;
+}
+
+.clippy-widget[data-variant="mobile"] .clippy-sprite {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  z-index: 1;
+  width: 68px;
+}
+
+/*
+ * Padding on the frame, not margin on the card. A top margin here collapses
+ * through the frame and drags the absolutely positioned sprite down with it, so
+ * the two never separate.
+ */
+.clippy-widget[data-variant="mobile"][data-open="true"] .clippy-frame {
+  padding-top: 50px;
+}
+
+.clippy-card {
+  position: relative;
+  min-width: 0;
+  padding: 14px 16px 16px;
+  border: 1px solid #c5e8ef;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgb(1 180 200 / 18%);
+  animation: clippy-beat 220ms ease-out both;
+}
+
+.clippy-card .clippy-copy {
+  display: block;
+  text-align: left;
+}
+
+.clippy-card .clippy-line {
+  color: #4e4646;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  /* Just enough gutter for the close button to sit in the corner. */
+  padding-right: 24px;
+  text-align: left;
+  text-shadow: none;
+  -webkit-line-clamp: 4;
+}
+
+/* Stacked and full width, primary first. Two pills side by side do not fit a
+   360px card once the labels are real sentences. */
+.clippy-card .clippy-actions {
+  flex-direction: column-reverse;
+  align-items: stretch;
+  margin-top: 14px;
+}
+
+.clippy-card .clippy-chip,
+.clippy-card .clippy-pill {
+  width: 100%;
+  height: 44px;
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+/* ---------- dismiss ---------- */
+
+.clippy-close {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 92%);
+  color: #627c86;
+  /* Quiet until wanted: present enough to find, faint enough to ignore. */
+  opacity: 0.45;
+  pointer-events: auto;
+  box-shadow: 0 1px 4px rgb(20 60 80 / 22%);
+  cursor: pointer;
+  transition:
+    opacity 160ms ease,
+    color 160ms ease;
+}
+
+.clippy-frame:hover .clippy-close,
+.clippy-close:hover,
+.clippy-close:focus-visible {
+  opacity: 1;
+}
+
+.clippy-close:hover {
+  color: #01b4c8;
+}
+
+.clippy-close::after {
+  content: "";
+  position: absolute;
+  inset: -13px;
+  border-radius: inherit;
+}
+
+.clippy-close:hover {
+  border-color: #8adcdf;
+  background: #effbfc;
+  color: #01b4c8;
+}
+
+/*
+ * Inside the bubble's own top corner, on the far side from the sprite. The copy
+ * is vertically centred and the sprite is bottom aligned, so this corner is the
+ * one piece of empty blue in the layout.
+ */
+/* Mobile puts it in the card's own top right corner, and keeps it always visible
+   because there is no hover to reveal it. */
+.clippy-card .clippy-close {
+  top: 12px;
+  right: 12px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #e5e7eb;
+  opacity: 1;
+  box-shadow: none;
+}
+
+/* Clear of the sprite's top edge, so it never sits on top of the artwork. */
+.clippy-sprite .clippy-close {
+  top: -16px;
+  right: -2px;
+  z-index: 2;
+}
+
+/* ---------- ambient motion ---------- */
+
+.clippy-widget[data-open="true"] .clippy-frame {
+  animation:
+    clippy-enter 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    clippy-float 9.6s cubic-bezier(0.77, 0, 0.175, 1) 420ms infinite;
+}
+
+.clippy-sprite {
+  animation: clippy-idle 13.1s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .clippy-frame:hover .clippy-sprite {
+    transform: translateY(-2px) scale(1.025);
+  }
+
+  .clippy-frame:hover,
+  .clippy-frame:hover .clippy-sprite {
+    animation-play-state: paused;
+  }
+}
+
+.clippy-widget[data-dragging="true"] .clippy-frame,
+.clippy-widget[data-dragging="true"] .clippy-sprite {
+  animation-play-state: paused;
+}
+
+@keyframes clippy-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes clippy-beat {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes clippy-float {
+  0%,
+  10%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  25% {
+    transform: translate3d(1px, -2px, 0);
+  }
+
+  44% {
+    transform: translate3d(-1.25px, -6px, 0);
+  }
+
+  59% {
+    transform: translate3d(0.75px, -3.5px, 0);
+  }
+
+  72% {
+    transform: translate3d(-0.25px, -1px, 0);
+  }
+
+  82% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes clippy-idle {
+  0%,
+  38%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0);
+  }
+
+  46% {
+    transform: translate3d(-1.5px, -1.25px, 0) rotate(-0.6deg);
+  }
+
+  55% {
+    transform: translate3d(1.25px, -3.5px, 0) rotate(1.05deg);
+  }
+
+  64% {
+    transform: translate3d(-0.65px, -1.25px, 0) rotate(-0.4deg);
+  }
+
+  72%,
+  94% {
+    transform: translate3d(0, 0, 0) rotate(0);
+  }
+
+  80% {
+    transform: translate3d(0.9px, -2.25px, 0) rotate(0.7deg);
+  }
+
+  88% {
+    transform: translate3d(-0.35px, -0.7px, 0) rotate(-0.18deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clippy-widget,
+  .clippy-widget * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .clippy-widget[data-open="true"] .clippy-frame,
+  .clippy-frame,
+  .clippy-copy,
+  .clippy-card {
+    opacity: 1;
+    transform: none;
+  }
+
+}
