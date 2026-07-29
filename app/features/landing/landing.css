@@ -625,7 +625,10 @@
     margin-top: 14px;
   }
 
-  .hero-headline .landing-cta {
+  /* Keeps the affiliate note centred on the CTA when the short-viewport rule
+     tightens the CTA's own margin. */
+  .hero-headline .landing-cta,
+  .hero-headline .hero-affiliate {
     margin-top: 14px;
   }
 }
