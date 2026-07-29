@@ -13,6 +13,15 @@ import {
   type ReactNode,
 } from "react";
 
+import canvasConfetti from "canvas-confetti";
+
+const confetti = (overrides?: Parameters<typeof canvasConfetti>[0]) =>
+  canvasConfetti({ particleCount: 200, spread: 360, ...overrides });
+
+if (typeof document !== "undefined") {
+  (window as unknown as Record<string, unknown>).confetti = confetti;
+}
+
 import { betaSignupSchema } from "../../../shared/beta-signup-schema";
 import { captureAnalytics } from "../analytics/analytics.client";
 import { usePrefersReducedMotion } from "./media";
@@ -176,6 +185,24 @@ function BetaAccessDialog({
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, [phase, email, referral]);
+
+  useEffect(() => {
+    if (phase !== "success" || reducedMotion) return;
+    const defaults = {
+      spread: 60,
+      ticks: 100,
+      gravity: 0.8,
+      decay: 0.94,
+      startVelocity: 30,
+      colors: ["#01b4c8", "#4cd8ff", "#d9f8ff", "#4e4646", "#627c86", "#ffffff"],
+    };
+    const left = () =>
+      confetti({ ...defaults, particleCount: 40, origin: { x: 0, y: 0.7 } });
+    const right = () =>
+      confetti({ ...defaults, particleCount: 40, origin: { x: 1, y: 0.7 } });
+    left();
+    right();
+  }, [phase, reducedMotion]);
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
