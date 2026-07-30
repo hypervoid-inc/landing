@@ -20,6 +20,7 @@
     "og:pick": "node scripts/generate-art.mjs --pick",
     "og:prompts": "node scripts/generate-og.mjs --prompts",
     "retheme": "node scripts/retheme-asset.mjs",
+    "social": "node scripts/generate-social-card.mjs",
     "preview": "wrangler pages dev",
     "test": "vitest run",
     "test:e2e": "playwright test",
