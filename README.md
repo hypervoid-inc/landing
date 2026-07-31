@@ -8,7 +8,7 @@ The public Construct Computer website. It preserves the established landing-page
 - Tailwind CSS 4 and shadcn/Radix primitives
 - Repository-authored MDX editorial content
 - Cloudflare Pages, Pages Functions, D1, Turnstile, and WAF
-- PostHog analytics and masked session replay
+- PostHog analytics with full autocapture and unmasked session replay
 - Vitest, Playwright, axe, ESLint, Prettier, and strict TypeScript
 
 ## Commands
