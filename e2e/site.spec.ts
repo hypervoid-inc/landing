@@ -11,21 +11,22 @@ import { canonicalRoutes } from "../app/lib/route-manifest";
 
 /**
  * The Clippy CTA is fixed to the corner and would intercept clicks in any test
- * that runs past its arming delay. Seeding a dismissal makes that structural
- * rather than a bet on every spec finishing inside the dwell delay. That bet
- * would already be lost: several specs run well past 15 seconds.
+ * that runs past its arming delay. Dismiss no longer survives a refresh (or a
+ * seeded sessionStorage write), so every navigation gets `?clippy=off` unless
+ * the URL already sets an override. Several specs run well past 15 seconds.
  */
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => {
-    try {
-      sessionStorage.setItem(
-        "construct_clippy_v1",
-        JSON.stringify({ state: "hidden", beat: 0, position: null }),
-      );
-    } catch {
-      // Storage is unavailable, and the widget is equally unavailable with it.
+  const originalGoto = page.goto.bind(page);
+  page.goto = ((url, options) => {
+    const target = new URL(String(url), "http://localhost:8788");
+    if (!target.searchParams.has("clippy")) {
+      target.searchParams.set("clippy", "off");
     }
-  });
+    return originalGoto(
+      `${target.pathname}${target.search}${target.hash}`,
+      options,
+    );
+  }) as typeof page.goto;
 });
 
 test("serves every canonical page with matching metadata", async ({
