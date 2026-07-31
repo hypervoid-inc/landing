@@ -38,7 +38,10 @@
   position: relative;
   display: flex;
   align-items: flex-end;
-  pointer-events: auto;
+  /* Frame is a layout shell only. Hits pass through to the page underneath
+     unless a child (sprite, bubble, actions) opts back in. Without this the
+     open mobile card sits on top of /blog/ cards and eats their clicks. */
+  pointer-events: none;
   animation: clippy-enter 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
@@ -50,6 +53,7 @@
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  pointer-events: auto;
 }
 
 .clippy-widget[data-variant="desktop"][data-open="true"] .clippy-sprite {
@@ -118,6 +122,7 @@
   position: relative;
   width: fit-content;
   max-width: clamp(228px, 23vw, 288px);
+  pointer-events: auto;
   /*
    * Rides up so the tail lands on the mascot's screen rather than its keyboard,
    * and tucks under the sprite so the two read as one object. Both track the
@@ -158,6 +163,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+  pointer-events: auto;
 }
 
 /* Both actions are plain white pills. Weight is the only hierarchy. */

@@ -7,7 +7,7 @@
       <title>All our Agents get computers, we pay for almost none</title>
       <link>https://construct.computer/blog/running-ai-agents-on-cloudflare-not-vms/</link>
       <guid>https://construct.computer/blog/running-ai-agents-on-cloudflare-not-vms/</guid>
-      <description>Construct is an AI employee with a real Linux computer per user. Don&apos;t get excited - we are not paying for the idle ones. How we run that on Cloudflare Durable Objects, Sandboxes, and R2.</description>
+      <description>Construct is an AI employee with a real Linux computer per user. Don&apos;t get excited - we are not paying for all of them. How we run that on Cloudflare Durable Objects, Sandboxes, and R2.</description>
       <dc:creator>Ankush</dc:creator>
       <category>engineering</category>
       <category>cloudflare</category>
