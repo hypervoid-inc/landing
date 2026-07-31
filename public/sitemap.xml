@@ -30,7 +30,11 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-07-31</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/running-ai-agents-on-cloudflare-not-vms/</loc>
+    <lastmod>2026-07-31</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/how-to-choose-an-ai-agent-platform-for-your-team/</loc>
@@ -90,11 +94,11 @@
   </url>
   <url>
     <loc>https://construct.computer/authors/</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-07-31</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/authors/ankush/</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-07-31</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/authors/nischal/</loc>

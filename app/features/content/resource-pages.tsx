@@ -14,6 +14,7 @@ import {
   formatDate,
   formatShortDate,
 } from "../../components/content/content-shell";
+import { BetaCta } from "../../components/content/beta-cta";
 import { mdxComponents } from "../../components/content/mdx-components";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 import { getBlogPost } from "../../content/blog";
@@ -148,6 +149,8 @@ export function ResourcePage({ slug }: { slug: string }) {
     >
       <post.Content components={mdxComponents} />
       <ResourceFaq slug={entry.slug} />
+      {/* Rendered here rather than authored so every post closes on one. */}
+      <BetaCta source="blog_end">Get beta access</BetaCta>
     </ContentShell>
   );
 }

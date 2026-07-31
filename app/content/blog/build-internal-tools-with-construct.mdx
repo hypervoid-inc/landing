@@ -12,6 +12,8 @@ Internal tools often begin as a spreadsheet, a checklist, or a prompt someone ru
 
 This is not a one-click path to a public SaaS product. A Construct workspace app is a focused internal interface for one workspace. You describe the job, the agent writes the app, checks that it builds, opens it in the desktop, and keeps the source available for inspection and later changes.
 
+<BetaCta source="blog_top">Meet Construct</BetaCta>
+
 ## Start with the repeated process
 
 The best request describes the work rather than prescribing a software architecture. For example:
@@ -51,6 +53,8 @@ The current runtime is intentionally narrower than a general web-hosting platfor
 
 The app UI receives a small Construct SDK for workspace files, app-scoped storage, notifications, window controls, and explicitly permitted calls. It does not inherit every tool available to the agent that authored it. The agent can use broader execution surfaces while building, but the finished interface runs with its own narrower contract.
 
+<BetaCta source="blog_inline_1">Build an internal tool</BetaCta>
+
 ## Permissions are part of the design
 
 An internal tool should not gain broad access simply because it was generated inside a trusted workspace. A workspace app declares the native capabilities, connected apps, and network origins it intends to use. Calls outside those allowlists are denied at runtime.
@@ -80,6 +84,8 @@ This is a last-good-build fallback, not full version history. It protects the wo
 Not every repeated process needs an interface. Use a workspace app when people need to view, enter, filter, or review state. Use a Construct workflow when the main value is running a known sequence of agent steps, connected-app actions, and notifications. Use a scheduled agent job when the process should run in the background without waiting for someone to open a screen.
 
 The two can support the same operation. A workspace app can provide the queue and review surface, while files hold durable records and a scheduled job prepares new work. The important boundary is that the app UI does not secretly become an unrestricted agent: automation still runs through the execution surfaces and permissions designed for it.
+
+<BetaCta source="blog_inline_2">Get beta access</BetaCta>
 
 ## Where workspace apps fit
 

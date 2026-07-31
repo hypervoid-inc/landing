@@ -11,6 +11,8 @@ draft: false
 
 Turn a successful AI task into a durable procedure that can run again without rebuilding the process from scratch.
 
+<BetaCta source="blog_top">Meet Construct</BetaCta>
+
 ## From one good run to a reusable procedure
 
 Traditional automation works best when every trigger and action is known before the flow is built. AI workflow automation is useful when a procedure contains research, judgment, writing, or tool use that cannot be reduced to a fixed data mapping. Construct combines durable workflow steps with an agent that can handle those less predictable parts.
@@ -32,6 +34,8 @@ Consider a recurring task: every Monday, check five competitors' pricing pages, 
 **Inspect it.** Each run leaves step results, retry information, and Activity summaries. Agent steps link back to their chat sessions, so a week where the summary looked wrong can be opened and read rather than guessed at.
 
 The durable output is a versioned procedure, a Slack post each week, and a run history that makes the procedure improvable. When a competitor redesigns a pricing page and the step starts returning less useful results, the run history is where that shows up.
+
+<BetaCta source="blog_inline_1">Build a workflow</BetaCta>
 
 ## Run now or put it on the Calendar
 
@@ -65,6 +69,8 @@ The distinction in the right-hand column matters more than it first appears. Liv
 Workflow automation should be debuggable. Construct keeps run state, step results, retry information, and Activity summaries. You can open resulting files and review connected-app actions; agent steps also link to their chat sessions. During interactive work the agent can ask for missing information, but workflows do not add a mandatory approval before every external action.
 
 That last point deserves emphasis when a workflow writes to systems other people read. Because there is no mandatory approval gate before each external side effect, a workflow that posts publicly, emails customers, or updates shared records should be run manually a few times before it goes on a schedule. Reviewing the first several runs is the cheapest way to catch a step that behaves differently than intended.
+
+<BetaCta source="blog_inline_2">Schedule a job</BetaCta>
 
 ## Working within linear runs
 

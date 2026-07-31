@@ -29,6 +29,8 @@ export const ogArtSubjects: Record<string, string> = {
 
   "blog-how-to-choose-an-ai-agent-platform-for-your-team":
     "An upright glass scorecard panel with six softly glowing evaluation rows, three small candidate cubes weighed on a beam of light beneath it, the mascot studying the result.",
+  "blog-running-ai-agents-on-cloudflare-not-vms":
+    "The mascot hovering in open air above a single glass machine cube that is assembling itself out of bright cyan light directly beneath it, its edges still half formed. To one side an identical cube is breaking apart into drifting motes and thinning away to nothing. Below both, one calm frosted slab holds a neat stack of files, untouched by either. Machines summoned and released, the files staying put.",
   "blog-build-internal-tools-with-construct":
     "The mascot assembling a small glass app window out of floating rounded blocks that snap together along cyan guide lines, one finished block glowing apart from the rest to show the last good build held safe.",
   "blog-ai-agent-vs-zapier":

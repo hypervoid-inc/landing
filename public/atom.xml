@@ -3,7 +3,20 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-07-28T00:00:00Z</updated>
+  <updated>2026-07-31T00:00:00Z</updated>
+  <entry>
+    <title>We give every user a computer and pay for almost none of them</title>
+    <id>https://construct.computer/blog/running-ai-agents-on-cloudflare-not-vms/</id>
+    <link href="https://construct.computer/blog/running-ai-agents-on-cloudflare-not-vms/"/>
+    <author><name>Ankush</name></author>
+    <published>2026-07-31T00:00:00Z</published>
+    <updated>2026-07-31T00:00:00Z</updated>
+    <category term="engineering"/>
+    <category term="cloudflare"/>
+    <category term="durable-objects"/>
+    <category term="infrastructure"/>
+    <summary>Every Construct user gets a Linux machine with a shell, a filesystem, and a disk. Almost none of them are running right now. We left the VPS in March 2026, put the agent loop in a Durable Object, made Linux a tool call, and turned the disk into R2.</summary>
+  </entry>
   <entry>
     <title>How to Choose an AI Agent Platform for Your Team</title>
     <id>https://construct.computer/blog/how-to-choose-an-ai-agent-platform-for-your-team/</id>

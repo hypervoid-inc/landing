@@ -158,6 +158,18 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: false,
   },
   {
+    slug: "running-ai-agents-on-cloudflare-not-vms",
+    title: "We give every user a computer and pay for almost none of them",
+    description:
+      "Every Construct user gets a Linux machine with a shell, a filesystem, and a disk. Almost none of them are running right now. We left the VPS in March 2026, put the agent loop in a Durable Object, made Linux a tool call, and turned the disk into R2.",
+    published: "2026-07-31",
+    seoTitle: "Running AI Agents on Cloudflare Without Always-On VMs",
+    author: "ankush",
+    tags: ["engineering", "cloudflare", "durable-objects", "infrastructure"],
+    kind: "article",
+    draft: false,
+  },
+  {
     slug: "what-is-an-ai-employee",
     title: "What is an AI employee?",
     description:
