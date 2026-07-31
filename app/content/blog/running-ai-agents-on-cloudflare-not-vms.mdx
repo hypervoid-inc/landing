@@ -1,0 +1,215 @@
+---
+title: "We give every user a computer and pay for almost none of them"
+description: "Every Construct user gets a Linux machine with a shell, a filesystem, and a disk. Almost none of them are running right now. We left the VPS in March 2026, put the agent loop in a Durable Object, made Linux a tool call, and turned the disk into R2."
+seoTitle: "Running AI Agents on Cloudflare Without Always-On VMs"
+published: "2026-07-31"
+author: "ankush"
+tags: ["engineering", "cloudflare", "durable-objects", "infrastructure"]
+kind: "article"
+draft: false
+---
+
+Every Construct user gets a Linux machine. It has a shell, a filesystem, Python, LibreOffice, ripgrep, and a disk they can fill up. Right now, almost none of them are running, and that is the whole design. We have been building it this way since March, and this is how the agent loop ended up inside a Durable Object, how Linux became something we summon for a tool call, and how the disk stopped being a disk.
+
+A note on the code in this post: everything below is pseudocode, and the internal names are stand-ins. The behaviour, the constants, and the tradeoffs are exactly what we run.
+
+<BetaCta source="blog_top">Meet Construct</BetaCta>
+
+## A computer per user is a bill per user
+
+The default way to run an AI agent is to give it a Linux box. This is not a silly choice. Agents are trained to reach for bash, bash implies a filesystem and a process table, and the easiest way to provide those is a machine that stays up between turns.
+
+The trouble is what that costs, and we know the shape of that bill because we signed it first.
+
+Construct's original backend was a Bun and Elysia monolith on a VPS: SQLite on local disk, nginx out front, and roughly 1,300 lines of container management handing every user their own box. It worked fine. It also meant that growing the product meant growing a fleet of real machines with real disks, billed through the long stretches where nobody was typing anything.
+
+We migrated off it on 30 March 2026. The commit is titled "migrate backend from VPS monolith to Cloudflare Workers", and everything in this post starts there: Hono on Workers, a per-user WebSocket hub in a Durable Object with hibernation, a container object that archived to R2 on sleep and restored on wake, D1 for relational state, R2 for files, and the frontend on Workers assets. Two days later we moved what was left of the container infrastructure into a legacy folder and wrote down the plan the product still runs on today, which was that the agent runs headlessly inside Durable Objects.
+
+Containers and Sandboxes went generally available two weeks after that, on 13 April 2026, and we moved onto the Sandbox SDK later once it had the shape we wanted. So we are not claiming we predicted anything. We were watching a cost curve that scaled with signups instead of usage, we bet on Durable Objects before there was a tidy product name for what we were doing, and the platform kept arriving at the same answer we did. The team at camelAI [hit the same wall and reached nearly the same conclusion](https://camelai.com/blog/our-coding-agent-runs-in-a-cloudflare-durable-object-not-a-vm) independently, which was a reassuring thing to read after the fact.
+
+## What actually needs to be alive
+
+Here is the reframe that made the rest possible.
+
+"The agent needs a computer" quietly bundles two different things. There is the **agent loop**: the transcript, the tool routing, the model calls, the memory recall. And there is the **machine**: the thing that actually runs `pdftotext`, converts a spreadsheet, compiles a project.
+
+Only the second one needs Linux. The first one needs durable state and a socket, which is a much cheaper thing to want. Cloudflare happens to sell a primitive that is exactly durable state plus a socket, and once you split the two, the expensive half stops needing to be always on.
+
+<BetaCta source="blog_inline_1">Get beta access</BetaCta>
+
+## The agent loop lives in a Durable Object
+
+Each agent gets one Durable Object, resolved by name. Sessions are rows inside it rather than objects of their own, and temporary subagents run as delegated sessions on the same parent object, so fanning out a job buys concurrency without buying instances.
+
+The transcript lives in that object's SQLite. We keep two things deliberately apart. One table is the append-only message log a user scrolls through. A separate record holds the compaction summary plus a watermark marking how far it has already consumed, and that second one is what actually reaches the model. Conflating them is how you end up paying to re-send an afternoon of conversation on every turn.
+
+The part that matters for the bill is hibernation. We use the WebSocket hibernation API, stash per-connection state on the socket itself, and let the runtime answer keepalives for us:
+
+```
+when a client connects:
+    accept the socket through the hibernation API
+    attach { user, agent, session } to the socket itself
+
+once, when the object starts:
+    register an automatic ping / pong reply
+    # the runtime answers keepalives without ever waking the object
+```
+
+A user with a tab open all afternoon is not a running process. It is a socket the runtime is holding for us and a few rows in SQLite. The object wakes when something actually happens.
+
+Because it can be evicted at any moment, every transcript row is also archived to D1, and the object restores from that archive on start if it comes back empty. That is what makes it safe to let the thing die constantly, which is the entire trick.
+
+Eviction does produce one genuinely annoying edge case. Replayed events on reconnect can include a turn-started event with no matching completion, because the object was evicted mid-turn. So when a client reconnects and nothing is actually running, we send it a terminal idle status, purely so the client can never sit "thinking" forever.
+
+## Linux shows up for the tool call, then leaves
+
+This is the section the title is about.
+
+When the agent calls the terminal tool, we resolve a sandbox:
+
+```
+sandbox = getSandbox(SANDBOX_BINDING, instanceKeyFor(user, workspace), {
+    transport:            rpc,
+    enableDefaultSession: false,          # every exec is a fresh shell
+    sleepAfter:           idleWindowFor(plan),
+})
+```
+
+The instance key is scoped to the user, or to the workspace when we know it. Not per agent and not per session, so the number of live containers tracks active humans rather than agent count.
+
+`sleepAfter` is where the money is:
+
+```
+function idleWindowFor(plan):
+    # the per-plan command ceiling, clamped by a global cap
+    seconds = min(commandCeilingFor(plan), GLOBAL_COMMAND_CAP)
+    # command budget, plus a five minute buffer
+    return minutes(ceil(seconds / 60) + 5)
+```
+
+The global cap is 300 seconds today, so that resolves to a ten minute idle sleep on every plan. Pair that with active CPU billing on Cloudflare Containers, where you are charged for CPU actually consumed rather than wall-clock uptime, and an idle sandbox stops being a cost you manage. It is the difference between "we should reap idle machines" and "there is nothing to reap."
+
+One consequence is unglamorous and load-bearing. Disabling the default session means every exec is a fresh shell, so the working directory does not persist between tool calls. Agents hate this. We ended up writing a hint straight into the failure path, addressed to the model, explaining that each terminal call starts clean, that a relative path will resolve against the scratch tree rather than wherever it thinks it is, and that any directory change or exported variable from an earlier call is gone.
+
+Before each exec we kill leftover processes, then mount, then run. That order is not cosmetic. Killing after the mount drops the local bucket's inotify watch and can leave a stale read-only workspace behind, which we found out the way you would expect.
+
+## The disk is R2, so there is no disk
+
+The durable workspace is an R2 bucket mounted into the container over s3fs, with `allow_other` and an explicit uid and gid so the non-root user can actually write to it.
+
+This is the second half of the cost story and the less obvious one. Storage quotas of 100 MB, 1 GB, and 3 GB are quotas on bytes we are storing, not on volumes we are keeping spun up. Nobody's files are sitting on provisioned block storage waiting for them to come back. The files outlive the machine by construction, because they were never on the machine.
+
+The interesting bit is how we verify the mount. Checking that the directory exists is useless, because it passes on a stale read-only mount. So we make the non-root user actually write something:
+
+```
+function workspaceIsWritable(sandbox):
+    probe = ".probe-" + now()
+    result = sandbox.exec(
+        as the non-root agent user:
+            touch <durable root>/probe
+            rm -f <durable root>/probe
+        , timeout: 10s
+    )
+    return result.exitCode == 0
+```
+
+If the probe fails, we unmount, remount, fix ownership, probe again, and only then give up. The probe is debounced to once a minute, and the isolate-level mount cache key carries a version string we bump whenever mount policy changes, so a policy change cannot be silently skipped by a warm isolate.
+
+The honest footnote: local development uses a plain directory sync rather than FUSE, files land root-owned, and we chown them on mount. That divergence between local and production cost us an afternoon, and it is the reason we now trust the write probe more than any status output.
+
+<BetaCta source="blog_inline_2">Try Construct in the beta</BetaCta>
+
+## Root control plane, non-root agent
+
+No cost angle here at all. This is a tax the model charges, and pretending otherwise would make everything above read as a sales pitch.
+
+You cannot set `USER` in a Cloudflare Sandbox image, because the control plane intercepts HTTPS and needs root to do it. So the privilege drop moves to the point of execution instead:
+
+```
+function wrapCommand(command, elevated):
+    inner = bash -c '<command>'
+
+    if elevated:
+        return  ELEVATED=1 <exec wrapper> inner        # stays root
+    else:
+        return  runuser -u <agent user> -- <exec wrapper> inner
+```
+
+No sudo, no passwordless sudoers, and process and file descriptor limits applied by the wrapper. Elevated access is granted per command or until the container sleeps, and those grants are stored inside the container rather than in Worker memory. That inversion turned out to be the right one: once the machine is disposable, the container becomes the correct place to keep short-lived trust, because its lifetime is the shorter and more predictable of the two.
+
+## We deleted our service bindings
+
+Memory and a registry catalog used to be separate Workers that the API called through service bindings. We folded them into one Worker, and the reasoning is worth spelling out because it cuts against the usual instinct.
+
+Service bindings are already an efficient in-account transport, so this was never a latency optimisation. The cost was operational: two more deployments, more local processes, more domains, more generated binding contracts, and releases that had to be coordinated.
+
+The numbers made it easy. Memory was roughly 41 KiB compressed and the registry was under 1 KiB. The combined Worker came out around 1,002 KiB compressed against a project gate of 2 MiB, and the 500 ms startup gate stays a cutover check because Wrangler dry runs do not report startup.
+
+What makes that engineering rather than opinion is that we wrote down when to undo it. Memory goes back to its own Worker if the compressed bundle passes 2 MiB, if startup passes 500 ms, if it needs its own release cadence, or if its failures start widening the API's blast radius.
+
+Same spirit, smaller decision: the web app is served by a Worker with static assets rather than by Pages, because we needed custom domains to manage their own DNS and Pages OAuth could not.
+
+## The edge makes you design for degradation
+
+Memory recall runs on a budget. The whole recall gets 800 ms, and inside that, remote embedding plus Vectorize gets 250 ms.
+
+To be precise about what those are: they are configured budgets, not measured percentiles. We do not have deployed latency dashboards yet and our own docs say so plainly.
+
+The design consequence is the point. SQLite full-text search and the graph traversal are the floor and always return, because they are local to the Durable Object. Vectorize is best-effort layered on top. If the vector path is slow, the agent gets a slightly worse answer instead of a hang. On one big warm box you would simply wait, and waiting is exactly what you cannot afford when nothing is warm by default.
+
+Choosing the embedding model was the one place we have real measurements. Over an 18 query set with close distractors, on Workers AI:
+
+| Model                | recall@1 | mrr   |
+| -------------------- | -------- | ----- |
+| qwen3-embedding-0.6b | 15/18    | 0.892 |
+| bge-m3               | 14/18    | 0.889 |
+| bge-large-en-v1.5    | 13/18    | 0.852 |
+| embeddinggemma-300m  | 12/18    | 0.824 |
+
+Qwen3 is trained for asymmetric retrieval, so telling it whether it is holding a question or a stored record measurably tightens the ranking. Adding that query-side instruction moved mrr from 0.892 to 0.924 on the same set.
+
+A 0.6b model is also what keeps this inside budget. Our gate for the memory pipeline is USD 1 per 1,000 turns, excluding the primary chat model.
+
+One warning for anyone copying this: do not swap embedding models casually. The Vectorize indexes are built at those exact dimensions, so a different model means recreating them and re-embedding every stored record. Vectors from two models are not comparable.
+
+<BetaCta source="blog_inline_3">Get beta access</BetaCta>
+
+## Small things the platform teaches you
+
+Three lessons that cost us something to learn.
+
+**`setTimeout` versus `setAlarm` has a boundary, and it is about ten seconds.** Our Discord gateway object reconnects with backoff, and anything beyond ten seconds goes on an alarm instead of a timer, because a timer does not survive eviction. That single object holds one WebSocket for every guild we serve. We also wrote down where it stops working: split it when Discord's own endpoint reports more than one shard, which happens somewhere around 2,500 guilds. Better to schedule that than discover it.
+
+**A fallback on the same backend as its primary is not a fallback.** The outage that takes out one takes out both. Our compaction slot runs the same Gemma build on Workers AI and on AI Studio, so failing over costs nothing but the route. Every other slot crosses providers too.
+
+**Alarms hand you a bare Durable Object id.** `ctx.id.name` is only populated when you reached the object through a named stub. Alarm-triggered instantiation does not, so the name is gone. Ours was used to address outbound messages, which meant the queue consumer rejected them and the repair alarm re-queued the same work forever. The fix is to persist the name on first use. Nothing warns you about this.
+
+## What we do pay for
+
+The container is real and it is not free, and this is where the title stops being a brag.
+
+The image lands between 1.5 and 1.9 GB, which forces `standard-1` instances because the disk allocation is effectively the image size limit. LibreOffice needs the 4 GiB of memory too, since it gets OOM killed on the smaller tier. Production is configured for up to 100 concurrent instances.
+
+Command execution is capped at 300 seconds on every plan today, clamped below what the plans are eventually meant to allow, until we are confident about agent turn duration. That is a real product limit this architecture caused, not a feature.
+
+s3fs is not a real POSIX filesystem, and it will surprise you at some point.
+
+The fresh-shell model genuinely irritates agents trained on bash, and we pay for it in prompt tokens explaining that the working directory resets. That is still a cost, just denominated in context instead of dollars.
+
+And the flat version: if your workload is one long-lived process per user that truly never idles, none of this helps you. Buy a VM. It is simpler and you will be happier.
+
+## What we run today
+
+Workers, Durable Objects with SQLite storage, Containers through the Sandbox SDK, D1, R2, Queues with dead letter queues, Vectorize, Workers AI, AI Gateway, Email Routing inbound with the send binding outbound, rate limiting bindings, the Cache API, Turnstile, cron triggers, static assets, Workers Logs, and the Agents SDK. No KV, no Hyperdrive, and no machines of our own.
+
+The site you are reading this on is Cloudflare too: Pages, Functions, D1, Turnstile, and the WAF.
+
+<BetaCta source="blog_inline_4">Put Construct to work</BetaCta>
+
+## TL;DR
+
+We left the VPS on 30 March 2026 and have been building on this shape ever since. The agent loop lives in a Durable Object, so an idle conversation is not a running process. Linux is summoned by a tool call and asleep ten minutes later, billed on active CPU. The disk is R2, so we pay for bytes stored instead of volumes provisioned. Memory and registry collapsed into one Worker, because the tax there was operational rather than measured in milliseconds. Recall degrades instead of blocking, inside a dollar per thousand turns. The container still exists, but it is a line item and not the floor.
+
+Every user has a computer. On any given afternoon, we are paying for a handful of them.
+
+If you want the product side of this rather than the plumbing, [what an AI employee actually does](/blog/ai-employee/) covers the work it completes, [inspectable agent memory](/blog/ai-agent-memory/) covers what it remembers and how you correct it, and [building your own agent stack](/blog/construct-vs-diy/) is the honest version of what you would be operating instead.

@@ -1,6 +1,8 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { useMDXComponents } from "@mdx-js/react";
 
+import { BetaCta } from "./beta-cta";
+
 type MDXComponents = ReturnType<typeof useMDXComponents>;
 
 function Table({ children, ...props }: ComponentPropsWithoutRef<"table">) {
@@ -18,6 +20,29 @@ function Table({ children, ...props }: ComponentPropsWithoutRef<"table">) {
         <caption className="sr-only">Article table</caption>
         {children}
       </table>
+    </div>
+  );
+}
+
+/**
+ * Fenced blocks scroll rather than wrap, so the region needs to be reachable by
+ * keyboard for the axe pass. The nested `code` reset undoes the inline pill
+ * below, which would otherwise paint a background behind every line.
+ */
+function CodeBlock({ children, ...props }: ComponentPropsWithoutRef<"pre">) {
+  return (
+    <div
+      className="my-6 overflow-x-auto rounded-lg border border-[#e5e7eb] bg-[#fafafa]"
+      role="region"
+      aria-label="Code block"
+      tabIndex={0}
+    >
+      <pre
+        {...props}
+        className="p-4 font-mono text-[13px] leading-relaxed text-[#4e4646] [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-inherit"
+      >
+        {children}
+      </pre>
     </div>
   );
 }
@@ -42,6 +67,8 @@ function ExternalAwareLink({
 }
 
 export const mdxComponents: MDXComponents = {
+  // Capitalised entries are authorable in MDX with no import, e.g. `<BetaCta />`.
+  BetaCta,
   h2: ({ children }) => (
     <h2 className="font-geist mt-10 mb-4 text-[22px] italic leading-tight text-[#4e4646] lg:text-[26px]">
       {children}
@@ -62,6 +89,15 @@ export const mdxComponents: MDXComponents = {
   strong: ({ children }) => (
     <strong className="font-medium text-[#4e4646]">{children}</strong>
   ),
+  code: ({ children, ...props }) => (
+    <code
+      {...props}
+      className="rounded bg-[#f3f4f6] px-1.5 py-0.5 font-mono text-[0.9em] text-[#4e4646]"
+    >
+      {children}
+    </code>
+  ),
+  pre: CodeBlock,
   a: ExternalAwareLink,
   table: Table,
   th: ({ children, ...props }) => (

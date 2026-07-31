@@ -56,6 +56,232 @@ Construct offers Lite ($9/month), Starter ($59/month), and Pro ($299/month). Pla
 
 # Resources
 
+## We give every user a computer and pay for almost none of them
+
+URL: https://construct.computer/blog/running-ai-agents-on-cloudflare-not-vms/
+Type: article
+Author: Ankush
+Published: 2026-07-31
+Tags: engineering, cloudflare, durable-objects, infrastructure
+
+Every Construct user gets a Linux machine. It has a shell, a filesystem, Python, LibreOffice, ripgrep, and a disk they can fill up. Right now, almost none of them are running, and that is the whole design. We have been building it this way since March, and this is how the agent loop ended up inside a Durable Object, how Linux became something we summon for a tool call, and how the disk stopped being a disk.
+
+A note on the code in this post: everything below is pseudocode, and the internal names are stand-ins. The behaviour, the constants, and the tradeoffs are exactly what we run.
+
+Meet Construct
+
+## A computer per user is a bill per user
+
+The default way to run an AI agent is to give it a Linux box. This is not a silly choice. Agents are trained to reach for bash, bash implies a filesystem and a process table, and the easiest way to provide those is a machine that stays up between turns.
+
+The trouble is what that costs, and we know the shape of that bill because we signed it first.
+
+Construct's original backend was a Bun and Elysia monolith on a VPS: SQLite on local disk, nginx out front, and roughly 1,300 lines of container management handing every user their own box. It worked fine. It also meant that growing the product meant growing a fleet of real machines with real disks, billed through the long stretches where nobody was typing anything.
+
+We migrated off it on 30 March 2026. The commit is titled "migrate backend from VPS monolith to Cloudflare Workers", and everything in this post starts there: Hono on Workers, a per-user WebSocket hub in a Durable Object with hibernation, a container object that archived to R2 on sleep and restored on wake, D1 for relational state, R2 for files, and the frontend on Workers assets. Two days later we moved what was left of the container infrastructure into a legacy folder and wrote down the plan the product still runs on today, which was that the agent runs headlessly inside Durable Objects.
+
+Containers and Sandboxes went generally available two weeks after that, on 13 April 2026, and we moved onto the Sandbox SDK later once it had the shape we wanted. So we are not claiming we predicted anything. We were watching a cost curve that scaled with signups instead of usage, we bet on Durable Objects before there was a tidy product name for what we were doing, and the platform kept arriving at the same answer we did. The team at camelAI [hit the same wall and reached nearly the same conclusion](https://camelai.com/blog/our-coding-agent-runs-in-a-cloudflare-durable-object-not-a-vm) independently, which was a reassuring thing to read after the fact.
+
+## What actually needs to be alive
+
+Here is the reframe that made the rest possible.
+
+"The agent needs a computer" quietly bundles two different things. There is the **agent loop**: the transcript, the tool routing, the model calls, the memory recall. And there is the **machine**: the thing that actually runs `pdftotext`, converts a spreadsheet, compiles a project.
+
+Only the second one needs Linux. The first one needs durable state and a socket, which is a much cheaper thing to want. Cloudflare happens to sell a primitive that is exactly durable state plus a socket, and once you split the two, the expensive half stops needing to be always on.
+
+Get beta access
+
+## The agent loop lives in a Durable Object
+
+Each agent gets one Durable Object, resolved by name. Sessions are rows inside it rather than objects of their own, and temporary subagents run as delegated sessions on the same parent object, so fanning out a job buys concurrency without buying instances.
+
+The transcript lives in that object's SQLite. We keep two things deliberately apart. One table is the append-only message log a user scrolls through. A separate record holds the compaction summary plus a watermark marking how far it has already consumed, and that second one is what actually reaches the model. Conflating them is how you end up paying to re-send an afternoon of conversation on every turn.
+
+The part that matters for the bill is hibernation. We use the WebSocket hibernation API, stash per-connection state on the socket itself, and let the runtime answer keepalives for us:
+
+```
+when a client connects:
+    accept the socket through the hibernation API
+    attach { user, agent, session } to the socket itself
+
+once, when the object starts:
+    register an automatic ping / pong reply
+    # the runtime answers keepalives without ever waking the object
+```
+
+A user with a tab open all afternoon is not a running process. It is a socket the runtime is holding for us and a few rows in SQLite. The object wakes when something actually happens.
+
+Because it can be evicted at any moment, every transcript row is also archived to D1, and the object restores from that archive on start if it comes back empty. That is what makes it safe to let the thing die constantly, which is the entire trick.
+
+Eviction does produce one genuinely annoying edge case. Replayed events on reconnect can include a turn-started event with no matching completion, because the object was evicted mid-turn. So when a client reconnects and nothing is actually running, we send it a terminal idle status, purely so the client can never sit "thinking" forever.
+
+## Linux shows up for the tool call, then leaves
+
+This is the section the title is about.
+
+When the agent calls the terminal tool, we resolve a sandbox:
+
+```
+sandbox = getSandbox(SANDBOX_BINDING, instanceKeyFor(user, workspace), {
+    transport:            rpc,
+    enableDefaultSession: false,          # every exec is a fresh shell
+    sleepAfter:           idleWindowFor(plan),
+})
+```
+
+The instance key is scoped to the user, or to the workspace when we know it. Not per agent and not per session, so the number of live containers tracks active humans rather than agent count.
+
+`sleepAfter` is where the money is:
+
+```
+function idleWindowFor(plan):
+    # the per-plan command ceiling, clamped by a global cap
+    seconds = min(commandCeilingFor(plan), GLOBAL_COMMAND_CAP)
+    # command budget, plus a five minute buffer
+    return minutes(ceil(seconds / 60) + 5)
+```
+
+The global cap is 300 seconds today, so that resolves to a ten minute idle sleep on every plan. Pair that with active CPU billing on Cloudflare Containers, where you are charged for CPU actually consumed rather than wall-clock uptime, and an idle sandbox stops being a cost you manage. It is the difference between "we should reap idle machines" and "there is nothing to reap."
+
+One consequence is unglamorous and load-bearing. Disabling the default session means every exec is a fresh shell, so the working directory does not persist between tool calls. Agents hate this. We ended up writing a hint straight into the failure path, addressed to the model, explaining that each terminal call starts clean, that a relative path will resolve against the scratch tree rather than wherever it thinks it is, and that any directory change or exported variable from an earlier call is gone.
+
+Before each exec we kill leftover processes, then mount, then run. That order is not cosmetic. Killing after the mount drops the local bucket's inotify watch and can leave a stale read-only workspace behind, which we found out the way you would expect.
+
+## The disk is R2, so there is no disk
+
+The durable workspace is an R2 bucket mounted into the container over s3fs, with `allow_other` and an explicit uid and gid so the non-root user can actually write to it.
+
+This is the second half of the cost story and the less obvious one. Storage quotas of 100 MB, 1 GB, and 3 GB are quotas on bytes we are storing, not on volumes we are keeping spun up. Nobody's files are sitting on provisioned block storage waiting for them to come back. The files outlive the machine by construction, because they were never on the machine.
+
+The interesting bit is how we verify the mount. Checking that the directory exists is useless, because it passes on a stale read-only mount. So we make the non-root user actually write something:
+
+```
+function workspaceIsWritable(sandbox):
+    probe = ".probe-" + now()
+    result = sandbox.exec(
+        as the non-root agent user:
+            touch /probe
+            rm -f /probe
+        , timeout: 10s
+    )
+    return result.exitCode == 0
+```
+
+If the probe fails, we unmount, remount, fix ownership, probe again, and only then give up. The probe is debounced to once a minute, and the isolate-level mount cache key carries a version string we bump whenever mount policy changes, so a policy change cannot be silently skipped by a warm isolate.
+
+The honest footnote: local development uses a plain directory sync rather than FUSE, files land root-owned, and we chown them on mount. That divergence between local and production cost us an afternoon, and it is the reason we now trust the write probe more than any status output.
+
+Try Construct in the beta
+
+## Root control plane, non-root agent
+
+No cost angle here at all. This is a tax the model charges, and pretending otherwise would make everything above read as a sales pitch.
+
+You cannot set `USER` in a Cloudflare Sandbox image, because the control plane intercepts HTTPS and needs root to do it. So the privilege drop moves to the point of execution instead:
+
+```
+function wrapCommand(command, elevated):
+    inner = bash -c ''
+
+    if elevated:
+        return  ELEVATED=1  inner        # stays root
+    else:
+        return  runuser -u  --  inner
+```
+
+No sudo, no passwordless sudoers, and process and file descriptor limits applied by the wrapper. Elevated access is granted per command or until the container sleeps, and those grants are stored inside the container rather than in Worker memory. That inversion turned out to be the right one: once the machine is disposable, the container becomes the correct place to keep short-lived trust, because its lifetime is the shorter and more predictable of the two.
+
+## We deleted our service bindings
+
+Memory and a registry catalog used to be separate Workers that the API called through service bindings. We folded them into one Worker, and the reasoning is worth spelling out because it cuts against the usual instinct.
+
+Service bindings are already an efficient in-account transport, so this was never a latency optimisation. The cost was operational: two more deployments, more local processes, more domains, more generated binding contracts, and releases that had to be coordinated.
+
+The numbers made it easy. Memory was roughly 41 KiB compressed and the registry was under 1 KiB. The combined Worker came out around 1,002 KiB compressed against a project gate of 2 MiB, and the 500 ms startup gate stays a cutover check because Wrangler dry runs do not report startup.
+
+What makes that engineering rather than opinion is that we wrote down when to undo it. Memory goes back to its own Worker if the compressed bundle passes 2 MiB, if startup passes 500 ms, if it needs its own release cadence, or if its failures start widening the API's blast radius.
+
+Same spirit, smaller decision: the web app is served by a Worker with static assets rather than by Pages, because we needed custom domains to manage their own DNS and Pages OAuth could not.
+
+## The edge makes you design for degradation
+
+Memory recall runs on a budget. The whole recall gets 800 ms, and inside that, remote embedding plus Vectorize gets 250 ms.
+
+To be precise about what those are: they are configured budgets, not measured percentiles. We do not have deployed latency dashboards yet and our own docs say so plainly.
+
+The design consequence is the point. SQLite full-text search and the graph traversal are the floor and always return, because they are local to the Durable Object. Vectorize is best-effort layered on top. If the vector path is slow, the agent gets a slightly worse answer instead of a hang. On one big warm box you would simply wait, and waiting is exactly what you cannot afford when nothing is warm by default.
+
+Choosing the embedding model was the one place we have real measurements. Over an 18 query set with close distractors, on Workers AI:
+
+| Model                | recall@1 | mrr   |
+| -------------------- | -------- | ----- |
+| qwen3-embedding-0.6b | 15/18    | 0.892 |
+| bge-m3               | 14/18    | 0.889 |
+| bge-large-en-v1.5    | 13/18    | 0.852 |
+| embeddinggemma-300m  | 12/18    | 0.824 |
+
+Qwen3 is trained for asymmetric retrieval, so telling it whether it is holding a question or a stored record measurably tightens the ranking. Adding that query-side instruction moved mrr from 0.892 to 0.924 on the same set.
+
+A 0.6b model is also what keeps this inside budget. Our gate for the memory pipeline is USD 1 per 1,000 turns, excluding the primary chat model.
+
+One warning for anyone copying this: do not swap embedding models casually. The Vectorize indexes are built at those exact dimensions, so a different model means recreating them and re-embedding every stored record. Vectors from two models are not comparable.
+
+Get beta access
+
+## Small things the platform teaches you
+
+Three lessons that cost us something to learn.
+
+**`setTimeout` versus `setAlarm` has a boundary, and it is about ten seconds.** Our Discord gateway object reconnects with backoff, and anything beyond ten seconds goes on an alarm instead of a timer, because a timer does not survive eviction. That single object holds one WebSocket for every guild we serve. We also wrote down where it stops working: split it when Discord's own endpoint reports more than one shard, which happens somewhere around 2,500 guilds. Better to schedule that than discover it.
+
+**A fallback on the same backend as its primary is not a fallback.** The outage that takes out one takes out both. Our compaction slot runs the same Gemma build on Workers AI and on AI Studio, so failing over costs nothing but the route. Every other slot crosses providers too.
+
+**Alarms hand you a bare Durable Object id.** `ctx.id.name` is only populated when you reached the object through a named stub. Alarm-triggered instantiation does not, so the name is gone. Ours was used to address outbound messages, which meant the queue consumer rejected them and the repair alarm re-queued the same work forever. The fix is to persist the name on first use. Nothing warns you about this.
+
+## What we do pay for
+
+The container is real and it is not free, and this is where the title stops being a brag.
+
+The image lands between 1.5 and 1.9 GB, which forces `standard-1` instances because the disk allocation is effectively the image size limit. LibreOffice needs the 4 GiB of memory too, since it gets OOM killed on the smaller tier. Production is configured for up to 100 concurrent instances.
+
+Command execution is capped at 300 seconds on every plan today, clamped below what the plans are eventually meant to allow, until we are confident about agent turn duration. That is a real product limit this architecture caused, not a feature.
+
+s3fs is not a real POSIX filesystem, and it will surprise you at some point.
+
+The fresh-shell model genuinely irritates agents trained on bash, and we pay for it in prompt tokens explaining that the working directory resets. That is still a cost, just denominated in context instead of dollars.
+
+And the flat version: if your workload is one long-lived process per user that truly never idles, none of this helps you. Buy a VM. It is simpler and you will be happier.
+
+## What we run today
+
+Workers, Durable Objects with SQLite storage, Containers through the Sandbox SDK, D1, R2, Queues with dead letter queues, Vectorize, Workers AI, AI Gateway, Email Routing inbound with the send binding outbound, rate limiting bindings, the Cache API, Turnstile, cron triggers, static assets, Workers Logs, and the Agents SDK. No KV, no Hyperdrive, and no machines of our own.
+
+The site you are reading this on is Cloudflare too: Pages, Functions, D1, Turnstile, and the WAF.
+
+Put Construct to work
+
+## TL;DR
+
+We left the VPS on 30 March 2026 and have been building on this shape ever since. The agent loop lives in a Durable Object, so an idle conversation is not a running process. Linux is summoned by a tool call and asleep ten minutes later, billed on active CPU. The disk is R2, so we pay for bytes stored instead of volumes provisioned. Memory and registry collapsed into one Worker, because the tax there was operational rather than measured in milliseconds. Recall degrades instead of blocking, inside a dollar per thousand turns. The container still exists, but it is a line item and not the floor.
+
+Every user has a computer. On any given afternoon, we are paying for a handful of them.
+
+If you want the product side of this rather than the plumbing, [what an AI employee actually does](/blog/ai-employee/) covers the work it completes, [inspectable agent memory](/blog/ai-agent-memory/) covers what it remembers and how you correct it, and [building your own agent stack](/blog/construct-vs-diy/) is the honest version of what you would be operating instead.
+
+### Frequently asked questions
+
+**Does Construct still run containers?**
+
+Yes. The terminal tool runs real bash inside a Cloudflare Container through the Sandbox SDK. The difference is that the container is summoned by a tool call and sleeps after ten minutes of inactivity, so it is a bounded line item rather than the substrate the product sits on.
+
+**What is running between tool calls?**
+
+The agent loop, which lives in a Durable Object with its transcript in SQLite. WebSocket hibernation means an open browser tab is a held socket rather than a running process, and keepalive pings are answered by the runtime without waking the object. Workspace files live in R2, so they persist with no machine attached.
+
+**When is an always-on VM the better choice?**
+
+When the workload is one long-lived process per user that genuinely never idles. This architecture trades a warm machine for cheap idling, and that trade only pays off if the machine would otherwise sit unused most of the time.
 ## How to Choose an AI Agent Platform for Your Team
 
 URL: https://construct.computer/blog/how-to-choose-an-ai-agent-platform-for-your-team/
@@ -65,6 +291,8 @@ Published: 2026-07-28
 Tags: ai-agent, ai-employee, governance, product
 
 Most teams evaluating an AI agent platform compare feature lists and demo videos, then discover months later that the demo and the production job were not the same thing. This is a vendor-agnostic framework for how to choose an AI agent platform: why pilots stall, six criteria that actually predict whether a platform survives contact with real work, the governance rules now attached to that decision, and a scorecard you can apply to any product on your shortlist, including Construct.
+
+Meet Construct
 
 ## Why most AI agent pilots never reach production
 
@@ -114,11 +342,15 @@ A published price answers less than it appears to. The number that actually pred
 
 Construct's published plans are Lite at $9, Starter at $59, and Pro at $299 per month, differing mainly in steps per task, command runtime, concurrent background jobs, and storage rather than gating core execution behind higher tiers ([AI employee product guide](/blog/ai-employee/)). Pricing and limits are current as of this post's publish date and can change; check the [Construct homepage](/) before purchasing, and ask any vendor for the equivalent numbers rather than the headline price alone.
 
+See how Construct answers these
+
 ## Governance pressure is raising the bar: EU AI Act and "agent washing"
 
 Two outside pressures are pushing evaluation criteria from nice-to-have to load-bearing. The first is regulatory. The EU AI Act's Article 14 requires high-risk AI systems to be designed so a human can effectively oversee them: monitor operation, intervene, and halt the system through a stop mechanism or equivalent procedure ([EU AI Act, Article 14](https://artificialintelligenceact.eu/article/14/)). The Act's full set of high-risk obligations, risk management, data governance, logging, transparency, human oversight, and cybersecurity, along with deployer obligations, becomes enforceable on August 2, 2026 ([Legal Nodes, EU AI Act 2026 compliance timeline](https://www.legalnodes.com/article/eu-ai-act-2026-updates-compliance-requirements-and-business-risks)). A team whose agent work touches a use case the Act classifies as high-risk needs to treat human-in-the-loop controls and inspectable activity as compliance requirements, not product preferences.
 
 The second pressure is a credibility problem inside the market itself. Gartner estimates that only about 130 of the thousands of vendors marketing "agentic AI" are genuinely agentic; the rest is what Gartner calls agent washing, existing chatbots, RPA, or assistants relabeled for a hotter category ([Digital Applied, agent-washing definition and buyer's scorecard](https://www.digitalapplied.com/blog/agent-washing-definition-buyers-scorecard-2026)). That is exactly why the checklist above asks what a platform actually does rather than what it calls itself: a chatbot with a new label still cannot orchestrate tools, hold correctable memory, or leave an inspectable trail, no matter what the pitch deck says.
+
+Get beta access
 
 ## Questions to ask a vendor before you pilot (and how Construct answers each one)
 
@@ -130,6 +362,8 @@ Bring these questions into a vendor call before you commit engineering time to a
 4. **Can we reach a system you do not already integrate with?** Construct supports custom MCP servers so an internally built system can be reached without waiting for first-party support.
 5. **Can the agent be wrong about something and be corrected without losing everything else it knows?** Construct versions memory assertions, so a correction supersedes a stale fact while keeping the history of how the system learned it.
 6. **What is metered, beyond the sticker price?** Construct's plans differ by steps per task, command runtime, concurrent jobs, and storage; ask for the same breakdown from any vendor you compare it against.
+
+Try Construct in the beta
 
 ## A 6-point scorecard you can apply to any AI agent platform
 
@@ -166,6 +400,8 @@ Tags: internal-tools, workspace-apps, ai-agent, product
 Internal tools often begin as a spreadsheet, a checklist, or a prompt someone runs every week. The process works, but the interface does not: people copy values between tabs, remember status in their heads, and repeat the same setup each time. Construct can turn that repeated process into a small private app that lives inside the same workspace as the files and agent doing the work.
 
 This is not a one-click path to a public SaaS product. A Construct workspace app is a focused internal interface for one workspace. You describe the job, the agent writes the app, checks that it builds, opens it in the desktop, and keeps the source available for inspection and later changes.
+
+Meet Construct
 
 ## Start with the repeated process
 
@@ -206,6 +442,8 @@ The current runtime is intentionally narrower than a general web-hosting platfor
 
 The app UI receives a small Construct SDK for workspace files, app-scoped storage, notifications, window controls, and explicitly permitted calls. It does not inherit every tool available to the agent that authored it. The agent can use broader execution surfaces while building, but the finished interface runs with its own narrower contract.
 
+Build an internal tool
+
 ## Permissions are part of the design
 
 An internal tool should not gain broad access simply because it was generated inside a trusted workspace. A workspace app declares the native capabilities, connected apps, and network origins it intends to use. Calls outside those allowlists are denied at runtime.
@@ -235,6 +473,8 @@ This is a last-good-build fallback, not full version history. It protects the wo
 Not every repeated process needs an interface. Use a workspace app when people need to view, enter, filter, or review state. Use a Construct workflow when the main value is running a known sequence of agent steps, connected-app actions, and notifications. Use a scheduled agent job when the process should run in the background without waiting for someone to open a screen.
 
 The two can support the same operation. A workspace app can provide the queue and review surface, while files hold durable records and a scheduled job prepares new work. The important boundary is that the app UI does not secretly become an unrestricted agent: automation still runs through the execution surfaces and permissions designed for it.
+
+Get beta access
 
 ## Where workspace apps fit
 
@@ -285,6 +525,8 @@ Tags: comparison, zapier, ai-agent, automation
 
 Search for a Zapier alternative and most results turn into feature tables: more apps, more steps, a lower price per task. That misses the real difference between the two approaches. Zapier runs a fixed trigger-action recipe every time it fires. An AI agent reads the situation in front of it, decides which steps and tools the job needs, and can change course mid-run. The comparison below is about that difference, not integration counts.
 
+Meet Construct
+
 ## Where Zapier's model breaks down
 
 A **Zap** starts with a trigger: a new row in a spreadsheet, a new email in Gmail, a new deal in a CRM. From there, optional filter steps decide whether the run continues, and action steps carry out each following task, such as creating a record or sending a message. Every step in that chain is wired in advance. The Zap does not decide what happens next; it does what it was built to do, in the order it was built to do it.
@@ -300,6 +542,8 @@ An **AI agent** inverts the build order. Instead of wiring trigger, filter, and 
 Runtime planning does not have to mean invisible autonomy. Construct's **Activity** feed keeps bounded action summaries and best-effort reasons, while chat retains bounded tool records. You can interrupt a job mid-run, and the agent can ask for missing information. Construct does not currently insert a mandatory approval before every external side effect, so important connected-app actions still require an appropriate level of supervision.
 
 **Persistence** is another difference. Construct keeps workspace files and selected long-term memories across sessions, so an agent can recall approved context from an earlier exchange. Automatic memory does not currently index uploaded files, private app results, terminal output, or live browser runs, so important context should be stored explicitly when it needs to carry forward.
+
+Get beta access
 
 ## The same recurring workflow, two ways
 
@@ -320,6 +564,8 @@ The Zapier version is not a bad build. It is fast and cheap to run once it is wi
 The gap this closes shows up in how much unstructured coordination work still sits on people's calendars. Knowledge workers spend about 60% of their time on "work about work," communicating about tasks, hunting for information, and switching between apps, rather than on the skilled work itself, according to Asana's Anatomy of Work Index, based on a global survey of more than 10,000 knowledge workers ([Asana, Anatomy of Work Index](https://asana.com/resources/why-work-about-work-is-bad)). Much of that time goes to exactly the kind of judgment calls and cross-app handoffs a fixed trigger-action recipe cannot absorb.
 
 Analyst research points the same direction. Gartner predicts that 40% of enterprise applications will feature task-specific AI agents by the end of 2026, up from less than 5% in 2025. "AI agents are evolving rapidly, progressing from basic assistants embedded in enterprise applications today to task-specific agents by 2026 and ultimately multiagent ecosystems by 2029," said Anushree Verma, Sr Director Analyst at Gartner ([Gartner, press release](https://www.gartner.com/en/newsroom/press-releases/2025-08-26-gartner-predicts-40-percent-of-enterprise-apps-will-feature-task-specific-ai-agents-by-2026-up-from-less-than-5-percent-in-2025)). Zapier's own move toward Agents and Human in the Loop steps fits the same pattern: even a platform built on fixed automations is adding room for a system to plan and for a person to check its work.
+
+Build a workflow
 
 ## When rule-based automation still wins
 
@@ -349,6 +595,8 @@ Published: 2026-07-25 (updated 2026-07-27)
 Tags: ai-agent, virtual-assistant, pricing, comparison
 
 Hiring a virtual assistant used to mean one decision: which agency or freelancer. Now it means a second one first - human VA, or a supervised AI agent for suitable parts of the job at a fraction of the monthly bill. This post puts real numbers next to each option, concedes where the human still wins, and explains how inspectable work records improve supervision beyond a chat-based "AI VA."
+
+Meet Construct
 
 ## What a virtual assistant does vs what an AI employee does
 
@@ -386,6 +634,8 @@ Customer-service benchmarks illustrate part of the structural cost difference. T
 
 The gap narrows on anything that needs relationship context, negotiation, or judgment calls a playbook cannot fully specify, which is exactly the work covered in the next section. Cost-per-interaction estimates should not be read as evidence that a supervised agent can replace the full scope of a human VA role.
 
+Try Construct in the beta
+
 ## Where a human VA still wins
 
 Concede this plainly: for customer-service interactions that depend on tone, empathy, or reading a client's mood, people still report a strong preference for human help. The cited analysis reports 88% satisfaction for human-handled customer-service interactions against 60% for AI-handled ones, while 93.4% of US consumers say they prefer a human for customer service work (source: [stealthagents.com](https://stealthagents.com/research/ai-virtual-assistant-vs-human-virtual-assistant-statistics-2026)).
@@ -399,6 +649,8 @@ A supervised AI agent can run scheduled work while you are offline and does not 
 The wedge a chat-based "AI VA" cannot match is an inspectable work record. A chatbot that drafts a reply for you to copy and send does not itself record what happened in your inbox, calendar, or CRM. Construct's Activity feed keeps bounded action summaries and best-effort reasons across its tools, while chat stores bounded tool records and resulting files or messages remain in the workspace. Activity is a rolling product-observability feed, not a forensic audit log.
 
 This is also a realistic moment to size the category correctly rather than oversell it. McKinsey's 2025 State of AI survey found that no more than 10% of organizations report scaling agentic AI within any single business function, while 23% are actively scaling in at least one function and 39% are still experimenting (source: [forbes.com](https://www.forbes.com/sites/josipamajic/2026/03/22/10-of-enterprise-functions-use-ai-agents-mckinsey-finds/)). Supervised, bounded use on specific recurring tasks is where the category actually is in 2026, not full autonomous replacement of a VA's entire job.
+
+Get beta access
 
 ## Choosing between the two, or running both together
 
@@ -428,6 +680,8 @@ Published: 2026-07-20 (updated 2026-07-27)
 Tags: ai-agent-memory, persistent-memory, ai-agent
 
 Construct remembers useful context across tasks without turning memory into an opaque, permanent transcript you cannot inspect or correct.
+
+Meet Construct
 
 ## Why long-term agent memory matters
 
@@ -480,6 +734,8 @@ A concrete case shows how the pieces fit. Suppose a monthly performance report g
 
 The durable output here is not just the reports. It is a small set of inspectable assertions that make each subsequent run cheaper to start, plus a record of how those assertions changed.
 
+Inspect agent memory
+
 ## Corrections instead of silent overwrites
 
 Facts change. A customer changes roles, a project gets renamed, or a preference that was once correct stops applying. Construct versions memory assertions and tracks when information is valid. A correction can supersede an older assertion without erasing the history that explains how the system learned it.
@@ -498,6 +754,8 @@ The Memories app lets you search and inspect what Construct remembers. You can a
 - Restore previously forgotten information
 
 Reviewing memory occasionally is worth the few minutes it takes, particularly after a project changes shape. Assertions learned during a since-abandoned approach are the most common source of confidently wrong recall.
+
+Get beta access
 
 ## Memory connects work across time
 
@@ -548,6 +806,8 @@ Tags: ai-employee, ai-agent, business-automation
 
 An AI employee goes beyond answering questions. It keeps context, operates tools, produces artifacts, and returns with finished work you can inspect.
 
+Meet Construct
+
 ## What is an AI employee?
 
 An AI employee is software that can accept an outcome, decide which tools are needed, and complete a multi-step job. Unlike a chat assistant, it has a persistent workspace for files, memory, schedules, and reusable procedures, plus live browser runs and a sandbox terminal. The result is not only an answer in a thread: it can be a report, an updated record, a sent message, or a completed workflow.
@@ -578,6 +838,8 @@ The clearest way to see the difference is to follow one recurring job from reque
 
 Nothing here is exotic. It is the ordinary shape of operational work: pull from a system, compare against last time, write it up, send it, and be able to explain it later.
 
+Put Construct to work
+
 ## What each plan can actually run
 
 An AI employee is bounded by real capacity, and the limits determine which jobs are practical. Construct's published plans differ mostly along task depth, runtime, and storage.
@@ -605,6 +867,8 @@ Worth being precise about what this is and is not: Activity provides bounded act
 Construct discovers supported applications from its live integration catalog, including tools such as Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable. The agent can find available actions, ask you to connect an account when necessary, and then execute the action through the integration. Slack and Telegram accept direct messages; Discord currently uses slash commands to reach the same workspace away from the web desktop.
 
 When an off-the-shelf connection is not enough, Construct can use its browser or terminal. It can also create a small workspace application for a recurring internal process, publish it to your desktop, and keep the last working build available if a later edit fails. That path is covered in detail in [how Construct builds internal tools](/blog/build-internal-tools-with-construct/).
+
+Get beta access
 
 ## What to delegate first
 
@@ -654,6 +918,8 @@ Tags: workflow-automation, ai-agent, scheduling
 
 Turn a successful AI task into a durable procedure that can run again without rebuilding the process from scratch.
 
+Meet Construct
+
 ## From one good run to a reusable procedure
 
 Traditional automation works best when every trigger and action is known before the flow is built. AI workflow automation is useful when a procedure contains research, judgment, writing, or tool use that cannot be reduced to a fixed data mapping. Construct combines durable workflow steps with an agent that can handle those less predictable parts.
@@ -675,6 +941,8 @@ Consider a recurring task: every Monday, check five competitors' pricing pages, 
 **Inspect it.** Each run leaves step results, retry information, and Activity summaries. Agent steps link back to their chat sessions, so a week where the summary looked wrong can be opened and read rather than guessed at.
 
 The durable output is a versioned procedure, a Slack post each week, and a run history that makes the procedure improvable. When a competitor redesigns a pricing page and the step starts returning less useful results, the run history is where that shows up.
+
+Build a workflow
 
 ## Run now or put it on the Calendar
 
@@ -708,6 +976,8 @@ The distinction in the right-hand column matters more than it first appears. Liv
 Workflow automation should be debuggable. Construct keeps run state, step results, retry information, and Activity summaries. You can open resulting files and review connected-app actions; agent steps also link to their chat sessions. During interactive work the agent can ask for missing information, but workflows do not add a mandatory approval before every external action.
 
 That last point deserves emphasis when a workflow writes to systems other people read. Because there is no mandatory approval gate before each external side effect, a workflow that posts publicly, emails customers, or updates shared records should be run manually a few times before it goes on a schedule. Reviewing the first several runs is the cheapest way to catch a step that behaves differently than intended.
+
+Schedule a job
 
 ## Working within linear runs
 
@@ -760,6 +1030,8 @@ Tags: comparison, chat-assistants, chatgpt, ai-employee
 
 Chat assistants combine conversation with product- and plan-dependent tools. Construct centers those capabilities in a persistent work OS for files, memory, schedules, workflows, terminal commands, live browser runs, and connected apps.
 
+Meet Construct
+
 ## Methodology
 
 This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
@@ -793,6 +1065,8 @@ Correctability is the part most often overlooked when comparing memory features.
 Chat is often the right interface for starting a job, but it should not be the only place the work can live. You or the agent can encode a repeatable process as a versioned linear workflow, schedule it through Construct's Calendar, and act through connected applications. The resulting files and run history remain available after the conversation ends.
 
 Construct discovers supported applications from its live integration catalog, including tools such as Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable, and custom MCP tools can be added. Slack and Telegram accept direct messages; Discord currently uses slash commands.
+
+Try Construct in the beta
 
 ## The same request in both
 
@@ -868,6 +1142,8 @@ Tags: comparison, coding-agents, ai-employee
 
 Tools like Devin-style coding agents focus on repositories and terminals. Construct is a generalist AI employee for the whole business stack.
 
+Meet Construct
+
 ## Methodology
 
 This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
@@ -902,6 +1178,8 @@ Neither definition is more advanced. They are optimisations for different jobs, 
 Construct exposes live browser work, a read-only terminal transcript, files, inbox, Calendar, workflows, memories, connected apps, notifications, and Activity summaries in one web desktop. Non-engineers can inspect outputs and interrupt a running turn without learning a repository-centric interface.
 
 That accessibility is a real difference in who can supervise the work. Reviewing a coding agent's output generally requires being able to read a diff. Reviewing a Construct job means opening a file, reading a summary, or checking a sent message, which is work an operations lead or founder can do directly.
+
+Get beta access
 
 ## Where the boundary matters
 
@@ -975,6 +1253,8 @@ Tags: comparison, copilot, google-workspace, ai-employee
 
 Microsoft Copilot and Google Workspace AI are strongest inside their own suites. Construct provides a vendor-neutral workspace for jobs that cross applications, live browser runs, files, and scripts.
 
+Meet Construct
+
 ## Methodology
 
 This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
@@ -1005,6 +1285,8 @@ The categories of work this opens up are the ones that fall between products: pu
 ## Memory and procedures across tools
 
 Suite copilots can use the context available in their ecosystem. Construct is designed to carry context across the wider job: a customer message, a workspace file, a CRM update, a browser research step, and a scheduled follow-up. Useful context can be stored in inspectable memory, while repeatable work can become a versioned workflow.
+
+Get beta access
 
 ## A concrete scenario: the monthly board pack
 
@@ -1075,6 +1357,8 @@ Tags: comparison, agent-frameworks, diy, ai-employee
 
 A DIY stack combines your chosen agent framework, models, tools, storage, runtime, and user interface. Construct ships those operating surfaces as one hosted product.
 
+Meet Construct
+
 ## Methodology
 
 This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
@@ -1113,6 +1397,8 @@ None of these are unsolvable. The question is whether solving them is the work y
 Bring your own model key on Pro, connect supported applications, or add a custom MCP server. The agent can use browser and sandbox tools when a structured integration is not enough. It can also build a constrained workspace application and add it to the desktop for a recurring internal process.
 
 MCP matters most here. Because Construct can consume custom MCP servers, an internal system with no public integration can still be reached without waiting for first-party support, you implement the tool interface and the hosted agent uses it. That path preserves much of DIY's extensibility while leaving the operating layers managed.
+
+Try Construct in the beta
 
 ## What you would otherwise operate
 
@@ -1185,6 +1471,8 @@ Tags: comparison, zapier, make, n8n, workflow-automation
 
 Zapier, Make, and n8n excel when you know every trigger and action upfront. Construct plans and executes when the goal is clear but the steps are not.
 
+Meet Construct
+
 ## Methodology
 
 This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
@@ -1212,6 +1500,8 @@ When inbox review needs judgment or research spans multiple sites, a fixed mappi
 
 The practical test is what happens on an unusual input. A trigger-action flow handles cases its builder anticipated and drops or mishandles the rest, which is correct behaviour for a system meant to be predictable. An agent step attempts to interpret the unusual case, which is useful when a dropped item would otherwise sit unnoticed, and less useful when a silently-handled edge case would have been better escalated.
 
+Build a workflow
+
 ## Reusable workflows without pretending everything is fixed
 
 Construct also supports durable workflows. A workflow can combine agent reasoning, connected-app tools, and in-app notifications, then run on demand or from the native Calendar. Current workflows are intentionally linear; branching, delays, approval steps, fan-out, and subworkflows are not yet supported.
@@ -1233,6 +1523,8 @@ Neither is strictly better. The first is faster, cheaper, and more predictable f
 Comparing monthly figures directly tends to mislead, because the two categories meter different things. Automation platforms typically price on task or operation volume: predictable per-run cost, scaling with throughput. Construct's plans meter task depth and capacity: Lite at $9 with up to 50 steps per task, Starter at $59, and Pro at $299 with deep runs up to 1,000 steps per task, with storage and command runtime rising alongside. Pricing is current as of this post's publish date and can change; check both vendors' current pricing before deciding.
 
 The useful comparison is cost per completed outcome on your actual work. A high-volume, low-complexity flow is almost always cheaper on an automation platform. A low-volume job that would otherwise take a person an hour of cross-app judgment is where per-step metering can come out ahead.
+
+Get beta access
 
 ## Using both together
 
@@ -1291,6 +1583,8 @@ Most AI assistants begin and end in a chat window. You ask a question, get an an
 
 Construct is the work OS around that employee. It combines persistent files, inspectable memory, schedules, linear workflows, and a native inbox with web research, live browser runs, a sandbox terminal, and connected applications in one web desktop.
 
+Meet Construct
+
 ## The four rungs of the ladder
 
 "AI employee" is a marketing term until you can say what separates it from the tools underneath it. The useful distinction is how much of a job the software can carry, and what survives afterwards.
@@ -1330,6 +1624,8 @@ Construct works from a purpose-built web desktop with Chat, Files, Browser, Term
 
 The agent plans the steps, uses live browser runs, the sandbox terminal, files, or supported applications from the live integration catalog, and leaves persistent outputs in your workspace. Activity keeps bounded action summaries and best-effort reasons; bounded tool details remain in chat.
 
+Get beta access
+
 ## Following one job end to end
 
 An abstract definition is less useful than watching a single request resolve. Take: "find out which of our five competitors changed pricing this month, and put a summary in the shared folder."
@@ -1351,6 +1647,8 @@ Read more about [AI workflow automation](/blog/ai-workflow-automation/) and [AI 
 An AI employee should not become invisible simply because it works independently. Construct exposes files, live browser activity, a terminal transcript, workflows, memories, chat tool records, and bounded Activity summaries in the same web desktop. You can inspect results, interrupt a running turn, and answer questions when the agent needs missing information.
 
 Construct can also delegate bounded subtasks to temporary agents. Plans allow 2, 4, or 8 temporary jobs to run concurrently; additional jobs queue, while browser and terminal work may still contend for shared execution surfaces.
+
+Try Construct in the beta
 
 ## How to evaluate one
 
@@ -1404,6 +1702,8 @@ Chat assistants changed how we draft emails, summarize documents, and explore id
 
 Capabilities vary substantially by product and plan. OpenAI documents ChatGPT's available tools in its [capabilities overview](https://help.openai.com/en/articles/9260256-chatgpt-capabilities-overview), while Anthropic describes Claude's current product surfaces in [Getting started with Claude](https://support.claude.com/en/articles/8114491-getting-started-with-claude). This article compares the workspace model, not every feature of every chat product.
 
+Meet Construct
+
 ## The execution gap
 
 A chat assistant can explain how to update a spreadsheet, prepare a report, and post a summary to Slack. Construct can use live browser runs, a sandbox terminal, workspace files, and connected applications to perform those steps and return with the resulting artifact, chat tool records, and Activity summaries.
@@ -1437,6 +1737,8 @@ The drafted text might be comparable in both cases. The difference is how much o
 A chat thread is a good place to discuss work. A persistent workspace is where the rest of the job can live. Construct brings persistent Files, Memories, Calendar items, and Workflows together with live Browser runs, a sandbox Terminal, native Email, connected apps, and Activity summaries in one web desktop.
 
 That continuity matters for recurring operations. A weekly research report can reuse a saved workflow and remember the intended audience. An inbox task can refer to earlier customer context. A file-analysis job can save the transformed output beside the original instead of losing it when the conversation closes.
+
+Get beta access
 
 ## Repeating work without rebuilding it
 

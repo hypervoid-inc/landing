@@ -10,6 +10,23 @@ export type FaqItem = {
  * that the body does not support.
  */
 export const resourceFaqs: Record<string, readonly FaqItem[]> = {
+  "running-ai-agents-on-cloudflare-not-vms": [
+    {
+      question: "Does Construct still run containers?",
+      answer:
+        "Yes. The terminal tool runs real bash inside a Cloudflare Container through the Sandbox SDK. The difference is that the container is summoned by a tool call and sleeps after ten minutes of inactivity, so it is a bounded line item rather than the substrate the product sits on.",
+    },
+    {
+      question: "What is running between tool calls?",
+      answer:
+        "The agent loop, which lives in a Durable Object with its transcript in SQLite. WebSocket hibernation means an open browser tab is a held socket rather than a running process, and keepalive pings are answered by the runtime without waking the object. Workspace files live in R2, so they persist with no machine attached.",
+    },
+    {
+      question: "When is an always-on VM the better choice?",
+      answer:
+        "When the workload is one long-lived process per user that genuinely never idles. This architecture trades a warm machine for cheap idling, and that trade only pays off if the machine would otherwise sit unused most of the time.",
+    },
+  ],
   "construct-vs-zapier": [
     {
       question: "Is Construct a replacement for Zapier?",
