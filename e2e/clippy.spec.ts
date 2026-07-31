@@ -26,7 +26,9 @@ test("walks a blog reader through three beats into the signup dialog", async ({
   await expect(tip).toContainText("Research, inbox, reports");
   await expect(page.locator(".clippy-chip")).toHaveCount(0);
 
-  await page.getByRole("link", { name: "Get beta access" }).click();
+  // Scoped to the tip: blog bodies now carry their own inline beta CTAs, so an
+  // unscoped link lookup matches those too.
+  await tip.getByRole("link", { name: "Get beta access" }).click();
   await expect(
     page.getByRole("dialog").getByRole("heading", { name: "Get beta access" }),
   ).toBeVisible();
@@ -67,6 +69,18 @@ test("keeps its beat and stays hidden across client side navigation", async ({
   await page.getByRole("link", { name: "Blog", exact: true }).first().click();
   await expect(page).toHaveURL(/\/blog\/$/);
   await expect(page.locator(widget)).toHaveCount(0);
+});
+
+test("reappears after a hard refresh even when previously dismissed", async ({
+  page,
+}) => {
+  await page.goto(POST);
+  await page.getByRole("button", { name: "Minimize Construct" }).click();
+  await page.getByRole("button", { name: "Hide Construct" }).click();
+  await expect(page.locator(widget)).toHaveCount(0);
+
+  await page.reload();
+  await expect(page.locator(widget)).toBeVisible();
 });
 
 test("dismisses with the Escape key", async ({ page }) => {
@@ -112,7 +126,7 @@ test("stays silent on the privacy policy", async ({ page }) => {
   await expect(page.locator(widget)).toHaveCount(0);
 });
 
-test("stays silent once beta access is granted", async ({ page }) => {
+test("still appears when beta access is already granted", async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem(
       "construct_beta_access_v1",
@@ -120,8 +134,7 @@ test("stays silent once beta access is granted", async ({ page }) => {
     );
   });
   await page.goto(POST);
-  await expect(page.locator("main")).toBeVisible();
-  await expect(page.locator(widget)).toHaveCount(0);
+  await expect(page.locator(widget)).toBeVisible();
 });
 
 test.describe("mobile", () => {

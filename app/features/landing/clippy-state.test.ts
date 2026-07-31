@@ -6,9 +6,8 @@ import {
   clippyCopy,
   ctaSource,
   getClippyPageKind,
-  initialClippyRecord,
   initialClippyTimer,
-  readClippyRecord,
+  resetClippyDelayOverride,
   resolveClippyDelay,
   tickClippyTimer,
   type ClippyPageKind,
@@ -122,40 +121,31 @@ describe("clippy dwell timer", () => {
   });
 });
 
-describe("clippy session record", () => {
-  it("survives missing and malformed storage", () => {
-    expect(readClippyRecord(null)).toEqual(initialClippyRecord);
-    expect(readClippyRecord("{oops")).toEqual(initialClippyRecord);
-    expect(readClippyRecord("null")).toEqual(initialClippyRecord);
-    expect(readClippyRecord('{"state":"yes"}')).toEqual(initialClippyRecord);
-  });
-
-  it("reads a well formed record", () => {
-    expect(
-      readClippyRecord(
-        '{"state":"collapsed","beat":2,"position":{"x":10,"y":20}}',
-      ),
-    ).toEqual({ state: "collapsed", beat: 2, position: { x: 10, y: 20 } });
-  });
-
-  it("drops a half written position rather than trusting it", () => {
-    expect(readClippyRecord('{"state":"open","beat":0,"position":{"x":10}}'))
-      .toEqual(initialClippyRecord);
-  });
-});
-
 describe("clippy delay override", () => {
   it("defaults to the real delay", () => {
+    resetClippyDelayOverride();
     expect(resolveClippyDelay("")).toBe(CLIPPY_DELAY_MS);
     expect(resolveClippyDelay("?utm_source=x")).toBe(CLIPPY_DELAY_MS);
   });
 
   it("arms immediately for tests and design review", () => {
+    resetClippyDelayOverride();
     expect(resolveClippyDelay("?clippy=now")).toBe(0);
   });
 
   it("can be switched off entirely", () => {
+    resetClippyDelayOverride();
     expect(resolveClippyDelay("?clippy=off")).toBeNull();
+    resetClippyDelayOverride();
     expect(resolveClippyDelay("?clippy=0")).toBeNull();
+  });
+
+  it("keeps off latched across later URLs until reset", () => {
+    resetClippyDelayOverride();
+    expect(resolveClippyDelay("?clippy=off")).toBeNull();
+    expect(resolveClippyDelay("")).toBeNull();
+    expect(resolveClippyDelay("?clippy=now")).toBeNull();
+    resetClippyDelayOverride();
+    expect(resolveClippyDelay("?clippy=now")).toBe(0);
   });
 });

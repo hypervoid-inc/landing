@@ -3,7 +3,6 @@ import { getRoute, type RouteKind } from "../../lib/route-manifest";
 export const CLIPPY_DELAY_MS = 15_000;
 /** Never pop the instant a page paints, even with time banked from a prior page. */
 export const CLIPPY_MIN_DWELL_MS = 5_000;
-export const CLIPPY_STATE_KEY = "construct_clippy_v1";
 
 export type ClippyPageKind = "blog-post" | "blog-browse" | "home" | "page";
 
@@ -149,46 +148,32 @@ export const initialClippyRecord: ClippyRecord = {
   position: null,
 };
 
-function isVisibleState(value: unknown): value is ClippyVisibleState {
-  return value === "open" || value === "collapsed" || value === "hidden";
-}
-
-/** Session storage is a convenience, not a contract. Anything odd resets to defaults. */
-export function readClippyRecord(raw: string | null): ClippyRecord {
-  if (!raw) return initialClippyRecord;
-  try {
-    const value = JSON.parse(raw) as Partial<ClippyRecord> | null;
-    if (!value || typeof value !== "object") return initialClippyRecord;
-    const position =
-      value.position &&
-      typeof value.position.x === "number" &&
-      typeof value.position.y === "number"
-        ? { x: value.position.x, y: value.position.y }
-        : null;
-    return {
-      state: isVisibleState(value.state) ? value.state : "open",
-      beat:
-        typeof value.beat === "number" && value.beat >= 0
-          ? Math.floor(value.beat)
-          : 0,
-      position,
-    };
-  } catch {
-    return initialClippyRecord;
-  }
-}
-
 /**
  * Playwright cannot reach a root mounted widget to stub the delay, and a build
  * flag would need bundler surgery, so the override rides on the query string.
  * Returns null when the widget should never arm on this page load.
+ *
+ * `clippy=off` latches for the lifetime of the JS module so SPA navigations in
+ * the site e2e suite stay quiet after the first `goto` injects the param.
+ * A hard refresh clears the latch, matching how dismiss itself works.
  */
+let clippyForcedOff = false;
+
 export function resolveClippyDelay(
   search: string,
   fallback = CLIPPY_DELAY_MS,
 ): number | null {
   const value = new URLSearchParams(search).get("clippy");
-  if (value === "off" || value === "0") return null;
+  if (value === "off" || value === "0") {
+    clippyForcedOff = true;
+    return null;
+  }
+  if (clippyForcedOff) return null;
   if (value === "now") return 0;
   return fallback;
+}
+
+/** Test-only: clear the off latch between unit cases. */
+export function resetClippyDelayOverride() {
+  clippyForcedOff = false;
 }

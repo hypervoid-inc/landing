@@ -4,20 +4,18 @@ import { useLocation } from "react-router";
 
 import { captureAnalytics } from "../analytics/analytics.client";
 import { sanitizePathname } from "../analytics/sanitize-event";
-import { BetaLink, hasBetaAccess, useBetaDialogOpen } from "./beta-access";
+import { BetaLink, useBetaDialogOpen } from "./beta-access";
 import {
   CLIPPY_CTA_LABEL,
   CLIPPY_HIDE_LABEL,
   CLIPPY_MINIMIZE_LABEL,
   CLIPPY_MIN_DWELL_MS,
   CLIPPY_REOPEN_LABEL,
-  CLIPPY_STATE_KEY,
   beatsFor,
   ctaSource,
   getClippyPageKind,
   initialClippyRecord,
   initialClippyTimer,
-  readClippyRecord,
   resolveClippyDelay,
   tickClippyTimer,
   type ClippyRecord,
@@ -44,23 +42,12 @@ export function ClippyCta() {
   const betaDialogOpen = useBetaDialogOpen();
 
   /*
-   * Storage is read in a lazy initializer rather than an effect. The prerender
-   * pass has no sessionStorage and falls back to defaults, but the component
-   * renders null on both passes regardless (the dwell timer has not fired), so
-   * there is nothing for hydration to mismatch on.
+   * Dismiss, beat, and drag position live in React state only. A hard refresh
+   * remounts clean so the tip always re-arms after the dwell delay, including
+   * for beta users. SPA navigations keep this tree mounted, so a dismiss
+   * sticks until that refresh.
    */
-  const [record, setRecord] = useState<ClippyRecord>(() => {
-    if (typeof sessionStorage === "undefined") return initialClippyRecord;
-    try {
-      return readClippyRecord(sessionStorage.getItem(CLIPPY_STATE_KEY));
-    } catch {
-      return initialClippyRecord;
-    }
-  });
-  const [betaGranted] = useState(() => {
-    if (typeof localStorage === "undefined") return false;
-    return hasBetaAccess();
-  });
+  const [record, setRecord] = useState<ClippyRecord>(initialClippyRecord);
   const [visible, setVisible] = useState(false);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [gaze, setGaze] = useState({ x: 0, y: 0 });
@@ -79,17 +66,12 @@ export function ClippyCta() {
 
   const persist = useCallback((next: ClippyRecord) => {
     setRecord(next);
-    try {
-      sessionStorage.setItem(CLIPPY_STATE_KEY, JSON.stringify(next));
-    } catch {
-      // Private mode and embedded webviews throw. The widget just forgets.
-    }
   }, []);
 
   // Dwell timer. Requires both banked time and a minimum stay on this page, so
   // arriving on a new post with the full delay already banked does not pop
-  // instantly.
-  const armed = record.state !== "hidden" && !betaGranted;
+  // instantly. Beta access never suppresses the tip.
+  const armed = record.state !== "hidden";
   const delay = armed && pageKind ? resolveClippyDelay(location.search) : null;
   useEffect(() => {
     if (delay === null || visible) return;
