@@ -159,9 +159,10 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
   },
   {
     slug: "running-ai-agents-on-cloudflare-not-vms",
-    title: "We give every user a computer and pay for almost none of them",
+    title:
+      "All our constructs edge together and we pay for almost none of them",
     description:
-      "Every Construct user gets a Linux machine with a shell, a filesystem, and a disk. Almost none of them are running right now. We left the VPS in March 2026, put the agent loop in a Durable Object, made Linux a tool call, and turned the disk into R2.",
+      "Don't get it twisted — the computers work. The idle ones just don't get to stay awake on our dime. We like edging, so we put the whole stack on the edge: Durable Objects, Sandboxes, R2.",
     published: "2026-07-31",
     seoTitle: "Running AI Agents on Cloudflare Without Always-On VMs",
     author: "ankush",
