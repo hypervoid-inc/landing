@@ -271,7 +271,7 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
     { property: "og:type", content: article ? "article" : "website" },
     { property: "og:site_name", content: "Construct Computer" },
     { property: "og:locale", content: "en_US" },
-    { property: "og:title", content: route.title },
+    { property: "og:title", content: displayTitle(route) },
     { property: "og:description", content: route.description },
     { property: "og:url", content: route.canonical },
     { property: "og:image", content: route.image },
@@ -299,7 +299,7 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
     ...(author
       ? [{ name: "twitter:creator", content: author.twitterHandle }]
       : []),
-    { name: "twitter:title", content: route.title },
+    { name: "twitter:title", content: displayTitle(route) },
     { name: "twitter:description", content: route.description },
     { name: "twitter:image", content: route.image },
     { "script:ld+json": routeJsonLd(route) as never },

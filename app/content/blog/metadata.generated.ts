@@ -161,7 +161,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     slug: "running-ai-agents-on-cloudflare-not-vms",
     title: "All our Agents get computers, we pay for almost none",
     description:
-      "Construct is an AI employee with a real Linux computer per user. Don't get excited - we are not paying for the idle ones. How we run that on Cloudflare Durable Objects, Sandboxes, and R2.",
+      "Construct is an AI employee with a real Linux computer per user. Don't get excited - we are not paying for all of them. How we run that on Cloudflare Durable Objects, Sandboxes, and R2.",
     published: "2026-07-31",
     seoTitle: "Running AI Agents on Cloudflare Without Always-On VMs",
     author: "ankush",

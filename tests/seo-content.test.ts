@@ -369,18 +369,53 @@ describe("route metadata", () => {
       ({ path }) => path === "/blog/ai-agent-vs-virtual-assistant",
     )!;
     const meta = routeMeta(route);
+    const socialTitle = "AI Agent vs Virtual Assistant: Cost and Capabilities";
 
     expect(route.title).toBe("AI Agent vs Virtual Assistant: Cost Comparison");
     expect(JSON.stringify(routeJsonLd(route))).toContain(
-      '"headline":"AI Agent vs Virtual Assistant: Cost and Capabilities"',
+      `"headline":"${socialTitle}"`,
     );
+    // Document <title> stays SEO-oriented; social cards match the editorial
+    // headline and the text drawn on the OG image.
+    expect(meta).toContainEqual({ title: route.title });
+    expect(meta).toContainEqual({ property: "og:title", content: socialTitle });
+    expect(meta).toContainEqual({
+      name: "twitter:title",
+      content: socialTitle,
+    });
     expect(meta).toContainEqual({
       property: "og:image:alt",
-      content: "AI Agent vs Virtual Assistant: Cost and Capabilities",
+      content: socialTitle,
     });
     expect(meta).toContainEqual({
       property: "article:modified_time",
       content: "2026-07-27",
     });
+  });
+
+  it("aligns Cloudflare agents social cards with the editorial title", () => {
+    const route = canonicalRoutes.find(
+      ({ path }) => path === "/blog/running-ai-agents-on-cloudflare-not-vms",
+    )!;
+    const meta = routeMeta(route);
+    const socialTitle = "All our Agents get computers, we pay for almost none";
+
+    expect(route.title).toBe(
+      "Running AI Agents on Cloudflare Without Always-On VMs",
+    );
+    expect(meta).toContainEqual({ property: "og:title", content: socialTitle });
+    expect(meta).toContainEqual({
+      name: "twitter:title",
+      content: socialTitle,
+    });
+    expect(meta).toContainEqual({
+      property: "og:image:alt",
+      content: socialTitle,
+    });
+    expect(meta).toContainEqual({
+      property: "og:description",
+      content: route.description,
+    });
+    expect(route.description).toContain("paying for all of them");
   });
 });

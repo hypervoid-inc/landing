@@ -88,24 +88,29 @@ function ResourceCard({ entry }: { entry: ResourceEntry }) {
   const path = `/blog/${entry.slug}/`;
   const image = getRoute(path.slice(0, -1))?.image;
   return (
-    <article className="group h-full overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white transition-colors hover:border-[#8adcdf]">
+    <article className="group relative h-full overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white transition-colors hover:border-[#8adcdf]">
+      {/*
+        One stretched hit target for the post. Tags sit above it with their own
+        pointer-events so hub-tag links still work.
+      */}
+      <Link
+        to={path}
+        className="absolute inset-0 z-[1]"
+        aria-label={entry.title}
+      />
       {image && (
-        <Link to={path} tabIndex={-1} aria-hidden="true">
-          <img
-            src={new URL(image).pathname}
-            alt=""
-            width="1200"
-            height="630"
-            loading="lazy"
-            className="aspect-[1200/630] w-full object-cover"
-          />
-        </Link>
+        <img
+          src={new URL(image).pathname}
+          alt=""
+          width="1200"
+          height="630"
+          loading="lazy"
+          className="aspect-[1200/630] w-full object-cover"
+        />
       )}
-      <div className="p-6">
-        <h3 className="font-geist text-[24px] italic leading-tight text-[#4e4646]">
-          <Link to={path} className="group-hover:text-[#01b4c8]">
-            {entry.title}
-          </Link>
+      <div className="pointer-events-none relative z-0 p-6">
+        <h3 className="font-geist text-[24px] italic leading-tight text-[#4e4646] group-hover:text-[#01b4c8]">
+          {entry.title}
         </h3>
         <p className="resource-card-meta mt-2 overflow-hidden text-ellipsis whitespace-nowrap text-[12px] capitalize text-[#526b75]">
           {entry.kind} · {formatShortDate(entry.published)} ·{" "}
@@ -114,7 +119,7 @@ function ResourceCard({ entry }: { entry: ResourceEntry }) {
         <p className="mt-3 line-clamp-3 text-[15px] leading-6">
           {entry.description}
         </p>
-        <TagList tags={entry.tags} className="mt-4" />
+        <TagList tags={entry.tags} className="pointer-events-auto relative z-[2] mt-4" />
       </div>
     </article>
   );

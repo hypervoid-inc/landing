@@ -15,7 +15,7 @@
     <category term="cloudflare"/>
     <category term="durable-objects"/>
     <category term="infrastructure"/>
-    <summary>Construct is an AI employee with a real Linux computer per user. Don&apos;t get excited - we are not paying for the idle ones. How we run that on Cloudflare Durable Objects, Sandboxes, and R2.</summary>
+    <summary>Construct is an AI employee with a real Linux computer per user. Don&apos;t get excited - we are not paying for all of them. How we run that on Cloudflare Durable Objects, Sandboxes, and R2.</summary>
   </entry>
   <entry>
     <title>How to Choose an AI Agent Platform for Your Team</title>
