@@ -5,7 +5,7 @@
   <link href="https://construct.computer/atom.xml" rel="self"/>
   <updated>2026-07-31T00:00:00Z</updated>
   <entry>
-    <title>All our constructs edge together and we pay for almost none of them</title>
+    <title>All our Agents get computers, we pay for almost none</title>
     <id>https://construct.computer/blog/running-ai-agents-on-cloudflare-not-vms/</id>
     <link href="https://construct.computer/blog/running-ai-agents-on-cloudflare-not-vms/"/>
     <author><name>Ankush</name></author>
@@ -15,7 +15,7 @@
     <category term="cloudflare"/>
     <category term="durable-objects"/>
     <category term="infrastructure"/>
-    <summary>Don&apos;t get it twisted — the computers work. The idle ones just don&apos;t get to stay awake on our dime. We like edging, so we put the whole stack on the edge: Durable Objects, Sandboxes, R2.</summary>
+    <summary>Construct is an AI employee with a real Linux computer per user. Don&apos;t get excited - we are not paying for the idle ones. How we run that on Cloudflare Durable Objects, Sandboxes, and R2.</summary>
   </entry>
   <entry>
     <title>How to Choose an AI Agent Platform for Your Team</title>

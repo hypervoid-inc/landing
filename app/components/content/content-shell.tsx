@@ -44,7 +44,7 @@ export function ContentShell({
           </ol>
         </nav>
         <Content>
-          <h1 className="font-geist mt-8 text-balance text-[36px] italic leading-[1.1] sm:text-[44px] lg:text-[52px]">
+          <h1 className="font-geist mt-8 text-[36px] italic leading-[1.1] sm:text-[44px] lg:text-[52px]">
             {title}
           </h1>
           {metadata && (
