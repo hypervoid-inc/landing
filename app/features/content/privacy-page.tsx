@@ -160,13 +160,14 @@ export function PrivacyPage() {
         <Subheading>2.6 Public Website Analytics</Subheading>
         <p>
           The public Construct website uses PostHog through a first-party proxy
-          to measure page views, navigation, beta conversions, heatmaps, and
-          masked session replays. Replay masks form inputs and blocks the beta
-          signup dialog. We do not send your waitlist email address to PostHog,
-          and captured URLs are reduced to known canonical paths without query
-          strings or fragments. PostHog may use cookies or local storage to
-          maintain an anonymous browser and session identifier. We respect the
-          browser Do Not Track signal where supported. Analytics retention and
+          for product analytics. This includes page views, navigation,
+          autocapture of clicks and form interactions, heatmaps, dead clicks,
+          performance metrics, exception capture, and unmasked session replay
+          (including form inputs such as the beta signup email, on-page text,
+          canvas, console logs, and network request headers and bodies where
+          captured). PostHog may use cookies or local storage to maintain a
+          browser and session identifier. We do not honor the browser Do Not
+          Track signal for this analytics stack. Analytics retention and
           processing region are configured in our PostHog project.
         </p>
         <p>

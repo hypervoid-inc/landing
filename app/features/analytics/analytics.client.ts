@@ -1,7 +1,5 @@
 import type { Properties } from "posthog-js";
 
-import { sanitizeEvent, sanitizeUrl } from "./sanitize-event";
-
 type AnalyticsEvent =
   | "beta_access_opened"
   | "beta_signup_submitted"
@@ -16,6 +14,9 @@ type AnalyticsEvent =
   | "clippy_hidden"
   | "clippy_dragged";
 
+/** EU cloud UI host — toolbar / replay assets; ingest stays on `api_host` proxy. */
+const POSTHOG_UI_HOST = "https://eu.posthog.com";
+
 let postHogPromise: Promise<typeof import("posthog-js").default | null> | null =
   null;
 
@@ -26,34 +27,40 @@ export function initializeAnalytics() {
     if (!import.meta.env.PROD || !key) return null;
 
     const { default: posthog } = await import("posthog-js");
+    // ponytail: intentional max capture for product ops — unmask + network bodies.
+    // Ceiling: PII in replay/network (incl. beta email); tighten via masks + project scrubbing.
     posthog.init(key, {
       api_host:
         import.meta.env.VITE_POSTHOG_HOST || "https://x.construct.computer",
-      ui_host: "https://us.posthog.com",
+      ui_host: POSTHOG_UI_HOST,
       defaults: "2026-05-30",
+      person_profiles: "always",
+      autocapture: true,
       capture_pageview: "history_change",
       capture_pageleave: true,
+      capture_performance: true,
+      capture_exceptions: true,
       capture_heatmaps: true,
-      capture_exceptions: false,
+      capture_dead_clicks: true,
       cross_subdomain_cookie: false,
       disable_session_recording: false,
-      enable_recording_console_log: false,
-      person_profiles: "identified_only",
-      respect_dnt: true,
+      disable_surveys: false,
+      enable_recording_console_log: true,
+      respect_dnt: false,
       secure_cookie: true,
       session_recording: {
-        blockSelector: "[data-private]",
-        maskAllInputs: true,
-        maskCapturedNetworkRequestFn: (request) => ({
-          ...request,
-          name: String(sanitizeUrl(request.name)),
-          requestBody: null,
-          requestHeaders: undefined,
-          responseBody: null,
-          responseHeaders: undefined,
-        }),
+        maskAllInputs: false,
+        maskTextSelector: null,
+        recordCrossOriginIframes: true,
+        recordHeaders: true,
+        recordBody: true,
+        captureCanvas: { recordCanvas: true },
+        collectFonts: true,
       },
-      before_send: (event) => (event ? sanitizeEvent(event) : null),
+      rate_limiting: {
+        events_per_second: 50,
+        events_burst_limit: 500,
+      },
     });
     return posthog;
   })();

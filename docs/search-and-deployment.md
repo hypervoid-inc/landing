@@ -87,5 +87,5 @@ Google does not guarantee crawling, indexing, rich results, or rankings. `llms.t
 - Request a random unknown URL and require `404`.
 - Validate representative pages with Google's Rich Results Test.
 - Check social cards in the major platform debuggers.
-- Confirm PostHog events use the first-party proxy and session replay masks the beta dialog.
+- Confirm PostHog events use the first-party proxy and session replay captures the beta dialog (unmasked).
 - Review Search Console weekly during migration, then monthly.

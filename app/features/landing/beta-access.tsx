@@ -299,7 +299,6 @@ function BetaAccessDialog({
       <Dialog.Portal>
         <Dialog.Overlay className="beta-dialog-overlay fixed inset-0 z-[100] bg-[#235061]/40 backdrop-blur-[2px]" />
         <Dialog.Content
-          data-private
           onEscapeKeyDown={(event) =>
             phase !== "form" && event.preventDefault()
           }
@@ -325,11 +324,7 @@ function BetaAccessDialog({
               <Dialog.Description className="mt-3 text-center text-[15px] leading-[21px] text-[#627c86]">
                 Enter your email to continue.
               </Dialog.Description>
-              <form
-                data-ph-no-autocapture
-                className="mt-7 space-y-4"
-                onSubmit={submit}
-              >
+              <form className="mt-7 space-y-4" onSubmit={submit}>
                 <label htmlFor={emailId} className="sr-only">
                   Email address
                 </label>
