@@ -14,11 +14,19 @@ type AnalyticsEvent =
   | "clippy_hidden"
   | "clippy_dragged";
 
-/** EU cloud UI host — toolbar / replay assets; ingest stays on `api_host` proxy. */
+/** First-party ingest proxy — never eu.i.posthog.com in the browser. */
+const POSTHOG_PROXY = "https://x.construct.computer";
+/** EU cloud UI host — dashboard links only; ingest stays on `api_host`. */
 const POSTHOG_UI_HOST = "https://eu.posthog.com";
 
-let postHogPromise: Promise<typeof import("posthog-js").default | null> | null =
-  null;
+function resolvePostHogHost(): string {
+  const configured = import.meta.env.VITE_POSTHOG_HOST?.trim();
+  return configured === POSTHOG_PROXY ? configured : POSTHOG_PROXY;
+}
+
+type PostHogClient = typeof import("posthog-js/dist/module.full.no-external").default;
+
+let postHogPromise: Promise<PostHogClient | null> | null = null;
 
 export function initializeAnalytics() {
   if (postHogPromise) return postHogPromise;
@@ -26,14 +34,17 @@ export function initializeAnalytics() {
     const key = import.meta.env.VITE_POSTHOG_KEY;
     if (!import.meta.env.PROD || !key) return null;
 
-    const { default: posthog } = await import("posthog-js");
+    // Pre-bundle replay/surveys/exceptions — proxy lazy-load stuck at lazy_loading.
+    const { default: posthog } = await import(
+      "posthog-js/dist/module.full.no-external"
+    );
     // ponytail: intentional max capture for product ops — unmask + network bodies.
     // Ceiling: PII in replay/network (incl. beta email); tighten via masks + project scrubbing.
     posthog.init(key, {
-      api_host:
-        import.meta.env.VITE_POSTHOG_HOST || "https://x.construct.computer",
+      api_host: resolvePostHogHost(),
       ui_host: POSTHOG_UI_HOST,
       defaults: "2026-05-30",
+      disable_external_dependency_loading: true,
       person_profiles: "always",
       autocapture: true,
       capture_pageview: "history_change",
