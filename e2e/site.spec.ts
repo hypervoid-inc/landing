@@ -209,7 +209,12 @@ test("uses one shared header, footer, and favicon across page types", async ({
       page.locator("header").getByRole("link", { name: "Affiliates" }),
     ).toHaveAttribute("href", "/affiliates/");
     await expect(
-      page.locator("footer").getByRole("link", { name: /Affiliate program/ }),
+      page.getByRole("navigation", { name: "Company" }).getByRole("link", {
+        name: "Affiliates",
+      }),
+    ).toHaveAttribute("href", "/affiliates/");
+    await expect(
+      page.locator("footer").getByRole("link", { name: /50% for first 25/ }),
     ).toHaveAttribute("href", "/affiliates/");
     await expect(
       page.locator('link[rel="icon"][sizes="32x32"]'),
