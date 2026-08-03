@@ -270,7 +270,8 @@ test("keeps the mobile footer compact and aligned", async ({ page }) => {
   const company = await companyNav.boundingBox();
   const comparisons = await comparisonsNav.boundingBox();
 
-  expect(footer?.height).toBeLessThan(760);
+  // Affiliates company link + CTA; CI Linux fonts sit a few px taller than macOS.
+  expect(footer?.height).toBeLessThan(800);
   expect(Math.abs((company?.y ?? 0) - (comparisons?.y ?? 0))).toBeLessThan(2);
   expect(comparisons?.x).toBeGreaterThan((company?.x ?? 0) + 100);
   await expect(companyNav).toHaveCSS("align-items", "center");

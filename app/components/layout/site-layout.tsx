@@ -199,9 +199,9 @@ export function SiteFooter() {
             <span className="inline-flex items-center rounded-full bg-[#01b4c8] px-2 py-1 text-[9px] font-black uppercase tracking-[.12em] text-white">
               New
             </span>
-            <span className="sm:hidden">Affiliates, 50% then 20%</span>
+            <span className="sm:hidden">Affiliates · 50%</span>
             <span className="hidden sm:inline">
-              Affiliate program: 50% for first 25, then 20%
+              Affiliates: 50% for first 25, then 20%
             </span>
             <span
               aria-hidden
