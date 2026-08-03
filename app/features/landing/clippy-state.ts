@@ -72,16 +72,16 @@ const OPENERS: Record<ClippyPageKind, string> = {
   "blog-post": "It looks like you're researching AI agents. Want to meet one?",
   "blog-browse":
     "It looks like you're browsing. I could read all of this for you.",
-  home: "It looks like you're still deciding. The beta is quicker.",
+  home: "It looks like you're still deciding. Start Now is quicker.",
   page: "It looks like you're exploring Construct. Want to try it?",
 };
 
 const SHARED_BEATS: readonly ClippyBeat[] = [
   {
-    line: "I am Construct, a cloud computer. Give me a job, I run it myself.",
+    line: "I am Construct, your AI coworker with a cloud computer.",
     advance: "Show me",
   },
-  { line: "Research, inbox, reports, all of it, done while you are away." },
+  { line: "Research, inbox, reports, done while your hours go elsewhere." },
 ];
 
 export function beatsFor(pageKind: ClippyPageKind): readonly ClippyBeat[] {

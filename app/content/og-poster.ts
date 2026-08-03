@@ -95,6 +95,11 @@ export const ogPosters: Record<string, PosterCard> = {
     scene:
       "The mascot resting on an empty desk beside a brushed steel nameplate holder with a blank insert in it, and one office chair back just entering the frame behind.",
   },
+  affiliates: {
+    headline: ["AFFILIATE", "PROGRAM"],
+    scene:
+      "The mascot beside a vintage metal cash register with its drawer open and a short stack of paper receipts clipped to a spindle next to it.",
+  },
   "editorial-policy": {
     headline: ["EDITORIAL", "POLICY"],
     scene:

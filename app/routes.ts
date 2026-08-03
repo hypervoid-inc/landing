@@ -4,6 +4,7 @@ export default [
   index("routes/home-seo.tsx"),
   route("about", "routes/about.tsx"),
   route("careers", "routes/careers.tsx"),
+  route("affiliates", "routes/affiliates.tsx"),
   route("editorial-policy", "routes/editorial-policy.tsx"),
   route("support", "routes/support.tsx"),
   route("privacy", "routes/privacy.tsx"),

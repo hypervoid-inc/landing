@@ -1,11 +1,12 @@
 # Construct Computer
 
-> Construct Computer is a supervised workspace for an AI employee that researches, operates tools, creates files, and runs recurring work through supported apps from a live integration catalog.
+> Construct Computer is an AI employee for startups, small businesses, and solo founders. It gets its own cloud computer, your tools connected, and a workspace where work finishes while you are away.
 
 ## Pages
-- [AI Employee with a Persistent Work OS | Construct](https://construct.computer/): Construct is a supervised AI workspace with persistent files and memory, live browser runs, schedules, reusable workflows, native email, and connected apps.
-- [About - Construct Computer](https://construct.computer/about/): Meet the team building a persistent work OS for an AI employee with files, memory, schedules, linear workflows, live browser and terminal tools, and connected apps.
+- [AI Employee for Solo Founders and Small Teams | Construct](https://construct.computer/): AI employee for startups, small businesses, and solo founders. Own cloud computer, your tools connected, work that finishes while you are away. From $9/month.
+- [About - Construct Computer](https://construct.computer/about/): Construct builds an AI employee for solo founders and small teams: own cloud computer, memory, schedules, workflows, browser and terminal tools, and connected apps.
 - [Careers - Construct Computer](https://construct.computer/careers/): Construct isn't actively hiring, but we'd love to hear from people who want to build AI agents, work interfaces, memory systems, and reliable execution tools.
+- [Affiliate Program - Construct Computer](https://construct.computer/affiliates/): Partner with Construct. First 25 affiliates earn 50% of referred revenue for up to 12 months; then the rate drops to 20%. Apply via PartnerStack.
 - [Editorial Policy - Construct Computer](https://construct.computer/editorial-policy/): How Construct reviews AI-assisted drafts, verifies sources and comparisons, handles publication dates, and corrects errors in its resource library.
 - [Support - Construct Computer](https://construct.computer/support/): Get help with your Construct Computer account, billing, integrations, and data requests. Report issues, review bounded Activity summaries, or contact the team.
 - [Privacy Policy - Construct Computer](https://construct.computer/privacy/): How Construct Computer collects, stores, encrypts, and shares data across the agent workspace, memory system, integrations, and billing provider.

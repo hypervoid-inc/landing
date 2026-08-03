@@ -3,7 +3,6 @@ import { Link } from "react-router";
 
 import { companyLinks, comparisonLinks } from "../../content/landing";
 import { BetaLink, StartLink } from "../../features/landing/beta-access";
-import { AffiliateLink } from "./affiliate-link";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -44,12 +43,12 @@ export function SiteHeader() {
           >
             Blog
           </Link>
-          <AffiliateLink
-            placement="header"
+          <Link
+            to="/affiliates/"
             className="hidden min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] sm:inline-flex"
           >
             Affiliates
-          </AffiliateLink>
+          </Link>
         </nav>
         <StartLink
           source="nav"
@@ -132,7 +131,7 @@ export function SiteFooter() {
               <span className="text-[#01b4c8]">Computer</span>
             </Link>
             <p className="max-w-[280px] text-[13px] leading-[1.55] text-[#627c86] sm:max-w-xs sm:text-sm sm:leading-[1.6]">
-              The personal work OS for an AI employee.
+              AI employee for founders and small teams.
             </p>
             <div className="flex items-center gap-2.5 sm:gap-3">
               <SocialLink
@@ -193,24 +192,24 @@ export function SiteFooter() {
           />
         </div>
         <div className="flex flex-col items-center gap-3 border-t border-[#e5e7eb] py-5 text-center sm:py-6 lg:flex-row-reverse lg:justify-between lg:gap-4 lg:text-left">
-          <AffiliateLink
-            placement="footer"
+          <Link
+            to="/affiliates/"
             className="group inline-flex min-h-10 items-center gap-2 rounded-full border border-[#35949a]/50 bg-white px-2.5 py-1.5 text-[13px] font-semibold leading-[18px] text-[#014e59] shadow-[0_6px_18px_rgba(57,148,154,.14)] transition-[transform,box-shadow,border-color] hover:-translate-y-px hover:border-[#01b4c8] hover:shadow-[0_10px_24px_rgba(57,148,154,.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8]"
           >
             <span className="inline-flex items-center rounded-full bg-[#01b4c8] px-2 py-1 text-[9px] font-black uppercase tracking-[.12em] text-white">
               New
             </span>
-            <span className="sm:hidden">Affiliates, earn 20%</span>
+            <span className="sm:hidden">Affiliates, 50% then 20%</span>
             <span className="hidden sm:inline">
-              Become an affiliate, earn 20% revenue share for a year
+              Affiliate program: 50% for first 25, then 20%
             </span>
             <span
               aria-hidden
               className="transition-transform group-hover:translate-x-0.5"
             >
-              ↗
+              →
             </span>
-          </AffiliateLink>
+          </Link>
           <p className="text-xs leading-[18px] text-[#8a9aa2]">
             © {new Date().getFullYear()} Construct
           </p>

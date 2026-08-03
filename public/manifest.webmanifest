@@ -1,7 +1,7 @@
 {
   "name": "Construct Computer",
   "short_name": "Construct",
-  "description": "The personal work OS for an AI employee.",
+  "description": "An AI employee for solo founders and small teams.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

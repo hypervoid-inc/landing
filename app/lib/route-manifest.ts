@@ -8,7 +8,7 @@ export const siteUrl = "https://construct.computer";
  * the marketing or company page copy actually changes — a dishonest freshness
  * signal is worse than none.
  */
-export const siteRevised = "2026-07-27";
+export const siteRevised = "2026-08-03";
 
 export type RouteKind =
   | "home"
@@ -126,29 +126,34 @@ export function ogStem(path: string, image?: string): string {
 function route(
   entry: Omit<CanonicalRoute, "canonical" | "image"> & {
     readonly image?: string;
+    /** Query on `og:image` so scrapers treat a same-path card as new. */
+    readonly imageVersion?: string;
   },
 ): CanonicalRoute {
+  const { imageVersion, ...rest } = entry;
+  const imagePath = `${siteUrl}/og/${ogStem(entry.path, entry.image)}.jpg`;
   return {
-    ...entry,
+    ...rest,
     canonical: entry.path === "/" ? `${siteUrl}/` : `${siteUrl}${entry.path}/`,
-    image: `${siteUrl}/og/${ogStem(entry.path, entry.image)}.jpg`,
+    image: imageVersion ? `${imagePath}?v=${imageVersion}` : imagePath,
   };
 }
 
 export const canonicalRoutes: readonly CanonicalRoute[] = [
   route({
     path: "/",
-    title: "AI Employee with a Persistent Work OS | Construct",
+    title: "AI Employee for Solo Founders and Small Teams | Construct",
     description:
-      "Construct is a supervised AI workspace with persistent files and memory, live browser runs, schedules, reusable workflows, native email, and connected apps.",
+      "AI employee for startups, small businesses, and solo founders. Own cloud computer, your tools connected, work that finishes while you are away. From $9/month.",
     kind: "home",
     lastModified: siteRevised,
+    imageVersion: "2",
   }),
   route({
     path: "/about",
     title: "About - Construct Computer",
     description:
-      "Meet the team building a persistent work OS for an AI employee with files, memory, schedules, linear workflows, live browser and terminal tools, and connected apps.",
+      "Construct builds an AI employee for solo founders and small teams: own cloud computer, memory, schedules, workflows, browser and terminal tools, and connected apps.",
     kind: "page",
     lastModified: siteRevised,
   }),
@@ -157,6 +162,14 @@ export const canonicalRoutes: readonly CanonicalRoute[] = [
     title: "Careers - Construct Computer",
     description:
       "Construct isn't actively hiring, but we'd love to hear from people who want to build AI agents, work interfaces, memory systems, and reliable execution tools.",
+    kind: "page",
+    lastModified: siteRevised,
+  }),
+  route({
+    path: "/affiliates",
+    title: "Affiliate Program - Construct Computer",
+    description:
+      "Partner with Construct. First 25 affiliates earn 50% of referred revenue for up to 12 months; then the rate drops to 20%. Apply via PartnerStack.",
     kind: "page",
     lastModified: siteRevised,
   }),

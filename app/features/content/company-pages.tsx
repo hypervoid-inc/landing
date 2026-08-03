@@ -5,18 +5,20 @@ import {
   List,
   Section,
 } from "../../components/content/content-shell";
+import { AffiliateLink } from "../../components/layout/affiliate-link";
 
 export function AboutPage() {
   return (
     <ContentShell
       title="About"
-      metadata="The personal work OS for an AI employee"
+      metadata="An AI employee for solo founders and small teams"
     >
       <Section title="What we're building">
         <p>
-          Construct Computer is a personal work OS for an AI employee. It gives
-          the agent persistent files, memory, schedules, workflows, email, and
-          connected apps, plus live browser runs and a sandbox terminal. Files
+          Construct Computer gives solo founders and small teams an AI employee
+          with its own cloud computer. Persistent files, memory, schedules,
+          workflows, email, and connected apps sit beside live browser runs and a
+          sandbox terminal, so work can finish while you do something else. Files
           saved in the workspace remain available after one conversation ends;
           live browser runs and shell state do not.
         </p>
@@ -119,7 +121,7 @@ export function AboutPage() {
         <p>
           We’re a small team shipping fast and listening hard.{" "}
           <InlineLink href="https://os.construct.computer">
-            Try the beta
+            Start now
           </InlineLink>
           , join us on{" "}
           <InlineLink href="https://discord.gg/puArEQHYN9">Discord</InlineLink>,
@@ -131,6 +133,159 @@ export function AboutPage() {
         </p>
       </Section>
     </ContentShell>
+  );
+}
+
+export function AffiliatesPage() {
+  return (
+    <ContentShell
+      title="Affiliate Program"
+      metadata="Earn on every paid referral for up to 12 months"
+    >
+      <AffiliateApplyPanel placement="affiliates_top" />
+
+      <Section title="What Construct is">
+        <p>
+          Construct Computer is an AI employee for solo founders, early startups,
+          and small teams. It is not another chat window. Every agent gets a real
+          cloud computer: files, memory, a browser, a terminal, email, a calendar,
+          and the apps those teams already run day to day.
+        </p>
+        <p>
+          People use it when hours are the constraint. They assign an outcome,
+          Construct finishes the work across tools, and they come back to a
+          report written, an inbox handled, or a recurring job already run. That
+          is the product story your audience can actually feel in a demo.
+        </p>
+      </Section>
+
+      <Section title="Who converts">
+        <p>
+          The buyers who stick are operators, not tire-kickers: founders juggling
+          CRM and inbox work themselves, lean teams that cannot hire yet, and
+          small businesses that want ops leverage without a full automation
+          stack. If your audience already cares about AI agents, indie hacking,
+          no-code ops, or shipping with a tiny team, Construct is a natural fit.
+        </p>
+        <p>
+          The content that works is concrete: a screen recording of one job from
+          ask to finished artifact, a workflow teardown, a weekly ops demo, or an
+          honest review of what it can and cannot do. Feature lists do less than
+          finished work on camera.
+        </p>
+      </Section>
+
+      <Section title="What we offer partners">
+        <p>
+          Revenue share is paid on every paid plan your link converts, for up to
+          12 months per customer. Your rate is locked when you are approved.
+        </p>
+        <List>
+          <li>
+            <Emph>Pro at $299/month at 50%:</Emph> $150 each month for up to 12
+            months
+          </li>
+          <li>
+            <Emph>Annual Pro at 50%:</Emph> $1,794 on the yearly charge
+          </li>
+          <li>
+            Lite ($9) and Starter ($59) pay the same share on whatever plan they
+            choose, also capped at 12 months
+          </li>
+        </List>
+        <p>
+          You get a unique PartnerStack link, attribution, and payouts through
+          their dashboard. Create demos, use cases, reviews, or workflows, share
+          the link, and earn on every conversion for the first year of that
+          subscription.
+        </p>
+      </Section>
+
+      <Section title="How to join">
+        <p>
+          Apply through PartnerStack. Approvals are manual so we can make sure
+          the fit is real for both sides. If you want a walkthrough of the
+          product, creative angles for your audience, or help getting set up,
+          email us and we will jump on a short call.
+        </p>
+        <AffiliateApplyPanel placement="affiliates_bottom" compact />
+        <p>
+          Not the right fit for you? Pass the page to a creator whose audience
+          lives in the founder and ops world. That is often the better
+          introduction.
+        </p>
+      </Section>
+    </ContentShell>
+  );
+}
+
+/**
+ * Pricing-page style offer: featured rate, struck standard rate, quiet limit.
+ */
+function AffiliateRateOffer() {
+  return (
+    <div aria-label="Affiliate revenue share">
+      <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
+        <span className="font-geist text-[48px] italic leading-none text-[#01b4c8] sm:text-[56px]">
+          50%
+        </span>
+        <span className="mb-1.5 text-[22px] font-medium leading-none text-[#b0c0c0] line-through sm:mb-2 sm:text-[26px]">
+          20%
+        </span>
+      </div>
+      <p className="mt-3 text-[15px] leading-6 text-[#4e4646]">
+        Revenue share for the <Emph>first 25 partners</Emph>, for up to 12 months
+        per customer. After that, new partners join at 20%.
+      </p>
+      <p className="mt-2 text-[13px] leading-5 text-[#8a9aa2]">
+        Pro at 50%: $150/month · at 20%: $60/month
+      </p>
+    </div>
+  );
+}
+
+function AffiliateApplyPanel({
+  placement,
+  compact = false,
+}: {
+  placement: "affiliates_top" | "affiliates_bottom";
+  compact?: boolean;
+}) {
+  return (
+    <div
+      className={`rounded-2xl border border-[#e5eef1] bg-white ${compact ? "px-5 py-5 sm:px-6" : "px-5 py-6 sm:px-6 sm:py-7"}`}
+    >
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+        <div className="min-w-0 space-y-1.5">
+          <p className="font-geist text-[22px] italic leading-tight text-[#4e4646] sm:text-[24px]">
+            Apply on PartnerStack
+          </p>
+          <p className="max-w-[32rem] text-[14px] leading-[1.55] text-[#627c86] sm:text-[15px]">
+            {compact
+              ? "Lock in 50% while first-25 spots remain."
+              : "Get your referral link and share Construct with your audience."}
+          </p>
+        </div>
+        <div className="flex w-full shrink-0 flex-col gap-2.5 sm:w-auto sm:items-end">
+          <AffiliateLink
+            placement={placement}
+            label="Apply on PartnerStack"
+            className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-[#d9f8ff] bg-[#4cd8ff] px-6 text-[15px] font-black text-white shadow-[inset_0_-4px_12px_rgb(255_255_255_/_90%),inset_0_3px_12px_rgb(255_255_255_/_88%),0_8px_20px_rgba(1,180,200,.18)] transition-[transform,box-shadow] hover:-translate-y-px focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] sm:w-auto sm:min-w-[220px] sm:text-[16px]"
+          >
+            Apply on PartnerStack
+            <span aria-hidden>↗</span>
+          </AffiliateLink>
+          <InlineLink href="mailto:hello@construct.computer?subject=Affiliate%20program">
+            Or email us to talk it through
+          </InlineLink>
+        </div>
+      </div>
+      {!compact ? (
+        <div className="mt-6 border-t border-[#eef3f5] pt-6">
+          <AffiliateRateOffer />
+        </div>
+      ) : null}
+    </div>
   );
 }
 
