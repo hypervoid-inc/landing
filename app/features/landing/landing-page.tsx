@@ -10,7 +10,7 @@ import {
   Timer,
   type LucideIcon,
 } from "lucide-react";
-import { AffiliateLink } from "../../components/layout/affiliate-link";
+import { Link } from "react-router";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 
 import {
@@ -49,13 +49,13 @@ function HeroHeadline() {
       </div>
       <p className="mx-auto mt-5 max-w-[360px] text-[15px] leading-[21px] text-[#627c86] xl:mx-0 xl:mt-6 xl:max-w-[520px] xl:text-base xl:leading-[22px]">
         <span className="xl:hidden">
-          Assign the outcome. Construct researches, operates tools, creates
-          files, and runs recurring work from a workspace you control.
+          Your constraint is hours, not ideas. Construct gives an AI coworker a
+          real computer so the work finishes while you do something else.
         </span>
         <span className="hidden xl:inline">
-          Assign the outcome. Construct researches, operates tools, creates
-          files, and runs recurring work from a persistent workspace you can
-          inspect and control.
+          Your constraint is hours, not ideas. Construct gives an AI coworker a
+          real computer so research, inbox, and follow-ups finish while you do
+          something else.
         </span>
       </p>
       <div className="flex items-center justify-center gap-5 xl:justify-start">
@@ -65,12 +65,13 @@ function HeroHeadline() {
         >
           Start Now
         </StartLink>
-        <AffiliateLink
-          placement="hero"
+        <Link
+          to="/affiliates/"
           className="hero-affiliate mt-8 hidden max-w-[150px] text-xs leading-4 text-[#627c86] transition-colors hover:text-[#01b4c8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] xl:block"
         >
-          Affiliate program, earn 20% for a year <span aria-hidden>↗</span>
-        </AffiliateLink>
+          Affiliate program: 50% now, then 20%{" "}
+          <span aria-hidden>→</span>
+        </Link>
       </div>
     </div>
   );
@@ -212,14 +213,15 @@ function WhatConstructIs() {
       </h2>
       <div className="mx-auto mt-6 max-w-[720px] space-y-4 text-base leading-[21px] text-[#627c86]">
         <p>
-          Construct is a personal work OS for an AI employee. It gives an AI
-          agent persistent memory, files, a browser, a terminal, schedules,
-          reusable workflows, and connected business apps, along with a desktop
-          where people can inspect and steer its work.
+          For solo founders, early startups, and small teams who juggle CRMs,
+          inboxes, and automations instead of hiring. Hours are the constraint,
+          not ideas, and Construct closes that gap.
         </p>
         <p>
-          The agent can research, create artifacts, operate connected tools, and
-          return with finished work instead of another list of instructions.
+          You get one AI employee with its own cloud desktop: files, memory, a
+          browser, a terminal, email, a calendar, and your connected apps. Assign
+          the outcome and it finishes the work while you do something else, in a
+          workspace you can inspect and steer.
         </p>
       </div>
       <nav
@@ -260,8 +262,8 @@ function AdaptsSection() {
         <span className="font-display italic text-[#01b4c8]">and Repeats</span>
       </h2>
       <p className="mx-auto mt-6 max-w-[495px] text-base leading-[21px] text-[#627c86]">
-        Keep the context, tools, procedures, and proof behind the work in one
-        persistent workspace.
+        One persistent workspace keeps the context, tools, procedures, and proof
+        behind the work, so Monday&rsquo;s job still makes sense on Friday.
       </p>
     </section>
   );
@@ -322,10 +324,10 @@ function WorkSection() {
             className="mx-auto max-w-[813px] text-center text-[31px] capitalize leading-[38px] lg:text-[clamp(31px,2.05vw,32.8px)] lg:leading-[46px]"
           >
             <span className="text-[#4e4646]">
-              Your Business Shouldn&rsquo;t Loop Around Dealing With
+              Stop Juggling Inboxes, CRMs, And
             </span>{" "}
             <span className="font-display italic text-[#01b4c8]">
-              Emails, Files And CRM
+              Half-Finished Automations
             </span>
           </h2>
           <div className="work-video mx-auto mt-8 aspect-[1166/653] w-full max-w-[1166px] overflow-hidden rounded-[28px] bg-white">
@@ -339,8 +341,18 @@ function WorkSection() {
             <span className="font-display italic text-[#01b4c8]">
               Let Construct
             </span>{" "}
-            <span className="text-[#4e4646]">Do It For You</span>
+            <span className="text-[#4e4646]">
+              Track What&rsquo;s Running And Finish The Loop
+            </span>
           </p>
+          <div className="mt-7 flex justify-center lg:mt-9">
+            <StartLink
+              source="work"
+              className="landing-cta min-h-[57px] w-[227px] px-5 text-[21px]"
+            >
+              Start Now
+            </StartLink>
+          </div>
         </div>
       </div>
     </section>
@@ -520,14 +532,15 @@ function PricingSection() {
             id="pricing-heading"
             className="text-balance text-[32px] capitalize leading-[38px] lg:text-[clamp(36px,3.24vw,51.8px)] lg:leading-[1.12]"
           >
-            <span className="text-[#4e4646]">Perfect Plan </span>
+            <span className="text-[#4e4646]">Plans For Lean Teams That Need</span>{" "}
             <span className="font-display italic text-[#01b4c8]">
-              For Your Every Need
+              Ops Leverage
             </span>
           </h2>
           <p className="mx-auto mt-4 max-w-[495px] text-[15px] leading-[21px] text-[#627c86] xl:mt-[22px] xl:text-base">
-            Construct can run supervised recurring work in the background.
-            Review important outputs and external actions.
+            Built for solo founders, early startups, and small businesses that
+            want operations handled without adding headcount. Plans start at
+            $9/month to try; Starter adds agent email and schedules.
           </p>
         </div>
         <div className="relative z-10 mx-auto mt-8 grid w-full max-w-[430px] grid-cols-1 gap-5 xl:mt-[100px] xl:max-w-none xl:grid-cols-3 xl:gap-7">

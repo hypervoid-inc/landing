@@ -82,7 +82,7 @@ export function organizationJsonLd(): JsonLd {
     name: "Construct Computer",
     alternateName: "Construct",
     description:
-      "Construct Computer builds a supervised workspace for an AI employee that researches, operates tools, creates files, and runs recurring work through connected apps.",
+      "Construct Computer builds an AI employee for startups, small businesses, and solo founders: a cloud computer with memory, connected tools, and work that finishes while you are away.",
     url: siteUrl,
     logo: {
       "@type": "ImageObject",

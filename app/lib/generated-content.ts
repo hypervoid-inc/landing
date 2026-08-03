@@ -75,7 +75,7 @@ function atomXml(): string {
 }
 
 const summary =
-  "Construct Computer is a supervised workspace for an AI employee that researches, operates tools, creates files, and runs recurring work through supported apps from a live integration catalog.";
+  "Construct Computer is an AI employee for startups, small businesses, and solo founders. It gets its own cloud computer, your tools connected, and a workspace where work finishes while you are away.";
 
 const capabilities = [
   "Persistent files, inspectable memory, native email, schedules, and linear workflows",

@@ -24,7 +24,9 @@ test("walks a blog reader through three beats into the product", async ({
   await expect(tip).toContainText("It looks like you're researching AI agents");
 
   await page.getByRole("button", { name: "What are you?" }).click();
-  await expect(tip).toContainText("I am Construct, a cloud computer");
+  await expect(tip).toContainText(
+    "I am Construct, your AI coworker with a cloud computer",
+  );
 
   await page.getByRole("button", { name: "Show me" }).click();
   await expect(tip).toContainText("Research, inbox, reports");

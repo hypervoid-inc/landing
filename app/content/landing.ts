@@ -74,6 +74,11 @@ export const pricingPlans = [
 
 export const landingFaq = [
   {
+    question: "Who is Construct for?",
+    answer:
+      "Solo founders, early startups, and small businesses that need ops leverage without adding headcount or a full automation stack. If growth is capped by what you personally have time to touch, Construct is built for that gap.",
+  },
+  {
     question: "What is an AI employee?",
     answer:
       "An AI employee is an agent that can accept an outcome, choose tools, and complete multi-step work. Construct gives that agent a persistent workspace for files, memory, and schedules. It also provides reusable workflows, a native inbox, connected apps, live browser runs, and a sandbox terminal.",
@@ -111,7 +116,7 @@ export const landingFaq = [
   {
     question: "How is Construct priced?",
     answer:
-      "Construct offers Lite ($9/month), Starter ($59/month), and Pro ($299/month). Plans increase task steps, concurrent temporary-agent jobs, storage, and scheduled-job capacity. Native agent email starts on Starter, while Pro adds BYOK for supported model providers. Check the current pricing page before purchasing.",
+      "Construct offers Lite ($9/month) to try Construct yourself, Starter ($59/month) for daily agent work with native email and schedules, and Pro ($299/month) for deeper runs and BYOK. Plans increase task steps, concurrent temporary-agent jobs, storage, and scheduled-job capacity. Native agent email starts on Starter. Check the current pricing page before purchasing.",
   },
 ] as const;
 
@@ -121,7 +126,7 @@ export const workflowDemos = [
     title: "Turn Any Process",
     accent: "Into A Workflow",
     description:
-      "Combine agent steps, connected apps, and notifications into a reusable procedure that anyone, or any schedule, can run again.",
+      "Encode a process once with agent steps, connected apps, and notifications. Version it, schedule it, and anyone on the team can run it again.",
     cta: "Build a Workflow",
     mutedAction: "See a Complete Run",
     video: "/assets/landing/workflows/workflow.mp4",
@@ -182,7 +187,7 @@ export const workflowDemos = [
     title: "One Workspace",
     accent: "For The Whole Team",
     description:
-      "Bring people, agents, files, apps, and shared conversations together, with invitations, roles, and precise access controls.",
+      "Bring people, your AI employee, files, apps, and shared conversations together, with invitations, roles, and precise access controls.",
     cta: "Explore Workspaces",
     mutedAction: "See Shared Work in Action",
     video: "/assets/landing/workflows/workspace.mp4",
@@ -195,7 +200,7 @@ export const workflowDemos = [
     title: "Memory",
     accent: "You Can Inspect",
     description:
-      "Construct remembers preferences, decisions, and project context with evidence and history. Review, correct, or forget anything it learns.",
+      "Preferences, decisions, and project context stay with evidence and history. Review, correct, or forget anything it learns so nothing important lives only in your head.",
     cta: "Inspect Agent Memory",
     mutedAction: "See Why It Remembered",
     video: "/assets/landing/workflows/memories.mp4",
@@ -263,6 +268,7 @@ export const featureCards = [
 export const companyLinks = [
   ["Blog", "/blog/"],
   ["About", "/about/"],
+  ["Affiliates", "/affiliates/"],
   ["Editorial Policy", "/editorial-policy/"],
   ["Careers", "/careers/"],
   ["Support", "/support/"],

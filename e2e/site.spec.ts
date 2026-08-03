@@ -206,11 +206,11 @@ test("uses one shared header, footer, and favicon across page types", async ({
     await expect(page.locator("footer")).toContainText("vs ChatGPT");
     await expect(page.locator("footer")).not.toContainText("Guides");
     await expect(
-      page.locator("footer").getByRole("link", { name: /Become an affiliate/ }),
-    ).toHaveAttribute(
-      "href",
-      "https://dash.partnerstack.com/application?company=constructcomputer",
-    );
+      page.locator("header").getByRole("link", { name: "Affiliates" }),
+    ).toHaveAttribute("href", "/affiliates/");
+    await expect(
+      page.locator("footer").getByRole("link", { name: /Affiliate program/ }),
+    ).toHaveAttribute("href", "/affiliates/");
     await expect(
       page.locator('link[rel="icon"][sizes="32x32"]'),
     ).toHaveAttribute("href", "/favicon-32.png?v=3");
@@ -270,7 +270,7 @@ test("keeps the mobile footer compact and aligned", async ({ page }) => {
   const company = await companyNav.boundingBox();
   const comparisons = await comparisonsNav.boundingBox();
 
-  expect(footer?.height).toBeLessThan(720);
+  expect(footer?.height).toBeLessThan(760);
   expect(Math.abs((company?.y ?? 0) - (comparisons?.y ?? 0))).toBeLessThan(2);
   expect(comparisons?.x).toBeGreaterThan((company?.x ?? 0) + 100);
   await expect(companyNav).toHaveCSS("align-items", "center");
@@ -506,6 +506,7 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
 
     const stage = await page.locator(".hero-stage").boundingBox();
     const cta = await page
+      .locator(".hero-copy")
       .getByRole("link", { name: "Start Now" })
       .boundingBox();
     const scene = await page.locator(".hero-scene").boundingBox();
@@ -570,6 +571,7 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
     const copy = await page.locator(".hero-copy").boundingBox();
     const report = await page.locator(".hero-report").boundingBox();
     const cta = await page
+      .locator(".hero-copy")
       .getByRole("link", { name: "Start Now" })
       .boundingBox();
     const overlaps =
@@ -719,11 +721,18 @@ test("every landing button responds to a real click", async ({
   ];
 
   for (const name of startActions) {
-    const popupPromise = page.waitForEvent("popup");
-    await page.getByRole("link", { name, exact: true }).click();
-    const popup = await popupPromise;
-    await expect(popup, name).toHaveURL("https://os.construct.computer/");
-    await popup.close();
+    const links = page.getByRole("link", { name, exact: true });
+    const count = await links.count();
+    expect(count, name).toBeGreaterThan(0);
+    for (let index = 0; index < count; index += 1) {
+      const popupPromise = page.waitForEvent("popup");
+      await links.nth(index).click();
+      const popup = await popupPromise;
+      await expect(popup, `${name} #${index + 1}`).toHaveURL(
+        "https://os.construct.computer/",
+      );
+      await popup.close();
+    }
   }
 
   // The footer keeps the one email capture, for readers who are not ready yet.

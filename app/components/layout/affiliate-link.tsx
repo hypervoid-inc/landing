@@ -12,7 +12,7 @@ export function AffiliateLink({
   children: ReactNode;
   className?: string;
   label?: string;
-  placement: "header" | "hero" | "footer";
+  placement: "header" | "hero" | "footer" | "affiliates" | "affiliates_top" | "affiliates_bottom";
 }) {
   return (
     <a
