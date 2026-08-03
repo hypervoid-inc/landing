@@ -20,7 +20,7 @@ import {
   type PricingIcon,
 } from "~/content/landing";
 
-import { BetaLink } from "./beta-access";
+import { StartLink } from "./beta-access";
 import { AutoVideo } from "./media";
 import { WorkflowSection } from "./workflow-section";
 import "./landing.css";
@@ -59,12 +59,12 @@ function HeroHeadline() {
         </span>
       </p>
       <div className="flex items-center justify-center gap-5 xl:justify-start">
-        <BetaLink
+        <StartLink
           source="hero"
           className="landing-cta mt-7 min-h-[57px] w-[227px] px-5 text-[21px] xl:mt-8"
         >
-          Enter Experience
-        </BetaLink>
+          Start Now
+        </StartLink>
         <AffiliateLink
           placement="hero"
           className="hero-affiliate mt-8 hidden max-w-[150px] text-xs leading-4 text-[#627c86] transition-colors hover:text-[#01b4c8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] xl:block"
@@ -86,9 +86,9 @@ function WorkflowChip({
   className: string;
 }) {
   return (
-    <BetaLink
+    <StartLink
       source="hero-workflow"
-      label={`Get beta access - ${label}`}
+      label={`Try Construct - ${label}`}
       className={`hero-interactive flex h-[38px] w-[216px] items-center gap-[14px] rounded-lg border border-[#f0f0f0] bg-white px-2 text-xs text-[#0b0b0b] shadow-[0_4px_14px_-6px_rgba(15,23,42,.18),inset_0_4px_4px_rgba(255,255,255,.25)] ${className}`}
     >
       <img
@@ -99,7 +99,7 @@ function WorkflowChip({
         className="h-7 w-7 rounded-[20px] object-contain"
       />
       <span>{label}</span>
-    </BetaLink>
+    </StartLink>
   );
 }
 
@@ -118,9 +118,9 @@ function Hero() {
         </div>
         <div className="hero-scene relative isolate">
           <div className="hero-portal absolute aspect-square">
-            <BetaLink
+            <StartLink
               source="hero-portal"
-              label="Get beta access - Construct AI workspace"
+              label="Try Construct - Construct AI workspace"
               className="hero-link block h-full w-full"
             >
               <span className="block h-full w-full">
@@ -130,11 +130,11 @@ function Hero() {
                   decorative
                 />
               </span>
-            </BetaLink>
+            </StartLink>
           </div>
-          <BetaLink
+          <StartLink
             source="hero-report"
-            label="Get beta access - research report"
+            label="Try Construct - research report"
             className="hero-link hero-report absolute z-20"
           >
             <img
@@ -144,10 +144,10 @@ function Hero() {
               height="705"
               className="hero-interactive block w-full"
             />
-          </BetaLink>
-          <BetaLink
+          </StartLink>
+          <StartLink
             source="hero-chat"
-            label="Get beta access - agent chat"
+            label="Try Construct - agent chat"
             className="hero-link hero-chat absolute z-20"
           >
             <img
@@ -157,10 +157,10 @@ function Hero() {
               height="459"
               className="hero-interactive block w-full"
             />
-          </BetaLink>
-          <BetaLink
+          </StartLink>
+          <StartLink
             source="hero-search"
-            label="Get beta access - workspace search"
+            label="Try Construct - workspace search"
             className="hero-link hero-search absolute z-20"
           >
             <img
@@ -170,7 +170,7 @@ function Hero() {
               height="135"
               className="hero-interactive block w-full"
             />
-          </BetaLink>
+          </StartLink>
           <div className="hero-workflow absolute z-30">
             <WorkflowChip
               image="/assets/landing/hero/google-meet.png"

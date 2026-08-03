@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { BetaLink } from "../../features/landing/beta-access";
+import { StartLink } from "../../features/landing/beta-access";
 
 /**
  * Inline call to action for MDX bodies. Authors place these at roughly even
@@ -20,14 +20,14 @@ export function BetaCta({
 }) {
   return (
     <p className="my-8 text-center">
-      <BetaLink
+      <StartLink
         source={source}
         className="inline-flex items-center gap-2.5 rounded-full border border-[#b6ecfb] bg-[#f2fcfe] py-2 pl-4 pr-5 text-[15px] font-medium text-[#017b89] no-underline transition-colors hover:bg-[#e8faff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8]"
       >
         <MascotEyes />
-        {children ?? "Get beta access"}
+        {children ?? "Try Construct"}
         <span aria-hidden="true">&rarr;</span>
-      </BetaLink>
+      </StartLink>
     </p>
   );
 }

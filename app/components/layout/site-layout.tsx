@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "react-router";
 
 import { companyLinks, comparisonLinks } from "../../content/landing";
-import { BetaLink } from "../../features/landing/beta-access";
+import { BetaLink, StartLink } from "../../features/landing/beta-access";
 import { AffiliateLink } from "./affiliate-link";
 
 export function SiteHeader() {
@@ -51,14 +51,14 @@ export function SiteHeader() {
             Affiliates
           </AffiliateLink>
         </nav>
-        <BetaLink
+        <StartLink
           source="nav"
-          label="Request early beta access"
+          label="Start using Construct"
           className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-3 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] transition-[transform,background-color,box-shadow] hover:-translate-y-px hover:bg-[#172126] hover:shadow-[0_6px_16px_rgba(0,0,0,.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] lg:px-4 lg:text-xs"
         >
-          <span className="sm:hidden">Beta access</span>
-          <span className="hidden sm:inline">Early Beta Access</span>
-        </BetaLink>
+          <span className="sm:hidden">Start now</span>
+          <span className="hidden sm:inline">Start Now</span>
+        </StartLink>
       </div>
     </header>
   );
@@ -179,9 +179,10 @@ export function SiteFooter() {
             </div>
             <BetaLink
               source="footer"
+              label="Get Construct product updates by email"
               className="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-black px-5 py-3 text-[13px] font-semibold text-white shadow-[0_4px_4px_rgba(0,0,0,.15)] sm:mt-2 sm:w-fit sm:py-2.5"
             >
-              Request beta access <span aria-hidden>↗</span>
+              Get product updates <span aria-hidden>↗</span>
             </BetaLink>
           </div>
           <FooterColumn title="Company" label="Company" links={companyLinks} />

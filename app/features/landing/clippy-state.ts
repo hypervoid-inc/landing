@@ -58,7 +58,7 @@ export type ClippyBeat = {
   readonly advance?: string;
 };
 
-export const CLIPPY_CTA_LABEL = "Get beta access";
+export const CLIPPY_CTA_LABEL = "Try Construct";
 export const CLIPPY_MINIMIZE_LABEL = "Minimize Construct";
 export const CLIPPY_REOPEN_LABEL = "Open Construct message";
 export const CLIPPY_HIDE_LABEL = "Hide Construct";

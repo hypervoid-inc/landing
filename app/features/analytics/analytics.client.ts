@@ -1,6 +1,7 @@
 import type { Properties } from "posthog-js";
 
 type AnalyticsEvent =
+  | "app_opened"
   | "beta_access_opened"
   | "beta_signup_submitted"
   | "beta_signup_granted"

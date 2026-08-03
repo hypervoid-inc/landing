@@ -114,7 +114,7 @@ The first needs durable state and a socket. Cloudflare sells exactly that. Split
 
 Everybody argues about which model to use. Almost nobody argues about which half of their stack is getting paid to nap. That is the whole post, in one sentence.
 
-Get beta access
+Try Construct
 
 ## Linux shows up, edges the job, and leaves
 
@@ -213,7 +213,7 @@ The container is real. It is not free. Image lands between 1.5 and 1.9 GB, which
 
 Flat version: if your workload is one long-lived process per user that truly never idles, none of this helps you. Buy a VM. Simpler. Happier. Nobody will make edging jokes at you.
 
-Get beta access
+Try Construct
 
 ## What we run today
 
@@ -314,7 +314,7 @@ Two outside pressures are pushing evaluation criteria from nice-to-have to load-
 
 The second pressure is a credibility problem inside the market itself. Gartner estimates that only about 130 of the thousands of vendors marketing "agentic AI" are genuinely agentic; the rest is what Gartner calls agent washing, existing chatbots, RPA, or assistants relabeled for a hotter category ([Digital Applied, agent-washing definition and buyer's scorecard](https://www.digitalapplied.com/blog/agent-washing-definition-buyers-scorecard-2026)). That is exactly why the checklist above asks what a platform actually does rather than what it calls itself: a chatbot with a new label still cannot orchestrate tools, hold correctable memory, or leave an inspectable trail, no matter what the pitch deck says.
 
-Get beta access
+Try Construct
 
 ## Questions to ask a vendor before you pilot (and how Construct answers each one)
 
@@ -438,7 +438,7 @@ Not every repeated process needs an interface. Use a workspace app when people n
 
 The two can support the same operation. A workspace app can provide the queue and review surface, while files hold durable records and a scheduled job prepares new work. The important boundary is that the app UI does not secretly become an unrestricted agent: automation still runs through the execution surfaces and permissions designed for it.
 
-Get beta access
+Try Construct
 
 ## Where workspace apps fit
 
@@ -507,7 +507,7 @@ Runtime planning does not have to mean invisible autonomy. Construct's **Activit
 
 **Persistence** is another difference. Construct keeps workspace files and selected long-term memories across sessions, so an agent can recall approved context from an earlier exchange. Automatic memory does not currently index uploaded files, private app results, terminal output, or live browser runs, so important context should be stored explicitly when it needs to carry forward.
 
-Get beta access
+Try Construct
 
 ## The same recurring workflow, two ways
 
@@ -614,7 +614,7 @@ The wedge a chat-based "AI VA" cannot match is an inspectable work record. A cha
 
 This is also a realistic moment to size the category correctly rather than oversell it. McKinsey's 2025 State of AI survey found that no more than 10% of organizations report scaling agentic AI within any single business function, while 23% are actively scaling in at least one function and 39% are still experimenting (source: [forbes.com](https://www.forbes.com/sites/josipamajic/2026/03/22/10-of-enterprise-functions-use-ai-agents-mckinsey-finds/)). Supervised, bounded use on specific recurring tasks is where the category actually is in 2026, not full autonomous replacement of a VA's entire job.
 
-Get beta access
+Try Construct
 
 ## Choosing between the two, or running both together
 
@@ -719,7 +719,7 @@ The Memories app lets you search and inspect what Construct remembers. You can a
 
 Reviewing memory occasionally is worth the few minutes it takes, particularly after a project changes shape. Assertions learned during a since-abandoned approach are the most common source of confidently wrong recall.
 
-Get beta access
+Try Construct
 
 ## Memory connects work across time
 
@@ -832,7 +832,7 @@ Construct discovers supported applications from its live integration catalog, in
 
 When an off-the-shelf connection is not enough, Construct can use its browser or terminal. It can also create a small workspace application for a recurring internal process, publish it to your desktop, and keep the last working build available if a later edit fails. That path is covered in detail in [how Construct builds internal tools](/blog/build-internal-tools-with-construct/).
 
-Get beta access
+Try Construct
 
 ## What to delegate first
 
@@ -1143,7 +1143,7 @@ Construct exposes live browser work, a read-only terminal transcript, files, inb
 
 That accessibility is a real difference in who can supervise the work. Reviewing a coding agent's output generally requires being able to read a diff. Reviewing a Construct job means opening a file, reading a summary, or checking a sent message, which is work an operations lead or founder can do directly.
 
-Get beta access
+Try Construct
 
 ## Where the boundary matters
 
@@ -1250,7 +1250,7 @@ The categories of work this opens up are the ones that fall between products: pu
 
 Suite copilots can use the context available in their ecosystem. Construct is designed to carry context across the wider job: a customer message, a workspace file, a CRM update, a browser research step, and a scheduled follow-up. Useful context can be stored in inspectable memory, while repeatable work can become a versioned workflow.
 
-Get beta access
+Try Construct
 
 ## A concrete scenario: the monthly board pack
 
@@ -1488,7 +1488,7 @@ Comparing monthly figures directly tends to mislead, because the two categories 
 
 The useful comparison is cost per completed outcome on your actual work. A high-volume, low-complexity flow is almost always cheaper on an automation platform. A low-volume job that would otherwise take a person an hour of cross-app judgment is where per-step metering can come out ahead.
 
-Get beta access
+Try Construct
 
 ## Using both together
 
@@ -1588,7 +1588,7 @@ Construct works from a purpose-built web desktop with Chat, Files, Browser, Term
 
 The agent plans the steps, uses live browser runs, the sandbox terminal, files, or supported applications from the live integration catalog, and leaves persistent outputs in your workspace. Activity keeps bounded action summaries and best-effort reasons; bounded tool details remain in chat.
 
-Get beta access
+Try Construct
 
 ## Following one job end to end
 
@@ -1702,7 +1702,7 @@ A chat thread is a good place to discuss work. A persistent workspace is where t
 
 That continuity matters for recurring operations. A weekly research report can reuse a saved workflow and remember the intended audience. An inbox task can refer to earlier customer context. A file-analysis job can save the transformed output beside the original instead of losing it when the conversation closes.
 
-Get beta access
+Try Construct
 
 ## Repeating work without rebuilding it
 

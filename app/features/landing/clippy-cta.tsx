@@ -4,7 +4,7 @@ import { useLocation } from "react-router";
 
 import { captureAnalytics } from "../analytics/analytics.client";
 import { sanitizePathname } from "../analytics/sanitize-event";
-import { BetaLink, useBetaDialogOpen } from "./beta-access";
+import { StartLink, useBetaDialogOpen } from "./beta-access";
 import {
   CLIPPY_CTA_LABEL,
   CLIPPY_HIDE_LABEL,
@@ -277,7 +277,7 @@ export function ClippyCta() {
             {beat.advance}
           </button>
         )}
-        <BetaLink
+        <StartLink
           source={ctaSource(pageKind, beatIndex)}
           className="clippy-pill"
           onClick={() =>
@@ -290,7 +290,7 @@ export function ClippyCta() {
           }
         >
           {CLIPPY_CTA_LABEL}
-        </BetaLink>
+        </StartLink>
       </div>
     </>
   );
