@@ -1,6 +1,8 @@
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-import { ogArtSubjects, ogLayout, ogTiled } from "../app/content/og-art";
+import { ogPosters, posterEyebrow } from "../app/content/og-poster";
 import { canonicalRoutes, ogName } from "../app/lib/route-manifest";
 import {
   costOf,
@@ -9,7 +11,12 @@ import {
   modelPricing,
   ratesFor,
 } from "../scripts/og/pricing.mjs";
-import { layouts } from "../scripts/og/prompt.mjs";
+import {
+  POSTER_ASPECT,
+  buildPosterPrompt,
+  posterReferences,
+  stylePlatePath,
+} from "../scripts/og/poster.mjs";
 
 describe("generation cost", () => {
   it("prices a call from the tokens the API reports", () => {
@@ -52,35 +59,140 @@ describe("generation cost", () => {
   });
 });
 
-describe("artwork layouts", () => {
-  it("gives every route a layout the prompt knows how to describe", () => {
-    for (const route of canonicalRoutes) {
-      expect(layouts[ogLayout(ogName(route.path))]).toBeDefined();
-    }
+const names = canonicalRoutes.map((route) => ogName(route.path));
+
+describe("card content", () => {
+  it("gives every route a card", () => {
+    expect(names.filter((name) => !ogPosters[name])).toEqual([]);
   });
 
-  /** The tile layout is retired; nothing should be routed to it. */
-  it("renders every route full-bleed", () => {
-    for (const route of canonicalRoutes) {
-      expect(ogLayout(ogName(route.path)), route.path).toBe("full");
-    }
-    expect(ogTiled).toEqual([]);
+  it("carries no cards for routes that no longer exist", () => {
+    expect(Object.keys(ogPosters).filter((n) => !names.includes(n))).toEqual(
+      [],
+    );
   });
 
-  it("keeps a subject for every route, since every route is generated", () => {
-    const missing = canonicalRoutes
-      .map((route) => ogName(route.path))
-      .filter((name) => !ogArtSubjects[name]);
-    expect(missing).toEqual([]);
+  it("keeps every scene unique, so no two cards photograph the same set", () => {
+    const scenes = Object.values(ogPosters).map((card) => card.scene);
+    expect(new Set(scenes).size).toBe(scenes.length);
   });
 
   /**
-   * A full-bleed card carries the headline over the artwork, so its prompt has
-   * to reserve the left side. Losing that instruction makes titles unreadable.
+   * The model sets the headline itself, so a line long enough to need shrinking
+   * is a line that either overruns the type column or collides with the object.
+   * Three lines at sixteen characters is what the layout was drawn around.
    */
-  it("reserves the left of the frame in the full-bleed composition", () => {
-    expect(layouts.full.composition).toMatch(/left 45%/);
-    expect(layouts.full.aspectRatio).toBe("16:9");
-    expect(layouts.tile.aspectRatio).toBe("1:1");
+  it("keeps headlines short enough to set at poster size", () => {
+    for (const [name, card] of Object.entries(ogPosters)) {
+      expect(card.headline.length, name).toBeLessThanOrEqual(3);
+      for (const line of card.headline) {
+        expect(line, `${name}: "${line}"`).toMatch(/^[A-Z0-9 ,.?&'-]+$/);
+        expect(line.length, `${name}: "${line}"`).toBeLessThanOrEqual(16);
+      }
+    }
+  });
+
+  /**
+   * Style lives in the contract, not in the scenes. A scene that restates the
+   * palette is how a set drifts: the contract and the scene start disagreeing
+   * and the model splits the difference.
+   */
+  it("leaves palette, lighting, and medium to the contract", () => {
+    for (const [name, card] of Object.entries(ogPosters)) {
+      expect(card.scene, name).not.toMatch(
+        /#[0-9a-f]{6}|photoreal|3d render|lit from|studio|navy|cyan/i,
+      );
+      expect(card.scene.length, name).toBeGreaterThan(60);
+    }
+  });
+
+  /**
+   * The badge sits opposite the wordmark on the same line, so a badge reading
+   * CONSTRUCT puts the word on the card twice and reads as a mistake.
+   */
+  it("badges every route kind with something that is not the wordmark", () => {
+    for (const route of canonicalRoutes) {
+      const badge = posterEyebrow(route.kind);
+      expect(badge, route.path).toMatch(/^[A-Z ]+$/);
+      expect(badge, route.path).not.toBe("CONSTRUCT");
+    }
+  });
+});
+
+describe("the prompt", () => {
+  const card = ogPosters.home!;
+  const prompt = buildPosterPrompt({
+    eyebrow: posterEyebrow("home"),
+    headline: card.headline,
+    scene: card.scene,
+  });
+
+  it("renders at the ratio the publish crop expects", () => {
+    expect(POSTER_ASPECT).toBe("16:9");
+  });
+
+  it("dictates the headline's line breaks rather than leaving them to the model", () => {
+    for (const [index, line] of card.headline.entries()) {
+      expect(prompt).toContain(`line ${index + 1}: ${line}`);
+    }
+  });
+
+  it("names all four text elements and the badge for this route kind", () => {
+    expect(prompt).toContain("CONSTRUCT");
+    expect(prompt).toContain("AI EMPLOYEE");
+    expect(prompt).toContain("construct.computer");
+  });
+
+  /**
+   * The set exists to avoid one specific failure: the floating-glass-panel
+   * render every image model reaches for. Losing this instruction loses the
+   * whole art direction, and it would be invisible until 34 cards came back
+   * looking like everyone else's.
+   */
+  it("forbids the generic AI-render filler by name", () => {
+    expect(prompt).toMatch(/floating translucent UI panels/);
+    expect(prompt).toMatch(/dashed concentric orbit rings/);
+  });
+
+  /** Crops eat the top and bottom, so the safe band has to be stated. */
+  it("reserves the band the publish crop removes", () => {
+    expect(prompt).toMatch(/top 4% and the bottom 4%/);
+  });
+});
+
+describe("the style plate", () => {
+  /**
+   * Consistency across the set comes from every call being shown one approved
+   * card, not from the prose. Without it on disk, a run still succeeds and
+   * quietly produces 34 unrelated images.
+   */
+  it("is committed, and sits second in the references", () => {
+    expect(
+      existsSync(stylePlatePath),
+      "missing assets/og/style/master.webp — run `pnpm og:master home`",
+    ).toBe(true);
+
+    const references = posterReferences();
+    expect(references[1]?.file).toBe("assets/og/style/master.webp");
+    expect(references[1]?.note).toMatch(/STYLE PLATE/);
+  });
+
+  /**
+   * The mascot outranks the plate. Reversing these two is what produced domes,
+   * lobeless squircles, and blobs with limbs in the first set: the plate shows
+   * one lit, partly occluded view of the character, and cards that copied it
+   * hardest lost the silhouette.
+   */
+  it("leads with the canonical mascot, ahead of the style plate", () => {
+    const references = posterReferences();
+    expect(references[0]?.file).toBe("public/favicon.png");
+    expect(references[0]?.note).toMatch(/silhouette/i);
+  });
+
+  it("attaches no reference that is missing from disk", () => {
+    const root = fileURLToPath(new URL("../", import.meta.url));
+    for (const { file } of posterReferences()) {
+      expect(existsSync(new URL(file, `file://${root}`)), file).toBe(true);
+    }
   });
 });

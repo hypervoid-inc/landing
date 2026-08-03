@@ -14,5 +14,6 @@ playwright-report/
 test-results/
 
 # Throwaway generation options, and a local record of what generation cost.
-/assets/og/candidates/
+/assets/og/poster/candidates/
+/assets/og/style/master-*.webp
 /assets/og/generation-log.jsonl

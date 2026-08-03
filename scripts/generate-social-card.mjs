@@ -13,7 +13,7 @@ import sharp from "sharp";
 
 import { generateImage } from "./og/gemini.mjs";
 import { defaultModel, formatTokens, formatUsd } from "./og/pricing.mjs";
-import { referenceImages } from "./og/prompt.mjs";
+import { referenceImages } from "./og/brand-references.mjs";
 
 /**
  * Wide dark-theme key art for social posts — X article covers, link previews,
@@ -167,7 +167,7 @@ function overlaySvg({ headline, accentFrom = 1, subline }) {
 // ─── Art ─────────────────────────────────────────────────────────────────────
 
 /**
- * The dark inverse of `scripts/og/prompt.mjs`. A separate contract rather than a
+ * The dark inverse of `scripts/og/poster.mjs`. A separate contract rather than a
  * flag on that one because every value in it differs, and because editing that
  * file re-bases all 28 route OG images.
  */

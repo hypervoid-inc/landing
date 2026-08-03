@@ -1,14 +1,12 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { ogArtSubjects } from "../app/content/og-art";
+import { ogPosters, posterEyebrow } from "../app/content/og-poster";
 import {
   canonicalRoutes,
   ogName,
   ogStem,
-  routeDisplayTitle,
   type CanonicalRoute,
 } from "../app/lib/route-manifest";
 import {
@@ -29,58 +27,14 @@ function publishedPath(route: CanonicalRoute) {
   return path.join(outputDirectory, imageFile(route));
 }
 
-const publicDirectory = fileURLToPath(new URL("../public/", import.meta.url));
-
-/** Author cards composite the real headshot, so it is part of their signature. */
-function portraitFor(route: CanonicalRoute) {
-  if (route.kind !== "author" || !route.author?.image) return null;
-  return readFileSync(path.join(publicDirectory, route.author.image.slice(1)));
-}
-
 const names = canonicalRoutes.map((route) => ogName(route.path));
 const renamed = canonicalRoutes.filter(
   (route) => imageFile(route) !== `${ogName(route.path)}.jpg`,
 );
 
-describe("OG artwork subjects", () => {
-  it("describes a subject for every route without a hand-made image", () => {
-    const missing = canonicalRoutes
-      .filter(
-        (route) =>
-          !existsSync(path.join(sourceDirectory, `${ogStem(route.path)}.png`)),
-      )
-      .map((route) => ogName(route.path))
-      .filter((name) => !ogArtSubjects[name]);
-    expect(missing).toEqual([]);
-  });
-
-  it("carries no subjects for routes that no longer exist", () => {
-    expect(
-      Object.keys(ogArtSubjects).filter((name) => !names.includes(name)),
-    ).toEqual([]);
-  });
-
-  it("keeps every subject unique, so no two images share a scene", () => {
-    const subjects = Object.values(ogArtSubjects);
-    expect(new Set(subjects).size).toBe(subjects.length);
-  });
-
-  /**
-   * Style lives in the prompt's style contract, not in the subject lines. A
-   * subject that restates the palette is how a set drifts: the contract and the
-   * subject start disagreeing and the model splits the difference.
-   */
-  it("leaves palette and medium to the style contract", () => {
-    for (const [name, subject] of Object.entries(ogArtSubjects)) {
-      expect(subject, name).not.toMatch(/#[0-9a-f]{6}|photoreal|3d render/i);
-      expect(subject.length, name).toBeGreaterThan(60);
-    }
-  });
-});
-
 /**
  * What every social crawler and the blog index rely on. These are cheap
- * structural checks on the bytes — nothing here judges how the art looks.
+ * structural checks on the bytes — nothing here judges how the card looks.
  */
 describe("OG image health", () => {
   it("publishes an image for every canonical route", () => {
@@ -123,20 +77,49 @@ describe("OG image health", () => {
   /**
    * These double as blog-index thumbnails, where fourteen load on one page, so
    * the ceiling is well below what social platforms would tolerate on their own.
+   *
+   * The second assertion is a mean rather than a total on purpose. A fixed
+   * budget across the whole set shrinks every time a post is added, so it
+   * eventually fails for the one reason that is not a problem — the site
+   * growing — and the fix is always to raise the number. Per-image and average
+   * both stay honest as the library grows.
    */
-  it("stays under 300KB per image and 4MB in total", () => {
+  it("stays under 300KB per image and 150KB on average", () => {
     const sizes = canonicalRoutes.map((route) => ({
       file: imageFile(route),
       kb: Math.round(statSync(publishedPath(route)).size / 1024),
     }));
     expect(sizes.filter((entry) => entry.kb > 300)).toEqual([]);
-    expect(sizes.reduce((total, entry) => total + entry.kb, 0)).toBeLessThan(
-      4096,
-    );
+
+    const mean =
+      sizes.reduce((total, entry) => total + entry.kb, 0) / sizes.length;
+    expect(Math.round(mean)).toBeLessThan(150);
   });
 });
 
 describe("committed OG images", () => {
+  it("has a source card for every route", () => {
+    const missing = canonicalRoutes
+      .filter((route) => {
+        const stem = ogStem(route.path);
+        const custom = [".png", ".jpg", ".jpeg", ".webp"].some((extension) =>
+          existsSync(path.join(sourceDirectory, `${stem}${extension}`)),
+        );
+        const poster = [".webp", ".png"].some((extension) =>
+          existsSync(
+            path.join(
+              sourceDirectory,
+              "poster",
+              `${ogName(route.path)}${extension}`,
+            ),
+          ),
+        );
+        return !custom && !poster;
+      })
+      .map((route) => ogName(route.path));
+    expect(missing, "run `pnpm og:generate`").toEqual([]);
+  });
+
   /**
    * Nothing generates a renamed image, so a frontmatter typo would otherwise
    * ship a social card pointing at a 404.
@@ -153,7 +136,7 @@ describe("committed OG images", () => {
 
   /**
    * The images are committed artifacts rather than build output, so nothing
-   * else notices when a title is edited and the image is not re-rendered.
+   * else notices when a headline is edited and the card is not re-published.
    */
   it("matches the committed manifest, or `pnpm og` needs rerunning", async () => {
     const manifest = await readManifest();
@@ -162,21 +145,22 @@ describe("committed OG images", () => {
     for (const route of canonicalRoutes) {
       const name = ogName(route.path);
       const stem = path.basename(imageFile(route), ".jpg");
-      const { custom, full } = await readSources(name, stem);
+      const { custom, poster } = await readSources(name, stem);
       const expected = signature({
-        title: routeDisplayTitle(route),
-        kind: route.kind,
         stem,
+        eyebrow: posterEyebrow(route.kind),
+        headline: ogPosters[name]!.headline,
+        fullFrame: Boolean(ogPosters[name]!.fullFrame),
         custom,
-        full,
-        photo: portraitFor(route),
+        poster,
       });
       if (manifest[name] !== expected) stale.push(name);
     }
 
-    expect(stale, `stale OG images — run \`pnpm og\` (${manifestPath})`).toEqual(
-      [],
-    );
+    expect(
+      stale,
+      `stale OG images — run \`pnpm og\` (${manifestPath})`,
+    ).toEqual([]);
   });
 
   it("tracks no manifest entries for removed routes", async () => {
@@ -200,7 +184,11 @@ function jpegSize(buffer: Buffer): { width: number; height: number } {
     }
     const marker = buffer[offset + 1]!;
     // SOF0-SOF15, excluding the non-frame markers DHT, JPG, and DAC.
-    if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+    if (
+      marker >= 0xc0 &&
+      marker <= 0xcf &&
+      ![0xc4, 0xc8, 0xcc].includes(marker)
+    ) {
       return {
         height: buffer.readUInt16BE(offset + 5),
         width: buffer.readUInt16BE(offset + 7),
