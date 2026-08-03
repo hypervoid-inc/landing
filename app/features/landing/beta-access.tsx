@@ -67,6 +67,47 @@ export function hasBetaAccess() {
   }
 }
 
+/**
+ * Direct route into the product, for warm surfaces: hero, header, pricing, and
+ * the feature sections. Checkout is live, so anyone who clicks these has
+ * already decided to look at the thing and an email form in front of them only
+ * costs signups. Cold surfaces keep `BetaLink` and its capture instead.
+ */
+export function StartLink({
+  children,
+  className = "",
+  label,
+  source = "unknown",
+  onClick: onBeforeClick,
+}: {
+  children: ReactNode;
+  className?: string;
+  label?: string;
+  source?: string;
+  onClick?: () => void;
+}) {
+  return (
+    <a
+      href={BETA_URL}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={label}
+      className={className}
+      onClick={() => {
+        onBeforeClick?.();
+        captureAnalytics("app_opened", { source });
+      }}
+    >
+      {children}
+    </a>
+  );
+}
+
+/**
+ * Email capture for cold surfaces: blog bodies and the footer. A reader partway
+ * through an article has not decided anything yet, so trading an email for the
+ * walkthrough is a fair ask where an immediate signup would not be.
+ */
 export function BetaLink({
   children,
   className = "",
@@ -144,7 +185,7 @@ function BetaAccessDialog({
   const emailRef = useRef<HTMLInputElement>(null);
   const otherRef = useRef<HTMLInputElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const [phase, setPhase] = useState<"form" | "granting" | "success">("form");
+  const [phase, setPhase] = useState<"form" | "success">("form");
   const [email, setEmail] = useState("");
   const [referral, setReferral] = useState("");
   const [other, setOther] = useState("");
@@ -152,19 +193,6 @@ function BetaAccessDialog({
   const [turnstileToken, setTurnstileToken] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [steps, setSteps] = useState(0);
-
-  useEffect(() => {
-    if (phase !== "granting") return;
-    const delays = reducedMotion ? [0, 100, 200] : [0, 900, 1800];
-    const timers = delays.map((delay, index) =>
-      window.setTimeout(() => setSteps(index + 1), delay),
-    );
-    timers.push(
-      window.setTimeout(() => setPhase("success"), reducedMotion ? 300 : 2600),
-    );
-    return () => timers.forEach(window.clearTimeout);
-  }, [phase, reducedMotion]);
 
   useEffect(() => {
     if (phase !== "form") return;
@@ -273,7 +301,7 @@ function BetaAccessDialog({
         source,
         referral_source: payload.data.referral,
       });
-      setPhase("granting");
+      setPhase("success");
     } catch {
       setError("Something went wrong. Please try again.");
       setTurnstileToken("");
@@ -282,12 +310,6 @@ function BetaAccessDialog({
       setSubmitting(false);
     }
   };
-
-  const stepLabels = [
-    `Verifying ${email.trim().toLowerCase()}`,
-    "Provisioning your cloud computer",
-    "Granting beta access",
-  ];
 
   return (
     <Dialog.Root
@@ -316,13 +338,15 @@ function BetaAccessDialog({
                 <X aria-hidden className="h-5 w-5" />
               </Dialog.Close>
               <Dialog.Title className="text-balance text-center text-[26px] leading-8">
-                Get{" "}
+                Follow what{" "}
                 <span className="font-serif italic text-[#01b4c8]">
-                  beta access
-                </span>
+                  Construct
+                </span>{" "}
+                ships
               </Dialog.Title>
               <Dialog.Description className="mt-3 text-center text-[15px] leading-[21px] text-[#627c86]">
-                Enter your email to continue.
+                New capabilities, real agent runs, and what we learned building
+                them. No drip sequence.
               </Dialog.Description>
               <form className="mt-7 space-y-4" onSubmit={submit}>
                 <label htmlFor={emailId} className="sr-only">
@@ -415,8 +439,8 @@ function BetaAccessDialog({
                   </p>
                 )}
                 <p className="text-[12px] leading-[17px] text-[#627c86]">
-                  By continuing, you agree to receive transactional beta-access
-                  email. See our{" "}
+                  By continuing, you agree to receive product update email. See
+                  our{" "}
                   <a
                     href="/privacy/"
                     className="text-[#01b4c8] underline underline-offset-2"
@@ -450,49 +474,23 @@ function BetaAccessDialog({
               </form>
             </>
           )}
-          {phase === "granting" && (
-            <>
-              <Dialog.Title className="text-center text-[22px] leading-7">
-                Setting things up…
-              </Dialog.Title>
-              <Dialog.Description className="sr-only">
-                Preparing beta access
-              </Dialog.Description>
-              <ul aria-live="polite" className="mt-8 space-y-4">
-                {stepLabels.map((label, index) => (
-                  <li
-                    key={label}
-                    className={`flex items-center gap-3 text-[15px] ${steps > index ? "text-[#4e4646]" : "text-[#becace] opacity-50"}`}
-                  >
-                    <span
-                      aria-hidden
-                      className={`grid h-6 w-6 place-items-center rounded-full text-xs ${steps > index ? "bg-[#4cd8ff] font-black text-white" : "border border-[#c5e8ef]"}`}
-                    >
-                      {steps > index ? "✓" : index + 1}
-                    </span>
-                    {label}
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
           {phase === "success" && (
             <div className="text-center">
               <Dialog.Title className="text-balance text-2xl leading-[30px]">
-                Beta access granted to{" "}
+                You're on the list,{" "}
                 <span className="font-serif italic text-[#01b4c8]">
                   {email.trim().toLowerCase()}
                 </span>
               </Dialog.Title>
               <Dialog.Description className="mt-3 text-[15px] leading-[21px] text-[#627c86]">
-                Your cloud computer is ready when you are.
+                No need to wait for the next one. Construct is ready now.
               </Dialog.Description>
               <a
                 href={BETA_URL}
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => {
-                  captureAnalytics("beta_opened", { source });
+                  captureAnalytics("app_opened", { source });
                   onOpenChange(false);
                 }}
                 className="beta-access-cta mt-8 h-[52px] w-full text-lg"

@@ -10,9 +10,13 @@ const POST = "/blog/ai-agent-memory/?clippy=now";
 
 const widget = "aside.clippy-widget";
 
-test("walks a blog reader through three beats into the signup dialog", async ({
+test("walks a blog reader through three beats into the product", async ({
+  context,
   page,
 }) => {
+  await context.route("https://os.construct.computer/", (route) =>
+    route.fulfill({ body: "ok" }),
+  );
   await page.goto(POST);
 
   const tip = page.getByRole("complementary", { name: "Construct" });
@@ -26,20 +30,28 @@ test("walks a blog reader through three beats into the signup dialog", async ({
   await expect(tip).toContainText("Research, inbox, reports");
   await expect(page.locator(".clippy-chip")).toHaveCount(0);
 
-  // Scoped to the tip: blog bodies now carry their own inline beta CTAs, so an
+  // Scoped to the tip: blog bodies now carry their own inline CTAs, so an
   // unscoped link lookup matches those too.
-  await tip.getByRole("link", { name: "Get beta access" }).click();
-  await expect(
-    page.getByRole("dialog").getByRole("heading", { name: "Get beta access" }),
-  ).toBeVisible();
+  const popupPromise = page.waitForEvent("popup");
+  await tip.getByRole("link", { name: "Try Construct" }).click();
+  const popup = await popupPromise;
+  await expect(popup).toHaveURL("https://os.construct.computer/");
+  await popup.close();
 });
 
-test("opens the beta dialog from the first beat too", async ({ page }) => {
+test("opens the product from the first beat too", async ({
+  context,
+  page,
+}) => {
+  await context.route("https://os.construct.computer/", (route) =>
+    route.fulfill({ body: "ok" }),
+  );
   await page.goto(POST);
+  const popupPromise = page.waitForEvent("popup");
   await page.locator(".clippy-pill").click();
-  await expect(
-    page.getByRole("dialog").getByRole("heading", { name: "Get beta access" }),
-  ).toBeVisible();
+  const popup = await popupPromise;
+  await expect(popup).toHaveURL("https://os.construct.computer/");
+  await popup.close();
 });
 
 test("collapses to the sprite and reopens on the same beat", async ({
@@ -126,7 +138,7 @@ test("stays silent on the privacy policy", async ({ page }) => {
   await expect(page.locator(widget)).toHaveCount(0);
 });
 
-test("still appears when beta access is already granted", async ({ page }) => {
+test("still appears when the reader already subscribed", async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem(
       "construct_beta_access_v1",

@@ -155,7 +155,7 @@ export function ResourcePage({ slug }: { slug: string }) {
       <post.Content components={mdxComponents} />
       <ResourceFaq slug={entry.slug} />
       {/* Rendered here rather than authored so every post closes on one. */}
-      <BetaCta source="blog_end">Get beta access</BetaCta>
+      <BetaCta source="blog_end">Try Construct</BetaCta>
     </ContentShell>
   );
 }

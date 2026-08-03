@@ -202,7 +202,7 @@ test("uses one shared header, footer, and favicon across page types", async ({
     await expect(page.getByRole("navigation", { name: "Primary" })).toHaveText(
       "BlogAffiliates",
     );
-    await expect(page.locator("footer")).toContainText("Request beta access");
+    await expect(page.locator("footer")).toContainText("Get product updates");
     await expect(page.locator("footer")).toContainText("vs ChatGPT");
     await expect(page.locator("footer")).not.toContainText("Guides");
     await expect(
@@ -240,7 +240,7 @@ test("keeps the primary action usable in the compact mobile header", async ({
     await page.goto("/");
 
     const header = await page.locator("header").boundingBox();
-    const beta = page.getByRole("link", { name: "Request early beta access" });
+    const beta = page.getByRole("link", { name: "Start using Construct" });
     const betaBox = await beta.boundingBox();
 
     expect(header?.height).toBeGreaterThanOrEqual(48);
@@ -251,7 +251,7 @@ test("keeps the primary action usable in the compact mobile header", async ({
       width,
     );
     await expect(beta).toBeVisible();
-    await expect(beta.locator(".sm\\:hidden")).toHaveText("Beta access");
+    await expect(beta.locator(".sm\\:hidden")).toHaveText("Start now");
     await expect(
       page.locator("header").getByRole("link", { name: "Affiliates" }),
     ).toBeHidden();
@@ -280,7 +280,7 @@ test("keeps the mobile footer compact and aligned", async ({ page }) => {
     "center",
   );
   await expect(
-    page.getByRole("link", { name: "Request beta access" }),
+    page.getByRole("link", { name: "Get Construct product updates by email" }),
   ).toHaveCSS("width", "350px");
 });
 
@@ -491,8 +491,12 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
 });
 
 test("keeps the landing hero clear and reserves lazy media space", async ({
+  context,
   page,
 }) => {
+  await context.route("https://os.construct.computer/", (route) =>
+    route.fulfill({ body: "ok" }),
+  );
   for (const viewport of [
     { width: 320, height: 568 },
     { width: 390, height: 667 },
@@ -502,7 +506,7 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
 
     const stage = await page.locator(".hero-stage").boundingBox();
     const cta = await page
-      .getByRole("link", { name: "Enter Experience" })
+      .getByRole("link", { name: "Start Now" })
       .boundingBox();
     const scene = await page.locator(".hero-scene").boundingBox();
 
@@ -566,7 +570,7 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
     const copy = await page.locator(".hero-copy").boundingBox();
     const report = await page.locator(".hero-report").boundingBox();
     const cta = await page
-      .getByRole("link", { name: "Enter Experience" })
+      .getByRole("link", { name: "Start Now" })
       .boundingBox();
     const overlaps =
       (copy?.x ?? 0) < (report?.x ?? 0) + (report?.width ?? 0) &&
@@ -603,34 +607,14 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
     await expect(page.locator(layer)).toBeVisible();
   }
   await expect(page.locator(".hero-scene a")).toHaveCount(7);
+  // Hero art routes straight into the product now rather than opening a gate.
+  const heroPopupPromise = page.waitForEvent("popup");
   await page
-    .getByRole("link", { name: "Get beta access - research report" })
+    .getByRole("link", { name: "Try Construct - research report" })
     .click();
-  await expect(
-    page.getByRole("dialog").getByRole("heading", { name: "Get beta access" }),
-  ).toBeVisible();
-  await expect(page.locator(".beta-dialog-overlay")).toHaveCSS(
-    "animation-name",
-    "beta-overlay-in",
-  );
-  await expect(page.locator(".beta-dialog-content")).toHaveCSS(
-    "animation-name",
-    "beta-dialog-in",
-  );
-  const openingDialog = await page
-    .locator(".beta-dialog-content")
-    .boundingBox();
-  expect(
-    Math.abs(
-      (openingDialog?.x ?? 0) + (openingDialog?.width ?? 0) / 2 - 1024 / 2,
-    ),
-  ).toBeLessThan(2);
-  expect(
-    Math.abs(
-      (openingDialog?.y ?? 0) + (openingDialog?.height ?? 0) / 2 - 768 / 2,
-    ),
-  ).toBeLessThan(14);
-  await page.getByRole("button", { name: "Close dialog" }).click();
+  const heroPopup = await heroPopupPromise;
+  await expect(heroPopup).toHaveURL("https://os.construct.computer/");
+  await heroPopup.close();
   const hero = await page.locator(".hero-stage").boundingBox();
   const what = await page.locator("#what").boundingBox();
   const sectionOverlap = (hero?.y ?? 0) + (hero?.height ?? 0) - (what?.y ?? 0);
@@ -714,41 +698,47 @@ test("every landing button responds to a real click", async ({
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
-  const betaActions = [
-    "Request early beta access",
-    "Enter Experience",
-    "Get beta access - Construct AI workspace",
-    "Get beta access - research report",
-    "Get beta access - agent chat",
-    "Get beta access - workspace search",
-    "Get beta access - Researched the Topic",
-    "Get beta access - Replied to the Mails",
-    "Get beta access - Prepared the Report",
-    ...workflowDemos.map((demo) => demo.cta),
-    "Request beta access",
-  ];
-
-  for (const name of betaActions) {
-    await page.getByRole("link", { name, exact: true }).click();
-    await expect(
-      page.getByRole("dialog").getByRole("heading", {
-        name: "Get beta access",
-      }),
-      name,
-    ).toBeVisible();
-    await page.getByRole("button", { name: "Close dialog" }).click();
-  }
-
   await context.route("https://os.construct.computer/", (route) =>
     route.fulfill({ body: "ok" }),
   );
-  for (const plan of pricingPlans) {
+
+  // Checkout is live, so every warm CTA routes straight into the product. An
+  // email form in front of a buyer only costs signups.
+  const startActions = [
+    "Start using Construct",
+    "Start Now",
+    "Try Construct - Construct AI workspace",
+    "Try Construct - research report",
+    "Try Construct - agent chat",
+    "Try Construct - workspace search",
+    "Try Construct - Researched the Topic",
+    "Try Construct - Replied to the Mails",
+    "Try Construct - Prepared the Report",
+    ...workflowDemos.map((demo) => demo.cta),
+    ...pricingPlans.map((plan) => plan.cta),
+  ];
+
+  for (const name of startActions) {
     const popupPromise = page.waitForEvent("popup");
-    await page.getByRole("link", { name: plan.cta, exact: true }).click();
+    await page.getByRole("link", { name, exact: true }).click();
     const popup = await popupPromise;
-    await expect(popup).toHaveURL("https://os.construct.computer/");
+    await expect(popup, name).toHaveURL("https://os.construct.computer/");
     await popup.close();
   }
+
+  // The footer keeps the one email capture, for readers who are not ready yet.
+  await page
+    .getByRole("link", {
+      name: "Get Construct product updates by email",
+      exact: true,
+    })
+    .click();
+  await expect(
+    page.getByRole("dialog").getByRole("heading", {
+      name: "Follow what Construct ships",
+    }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Close dialog" }).click();
 
   await context.route("https://cal.com/construct/15min", (route) =>
     route.fulfill({ body: "ok" }),
@@ -884,7 +874,13 @@ test("eases the workflow into and out of its pinned position", async ({
   expect((await sticky.boundingBox())?.y).toBeCloseTo(32, 0);
 });
 
-test("opens beta access from the animated workflow CTA", async ({ page }) => {
+test("opens the product from the animated workflow CTA", async ({
+  context,
+  page,
+}) => {
+  await context.route("https://os.construct.computer/", (route) =>
+    route.fulfill({ body: "ok" }),
+  );
   for (const viewport of [
     { width: 390, height: 844 },
     { width: 1440, height: 900 },
@@ -902,15 +898,13 @@ test("opens beta access from the animated workflow CTA", async ({ page }) => {
     );
     await page.waitForTimeout(500);
 
+    const popupPromise = page.waitForEvent("popup");
     await page
       .getByRole("link", { name: workflowDemos[0]!.cta, exact: true })
       .click();
-    await expect(
-      page.getByRole("dialog").getByRole("heading", {
-        name: "Get beta access",
-      }),
-    ).toBeVisible();
-    await page.getByRole("button", { name: "Close dialog" }).click();
+    const popup = await popupPromise;
+    await expect(popup).toHaveURL("https://os.construct.computer/");
+    await popup.close();
   }
 });
 
@@ -1047,16 +1041,48 @@ test("returns a real 404 for unknown URLs", async ({ request }) => {
   expect(await response.text()).toContain("Page not found");
 });
 
-test("submits beta access through Turnstile and D1", async ({ page }) => {
+test("presents the updates dialog centered and animated", async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 768 });
   await page.goto("/");
-  await page.getByRole("link", { name: "Enter Experience" }).click();
+  await page
+    .getByRole("link", { name: "Get Construct product updates by email" })
+    .click();
+  await expect(
+    page
+      .getByRole("dialog")
+      .getByRole("heading", { name: "Follow what Construct ships" }),
+  ).toBeVisible();
+  await expect(page.locator(".beta-dialog-overlay")).toHaveCSS(
+    "animation-name",
+    "beta-overlay-in",
+  );
+  await expect(page.locator(".beta-dialog-content")).toHaveCSS(
+    "animation-name",
+    "beta-dialog-in",
+  );
+  const dialog = await page.locator(".beta-dialog-content").boundingBox();
+  expect(
+    Math.abs((dialog?.x ?? 0) + (dialog?.width ?? 0) / 2 - 1024 / 2),
+  ).toBeLessThan(2);
+  expect(
+    Math.abs((dialog?.y ?? 0) + (dialog?.height ?? 0) / 2 - 768 / 2),
+  ).toBeLessThan(14);
+});
+
+test("submits the updates opt-in through Turnstile and D1", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("link", { name: "Get Construct product updates by email" })
+    .click();
   await page.getByLabel("Email address").fill("playwright@example.com");
   await page.getByRole("button", { name: "Reddit" }).click();
   await expect(page.getByRole("button", { name: "Continue" })).toBeEnabled({
     timeout: 15_000,
   });
   await page.getByRole("button", { name: "Continue" }).click();
-  await expect(page.getByText("Beta access granted to")).toBeVisible({
+  await expect(page.getByText("You're on the list,")).toBeVisible({
     timeout: 15_000,
   });
 });

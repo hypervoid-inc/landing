@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { workflowDemos, type WorkflowDemo } from "~/content/landing";
 
-import { BetaLink } from "./beta-access";
+import { StartLink } from "./beta-access";
 import { useDesktop, usePrefersReducedMotion } from "./media";
 import {
   clamp,
@@ -218,9 +218,9 @@ function WorkflowCopy({
           pointerEvents: support > 0.85 ? "auto" : "none",
         }}
       >
-        <BetaLink source={`workflow-${demo.id}`} className={ctaClass}>
+        <StartLink source={`workflow-${demo.id}`} className={ctaClass}>
           {demo.cta}
-        </BetaLink>
+        </StartLink>
         {(desktop || viewportMode !== "short") && (
           <p
             className={
@@ -271,12 +271,12 @@ function StaticWorkflow() {
               <p className="mt-3 text-[15px] leading-[21px] text-[#627c86] lg:mt-4 lg:text-base">
                 {demo.description}
               </p>
-              <BetaLink
+              <StartLink
                 source={`workflow-${demo.id}`}
                 className="landing-cta mt-5 min-h-11 px-6 text-[17px]"
               >
                 {demo.cta}
-              </BetaLink>
+              </StartLink>
             </div>
           </article>
         ))}
