@@ -13,7 +13,8 @@
 playwright-report/
 test-results/
 
-# Throwaway generation options, and a local record of what generation cost.
-/assets/og/poster/candidates/
+# Unpromoted style plates, and a local record of what generation cost.
+# `assets/og/poster/candidates/` is deliberately NOT ignored: the alternates
+# kept there are worth having, and generating them again costs money.
 /assets/og/style/master-*.webp
 /assets/og/generation-log.jsonl
