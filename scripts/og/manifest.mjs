@@ -3,32 +3,26 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { FRAME_VERSION } from "./frame.mjs";
+import { PUBLISH_VERSION } from "./publish.mjs";
 
 /**
  * Source layout and the freshness record for `public/og/`.
  *
- *   assets/og/<file>.png       a finished 1200x630 image, published as-is
- *   assets/og/full/<name>.png  wide artwork filling the card, type set over it
+ *   assets/og/<file>.png         a finished 1200x630 card, published as-is
+ *   assets/og/poster/<name>.webp a generated 16:9 card, cropped and published
+ *   assets/og/style/master.webp  the approved card every generation matches
  *
  * Because the images are committed rather than rebuilt, something has to notice
- * when a title changes or artwork is replaced and the PNGs are not re-rendered.
- * `pnpm og` writes a signature per image; `tests/og-images.test.ts` recomputes
- * it from live route data and disk, and fails when the two disagree.
+ * when a headline changes or a card is replaced and the JPEGs are not
+ * re-rendered. `pnpm og` writes a signature per image; `tests/og-images.test.ts`
+ * recomputes it from live route data and disk, and fails when the two disagree.
  */
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
 
 export const sourceDirectory = path.join(root, "assets/og");
-export const fullDirectory = path.join(sourceDirectory, "full");
-
-/**
- * @deprecated Square tile artwork. Nothing reads this directory any more —
- * `readSources` no longer looks in it and `renderOne` no longer composites from
- * it. Kept so `--layout tile` can still write here if the layout is ever
- * revived.
- */
-export const artDirectory = path.join(sourceDirectory, "art");
+export const posterDirectory = path.join(sourceDirectory, "poster");
+export const styleDirectory = path.join(sourceDirectory, "style");
 export const outputDirectory = path.join(root, "public/og");
 export const manifestPath = path.join(sourceDirectory, "manifest.json");
 export const promptsPath = path.join(sourceDirectory, "PROMPTS.md");
@@ -64,36 +58,53 @@ function readCustom(stem) {
 }
 
 /**
- * Generated artwork is stored as WebP: at q95 it is eight times smaller than
- * the PNG the model returns, and the published JPEG comes out within 4KB of
- * identical. PNG is still read so older artwork keeps working.
+ * Generated cards are stored as WebP: at q95 it is several times smaller than
+ * the PNG the model returns, and the published JPEG comes out within a few KB
+ * of identical. PNG is still read so hand-saved cards keep working.
  */
-function readFull(name) {
-  return readFirst(fullDirectory, name, [".webp", ".png"]);
+function readPoster(name) {
+  return readFirst(posterDirectory, name, [".webp", ".png"]);
 }
 
 /**
  * The source files behind one image, in precedence order: `custom` is a
- * finished card that wins outright, `full` is wide artwork the type is set
- * over. `stem` is the published filename without its extension, which differs
- * from the route name only when MDX frontmatter names its own image.
+ * finished card that wins outright, `poster` is the generated card. `stem` is
+ * the published filename without its extension, which differs from the route
+ * name only when MDX frontmatter names its own image.
  */
 export async function readSources(name, stem = name) {
-  const [custom, full] = await Promise.all([readCustom(stem), readFull(name)]);
-  return { custom, full };
+  const [custom, poster] = await Promise.all([
+    readCustom(stem),
+    readPoster(name),
+  ]);
+  return { custom, poster };
 }
 
-/** Every input that can change an output image, collapsed to one hash. */
-export function signature({ title, kind, stem, custom, full, photo }) {
+/**
+ * Every input that can change an output image, collapsed to one hash.
+ *
+ * The route title is deliberately absent: the card carries the hand-broken
+ * `headline` from `app/content/og-poster.ts`, not the page title, so editing an
+ * SEO string is not a reason to re-render. Editing the headline or the badge
+ * is, because the card is then making a promise it no longer keeps.
+ */
+export function signature({
+  stem,
+  eyebrow,
+  headline,
+  fullFrame = false,
+  custom,
+  poster,
+}) {
   return digest(
     JSON.stringify({
-      title,
-      kind,
       stem,
-      frame: FRAME_VERSION,
+      eyebrow,
+      headline,
+      fullFrame,
+      publish: PUBLISH_VERSION,
       custom: custom && digest(custom),
-      full: full && digest(full),
-      photo: photo && digest(photo),
+      poster: poster && digest(poster),
     }),
   );
 }

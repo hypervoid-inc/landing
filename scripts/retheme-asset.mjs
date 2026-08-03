@@ -5,7 +5,7 @@ import sharp from "sharp";
 
 import { generateImage } from "./og/gemini.mjs";
 import { defaultModel, formatTokens, formatUsd } from "./og/pricing.mjs";
-import { referenceImages } from "./og/prompt.mjs";
+import { referenceImages } from "./og/brand-references.mjs";
 
 /**
  * Recolours an existing landing asset into the brand palette, in place.
@@ -37,17 +37,27 @@ const model = process.env.GEMINI_IMAGE_MODEL ?? defaultModel;
  * the asset stays a drop-in replacement whatever the model returns.
  */
 const ASPECT_RATIOS = {
-  "1:1": 1, "4:5": 0.8, "5:4": 1.25, "3:4": 0.75, "4:3": 4 / 3,
-  "2:3": 2 / 3, "3:2": 1.5, "9:16": 0.5625, "16:9": 16 / 9, "21:9": 21 / 9,
+  "1:1": 1,
+  "4:5": 0.8,
+  "5:4": 1.25,
+  "3:4": 0.75,
+  "4:3": 4 / 3,
+  "2:3": 2 / 3,
+  "3:2": 1.5,
+  "9:16": 0.5625,
+  "16:9": 16 / 9,
+  "21:9": 21 / 9,
 };
 
 function nearestAspect(width, height) {
   const target = width / height;
-  return Object.entries(ASPECT_RATIOS).reduce((best, [name, value]) =>
-    Math.abs(value - target) < Math.abs(ASPECT_RATIOS[best] - target)
-      ? name
-      : best,
-  "1:1");
+  return Object.entries(ASPECT_RATIOS).reduce(
+    (best, [name, value]) =>
+      Math.abs(value - target) < Math.abs(ASPECT_RATIOS[best] - target)
+        ? name
+        : best,
+    "1:1",
+  );
 }
 
 const instruction = `Recolour the attached image into the Construct Computer palette. This is a retheme, not a new illustration.
@@ -77,9 +87,7 @@ placeholder bars used in the references.`;
 const args = process.argv.slice(2);
 const source = args[0];
 if (!source || source.startsWith("--")) {
-  throw new Error(
-    "Usage: pnpm retheme <file> [--out <file>] [--dry-run]",
-  );
+  throw new Error("Usage: pnpm retheme <file> [--out <file>] [--dry-run]");
 }
 const outIndex = args.indexOf("--out");
 const destination = outIndex === -1 ? source : args[outIndex + 1];

@@ -1,4 +1,4 @@
-# OG images and blog thumbnails
+# Social cards and blog thumbnails
 
 One image per canonical route serves three jobs at once: the `og:image` and
 `twitter:image` social card, and the thumbnail on the blog index. They are
@@ -7,65 +7,70 @@ published to `public/og/` at 1200×630 and are committed to the repo.
 Route names come from `ogName()` in `app/lib/route-manifest.ts`
 (`/blog/ai-employee` → `blog-ai-employee`).
 
-## How an image is put together
+## The direction
 
-Generated artwork fills the whole card, and the type is drawn over it:
+Every card is a cover from a technology magazine that never existed: one real
+object and the Construct mascot, photographed together in a blacked-out blue
+studio, with the type set over the frame.
 
 ```
-┌──────────────────────────────────────┐
-│ ConstructComputer ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ │
-│                   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ │
-│ [ GUIDE ]         ▓▓▓  artwork  ▓▓▓▓ │ ← assets/og/full/<name>.png
-│ AI Agent Memory   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ │   (16:9, wordless)
-│ You Can Control   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ │
-│ ● construct.computer ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ │
-└──────────────────────────────────────┘
-  ↑ vector text over a scrim, drawn by scripts/og/frame.mjs
+┌──────────────────────────────────────────────┐
+│ C O N S T R U C T          [ AI EMPLOYEE ]   │  ← silver wordmark, hairline badge
+│                                              │
+│                    (mascot, hero, lit)       │
+│                        ▓▓▓▓▓                 │  ← one real object, 1995-2005
+│  A PERSISTENT           ▓▓▓▓▓                │
+│  WORK OS FOR AN                              │  ← white condensed caps
+│  AI EMPLOYEE            construct.computer   │
+└──────────────────────────────────────────────┘
 ```
 
-The split is the point. Image models render type inconsistently, so they never
-render any: the wordmark, eyebrow, title, and domain are drawn as real text in
-`scripts/og/frame.mjs` and are pixel-identical across the set. The prompt asks
-the model to keep the left 45% of the frame empty, and a white scrim guarantees
-legibility when it does not.
+The whole card, type included, comes out of the model in one pass. There is no
+compositing step and no vector overlay.
 
-Routes with no artwork yet fall back to a branded plate with the Construct mark
-— a finished-looking placeholder rather than a missing asset.
+**The failure mode this set exists to avoid** is the default one: a swarm of
+glowing translucent UI panels and dashed orbit rings on a cyan gradient. That
+is what an image model reaches for unprompted, and what every AI company
+already looks like. `scripts/og/poster.mjs` forbids it by name, and scenes in
+`app/content/og-poster.ts` are written as real objects specifically so the
+model never has to invent something abstract.
 
-### The retired tile layout
+## What holds 34 cards together
 
-Artwork used to be square and sit in a tile on the right of an otherwise white
-card. Side by side, it lost: at the size these images are actually seen, a small
-tile in a field of white does not read. Full-bleed replaced it everywhere.
+Three things, in order of how much they actually do:
 
-The code was unwired rather than deleted. `renderFrame` still composites a tile
-and still draws the placeholder, `--layout tile` still generates square art into
-`assets/og/art/`, and `ogTiled` in `app/content/og-art.ts` still exists. What is
-gone is the wiring: `readSources` no longer looks in `assets/og/art/`, so a tile
-sitting there is inert. Reviving the layout means restoring that branch in
-`renderOne` and populating `ogTiled` — not rebuilding the renderer.
+1. **`assets/og/style/master.webp`** — one approved card, attached first on
+   every request as the layout and typography to copy. This does more than
+   everything else combined. Prose describes a look; an approved card _is_ the
+   look.
+2. **The contract in `scripts/og/poster.mjs`**, sent byte-identical every time.
+3. **The route's entry in `app/content/og-poster.ts`** — the only part that
+   changes between cards.
+
+Regenerating the plate re-bases the whole set, which is why it takes its own
+command rather than falling out of a normal run.
 
 ## Source layout
 
 ```
 assets/og/
-  <file>.png        a finished 1200×630 image, published verbatim
-  full/<name>.png   wide artwork filling the card, type set over a scrim
-  art/<name>.png    retired square artwork — inert, nothing reads it
-  PROMPTS.md        generated; the paste-ready prompts
-  manifest.json     generated; the freshness record
+  <file>.png             a finished 1200x630 card, published verbatim
+  poster/<name>.webp     the generated card, cropped and published
+  poster/candidates/     options from `--candidates`, awaiting a pick
+  style/master.webp      the approved card every generation copies
+  PROMPTS.md             generated; the paste-ready prompts
+  manifest.json          generated; the freshness record
 ```
 
 `pnpm og` resolves each route in this order:
 
-1. **`assets/og/<file>`** — a finished image, copied straight to `public/og/`.
-   The homepage works this way: `assets/og/home.png` is laid out by hand and
-   carries its own type.
-2. **`assets/og/full/<name>.png`** — 16:9 artwork cover-cropped to fill the
-   card, with the wordmark, eyebrow, title, and domain drawn over it.
-3. None — the branded placeholder plate.
+1. **`assets/og/<file>`** — a finished image, cropped and re-encoded. This is
+   the escape hatch for a card laid out by hand.
+2. **`assets/og/poster/<name>.webp`** — the generated card.
+3. None — reported, and nothing is written. There is no placeholder plate: a
+   fallback that looks finished is how a route quietly stays unillustrated.
 
-## Generating artwork with Gemini
+## Generating
 
 Put a key in `.env` (gitignored):
 
@@ -76,71 +81,97 @@ GEMINI_API_KEY="..."
 Then:
 
 ```
-pnpm og:generate --dry-run          what it would generate, and the rough spend
-pnpm og:generate                    fill in everything missing
-pnpm og:generate --only <name>      just one
-pnpm og:generate --force <name>     replace art that already exists
-pnpm og:generate --candidates 3     three options per route, to choose between
-pnpm og:pick <name> 2               promote candidate 2 to the real file
-pnpm og:generate --layout full --only <name>   a full-bleed variant to compare
-pnpm og                             composite the new artwork into public/og/
+pnpm og:master home --candidates 3   the style plate, first and once
+pnpm og:generate --dry-run           what it would generate, and the rough spend
+pnpm og:generate                     fill in everything missing
+pnpm og:generate --only <name>       just one
+pnpm og:generate --force <name>      replace a card that already exists
+pnpm og:generate --candidates 3      three options per route, to choose between
+pnpm og:pick <name> 2                promote candidate 2 to the real file
+pnpm og                              crop and publish into public/og/
 ```
 
-### Comparing a tile against a full-bleed card
+`pnpm og:generate` refuses to run without a style plate, because a run without
+one succeeds and quietly produces 34 unrelated images.
 
-`--layout <tile|full>` generates a variant for a route whatever its configured
-layout is. Because `assets/og/full/` outranks `assets/og/art/` when
-compositing, the next `pnpm og` switches the route over:
+### Choosing a style plate
+
+`pnpm og:master <name> --candidates 3` writes `assets/og/style/master-1.webp`
+and friends, generated from the written contract alone — these are the only
+calls in the set with no plate to copy. Look at all three at published size,
+then:
 
 ```
-pnpm og:generate --layout full --only blog-ai-employee
-pnpm og                                    # now full-bleed
-rm assets/og/full/blog-ai-employee.png
-pnpm og                                    # back to the tile
+cp assets/og/style/master-2.webp assets/og/style/master.webp
 ```
 
-Both source files can coexist; whichever exists in `full/` wins. Once you have
-decided, record it in `ogTiled` rather than leaving it implied by which files
-happen to be on disk — the skip logic reads the configured layout, so a route
-listed as tiled will never have full-bleed art generated for it again.
+Judge them on the things the rest of the set will inherit: is the headline
+entirely clear of the objects, is the wordmark bright enough to read at
+thumbnail size, is the mascot four-lobed rather than an egg. Everything after
+copies whatever lands here, mistakes included.
 
-**Nothing is ever regenerated.** A route is skipped when it already has _any_
-source — a finished card, full-bleed art, or a tile — so a good image stays
-good and a rerun after a crash costs nothing for what already landed. `--force`
-is the only way past that, and it takes one name at a time on purpose.
+**Nothing is ever regenerated.** A route is skipped when it already has a
+source, so a good card stays good and a rerun after a crash costs nothing for
+what already landed. `--force` is the only way past that, and it takes one name
+at a time on purpose.
 
-Generation only ever writes into `assets/og/`. Compositing stays in `pnpm og`,
-so a bad generation can be deleted and retried without `public/og/` ever having
-held it.
+Generation only ever writes into `assets/og/`. Cropping and publishing stay in
+`pnpm og`, so a bad generation can be deleted and retried without `public/og/`
+ever having held it.
 
 ### Cost
 
 Every call is priced from the `usageMetadata` the API returns, not estimated:
 
 ```
-[4/28] blog-ai-agent-memory … $0.1381  (5,102 in / 1,680 out, 8.3s)
-        running total $0.5347
+[4/33] blog-ai-agent-memory … $0.1774  (3,710 in / 1,412 out, 41.2s)
+        running total $0.7213
 ```
 
 and at the end, the run total plus lifetime spend across all runs, tracked in
 `assets/og/generation-log.jsonl` (gitignored). Rates live in
-`scripts/og/pricing.mjs` and were verified against Google's pricing page on
-2026-07-29 — if a total looks wrong, check there first.
+`scripts/og/pricing.mjs`. A full 34-card set is about $6.
 
-Defaults to `gemini-3-pro-image` at 2K, about $0.134 an image. Override with
-`GEMINI_IMAGE_MODEL` and `GEMINI_IMAGE_SIZE`; anything you point it at needs an
-entry in `pricing.mjs` or it refuses to run rather than generate uncosted.
+Defaults to `gemini-3-pro-image` (Nano Banana Pro) at 2K, about $0.18 a card.
+Override with `GEMINI_IMAGE_MODEL` and `GEMINI_IMAGE_SIZE`; anything you point
+it at needs an entry in `pricing.mjs` or it refuses to run rather than generate
+uncosted.
 
 ### Generating by hand instead
 
 `pnpm og:prompts` writes `assets/og/PROMPTS.md` — the same prompts, paste-ready
 for a chat UI. `pnpm og --print <name>` prints one to stdout. **Attach the
-reference images listed at the top of that file**; they pin the mascot's
-geometry and the glass material far more reliably than prose, and a run without
-them will drift. Save the result to `assets/og/full/<name>.png` (16:9, ≥1024
-wide), then run `pnpm og`.
+reference images listed at the top of that file**, style plate first. Save the
+result to `assets/og/poster/<name>.webp` (16:9, ≥1600 wide), then run `pnpm og`.
 
-Commit both the source art and the published PNG.
+Commit both the source card and the published JPEG.
+
+## Writing a card
+
+```ts
+"blog-ai-agent-memory": {
+  headline: ["AI AGENT MEMORY", "YOU CAN CONTROL"],
+  scene:
+    "The mascot on top of a wooden card index drawer pulled fully open, ...",
+},
+```
+
+**`headline`** is hand-broken, because poster type always is. At most three
+lines of about sixteen characters — beyond that the model has to choose between
+shrinking the headline and running it into the object, and it usually chooses
+wrong. The badge above it comes from the route kind, not from here.
+
+**`scene`** names real objects, from roughly 1995 to 2005. A camera can
+photograph "an index card drawer pulled open"; it cannot photograph "memory you
+can control". Scenes carry no colour, lighting, material, or camera notes,
+because those would start disagreeing with the contract and the model would
+split the difference. The moment a scene asks for something abstract, the model
+falls back on floating glass panels and the card stops being a photograph.
+
+Writing **on** the objects is allowed and wanted — a product name silkscreened
+on a box, a label on a file tab. It is what makes a card read as an artifact
+rather than a render. The contract fences it: short, plainly spelled, never
+competing with the headline, and blank rather than garbled.
 
 ## Giving one post its own image
 
@@ -158,38 +189,32 @@ image: "ai-employee-hero.png"
 
 `assets/og/ai-employee-hero.png` is then published to
 `public/og/ai-employee-hero.png` and used as that post's `og:image`, thumbnail,
-and `twitter:image`. The frame, the art tile, and the prompt are all skipped.
+and `twitter:image`. The generated card is skipped.
 
 The value is a bare filename, not a path — the file always lives in
 `assets/og/`. If it is missing, `pnpm og` fails loudly rather than writing an
 image to the wrong name and leaving the route pointing at a 404.
 
-## Where each piece of the prompt lives
+## Where each piece lives
 
-| Concern                                      | File                    | Changing it affects |
-| -------------------------------------------- | ----------------------- | ------------------- |
-| Palette, lighting, mascot, forbidden content | `scripts/og/prompt.mjs` | every image         |
-| What a given image depicts                   | `app/content/og-art.ts` | one image           |
-| Frame layout, type, tile geometry            | `scripts/og/frame.mjs`  | every image         |
+| Concern                                        | File                       | Changing it affects     |
+| ---------------------------------------------- | -------------------------- | ----------------------- |
+| Studio, palette, mascot, typography, forbidden | `scripts/og/poster.mjs`    | every card              |
+| What one card says and photographs             | `app/content/og-poster.ts` | one card                |
+| The badge for a route kind                     | `app/content/og-poster.ts` | every card of that kind |
+| Crop and encode                                | `scripts/og/publish.mjs`   | every card              |
 
-If one image comes out wrong, fix its **subject**. Only re-base the **style
-contract** when the whole set should change — and re-generate everything after,
-or the set stops matching itself.
-
-Subjects are staged scenes, not concepts: a model can draw "two glass panels
-balanced on a beam of light" and cannot draw "cost efficiency". They also carry
-no palette or medium notes, because those would start disagreeing with the style
-contract and the model would split the difference.
+If one card comes out wrong, fix its **scene**. Only re-base the **contract**
+when the whole set should change — and regenerate everything after, or the set
+stops matching itself.
 
 ## Why this is not part of `pnpm build`
 
-The frame renders text with Georgia, and OG images used to be regenerated on
-every build — including on CI, where that font is absent and the output
-silently differed from what was reviewed locally. They are now committed
-artifacts, rendered once on a machine that has the font.
+The cards cost money and take about forty seconds each, and they are reviewed
+by eye before they ship. They are committed artifacts, generated once.
 
-That trades one failure mode for another: an edited title with a stale image.
+That trades one failure mode for another: an edited headline with a stale card.
 `tests/og-images.test.ts` closes it by recomputing each image's signature from
 live route data plus the source files on disk and comparing it to
-`assets/og/manifest.json`. Change a title, replace artwork, or bump
-`FRAME_VERSION`, and the suite fails with "run `pnpm og`".
+`assets/og/manifest.json`. Change a headline, replace a card, or bump
+`PUBLISH_VERSION`, and the suite fails with "run `pnpm og`".

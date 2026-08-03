@@ -20,26 +20,25 @@ import { authorSameAs, authors, listedAuthors } from "../app/content/authors";
 
 describe("generated discovery content", () => {
   /**
-   * The homepage card is laid out by hand and carries its own type, so nothing
-   * may replace it with a generated frame. It is re-encoded rather than copied,
-   * so the published bytes are the source put through the same encoder every
-   * other card goes through — not the source verbatim.
+   * Published cards are the source put through the encoder every other card
+   * goes through, never the source verbatim. Sources are 16:9 WebP and the
+   * published slot is a 1200x630 JPEG, so a copy that skipped the crop would
+   * ship the wrong aspect ratio to every social crawler.
    *
    * This checks structure rather than exact bytes because mozjpeg output varies
    * across platforms: the committed file is generated on macOS while CI runs on
    * Linux. The OG-image manifest test (og-images.test.ts) catches staleness
-   * from source changes; this just guards against a verbatim PNG copy slipping
-   * into the published JPEG slot.
+   * from source changes; this just guards against a source slipping unconverted
+   * into the published slot.
    */
-  it("preserves the custom homepage OG image", () => {
-    const png = readFileSync(new URL("../assets/og/home.png", import.meta.url));
+  it("re-encodes the homepage card rather than copying its source", () => {
+    const source = readFileSync(
+      new URL("../assets/og/poster/home.webp", import.meta.url),
+    );
     const jpg = readFileSync(new URL("../public/og/home.jpg", import.meta.url));
 
-    // Must be JPEG, not a verbatim copy of the PNG source.
     expect(jpg.readUInt16BE(0)).toBe(0xffd8);
-    expect(jpg.equals(png)).toBe(false);
-    // Re-encoding compresses photographic content smaller than PNG.
-    expect(jpg.length).toBeLessThan(png.length);
+    expect(jpg.equals(source)).toBe(false);
   });
 
   it("includes only canonical 200 routes in the sitemap", () => {
