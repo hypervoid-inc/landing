@@ -36,6 +36,28 @@
   box-shadow:
     inset 0 -5px 14px rgb(255 255 255 / 92%),
     inset 0 4px 14px rgb(255 255 255 / 91%);
+  transition:
+    transform var(--dur-press) var(--ease-snap),
+    box-shadow var(--dur-hover) var(--ease-snap);
+}
+
+.landing-cta:active {
+  transform: scale(0.97);
+  transition-duration: var(--dur-press);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .landing-cta:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 -5px 14px rgb(255 255 255 / 92%),
+      inset 0 4px 14px rgb(255 255 255 / 91%),
+      0 10px 24px rgb(1 180 200 / 28%);
+  }
+
+  .landing-cta:hover:active {
+    transform: scale(0.97);
+  }
 }
 
 .hero-stage {
@@ -83,23 +105,29 @@
   cursor: pointer;
   transform-origin: center;
   transition:
-    transform 220ms ease,
-    filter 220ms ease;
+    transform var(--dur-enter) var(--ease-snap),
+    filter var(--dur-enter) var(--ease-snap);
 }
 
-.hero-link:hover > .hero-interactive,
 .hero-link:focus-visible > .hero-interactive,
-.hero-interactive:hover,
 .hero-interactive:focus-visible {
   transform: scale(1.04);
   filter: brightness(1.04);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-link:hover > .hero-interactive,
+  .hero-interactive:hover {
+    transform: scale(1.04);
+    filter: brightness(1.04);
+  }
 }
 
 .hero-link:focus-visible,
 .hero-interactive:focus-visible {
   border-radius: 10px;
   outline: 2px solid #01b4c8;
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
 .hero-report {
@@ -258,29 +286,36 @@
   }
 }
 
-@keyframes landing-accordion-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--radix-accordion-content-height);
-  }
-}
-
-@keyframes landing-accordion-up {
-  from {
-    height: var(--radix-accordion-content-height);
-  }
-  to {
-    height: 0;
-  }
+.faq-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition:
+    grid-template-rows 200ms var(--ease-snap),
+    visibility 0s linear 200ms;
+  visibility: hidden;
 }
 
 .faq-content[data-state="open"] {
-  animation: landing-accordion-down 200ms ease-out;
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows 200ms var(--ease-snap),
+    visibility 0s;
 }
-.faq-content[data-state="closed"] {
-  animation: landing-accordion-up 200ms ease-out;
+
+.faq-content-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.faq-content-inner > * {
+  opacity: 0;
+  transition: opacity 120ms var(--ease-snap);
+}
+
+.faq-content[data-state="open"] .faq-content-inner > * {
+  opacity: 1;
 }
 
 .feature-grid > :nth-child(2) {
@@ -422,7 +457,6 @@
 }
 
 .pricing-price {
-  --pricing-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   /* Reserve annual three-line stack so monthly↔annual never animates height. */
   min-height: 88px;
 }
@@ -458,7 +492,7 @@
 
 .pricing-price-period {
   display: inline-block;
-  transition: transform 200ms var(--pricing-ease-out);
+  transition: transform 200ms var(--ease-snap);
 }
 
 .pricing-price-was {
@@ -478,8 +512,8 @@
   visibility: visible;
   transform: translateY(0);
   transition:
-    opacity 200ms var(--pricing-ease-out) 40ms,
-    transform 200ms var(--pricing-ease-out) 40ms,
+    opacity 200ms var(--ease-snap) 40ms,
+    transform 200ms var(--ease-snap) 40ms,
     visibility 0s;
 }
 
@@ -489,8 +523,8 @@
   pointer-events: none;
   transform: translateY(-4px);
   transition:
-    opacity 160ms var(--pricing-ease-out),
-    transform 160ms var(--pricing-ease-out),
+    opacity 160ms var(--ease-snap),
+    transform 160ms var(--ease-snap),
     visibility 0s linear 160ms;
 }
 
@@ -508,8 +542,8 @@
   visibility: visible;
   transform: translateY(0);
   transition:
-    opacity 200ms var(--pricing-ease-out) 80ms,
-    transform 200ms var(--pricing-ease-out) 80ms,
+    opacity 200ms var(--ease-snap) 80ms,
+    transform 200ms var(--ease-snap) 80ms,
     visibility 0s;
 }
 
@@ -519,8 +553,8 @@
   pointer-events: none;
   transform: translateY(4px);
   transition:
-    opacity 160ms var(--pricing-ease-out),
-    transform 160ms var(--pricing-ease-out),
+    opacity 160ms var(--ease-snap),
+    transform 160ms var(--ease-snap),
     visibility 0s linear 160ms;
 }
 
@@ -548,8 +582,9 @@
   height: calc(100% - 6px);
   border-radius: 999px;
   background: #01b4c8;
-  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
-  will-change: transform;
+  transition:
+    transform 220ms var(--ease-snap),
+    width 220ms var(--ease-snap);
 }
 
 .billing-toggle-option {
@@ -568,8 +603,8 @@
   font-weight: 600;
   line-height: 1;
   transition:
-    color 160ms ease,
-    transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+    color var(--dur-hover) ease,
+    transform var(--dur-hover) var(--ease-snap);
 }
 
 .billing-toggle-option[data-active] {
@@ -578,6 +613,7 @@
 
 .billing-toggle-option:active {
   transform: scale(0.98);
+  transition-duration: var(--dur-press);
 }
 
 .billing-toggle-savings {
@@ -623,6 +659,28 @@
     inset 0 -5px 14px rgb(255 255 255 / 92%),
     inset 0 4px 14px rgb(255 255 255 / 91%),
     0 12px 26px rgb(1 180 200 / 22%);
+  transition:
+    transform var(--dur-press) var(--ease-snap),
+    box-shadow var(--dur-hover) var(--ease-snap);
+}
+
+.pricing-button:active {
+  transform: scale(0.97);
+  transition-duration: var(--dur-press);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pricing-button:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 -5px 14px rgb(255 255 255 / 92%),
+      inset 0 4px 14px rgb(255 255 255 / 91%),
+      0 16px 32px rgb(1 180 200 / 30%);
+  }
+
+  .pricing-button:hover:active {
+    transform: scale(0.97);
+  }
 }
 
 .enterprise-rings {
@@ -906,13 +964,76 @@
   }
 }
 
+/* Restrained entrances — soft rise, long settle.
+ * Once JS opts in (data-reveal-enabled), items stay at opacity 0 until the
+ * animation owns them. `both` applies the from-keyframe during the delay so
+ * adding data-reveal-visible never flashes the final state first. */
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-page[data-reveal-enabled] .reveal-item {
+  opacity: 0;
+}
+
+.landing-page[data-reveal-enabled] .reveal-item[data-reveal-visible] {
+  animation: reveal-in 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal-item[data-reveal-delay="1"][data-reveal-visible] {
+  animation-delay: 140ms;
+}
+.reveal-item[data-reveal-delay="2"][data-reveal-visible] {
+  animation-delay: 280ms;
+}
+.reveal-item[data-reveal-delay="3"][data-reveal-visible] {
+  animation-delay: 420ms;
+}
+.reveal-item[data-reveal-delay="4"][data-reveal-visible] {
+  animation-delay: 560ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .landing-page *,
-  .landing-page ::before,
-  .landing-page ::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .landing-page {
+    scroll-behavior: auto;
+  }
+
+  .landing-page .reveal-item {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .landing-page .hero-interactive,
+  .landing-page .landing-cta,
+  .landing-page .pricing-button,
+  .landing-page .billing-toggle-thumb,
+  .landing-page .billing-toggle-option,
+  .landing-page .faq-content,
+  .landing-page .faq-content-inner > *,
+  .landing-page .pricing-price-period,
+  .landing-page .pricing-price-was,
+  .landing-page .pricing-price-savings {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .landing-page .faq-content {
+    display: block;
+  }
+
+  .landing-page .faq-content[data-state="closed"] {
+    display: none;
+  }
+
+  .landing-page .faq-content-inner > * {
+    opacity: 1;
   }
 }

@@ -109,7 +109,7 @@ function ResourceCard({ entry }: { entry: ResourceEntry }) {
         />
       )}
       <div className="pointer-events-none relative z-0 p-6">
-        <h3 className="font-geist text-[24px] italic leading-tight text-[#4e4646] group-hover:text-[#01b4c8]">
+        <h3 className="font-geist text-[24px] italic leading-tight tracking-[-0.015em] text-[#4e4646] transition-colors group-hover:text-[#01b4c8]">
           {entry.title}
         </h3>
         <p className="resource-card-meta mt-2 overflow-hidden text-ellipsis whitespace-nowrap text-[12px] capitalize text-[#526b75]">
@@ -119,7 +119,10 @@ function ResourceCard({ entry }: { entry: ResourceEntry }) {
         <p className="mt-3 line-clamp-3 text-[15px] leading-6">
           {entry.description}
         </p>
-        <TagList tags={entry.tags} className="pointer-events-auto relative z-[2] mt-4" />
+        <TagList
+          tags={entry.tags}
+          className="pointer-events-auto relative z-[2] mt-4"
+        />
       </div>
     </article>
   );
@@ -354,7 +357,7 @@ export function TagPage({ tag }: { tag: string }) {
               <Link
                 to={`/blog/tag/${item}/`}
                 aria-current={item === tag ? "page" : undefined}
-                className={`inline-block rounded-full px-3 py-1 text-[13px] ${item === tag ? "bg-[#01b4c8] text-white" : "bg-[#effbfc] text-[#016d79] hover:bg-[#d9f6f5]"}`}
+                className={`inline-block rounded-full px-3 py-1 text-[13px] transition-colors ${item === tag ? "bg-[#01b4c8] text-white" : "bg-[#effbfc] text-[#016d79] hover:bg-[#d9f6f5]"}`}
               >
                 {tagLabel(item)}
               </Link>
@@ -384,7 +387,7 @@ function TagList({
           {hubTags.includes(tag) ? (
             <Link
               to={`/blog/tag/${tag}/`}
-              className="inline-block rounded-full bg-[#effbfc] px-2.5 py-1 text-[11px] leading-4 text-[#016d79] hover:bg-[#d9f6f5]"
+              className="inline-block rounded-full bg-[#effbfc] px-2.5 py-1 text-[11px] leading-4 text-[#016d79] transition-colors hover:bg-[#d9f6f5]"
             >
               {tag}
             </Link>

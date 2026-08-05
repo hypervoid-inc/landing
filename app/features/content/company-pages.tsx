@@ -17,10 +17,10 @@ export function AboutPage() {
         <p>
           Construct Computer gives solo founders and small teams an AI employee
           with its own cloud computer. Persistent files, memory, schedules,
-          workflows, email, and connected apps sit beside live browser runs and a
-          sandbox terminal, so work can finish while you do something else. Files
-          saved in the workspace remain available after one conversation ends;
-          live browser runs and shell state do not.
+          workflows, email, and connected apps sit beside live browser runs and
+          a sandbox terminal, so work can finish while you do something else.
+          Files saved in the workspace remain available after one conversation
+          ends; live browser runs and shell state do not.
         </p>
         <p>
           You assign an outcome and Construct decides which available tools are
@@ -146,10 +146,10 @@ export function AffiliatesPage() {
 
       <Section title="What Construct is">
         <p>
-          Construct Computer is an AI employee for solo founders, early startups,
-          and small teams. It is not another chat window. Every agent gets a real
-          cloud computer: files, memory, a browser, a terminal, email, a calendar,
-          and the apps those teams already run day to day.
+          Construct Computer is an AI employee for solo founders, early
+          startups, and small teams. It is not another chat window. Every agent
+          gets a real cloud computer: files, memory, a browser, a terminal,
+          email, a calendar, and the apps those teams already run day to day.
         </p>
         <p>
           People use it when hours are the constraint. They assign an outcome,
@@ -161,17 +161,18 @@ export function AffiliatesPage() {
 
       <Section title="Who converts">
         <p>
-          The buyers who stick are operators, not tire-kickers: founders juggling
-          CRM and inbox work themselves, lean teams that cannot hire yet, and
-          small businesses that want ops leverage without a full automation
-          stack. If your audience already cares about AI agents, indie hacking,
-          no-code ops, or shipping with a tiny team, Construct is a natural fit.
+          The buyers who stick are operators, not tire-kickers: founders
+          juggling CRM and inbox work themselves, lean teams that cannot hire
+          yet, and small businesses that want ops leverage without a full
+          automation stack. If your audience already cares about AI agents,
+          indie hacking, no-code ops, or shipping with a tiny team, Construct is
+          a natural fit.
         </p>
         <p>
           The content that works is concrete: a screen recording of one job from
-          ask to finished artifact, a workflow teardown, a weekly ops demo, or an
-          honest review of what it can and cannot do. Feature lists do less than
-          finished work on camera.
+          ask to finished artifact, a workflow teardown, a weekly ops demo, or
+          an honest review of what it can and cannot do. Feature lists do less
+          than finished work on camera.
         </p>
       </Section>
 
@@ -234,8 +235,8 @@ function AffiliateRateOffer() {
         </span>
       </div>
       <p className="mt-3 text-[15px] leading-6 text-[#4e4646]">
-        Revenue share for the <Emph>first 25 partners</Emph>, for up to 12 months
-        per customer. After that, new partners join at 20%.
+        Revenue share for the <Emph>first 25 partners</Emph>, for up to 12
+        months per customer. After that, new partners join at 20%.
       </p>
       <p className="mt-2 text-[13px] leading-5 text-[#8a9aa2]">
         Pro at 50%: $150/month · at 20%: $60/month
@@ -270,7 +271,7 @@ function AffiliateApplyPanel({
           <AffiliateLink
             placement={placement}
             label="Apply on PartnerStack"
-            className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-[#d9f8ff] bg-[#4cd8ff] px-6 text-[15px] font-black text-white shadow-[inset_0_-4px_12px_rgb(255_255_255_/_90%),inset_0_3px_12px_rgb(255_255_255_/_88%),0_8px_20px_rgba(1,180,200,.18)] transition-[transform,box-shadow] hover:-translate-y-px focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] sm:w-auto sm:min-w-[220px] sm:text-[16px]"
+            className="landing-cta inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-[#d9f8ff] bg-[#4cd8ff] px-6 text-[15px] font-black text-white shadow-[inset_0_-4px_12px_rgb(255_255_255_/_90%),inset_0_3px_12px_rgb(255_255_255_/_88%),0_8px_20px_rgba(1,180,200,.18)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:w-auto sm:min-w-[220px] sm:text-[16px]"
           >
             Apply on PartnerStack
             <span aria-hidden>↗</span>
