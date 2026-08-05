@@ -396,10 +396,10 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     ).toHaveText("$9", { timeout: 1000 });
     await page.locator("#pricing").scrollIntoViewIfNeeded();
 
-    for (const cta of ["Start with Lite", "Put Starter to work", "Go Pro"]) {
-      await expect(page.getByRole("link", { name: cta })).toHaveAttribute(
+    for (const plan of pricingPlans) {
+      await expect(page.getByRole("link", { name: plan.cta })).toHaveAttribute(
         "href",
-        "https://os.construct.computer",
+        `/login?plan=${plan.name.toLowerCase()}`,
       );
     }
 
@@ -779,8 +779,8 @@ test("every landing button responds to a real click", async ({
     route.fulfill({ body: "ok" }),
   );
 
-  // Checkout is live, so every warm CTA routes straight into the product. An
-  // email form in front of a buyer only costs signups.
+  // Checkout is live, so warm CTAs open the product. Pricing routes anonymous
+  // buyers through /login first so plan intent survives signup.
   const startActions = [
     "Start using Construct",
     "Start Now",
@@ -792,7 +792,6 @@ test("every landing button responds to a real click", async ({
     "Try Construct - Replied to the Mails",
     "Try Construct - Prepared the Report",
     ...workflowDemos.map((demo) => demo.cta),
-    ...pricingPlans.map((plan) => plan.cta),
   ];
 
   for (const name of startActions) {
@@ -808,6 +807,19 @@ test("every landing button responds to a real click", async ({
       );
       await popup.close();
     }
+  }
+
+  for (const plan of pricingPlans) {
+    const link = page.getByRole("link", { name: plan.cta, exact: true });
+    await expect(link).toHaveAttribute(
+      "href",
+      `/login?plan=${plan.name.toLowerCase()}`,
+    );
+    await link.click();
+    await expect(page).toHaveURL(
+      new RegExp(`/login\\?plan=${plan.name.toLowerCase()}`),
+    );
+    await page.goto("/");
   }
 
   // The footer keeps the one email capture, for readers who are not ready yet.
