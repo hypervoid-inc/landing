@@ -9,6 +9,10 @@ import {
 } from "react";
 import * as authApi from "../../platform/api/auth";
 import type { AuthUser } from "../../platform/api/auth";
+import {
+  identifyAnalyticsUser,
+  resetAnalyticsUser,
+} from "../analytics/analytics.client";
 
 type AuthStatus = "loading" | "authenticated" | "anonymous";
 
@@ -24,6 +28,11 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+function applyIdentity(user: AuthUser | null) {
+  if (user) identifyAnalyticsUser(user);
+  else resetAnalyticsUser();
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>("loading");
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -35,10 +44,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(me.user);
       setStatus("authenticated");
       setError(null);
+      applyIdentity(me.user);
       return;
     }
     setUser(null);
     setStatus("anonymous");
+    applyIdentity(null);
   }, []);
 
   useEffect(() => {
@@ -58,6 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await authApi.logout();
     setUser(null);
     setStatus("anonymous");
+    applyIdentity(null);
   }, []);
 
   const value = useMemo(
@@ -70,6 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser: (next: AuthUser | null) => {
         setUser(next);
         setStatus(next ? "authenticated" : "anonymous");
+        applyIdentity(next);
       },
       clearError: () => setError(null),
     }),

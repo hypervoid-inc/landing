@@ -79,6 +79,27 @@ export function initializeAnalytics() {
   return postHogPromise;
 }
 
+/** Prefer email so landing + OS persons match in session replay. */
+export function identifyAnalyticsUser(user: {
+  id: string;
+  email: string | null;
+}): void {
+  void initializeAnalytics().then((posthog) => {
+    if (!posthog) return;
+    const email = user.email?.trim().toLowerCase() ?? "";
+    const distinctId = email.includes("@") ? email : user.id;
+    if (!distinctId) return;
+    posthog.identify(distinctId, {
+      ...(email.includes("@") ? { email } : {}),
+      user_id: user.id,
+    });
+  });
+}
+
+export function resetAnalyticsUser(): void {
+  void initializeAnalytics().then((posthog) => posthog?.reset());
+}
+
 export function captureAnalytics(
   event: AnalyticsEvent,
   properties?: Properties,
