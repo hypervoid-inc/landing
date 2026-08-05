@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import { Analytics } from "./features/analytics/analytics";
+import { AuthProvider } from "./features/auth/auth-provider";
 import { BetaAccessProvider } from "./features/landing/beta-access";
 import { ClippyCta } from "./features/landing/clippy-cta";
 import "./app.css";
@@ -80,10 +81,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <BetaAccessProvider>
-      <Outlet />
-      <ClippyCta />
-    </BetaAccessProvider>
+    <AuthProvider>
+      <BetaAccessProvider>
+        <Outlet />
+        <ClippyCta />
+      </BetaAccessProvider>
+    </AuthProvider>
   );
 }
 

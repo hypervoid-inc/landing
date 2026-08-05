@@ -14,6 +14,8 @@ export default [
   route("blog/:slug", "routes/blog-post.tsx"),
   route("authors", "routes/authors.tsx"),
   route("authors/:id", "routes/author.tsx"),
+  route("login", "routes/login.tsx"),
+  route("account", "routes/account.tsx"),
   route("404", "routes/not-found.tsx"),
   route("*", "routes/catch-all.tsx"),
 ] satisfies RouteConfig;

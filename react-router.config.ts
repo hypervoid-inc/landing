@@ -3,5 +3,11 @@ import { canonicalRoutes } from "./app/lib/route-manifest";
 
 export default {
   ssr: false,
-  prerender: [...canonicalRoutes.map(({ path }) => path), "/404"],
+  // Auth shells are prerendered but excluded from sitemap (see route-manifest).
+  prerender: [
+    ...canonicalRoutes.map(({ path }) => path),
+    "/login",
+    "/account",
+    "/404",
+  ],
 } satisfies Config;
