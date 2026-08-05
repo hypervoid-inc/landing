@@ -96,7 +96,7 @@ export function SiteHeader() {
           <>
             <Link
               to="/login"
-              className="inline-flex min-h-10 items-center rounded-full px-2 text-[11px] font-semibold text-[#4e4646] hover:bg-[#effbfc] sm:px-3 sm:text-xs"
+              className="hidden min-h-10 items-center rounded-full px-2 text-[11px] font-semibold text-[#4e4646] hover:bg-[#effbfc] sm:inline-flex sm:px-3 sm:text-xs"
             >
               Log in
             </Link>
