@@ -10,6 +10,7 @@ import {
   Timer,
   type LucideIcon,
 } from "lucide-react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 
@@ -17,11 +18,13 @@ import {
   featureCards,
   landingFaq,
   pricingPlans,
+  type BillingPeriod,
   type PricingIcon,
 } from "~/content/landing";
 
 import { StartLink } from "./beta-access";
 import { AutoVideo } from "./media";
+import { usePriceTicker } from "./price-ticker";
 import { WorkflowSection } from "./workflow-section";
 import "./landing.css";
 
@@ -359,7 +362,106 @@ function WorkSection() {
   );
 }
 
-function PricingCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
+function BillingPeriodToggle({
+  period,
+  onChange,
+}: {
+  period: BillingPeriod;
+  onChange: (period: BillingPeriod) => void;
+}) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const thumbRef = useRef<HTMLSpanElement>(null);
+  const monthlyRef = useRef<HTMLButtonElement>(null);
+  const annualRef = useRef<HTMLButtonElement>(null);
+
+  const syncThumb = useCallback(() => {
+    const thumb = thumbRef.current;
+    const active =
+      period === "monthly" ? monthlyRef.current : annualRef.current;
+    if (!thumb || !active) return;
+    thumb.style.width = `${active.offsetWidth}px`;
+    thumb.style.transform = `translateX(${active.offsetLeft}px)`;
+  }, [period]);
+
+  useLayoutEffect(() => {
+    syncThumb();
+    const root = rootRef.current;
+    if (!root || typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(() => syncThumb());
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, [syncThumb]);
+
+  return (
+    <div
+      ref={rootRef}
+      className="billing-toggle"
+      role="radiogroup"
+      aria-label="Billing period"
+      data-period={period}
+    >
+      <span ref={thumbRef} className="billing-toggle-thumb" aria-hidden />
+      <button
+        ref={monthlyRef}
+        type="button"
+        role="radio"
+        aria-checked={period === "monthly"}
+        className="billing-toggle-option"
+        data-active={period === "monthly" ? "true" : undefined}
+        onClick={() => onChange("monthly")}
+      >
+        Monthly
+      </button>
+      <button
+        ref={annualRef}
+        type="button"
+        role="radio"
+        aria-checked={period === "annual"}
+        className="billing-toggle-option"
+        data-active={period === "annual" ? "true" : undefined}
+        onClick={() => onChange("annual")}
+      >
+        <span>Annual</span>
+        <span className="billing-toggle-savings">4 months free</span>
+      </button>
+    </div>
+  );
+}
+
+function PricingCard({
+  plan,
+  period,
+}: {
+  plan: (typeof pricingPlans)[number];
+  period: BillingPeriod;
+}) {
+  const targetPrice =
+    period === "annual" ? plan.annualMonthlyPrice : plan.price;
+  const displayPrice = usePriceTicker(targetPrice);
+
+  const stackRef = useRef<HTMLSpanElement>(null);
+  const amountRef = useRef<HTMLSpanElement>(null);
+  const periodLabelRef = useRef<HTMLSpanElement>(null);
+
+  const syncAmountLayout = useCallback(() => {
+    const amount = amountRef.current;
+    const stack = stackRef.current;
+    const periodLabel = periodLabelRef.current;
+    if (!amount || !stack || !periodLabel) return;
+    const maxWidth = stack.offsetWidth;
+    const activeWidth = amount.offsetWidth;
+    periodLabel.style.transform = `translateX(${activeWidth - maxWidth}px)`;
+  }, [displayPrice]);
+
+  useLayoutEffect(() => {
+    syncAmountLayout();
+    const stack = stackRef.current;
+    if (!stack || typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(() => syncAmountLayout());
+    observer.observe(stack);
+    return () => observer.disconnect();
+  }, [syncAmountLayout]);
+
   return (
     <article className="pricing-card relative isolate w-full overflow-hidden rounded-[26px] bg-white shadow-[0_18px_48px_rgba(57,148,154,.08)] xl:shadow-none">
       <div
@@ -392,13 +494,40 @@ function PricingCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
               </p>
             ) : null}
           </div>
-          <div className="pricing-price flex flex-wrap items-end gap-x-[5px]">
-            <span className="font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]">
+          <div className="pricing-price" data-period={period}>
+            <span className="pricing-price-was" aria-hidden>
               {plan.price}
             </span>
-            <span className="mb-0.5 whitespace-nowrap text-xs text-[#17707d] xl:mb-1 xl:text-sm">
-              / month
-            </span>
+            <div className="pricing-price-row flex flex-wrap items-end gap-x-[5px]">
+              <span ref={stackRef} className="pricing-price-stack">
+                <span className="pricing-price-sizer" aria-hidden>
+                  <span className="pricing-price-amount font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]">
+                    {plan.price}
+                  </span>
+                  <span className="pricing-price-amount font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]">
+                    {plan.annualMonthlyPrice}
+                  </span>
+                </span>
+                <span
+                  ref={amountRef}
+                  className="pricing-price-amount pricing-price-amount-live font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]"
+                >
+                  {displayPrice}
+                </span>
+              </span>
+              <span
+                ref={periodLabelRef}
+                className="pricing-price-period mb-0.5 whitespace-nowrap text-xs text-[#17707d] xl:mb-1 xl:text-sm"
+              >
+                / month
+              </span>
+            </div>
+            <p
+              className="pricing-price-savings"
+              aria-hidden={period !== "annual"}
+            >
+              {plan.annualSavingsLabel}
+            </p>
           </div>
         </div>
       </div>
@@ -412,7 +541,7 @@ function PricingCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
           {plan.cta}
         </a>
         {plan.highlight ? (
-          <p className="mt-2.5 text-center text-[12px] font-semibold leading-[15px] text-[#129a5f] xl:text-[13px] xl:leading-4">
+          <p className="mt-2.5 text-center text-[14px] font-semibold leading-[17px] text-[#129a5f] xl:text-[15px] xl:leading-[18px]">
             {plan.highlight}
           </p>
         ) : null}
@@ -520,6 +649,8 @@ function EnterprisePanel() {
 }
 
 function PricingSection() {
+  const [period, setPeriod] = useState<BillingPeriod>("annual");
+
   return (
     <section
       id="pricing"
@@ -542,10 +673,13 @@ function PricingSection() {
             want operations handled without adding headcount. Plans start at
             $9/month to try; Starter adds agent email and schedules.
           </p>
+          <div className="mt-6 flex justify-center xl:mt-8">
+            <BillingPeriodToggle period={period} onChange={setPeriod} />
+          </div>
         </div>
         <div className="relative z-10 mx-auto mt-8 grid w-full max-w-[430px] grid-cols-1 gap-5 xl:mt-[100px] xl:max-w-none xl:grid-cols-3 xl:gap-7">
           {pricingPlans.map((plan) => (
-            <PricingCard key={plan.name} plan={plan} />
+            <PricingCard key={plan.name} plan={plan} period={period} />
           ))}
         </div>
         <EnterprisePanel />
