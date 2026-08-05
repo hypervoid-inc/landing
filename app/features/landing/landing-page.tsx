@@ -23,7 +23,7 @@ import {
 } from "~/content/landing";
 
 import { StartLink } from "./beta-access";
-import { AutoVideo } from "./media";
+import { AutoVideo, useRevealOnView } from "./media";
 import { usePriceTicker } from "./price-ticker";
 import { WorkflowSection } from "./workflow-section";
 import "./landing.css";
@@ -43,14 +43,20 @@ function HeroHeadline() {
     <div className="hero-headline max-w-[560px] text-center xl:text-left">
       <div
         aria-hidden="true"
-        className="font-display text-balance text-[38px] capitalize italic leading-[1.1] text-[#4e4646] xl:text-[51.8px] xl:leading-[58px]"
+        className="reveal-item font-display text-balance text-[38px] capitalize italic leading-[1.1] tracking-[-0.02em] text-[#4e4646] xl:text-[51.8px] xl:leading-[58px]"
+        data-reveal="mount"
+        data-reveal-delay="1"
       >
         <span>An </span>
         <span className="text-[#01b4c8]">AI Employee </span>
         <span>You Can Actually </span>
         <span className="text-[#01b4c8]">Work With</span>
       </div>
-      <p className="mx-auto mt-5 max-w-[360px] text-[15px] leading-[21px] text-[#627c86] xl:mx-0 xl:mt-6 xl:max-w-[520px] xl:text-base xl:leading-[22px]">
+      <p
+        className="reveal-item mx-auto mt-5 max-w-[360px] text-[15px] leading-[21px] text-[#627c86] xl:mx-0 xl:mt-6 xl:max-w-[520px] xl:text-base xl:leading-[22px]"
+        data-reveal="mount"
+        data-reveal-delay="2"
+      >
         <span className="xl:hidden">
           Your constraint is hours, not ideas. Construct gives an AI coworker a
           real computer so the work finishes while you do something else.
@@ -61,7 +67,11 @@ function HeroHeadline() {
           something else.
         </span>
       </p>
-      <div className="flex items-center justify-center gap-5 xl:justify-start">
+      <div
+        className="reveal-item flex items-center justify-center gap-5 xl:justify-start"
+        data-reveal="mount"
+        data-reveal-delay="3"
+      >
         <StartLink
           source="hero"
           className="landing-cta mt-7 min-h-[57px] w-[227px] px-5 text-[21px] xl:mt-8"
@@ -70,10 +80,9 @@ function HeroHeadline() {
         </StartLink>
         <Link
           to="/affiliates/"
-          className="hero-affiliate mt-8 hidden max-w-[150px] text-xs leading-4 text-[#627c86] transition-colors hover:text-[#01b4c8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] xl:block"
+          className="hero-affiliate mt-8 hidden max-w-[150px] text-xs leading-4 text-[#627c86] transition-colors hover:text-[#01b4c8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] xl:block"
         >
-          Affiliate program: 50% now, then 20%{" "}
-          <span aria-hidden>→</span>
+          Affiliate program: 50% now, then 20% <span aria-hidden>→</span>
         </Link>
       </div>
     </div>
@@ -122,75 +131,111 @@ function Hero() {
         </div>
         <div className="hero-scene relative isolate">
           <div className="hero-portal absolute aspect-square">
-            <StartLink
-              source="hero-portal"
-              label="Try Construct - Construct AI workspace"
-              className="hero-link block h-full w-full"
+            <div
+              className="reveal-item h-full w-full"
+              data-reveal="mount"
+              data-reveal-delay="1"
             >
-              <span className="block h-full w-full">
-                <AutoVideo
-                  src="/assets/landing/hero/portal.mp4"
-                  poster="/assets/landing/hero/portal-poster.jpg"
-                  decorative
-                />
-              </span>
-            </StartLink>
+              <StartLink
+                source="hero-portal"
+                label="Try Construct - Construct AI workspace"
+                className="hero-link block h-full w-full"
+              >
+                <span className="block h-full w-full">
+                  <AutoVideo
+                    src="/assets/landing/hero/portal.mp4"
+                    poster="/assets/landing/hero/portal-poster.jpg"
+                    decorative
+                  />
+                </span>
+              </StartLink>
+            </div>
           </div>
-          <StartLink
-            source="hero-report"
-            label="Try Construct - research report"
-            className="hero-link hero-report absolute z-20"
-          >
-            <img
-              src="/assets/landing/hero/research-report.webp"
-              alt="Generated PDF research report produced by the Construct AI agent"
-              width="1272"
-              height="705"
-              className="hero-interactive block w-full"
-            />
-          </StartLink>
-          <StartLink
-            source="hero-chat"
-            label="Try Construct - agent chat"
-            className="hero-link hero-chat absolute z-20"
-          >
-            <img
-              src="/assets/landing/hero/agent-chat.webp"
-              alt="Construct agent chat window handling an inbound email autonomously"
-              width="825"
-              height="459"
-              className="hero-interactive block w-full"
-            />
-          </StartLink>
-          <StartLink
-            source="hero-search"
-            label="Try Construct - workspace search"
-            className="hero-link hero-search absolute z-20"
-          >
-            <img
-              src="/assets/landing/hero/search-bar.png"
-              alt="Search inside the Construct AI work desktop"
-              width="1365"
-              height="135"
-              className="hero-interactive block w-full"
-            />
-          </StartLink>
+          <div className="hero-report absolute z-20">
+            <div
+              className="reveal-item"
+              data-reveal="mount"
+              data-reveal-delay="2"
+            >
+              <StartLink
+                source="hero-report"
+                label="Try Construct - research report"
+                className="hero-link block"
+              >
+                <img
+                  src="/assets/landing/hero/research-report.webp"
+                  alt="Generated PDF research report produced by the Construct AI agent"
+                  width="1272"
+                  height="705"
+                  className="hero-interactive block w-full"
+                />
+              </StartLink>
+            </div>
+          </div>
+          <div className="hero-chat absolute z-20">
+            <div
+              className="reveal-item"
+              data-reveal="mount"
+              data-reveal-delay="3"
+            >
+              <StartLink
+                source="hero-chat"
+                label="Try Construct - agent chat"
+                className="hero-link block"
+              >
+                <img
+                  src="/assets/landing/hero/agent-chat.webp"
+                  alt="Construct agent chat window handling an inbound email autonomously"
+                  width="825"
+                  height="459"
+                  className="hero-interactive block w-full"
+                />
+              </StartLink>
+            </div>
+          </div>
+          <div className="hero-search absolute z-20">
+            <div
+              className="reveal-item"
+              data-reveal="mount"
+              data-reveal-delay="4"
+            >
+              <StartLink
+                source="hero-search"
+                label="Try Construct - workspace search"
+                className="hero-link block"
+              >
+                <img
+                  src="/assets/landing/hero/search-bar.png"
+                  alt="Search inside the Construct AI work desktop"
+                  width="1365"
+                  height="135"
+                  className="hero-interactive block w-full"
+                />
+              </StartLink>
+            </div>
+          </div>
           <div className="hero-workflow absolute z-30">
-            <WorkflowChip
-              image="/assets/landing/hero/google-meet.png"
-              label="Researched the Topic"
-              className=""
-            />
-            <WorkflowChip
-              image="/assets/landing/hero/gmail.png"
-              label="Replied to the Mails"
-              className="mt-3"
-            />
-            <WorkflowChip
-              image="/assets/landing/hero/google-docs.png"
-              label="Prepared the Report"
-              className="mt-3"
-            />
+            <div
+              className="reveal-item"
+              data-reveal="mount"
+              data-reveal-delay="4"
+            >
+              <WorkflowChip
+                image="/assets/landing/hero/google-meet.png"
+                label="Researched the Topic"
+                className=""
+              />
+              <WorkflowChip
+                image="/assets/landing/hero/gmail.png"
+                label="Replied to the Mails"
+                className="mt-3"
+              />
+              <WorkflowChip
+                image="/assets/landing/hero/google-docs.png"
+                label="Prepared the Report"
+                className="mt-3"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -207,14 +252,18 @@ function WhatConstructIs() {
     >
       <h2
         id="what-heading"
-        className="text-balance text-3xl sm:text-4xl lg:text-[51.8px] lg:leading-[58px]"
+        className="reveal-item text-balance text-3xl tracking-[-0.02em] sm:text-4xl lg:text-[51.8px] lg:leading-[58px]"
+        data-reveal-delay="1"
       >
         <span className="text-[#4e4646]">What is </span>
         <span className="font-display italic text-[#01b4c8]">
           Construct Computer?
         </span>
       </h2>
-      <div className="mx-auto mt-6 max-w-[720px] space-y-4 text-base leading-[21px] text-[#627c86]">
+      <div
+        className="reveal-item mx-auto mt-6 max-w-[720px] space-y-4 text-base leading-[21px] text-[#627c86]"
+        data-reveal-delay="2"
+      >
         <p>
           For solo founders, early startups, and small teams who juggle CRMs,
           inboxes, and automations instead of hiring. Hours are the constraint,
@@ -222,14 +271,15 @@ function WhatConstructIs() {
         </p>
         <p>
           You get one AI employee with its own cloud desktop: files, memory, a
-          browser, a terminal, email, a calendar, and your connected apps. Assign
-          the outcome and it finishes the work while you do something else, in a
-          workspace you can inspect and steer.
+          browser, a terminal, email, a calendar, and your connected apps.
+          Assign the outcome and it finishes the work while you do something
+          else, in a workspace you can inspect and steer.
         </p>
       </div>
       <nav
         aria-label="Learn about Construct"
-        className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm"
+        className="reveal-item mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm"
+        data-reveal-delay="3"
       >
         <a href="/blog/ai-employee/" className="text-[#01b4c8] hover:underline">
           AI employees →
@@ -259,12 +309,16 @@ function AdaptsSection() {
     >
       <h2
         id="adapts-heading"
-        className="text-balance text-3xl capitalize sm:text-4xl lg:text-[51.8px] lg:leading-[58px]"
+        className="reveal-item text-balance text-3xl capitalize tracking-[-0.02em] sm:text-4xl lg:text-[51.8px] lg:leading-[58px]"
+        data-reveal-delay="1"
       >
         <span className="text-[#4e4646]">Work That Remembers, Runs,</span>{" "}
         <span className="font-display italic text-[#01b4c8]">and Repeats</span>
       </h2>
-      <p className="mx-auto mt-6 max-w-[495px] text-base leading-[21px] text-[#627c86]">
+      <p
+        className="reveal-item mx-auto mt-6 max-w-[495px] text-base leading-[21px] text-[#627c86]"
+        data-reveal-delay="2"
+      >
         One persistent workspace keeps the context, tools, procedures, and proof
         behind the work, so Monday&rsquo;s job still makes sense on Friday.
       </p>
@@ -283,7 +337,7 @@ function FeatureGrid() {
         Construct capabilities
       </h2>
       <div className="feature-grid mx-auto grid w-full max-w-[1078px] grid-cols-1 gap-4 px-5 lg:grid-cols-3 lg:gap-5 lg:px-0">
-        {featureCards.map((card) => (
+        {featureCards.map((card, index) => (
           <img
             key={card.src}
             src={card.src}
@@ -292,7 +346,8 @@ function FeatureGrid() {
             height={346}
             loading="lazy"
             decoding="async"
-            className={`feature-card h-auto w-full rounded-[18px] bg-white shadow-[0_8px_32px_rgba(71,156,223,.12)] ${card.wide ? "feature-card-wide lg:col-span-2" : ""}`}
+            className={`feature-card reveal-item h-auto w-full rounded-[18px] bg-white shadow-[0_8px_32px_rgba(71,156,223,.12)] ${card.wide ? "feature-card-wide lg:col-span-2" : ""}`}
+            data-reveal-delay={String(Math.min(index, 3) + 1)}
           />
         ))}
       </div>
@@ -324,7 +379,8 @@ function WorkSection() {
         <div className="work-panel relative overflow-hidden rounded-[36px] bg-white px-4 pb-8 pt-9 backdrop-blur-[13.55px]">
           <h2
             id="work-heading"
-            className="mx-auto max-w-[813px] text-center text-[31px] capitalize leading-[38px] lg:text-[clamp(31px,2.05vw,32.8px)] lg:leading-[46px]"
+            className="reveal-item mx-auto max-w-[813px] text-center text-[31px] capitalize leading-[38px] tracking-[-0.02em] lg:text-[clamp(31px,2.05vw,32.8px)] lg:leading-[46px]"
+            data-reveal-delay="1"
           >
             <span className="text-[#4e4646]">
               Stop Juggling Inboxes, CRMs, And
@@ -333,14 +389,20 @@ function WorkSection() {
               Half-Finished Automations
             </span>
           </h2>
-          <div className="work-video mx-auto mt-8 aspect-[1166/653] w-full max-w-[1166px] overflow-hidden rounded-[28px] bg-white">
+          <div
+            className="reveal-item work-video mx-auto mt-8 aspect-[1166/653] w-full max-w-[1166px] overflow-hidden rounded-[28px] bg-white"
+            data-reveal-delay="2"
+          >
             <AutoVideo
               src="/assets/landing/work/demo.mp4"
               poster="/assets/landing/work/demo-poster.jpg"
               label="Construct organizing work across emails, files, and CRM"
             />
           </div>
-          <p className="mx-auto mt-6 max-w-[857px] text-center text-[31px] capitalize leading-[38px] lg:mt-8 lg:text-[clamp(31px,2.05vw,32.8px)] lg:leading-[46px]">
+          <p
+            className="reveal-item mx-auto mt-6 max-w-[857px] text-center text-[31px] capitalize leading-[38px] lg:mt-8 lg:text-[clamp(31px,2.05vw,32.8px)] lg:leading-[46px]"
+            data-reveal-delay="3"
+          >
             <span className="font-display italic text-[#01b4c8]">
               Let Construct
             </span>{" "}
@@ -348,7 +410,10 @@ function WorkSection() {
               Track What&rsquo;s Running And Finish The Loop
             </span>
           </p>
-          <div className="mt-7 flex justify-center lg:mt-9">
+          <div
+            className="reveal-item mt-7 flex justify-center lg:mt-9"
+            data-reveal-delay="4"
+          >
             <StartLink
               source="work"
               className="landing-cta min-h-[57px] w-[227px] px-5 text-[21px]"
@@ -431,9 +496,11 @@ function BillingPeriodToggle({
 function PricingCard({
   plan,
   period,
+  revealDelay = 1,
 }: {
   plan: (typeof pricingPlans)[number];
   period: BillingPeriod;
+  revealDelay?: number;
 }) {
   const targetPrice =
     period === "annual" ? plan.annualMonthlyPrice : plan.price;
@@ -463,7 +530,11 @@ function PricingCard({
   }, [syncAmountLayout]);
 
   return (
-    <article className="pricing-card relative isolate w-full overflow-hidden rounded-[26px] bg-white shadow-[0_18px_48px_rgba(57,148,154,.08)] xl:shadow-none">
+    <article
+      className="pricing-card reveal-item relative isolate w-full overflow-hidden rounded-[26px] bg-white shadow-[0_18px_48px_rgba(57,148,154,.08)] xl:shadow-none"
+      data-reveal-delay={String(revealDelay)}
+    >
+      {" "}
       <div
         aria-hidden
         className="pricing-border pointer-events-none absolute inset-0 z-20 rounded-[26px] border border-[#35949a]/50"
@@ -576,7 +647,8 @@ function EnterprisePanel() {
   return (
     <article
       aria-labelledby="enterprise-heading"
-      className="enterprise-panel relative isolate mx-auto mt-5 w-full max-w-[430px] overflow-hidden rounded-[26px] border border-[#b3d6f6] bg-white px-6 pb-7 pt-8 xl:mt-7 xl:max-w-none xl:px-[clamp(32px,3.4vw,54px)] xl:pt-[clamp(32px,2.8vw,45px)]"
+      className="enterprise-panel reveal-item relative isolate mx-auto mt-5 w-full max-w-[430px] overflow-hidden rounded-[26px] border border-[#b3d6f6] bg-white px-6 pb-7 pt-8 xl:mt-7 xl:max-w-none xl:px-[clamp(32px,3.4vw,54px)] xl:pt-[clamp(32px,2.8vw,45px)]"
+      data-reveal-delay="2"
     >
       <img
         src="/assets/landing/pricing/enterprise-rings.webp"
@@ -661,25 +733,39 @@ function PricingSection() {
         <div className="mx-auto max-w-[671px] text-center">
           <h2
             id="pricing-heading"
-            className="text-balance text-[32px] capitalize leading-[38px] lg:text-[clamp(36px,3.24vw,51.8px)] lg:leading-[1.12]"
+            className="reveal-item text-balance text-[32px] capitalize leading-[38px] tracking-[-0.02em] lg:text-[clamp(36px,3.24vw,51.8px)] lg:leading-[1.12]"
+            data-reveal-delay="1"
           >
-            <span className="text-[#4e4646]">Plans For Lean Teams That Need</span>{" "}
+            <span className="text-[#4e4646]">
+              Plans For Lean Teams That Need
+            </span>{" "}
             <span className="font-display italic text-[#01b4c8]">
               Ops Leverage
             </span>
           </h2>
-          <p className="mx-auto mt-4 max-w-[495px] text-[15px] leading-[21px] text-[#627c86] xl:mt-[22px] xl:text-base">
+          <p
+            className="reveal-item mx-auto mt-4 max-w-[495px] text-[15px] leading-[21px] text-[#627c86] xl:mt-[22px] xl:text-base"
+            data-reveal-delay="2"
+          >
             Built for solo founders, early startups, and small businesses that
             want operations handled without adding headcount. Plans start at
             $9/month to try; Starter adds agent email and schedules.
           </p>
-          <div className="mt-6 flex justify-center xl:mt-8">
+          <div
+            className="reveal-item mt-6 flex justify-center xl:mt-8"
+            data-reveal-delay="3"
+          >
             <BillingPeriodToggle period={period} onChange={setPeriod} />
           </div>
         </div>
         <div className="relative z-10 mx-auto mt-8 grid w-full max-w-[430px] grid-cols-1 gap-5 xl:mt-[100px] xl:max-w-none xl:grid-cols-3 xl:gap-7">
-          {pricingPlans.map((plan) => (
-            <PricingCard key={plan.name} plan={plan} period={period} />
+          {pricingPlans.map((plan, index) => (
+            <PricingCard
+              key={plan.name}
+              plan={plan}
+              period={period}
+              revealDelay={Math.min(index, 3) + 1}
+            />
           ))}
         </div>
         <EnterprisePanel />
@@ -696,10 +782,13 @@ function FaqSection() {
       className="relative w-full scroll-mt-16 px-5 py-16 xl:px-16 xl:py-24"
     >
       <div className="mx-auto grid w-full max-w-[1395px] items-start gap-10 xl:grid-cols-[minmax(300px,420px)_minmax(0,1fr)] xl:gap-[clamp(80px,10vw,170px)]">
-        <div className="text-center xl:pt-2 xl:text-left">
+        <div
+          className="reveal-item text-center xl:pt-2 xl:text-left"
+          data-reveal-delay="1"
+        >
           <h2
             id="faq-heading"
-            className="text-balance text-[32px] capitalize leading-[38px] lg:text-[clamp(36px,3.24vw,51.8px)] lg:leading-[1.12]"
+            className="text-balance text-[32px] capitalize leading-[38px] tracking-[-0.02em] lg:text-[clamp(36px,3.24vw,51.8px)] lg:leading-[1.12]"
           >
             <span className="text-[#4e4646]">Frequently Asked</span>{" "}
             <span className="font-display italic text-[#01b4c8]">
@@ -731,7 +820,8 @@ function FaqSection() {
             <Accordion.Item
               key={item.question}
               value={`faq-${index}`}
-              className="overflow-hidden rounded-[22px] bg-[#f8f8f8] data-[state=open]:bg-[#f3f3f3] xl:rounded-3xl"
+              className="reveal-item overflow-hidden rounded-[22px] bg-[#f8f8f8] data-[state=open]:bg-[#f3f3f3] xl:rounded-3xl"
+              data-reveal-delay={String(Math.min(index, 3) + 1)}
             >
               <Accordion.Header>
                 <Accordion.Trigger className="group flex w-full items-center justify-between gap-4 px-5 py-5 text-left xl:gap-6 xl:px-[55px] xl:py-[30px]">
@@ -744,10 +834,12 @@ function FaqSection() {
                   />
                 </Accordion.Trigger>
               </Accordion.Header>
-              <Accordion.Content className="faq-content overflow-hidden">
-                <p className="px-5 pb-5 text-[15px] leading-[21px] text-[#627c86] xl:px-[55px] xl:pb-7 xl:text-base xl:leading-[22px]">
-                  {item.answer}
-                </p>
+              <Accordion.Content forceMount className="faq-content">
+                <div className="faq-content-inner">
+                  <p className="px-5 pb-5 text-[15px] leading-[21px] text-[#627c86] xl:px-[55px] xl:pb-7 xl:text-base xl:leading-[22px]">
+                    {item.answer}
+                  </p>
+                </div>
               </Accordion.Content>
             </Accordion.Item>
           ))}
@@ -758,8 +850,14 @@ function FaqSection() {
 }
 
 export function LandingPage() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  useRevealOnView(rootRef);
+
   return (
-    <div className="landing-page relative min-h-dvh w-full overflow-x-clip bg-white text-[#4e4646]">
+    <div
+      ref={rootRef}
+      className="landing-page relative min-h-dvh w-full overflow-x-clip bg-white text-[#4e4646]"
+    >
       <SiteHeader />
       <main id="main">
         <Hero />

@@ -14,6 +14,28 @@
   box-shadow:
     inset 0 -5px 14px rgb(255 255 255 / 92%),
     inset 0 4px 14px rgb(255 255 255 / 91%);
+  transition:
+    transform var(--dur-press) var(--ease-snap),
+    box-shadow var(--dur-hover) var(--ease-snap);
+}
+
+.beta-access-cta:active {
+  transform: scale(0.97);
+  transition-duration: var(--dur-press);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .beta-access-cta:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 -5px 14px rgb(255 255 255 / 92%),
+      inset 0 4px 14px rgb(255 255 255 / 91%),
+      0 10px 24px rgb(1 180 200 / 28%);
+  }
+
+  .beta-access-cta:hover:active {
+    transform: scale(0.97);
+  }
 }
 
 .beta-dialog-overlay[data-state="open"] {
@@ -21,7 +43,7 @@
 }
 
 .beta-dialog-overlay[data-state="closed"] {
-  animation: beta-overlay-out 170ms ease-in;
+  animation: beta-overlay-out 170ms ease-out;
 }
 
 .beta-dialog-content[data-state="open"] {
@@ -29,7 +51,7 @@
 }
 
 .beta-dialog-content[data-state="closed"] {
-  animation: beta-dialog-out 170ms ease-in;
+  animation: beta-dialog-out 170ms ease-out;
 }
 
 @keyframes beta-overlay-in {
@@ -76,5 +98,14 @@
   .beta-dialog-overlay,
   .beta-dialog-content {
     animation-duration: 0.01ms !important;
+  }
+
+  .beta-access-cta {
+    transition: none !important;
+  }
+
+  .beta-access-cta:hover,
+  .beta-access-cta:active {
+    transform: none !important;
   }
 }

@@ -1,11 +1,27 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 import { companyLinks, comparisonLinks } from "../../content/landing";
 import { BetaLink, StartLink } from "../../features/landing/beta-access";
 
+function navCurrent(pathname: string, href: string): "page" | undefined {
+  if (href.startsWith("/#")) return undefined;
+  const path = href.endsWith("/") ? href.slice(0, -1) || "/" : href;
+  const current =
+    pathname.endsWith("/") && pathname.length > 1
+      ? pathname.slice(0, -1)
+      : pathname;
+  if (path === "/blog") {
+    return current === "/blog" || current.startsWith("/blog/")
+      ? "page"
+      : undefined;
+  }
+  return current === path ? "page" : undefined;
+}
+
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 8);
@@ -16,7 +32,7 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full border-b transition-[background-color,border-color,box-shadow,backdrop-filter] duration-200 ${scrolled ? "border-[#dcecef] bg-white/90 shadow-[0_6px_20px_rgba(37,72,82,.06)] backdrop-blur-xl backdrop-saturate-150" : "border-[#edf4f5] bg-white/80 backdrop-blur-md"}`}
+      className={`site-header sticky top-0 z-50 w-full border-b transition-[background-color,border-color,box-shadow] duration-200 ${scrolled ? "border-[#dcecef] bg-white/90 shadow-[0_6px_20px_rgba(37,72,82,.06)] backdrop-blur-xl backdrop-saturate-150" : "border-transparent bg-white/80 backdrop-blur-md"}`}
     >
       <a
         href="#main"
@@ -39,19 +55,21 @@ export function SiteHeader() {
         >
           <Link
             to="/#pricing"
-            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] sm:px-2"
+            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:px-2"
           >
             Pricing
           </Link>
           <Link
             to="/blog/"
-            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] sm:px-2"
+            aria-current={navCurrent(pathname, "/blog")}
+            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:px-2"
           >
             Blog
           </Link>
           <Link
             to="/affiliates/"
-            className="hidden min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] sm:inline-flex"
+            aria-current={navCurrent(pathname, "/affiliates")}
+            className="hidden min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:inline-flex"
           >
             Affiliates
           </Link>
@@ -59,7 +77,7 @@ export function SiteHeader() {
         <StartLink
           source="nav"
           label="Start using Construct"
-          className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] transition-[transform,background-color,box-shadow] hover:-translate-y-px hover:bg-[#172126] hover:shadow-[0_6px_16px_rgba(0,0,0,.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] sm:px-3 lg:px-4 lg:text-xs"
+          className="site-cta inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:px-3 lg:px-4 lg:text-xs"
         >
           <span className="sm:hidden">Start now</span>
           <span className="hidden sm:inline">Start Now</span>
@@ -84,7 +102,7 @@ function SocialLink({
       target="_blank"
       rel="noreferrer"
       aria-label={label}
-      className="grid h-9 w-9 place-items-center rounded-full border border-[#e5e7eb] bg-white text-[#627c86] hover:border-[#8adcdf] hover:text-[#01b4c8]"
+      className="grid h-9 w-9 place-items-center rounded-full border border-[#e5e7eb] bg-white text-[#627c86] transition-[color,border-color] hover:border-[#8adcdf] hover:text-[#01b4c8]"
     >
       {children}
     </a>
@@ -113,7 +131,7 @@ function FooterColumn({
           <Link
             key={href}
             to={href}
-            className="inline-flex min-h-9 w-fit items-center text-[13px] leading-5 text-[#627c86] hover:text-[#01b4c8] sm:min-h-0 sm:text-sm"
+            className="inline-flex min-h-9 w-fit items-center text-[13px] leading-5 text-[#627c86] transition-colors hover:text-[#01b4c8] sm:text-sm"
           >
             {text}
           </Link>
@@ -131,7 +149,7 @@ export function SiteFooter() {
           <div className="col-span-2 flex flex-col items-center gap-4 text-center sm:gap-6 lg:col-span-1 lg:items-start lg:text-left">
             <Link
               to="/"
-              className="font-display w-fit text-2xl italic leading-none sm:text-[32px]"
+              className="font-display w-fit text-2xl italic leading-none tracking-[-0.02em] sm:text-[32px]"
             >
               <span className="text-[#4e4646]">Construct</span>
               <span className="text-[#01b4c8]">Computer</span>
@@ -185,7 +203,7 @@ export function SiteFooter() {
             <BetaLink
               source="footer"
               label="Get Construct product updates by email"
-              className="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-black px-5 py-3 text-[13px] font-semibold text-white shadow-[0_4px_4px_rgba(0,0,0,.15)] sm:mt-2 sm:w-fit sm:py-2.5"
+              className="site-cta mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-black px-5 py-3 text-[13px] font-semibold text-white shadow-[0_4px_4px_rgba(0,0,0,.15)] sm:mt-2 sm:w-fit sm:py-2.5"
             >
               Get product updates <span aria-hidden>↗</span>
             </BetaLink>
@@ -200,7 +218,7 @@ export function SiteFooter() {
         <div className="flex flex-col items-center gap-3 border-t border-[#e5e7eb] py-5 text-center sm:py-6 lg:flex-row-reverse lg:justify-between lg:gap-4 lg:text-left">
           <Link
             to="/affiliates/"
-            className="group inline-flex min-h-10 items-center gap-2 rounded-full border border-[#35949a]/50 bg-white px-2.5 py-1.5 text-[13px] font-semibold leading-[18px] text-[#014e59] shadow-[0_6px_18px_rgba(57,148,154,.14)] transition-[transform,box-shadow,border-color] hover:-translate-y-px hover:border-[#01b4c8] hover:shadow-[0_10px_24px_rgba(57,148,154,.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8]"
+            className="site-cta-pill group inline-flex min-h-10 items-center gap-2 rounded-full border border-[#35949a]/50 bg-white px-2.5 py-1.5 text-[13px] font-semibold leading-[18px] text-[#014e59] shadow-[0_6px_18px_rgba(57,148,154,.14)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8]"
           >
             <span className="inline-flex items-center rounded-full bg-[#01b4c8] px-2 py-1 text-[9px] font-black uppercase tracking-[.12em] text-white">
               New
@@ -209,10 +227,7 @@ export function SiteFooter() {
             <span className="hidden sm:inline">
               Affiliates: 50% for first 25, then 20%
             </span>
-            <span
-              aria-hidden
-              className="transition-transform group-hover:translate-x-0.5"
-            >
+            <span aria-hidden className="site-cta-pill-arrow">
               →
             </span>
           </Link>

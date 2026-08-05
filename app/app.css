@@ -8,6 +8,15 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-geist: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-display: Georgia, "Times New Roman", serif;
+  --default-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-snap: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+:root {
+  --dur-press: 120ms;
+  --dur-hover: 160ms;
+  --dur-enter: 220ms;
 }
 
 html {
@@ -31,8 +40,83 @@ input {
   outline: 2px solid #01b4c8;
 }
 
+:focus-visible,
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  scroll-margin-top: 5rem;
+  scroll-margin-bottom: 2rem;
+}
+
+/* Shared press / hover vocabulary for black CTAs and affiliate pill. */
+.site-cta,
+.site-cta-pill {
+  transition:
+    transform var(--dur-hover) var(--ease-snap),
+    background-color var(--dur-hover) var(--ease-snap),
+    box-shadow var(--dur-hover) var(--ease-snap),
+    border-color var(--dur-hover) var(--ease-snap);
+}
+
+.site-cta-pill-arrow {
+  display: inline-block;
+  transition: transform var(--dur-hover) var(--ease-snap);
+}
+
+.site-cta:active,
+.site-cta-pill:active {
+  transform: scale(0.97);
+  transition-duration: var(--dur-press);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-cta:hover {
+    transform: translateY(-1px);
+    background-color: #172126;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .site-cta:hover:active {
+    transform: scale(0.97);
+  }
+
+  .site-cta-pill:hover {
+    transform: translateY(-1px);
+    border-color: #01b4c8;
+    box-shadow: 0 10px 24px rgba(57, 148, 154, 0.2);
+  }
+
+  .site-cta-pill:hover:active {
+    transform: scale(0.97);
+  }
+
+  .site-cta-pill:hover .site-cta-pill-arrow {
+    transform: translateX(0.125rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .site-cta:hover,
+  .site-cta:active,
+  .site-cta-pill:hover,
+  .site-cta-pill:active {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-header {
+    background: #fff !important;
+    backdrop-filter: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .site-header {
+    border-bottom-color: #8a9aa2 !important;
   }
 }

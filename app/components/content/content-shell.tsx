@@ -34,7 +34,10 @@ export function ContentShell({
           <ol className="flex flex-wrap items-center gap-2">
             {breadcrumbs.map((item) => (
               <li key={item.to} className="flex items-center gap-2">
-                <Link to={item.to} className="hover:text-[#01b4c8]">
+                <Link
+                  to={item.to}
+                  className="transition-colors hover:text-[#01b4c8]"
+                >
                   {item.label}
                 </Link>
                 <span aria-hidden>/</span>
@@ -44,7 +47,7 @@ export function ContentShell({
           </ol>
         </nav>
         <Content>
-          <h1 className="font-geist mt-8 text-[36px] italic leading-[1.1] sm:text-[44px] lg:text-[52px]">
+          <h1 className="font-geist mt-8 text-[36px] italic leading-[1.1] tracking-[-0.02em] sm:text-[44px] lg:text-[52px]">
             {title}
           </h1>
           {metadata && (
@@ -71,7 +74,7 @@ export function Section({
 }) {
   return (
     <section className="space-y-4">
-      <h2 className="font-geist text-[22px] italic leading-tight text-[#4e4646] lg:text-[26px]">
+      <h2 className="font-geist text-[22px] italic leading-tight tracking-[-0.015em] text-[#4e4646] lg:text-[26px]">
         {title}
       </h2>
       {children}

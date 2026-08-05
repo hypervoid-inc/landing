@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
 
 export function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -12,6 +12,70 @@ export function usePrefersReducedMotion() {
   }, []);
 
   return reduced;
+}
+
+/**
+ * Reveals `.reveal-item` descendants once when they enter the viewport.
+ * Hero items with `data-reveal="mount"` fire on the frame after hide is applied.
+ * Under reduced motion, marks everything visible with no animation.
+ */
+export function useRevealOnView(rootRef: RefObject<HTMLElement | null>) {
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const items = [...root.querySelectorAll<HTMLElement>(".reveal-item")];
+    if (!items.length) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      items.forEach((el) => el.setAttribute("data-reveal-visible", ""));
+      return;
+    }
+
+    // Hide before paint, then start mount animations on the next frame so the
+    // opacity:0 rule is committed before data-reveal-visible is added.
+    root.setAttribute("data-reveal-enabled", "");
+
+    const mountItems = items.filter((el) => el.dataset.reveal === "mount");
+    const scrollItems = items.filter((el) => el.dataset.reveal !== "mount");
+
+    let mountFrame = 0;
+    let startFrame = 0;
+    startFrame = requestAnimationFrame(() => {
+      mountFrame = requestAnimationFrame(() => {
+        mountItems.forEach((el) => el.setAttribute("data-reveal-visible", ""));
+      });
+    });
+
+    if (!scrollItems.length) {
+      return () => {
+        cancelAnimationFrame(startFrame);
+        cancelAnimationFrame(mountFrame);
+        root.removeAttribute("data-reveal-enabled");
+      };
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLElement;
+          el.setAttribute("data-reveal-visible", "");
+          observer.unobserve(el);
+        }
+      },
+      { rootMargin: "-10% 0px" },
+    );
+    scrollItems.forEach((el) => observer.observe(el));
+
+    return () => {
+      cancelAnimationFrame(startFrame);
+      cancelAnimationFrame(mountFrame);
+      observer.disconnect();
+      root.removeAttribute("data-reveal-enabled");
+    };
+  }, [rootRef]);
 }
 
 export function useDesktop() {
