@@ -2,32 +2,28 @@ import { useCallback, useEffect, useState } from "react";
 import { Link, Navigate, useSearchParams } from "react-router";
 
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
+import { ConfirmDialog } from "../../components/ui/confirm-dialog";
+import { Banner, Card, buttonVariants } from "../../components/ui/primitives";
+import { cn } from "../../lib/cn";
+import * as authApi from "../../platform/api/auth";
 import * as billingApi from "../../platform/api/billing";
+import { catalogIntervalView } from "../../platform/api/billing";
+import { getOsOrigin } from "../../platform/env";
 import type {
   BillingInterval,
-  BillingPlan,
-  CatalogPlan,
   PaidPlanId,
-  WorkspaceSummary,
-} from "../../platform/api/billing";
-import * as authApi from "../../platform/api/auth";
-import { getOsOrigin } from "../../platform/env";
+} from "../../platform/api/schemas";
 import { useAuth } from "../auth/auth-provider";
-
-const fieldClass =
-  "w-full rounded-xl border border-[#dcecef] bg-white px-3 py-2.5 text-sm text-[#4e4646] outline-none focus:border-[#01b4c8]";
-const btn =
-  "inline-flex min-h-10 items-center justify-center rounded-full px-4 text-sm font-semibold";
-const btnPrimary = `${btn} bg-black text-white`;
-const btnGhost = `${btn} border border-[#dcecef] bg-white text-[#4e4646]`;
-
-function formatBytes(n: number | undefined): string {
-  if (n == null) return "—";
-  if (n < 1024) return `${n} B`;
-  if (n < 1024 ** 2) return `${(n / 1024).toFixed(1)} KB`;
-  if (n < 1024 ** 3) return `${(n / 1024 ** 2).toFixed(1)} MB`;
-  return `${(n / 1024 ** 3).toFixed(1)} GB`;
-}
+import { formatMoney, intervalSuffix } from "./account-format";
+import * as llmApi from "../../platform/api/llm";
+import { BillingActionsSection } from "./sections/billing-actions-section";
+import { ByokSection } from "./sections/byok-section";
+import { IdentityHero } from "./sections/identity-hero";
+import { PlanSection } from "./sections/plan-section";
+import { ProfileSection } from "./sections/profile-section";
+import { SecuritySection } from "./sections/security-section";
+import { UsageSection } from "./sections/usage-section";
+import { usePendingActions, useAccountData } from "./use-account-data";
 
 function billingReturnMessage(status: string | null): string | null {
   if (status === "success") return "Subscription activating — refreshing…";
@@ -36,65 +32,31 @@ function billingReturnMessage(status: string | null): string | null {
 }
 
 export function AccountPage() {
-  const { status, user, logout, refresh } = useAuth();
+  const { status, user, logout, refresh: refreshAuth } = useAuth();
   const [params, setParams] = useSearchParams();
   const billingStatusParam = params.get("billing_status");
-  const [plan, setPlan] = useState<BillingPlan | null>(null);
-  const [catalog, setCatalog] = useState<CatalogPlan[]>([]);
-  const [workspaces, setWorkspaces] = useState<WorkspaceSummary[]>([]);
-  const [activeWorkspaceId, setActiveWorkspaceId] = useState<string | null>(
+
+  const authed = status === "authenticated";
+  const { data, refresh } = useAccountData(authed);
+  const { isPending, run } = usePendingActions();
+
+  const [intervalChoice, setIntervalChoice] = useState<BillingInterval | null>(
     null,
   );
-  const [interval, setInterval] = useState<BillingInterval>("month");
-  const [busy, setBusy] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(() =>
     billingReturnMessage(billingStatusParam),
   );
   const [error, setError] = useState<string | null>(null);
-  const [hasPassword, setHasPassword] = useState(false);
-  const [pwCurrent, setPwCurrent] = useState("");
-  const [pwNext, setPwNext] = useState("");
-  const [pwConfirm, setPwConfirm] = useState("");
+  const [confirmCancel, setConfirmCancel] = useState(false);
+  const [pendingSwitch, setPendingSwitch] = useState<PaidPlanId | null>(null);
 
-  const load = useCallback(async () => {
-    const [planRes, catalogRes, wsRes, pw] = await Promise.all([
-      billingApi.getPlan(),
-      billingApi.getPlanCatalog(),
-      billingApi.listWorkspaces(),
-      authApi.passwordStatus(),
-    ]);
-    if (planRes.success) setPlan(planRes.data);
-    if (catalogRes.success) setCatalog(catalogRes.data.plans ?? []);
-    if (wsRes.success) {
-      setWorkspaces(wsRes.data.workspaces ?? []);
-      setActiveWorkspaceId(wsRes.data.activeWorkspaceId);
-    }
-    setHasPassword(pw.hasPassword);
-  }, []);
-
-  useEffect(() => {
-    if (status !== "authenticated") return;
-    let cancelled = false;
-    void (async () => {
-      const [planRes, catalogRes, wsRes, pw] = await Promise.all([
-        billingApi.getPlan(),
-        billingApi.getPlanCatalog(),
-        billingApi.listWorkspaces(),
-        authApi.passwordStatus(),
-      ]);
-      if (cancelled) return;
-      if (planRes.success) setPlan(planRes.data);
-      if (catalogRes.success) setCatalog(catalogRes.data.plans ?? []);
-      if (wsRes.success) {
-        setWorkspaces(wsRes.data.workspaces ?? []);
-        setActiveWorkspaceId(wsRes.data.activeWorkspaceId);
-      }
-      setHasPassword(pw.hasPassword);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [status]);
+  // Derived, not synced: until the user picks, show the interval they're
+  // already billed on so the toggle reflects reality rather than defaulting to
+  // monthly and needing an effect to correct itself.
+  const planInterval =
+    data.plan.state === "ready" ? data.plan.data.interval : null;
+  const interval: BillingInterval = intervalChoice ?? planInterval ?? "month";
+  const setInterval = setIntervalChoice;
 
   useEffect(() => {
     if (!billingStatusParam) return;
@@ -103,418 +65,404 @@ export function AccountPage() {
     setParams(next, { replace: true });
   }, [billingStatusParam, params, setParams]);
 
+  const startCheckout = useCallback(
+    async (id: PaidPlanId, chosen: BillingInterval) => {
+      setError(null);
+      const result = await run(`checkout-${id}`, async () => {
+        const response = await billingApi.createCheckout(id, chosen);
+        if (response.success) {
+          window.location.href = response.data.checkoutUrl;
+          return { success: true };
+        }
+        return { success: false, error: response.error };
+      });
+      if (!result.success) setError(result.error ?? "Couldn't start checkout.");
+    },
+    [run],
+  );
+
+  // `?plan=` is the handoff from the pricing CTAs.
+  const planIntent = params.get("plan");
+  const canCheckout =
+    data.plan.state === "ready" ? data.plan.data.canCheckout : false;
   useEffect(() => {
-    const intent = params.get("plan");
-    if (!intent || !plan?.canCheckout) return;
-    if (!["lite", "starter", "pro"].includes(intent)) return;
-    const next = new URLSearchParams(params);
-    next.delete("plan");
-    setParams(next, { replace: true });
+    if (!planIntent || !canCheckout) return;
+    if (!["lite", "starter", "pro"].includes(planIntent)) return;
     void (async () => {
-      setBusy("checkout");
-      const result = await billingApi.createCheckout(
-        intent as PaidPlanId,
-        interval,
-      );
-      setBusy(null);
-      if (result.success) window.location.href = result.data.checkoutUrl;
-      else setError(result.error);
+      const next = new URLSearchParams(params);
+      next.delete("plan");
+      setParams(next, { replace: true });
+      await startCheckout(planIntent as PaidPlanId, interval);
     })();
-  }, [params, plan, interval, setParams]);
+  }, [planIntent, canCheckout, params, setParams, interval, startCheckout]);
 
   if (status === "loading") {
-    return (
-      <div className="flex min-h-dvh flex-col bg-[#f7fbfc]">
-        <SiteHeader />
-        <main className="flex flex-1 items-center justify-center text-sm text-[#627c86]">
-          Loading account…
-        </main>
-      </div>
-    );
+    return <AccountSkeleton />;
   }
-
   if (status === "anonymous" || !user) {
     return <Navigate to="/login" replace />;
   }
 
-  const isOwner = plan?.canManage || plan?.canCheckout || plan?.canChangePlan;
-
-  async function run(
+  async function act(
     key: string,
     fn: () => Promise<{ success: boolean; error?: string }>,
+    successMessage: string,
   ) {
-    setBusy(key);
     setError(null);
     setMessage(null);
-    const result = await fn();
-    setBusy(null);
-    if (!result.success) setError(result.error ?? "Failed");
-    else {
-      setMessage("Done.");
-      await load();
+    const result = await run(key, fn);
+    if (result.success) {
+      setMessage(successMessage);
+      await refresh();
+    } else {
+      setError(result.error ?? "Something went wrong.");
     }
   }
 
-  return (
-    <div className="flex min-h-dvh flex-col bg-[#f7fbfc]">
-      <SiteHeader />
-      <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 py-10">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h1 className="font-geist text-3xl font-semibold tracking-tight text-[#4e4646]">
-              Account
-            </h1>
-            <p className="mt-1 text-sm text-[#627c86]">
-              {user.email ?? user.username}
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <a href={getOsOrigin()} className={btnGhost}>
-              Open OS
-            </a>
-            <button
-              type="button"
-              className={btnGhost}
-              onClick={() => void logout()}
-            >
-              Log out
-            </button>
-          </div>
-        </div>
+  const planData = data.plan.state === "ready" ? data.plan.data : null;
+  const catalogPlans =
+    data.catalog.state === "ready" ? data.catalog.data.plans : [];
+  const currentCatalog = catalogPlans.find((p) => p.id === planData?.plan);
+  const currentView = currentCatalog
+    ? catalogIntervalView(currentCatalog, planData?.interval ?? interval)
+    : null;
+  const heroPrice = currentView
+    ? (() => {
+        const money = formatMoney(currentView.price);
+        return money
+          ? `${money}${intervalSuffix(planData?.interval ?? interval)}`
+          : null;
+      })()
+    : null;
 
+  const workspaceData =
+    data.workspaces.state === "ready"
+      ? data.workspaces.data
+      : { workspaces: [], activeWorkspaceId: null };
+
+  return (
+    <div className="flex min-h-dvh flex-col bg-[var(--color-canvas)]">
+      <SiteHeader />
+      <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">
         {message ? (
-          <p className="mt-4 rounded-lg bg-[#effbfc] px-3 py-2 text-sm text-[#018fa0]">
+          <Banner tone="info" onDismiss={() => setMessage(null)}>
             {message}
-          </p>
+          </Banner>
         ) : null}
         {error ? (
-          <p className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+          <Banner tone="error" onDismiss={() => setError(null)}>
             {error}
-          </p>
+          </Banner>
         ) : null}
 
-        {!user.onboardingCompleted ? (
-          <section className="mt-6 rounded-2xl border border-[#f5d0a9] bg-[#fff8f0] p-5">
-            <h2 className="font-semibold text-[#4e4646]">Finish setup</h2>
-            <p className="mt-1 text-sm text-[#627c86]">
-              Complete onboarding in Construct OS to unlock the full product.
-            </p>
-            <a href={getOsOrigin()} className={`${btnPrimary} mt-4`}>
-              Continue in OS
-            </a>
-          </section>
-        ) : null}
+        <div className="mt-4 space-y-4">
+          <IdentityHero
+            user={user}
+            plan={data.plan}
+            priceLabel={heroPrice}
+            manageBusy={isPending("portal")}
+            onManage={() =>
+              void act(
+                "portal",
+                async () => {
+                  const result = await billingApi.createPortal();
+                  if (result.success) {
+                    window.location.href = result.data.portalUrl;
+                    return { success: true };
+                  }
+                  return { success: false, error: result.error };
+                },
+                "Opening billing…",
+              )
+            }
+          />
 
-        <section className="mt-8 rounded-2xl border border-[#dcecef] bg-white p-5">
-          <h2 className="font-geist text-lg font-semibold text-[#4e4646]">
-            Profile
-          </h2>
-          <dl className="mt-3 grid gap-2 text-sm text-[#627c86]">
-            <div>
-              <dt className="inline font-medium text-[#4e4646]">Name: </dt>
-              <dd className="inline">
-                {user.displayName ?? user.username}
-              </dd>
-            </div>
-            <div>
-              <dt className="inline font-medium text-[#4e4646]">Email: </dt>
-              <dd className="inline">{user.email ?? "—"}</dd>
-            </div>
-          </dl>
-
-          {workspaces.length > 1 ? (
-            <div className="mt-4">
-              <label className="text-sm font-medium text-[#4e4646]">
-                Active workspace
-              </label>
-              <select
-                className={`${fieldClass} mt-1`}
-                value={activeWorkspaceId ?? ""}
-                onChange={(e) => {
-                  const id = e.target.value;
-                  void (async () => {
-                    setBusy("switch");
-                    const result = await billingApi.switchWorkspace(id);
-                    setBusy(null);
-                    if (!result.success) setError(result.error);
-                    else {
-                      setActiveWorkspaceId(id);
-                      await load();
-                      await refresh();
-                    }
-                  })();
-                }}
-              >
-                {workspaces.map((ws) => (
-                  <option key={ws.id} value={ws.id}>
-                    {ws.name} ({ws.kind})
-                  </option>
-                ))}
-              </select>
-            </div>
-          ) : null}
-
-          <form
-            className="mt-6 space-y-3 border-t border-[#eff3f5] pt-5"
-            onSubmit={(e) => {
-              e.preventDefault();
-              void run("password", async () =>
-                authApi.passwordSet({
-                  currentPassword: hasPassword ? pwCurrent : undefined,
-                  password: pwNext,
-                  passwordConfirm: pwConfirm,
-                }),
-              );
-            }}
-          >
-            <h3 className="text-sm font-semibold text-[#4e4646]">
-              {hasPassword ? "Change password" : "Set password"}
-            </h3>
-            {hasPassword ? (
-              <input
-                className={fieldClass}
-                type="password"
-                placeholder="Current password"
-                value={pwCurrent}
-                onChange={(e) => setPwCurrent(e.target.value)}
-                required
-              />
-            ) : null}
-            <input
-              className={fieldClass}
-              type="password"
-              minLength={12}
-              placeholder="New password (12+)"
-              value={pwNext}
-              onChange={(e) => setPwNext(e.target.value)}
-              required
-            />
-            <input
-              className={fieldClass}
-              type="password"
-              minLength={12}
-              placeholder="Confirm password"
-              value={pwConfirm}
-              onChange={(e) => setPwConfirm(e.target.value)}
-              required
-            />
-            <button
-              type="submit"
-              className={btnPrimary}
-              disabled={busy === "password"}
+          {!user.onboardingCompleted ? (
+            <Card
+              index={1}
+              className="border-[var(--color-warn-line)] bg-[var(--color-warn-tint)]"
             >
-              Save password
-            </button>
-          </form>
-        </section>
-
-        <section className="mt-6 rounded-2xl border border-[#dcecef] bg-white p-5">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="font-geist text-lg font-semibold text-[#4e4646]">
-              Billing
-            </h2>
-            <div className="inline-flex rounded-full border border-[#dcecef] p-0.5 text-xs">
-              <button
-                type="button"
-                className={`rounded-full px-3 py-1.5 ${interval === "month" ? "bg-black text-white" : "text-[#627c86]"}`}
-                onClick={() => setInterval("month")}
-              >
-                Monthly
-              </button>
-              <button
-                type="button"
-                className={`rounded-full px-3 py-1.5 ${interval === "year" ? "bg-black text-white" : "text-[#627c86]"}`}
-                onClick={() => setInterval("year")}
-              >
-                Annual
-              </button>
-            </div>
-          </div>
-
-          {plan ? (
-            <div className="mt-3 text-sm text-[#627c86]">
-              <p>
-                Current plan:{" "}
-                <span className="font-semibold capitalize text-[#4e4646]">
-                  {plan.plan}
-                </span>{" "}
-                · {plan.status}
-                {plan.cancelAtPeriodEnd ? " (cancels at period end)" : ""}
+              <h2 className="font-geist font-semibold text-[var(--color-ink)]">
+                Finish setup
+              </h2>
+              <p className="mt-1 text-sm text-[var(--color-ink-muted)]">
+                Complete onboarding in Construct OS to unlock the full product.
               </p>
-              {plan.usage ? (
-                <p className="mt-1">
-                  Usage — session {Math.round(plan.usage.sessionPct ?? 0)}%,
-                  monthly {Math.round(plan.usage.monthlyPct ?? 0)}%
-                </p>
-              ) : null}
-              {plan.ownerUsage ? (
-                <p className="mt-1">
-                  Agents {plan.ownerUsage.agentsUsed ?? 0}/
-                  {plan.ownerUsage.agentsMax ?? "—"} · Storage{" "}
-                  {formatBytes(plan.ownerUsage.storageBytesUsed)} /{" "}
-                  {formatBytes(plan.ownerUsage.storageBytesMax)}
-                </p>
-              ) : null}
-            </div>
-          ) : (
-            <p className="mt-3 text-sm text-[#627c86]">Loading plan…</p>
-          )}
-
-          {!isOwner ? (
-            <p className="mt-4 text-sm text-[#627c86]">
-              Only the workspace owner can change billing. You can still view
-              status here.
-            </p>
-          ) : (
-            <div className="mt-5 grid gap-3 sm:grid-cols-3">
-              {(["lite", "starter", "pro"] as const).map((id) => {
-                const cat = catalog.find((p) => p.id === id);
-                const price = cat?.prices?.[interval];
-                const current = plan?.plan === id;
-                return (
-                  <div
-                    key={id}
-                    className="rounded-xl border border-[#eff3f5] p-4"
-                  >
-                    <p className="font-semibold capitalize text-[#4e4646]">
-                      {id}
-                    </p>
-                    <p className="mt-1 text-sm text-[#627c86]">
-                      {price
-                        ? `${(price.amount / 100).toFixed(0)} ${price.currency.toUpperCase()}/${interval === "year" ? "yr" : "mo"}`
-                        : "—"}
-                    </p>
-                    {current ? (
-                      <p className="mt-3 text-xs font-medium text-[#018fa0]">
-                        Current
-                      </p>
-                    ) : plan?.canCheckout ? (
-                      <button
-                        type="button"
-                        className={`${btnPrimary} mt-3 w-full`}
-                        disabled={busy === `checkout-${id}`}
-                        onClick={() =>
-                          void (async () => {
-                            setBusy(`checkout-${id}`);
-                            const result = await billingApi.createCheckout(
-                              id,
-                              interval,
-                            );
-                            setBusy(null);
-                            if (result.success) {
-                              window.location.href = result.data.checkoutUrl;
-                            } else setError(result.error);
-                          })()
-                        }
-                      >
-                        Subscribe
-                      </button>
-                    ) : plan?.canChangePlan ? (
-                      <button
-                        type="button"
-                        className={`${btnGhost} mt-3 w-full`}
-                        disabled={busy === `change-${id}`}
-                        onClick={() =>
-                          void run(`change-${id}`, async () => {
-                            const r = await billingApi.changePlan(id, interval);
-                            return r.success
-                              ? { success: true }
-                              : { success: false, error: r.error };
-                          })
-                        }
-                      >
-                        Switch
-                      </button>
-                    ) : null}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {isOwner ? (
-            <div className="mt-5 flex flex-wrap gap-2">
-              {plan?.canManage ? (
-                <button
-                  type="button"
-                  className={btnGhost}
-                  disabled={!!busy}
-                  onClick={() =>
-                    void (async () => {
-                      setBusy("portal");
-                      const r = await billingApi.createPortal();
-                      setBusy(null);
-                      if (r.success) window.location.href = r.data.portalUrl;
-                      else setError(r.error);
-                    })()
-                  }
-                >
-                  Manage billing
-                </button>
-              ) : null}
-              {plan?.canManage ? (
-                <button
-                  type="button"
-                  className={btnGhost}
-                  disabled={!!busy}
-                  onClick={() =>
-                    void (async () => {
-                      setBusy("payment");
-                      const r = await billingApi.updatePaymentMethod();
-                      setBusy(null);
-                      if (r.success) window.location.href = r.data.url;
-                      else setError(r.error);
-                    })()
-                  }
-                >
-                  Update payment
-                </button>
-              ) : null}
-              {plan?.canManage &&
-              plan.plan !== "unsubscribed" &&
-              !plan.cancelAtPeriodEnd ? (
-                <button
-                  type="button"
-                  className={btnGhost}
-                  disabled={!!busy}
-                  onClick={() =>
-                    void run("cancel", async () => {
-                      const r = await billingApi.cancelSubscription();
-                      return r.success
-                        ? { success: true }
-                        : { success: false, error: r.error };
-                    })
-                  }
-                >
-                  Cancel at period end
-                </button>
-              ) : null}
-              {plan?.cancelAtPeriodEnd ? (
-                <button
-                  type="button"
-                  className={btnGhost}
-                  disabled={!!busy}
-                  onClick={() =>
-                    void run("resume", async () => {
-                      const r = await billingApi.resumeSubscription();
-                      return r.success
-                        ? { success: true }
-                        : { success: false, error: r.error };
-                    })
-                  }
-                >
-                  Resume subscription
-                </button>
-              ) : null}
-            </div>
+              <a
+                href={getOsOrigin()}
+                className={cn(
+                  buttonVariants({ variant: "primary" }),
+                  "mt-4 no-underline",
+                )}
+              >
+                Continue in OS
+              </a>
+            </Card>
           ) : null}
-        </section>
 
-        <p className="mt-8 text-center text-sm text-[#627c86]">
-          <Link to="/" className="text-[#018fa0]">
+          <PlanSection
+            index={2}
+            plan={data.plan}
+            catalog={data.catalog}
+            interval={interval}
+            onIntervalChange={setInterval}
+            isPending={isPending}
+            onRetry={refresh}
+            onCheckout={(id) => void startCheckout(id, interval)}
+            onChangePlan={(id) => setPendingSwitch(id)}
+          />
+
+          <UsageSection index={3} plan={data.plan} onRetry={refresh} />
+
+          {data.byok ? (
+            <ByokSection
+              index={4}
+              settings={data.byok}
+              models={data.byokModels}
+              byokUsage={planData?.byokUsage}
+              isPending={isPending}
+              onRetry={refresh}
+              onSetKey={(provider, apiKey, region) =>
+                void act(
+                  `byok-key-${provider}`,
+                  async () => {
+                    const result = await llmApi.setByokKey(
+                      provider,
+                      apiKey,
+                      region,
+                    );
+                    return result.success
+                      ? { success: true }
+                      : { success: false, error: result.error };
+                  },
+                  "Key saved.",
+                )
+              }
+              onRemoveKey={(provider) =>
+                void act(
+                  `byok-key-${provider}`,
+                  async () => {
+                    const result = await llmApi.removeByokKey(provider);
+                    return result.success
+                      ? { success: true }
+                      : { success: false, error: result.error };
+                  },
+                  "Key removed.",
+                )
+              }
+              onUpdate={(input) =>
+                void act(
+                  input.slots
+                    ? "byok-slots"
+                    : input.mode
+                      ? "byok-mode"
+                      : "byok-limit",
+                  async () => {
+                    const result = await llmApi.updateByokSettings(input);
+                    return result.success
+                      ? { success: true }
+                      : { success: false, error: result.error };
+                  },
+                  "Key settings updated.",
+                )
+              }
+            />
+          ) : null}
+
+          <ProfileSection
+            // Remount on a different account so the form reseeds from the new
+            // user rather than syncing props into state.
+            key={user.id}
+            index={5}
+            user={user}
+            workspaces={workspaceData.workspaces}
+            activeWorkspaceId={workspaceData.activeWorkspaceId}
+            saving={isPending("profile")}
+            switching={isPending("workspace")}
+            onSave={(input) =>
+              void act(
+                "profile",
+                async () => {
+                  const result = await authApi.updateProfile(input);
+                  if (result.success) {
+                    await refreshAuth();
+                    return { success: true };
+                  }
+                  return { success: false, error: result.error };
+                },
+                "Profile updated.",
+              )
+            }
+            onSwitchWorkspace={(id) =>
+              void act(
+                "workspace",
+                async () => {
+                  const result = await billingApi.switchWorkspace(id);
+                  if (result.success) {
+                    await refreshAuth();
+                    return { success: true };
+                  }
+                  return { success: false, error: result.error };
+                },
+                "Workspace switched.",
+              )
+            }
+          />
+
+          <SecuritySection
+            index={6}
+            hasPassword={data.hasPassword}
+            sessions={data.sessions}
+            isPending={isPending}
+            onRetry={refresh}
+            onLogout={() => void logout()}
+            onSetPassword={(input) =>
+              void act(
+                "password",
+                () => authApi.passwordSet(input),
+                "Password updated. Other sessions were signed out.",
+              )
+            }
+            onRevokeSession={(id) =>
+              void act(
+                `revoke-${id}`,
+                async () => {
+                  const result = await authApi.revokeSession(id);
+                  return result.success
+                    ? { success: true }
+                    : { success: false, error: result.error };
+                },
+                "Session signed out.",
+              )
+            }
+          />
+
+          <BillingActionsSection
+            index={7}
+            plan={data.plan}
+            isPending={isPending}
+            onPortal={() =>
+              void act(
+                "portal",
+                async () => {
+                  const result = await billingApi.createPortal();
+                  if (result.success) {
+                    window.location.href = result.data.portalUrl;
+                    return { success: true };
+                  }
+                  return { success: false, error: result.error };
+                },
+                "Opening billing…",
+              )
+            }
+            onPaymentMethod={() =>
+              void act(
+                "payment-method",
+                async () => {
+                  const result = await billingApi.updatePaymentMethod();
+                  if (result.success) {
+                    window.location.href = result.data.url;
+                    return { success: true };
+                  }
+                  return { success: false, error: result.error };
+                },
+                "Opening payment details…",
+              )
+            }
+            onCancel={() => setConfirmCancel(true)}
+            onResume={() =>
+              void act(
+                "resume",
+                async () => {
+                  const result = await billingApi.resumeSubscription();
+                  return result.success
+                    ? { success: true }
+                    : { success: false, error: result.error };
+                },
+                "Subscription resumed.",
+              )
+            }
+          />
+        </div>
+
+        <p className="mt-8 text-center text-sm">
+          <Link to="/" className="text-[var(--color-brand-strong)]">
             Back to home
           </Link>
         </p>
+      </main>
+      <SiteFooter />
+
+      <ConfirmDialog
+        open={confirmCancel}
+        onOpenChange={setConfirmCancel}
+        destructive
+        title="Cancel your subscription?"
+        description="You'll keep full access until the end of the current billing period, then drop to the free tier."
+        confirmLabel="Cancel subscription"
+        cancelLabel="Keep it"
+        busy={isPending("cancel")}
+        onConfirm={() => {
+          setConfirmCancel(false);
+          void act(
+            "cancel",
+            async () => {
+              const result = await billingApi.cancelSubscription();
+              return result.success
+                ? { success: true }
+                : { success: false, error: result.error };
+            },
+            "Subscription will end at the period close.",
+          );
+        }}
+      />
+
+      <ConfirmDialog
+        open={pendingSwitch != null}
+        onOpenChange={(open) => !open && setPendingSwitch(null)}
+        title={`Switch to ${pendingSwitch ?? ""}?`}
+        description="Your plan changes immediately and billing is prorated by our payment provider."
+        confirmLabel="Switch plan"
+        busy={pendingSwitch ? isPending(`change-${pendingSwitch}`) : false}
+        onConfirm={() => {
+          const target = pendingSwitch;
+          setPendingSwitch(null);
+          if (!target) return;
+          void act(
+            `change-${target}`,
+            async () => {
+              const result = await billingApi.changePlan(target, interval);
+              return result.success
+                ? { success: true }
+                : { success: false, error: result.error };
+            },
+            "Plan updated.",
+          );
+        }}
+      />
+    </div>
+  );
+}
+
+/**
+ * Renders the real page frame, including the footer, so nothing shifts when
+ * auth resolves. The old loading branch dropped the footer entirely.
+ */
+function AccountSkeleton() {
+  return (
+    <div className="flex min-h-dvh flex-col bg-[var(--color-canvas)]">
+      <SiteHeader />
+      <main
+        id="main"
+        aria-busy="true"
+        aria-label="Loading your account"
+        className="mx-auto w-full max-w-3xl flex-1 px-4 py-8"
+      >
+        <div className="space-y-4">
+          <div className="h-32 rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white" />
+          <div className="h-56 rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white" />
+          <div className="h-40 rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white" />
+        </div>
       </main>
       <SiteFooter />
     </div>

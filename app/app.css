@@ -11,12 +11,39 @@
   --default-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-snap: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Named from the hexes already repeated across the site (#01b4c8 x60,
+     #4e4646 x58, #627c86 x43) so account/login stop re-inventing them. */
+  --color-brand: #01b4c8;
+  --color-brand-strong: #018fa0;
+  --color-brand-tint: #effbfc;
+  --color-ink: #4e4646;
+  --color-ink-muted: #627c86;
+  --color-ink-subtle: #8a9aa2;
+  --color-line: #dcecef;
+  --color-line-soft: #eff3f5;
+  --color-canvas: #f7fbfc;
+  --color-surface: #ffffff;
+  --color-warn-line: #f5d0a9;
+  --color-warn-tint: #fff8f0;
+  --color-danger: #b42318;
+  --color-danger-tint: #fef3f2;
+  --color-positive: #067647;
+
+  --radius-card: 1rem;
+  --radius-control: 0.75rem;
+  --radius-pill: 9999px;
+
+  --shadow-card: 0 1px 2px rgba(37, 72, 82, 0.04);
+  --shadow-raised: 0 8px 30px rgba(37, 72, 82, 0.06);
+  --shadow-overlay: 0 24px 60px rgba(37, 72, 82, 0.18);
 }
 
 :root {
   --dur-press: 120ms;
   --dur-hover: 160ms;
   --dur-enter: 220ms;
+  --dur-panel: 260ms;
 }
 
 html {
@@ -95,6 +122,133 @@ button:focus-visible,
   }
 }
 
+/* Account / login motion. Enter states are keyframes (fire once); anything the
+   user can interrupt stays a transition. */
+
+@keyframes account-section-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Stagger: each section follows the one above it. */
+.account-section {
+  animation: account-section-in var(--dur-enter) var(--ease-snap) both;
+  animation-delay: calc(var(--section-index, 0) * 40ms);
+}
+
+@keyframes banner-pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0) scale(1.008);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+/* The one place overshoot is earned: a banner is an arrival worth noticing. */
+.banner-enter {
+  animation: banner-pop-in var(--dur-panel) var(--ease-snap) both;
+}
+
+/* Direction-aware: forward slides left, back slides right. */
+@keyframes panel-in-forward {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes panel-in-back {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.auth-panel[data-direction="forward"] {
+  animation: panel-in-forward var(--dur-enter) var(--ease-snap) both;
+}
+
+.auth-panel[data-direction="back"] {
+  animation: panel-in-back var(--dur-enter) var(--ease-snap) both;
+}
+
+/* Height follows the panel instead of snapping. */
+.auth-panel-frame {
+  transition: height var(--dur-panel) var(--ease-snap);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Materialize: scale and opacity together, so it arrives rather than blinks. */
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes skeleton-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-line-soft) 25%,
+    #f7fafb 37%,
+    var(--color-line-soft) 63%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+/* Meters animate width; tabular digits keep the number from jittering. */
+.meter-fill {
+  transition:
+    width var(--dur-panel) var(--ease-snap),
+    background-color var(--dur-hover) var(--ease-snap);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -105,6 +259,25 @@ button:focus-visible,
   .site-cta-pill:hover,
   .site-cta-pill:active {
     transform: none;
+  }
+
+  /* Keep the feedback, drop the travel: cross-fade instead of slide/overshoot. */
+  .account-section,
+  .banner-enter,
+  .auth-panel[data-direction="forward"],
+  .auth-panel[data-direction="back"] {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .auth-panel-frame,
+  .meter-fill {
+    transition-duration: 1ms;
+  }
+
+  .skeleton {
+    animation: none;
   }
 }
 

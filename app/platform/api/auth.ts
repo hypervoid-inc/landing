@@ -1,16 +1,17 @@
-import { getApiBaseUrl, getReturnOrigin } from "../env";
-import { apiRequest } from "./client";
+import { z } from "zod";
 
-export type AuthUser = {
-  id: string;
-  username: string;
-  email: string | null;
-  displayName: string | null;
-  avatarUrl: string | null;
-  timezone: string | null;
-  onboardingCompleted: boolean;
-  createdAt: string;
-};
+import { getApiBaseUrl, getReturnOrigin } from "../env";
+import { apiRequest, type ApiResult } from "./client";
+import {
+  AuthUserSchema,
+  MeResponseSchema,
+  PasswordStatusSchema,
+  SessionListSchema,
+} from "./schemas";
+
+export type { AuthSession, AuthUser, SessionSurface } from "./schemas";
+
+import type { AuthUser } from "./schemas";
 
 export function getGoogleAuthUrl(): string {
   const url = new URL(`${getApiBaseUrl()}/auth/google`);
@@ -29,11 +30,20 @@ export async function exchangeCode(code: string): Promise<boolean> {
 }
 
 export async function getMe(): Promise<
-  { success: true; user: AuthUser } | { success: false; error: string }
+  | { success: true; user: AuthUser }
+  | { success: false; error: string; unauthenticated: boolean }
 > {
-  const result = await apiRequest<AuthUser>("/auth/me");
-  if (!result.success) return { success: false, error: result.error };
-  return { success: true, user: result.data };
+  const result = await apiRequest("/auth/me", { schema: MeResponseSchema });
+  if (!result.success) {
+    return {
+      success: false,
+      error: result.error,
+      // A 401 is a signed-out user, not a failure worth showing an error for.
+      unauthenticated: result.status === 401,
+    };
+  }
+  const user = "user" in result.data ? result.data.user : result.data;
+  return { success: true, user };
 }
 
 export async function logout(): Promise<void> {
@@ -222,11 +232,15 @@ export async function passwordReset(input: {
   return { success: true, user: data?.user };
 }
 
-export async function passwordStatus(): Promise<{ hasPassword: boolean }> {
-  const result = await apiRequest<{ hasPassword: boolean }>(
-    "/auth/password/status",
-  );
-  return result.success ? result.data : { hasPassword: false };
+/**
+ * Returns the result rather than a bare boolean: swallowing the error made a
+ * network blip look like "no password set", which silently drops the
+ * current-password field and turns a change into an unverified set.
+ */
+export async function passwordStatus(): Promise<
+  ApiResult<{ hasPassword: boolean }>
+> {
+  return apiRequest("/auth/password/status", { schema: PasswordStatusSchema });
 }
 
 export async function passwordSet(input: {
@@ -234,13 +248,35 @@ export async function passwordSet(input: {
   password: string;
   passwordConfirm: string;
 }): Promise<{ success: boolean; error?: string }> {
-  const result = await apiRequest<{ ok: true }>("/auth/password/set", {
+  const result = await apiRequest("/auth/password/set", {
     method: "POST",
     body: JSON.stringify(input),
   });
   return result.success
     ? { success: true }
     : { success: false, error: result.error };
+}
+
+export async function updateProfile(input: {
+  displayName?: string;
+  timezone?: string;
+}) {
+  return apiRequest("/auth/profile", {
+    method: "PATCH",
+    schema: AuthUserSchema,
+    body: JSON.stringify(input),
+  });
+}
+
+export async function listSessions() {
+  return apiRequest("/auth/sessions", { schema: SessionListSchema });
+}
+
+export async function revokeSession(id: string) {
+  return apiRequest(`/auth/sessions/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    schema: z.object({ ok: z.boolean(), revoked: z.boolean().optional() }),
+  });
 }
 
 export async function redeemPasswordSetCode(

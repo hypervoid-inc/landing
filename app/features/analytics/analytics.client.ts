@@ -1,5 +1,7 @@
 import type { Properties } from "posthog-js";
 
+import { scrubNetworkCapture } from "./scrub-network-capture";
+
 type AnalyticsEvent =
   | "app_opened"
   | "beta_access_opened"
@@ -41,6 +43,8 @@ export function initializeAnalytics() {
     );
     // ponytail: intentional max capture for product ops — unmask + network bodies.
     // Ceiling: PII in replay/network (incl. beta email); tighten via masks + project scrubbing.
+    // Credentials are the hard line: `scrubNetworkCapture` drops password and BYOK
+    // key payloads before they reach the recording. See scrub-network-capture.ts.
     posthog.init(key, {
       api_host: resolvePostHogHost(),
       ui_host: POSTHOG_UI_HOST,
@@ -62,10 +66,13 @@ export function initializeAnalytics() {
       secure_cookie: true,
       session_recording: {
         maskAllInputs: false,
+        // Password and BYOK key fields still mask, whatever the global setting.
+        maskInputOptions: { password: true },
         maskTextSelector: null,
         recordCrossOriginIframes: true,
         recordHeaders: true,
         recordBody: true,
+        maskCapturedNetworkRequestFn: scrubNetworkCapture,
         captureCanvas: { recordCanvas: true },
         collectFonts: true,
       },
