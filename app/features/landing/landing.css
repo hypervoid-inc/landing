@@ -328,8 +328,19 @@
   min-height: 0;
 }
 
+.pricing-card[data-recommended] {
+  box-shadow:
+    0 0 0 1px rgb(1 180 200 / 35%),
+    0 12px 40px rgb(1 180 200 / 18%),
+    0 18px 48px rgb(57 148 154 / 10%);
+}
+
 .pricing-border {
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 55%);
+}
+
+.pricing-card[data-recommended] .pricing-border {
+  border-color: #01b4c8;
 }
 
 .pricing-visual {
@@ -664,6 +675,13 @@
     box-shadow var(--dur-hover) var(--ease-snap);
 }
 
+.pricing-card:not([data-recommended]) .pricing-button {
+  border-color: rgb(1 180 200 / 28%);
+  background: #effbfc;
+  color: #014e59;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 80%);
+}
+
 .pricing-button:active {
   transform: scale(0.97);
   transition-duration: var(--dur-press);
@@ -676,6 +694,12 @@
       inset 0 -5px 14px rgb(255 255 255 / 92%),
       inset 0 4px 14px rgb(255 255 255 / 91%),
       0 16px 32px rgb(1 180 200 / 30%);
+  }
+
+  .pricing-card:not([data-recommended]) .pricing-button:hover {
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 80%),
+      0 8px 20px rgb(1 180 200 / 14%);
   }
 
   .pricing-button:hover:active {

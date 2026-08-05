@@ -12,12 +12,15 @@ export function AuthPanelFrame({
   panelKey,
   depth,
   children,
+  /** When false, skip overflow clip + height lock so focus rings / CTA glow aren't cut off. */
+  clip = true,
 }: {
   /** Changes when the visible panel changes; drives the enter animation. */
   panelKey: string;
   /** Position in the flow. Higher means further along. */
   depth: number;
   children: ReactNode;
+  clip?: boolean;
 }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number | null>(null);
@@ -32,6 +35,7 @@ export function AuthPanelFrame({
   }
 
   useLayoutEffect(() => {
+    if (!clip) return;
     const element = contentRef.current;
     if (!element) return;
 
@@ -43,14 +47,18 @@ export function AuthPanelFrame({
     const observer = new ResizeObserver(sync);
     observer.observe(element);
     return () => observer.disconnect();
-  }, [panelKey, depth]);
+  }, [panelKey, depth, clip]);
 
   return (
     <div
-      className="auth-panel-frame relative overflow-hidden"
-      style={height == null ? undefined : { height }}
+      className={
+        clip
+          ? "auth-panel-frame relative overflow-hidden"
+          : "auth-panel-frame relative overflow-visible"
+      }
+      style={clip && height != null ? { height } : undefined}
     >
-      <div ref={contentRef}>
+      <div ref={contentRef} className={clip ? "px-1 py-1" : undefined}>
         <div key={panelKey} className="auth-panel" data-direction={direction}>
           {children}
         </div>

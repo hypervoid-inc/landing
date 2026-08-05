@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router";
 import { companyLinks, comparisonLinks } from "../../content/landing";
 import { useAuth } from "../../features/auth/auth-provider";
 import { BetaLink, StartLink } from "../../features/landing/beta-access";
-import { getOsOrigin } from "../../platform/env";
+import { UserMenu } from "./user-menu";
 
 function navCurrent(pathname: string, href: string): "page" | undefined {
   if (href.startsWith("/#")) return undefined;
@@ -78,37 +78,16 @@ export function SiteHeader() {
           </Link>
         </nav>
         {status === "authenticated" && user ? (
-          <>
-            <Link
-              to="/account"
-              className="inline-flex min-h-10 items-center rounded-full px-2 text-[11px] font-semibold text-[#4e4646] hover:bg-[#effbfc] sm:px-3 sm:text-xs"
-            >
-              Account
-            </Link>
-            <a
-              href={getOsOrigin()}
-              className="site-cta inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:px-3 lg:px-4 lg:text-xs"
-            >
-              Open OS
-            </a>
-          </>
+          <UserMenu user={user} />
         ) : (
-          <>
-            <Link
-              to="/login"
-              className="hidden min-h-10 items-center rounded-full px-2 text-[11px] font-semibold text-[#4e4646] hover:bg-[#effbfc] sm:inline-flex sm:px-3 sm:text-xs"
-            >
-              Log in
-            </Link>
-            <StartLink
-              source="nav"
-              label="Start using Construct"
-              className="site-cta inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:px-3 lg:px-4 lg:text-xs"
-            >
-              <span className="sm:hidden">Start now</span>
-              <span className="hidden sm:inline">Start Now</span>
-            </StartLink>
-          </>
+          <StartLink
+            source="nav"
+            label="Start using Construct"
+            className="site-cta inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:px-3 lg:px-4 lg:text-xs"
+          >
+            <span className="sm:hidden">Start now</span>
+            <span className="hidden sm:inline">Start Now</span>
+          </StartLink>
         )}
       </div>
     </header>

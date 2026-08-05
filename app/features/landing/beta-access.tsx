@@ -12,6 +12,7 @@ import {
   type MouseEvent,
   type ReactNode,
 } from "react";
+import { useNavigate } from "react-router";
 
 import canvasConfetti from "canvas-confetti";
 
@@ -23,11 +24,13 @@ if (typeof document !== "undefined") {
 }
 
 import { betaSignupSchema } from "../../../shared/beta-signup-schema";
+import { getOsOrigin } from "../../platform/env";
+import { AuthSignInForm } from "../auth/auth-sign-in-form";
+import { useAuth } from "../auth/auth-provider";
 import { captureAnalytics } from "../analytics/analytics.client";
 import { usePrefersReducedMotion } from "./media";
 import "./beta-access.css";
 
-const BETA_URL = "https://os.construct.computer";
 const STORAGE_KEY = "construct_beta_access_v1";
 const TURNSTILE_SITE_KEY =
   import.meta.env.VITE_TURNSTILE_SITE_KEY ||
@@ -42,9 +45,17 @@ const referrals = [
   ["other", "Other"],
 ] as const;
 
-const BetaAccessContext = createContext<(source: string) => void>(
-  () => undefined,
-);
+export type AccessDialogMode = "auth" | "updates";
+
+export type OpenAccessDialogOptions = {
+  mode: AccessDialogMode;
+  source: string;
+  plan?: string;
+};
+
+type OpenAccessDialog = (options: OpenAccessDialogOptions) => void;
+
+const BetaAccessContext = createContext<OpenAccessDialog>(() => undefined);
 
 /**
  * Read-only companion to BetaAccessContext. Kept separate so widening it never
@@ -54,6 +65,10 @@ const BetaDialogOpenContext = createContext(false);
 
 export function useBetaDialogOpen() {
   return useContext(BetaDialogOpenContext);
+}
+
+export function useOpenAccessDialog(): OpenAccessDialog {
+  return useContext(BetaAccessContext);
 }
 
 export function hasBetaAccess() {
@@ -68,45 +83,58 @@ export function hasBetaAccess() {
 }
 
 /**
- * Direct route into the product, for warm surfaces: hero, header, pricing, and
- * the feature sections. Checkout is live, so anyone who clicks these has
- * already decided to look at the thing and an email form in front of them only
- * costs signups. Cold surfaces keep `BetaLink` and its capture instead.
+ * Warm CTAs: hero, header, workflows, Clippy, blog. Anonymous users get the
+ * on-site auth dialog; signed-in users go straight to OS.
  */
 export function StartLink({
   children,
   className = "",
   label,
   source = "unknown",
+  authedChildren,
   onClick: onBeforeClick,
 }: {
   children: ReactNode;
   className?: string;
   label?: string;
   source?: string;
+  /** When signed in, render this instead of `children` (e.g. "Open OS"). */
+  authedChildren?: ReactNode;
   onClick?: () => void;
 }) {
+  const { status } = useAuth();
+  const openDialog = useContext(BetaAccessContext);
+  const osOrigin = getOsOrigin();
+  const authenticated = status === "authenticated";
+
+  const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    onBeforeClick?.();
+    if (authenticated) {
+      captureAnalytics("app_opened", { source });
+      return;
+    }
+    event.preventDefault();
+    captureAnalytics("auth_dialog_opened", { source });
+    openDialog({ mode: "auth", source });
+  };
+
   return (
     <a
-      href={BETA_URL}
-      target="_blank"
-      rel="noreferrer"
+      href={osOrigin}
+      target={authenticated ? "_blank" : undefined}
+      rel={authenticated ? "noreferrer" : undefined}
       aria-label={label}
       className={className}
-      onClick={() => {
-        onBeforeClick?.();
-        captureAnalytics("app_opened", { source });
-      }}
+      onClick={onClick}
     >
-      {children}
+      {authenticated && authedChildren != null ? authedChildren : children}
     </a>
   );
 }
 
 /**
- * Email capture for cold surfaces: blog bodies and the footer. A reader partway
- * through an article has not decided anything yet, so trading an email for the
- * walkthrough is a fair ask where an immediate signup would not be.
+ * Email capture for cold surfaces (footer product updates). Keeps referral
+ * source; opens updates mode of the shared dialog chrome.
  */
 export function BetaLink({
   children,
@@ -119,10 +147,10 @@ export function BetaLink({
   className?: string;
   label?: string;
   source?: string;
-  /** Runs before the access branch, for callers that track their own funnel. */
   onClick?: () => void;
 }) {
-  const requestAccess = useContext(BetaAccessContext);
+  const openDialog = useContext(BetaAccessContext);
+  const osOrigin = getOsOrigin();
   const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
     onBeforeClick?.();
     if (hasBetaAccess()) {
@@ -131,12 +159,12 @@ export function BetaLink({
     }
     event.preventDefault();
     captureAnalytics("beta_access_opened", { source });
-    requestAccess(source);
+    openDialog({ mode: "updates", source });
   };
 
   return (
     <a
-      href={BETA_URL}
+      href={osOrigin}
       target="_blank"
       rel="noreferrer"
       aria-label={label}
@@ -169,15 +197,21 @@ function errorMessage(code?: string) {
   return "Signup is temporarily unavailable. Please try again soon.";
 }
 
-function BetaAccessDialog({
+function AccessDialog({
   open,
+  mode,
   source,
+  plan,
   onOpenChange,
 }: {
   open: boolean;
+  mode: AccessDialogMode;
   source: string;
+  plan?: string;
   onOpenChange: (open: boolean) => void;
 }) {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const emailId = useId();
   const errorId = useId();
   const otherId = useId();
@@ -193,9 +227,10 @@ function BetaAccessDialog({
   const [turnstileToken, setTurnstileToken] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const osOrigin = getOsOrigin();
 
   useEffect(() => {
-    if (phase !== "form") return;
+    if (mode !== "updates" || phase !== "form") return;
     const handler = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return;
@@ -212,7 +247,7 @@ function BetaAccessDialog({
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [phase, email, referral]);
+  }, [mode, phase, email, referral]);
 
   useEffect(() => {
     if (phase !== "success" || reducedMotion) return;
@@ -232,7 +267,16 @@ function BetaAccessDialog({
     right();
   }, [phase, reducedMotion]);
 
-  const submit = async (event: FormEvent) => {
+  const handleAuthSuccess = () => {
+    if (plan) {
+      onOpenChange(false);
+      navigate(`/account?plan=${plan}`, { replace: true });
+      return;
+    }
+    setPhase("success");
+  };
+
+  const submitUpdates = async (event: FormEvent) => {
     event.preventDefault();
     const normalized = email.trim().toLowerCase();
     if (
@@ -311,25 +355,59 @@ function BetaAccessDialog({
     }
   };
 
+  const canDismiss =
+    phase === "form" || (mode === "auth" && phase === "success");
+  const successName =
+    user?.displayName?.trim() || user?.username || email.trim().toLowerCase();
+
   return (
     <Dialog.Root
       open={open}
-      onOpenChange={(next) =>
-        phase === "form" || next ? onOpenChange(next) : undefined
-      }
+      onOpenChange={(next) => (canDismiss || next ? onOpenChange(next) : undefined)}
     >
       <Dialog.Portal>
         <Dialog.Overlay className="beta-dialog-overlay fixed inset-0 z-[100] bg-[#235061]/40 backdrop-blur-[2px]" />
         <Dialog.Content
-          onEscapeKeyDown={(event) =>
-            phase !== "form" && event.preventDefault()
-          }
+          onEscapeKeyDown={(event) => !canDismiss && event.preventDefault()}
           onPointerDownOutside={(event) =>
-            phase !== "form" && event.preventDefault()
+            !canDismiss && event.preventDefault()
           }
-          className="beta-dialog-content fixed left-1/2 top-1/2 z-[101] w-[calc(100%_-_2rem)] max-w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-[28px] border border-[#d9f8ff]/80 bg-white px-8 py-9 font-sans text-[#4e4646] shadow-[0_24px_80px_rgba(1,180,200,.18)] focus:outline-none"
+          className="beta-dialog-content fixed left-1/2 top-1/2 z-[101] w-[calc(100%_-_2rem)] max-w-[420px] -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-[28px] border border-[#d9f8ff]/80 bg-white px-8 py-9 font-sans text-[#4e4646] shadow-[0_24px_80px_rgba(1,180,200,.18)] focus:outline-none"
         >
-          {phase === "form" && (
+          {phase === "form" && mode === "auth" ? (
+            <>
+              <Dialog.Close
+                aria-label="Close dialog"
+                className="absolute right-5 top-5 rounded-full p-1 text-[#627c86] hover:bg-[#f3f3f3] focus-visible:outline-2 focus-visible:outline-[#01b4c8]"
+              >
+                <X aria-hidden className="h-5 w-5" />
+              </Dialog.Close>
+              <Dialog.Title className="text-balance text-center text-[26px] leading-8">
+                Start with{" "}
+                <span className="font-serif italic text-[#01b4c8]">
+                  Construct
+                </span>
+              </Dialog.Title>
+              <Dialog.Description className="mt-3 text-center text-[15px] leading-[21px] text-[#627c86]">
+                Sign in with the same account you use for Construct OS.
+              </Dialog.Description>
+              <AuthSignInForm
+                appearance="dialog"
+                onSuccess={handleAuthSuccess}
+              />
+              <p className="mt-4 text-center text-[12px] leading-[17px] text-[#627c86]">
+                Need a password reset or to create an account?{" "}
+                <a
+                  href={plan ? `/login?plan=${plan}` : "/login"}
+                  className="whitespace-nowrap text-[#01b4c8] underline underline-offset-2"
+                >
+                  Full sign-in page
+                </a>
+              </p>
+            </>
+          ) : null}
+
+          {phase === "form" && mode === "updates" ? (
             <>
               <Dialog.Close
                 aria-label="Close dialog"
@@ -348,7 +426,7 @@ function BetaAccessDialog({
                 New capabilities, real agent runs, and what we learned building
                 them. No drip sequence.
               </Dialog.Description>
-              <form className="mt-7 space-y-4" onSubmit={submit}>
+              <form className="mt-7 space-y-4" onSubmit={submitUpdates}>
                 <label htmlFor={emailId} className="sr-only">
                   Email address
                 </label>
@@ -473,11 +551,51 @@ function BetaAccessDialog({
                 </button>
               </form>
             </>
-          )}
-          {phase === "success" && (
+          ) : null}
+
+          {phase === "success" && mode === "auth" ? (
             <div className="text-center">
               <Dialog.Title className="text-balance text-2xl leading-[30px]">
-                You're on the list,{" "}
+                You&apos;re in
+                {successName ? (
+                  <>
+                    ,{" "}
+                    <span className="font-serif italic text-[#01b4c8]">
+                      {successName}
+                    </span>
+                  </>
+                ) : null}
+              </Dialog.Title>
+              <Dialog.Description className="mt-3 text-[15px] leading-[21px] text-[#627c86]">
+                Open Construct OS to start working, or close this and keep
+                browsing.
+              </Dialog.Description>
+              <a
+                href={osOrigin}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => {
+                  captureAnalytics("app_opened", { source });
+                  onOpenChange(false);
+                }}
+                className="beta-access-cta mt-8 h-[52px] w-full text-lg"
+              >
+                Open OS
+              </a>
+              <button
+                type="button"
+                className="mt-3 w-full text-sm text-[#627c86] hover:text-[#01b4c8]"
+                onClick={() => onOpenChange(false)}
+              >
+                Stay on the site
+              </button>
+            </div>
+          ) : null}
+
+          {phase === "success" && mode === "updates" ? (
+            <div className="text-center">
+              <Dialog.Title className="text-balance text-2xl leading-[30px]">
+                You&apos;re on the list,{" "}
                 <span className="font-serif italic text-[#01b4c8]">
                   {email.trim().toLowerCase()}
                 </span>
@@ -486,7 +604,7 @@ function BetaAccessDialog({
                 No need to wait for the next one. Construct is ready now.
               </Dialog.Description>
               <a
-                href={BETA_URL}
+                href={osOrigin}
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => {
@@ -498,7 +616,7 @@ function BetaAccessDialog({
                 Open Construct
               </a>
             </div>
-          )}
+          ) : null}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -508,18 +626,29 @@ function BetaAccessDialog({
 export function BetaAccessProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [source, setSource] = useState("unknown");
+  const [mode, setMode] = useState<AccessDialogMode>("auth");
+  const [plan, setPlan] = useState<string | undefined>();
 
   return (
     <BetaAccessContext.Provider
-      value={(nextSource) => {
-        setSource(nextSource);
+      value={(options) => {
+        setMode(options.mode);
+        setSource(options.source);
+        setPlan(options.plan);
         setOpen(true);
       }}
     >
       <BetaDialogOpenContext.Provider value={open}>
         {children}
         {open && (
-          <BetaAccessDialog open source={source} onOpenChange={setOpen} />
+          <AccessDialog
+            key={`${mode}-${source}-${plan ?? ""}`}
+            open
+            mode={mode}
+            source={source}
+            plan={plan}
+            onOpenChange={setOpen}
+          />
         )}
       </BetaDialogOpenContext.Provider>
     </BetaAccessContext.Provider>

@@ -4,6 +4,7 @@ import { scrubNetworkCapture } from "./scrub-network-capture";
 
 type AnalyticsEvent =
   | "app_opened"
+  | "auth_dialog_opened"
   | "beta_access_opened"
   | "beta_signup_submitted"
   | "beta_signup_granted"

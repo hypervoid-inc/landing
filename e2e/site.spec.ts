@@ -370,9 +370,38 @@ test("keeps the primary action usable in the compact mobile header", async ({
     await expect(beta).toBeVisible();
     await expect(beta.locator(".sm\\:hidden")).toHaveText("Start now");
     await expect(
+      page.locator("header").getByRole("link", { name: "Log in" }),
+    ).toHaveCount(0);
+    await expect(
       page.locator("header").getByRole("link", { name: "Affiliates" }),
     ).toBeHidden();
   }
+});
+
+test("opens the auth dialog from Start Now without leaving the site", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(
+    page.locator("header").getByRole("link", { name: "Log in" }),
+  ).toHaveCount(0);
+
+  await page
+    .locator("header")
+    .getByRole("link", { name: "Start using Construct" })
+    .click();
+  const dialog = page.getByRole("dialog");
+  await expect(
+    dialog.getByRole("heading", { name: /Start with Construct/i }),
+  ).toBeVisible();
+  await expect(
+    dialog.getByRole("link", { name: "Continue with Google" }),
+  ).toBeVisible();
+  await expect(dialog.getByPlaceholder("you@company.com")).toBeVisible();
+  await expect(
+    dialog.getByText("Where did you learn about Construct?"),
+  ).toHaveCount(0);
+  await page.getByRole("button", { name: "Close dialog" }).click();
 });
 
 test("keeps the mobile footer compact and aligned", async ({ page }) => {
@@ -507,10 +536,9 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     await page.locator("#pricing").scrollIntoViewIfNeeded();
 
     for (const plan of pricingPlans) {
-      await expect(page.getByRole("link", { name: plan.cta })).toHaveAttribute(
-        "href",
-        `/login?plan=${plan.name.toLowerCase()}`,
-      );
+      await expect(
+        page.getByRole("button", { name: plan.cta }),
+      ).toBeVisible();
     }
 
     const cards = page.locator(".pricing-card");
@@ -520,6 +548,9 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     ).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
     await expect(cards.nth(0)).toContainText("5-minute command runtime");
     await expect(cards.nth(1)).toContainText("Recommended");
+    await expect(cards.nth(1)).toHaveAttribute("data-recommended", "");
+    await expect(cards.nth(0)).not.toHaveAttribute("data-recommended");
+    await expect(cards.nth(2)).not.toHaveAttribute("data-recommended");
     await expect(cards.nth(1)).not.toContainText(
       "Daily agent work with email & schedules",
     );
@@ -724,7 +755,9 @@ test("applies live catalog recommended plan and trial highlight", async ({
   await expect(cards.nth(2).locator(".pricing-badge")).toHaveText(
     "Recommended",
   );
+  await expect(cards.nth(2)).toHaveAttribute("data-recommended", "");
   await expect(cards.nth(1).locator(".pricing-badge")).toHaveCount(0);
+  await expect(cards.nth(1)).not.toHaveAttribute("data-recommended");
   await expect(cards.nth(2)).toContainText("7-day trial");
   await expect(cards.nth(0)).not.toContainText("7-day trial");
   await expect(page.locator("#pricing")).toContainText("Plans start at $9/month");
@@ -849,14 +882,16 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
     await expect(page.locator(layer)).toBeVisible();
   }
   await expect(page.locator(".hero-scene a")).toHaveCount(7);
-  // Hero art routes straight into the product now rather than opening a gate.
-  const heroPopupPromise = page.waitForEvent("popup");
+  // Hero art opens the on-site auth dialog for anonymous visitors.
   await page
     .getByRole("link", { name: "Try Construct - research report" })
     .click();
-  const heroPopup = await heroPopupPromise;
-  await expect(heroPopup).toHaveURL("https://os.construct.computer/");
-  await heroPopup.close();
+  const heroDialog = page.getByRole("dialog");
+  await expect(
+    heroDialog.getByRole("heading", { name: /Start with Construct/i }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Close dialog" }).click();
+  await expect(heroDialog).toHaveCount(0);
   const hero = await page.locator(".hero-stage").boundingBox();
   const what = await page.locator("#what").boundingBox();
   const sectionOverlap = (hero?.y ?? 0) + (hero?.height ?? 0) - (what?.y ?? 0);
@@ -944,8 +979,7 @@ test("every landing button responds to a real click", async ({
     route.fulfill({ body: "ok" }),
   );
 
-  // Checkout is live, so warm CTAs open the product. Pricing routes anonymous
-  // buyers through /login first so plan intent survives signup.
+  // Warm CTAs open the on-site auth dialog; footer updates keep email + referral.
   const startActions = [
     "Start using Construct",
     "Start Now",
@@ -964,27 +998,32 @@ test("every landing button responds to a real click", async ({
     const count = await links.count();
     expect(count, name).toBeGreaterThan(0);
     for (let index = 0; index < count; index += 1) {
-      const popupPromise = page.waitForEvent("popup");
       await links.nth(index).click();
-      const popup = await popupPromise;
-      await expect(popup, `${name} #${index + 1}`).toHaveURL(
-        "https://os.construct.computer/",
-      );
-      await popup.close();
+      const dialog = page.getByRole("dialog");
+      await expect(
+        dialog.getByRole("heading", { name: /Start with Construct/i }),
+        `${name} #${index + 1}`,
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("link", { name: "Continue with Google" }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByText("Where did you learn about Construct?"),
+      ).toHaveCount(0);
+      await page.getByRole("button", { name: "Close dialog" }).click();
+      await expect(dialog).toHaveCount(0);
     }
   }
 
   for (const plan of pricingPlans) {
-    const link = page.getByRole("link", { name: plan.cta, exact: true });
-    await expect(link).toHaveAttribute(
-      "href",
-      `/login?plan=${plan.name.toLowerCase()}`,
-    );
-    await link.click();
-    await expect(page).toHaveURL(
-      new RegExp(`/login\\?plan=${plan.name.toLowerCase()}`),
-    );
-    await page.goto("/");
+    const cta = page.getByRole("button", { name: plan.cta, exact: true });
+    await cta.click();
+    const dialog = page.getByRole("dialog");
+    await expect(
+      dialog.getByRole("heading", { name: /Start with Construct/i }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Close dialog" }).click();
+    await expect(dialog).toHaveCount(0);
   }
 
   // The footer keeps the one email capture, for readers who are not ready yet.
@@ -998,6 +1037,9 @@ test("every landing button responds to a real click", async ({
     page.getByRole("dialog").getByRole("heading", {
       name: "Follow what Construct ships",
     }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Where did you learn about Construct?"),
   ).toBeVisible();
   await page.getByRole("button", { name: "Close dialog" }).click();
 
@@ -1135,13 +1177,9 @@ test("eases the workflow into and out of its pinned position", async ({
   expect((await sticky.boundingBox())?.y).toBeCloseTo(32, 0);
 });
 
-test("opens the product from the animated workflow CTA", async ({
-  context,
+test("opens the auth dialog from the animated workflow CTA", async ({
   page,
 }) => {
-  await context.route("https://os.construct.computer/", (route) =>
-    route.fulfill({ body: "ok" }),
-  );
   for (const viewport of [
     { width: 390, height: 844 },
     { width: 1440, height: 900 },
@@ -1159,13 +1197,15 @@ test("opens the product from the animated workflow CTA", async ({
     );
     await page.waitForTimeout(500);
 
-    const popupPromise = page.waitForEvent("popup");
     await page
       .getByRole("link", { name: workflowDemos[0]!.cta, exact: true })
       .click();
-    const popup = await popupPromise;
-    await expect(popup).toHaveURL("https://os.construct.computer/");
-    await popup.close();
+    const dialog = page.getByRole("dialog");
+    await expect(
+      dialog.getByRole("heading", { name: /Start with Construct/i }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Close dialog" }).click();
+    await expect(dialog).toHaveCount(0);
   }
 });
 

@@ -14,6 +14,7 @@ import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 import { useAuth } from "../auth/auth-provider";
+import { captureAnalytics } from "../analytics/analytics.client";
 import { createCheckout } from "../../platform/api/billing";
 import { getOsOrigin } from "../../platform/env";
 
@@ -24,7 +25,7 @@ import {
   type PricingIcon,
 } from "~/content/landing";
 
-import { StartLink } from "./beta-access";
+import { StartLink, useOpenAccessDialog } from "./beta-access";
 import { AutoVideo, useRevealOnView } from "./media";
 import {
   maxAnnualMonthsFree,
@@ -46,14 +47,29 @@ function PricingCta({
   period: BillingPeriod;
 }) {
   const { status, user } = useAuth();
+  const openDialog = useOpenAccessDialog();
   const [busy, setBusy] = useState(false);
   const planId = plan.id;
 
   if (status !== "authenticated" || !user) {
     return (
-      <Link to={`/login?plan=${planId}`} className="pricing-button">
+      <button
+        type="button"
+        className="pricing-button"
+        onClick={() => {
+          captureAnalytics("auth_dialog_opened", {
+            source: `pricing-${planId}`,
+            plan: planId,
+          });
+          openDialog({
+            mode: "auth",
+            source: `pricing-${planId}`,
+            plan: planId,
+          });
+        }}
+      >
         {plan.cta}
-      </Link>
+      </button>
     );
   }
 
@@ -134,6 +150,7 @@ function HeroHeadline() {
         <StartLink
           source="hero"
           className="landing-cta mt-7 min-h-[57px] w-[227px] px-5 text-[21px] xl:mt-8"
+          authedChildren="Open OS"
         >
           Start Now
         </StartLink>
@@ -476,6 +493,7 @@ function WorkSection() {
             <StartLink
               source="work"
               className="landing-cta min-h-[57px] w-[227px] px-5 text-[21px]"
+              authedChildren="Open OS"
             >
               Start Now
             </StartLink>
@@ -594,7 +612,8 @@ function PricingCard({
 
   return (
     <article
-      className="pricing-card reveal-item relative isolate w-full overflow-hidden rounded-[26px] bg-white shadow-[0_18px_48px_rgba(57,148,154,.08)] xl:shadow-none"
+      className={`pricing-card reveal-item relative isolate w-full overflow-hidden rounded-[26px] bg-white shadow-[0_18px_48px_rgba(57,148,154,.08)]${plan.badge ? "" : " xl:shadow-none"}`}
+      data-recommended={plan.badge ? "" : undefined}
       data-reveal-delay={String(revealDelay)}
     >
       {" "}

@@ -409,6 +409,34 @@ test.describe("/account", () => {
     ).toBeVisible();
     expect(appErrors(errors)).toEqual([]);
   });
+
+  test("opens the header account menu with Account, Open OS, and Log out", async ({
+    page,
+  }) => {
+    await stubApi(page);
+    await page.goto("/account");
+
+    const menuButton = page.getByRole("button", {
+      name: "Account menu for Ankush Singh",
+    });
+    await expect(menuButton).toBeVisible();
+    const header = page.locator("header");
+    await expect(header.getByRole("link", { name: "Account" })).toHaveCount(0);
+    await expect(header.getByRole("link", { name: /^Open OS/ })).toHaveCount(0);
+
+    await menuButton.click();
+    const menu = page.getByRole("menu");
+    await expect(menu).toBeVisible();
+    await expect(menu.getByRole("menuitem", { name: "Account" })).toBeVisible();
+    await expect(menu.getByRole("menuitem", { name: "Open OS" })).toHaveAttribute(
+      "href",
+      "https://os.construct.computer",
+    );
+    await expect(menu.getByRole("menuitem", { name: "Log out" })).toBeVisible();
+
+    await menu.getByRole("menuitem", { name: "Account" }).click();
+    await expect(page).toHaveURL(/\/account\/?$/);
+  });
 });
 
 test.describe("/login", () => {
