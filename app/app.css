@@ -59,12 +59,25 @@ body {
 
 button,
 a,
-input {
-  outline-offset: 3px;
+input,
+[tabindex] {
+  /* Tight offset — a 3px gap reads as a chunky “halo,” not a focus cue. */
+  outline-offset: 1px;
 }
 
 :focus-visible {
-  outline: 2px solid #01b4c8;
+  outline: 2px solid color-mix(in srgb, var(--color-brand) 70%, transparent);
+}
+
+/* Menus / lists that already paint a highlight on keyboard + pointer —
+   don't stack a second focus ring on top (Radix focuses the highlighted item). */
+[data-radix-collection-item]:focus,
+[data-radix-collection-item]:focus-visible,
+[role="menuitem"]:focus,
+[role="menuitem"]:focus-visible,
+[role="option"]:focus,
+[role="option"]:focus-visible {
+  outline: none;
 }
 
 :focus-visible,

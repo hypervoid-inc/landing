@@ -156,7 +156,7 @@ function HeroHeadline() {
         </StartLink>
         <Link
           to="/affiliates/"
-          className="hero-affiliate mt-8 hidden max-w-[150px] text-xs leading-4 text-[#627c86] transition-colors hover:text-[#01b4c8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] xl:block"
+          className="hero-affiliate mt-8 hidden max-w-[150px] text-xs leading-4 text-[#627c86] transition-colors hover:text-[#01b4c8] xl:block"
         >
           Affiliate program: 50% now, then 20% <span aria-hidden>→</span>
         </Link>

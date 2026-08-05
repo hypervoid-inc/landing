@@ -1,7 +1,6 @@
 import {
   Button,
-  Card,
-  CardHeader,
+  CollapsibleCard,
   Skeleton,
 } from "../../../components/ui/primitives";
 import type { BillingPlan } from "../../../platform/api/schemas";
@@ -27,10 +26,9 @@ export function BillingActionsSection({
 }) {
   if (plan.state === "loading") {
     return (
-      <Card index={index}>
-        <CardHeader title="Billing" />
+      <CollapsibleCard index={index} title="Billing" defaultOpen={false}>
         <Skeleton className="mt-4 h-10 w-full" />
-      </Card>
+      </CollapsibleCard>
     );
   }
   if (plan.state === "error") return null;
@@ -39,12 +37,22 @@ export function BillingActionsSection({
   const showPortal = canOpenBillingPortal(data);
   if (!showPortal && !data.cancelAtPeriodEnd) return null;
 
+  const summary = data.cancelAtPeriodEnd
+    ? "Cancelling at period end"
+    : showPortal
+      ? "Invoices & payment method"
+      : undefined;
+
   return (
-    <Card index={index}>
-      <CardHeader
-        title="Billing"
-        description="Invoices and payment details are handled by our payment provider."
-      />
+    <CollapsibleCard
+      index={index}
+      title="Billing"
+      summary={summary}
+      defaultOpen={false}
+    >
+      <p className="mt-1 text-sm text-[var(--color-ink-muted)]">
+        Invoices and payment details are handled by our payment provider.
+      </p>
       <div className="mt-4 flex flex-wrap gap-2">
         {showPortal ? (
           <Button busy={isPending("portal")} onClick={onPortal}>
@@ -85,6 +93,6 @@ export function BillingActionsSection({
           </Button>
         ) : null}
       </div>
-    </Card>
+    </CollapsibleCard>
   );
 }

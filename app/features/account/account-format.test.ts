@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import type { BillingPlan } from "../../platform/api/schemas";
 import {
+  billedCatalogPriceLabel,
   canOpenBillingPortal,
   formatBytes,
   formatMemberSince,
@@ -99,11 +100,50 @@ describe("planSummary", () => {
   });
 
   it("omits a null interval instead of printing 'null'", () => {
-    expect(planSummary(plan({ interval: null }))).toBe("pro");
+    expect(planSummary(plan({ interval: null, grantSource: "dodo" }))).toBe(
+      "pro",
+    );
+  });
+
+  it("labels non-Dodo grants without a billed interval", () => {
+    expect(
+      planSummary(
+        plan({ interval: null, grantSource: "manual", plan: "pro" }),
+      ),
+    ).toBe("pro · Granted");
   });
 
   it("names the unsubscribed state explicitly", () => {
     expect(planSummary(plan({ plan: "unsubscribed" }))).toBe("No active plan");
+  });
+});
+
+describe("billedCatalogPriceLabel", () => {
+  it("returns null for admin grants even with a catalog price", () => {
+    expect(
+      billedCatalogPriceLabel(
+        plan({ grantSource: "manual", interval: null }),
+        { amount: 29900, currency: "USD" },
+      ),
+    ).toBeNull();
+  });
+
+  it("returns null when Dodo interval is unknown", () => {
+    expect(
+      billedCatalogPriceLabel(plan({ interval: null }), {
+        amount: 29900,
+        currency: "USD",
+      }),
+    ).toBeNull();
+  });
+
+  it("formats a Dodo billed price", () => {
+    const label = billedCatalogPriceLabel(plan({ interval: "year" }), {
+      amount: 238_800,
+      currency: "USD",
+    });
+    expect(label).toMatch(/2,?388/);
+    expect(label).toMatch(/\/yr/);
   });
 });
 

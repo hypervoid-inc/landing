@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 import { ConfirmDialog } from "../../../components/ui/confirm-dialog";
 import {
@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   CardHeader,
+  CollapsibleCard,
   ErrorState,
   Input,
   Row,
@@ -51,6 +52,7 @@ export function ByokSection({
   onUpdate,
   isPending,
   onRetry,
+  collapsible = true,
 }: {
   index: number;
   settings: Resource<ByokSettings>;
@@ -69,56 +71,72 @@ export function ByokSection({
   }) => void;
   isPending: (key: string) => boolean;
   onRetry: () => void;
+  collapsible?: boolean;
 }) {
   const [removing, setRemoving] = useState<ByokProvider | null>(null);
 
-  if (settings.state === "loading") {
-    return (
+  const summary =
+    settings.state === "ready"
+      ? settings.data.allowed
+        ? `${MODE_LABEL[settings.data.mode]} · ${readyProviderCount(settings.data)} connected`
+        : "Upgrade to unlock"
+      : undefined;
+
+  const wrap = (body: ReactNode, description?: string) =>
+    collapsible ? (
+      <CollapsibleCard
+        index={index}
+        title="Bring your own key"
+        summary={summary}
+        defaultOpen={false}
+      >
+        {description ? (
+          <p className="mt-1 text-sm text-[var(--color-ink-muted)]">
+            {description}
+          </p>
+        ) : null}
+        {body}
+      </CollapsibleCard>
+    ) : (
       <Card index={index}>
-        <CardHeader title="Your API keys" />
-        <div className="mt-4 space-y-3">
-          <Skeleton className="h-10 w-full" />
-          <Skeleton className="h-16 w-full" />
-        </div>
+        <CardHeader title="Your API keys" description={description} />
+        {body}
       </Card>
+    );
+
+  if (settings.state === "loading") {
+    return wrap(
+      <div className="mt-4 space-y-3">
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-16 w-full" />
+      </div>,
     );
   }
 
   if (settings.state === "error") {
-    return (
-      <Card index={index}>
-        <CardHeader title="Your API keys" />
-        <ErrorState
-          message="Couldn't load your key settings."
-          onRetry={settings.retryable ? onRetry : undefined}
-        />
-      </Card>
+    return wrap(
+      <ErrorState
+        message="Couldn't load your key settings."
+        onRetry={settings.retryable ? onRetry : undefined}
+      />,
     );
   }
 
   const data = settings.data;
 
   if (!data.allowed) {
-    return (
-      <Card index={index}>
-        <CardHeader title="Your API keys" />
-        <p className="mt-3 text-sm text-[var(--color-ink-muted)]">
-          {upgradeCopy(data)}
-        </p>
-      </Card>
+    return wrap(
+      <p className="mt-3 text-sm text-[var(--color-ink-muted)]">
+        {upgradeCopy(data)}
+      </p>,
     );
   }
 
   const usage = byokUsageTotals(byokUsage);
   const anyReady = readyProviderCount(data) > 0;
 
-  return (
-    <Card index={index}>
-      <CardHeader
-        title="Your API keys"
-        description="Run inference on your own provider accounts instead of Construct's."
-      />
-
+  return wrap(
+    <>
       {/* Mode first: it decides what the keys below actually do. */}
       <div className="mt-4">
         <p className="text-sm font-medium text-[var(--color-ink)]">Mode</p>
@@ -238,7 +256,8 @@ export function ByokSection({
           if (target) onRemoveKey(target);
         }}
       />
-    </Card>
+    </>,
+    "Run inference on your own provider accounts instead of Construct's.",
   );
 }
 

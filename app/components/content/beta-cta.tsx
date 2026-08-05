@@ -22,7 +22,7 @@ export function BetaCta({
     <p className="my-8 text-center">
       <StartLink
         source={source}
-        className="inline-flex items-center gap-2.5 rounded-full border border-[#b6ecfb] bg-[#f2fcfe] py-2 pl-4 pr-5 text-[15px] font-medium text-[#017b89] no-underline transition-colors hover:bg-[#e8faff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8]"
+        className="inline-flex items-center gap-2.5 rounded-full border border-[#b6ecfb] bg-[#f2fcfe] py-2 pl-4 pr-5 text-[15px] font-medium text-[#017b89] no-underline transition-colors hover:bg-[#e8faff]"
       >
         <MascotEyes />
         {children ?? "Try Construct"}

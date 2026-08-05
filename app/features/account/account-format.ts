@@ -112,7 +112,27 @@ export function planSummary(plan: BillingPlan): string {
       : plan.interval === "month"
         ? "Monthly"
         : null;
-  return [plan.plan, interval].filter(Boolean).join(" · ");
+  // Non-Dodo grants (admin/manual) aren't a billed cycle — say so instead of
+  // implying Monthly/Annual from a missing interval.
+  const grant =
+    !interval && plan.grantSource !== "dodo" && plan.grantSource !== "none"
+      ? "Granted"
+      : null;
+  return [plan.plan, interval ?? grant].filter(Boolean).join(" · ");
+}
+
+/**
+ * Catalog list price for the hero — only when we know the real billed interval
+ * on a Dodo subscription. Never invent a price from the Monthly/Annual toggle.
+ */
+export function billedCatalogPriceLabel(
+  plan: BillingPlan,
+  catalogPrice: CatalogMoney | null | undefined,
+): string | null {
+  if (plan.grantSource !== "dodo" || plan.interval == null) return null;
+  const money = formatMoney(catalogPrice ?? null);
+  if (!money) return null;
+  return `${money}${intervalSuffix(plan.interval)}`;
 }
 
 /** "Renews 12 Mar 2027" vs "Access until 12 Mar 2027" — the distinction matters. */
@@ -135,4 +155,9 @@ export function canOpenBillingPortal(plan: BillingPlan): boolean {
     plan.plan !== "unsubscribed" &&
     plan.access
   );
+}
+
+/** Show the Lite/Starter/Pro picker only when the user can act on it. */
+export function canChangeBillingPlan(plan: BillingPlan): boolean {
+  return plan.canCheckout || plan.canChangePlan;
 }

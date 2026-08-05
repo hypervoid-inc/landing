@@ -14,7 +14,7 @@ import type {
   PaidPlanId,
 } from "../../platform/api/schemas";
 import { useAuth } from "../auth/auth-provider";
-import { formatMoney, intervalSuffix } from "./account-format";
+import { billedCatalogPriceLabel, canChangeBillingPlan } from "./account-format";
 import * as llmApi from "../../platform/api/llm";
 import { BillingActionsSection } from "./sections/billing-actions-section";
 import { ByokSection } from "./sections/byok-section";
@@ -123,22 +123,34 @@ export function AccountPage() {
   const catalogPlans =
     data.catalog.state === "ready" ? data.catalog.data.plans : [];
   const currentCatalog = catalogPlans.find((p) => p.id === planData?.plan);
-  const currentView = currentCatalog
-    ? catalogIntervalView(currentCatalog, planData?.interval ?? interval)
-    : null;
-  const heroPrice = currentView
-    ? (() => {
-        const money = formatMoney(currentView.price);
-        return money
-          ? `${money}${intervalSuffix(planData?.interval ?? interval)}`
-          : null;
-      })()
-    : null;
+  const currentView =
+    planData?.interval != null && currentCatalog
+      ? catalogIntervalView(currentCatalog, planData.interval)
+      : null;
+  const heroPrice =
+    planData && currentView
+      ? billedCatalogPriceLabel(planData, currentView.price)
+      : null;
+  const showPlanPicker = planData != null && canChangeBillingPlan(planData);
 
   const workspaceData =
     data.workspaces.state === "ready"
       ? data.workspaces.data
       : { workspaces: [], activeWorkspaceId: null };
+
+  const openPortal = () =>
+    void act(
+      "portal",
+      async () => {
+        const result = await billingApi.createPortal();
+        if (result.success) {
+          window.location.href = result.data.portalUrl;
+          return { success: true };
+        }
+        return { success: false, error: result.error };
+      },
+      "Opening billing…",
+    );
 
   return (
     <div className="flex min-h-dvh flex-col bg-[var(--color-canvas)]">
@@ -161,20 +173,7 @@ export function AccountPage() {
             plan={data.plan}
             priceLabel={heroPrice}
             manageBusy={isPending("portal")}
-            onManage={() =>
-              void act(
-                "portal",
-                async () => {
-                  const result = await billingApi.createPortal();
-                  if (result.success) {
-                    window.location.href = result.data.portalUrl;
-                    return { success: true };
-                  }
-                  return { success: false, error: result.error };
-                },
-                "Opening billing…",
-              )
-            }
+            onManage={openPortal}
           />
 
           {!user.onboardingCompleted ? (
@@ -200,38 +199,67 @@ export function AccountPage() {
             </Card>
           ) : null}
 
-          <PlanSection
+          <ProfileSection
+            // Remount on a different account so the form reseeds from the new
+            // user rather than syncing props into state.
+            key={user.id}
             index={2}
-            plan={data.plan}
-            catalog={data.catalog}
-            interval={interval}
-            onIntervalChange={setInterval}
-            isPending={isPending}
-            onRetry={refresh}
-            onCheckout={(id) => void startCheckout(id, interval)}
-            onChangePlan={(id) => setPendingSwitch(id)}
-            manageBusy={isPending("portal")}
-            onManage={() =>
+            user={user}
+            workspaces={workspaceData.workspaces}
+            activeWorkspaceId={workspaceData.activeWorkspaceId}
+            saving={isPending("profile")}
+            switching={isPending("workspace")}
+            onSave={(input) =>
               void act(
-                "portal",
+                "profile",
                 async () => {
-                  const result = await billingApi.createPortal();
+                  const result = await authApi.updateProfile(input);
                   if (result.success) {
-                    window.location.href = result.data.portalUrl;
+                    await refreshAuth();
                     return { success: true };
                   }
                   return { success: false, error: result.error };
                 },
-                "Opening billing…",
+                "Profile updated.",
+              )
+            }
+            onSwitchWorkspace={(id) =>
+              void act(
+                "workspace",
+                async () => {
+                  const result = await billingApi.switchWorkspace(id);
+                  if (result.success) {
+                    await refreshAuth();
+                    return { success: true };
+                  }
+                  return { success: false, error: result.error };
+                },
+                "Workspace switched.",
               )
             }
           />
 
           <UsageSection index={3} plan={data.plan} onRetry={refresh} />
 
+          {showPlanPicker ? (
+            <PlanSection
+              index={4}
+              plan={data.plan}
+              catalog={data.catalog}
+              interval={interval}
+              onIntervalChange={setInterval}
+              isPending={isPending}
+              onRetry={refresh}
+              onCheckout={(id) => void startCheckout(id, interval)}
+              onChangePlan={(id) => setPendingSwitch(id)}
+              manageBusy={isPending("portal")}
+              onManage={openPortal}
+            />
+          ) : null}
+
           {data.byok ? (
             <ByokSection
-              index={4}
+              index={5}
               settings={data.byok}
               models={data.byokModels}
               byokUsage={planData?.byokUsage}
@@ -284,46 +312,6 @@ export function AccountPage() {
             />
           ) : null}
 
-          <ProfileSection
-            // Remount on a different account so the form reseeds from the new
-            // user rather than syncing props into state.
-            key={user.id}
-            index={5}
-            user={user}
-            workspaces={workspaceData.workspaces}
-            activeWorkspaceId={workspaceData.activeWorkspaceId}
-            saving={isPending("profile")}
-            switching={isPending("workspace")}
-            onSave={(input) =>
-              void act(
-                "profile",
-                async () => {
-                  const result = await authApi.updateProfile(input);
-                  if (result.success) {
-                    await refreshAuth();
-                    return { success: true };
-                  }
-                  return { success: false, error: result.error };
-                },
-                "Profile updated.",
-              )
-            }
-            onSwitchWorkspace={(id) =>
-              void act(
-                "workspace",
-                async () => {
-                  const result = await billingApi.switchWorkspace(id);
-                  if (result.success) {
-                    await refreshAuth();
-                    return { success: true };
-                  }
-                  return { success: false, error: result.error };
-                },
-                "Workspace switched.",
-              )
-            }
-          />
-
           <SecuritySection
             index={6}
             hasPassword={data.hasPassword}
@@ -356,20 +344,7 @@ export function AccountPage() {
             index={7}
             plan={data.plan}
             isPending={isPending}
-            onPortal={() =>
-              void act(
-                "portal",
-                async () => {
-                  const result = await billingApi.createPortal();
-                  if (result.success) {
-                    window.location.href = result.data.portalUrl;
-                    return { success: true };
-                  }
-                  return { success: false, error: result.error };
-                },
-                "Opening billing…",
-              )
-            }
+            onPortal={openPortal}
             onPaymentMethod={() =>
               void act(
                 "payment-method",

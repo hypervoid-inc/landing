@@ -1,5 +1,10 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
+import {
+  useState,
+  type ButtonHTMLAttributes,
+  type InputHTMLAttributes,
+  type ReactNode,
+} from "react";
 
 import { cn } from "../../lib/cn";
 
@@ -144,6 +149,91 @@ export function CardHeader({
       </div>
       {action ? <div className="shrink-0">{action}</div> : null}
     </div>
+  );
+}
+
+/**
+ * Rare-config sections on /account. Collapsed by default so primary status
+ * (plan, usage, profile) stays above the fold.
+ */
+export function CollapsibleCard({
+  title,
+  summary,
+  index,
+  defaultOpen = false,
+  children,
+  className,
+}: {
+  title: string;
+  /** Shown next to the title while collapsed (e.g. "3 sessions"). */
+  summary?: string;
+  index?: number;
+  defaultOpen?: boolean;
+  children: ReactNode;
+  className?: string;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  const panelId = `collapsible-${title.toLowerCase().replace(/\s+/g, "-")}`;
+
+  return (
+    <Card index={index} className={className}>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((value) => !value)}
+        className={cn(
+          "flex w-full items-center justify-between gap-3 text-left",
+          "rounded-[var(--radius-control)]",
+        )}
+      >
+        <div className="min-w-0">
+          <h2 className="font-geist text-lg font-semibold tracking-[-0.01em] text-[var(--color-ink)]">
+            {title}
+          </h2>
+          {!open && summary ? (
+            <p className="mt-0.5 truncate text-sm text-[var(--color-ink-muted)]">
+              {summary}
+            </p>
+          ) : null}
+        </div>
+        <Chevron
+          className={cn(
+            "size-5 shrink-0 text-[var(--color-ink-muted)]",
+            "transition-transform duration-[var(--dur-hover)] ease-[var(--ease-snap)]",
+            "motion-reduce:transition-none",
+            open && "rotate-180",
+          )}
+        />
+      </button>
+      <div
+        id={panelId}
+        hidden={!open}
+        // Keep children mounted so password/BYOK form state survives collapse.
+        className={cn(!open && "hidden")}
+      >
+        {children}
+      </div>
+    </Card>
+  );
+}
+
+function Chevron({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      aria-hidden="true"
+      className={className}
+    >
+      <path
+        d="M5 7.5 10 12.5 15 7.5"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
