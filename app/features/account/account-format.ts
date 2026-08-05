@@ -59,9 +59,19 @@ export function formatMemberSince(iso: string | null | undefined): string | null
   }
 }
 
-export function relativeTime(seconds: number | null | undefined): string {
-  if (seconds == null) return "—";
-  const deltaMs = seconds * 1000 - Date.now();
+/** Relative label for a session instant (ISO string or unix seconds/ms). */
+export function relativeTime(
+  value: string | number | null | undefined,
+): string {
+  if (value == null) return "—";
+  const epochMs =
+    typeof value === "number"
+      ? value > 1e12
+        ? value
+        : value * 1000
+      : Date.parse(value);
+  if (!Number.isFinite(epochMs)) return "—";
+  const deltaMs = epochMs - Date.now();
   const abs = Math.abs(deltaMs);
   const units: Array<[Intl.RelativeTimeFormatUnit, number]> = [
     ["day", 86_400_000],
@@ -112,4 +122,17 @@ export function renewalLabel(plan: BillingPlan): string | null {
   if (plan.cancelAtPeriodEnd) return `Access until ${date}`;
   if (plan.plan === "unsubscribed") return null;
   return `Renews ${date}`;
+}
+
+/**
+ * Whether to offer the Dodo customer portal. Prefer the API flag; fall back to
+ * an active Dodo grant so owners still get Manage plan when capability bits lag.
+ */
+export function canOpenBillingPortal(plan: BillingPlan): boolean {
+  if (plan.canManage) return true;
+  return (
+    plan.grantSource === "dodo" &&
+    plan.plan !== "unsubscribed" &&
+    plan.access
+  );
 }

@@ -11,6 +11,7 @@ import type { Resource } from "../use-account-data";
 import type { BillingPlan } from "../../../platform/api/schemas";
 import {
   formatMemberSince,
+  canOpenBillingPortal,
   planStatusTone,
   planSummary,
   renewalLabel,
@@ -55,15 +56,24 @@ export function IdentityHero({
             </p>
           </div>
         </div>
-        <a
-          href={getOsOrigin()}
-          className={cn(
-            buttonVariants({ variant: "secondary" }),
-            "no-underline",
-          )}
-        >
-          Open OS ↗
-        </a>
+        <div className="flex flex-wrap items-center gap-2">
+          {plan.state === "ready" &&
+          canOpenBillingPortal(plan.data) &&
+          onManage ? (
+            <Button variant="primary" onClick={onManage} busy={manageBusy}>
+              Manage plan
+            </Button>
+          ) : null}
+          <a
+            href={getOsOrigin()}
+            className={cn(
+              buttonVariants({ variant: "secondary" }),
+              "no-underline",
+            )}
+          >
+            Open OS ↗
+          </a>
+        </div>
       </div>
 
       <div className="mt-5 border-t border-[var(--color-line-soft)] pt-4">
@@ -77,27 +87,20 @@ export function IdentityHero({
             Plan details are unavailable right now.
           </p>
         ) : (
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <p className="font-geist text-lg font-semibold capitalize text-[var(--color-ink)]">
-                  {planSummary(plan.data)}
-                </p>
-                <Badge tone={planStatusTone(plan.data)}>
-                  {plan.data.cancelAtPeriodEnd ? "cancelling" : plan.data.status}
-                </Badge>
-              </div>
-              <p className="mt-1 text-sm text-[var(--color-ink-muted)]">
-                {[priceLabel, renewalLabel(plan.data)]
-                  .filter(Boolean)
-                  .join(" · ") || "No renewal scheduled"}
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="font-geist text-lg font-semibold capitalize text-[var(--color-ink)]">
+                {planSummary(plan.data)}
               </p>
+              <Badge tone={planStatusTone(plan.data)}>
+                {plan.data.cancelAtPeriodEnd ? "cancelling" : plan.data.status}
+              </Badge>
             </div>
-            {plan.data.canManage && onManage ? (
-              <Button variant="secondary" onClick={onManage} busy={manageBusy}>
-                Manage billing
-              </Button>
-            ) : null}
+            <p className="mt-1 text-sm text-[var(--color-ink-muted)]">
+              {[priceLabel, renewalLabel(plan.data)]
+                .filter(Boolean)
+                .join(" · ") || "No renewal scheduled"}
+            </p>
           </div>
         )}
 

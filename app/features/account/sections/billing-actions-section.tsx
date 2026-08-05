@@ -5,6 +5,7 @@ import {
   Skeleton,
 } from "../../../components/ui/primitives";
 import type { BillingPlan } from "../../../platform/api/schemas";
+import { canOpenBillingPortal } from "../account-format";
 import type { Resource } from "../use-account-data";
 
 export function BillingActionsSection({
@@ -35,7 +36,8 @@ export function BillingActionsSection({
   if (plan.state === "error") return null;
 
   const data = plan.data;
-  if (!data.canManage && !data.cancelAtPeriodEnd) return null;
+  const showPortal = canOpenBillingPortal(data);
+  if (!showPortal && !data.cancelAtPeriodEnd) return null;
 
   return (
     <Card index={index}>
@@ -44,14 +46,14 @@ export function BillingActionsSection({
         description="Invoices and payment details are handled by our payment provider."
       />
       <div className="mt-4 flex flex-wrap gap-2">
-        {data.canManage ? (
+        {showPortal ? (
           <Button busy={isPending("portal")} onClick={onPortal}>
-            Invoices &amp; receipts
+            Manage plan
           </Button>
         ) : null}
 
         {/* Surfaced only when there's actually a payment problem to fix. */}
-        {data.canManage && (data.status === "on_hold" || data.paymentError) ? (
+        {showPortal && (data.status === "on_hold" || data.paymentError) ? (
           <Button
             variant="primary"
             busy={isPending("payment-method")}
@@ -59,7 +61,7 @@ export function BillingActionsSection({
           >
             Update payment method
           </Button>
-        ) : data.canManage ? (
+        ) : showPortal ? (
           <Button busy={isPending("payment-method")} onClick={onPaymentMethod}>
             Update payment method
           </Button>
@@ -73,7 +75,7 @@ export function BillingActionsSection({
           >
             Resume subscription
           </Button>
-        ) : data.canManage && data.plan !== "unsubscribed" ? (
+        ) : showPortal && data.plan !== "unsubscribed" ? (
           <Button
             variant="danger"
             busy={isPending("cancel")}

@@ -210,6 +210,21 @@ export function AccountPage() {
             onRetry={refresh}
             onCheckout={(id) => void startCheckout(id, interval)}
             onChangePlan={(id) => setPendingSwitch(id)}
+            manageBusy={isPending("portal")}
+            onManage={() =>
+              void act(
+                "portal",
+                async () => {
+                  const result = await billingApi.createPortal();
+                  if (result.success) {
+                    window.location.href = result.data.portalUrl;
+                    return { success: true };
+                  }
+                  return { success: false, error: result.error };
+                },
+                "Opening billing…",
+              )
+            }
           />
 
           <UsageSection index={3} plan={data.plan} onRetry={refresh} />

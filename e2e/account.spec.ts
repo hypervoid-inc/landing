@@ -229,6 +229,7 @@ async function stubApi(
       });
     if (path.endsWith("/auth/sessions"))
       return json(route, {
+        currentSessionId: "s1",
         sessions: [
           {
             id: "s1",
@@ -238,8 +239,8 @@ async function stubApi(
             userAgent:
               "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
             ip: "203.0.113.9",
-            createdAt: 1_760_000_000,
-            lastSeenAt: Math.floor(Date.now() / 1000) - 120,
+            createdAt: "2026-03-01T12:00:00.000Z",
+            lastSeenAt: new Date(Date.now() - 120_000).toISOString(),
             revokedAt: null,
             isCurrent: true,
           },
@@ -273,6 +274,14 @@ test.describe("/account", () => {
     await expect(page.getByText(/pro · Annual/i).first()).toBeVisible();
     await expect(page.getByText(/Renews/i).first()).toBeVisible();
 
+    // Dodo portal entry points for the billing owner.
+    await expect(
+      page.getByRole("button", { name: "Manage plan" }).first(),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /Annual · yours/i }),
+    ).toBeVisible();
+
     // Prices: previously every card showed an em dash.
     await expect(page.getByText("$2,388").first()).toBeVisible();
     await expect(page.locator("body")).not.toContainText("Loading plan");
@@ -282,6 +291,26 @@ test.describe("/account", () => {
     await expect(session).toHaveAttribute("aria-valuenow", "48");
     await expect(page.getByText("3 / 15")).toBeVisible();
     await expect(page.getByText(/412\.0 MB|411\.9 MB/)).toBeVisible();
+
+    // Sessions: ISO timestamps from the API must parse (not "Couldn't load").
+    await expect(page.getByText("This device", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).not.toContainText(
+      "Couldn't load your sessions",
+    );
+  });
+
+  test("marks Current only on the billed interval", async ({ page }) => {
+    await stubApi(page);
+    await page.goto("/account");
+
+    // Stub is annual Pro — Current on annual view.
+    await expect(page.getByText("Current")).toBeVisible();
+    await page.getByRole("button", { name: "Monthly" }).click();
+    await expect(page.getByText("Current")).toHaveCount(0);
+    await expect(page.getByText("Your annual plan")).toBeVisible();
+    await expect(
+      page.getByText(/You're billed annually/i),
+    ).toBeVisible();
   });
 
   test("shows the annual list price struck through", async ({ page }) => {
