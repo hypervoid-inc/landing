@@ -7,6 +7,7 @@ import * as authApi from "../../platform/api/auth";
 import { getTurnstileSiteKey } from "../../platform/env";
 import { AuthPanelFrame } from "./auth-panel-frame";
 import { useAuth } from "./auth-provider";
+import { markPostLoginWelcome } from "./post-login-welcome";
 
 type SignInPanel = "signin" | "magic-otp";
 
@@ -74,6 +75,11 @@ export type AuthSignInFormProps = {
   onSuccess?: () => void;
   /** Surface external error (e.g. auth provider return error). */
   externalError?: string | null;
+  /**
+   * When set (landing auth dialog), persist a welcome flag before Google or
+   * magic-email leave so the OS handoff can reopen after return.
+   */
+  postLoginWelcome?: { source: string; plan?: string };
   className?: string;
 };
 
@@ -86,6 +92,7 @@ export function AuthSignInForm({
   footer,
   onSuccess,
   externalError,
+  postLoginWelcome,
   className,
 }: AuthSignInFormProps) {
   const { setUser, clearError, refresh } = useAuth();
@@ -110,6 +117,11 @@ export function AuthSignInForm({
 
   const displayError = error ?? externalError ?? null;
 
+  function markWelcomeIfNeeded() {
+    if (!postLoginWelcome) return;
+    markPostLoginWelcome(postLoginWelcome);
+  }
+
   async function onMagicSend(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
@@ -124,6 +136,8 @@ export function AuthSignInForm({
       setError(result.error ?? "Failed");
       return;
     }
+    // Email magic links leave the page; flag bridges the return.
+    markWelcomeIfNeeded();
     setPanel("magic-otp");
   }
 
@@ -186,7 +200,11 @@ export function AuthSignInForm({
               appearance === "dialog" ? "mt-7 space-y-3" : "mt-6 space-y-3"
             }
           >
-            <a href={authApi.getGoogleAuthUrl()} className={btnSecondary}>
+            <a
+              href={authApi.getGoogleAuthUrl()}
+              className={btnSecondary}
+              onClick={() => markWelcomeIfNeeded()}
+            >
               <GoogleLogo className="shrink-0" />
               Continue with Google
             </a>

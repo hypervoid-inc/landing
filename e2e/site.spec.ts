@@ -93,19 +93,36 @@ const HOMEPAGE_CATALOG = {
   ],
 };
 
-function fulfillJson(route: Route, body: unknown) {
+function fulfillJson(route: Route, body: unknown, status = 200) {
   const origin =
     route.request().headers().origin ?? "http://localhost:8788";
+  const headers = {
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Credentials": "true",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+  };
+  if (route.request().method() === "OPTIONS") {
+    return route.fulfill({ status: 204, headers });
+  }
   return route.fulfill({
-    status: 200,
+    status,
     contentType: "application/json",
-    headers: {
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Credentials": "true",
-    },
+    headers,
     body: JSON.stringify(body),
   });
 }
+
+const WELCOME_USER = {
+  id: "22222222-2222-4222-8222-222222222222",
+  username: "ada",
+  email: "ada@example.com",
+  displayName: "Ada Lovelace",
+  avatarUrl: null,
+  timezone: "UTC",
+  onboardingCompleted: true,
+  createdAt: "2026-01-01T00:00:00.000Z",
+};
 
 async function stubPlanCatalog(
   page: Page,
@@ -402,6 +419,109 @@ test("opens the auth dialog from Start Now without leaving the site", async ({
     dialog.getByText("Where did you learn about Construct?"),
   ).toHaveCount(0);
   await page.getByRole("button", { name: "Close dialog" }).click();
+});
+
+test("opens post-login welcome from ?welcome=1 without auth", async ({
+  page,
+}) => {
+  await page.goto("/?welcome=1");
+  const dialog = page.getByRole("dialog");
+  await expect(
+    dialog.getByRole("heading", { name: /^Welcome$/i }),
+  ).toBeVisible();
+  await expect(
+    dialog.getByRole("link", { name: "Open Construct OS" }),
+  ).toBeVisible();
+  await expect(dialog.getByText(/persistent cloud workspace/i)).toBeVisible();
+  await dialog.getByRole("button", { name: "Stay on the site" }).click();
+  await expect(dialog).toBeHidden();
+});
+
+test("shows post-login welcome after dialog magic verify", async ({ page }) => {
+  await page.route(`${API}/**`, (route) => {
+    const path = new URL(route.request().url()).pathname;
+    if (path.endsWith("/auth/me")) return fulfillJson(route, {}, 401);
+    if (path.endsWith("/auth/magic")) return fulfillJson(route, { ok: true });
+    if (path.endsWith("/auth/magic/verify-otp")) {
+      return fulfillJson(route, { user: WELCOME_USER });
+    }
+    if (path.endsWith("/v1/billing/plans")) {
+      return fulfillJson(route, HOMEPAGE_CATALOG);
+    }
+    return fulfillJson(route, {});
+  });
+
+  await page.goto("/");
+  await page
+    .locator("header")
+    .getByRole("link", { name: "Start using Construct" })
+    .click();
+
+  const dialog = page.getByRole("dialog");
+  await dialog.getByPlaceholder("you@company.com").fill("ada@example.com");
+  await dialog.getByRole("button", { name: "Email me a code" }).click();
+  await expect(
+    dialog.getByText(/Enter the 6-digit code sent to ada@example.com/),
+  ).toBeVisible();
+  await dialog.getByPlaceholder("123456").fill("123456");
+  await dialog.getByRole("button", { name: "Verify" }).click();
+
+  await expect(
+    dialog.getByRole("heading", { name: /Welcome,\s*Ada/i }),
+  ).toBeVisible();
+  await expect(
+    dialog.getByRole("link", { name: "Open Construct OS" }),
+  ).toBeVisible();
+  await expect(
+    dialog.getByText(/persistent cloud workspace/i),
+  ).toBeVisible();
+
+  await dialog.getByRole("button", { name: "Stay on the site" }).click();
+  await expect(dialog).toBeHidden();
+});
+
+test("reopens welcome from seeded post-login flag when authenticated", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    // Seed once per tab — subsequent navigations must not re-arm the flag.
+    if (sessionStorage.getItem("construct.landing.postLoginWelcome.seeded") === "1") {
+      return;
+    }
+    sessionStorage.setItem("construct.landing.postLoginWelcome.seeded", "1");
+    sessionStorage.setItem(
+      "construct.landing.postLoginWelcome",
+      JSON.stringify({ source: "oauth-return", ts: Date.now() }),
+    );
+  });
+
+  await page.route(`${API}/**`, (route) => {
+    const path = new URL(route.request().url()).pathname;
+    if (path.endsWith("/auth/me")) return fulfillJson(route, WELCOME_USER);
+    if (path.endsWith("/v1/billing/plans")) {
+      return fulfillJson(route, HOMEPAGE_CATALOG);
+    }
+    return fulfillJson(route, {});
+  });
+
+  await page.goto("/");
+  const dialog = page.getByRole("dialog");
+  await expect(
+    dialog.getByRole("heading", { name: /Welcome,\s*Ada/i }),
+  ).toBeVisible();
+  await expect(
+    dialog.getByRole("link", { name: "Open Construct OS" }),
+  ).toBeVisible();
+
+  await dialog.getByRole("button", { name: "Stay on the site" }).click();
+  await expect(dialog).toBeHidden();
+
+  // Flag was consumed — a cold already-authed load must not re-open welcome.
+  await page.goto("/");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: /Welcome,\s*Ada/i }),
+  ).toHaveCount(0);
 });
 
 test("keeps the mobile footer compact and aligned", async ({ page }) => {

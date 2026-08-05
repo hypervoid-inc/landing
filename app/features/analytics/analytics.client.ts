@@ -16,7 +16,10 @@ type AnalyticsEvent =
   | "clippy_collapsed"
   | "clippy_reopened"
   | "clippy_hidden"
-  | "clippy_dragged";
+  | "clippy_dragged"
+  | "post_login_welcome_shown"
+  | "post_login_welcome_os"
+  | "post_login_welcome_dismissed";
 
 /** First-party ingest proxy — never eu.i.posthog.com in the browser. */
 const POSTHOG_PROXY = "https://x.construct.computer";

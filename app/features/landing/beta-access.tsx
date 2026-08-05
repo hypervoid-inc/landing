@@ -1,6 +1,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
-import { X } from "lucide-react";
+import { Cloud, FolderOpen, History, X } from "lucide-react";
 import {
   createContext,
   useContext,
@@ -27,6 +27,12 @@ import { betaSignupSchema } from "../../../shared/beta-signup-schema";
 import { getOsOrigin } from "../../platform/env";
 import { AuthSignInForm } from "../auth/auth-sign-in-form";
 import { useAuth } from "../auth/auth-provider";
+import {
+  clearPostLoginWelcome,
+  consumePostLoginWelcome,
+  peekPostLoginWelcome,
+  shouldOpenPostLoginWelcomePreview,
+} from "../auth/post-login-welcome";
 import { captureAnalytics } from "../analytics/analytics.client";
 import { usePrefersReducedMotion } from "./media";
 import "./beta-access.css";
@@ -202,12 +208,14 @@ function AccessDialog({
   mode,
   source,
   plan,
+  initialPhase = "form",
   onOpenChange,
 }: {
   open: boolean;
   mode: AccessDialogMode;
   source: string;
   plan?: string;
+  initialPhase?: "form" | "success";
   onOpenChange: (open: boolean) => void;
 }) {
   const navigate = useNavigate();
@@ -219,7 +227,7 @@ function AccessDialog({
   const emailRef = useRef<HTMLInputElement>(null);
   const otherRef = useRef<HTMLInputElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const [phase, setPhase] = useState<"form" | "success">("form");
+  const [phase, setPhase] = useState<"form" | "success">(initialPhase);
   const [email, setEmail] = useState("");
   const [referral, setReferral] = useState("");
   const [other, setOther] = useState("");
@@ -228,6 +236,7 @@ function AccessDialog({
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const osOrigin = getOsOrigin();
+  const welcomeShown = useRef(false);
 
   useEffect(() => {
     if (mode !== "updates" || phase !== "form") return;
@@ -251,23 +260,78 @@ function AccessDialog({
 
   useEffect(() => {
     if (phase !== "success" || reducedMotion) return;
-    const defaults = {
-      spread: 60,
-      ticks: 100,
-      gravity: 0.8,
-      decay: 0.94,
-      startVelocity: 30,
-      colors: ["#01b4c8", "#4cd8ff", "#d9f8ff", "#4e4646", "#627c86", "#ffffff"],
+    const colors = [
+      "#01b4c8",
+      "#4cd8ff",
+      "#d9f8ff",
+      "#4e4646",
+      "#627c86",
+      "#ffffff",
+    ];
+    const side = (x: number, count: number) =>
+      confetti({
+        particleCount: count,
+        spread: 74,
+        ticks: 140,
+        gravity: 0.82,
+        decay: 0.92,
+        startVelocity: 38,
+        origin: { x, y: 0.68 },
+        colors,
+      });
+
+    side(0, 90);
+    side(1, 90);
+    confetti({
+      particleCount: 120,
+      spread: 110,
+      startVelocity: 48,
+      ticks: 140,
+      gravity: 0.9,
+      decay: 0.91,
+      origin: { x: 0.5, y: 0.52 },
+      colors,
+    });
+
+    const burst = window.setTimeout(() => {
+      side(0.15, 55);
+      side(0.85, 55);
+    }, 200);
+    const finale = window.setTimeout(() => {
+      confetti({
+        particleCount: 80,
+        spread: 360,
+        startVelocity: 28,
+        ticks: 160,
+        gravity: 0.75,
+        decay: 0.94,
+        origin: { x: 0.5, y: 0.45 },
+        colors,
+      });
+    }, 420);
+
+    return () => {
+      window.clearTimeout(burst);
+      window.clearTimeout(finale);
     };
-    const left = () =>
-      confetti({ ...defaults, particleCount: 40, origin: { x: 0, y: 0.7 } });
-    const right = () =>
-      confetti({ ...defaults, particleCount: 40, origin: { x: 1, y: 0.7 } });
-    left();
-    right();
   }, [phase, reducedMotion]);
 
+  useEffect(() => {
+    if (mode !== "auth" || phase !== "success" || welcomeShown.current) return;
+    welcomeShown.current = true;
+    captureAnalytics("post_login_welcome_shown", { source });
+  }, [mode, phase, source]);
+
+  const dismissWelcome = () => {
+    if (mode === "auth" && phase === "success") {
+      captureAnalytics("post_login_welcome_dismissed", { source });
+    }
+    onOpenChange(false);
+  };
+
   const handleAuthSuccess = () => {
+    // In-dialog success owns the welcome UI; drop the leave-bridge flag.
+    clearPostLoginWelcome();
     if (plan) {
       onOpenChange(false);
       navigate(`/account?plan=${plan}`, { replace: true });
@@ -357,21 +421,45 @@ function AccessDialog({
 
   const canDismiss =
     phase === "form" || (mode === "auth" && phase === "success");
+  const firstName =
+    user?.displayName?.trim().split(/\s+/)[0] ||
+    user?.username ||
+    null;
   const successName =
-    user?.displayName?.trim() || user?.username || email.trim().toLowerCase();
+    mode === "updates"
+      ? email.trim().toLowerCase()
+      : firstName;
 
   return (
     <Dialog.Root
       open={open}
-      onOpenChange={(next) => (canDismiss || next ? onOpenChange(next) : undefined)}
+      onOpenChange={(next) => {
+        if (!canDismiss && !next) return;
+        if (!next) {
+          dismissWelcome();
+          return;
+        }
+        onOpenChange(next);
+      }}
     >
       <Dialog.Portal>
         <Dialog.Overlay className="beta-dialog-overlay fixed inset-0 z-[100] bg-[#235061]/40 backdrop-blur-[2px]" />
         <Dialog.Content
           onEscapeKeyDown={(event) => !canDismiss && event.preventDefault()}
-          onPointerDownOutside={(event) =>
-            !canDismiss && event.preventDefault()
-          }
+          onPointerDownOutside={(event) => {
+            // Welcome: force an intentional Stay / X — don't treat the dim
+            // backdrop as dismiss.
+            if (mode === "auth" && phase === "success") {
+              event.preventDefault();
+              return;
+            }
+            if (!canDismiss) event.preventDefault();
+          }}
+          onInteractOutside={(event) => {
+            if (mode === "auth" && phase === "success") {
+              event.preventDefault();
+            }
+          }}
           className="beta-dialog-content fixed left-1/2 top-1/2 z-[101] w-[calc(100%_-_2rem)] max-w-[420px] -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-[28px] border border-[#d9f8ff]/80 bg-white px-8 py-9 font-sans text-[#4e4646] shadow-[0_24px_80px_rgba(1,180,200,.18)] focus:outline-none"
         >
           {phase === "form" && mode === "auth" ? (
@@ -394,6 +482,7 @@ function AccessDialog({
               <AuthSignInForm
                 appearance="dialog"
                 onSuccess={handleAuthSuccess}
+                postLoginWelcome={{ source, plan }}
               />
               <p className="mt-4 text-center text-[12px] leading-[17px] text-[#627c86]">
                 Need a password reset or to create an account?{" "}
@@ -555,8 +644,14 @@ function AccessDialog({
 
           {phase === "success" && mode === "auth" ? (
             <div className="text-center">
-              <Dialog.Title className="text-balance text-2xl leading-[30px]">
-                You&apos;re in
+              <Dialog.Close
+                aria-label="Close dialog"
+                className="absolute right-5 top-5 rounded-full p-1 text-[#627c86] hover:bg-[#f3f3f3]"
+              >
+                <X aria-hidden className="h-5 w-5" />
+              </Dialog.Close>
+              <Dialog.Title className="text-balance text-[26px] leading-8">
+                Welcome
                 {successName ? (
                   <>
                     ,{" "}
@@ -567,25 +662,54 @@ function AccessDialog({
                 ) : null}
               </Dialog.Title>
               <Dialog.Description className="mt-3 text-[15px] leading-[21px] text-[#627c86]">
-                Open Construct OS to start working, or close this and keep
-                browsing.
+                Construct OS is your persistent cloud workspace — agents, files,
+                and work that keeps running.
               </Dialog.Description>
+              <ul className="mt-6 space-y-3 text-left text-[14px] leading-5 text-[#4e4646]">
+                <li className="flex gap-3">
+                  <Cloud
+                    aria-hidden
+                    className="mt-0.5 size-[18px] shrink-0 text-[#01b4c8]"
+                    strokeWidth={1.75}
+                  />
+                  <span>Always-on agents that keep working while you&apos;re away</span>
+                </li>
+                <li className="flex gap-3">
+                  <FolderOpen
+                    aria-hidden
+                    className="mt-0.5 size-[18px] shrink-0 text-[#01b4c8]"
+                    strokeWidth={1.75}
+                  />
+                  <span>Your files and browser in one place</span>
+                </li>
+                <li className="flex gap-3">
+                  <History
+                    aria-hidden
+                    className="mt-0.5 size-[18px] shrink-0 text-[#01b4c8]"
+                    strokeWidth={1.75}
+                  />
+                  <span>Pick up exactly where you left off</span>
+                </li>
+              </ul>
+              {user && !user.onboardingCompleted ? (
+                <p className="mt-4 text-[13px] leading-[18px] text-[#627c86]">
+                  You&apos;ll finish setup there.
+                </p>
+              ) : null}
               <a
                 href={osOrigin}
-                target="_blank"
-                rel="noreferrer"
                 onClick={() => {
+                  captureAnalytics("post_login_welcome_os", { source });
                   captureAnalytics("app_opened", { source });
-                  onOpenChange(false);
                 }}
                 className="beta-access-cta mt-8 h-[52px] w-full text-lg"
               >
-                Open OS
+                Open Construct OS
               </a>
               <button
                 type="button"
                 className="mt-3 w-full text-sm text-[#627c86] hover:text-[#01b4c8]"
-                onClick={() => onOpenChange(false)}
+                onClick={dismissWelcome}
               >
                 Stay on the site
               </button>
@@ -624,10 +748,60 @@ function AccessDialog({
 }
 
 export function BetaAccessProvider({ children }: { children: ReactNode }) {
+  const { status } = useAuth();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [source, setSource] = useState("unknown");
   const [mode, setMode] = useState<AccessDialogMode>("auth");
   const [plan, setPlan] = useState<string | undefined>();
+  const [initialPhase, setInitialPhase] = useState<"form" | "success">("form");
+  const handledWelcome = useRef(false);
+  const previewOpened = useRef(false);
+
+  // Local-only: `?welcome=1` previews the handoff without auth.
+  useEffect(() => {
+    if (previewOpened.current) return;
+    if (typeof window === "undefined") return;
+    if (!shouldOpenPostLoginWelcomePreview(window.location.search)) return;
+    previewOpened.current = true;
+    queueMicrotask(() => {
+      setMode("auth");
+      setSource("url-preview");
+      setPlan(undefined);
+      setInitialPhase("success");
+      setOpen(true);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (status === "anonymous") {
+      // Don't wipe a local URL preview — only clear leave-bridge flags.
+      if (peekPostLoginWelcome()) clearPostLoginWelcome();
+      handledWelcome.current = false;
+      return;
+    }
+    if (status !== "authenticated" || handledWelcome.current) return;
+    if (!peekPostLoginWelcome()) return;
+
+    handledWelcome.current = true;
+    const payload = consumePostLoginWelcome();
+    if (!payload) return;
+
+    if (payload.plan) {
+      navigate(`/account?plan=${payload.plan}`, { replace: true });
+      return;
+    }
+
+    // Defer past the effect body — opening the dialog is a reaction to auth
+    // settling + sessionStorage, not derived render state.
+    queueMicrotask(() => {
+      setMode("auth");
+      setSource(payload.source || "oauth-return");
+      setPlan(undefined);
+      setInitialPhase("success");
+      setOpen(true);
+    });
+  }, [status, navigate]);
 
   return (
     <BetaAccessContext.Provider
@@ -635,6 +809,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
         setMode(options.mode);
         setSource(options.source);
         setPlan(options.plan);
+        setInitialPhase("form");
         setOpen(true);
       }}
     >
@@ -642,11 +817,12 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
         {children}
         {open && (
           <AccessDialog
-            key={`${mode}-${source}-${plan ?? ""}`}
+            key={`${mode}-${source}-${plan ?? ""}-${initialPhase}`}
             open
             mode={mode}
             source={source}
             plan={plan}
+            initialPhase={initialPhase}
             onOpenChange={setOpen}
           />
         )}

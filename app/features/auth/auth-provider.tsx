@@ -14,6 +14,7 @@ import {
   identifyAnalyticsUser,
   resetAnalyticsUser,
 } from "../analytics/analytics.client";
+import { clearPostLoginWelcome } from "./post-login-welcome";
 
 type AuthStatus = "loading" | "authenticated" | "anonymous";
 
@@ -63,7 +64,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     void (async () => {
       const returned = await authApi.handleAuthReturn();
       if (cancelled) return;
-      if (returned.error) setError(returned.error);
+      if (returned.error) {
+        setError(returned.error);
+        clearPostLoginWelcome();
+      }
       await refresh();
     })();
     return () => {
