@@ -3,8 +3,11 @@ import { Link, useNavigate, useSearchParams } from "react-router";
 import { Turnstile } from "@marsidev/react-turnstile";
 
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
+import { Banner, buttonVariants } from "../../components/ui/primitives";
+import { cn } from "../../lib/cn";
 import * as authApi from "../../platform/api/auth";
 import { getOsOrigin, getTurnstileSiteKey } from "../../platform/env";
+import { AuthPanelFrame, PANEL_DEPTH } from "./auth-panel-frame";
 import { useAuth } from "./auth-provider";
 
 type Panel =
@@ -17,12 +20,22 @@ type Panel =
   | "forgot-sent"
   | "reset";
 
-const fieldClass =
-  "w-full rounded-xl border border-[#dcecef] bg-white px-3 py-2.5 text-sm text-[#4e4646] outline-none focus:border-[#01b4c8]";
-const btnPrimary =
-  "site-cta inline-flex min-h-11 w-full items-center justify-center rounded-full bg-black px-4 text-sm font-semibold text-white";
-const btnSecondary =
-  "inline-flex min-h-11 w-full items-center justify-center rounded-full border border-[#dcecef] bg-white px-4 text-sm font-semibold text-[#4e4646]";
+// Shared vocabulary from components/ui, so login and account can't drift apart
+// again. Press feedback is built into buttonVariants rather than opt-in.
+const fieldClass = cn(
+  "w-full rounded-[var(--radius-control)] border border-[var(--color-line)] bg-white",
+  "px-3 py-2.5 text-sm text-[var(--color-ink)] outline-none",
+  "transition-[border-color] duration-[var(--dur-hover)]",
+  "placeholder:text-[var(--color-ink-subtle)] focus:border-[var(--color-brand)]",
+);
+const btnPrimary = cn(
+  buttonVariants({ variant: "primary", full: true }),
+  "min-h-11 no-underline",
+);
+const btnSecondary = cn(
+  buttonVariants({ variant: "secondary", full: true }),
+  "min-h-11 no-underline",
+);
 
 export function LoginPage() {
   const { status, user, setUser, error: authError, clearError, refresh } =
@@ -228,12 +241,9 @@ export function LoginPage() {
               .
             </p>
 
-            {displayError ? (
-              <p className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
-                {displayError}
-              </p>
-            ) : null}
+            {displayError ? <Banner tone="error">{displayError}</Banner> : null}
 
+            <AuthPanelFrame panelKey={panel} depth={PANEL_DEPTH[panel] ?? 0}>
             {panel === "signin" ? (
               <div className="mt-6 space-y-3">
                 <a href={authApi.getGoogleAuthUrl()} className={btnSecondary}>
@@ -468,9 +478,10 @@ export function LoginPage() {
                 </button>
               </form>
             ) : null}
+            </AuthPanelFrame>
 
-            <p className="mt-6 text-center text-xs text-[#627c86]">
-              <Link to="/" className="text-[#018fa0]">
+            <p className="mt-6 text-center text-xs text-[var(--color-ink-muted)]">
+              <Link to="/" className="text-[var(--color-brand-strong)]">
                 Back to home
               </Link>
             </p>

@@ -10,45 +10,44 @@ import {
   Timer,
   type LucideIcon,
 } from "lucide-react";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 import { useAuth } from "../auth/auth-provider";
 import { createCheckout } from "../../platform/api/billing";
-import type { PaidPlanId } from "../../platform/api/billing";
 import { getOsOrigin } from "../../platform/env";
 
 import {
   featureCards,
   landingFaq,
-  pricingPlans,
   type BillingPeriod,
   type PricingIcon,
 } from "~/content/landing";
 
 import { StartLink } from "./beta-access";
 import { AutoVideo, useRevealOnView } from "./media";
+import {
+  maxAnnualMonthsFree,
+  mergePricingPlans,
+  pricingFloorLabel,
+  trialHighlightForPeriod,
+  type PricingPlanView,
+} from "./merge-pricing-catalog";
 import { usePriceTicker } from "./price-ticker";
+import { usePlanCatalog } from "./use-plan-catalog";
 import { WorkflowSection } from "./workflow-section";
 import "./landing.css";
-
-function planIdFromName(name: string): PaidPlanId {
-  const n = name.toLowerCase();
-  if (n === "starter") return "starter";
-  if (n === "pro") return "pro";
-  return "lite";
-}
 
 function PricingCta({
   plan,
   period,
 }: {
-  plan: (typeof pricingPlans)[number];
+  plan: PricingPlanView;
   period: BillingPeriod;
 }) {
   const { status, user } = useAuth();
   const [busy, setBusy] = useState(false);
-  const planId = planIdFromName(plan.name);
+  const planId = plan.id;
 
   if (status !== "authenticated" || !user) {
     return (
@@ -490,9 +489,11 @@ function WorkSection() {
 function BillingPeriodToggle({
   period,
   onChange,
+  annualSavingsLabel,
 }: {
   period: BillingPeriod;
   onChange: (period: BillingPeriod) => void;
+  annualSavingsLabel: string;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLSpanElement>(null);
@@ -547,7 +548,7 @@ function BillingPeriodToggle({
         onClick={() => onChange("annual")}
       >
         <span>Annual</span>
-        <span className="billing-toggle-savings">4 months free</span>
+        <span className="billing-toggle-savings">{annualSavingsLabel}</span>
       </button>
     </div>
   );
@@ -558,13 +559,15 @@ function PricingCard({
   period,
   revealDelay = 1,
 }: {
-  plan: (typeof pricingPlans)[number];
+  plan: PricingPlanView;
   period: BillingPeriod;
   revealDelay?: number;
 }) {
   const targetPrice =
     period === "annual" ? plan.annualMonthlyPrice : plan.price;
   const displayPrice = usePriceTicker(targetPrice);
+  const highlight =
+    trialHighlightForPeriod(plan, period) ?? plan.highlight;
 
   const stackRef = useRef<HTMLSpanElement>(null);
   const amountRef = useRef<HTMLSpanElement>(null);
@@ -664,9 +667,9 @@ function PricingCard({
       </div>
       <div className="pricing-content relative z-10 flex flex-1 flex-col">
         <PricingCta plan={plan} period={period} />
-        {plan.highlight ? (
+        {highlight ? (
           <p className="mt-2.5 text-center text-[14px] font-semibold leading-[17px] text-[#129a5f] xl:text-[15px] xl:leading-[18px]">
-            {plan.highlight}
+            {highlight}
           </p>
         ) : null}
         <div className="pricing-benefits">
@@ -775,6 +778,17 @@ function EnterprisePanel() {
 
 function PricingSection() {
   const [period, setPeriod] = useState<BillingPeriod>("annual");
+  const catalog = usePlanCatalog();
+  const plans = useMemo(
+    () => mergePricingPlans(catalog.plans, catalog.recommendedPlan),
+    [catalog.plans, catalog.recommendedPlan],
+  );
+  const floor = pricingFloorLabel(plans) ?? "$9";
+  const toggleMonths = maxAnnualMonthsFree(plans);
+  const annualSavingsLabel =
+    toggleMonths != null
+      ? `${toggleMonths} ${toggleMonths === 1 ? "month" : "months"} free`
+      : "Save annually";
 
   return (
     <section
@@ -801,20 +815,24 @@ function PricingSection() {
             data-reveal-delay="2"
           >
             Built for solo founders, early startups, and small businesses that
-            want operations handled without adding headcount. Plans start at
-            $9/month to try; Starter adds agent email and schedules.
+            want operations handled without adding headcount. Plans start at{" "}
+            {floor}/month to try; Starter adds agent email and schedules.
           </p>
           <div
             className="reveal-item mt-6 flex justify-center xl:mt-8"
             data-reveal-delay="3"
           >
-            <BillingPeriodToggle period={period} onChange={setPeriod} />
+            <BillingPeriodToggle
+              period={period}
+              onChange={setPeriod}
+              annualSavingsLabel={annualSavingsLabel}
+            />
           </div>
         </div>
         <div className="relative z-10 mx-auto mt-8 grid w-full max-w-[430px] grid-cols-1 gap-5 xl:mt-[100px] xl:max-w-none xl:grid-cols-3 xl:gap-7">
-          {pricingPlans.map((plan, index) => (
+          {plans.map((plan, index) => (
             <PricingCard
-              key={plan.name}
+              key={plan.id}
               plan={plan}
               period={period}
               revealDelay={Math.min(index, 3) + 1}
