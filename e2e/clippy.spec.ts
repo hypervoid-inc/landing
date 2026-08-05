@@ -10,13 +10,9 @@ const POST = "/blog/ai-agent-memory/?clippy=now";
 
 const widget = "aside.clippy-widget";
 
-test("walks a blog reader through three beats into the product", async ({
-  context,
+test("walks a blog reader through three beats into the auth dialog", async ({
   page,
 }) => {
-  await context.route("https://os.construct.computer/", (route) =>
-    route.fulfill({ body: "ok" }),
-  );
   await page.goto(POST);
 
   const tip = page.getByRole("complementary", { name: "Construct" });
@@ -34,26 +30,22 @@ test("walks a blog reader through three beats into the product", async ({
 
   // Scoped to the tip: blog bodies now carry their own inline CTAs, so an
   // unscoped link lookup matches those too.
-  const popupPromise = page.waitForEvent("popup");
   await tip.getByRole("link", { name: "Try Construct" }).click();
-  const popup = await popupPromise;
-  await expect(popup).toHaveURL("https://os.construct.computer/");
-  await popup.close();
+  const dialog = page.getByRole("dialog");
+  await expect(
+    dialog.getByRole("heading", { name: /Start with Construct/i }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Close dialog" }).click();
 });
 
-test("opens the product from the first beat too", async ({
-  context,
-  page,
-}) => {
-  await context.route("https://os.construct.computer/", (route) =>
-    route.fulfill({ body: "ok" }),
-  );
+test("opens the auth dialog from the first beat too", async ({ page }) => {
   await page.goto(POST);
-  const popupPromise = page.waitForEvent("popup");
   await page.locator(".clippy-pill").click();
-  const popup = await popupPromise;
-  await expect(popup).toHaveURL("https://os.construct.computer/");
-  await popup.close();
+  const dialog = page.getByRole("dialog");
+  await expect(
+    dialog.getByRole("heading", { name: /Start with Construct/i }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Close dialog" }).click();
 });
 
 test("collapses to the sprite and reopens on the same beat", async ({
