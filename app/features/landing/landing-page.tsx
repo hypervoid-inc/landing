@@ -13,6 +13,10 @@ import {
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
+import { useAuth } from "../auth/auth-provider";
+import { createCheckout } from "../../platform/api/billing";
+import type { PaidPlanId } from "../../platform/api/billing";
+import { getOsOrigin } from "../../platform/env";
 
 import {
   featureCards,
@@ -28,6 +32,62 @@ import { usePriceTicker } from "./price-ticker";
 import { WorkflowSection } from "./workflow-section";
 import "./landing.css";
 
+function planIdFromName(name: string): PaidPlanId {
+  const n = name.toLowerCase();
+  if (n === "starter") return "starter";
+  if (n === "pro") return "pro";
+  return "lite";
+}
+
+function PricingCta({
+  plan,
+  period,
+}: {
+  plan: (typeof pricingPlans)[number];
+  period: BillingPeriod;
+}) {
+  const { status, user } = useAuth();
+  const [busy, setBusy] = useState(false);
+  const planId = planIdFromName(plan.name);
+
+  if (status !== "authenticated" || !user) {
+    return (
+      <Link to={`/login?plan=${planId}`} className="pricing-button">
+        {plan.cta}
+      </Link>
+    );
+  }
+
+  if (!user.onboardingCompleted) {
+    return (
+      <a href={getOsOrigin()} className="pricing-button">
+        Finish setup in OS
+      </a>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      className="pricing-button"
+      disabled={busy}
+      onClick={() => {
+        void (async () => {
+          setBusy(true);
+          const result = await createCheckout(
+            planId,
+            period === "annual" ? "year" : "month",
+          );
+          setBusy(false);
+          if (result.success) window.location.href = result.data.checkoutUrl;
+          else window.location.href = `/account?plan=${planId}`;
+        })();
+      }}
+    >
+      {busy ? "Starting checkout…" : plan.cta}
+    </button>
+  );
+}
 const pricingIcons: Record<PricingIcon, LucideIcon> = {
   footprints: Footprints,
   workflow: Network,
@@ -603,14 +663,7 @@ function PricingCard({
         </div>
       </div>
       <div className="pricing-content relative z-10 flex flex-1 flex-col">
-        <a
-          href="https://os.construct.computer"
-          target="_blank"
-          rel="noreferrer"
-          className="pricing-button"
-        >
-          {plan.cta}
-        </a>
+        <PricingCta plan={plan} period={period} />
         {plan.highlight ? (
           <p className="mt-2.5 text-center text-[14px] font-semibold leading-[17px] text-[#129a5f] xl:text-[15px] xl:leading-[18px]">
             {plan.highlight}
