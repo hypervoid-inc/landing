@@ -421,13 +421,184 @@
   height: 14px;
 }
 
-.pricing-summary .pricing-price > :first-child {
+.pricing-price {
+  --pricing-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  /* Reserve annual three-line stack so monthly↔annual never animates height. */
+  min-height: 88px;
+}
+
+.pricing-price-stack {
+  position: relative;
+  display: inline-block;
+  vertical-align: bottom;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Invisible max(monthly, annual) sizer — keeps stack width stable while amounts tick. */
+.pricing-price-sizer {
+  display: inline-grid;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pricing-price-sizer .pricing-price-amount {
+  grid-area: 1 / 1;
+}
+
+.pricing-price-amount-live {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.pricing-price-amount {
   font-size: 40px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pricing-price-period {
+  display: inline-block;
+  transition: transform 200ms var(--pricing-ease-out);
+}
+
+.pricing-price-was {
+  display: block;
+  margin-bottom: 6px;
+  color: #63afc2;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  transform: translateY(0);
+}
+
+.pricing-price[data-period="annual"] .pricing-price-was {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    opacity 200ms var(--pricing-ease-out) 40ms,
+    transform 200ms var(--pricing-ease-out) 40ms,
+    visibility 0s;
+}
+
+.pricing-price[data-period="monthly"] .pricing-price-was {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition:
+    opacity 160ms var(--pricing-ease-out),
+    transform 160ms var(--pricing-ease-out),
+    visibility 0s linear 160ms;
+}
+
+.pricing-price-savings {
+  margin-top: 8px;
+  color: #129a5f;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  transform: translateY(0);
+}
+
+.pricing-price[data-period="annual"] .pricing-price-savings {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    opacity 200ms var(--pricing-ease-out) 80ms,
+    transform 200ms var(--pricing-ease-out) 80ms,
+    visibility 0s;
+}
+
+.pricing-price[data-period="monthly"] .pricing-price-savings {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition:
+    opacity 160ms var(--pricing-ease-out),
+    transform 160ms var(--pricing-ease-out),
+    visibility 0s linear 160ms;
 }
 
 .pricing-content .pricing-button {
   height: 40px;
   font-size: 12px;
+}
+
+.billing-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid #b3d6f6;
+  border-radius: 999px;
+  background: #f3fbfd;
+}
+
+.billing-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  z-index: 0;
+  height: calc(100% - 6px);
+  border-radius: 999px;
+  background: #01b4c8;
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+.billing-toggle-option {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: transparent;
+  color: #627c86;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  transition:
+    color 160ms ease,
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.billing-toggle-option[data-active] {
+  color: #fff;
+}
+
+.billing-toggle-option:active {
+  transform: scale(0.98);
+}
+
+.billing-toggle-savings {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: rgb(1 180 200 / 12%);
+  padding: 3px 7px;
+  color: #01b4c8;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.billing-toggle-option[data-active] .billing-toggle-savings {
+  background: rgb(255 255 255 / 22%);
+  color: #fff;
 }
 
 /**
@@ -497,8 +668,23 @@
     padding: 22px 18px 98px;
   }
 
-  .pricing-summary .pricing-price > :first-child {
+  .pricing-price {
+    min-height: 104px;
+  }
+
+  .pricing-summary .pricing-price-amount {
     font-size: 45px;
+  }
+
+  .pricing-price-was {
+    margin-bottom: 8px;
+    font-size: 20px;
+  }
+
+  .pricing-price-savings {
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 18px;
   }
 
   .pricing-content {

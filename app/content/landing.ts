@@ -1,14 +1,18 @@
 export type PricingIcon =
   "footprints" | "workflow" | "cloud" | "timer" | "mail" | "tabs" | "key";
 
+export type BillingPeriod = "monthly" | "annual";
+
 export const pricingPlans = [
   {
     name: "Lite",
     price: "$9",
+    annualMonthlyPrice: "$7.50",
+    annualSavingsLabel: "2 months free",
     cta: "Start with Lite",
     description: "Try Construct for yourself",
     badge: null,
-    highlight: "1-day trial",
+    highlight: "7-day trial",
     image: "/assets/landing/pricing/lite-v3.webp",
     imageAlt:
       "Construct mascot completing a focused task at a personal workspace",
@@ -24,6 +28,8 @@ export const pricingPlans = [
   {
     name: "Starter",
     price: "$59",
+    annualMonthlyPrice: "$39",
+    annualSavingsLabel: "4 months free",
     cta: "Put Starter to work",
     description: "Daily agent work with email & schedules",
     badge: "Recommended",
@@ -43,6 +49,8 @@ export const pricingPlans = [
   {
     name: "Pro",
     price: "$299",
+    annualMonthlyPrice: "$199",
+    annualSavingsLabel: "4 months free",
     cta: "Go Pro",
     description: "Full desktop power + your own model keys",
     badge: null,
@@ -63,6 +71,8 @@ export const pricingPlans = [
 ] as const satisfies ReadonlyArray<{
   name: string;
   price: string;
+  annualMonthlyPrice: string;
+  annualSavingsLabel: string;
   cta: string;
   description: string;
   badge: string | null;
@@ -116,7 +126,7 @@ export const landingFaq = [
   {
     question: "How is Construct priced?",
     answer:
-      "Construct offers Lite ($9/month) to try Construct yourself, Starter ($59/month) for daily agent work with native email and schedules, and Pro ($299/month) for deeper runs and BYOK. Plans increase task steps, concurrent temporary-agent jobs, storage, and scheduled-job capacity. Native agent email starts on Starter. Check the current pricing page before purchasing.",
+      "Construct offers Lite ($9/month) to try Construct yourself, Starter ($59/month) for daily agent work with native email and schedules, and Pro ($299/month) for deeper runs and BYOK. Annual billing lowers the monthly equivalent, with up to 4 months free on Starter and Pro. Plans increase task steps, concurrent temporary-agent jobs, storage, and scheduled-job capacity. Native agent email starts on Starter. Check the current pricing page before purchasing.",
   },
 ] as const;
 

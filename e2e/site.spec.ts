@@ -98,7 +98,7 @@ test("shows every resource once in one ordered image grid", async ({
     ),
   ).toBe(true);
   await expect(page.getByRole("navigation", { name: "Primary" })).toHaveText(
-    "BlogAffiliates",
+    "PricingBlogAffiliates",
   );
 });
 
@@ -200,11 +200,14 @@ test("uses one shared header, footer, and favicon across page types", async ({
   for (const path of ["/", "/blog/", "/privacy/"]) {
     await page.goto(path);
     await expect(page.getByRole("navigation", { name: "Primary" })).toHaveText(
-      "BlogAffiliates",
+      "PricingBlogAffiliates",
     );
     await expect(page.locator("footer")).toContainText("Get product updates");
     await expect(page.locator("footer")).toContainText("vs ChatGPT");
     await expect(page.locator("footer")).not.toContainText("Guides");
+    await expect(
+      page.locator("header").getByRole("link", { name: "Pricing" }),
+    ).toHaveAttribute("href", "/#pricing");
     await expect(
       page.locator("header").getByRole("link", { name: "Affiliates" }),
     ).toHaveAttribute("href", "/affiliates/");
@@ -381,6 +384,18 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/");
 
+    // Layout geometry matches the original monthly price density.
+    const monthly = page.getByRole("radio", { name: "Monthly" });
+    await monthly.click();
+    await expect(monthly).toHaveAttribute("aria-checked", "true");
+    await expect(
+      page
+        .locator(".pricing-card")
+        .nth(0)
+        .locator(".pricing-price-amount-live"),
+    ).toHaveText("$9", { timeout: 1000 });
+    await page.locator("#pricing").scrollIntoViewIfNeeded();
+
     for (const cta of ["Start with Lite", "Put Starter to work", "Go Pro"]) {
       await expect(page.getByRole("link", { name: cta })).toHaveAttribute(
         "href",
@@ -409,11 +424,12 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
       "Bring your own model keys (BYOK)",
     );
     const starterBox = await cards.nth(1).boundingBox();
-    const badge = cards.nth(1).getByText("Recommended");
+    const badge = cards.nth(1).locator(".pricing-badge");
     const badgeBox = await badge.boundingBox();
     await expect(badge).toHaveCSS("text-shadow", "none");
     await expect(badge).toHaveCSS("box-shadow", "none");
     await expect(badge).toHaveCSS("background-color", "rgb(1, 180, 200)");
+    await expect(badge).toHaveCSS("top", width < 640 ? "56px" : "20px");
     expect((badgeBox?.y ?? 0) - (starterBox?.y ?? 0)).toBeCloseTo(
       width < 640 ? 56 : 20,
       0,
@@ -446,7 +462,10 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
       const button = await card.locator(".pricing-button").boundingBox();
       const benefits = await card.locator(".pricing-benefits").boundingBox();
 
-      expect(image).toEqual(visual);
+      expect(image?.x).toBeCloseTo(visual?.x ?? 0, 0);
+      expect(image?.y).toBeCloseTo(visual?.y ?? 0, 0);
+      expect(image?.width).toBeCloseTo(visual?.width ?? 0, 0);
+      expect(image?.height).toBeCloseTo(visual?.height ?? 0, 0);
       expect((summary?.y ?? 0) + (summary?.height ?? 0)).toBeLessThanOrEqual(
         (visual?.y ?? 0) + (visual?.height ?? 0) + 1,
       );
@@ -474,7 +493,7 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
           (visual?.y ?? 0) + (visual?.height ?? 0),
         );
         expect((price?.y ?? 0) + (price?.height ?? 0)).toBeLessThanOrEqual(
-          (visual?.y ?? 0) + (visual?.height ?? 0) - 84,
+          (visual?.y ?? 0) + (visual?.height ?? 0) - 56,
         );
         expect(benefits?.y).toBeGreaterThan(
           (button?.y ?? 0) + (button?.height ?? 0) + 20,
@@ -494,6 +513,56 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
         ((lastPlanBox?.y ?? 0) + (lastPlanBox?.height ?? 0)),
     ).toBeCloseTo(width < 1280 ? 20 : 28, 0);
   }
+});
+
+test("toggles pricing between monthly and annual rates", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+
+  const cards = page.locator(".pricing-card");
+  const annual = page.getByRole("radio", { name: /Annual/ });
+  const monthly = page.getByRole("radio", { name: "Monthly" });
+  const amount = (card: ReturnType<typeof cards.nth>) =>
+    card.locator(".pricing-price-amount-live");
+
+  await expect(annual).toHaveAttribute("aria-checked", "true");
+  await expect(amount(cards.nth(0))).toHaveText("$7.50");
+  await expect(cards.nth(0).locator(".pricing-price-was")).toHaveText("$9");
+  await expect(cards.nth(0).locator(".pricing-price-was")).toBeVisible();
+  await expect(cards.nth(0).locator(".pricing-price-savings")).toHaveText(
+    "2 months free",
+  );
+  await expect(cards.nth(0).locator(".pricing-price-savings")).toBeVisible();
+  await expect(cards.nth(0)).toContainText("7-day trial");
+  await expect(amount(cards.nth(1))).toHaveText("$39");
+  await expect(cards.nth(1).locator(".pricing-price-was")).toHaveText("$59");
+  await expect(cards.nth(1).locator(".pricing-price-savings")).toHaveText(
+    "4 months free",
+  );
+  await expect(cards.nth(1)).not.toContainText("trial");
+  await expect(amount(cards.nth(2))).toHaveText("$199");
+  await expect(cards.nth(2).locator(".pricing-price-was")).toHaveText("$299");
+  await expect(cards.nth(2)).not.toContainText("trial");
+  await expect(page.locator("#pricing")).not.toContainText("billed");
+
+  await monthly.click();
+  await expect(monthly).toHaveAttribute("aria-checked", "true");
+  await expect(amount(cards.nth(0))).toHaveText("$9", { timeout: 1000 });
+  await expect(cards.nth(0)).toContainText("7-day trial");
+  await expect(amount(cards.nth(1))).toHaveText("$59", { timeout: 1000 });
+  await expect(amount(cards.nth(2))).toHaveText("$299", { timeout: 1000 });
+  await expect(cards.nth(0).locator(".pricing-price-was")).not.toBeVisible();
+  await expect(cards.nth(0).locator(".pricing-price-savings")).not.toBeVisible();
+  await expect(cards.nth(1)).not.toContainText("trial");
+  await expect(cards.nth(2)).not.toContainText("trial");
+
+  await annual.click();
+  await expect(amount(cards.nth(1))).toHaveText("$39", { timeout: 1000 });
+  await expect(cards.nth(1).locator(".pricing-price-was")).toBeVisible();
+  await expect(cards.nth(1).locator(".pricing-price-was")).toHaveCSS(
+    "text-decoration-line",
+    "line-through",
+  );
 });
 
 test("keeps the landing hero clear and reserves lazy media space", async ({

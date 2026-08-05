@@ -24,11 +24,11 @@ export function SiteHeader() {
       >
         Skip to main content
       </a>
-      <div className="mx-auto flex h-12 w-full max-w-[1500px] items-center gap-2 px-3 sm:gap-4 sm:px-6 lg:h-14 lg:px-16">
+      <div className="mx-auto flex h-12 w-full max-w-[1500px] items-center gap-1.5 px-3 sm:gap-4 sm:px-6 lg:h-14 lg:px-16">
         <Link
           to="/"
           aria-label="Construct Computer - home"
-          className="font-display whitespace-nowrap text-[16px] italic leading-6 tracking-[-.015em] lg:text-[18px] lg:leading-7"
+          className="font-display whitespace-nowrap text-[15px] italic leading-6 tracking-[-.015em] sm:text-[16px] lg:text-[18px] lg:leading-7"
         >
           <span className="text-[#4e4646]">Construct</span>
           <span className="text-[#01b4c8]">Computer</span>
@@ -38,8 +38,14 @@ export function SiteHeader() {
           className="ml-auto flex items-center text-[12px] text-[#627c86] sm:text-[13px]"
         >
           <Link
+            to="/#pricing"
+            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] sm:px-2"
+          >
+            Pricing
+          </Link>
+          <Link
             to="/blog/"
-            className="inline-flex min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8]"
+            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] sm:px-2"
           >
             Blog
           </Link>
@@ -53,7 +59,7 @@ export function SiteHeader() {
         <StartLink
           source="nav"
           label="Start using Construct"
-          className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-3 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] transition-[transform,background-color,box-shadow] hover:-translate-y-px hover:bg-[#172126] hover:shadow-[0_6px_16px_rgba(0,0,0,.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] lg:px-4 lg:text-xs"
+          className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] transition-[transform,background-color,box-shadow] hover:-translate-y-px hover:bg-[#172126] hover:shadow-[0_6px_16px_rgba(0,0,0,.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#01b4c8] sm:px-3 lg:px-4 lg:text-xs"
         >
           <span className="sm:hidden">Start now</span>
           <span className="hidden sm:inline">Start Now</span>
