@@ -58,21 +58,21 @@ export function SiteHeader() {
         >
           <Link
             to="/#pricing"
-            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:px-2"
+            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
           >
             Pricing
           </Link>
           <Link
             to="/blog/"
             aria-current={navCurrent(pathname, "/blog")}
-            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:px-2"
+            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
           >
             Blog
           </Link>
           <Link
             to="/affiliates/"
             aria-current={navCurrent(pathname, "/affiliates")}
-            className="hidden min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:inline-flex"
+            className="hidden min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:inline-flex"
           >
             Affiliates
           </Link>
@@ -83,7 +83,7 @@ export function SiteHeader() {
           <StartLink
             source="nav"
             label="Start using Construct"
-            className="site-cta inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:px-3 lg:px-4 lg:text-xs"
+            className="site-cta inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] sm:px-3 lg:px-4 lg:text-xs"
           >
             <span className="sm:hidden">Start now</span>
             <span className="hidden sm:inline">Start Now</span>
@@ -225,7 +225,7 @@ export function SiteFooter() {
         <div className="flex flex-col items-center gap-3 border-t border-[#e5e7eb] py-5 text-center sm:py-6 lg:flex-row-reverse lg:justify-between lg:gap-4 lg:text-left">
           <Link
             to="/affiliates/"
-            className="site-cta-pill group inline-flex min-h-10 items-center gap-2 rounded-full border border-[#35949a]/50 bg-white px-2.5 py-1.5 text-[13px] font-semibold leading-[18px] text-[#014e59] shadow-[0_6px_18px_rgba(57,148,154,.14)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8]"
+            className="site-cta-pill group inline-flex min-h-10 items-center gap-2 rounded-full border border-[#35949a]/50 bg-white px-2.5 py-1.5 text-[13px] font-semibold leading-[18px] text-[#014e59] shadow-[0_6px_18px_rgba(57,148,154,.14)]"
           >
             <span className="inline-flex items-center rounded-full bg-[#01b4c8] px-2 py-1 text-[9px] font-black uppercase tracking-[.12em] text-white">
               New

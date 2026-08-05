@@ -32,7 +32,7 @@ function MenuAvatar({ user, name }: { user: AuthUser; name: string }) {
 }
 
 const itemClassName =
-  "flex cursor-pointer items-center rounded-lg px-2.5 py-2 text-[13px] font-medium text-[#4e4646] outline-none data-[highlighted]:bg-[#effbfc] data-[highlighted]:text-[#014e59] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8]";
+  "flex cursor-pointer items-center rounded-lg px-2.5 py-2 text-[13px] font-medium text-[#4e4646] outline-none data-[highlighted]:bg-[#effbfc] data-[highlighted]:text-[#014e59]";
 
 export function UserMenu({ user }: { user: AuthUser }) {
   const { logout } = useAuth();
@@ -44,7 +44,7 @@ export function UserMenu({ user }: { user: AuthUser }) {
         <button
           type="button"
           aria-label={`Account menu for ${name}`}
-          className="site-cta inline-flex min-h-10 max-w-[11.5rem] shrink-0 items-center gap-1.5 rounded-full bg-black px-2 py-1 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:max-w-[14rem] sm:gap-2 sm:px-2.5 sm:text-xs lg:px-3"
+          className="site-cta inline-flex min-h-10 max-w-[11.5rem] shrink-0 items-center gap-1.5 rounded-full bg-black px-2 py-1 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] sm:max-w-[14rem] sm:gap-2 sm:px-2.5 sm:text-xs lg:px-3"
         >
           <MenuAvatar user={user} name={name} />
           <span className="min-w-0 truncate">{name}</span>

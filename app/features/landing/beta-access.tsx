@@ -378,7 +378,7 @@ function AccessDialog({
             <>
               <Dialog.Close
                 aria-label="Close dialog"
-                className="absolute right-5 top-5 rounded-full p-1 text-[#627c86] hover:bg-[#f3f3f3] focus-visible:outline-2 focus-visible:outline-[#01b4c8]"
+                className="absolute right-5 top-5 rounded-full p-1 text-[#627c86] hover:bg-[#f3f3f3]"
               >
                 <X aria-hidden className="h-5 w-5" />
               </Dialog.Close>
@@ -411,7 +411,7 @@ function AccessDialog({
             <>
               <Dialog.Close
                 aria-label="Close dialog"
-                className="absolute right-5 top-5 rounded-full p-1 text-[#627c86] hover:bg-[#f3f3f3] focus-visible:outline-2 focus-visible:outline-[#01b4c8]"
+                className="absolute right-5 top-5 rounded-full p-1 text-[#627c86] hover:bg-[#f3f3f3]"
               >
                 <X aria-hidden className="h-5 w-5" />
               </Dialog.Close>

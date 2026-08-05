@@ -17,7 +17,21 @@
 .landing-page video {
   border: 0;
   outline: 0;
+  /* Inline replaced elements leave a descender gap; block kills the seam. */
+  display: block;
   background: white;
+}
+
+/* Rounded overflow + <video> often paints a 1px dark hairline on the clip edge
+   (Chrome/Safari). Mask + slight scale hides the compositing seam. */
+.work-video {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+}
+
+.work-video video {
+  transform: scale(1.015);
+  transform-origin: center;
 }
 
 .landing-cta {
@@ -126,8 +140,8 @@
 .hero-link:focus-visible,
 .hero-interactive:focus-visible {
   border-radius: 10px;
-  outline: 2px solid #01b4c8;
-  outline-offset: 3px;
+  outline: 2px solid color-mix(in srgb, #01b4c8 70%, transparent);
+  outline-offset: 1px;
 }
 
 .hero-report {

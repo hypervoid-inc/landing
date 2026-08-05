@@ -259,6 +259,16 @@ async function stubApi(
   });
 }
 
+/** Rare-config sections start collapsed — expand before asserting body content. */
+async function expandSection(page: Page, title: string) {
+  const trigger = page.getByRole("button", { name: new RegExp(title, "i") });
+  await expect(trigger).toBeVisible();
+  if ((await trigger.getAttribute("aria-expanded")) !== "true") {
+    await trigger.click();
+  }
+  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+}
+
 test.describe("/account", () => {
   test("renders the plan, price, renewal date and usage", async ({ page }) => {
     await stubApi(page);
@@ -269,6 +279,9 @@ test.describe("/account", () => {
       page.getByRole("heading", { name: "Ankush Singh" }),
     ).toBeVisible();
     await expect(page.getByText(/member since/i)).toBeVisible();
+
+    // Profile sits directly under identity.
+    await expect(page.getByRole("heading", { name: "Profile" })).toBeVisible();
 
     // The plan summary and renewal date, neither of which used to render.
     await expect(page.getByText(/pro · Annual/i).first()).toBeVisible();
@@ -292,11 +305,41 @@ test.describe("/account", () => {
     await expect(page.getByText("3 / 15")).toBeVisible();
     await expect(page.getByText(/412\.0 MB|411\.9 MB/)).toBeVisible();
 
-    // Sessions: ISO timestamps from the API must parse (not "Couldn't load").
+    // Config sections stay collapsed until opened.
+    await expect(
+      page.getByText("This device", { exact: true }),
+    ).not.toBeVisible();
+    await expandSection(page, "Security");
     await expect(page.getByText("This device", { exact: true })).toBeVisible();
+    await expect(page.getByText(/Chrome on macOS/i)).toBeVisible();
     await expect(page.locator("body")).not.toContainText(
       "Couldn't load your sessions",
     );
+  });
+
+  test("hides the plan picker for admin grants and does not invent a price", async ({
+    page,
+  }) => {
+    await stubApi(page, {
+      plan: {
+        ...PLAN,
+        grantSource: "manual",
+        interval: null,
+        canCheckout: false,
+        canManage: false,
+        canChangePlan: false,
+        periodEnd: null,
+      },
+    });
+    await page.goto("/account");
+
+    await expect(page.getByText(/pro · Granted/i).first()).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /Annual · yours/i }),
+    ).toHaveCount(0);
+    await expect(page.getByText("Lite")).toHaveCount(0);
+    await expect(page.getByText("$2,388")).toHaveCount(0);
+    await expect(page.getByText("$299")).toHaveCount(0);
   });
 
   test("marks Current only on the billed interval", async ({ page }) => {
@@ -364,9 +407,7 @@ test.describe("/account", () => {
     await stubApi(page);
     await page.goto("/account");
 
-    await expect(
-      page.getByRole("heading", { name: "Your API keys" }),
-    ).toBeVisible();
+    await expandSection(page, "Bring your own key");
     await expect(page.getByText("Anthropic", { exact: true })).toBeVisible();
     await expect(page.getByText("Ready")).toBeVisible();
 
@@ -391,6 +432,7 @@ test.describe("/account", () => {
     });
     await page.goto("/account");
 
+    await expandSection(page, "Bring your own key");
     await expect(page.getByText("Check key")).toBeVisible();
     await expect(page.getByText("Key saved but not working")).toBeVisible();
   });
@@ -401,6 +443,7 @@ test.describe("/account", () => {
     });
     await page.goto("/account");
 
+    await expandSection(page, "Bring your own key");
     await expect(page.getByText(/on the starter plan and above/i)).toBeVisible();
     // No key input should exist when the plan doesn't permit BYOK.
     await expect(page.getByRole("button", { name: "Connect" })).toHaveCount(0);
@@ -414,7 +457,7 @@ test.describe("/account", () => {
       page.getByRole("heading", { name: "Ankush Singh" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "Your API keys" }),
+      page.getByRole("button", { name: /Bring your own key/i }),
     ).toHaveCount(0);
   });
 

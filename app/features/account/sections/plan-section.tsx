@@ -124,15 +124,21 @@ export function PlanSection({
             ? [0, 1, 2].map((i) => <PlanCardSkeleton key={i} />)
             : plans.map((catalogPlan) => {
                 const isCurrentTier = currentPlan?.plan === catalogPlan.id;
+                // Null interval (admin grants) must not light Current on every
+                // toggle — only match when we know the billed cycle.
                 const isCurrentInterval =
-                  billedInterval == null || billedInterval === interval;
+                  billedInterval != null && billedInterval === interval;
                 return (
                   <PlanCard
                     key={catalogPlan.id}
                     catalogPlan={catalogPlan}
                     interval={interval}
                     current={isCurrentTier && isCurrentInterval}
-                    currentOtherInterval={isCurrentTier && !isCurrentInterval}
+                    currentOtherInterval={
+                      isCurrentTier &&
+                      billedInterval != null &&
+                      !isCurrentInterval
+                    }
                     recommended={
                       recommendedPlan != null &&
                       catalogPlan.id === recommendedPlan

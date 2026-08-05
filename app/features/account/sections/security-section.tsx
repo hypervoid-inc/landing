@@ -1,15 +1,18 @@
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 
 import {
+  Badge,
   Button,
-  Card,
-  CardHeader,
+  CollapsibleCard,
   ErrorState,
   Input,
-  Row,
   Skeleton,
 } from "../../../components/ui/primitives";
-import { resolveSessionDevice } from "../../../domain/session-device";
+import {
+  resolveSessionDevice,
+  SURFACE_LABEL,
+} from "../../../domain/session-device";
 import type { AuthSession } from "../../../platform/api/schemas";
 import { relativeTime } from "../account-format";
 import type { Resource } from "../use-account-data";
@@ -46,11 +49,20 @@ export function SecuritySection({
     sessions.state === "ready"
       ? sessions.data.filter((session) => !session.revokedAt)
       : [];
+  const summary =
+    sessions.state === "ready"
+      ? `${active.length} active session${active.length === 1 ? "" : "s"}`
+      : sessions.state === "error"
+        ? "Couldn't load sessions"
+        : undefined;
 
   return (
-    <Card index={index}>
-      <CardHeader title="Security" />
-
+    <CollapsibleCard
+      index={index}
+      title="Security"
+      summary={summary}
+      defaultOpen={false}
+    >
       {hasPassword.state === "error" ? (
         // Never silently assume "no password": that drops the current-password
         // field and turns a change into an unverified set.
@@ -132,11 +144,15 @@ export function SecuritySection({
         <h3 className="text-sm font-semibold text-[var(--color-ink)]">
           Active sessions
         </h3>
+        <p className="mt-1 text-sm text-[var(--color-ink-muted)]">
+          See where your account is signed in and sign out devices you do not
+          recognize.
+        </p>
 
         {sessions.state === "loading" ? (
           <div className="mt-3 space-y-2">
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-14 w-full" />
+            <Skeleton className="h-14 w-full" />
           </div>
         ) : sessions.state === "error" ? (
           <ErrorState
@@ -148,32 +164,15 @@ export function SecuritySection({
             No other active sessions.
           </p>
         ) : (
-          <div className="mt-1">
-            {active.map((session) => {
-              const device = resolveSessionDevice(session);
-              return (
-                <Row
-                  key={session.id}
-                  label={device.label}
-                  hint={`${session.ip ?? "unknown IP"} · active ${relativeTime(session.lastSeenAt)}`}
-                >
-                  {session.isCurrent ? (
-                    <span className="text-xs font-medium text-[var(--color-brand-strong)]">
-                      This device
-                    </span>
-                  ) : (
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      busy={isPending(`revoke-${session.id}`)}
-                      onClick={() => onRevokeSession(session.id)}
-                    >
-                      Sign out
-                    </Button>
-                  )}
-                </Row>
-              );
-            })}
+          <div className="mt-3 overflow-hidden rounded-[var(--radius-control)] border border-[var(--color-line-soft)]">
+            {active.map((session) => (
+              <SessionRow
+                key={session.id}
+                session={session}
+                busy={isPending(`revoke-${session.id}`)}
+                onRevoke={() => onRevokeSession(session.id)}
+              />
+            ))}
           </div>
         )}
 
@@ -181,6 +180,63 @@ export function SecuritySection({
           Log out of this device
         </Button>
       </div>
-    </Card>
+    </CollapsibleCard>
+  );
+}
+
+function SessionRow({
+  session,
+  busy,
+  onRevoke,
+}: {
+  session: AuthSession;
+  busy: boolean;
+  onRevoke: () => void;
+}) {
+  const device = resolveSessionDevice(session);
+  const surface = SURFACE_LABEL[session.surface] ?? "Web";
+
+  return (
+    <div className="group/session flex items-start gap-3 border-b border-[var(--color-line-soft)] px-3 py-3 last:border-b-0">
+      <div className="mt-0.5 flex size-11 shrink-0 items-center justify-center rounded-[0.85rem] border border-[var(--color-line-soft)] bg-[var(--color-brand-tint)] text-[var(--color-brand-strong)]">
+        <HugeiconsIcon
+          icon={device.icon}
+          size={26}
+          strokeWidth={1.6}
+          aria-hidden
+        />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="truncate text-sm font-medium text-[var(--color-ink)]">
+            {device.label}
+          </p>
+          {session.isCurrent ? (
+            <Badge tone="positive">This device</Badge>
+          ) : null}
+        </div>
+        <p className="mt-1 flex min-h-[18px] max-w-full items-center gap-1 overflow-hidden text-xs text-[var(--color-ink-muted)]">
+          <span className="shrink-0">{surface}</span>
+          {session.ip ? (
+            <>
+              <span className="shrink-0 text-[var(--color-ink-subtle)]">·</span>
+              <span className="min-w-0 truncate opacity-0 transition-opacity duration-[var(--dur-hover)] group-hover/session:opacity-100 group-focus-within/session:opacity-100">
+                {session.ip}
+              </span>
+            </>
+          ) : null}
+        </p>
+        <p className="mt-0.5 text-[11px] text-[var(--color-ink-subtle)]">
+          Last active {relativeTime(session.lastSeenAt)}
+        </p>
+      </div>
+      <div className="shrink-0 self-center">
+        {session.isCurrent ? null : (
+          <Button size="sm" variant="ghost" busy={busy} onClick={onRevoke}>
+            Sign out
+          </Button>
+        )}
+      </div>
+    </div>
   );
 }

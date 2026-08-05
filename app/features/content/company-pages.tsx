@@ -271,7 +271,7 @@ function AffiliateApplyPanel({
           <AffiliateLink
             placement={placement}
             label="Apply on PartnerStack"
-            className="landing-cta inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-[#d9f8ff] bg-[#4cd8ff] px-6 text-[15px] font-black text-white shadow-[inset_0_-4px_12px_rgb(255_255_255_/_90%),inset_0_3px_12px_rgb(255_255_255_/_88%),0_8px_20px_rgba(1,180,200,.18)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#01b4c8] sm:w-auto sm:min-w-[220px] sm:text-[16px]"
+            className="landing-cta inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-[#d9f8ff] bg-[#4cd8ff] px-6 text-[15px] font-black text-white shadow-[inset_0_-4px_12px_rgb(255_255_255_/_90%),inset_0_3px_12px_rgb(255_255_255_/_88%),0_8px_20px_rgba(1,180,200,.18)] sm:w-auto sm:min-w-[220px] sm:text-[16px]"
           >
             Apply on PartnerStack
             <span aria-hidden>↗</span>
