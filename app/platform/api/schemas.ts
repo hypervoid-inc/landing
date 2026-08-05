@@ -234,6 +234,18 @@ export const SessionSurfaceSchema = z.enum([
 ]);
 export type SessionSurface = z.infer<typeof SessionSurfaceSchema>;
 
+/**
+ * Session timestamps arrive as ISO strings from the API. Older stubs used unix
+ * seconds — accept both and normalize to ISO so the UI has one shape.
+ */
+const SessionInstantSchema = z.union([
+  z.string().min(1),
+  z.number().transform((n) => {
+    const ms = n > 1e12 ? n : n * 1000;
+    return new Date(ms).toISOString();
+  }),
+]);
+
 export const AuthSessionSchema = z.object({
   id: z.string(),
   loginProvider: z.string(),
@@ -241,14 +253,15 @@ export const AuthSessionSchema = z.object({
   deviceLabel: z.string().nullable(),
   userAgent: z.string().nullable(),
   ip: z.string().nullable(),
-  createdAt: z.number(),
-  lastSeenAt: z.number(),
-  revokedAt: z.number().nullable(),
+  createdAt: SessionInstantSchema,
+  lastSeenAt: SessionInstantSchema,
+  revokedAt: z.union([SessionInstantSchema, z.null()]),
   isCurrent: z.boolean().optional(),
 });
 export type AuthSession = z.infer<typeof AuthSessionSchema>;
 
 export const SessionListSchema = z.object({
+  currentSessionId: z.string().nullable().optional(),
   sessions: z.array(AuthSessionSchema),
 });
 

@@ -2,12 +2,14 @@ import { describe, expect, it } from "vitest";
 
 import type { BillingPlan } from "../../platform/api/schemas";
 import {
+  canOpenBillingPortal,
   formatBytes,
   formatMemberSince,
   formatMoney,
   formatUnixDate,
   planStatusTone,
   planSummary,
+  relativeTime,
   renewalLabel,
 } from "./account-format";
 
@@ -121,6 +123,18 @@ describe("renewalLabel", () => {
   });
 });
 
+describe("relativeTime", () => {
+  it("accepts ISO strings from the sessions API", () => {
+    const recent = new Date(Date.now() - 2 * 60 * 1000).toISOString();
+    expect(relativeTime(recent)).toMatch(/minute|hour|ago|now/i);
+  });
+
+  it("still accepts unix seconds", () => {
+    const seconds = Math.floor(Date.now() / 1000) - 120;
+    expect(relativeTime(seconds)).toMatch(/minute|ago|now/i);
+  });
+});
+
 describe("planStatusTone", () => {
   it("flags a payment error above every other state", () => {
     expect(
@@ -142,5 +156,42 @@ describe("planStatusTone", () => {
     expect(planStatusTone(plan({ access: false, plan: "unsubscribed" }))).toBe(
       "neutral",
     );
+  });
+});
+
+describe("canOpenBillingPortal", () => {
+  it("follows the API canManage flag", () => {
+    expect(canOpenBillingPortal(plan({ canManage: true }))).toBe(true);
+    expect(
+      canOpenBillingPortal(
+        plan({ canManage: false, grantSource: "none", access: false }),
+      ),
+    ).toBe(false);
+  });
+
+  it("falls back for an active Dodo grant when canManage lags", () => {
+    expect(
+      canOpenBillingPortal(
+        plan({
+          canManage: false,
+          grantSource: "dodo",
+          access: true,
+          plan: "pro",
+        }),
+      ),
+    ).toBe(true);
+  });
+
+  it("does not open the portal for non-Dodo grants without canManage", () => {
+    expect(
+      canOpenBillingPortal(
+        plan({
+          canManage: false,
+          grantSource: "manual",
+          access: true,
+          plan: "pro",
+        }),
+      ),
+    ).toBe(false);
   });
 });

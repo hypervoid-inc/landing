@@ -17,7 +17,11 @@ import type {
   CatalogPlan,
   PaidPlanId,
 } from "../../../platform/api/schemas";
-import { formatMoney, intervalSuffix } from "../account-format";
+import {
+  canOpenBillingPortal,
+  formatMoney,
+  intervalSuffix,
+} from "../account-format";
 import type { Resource } from "../use-account-data";
 
 /** Marketing copy per tier, mirroring the OS's plan-marketing.ts. */
@@ -40,6 +44,8 @@ export function PlanSection({
   onIntervalChange,
   onCheckout,
   onChangePlan,
+  onManage,
+  manageBusy,
   isPending,
   onRetry,
 }: {
@@ -50,6 +56,8 @@ export function PlanSection({
   onIntervalChange: (interval: BillingInterval) => void;
   onCheckout: (id: PaidPlanId) => void;
   onChangePlan: (id: PaidPlanId) => void;
+  onManage?: () => void;
+  manageBusy?: boolean;
   isPending: (key: string) => boolean;
   onRetry: () => void;
 }) {
@@ -58,25 +66,50 @@ export function PlanSection({
     currentPlan?.canCheckout ||
     currentPlan?.canManage ||
     currentPlan?.canChangePlan;
+  const billedInterval = currentPlan?.interval ?? null;
 
   const plans = catalog.state === "ready" ? catalog.data.plans : [];
   const recommendedPlan =
     catalog.state === "ready" ? catalog.data.recommendedPlan : null;
   const hasAnnual = plans.length > 0 && plans.some((p) => p.year?.price != null);
+  const viewingOtherInterval =
+    billedInterval != null && interval !== billedInterval;
 
   return (
     <Card index={index}>
       <CardHeader
         title="Plan"
         description={
-          isOwner === false
+          isOwner === false &&
+          !(currentPlan && canOpenBillingPortal(currentPlan))
             ? "Only the workspace owner can change billing."
-            : undefined
+            : viewingOtherInterval
+              ? `You're billed ${billedInterval === "year" ? "annually" : "monthly"}. Prices below are for ${interval === "year" ? "annual" : "monthly"} billing.`
+              : billedInterval != null
+                ? `Billed ${billedInterval === "year" ? "annually" : "monthly"}.`
+                : isOwner === false
+                  ? "Plan switches are limited to the workspace owner."
+                  : undefined
         }
         action={
-          hasAnnual ? (
-            <IntervalToggle value={interval} onChange={onIntervalChange} />
-          ) : null
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            {currentPlan && canOpenBillingPortal(currentPlan) && onManage ? (
+              <Button
+                variant="secondary"
+                busy={manageBusy}
+                onClick={onManage}
+              >
+                Manage plan
+              </Button>
+            ) : null}
+            {hasAnnual ? (
+              <IntervalToggle
+                value={interval}
+                billedInterval={billedInterval}
+                onChange={onIntervalChange}
+              />
+            ) : null}
+          </div>
         }
       />
 
@@ -89,27 +122,33 @@ export function PlanSection({
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           {catalog.state === "loading"
             ? [0, 1, 2].map((i) => <PlanCardSkeleton key={i} />)
-            : plans.map((catalogPlan) => (
-                <PlanCard
-                  key={catalogPlan.id}
-                  catalogPlan={catalogPlan}
-                  interval={interval}
-                  current={currentPlan?.plan === catalogPlan.id}
-                  recommended={
-                    recommendedPlan != null &&
-                    catalogPlan.id === recommendedPlan
-                  }
-                  canCheckout={currentPlan?.canCheckout ?? false}
-                  canChangePlan={currentPlan?.canChangePlan ?? false}
-                  trialUsed={currentPlan?.trialUsed ?? false}
-                  busy={
-                    isPending(`checkout-${catalogPlan.id}`) ||
-                    isPending(`change-${catalogPlan.id}`)
-                  }
-                  onCheckout={() => onCheckout(catalogPlan.id)}
-                  onChangePlan={() => onChangePlan(catalogPlan.id)}
-                />
-              ))}
+            : plans.map((catalogPlan) => {
+                const isCurrentTier = currentPlan?.plan === catalogPlan.id;
+                const isCurrentInterval =
+                  billedInterval == null || billedInterval === interval;
+                return (
+                  <PlanCard
+                    key={catalogPlan.id}
+                    catalogPlan={catalogPlan}
+                    interval={interval}
+                    current={isCurrentTier && isCurrentInterval}
+                    currentOtherInterval={isCurrentTier && !isCurrentInterval}
+                    recommended={
+                      recommendedPlan != null &&
+                      catalogPlan.id === recommendedPlan
+                    }
+                    canCheckout={currentPlan?.canCheckout ?? false}
+                    canChangePlan={currentPlan?.canChangePlan ?? false}
+                    trialUsed={currentPlan?.trialUsed ?? false}
+                    busy={
+                      isPending(`checkout-${catalogPlan.id}`) ||
+                      isPending(`change-${catalogPlan.id}`)
+                    }
+                    onCheckout={() => onCheckout(catalogPlan.id)}
+                    onChangePlan={() => onChangePlan(catalogPlan.id)}
+                  />
+                );
+              })}
         </div>
       )}
     </Card>
@@ -118,9 +157,11 @@ export function PlanSection({
 
 function IntervalToggle({
   value,
+  billedInterval,
   onChange,
 }: {
   value: BillingInterval;
+  billedInterval: BillingInterval | null;
   onChange: (interval: BillingInterval) => void;
 }) {
   return (
@@ -129,24 +170,28 @@ function IntervalToggle({
       aria-label="Billing interval"
       className="inline-flex rounded-full border border-[var(--color-line)] p-0.5 text-xs"
     >
-      {(["month", "year"] as const).map((option) => (
-        <button
-          key={option}
-          type="button"
-          aria-pressed={value === option}
-          onClick={() => onChange(option)}
-          className={cn(
-            "rounded-full px-3 py-1.5 font-medium",
-            "transition-[background-color,color] duration-[var(--dur-hover)]",
-            "active:scale-[0.97] motion-reduce:transform-none",
-            value === option
-              ? "bg-black text-white"
-              : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
-          )}
-        >
-          {option === "month" ? "Monthly" : "Annual"}
-        </button>
-      ))}
+      {(["month", "year"] as const).map((option) => {
+        const isBilled = billedInterval === option;
+        return (
+          <button
+            key={option}
+            type="button"
+            aria-pressed={value === option}
+            onClick={() => onChange(option)}
+            className={cn(
+              "rounded-full px-3 py-1.5 font-medium",
+              "transition-[background-color,color] duration-[var(--dur-hover)]",
+              "active:scale-[0.97] motion-reduce:transform-none",
+              value === option
+                ? "bg-black text-white"
+                : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
+            )}
+          >
+            {option === "month" ? "Monthly" : "Annual"}
+            {isBilled ? " · yours" : ""}
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -166,6 +211,7 @@ function PlanCard({
   catalogPlan,
   interval,
   current,
+  currentOtherInterval,
   recommended,
   canCheckout,
   canChangePlan,
@@ -177,6 +223,8 @@ function PlanCard({
   catalogPlan: CatalogPlan;
   interval: BillingInterval;
   current: boolean;
+  /** Same tier, but the toggle is showing the other billing interval. */
+  currentOtherInterval: boolean;
   recommended: boolean;
   canCheckout: boolean;
   canChangePlan: boolean;
@@ -217,10 +265,15 @@ function PlanCard({
           {catalogPlan.name || catalogPlan.id}
         </p>
         <div className="flex flex-wrap items-center gap-1.5">
-          {recommended && !current ? (
+          {recommended && !current && !currentOtherInterval ? (
             <Badge tone="neutral">Recommended</Badge>
           ) : null}
           {current ? <Badge tone="positive">Current</Badge> : null}
+          {currentOtherInterval ? (
+            <Badge tone="neutral">
+              Your {interval === "year" ? "monthly" : "annual"} plan
+            </Badge>
+          ) : null}
         </div>
       </div>
 
@@ -264,7 +317,7 @@ function PlanCard({
         {PLAN_BLURB[catalogPlan.id]}
       </p>
 
-      {current ? null : canCheckout ? (
+      {current || currentOtherInterval ? null : canCheckout ? (
         <Button
           variant={recommended ? "primary" : "secondary"}
           full
