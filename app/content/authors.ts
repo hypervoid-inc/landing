@@ -47,11 +47,6 @@ export const authors: Record<AuthorId, Author> = {
         icon: "linkedin",
       },
       {
-        label: "GitHub",
-        href: "https://github.com/construct-computer",
-        icon: "github",
-      },
-      {
         label: "Discord",
         href: "https://discord.gg/puArEQHYN9",
         icon: "discord",

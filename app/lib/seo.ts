@@ -107,7 +107,6 @@ export function organizationJsonLd(): JsonLd {
     ],
     sameAs: [
       "https://x.com/use_construct",
-      "https://github.com/construct-computer",
       "https://linkedin.com/company/construct-computer",
       "https://discord.gg/puArEQHYN9",
     ],

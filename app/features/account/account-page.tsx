@@ -13,6 +13,8 @@ import type {
   BillingInterval,
   PaidPlanId,
 } from "../../platform/api/schemas";
+import { captureAnalytics } from "../analytics/analytics.client";
+import { readAttributionCookie } from "../analytics/campaign-attribution.client";
 import { useAuth } from "../auth/auth-provider";
 import { billedCatalogPriceLabel, canChangeBillingPlan } from "./account-format";
 import * as llmApi from "../../platform/api/llm";
@@ -68,15 +70,36 @@ export function AccountPage() {
   const startCheckout = useCallback(
     async (id: PaidPlanId, chosen: BillingInterval) => {
       setError(null);
+      const promoCode = readAttributionCookie()?.p;
+      // Same event name and property shape as the pricing CTA and apps/web, so
+      // all three roll up into one checkout funnel split by `source`.
+      captureAnalytics("checkout_started", {
+        plan: id,
+        interval: chosen,
+        source: "account",
+        ...(promoCode ? { promo_code: promoCode } : {}),
+      });
       const result = await run(`checkout-${id}`, async () => {
-        const response = await billingApi.createCheckout(id, chosen);
+        const response = await billingApi.createCheckout(id, chosen, promoCode);
         if (response.success) {
+          captureAnalytics("checkout_redirected", {
+            plan: id,
+            interval: chosen,
+            source: "account",
+          });
           window.location.href = response.data.checkoutUrl;
           return { success: true };
         }
         return { success: false, error: response.error };
       });
-      if (!result.success) setError(result.error ?? "Couldn't start checkout.");
+      if (!result.success) {
+        captureAnalytics("checkout_failed", {
+          plan: id,
+          interval: chosen,
+          source: "account",
+        });
+        setError(result.error ?? "Couldn't start checkout.");
+      }
     },
     [run],
   );

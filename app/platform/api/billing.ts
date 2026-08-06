@@ -37,6 +37,12 @@ export async function getPlanCatalog() {
 export async function createCheckout(
   plan: PaidPlanId,
   interval: BillingInterval = "month",
+  /**
+   * Campaign promo code, read from the attribution cookie at the call site.
+   * The server validates it against Dodo and falls back to an undiscounted
+   * session when it is unknown or expired, so a stale code never blocks a sale.
+   */
+  promoCode?: string,
 ) {
   return apiRequest("/v1/billing/checkout", {
     method: "POST",
@@ -45,6 +51,7 @@ export async function createCheckout(
       plan,
       interval,
       returnOrigin: getReturnOrigin(),
+      ...(promoCode ? { promoCode } : {}),
     }),
   });
 }

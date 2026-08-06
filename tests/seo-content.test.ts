@@ -222,7 +222,7 @@ describe("route metadata", () => {
       ({ path }) => path === "/blog/construct-vs-chatgpt",
     )!;
     expect(JSON.stringify(routeJsonLd(comparison))).toContain(
-      '"author":{"@type":"Organization","name":"Construct Team","url":"https://construct.computer/authors/construct-team/","image":"https://construct.computer/icon-192.png","sameAs":["https://x.com/use_construct","https://linkedin.com/company/construct-computer","https://github.com/construct-computer","https://discord.gg/puArEQHYN9"]}',
+      '"author":{"@type":"Organization","name":"Construct Team","url":"https://construct.computer/authors/construct-team/","image":"https://construct.computer/icon-192.png","sameAs":["https://x.com/use_construct","https://linkedin.com/company/construct-computer","https://discord.gg/puArEQHYN9"]}',
     );
 
     expect(() => routeJsonLd({ ...route, author: undefined })).toThrow(
