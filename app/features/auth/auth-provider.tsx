@@ -33,16 +33,29 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 /** Tab-flipping shouldn't turn into a burst of /auth/me calls. */
 const REVALIDATE_THROTTLE_MS = 5_000;
 
-function applyIdentity(user: AuthUser | null) {
-  if (user) identifyAnalyticsUser(user);
-  else resetAnalyticsUser();
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>("loading");
   const [user, setUser] = useState<AuthUser | null>(null);
   const [error, setError] = useState<string | null>(null);
   const lastRevalidatedAt = useRef(0);
+  const previousUserId = useRef<string | null>(null);
+
+  // Reset is a sign-out transition, not a description of being anonymous.
+  // refresh() runs on mount and on every focus/visibilitychange, so resetting
+  // whenever there's no session would call posthog.reset() on each page load for
+  // logged-out visitors — regenerating the anonymous distinct_id and discarding
+  // the campaign super properties before they can ever reach a signup.
+  const applyIdentity = useCallback((next: AuthUser | null) => {
+    if (next) {
+      identifyAnalyticsUser(next);
+      previousUserId.current = next.id;
+      return;
+    }
+    if (previousUserId.current !== null) {
+      resetAnalyticsUser();
+      previousUserId.current = null;
+    }
+  }, []);
 
   const refresh = useCallback(async () => {
     lastRevalidatedAt.current = Date.now();
@@ -57,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     setStatus("anonymous");
     applyIdentity(null);
-  }, []);
+  }, [applyIdentity]);
 
   useEffect(() => {
     let cancelled = false;
@@ -100,7 +113,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     setStatus("anonymous");
     applyIdentity(null);
-  }, []);
+  }, [applyIdentity]);
 
   const value = useMemo(
     () => ({
@@ -116,7 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       },
       clearError: () => setError(null),
     }),
-    [status, user, error, refresh, logout],
+    [status, user, error, refresh, logout, applyIdentity],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

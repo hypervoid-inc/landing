@@ -379,15 +379,6 @@ export function CareersPage() {
             submissions are not yet active in the current v2 catalog.
           </li>
           <li>
-            <Emph>Follow our public projects.</Emph> Selected repositories are
-            available on{" "}
-            <InlineLink href="https://github.com/construct-computer">
-              GitHub
-            </InlineLink>
-            . Check each repository's licence and contribution policy before
-            opening a pull request.
-          </li>
-          <li>
             <Emph>Join the community.</Emph> Hang out on{" "}
             <InlineLink href="https://discord.gg/puArEQHYN9">
               Discord
@@ -538,12 +529,6 @@ export function SupportPage() {
               X / Twitter
             </InlineLink>{" "}
             - product updates and announcements
-          </li>
-          <li>
-            <InlineLink href="https://github.com/construct-computer">
-              GitHub
-            </InlineLink>{" "}
-            - file issues, read the source, or publish an app to the registry
           </li>
         </List>
       </Section>

@@ -1181,7 +1181,6 @@ test("every landing button responds to a real click", async ({
 
   for (const [name, href] of [
     ["X (Twitter)", "https://x.com/use_construct"],
-    ["GitHub", "https://github.com/construct-computer"],
     ["Discord", "https://discord.gg/puArEQHYN9"],
     ["LinkedIn", "https://linkedin.com/company/construct-computer"],
   ] as const) {

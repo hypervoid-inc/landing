@@ -19,12 +19,30 @@ type AnalyticsEvent =
   | "clippy_dragged"
   | "post_login_welcome_shown"
   | "post_login_welcome_os"
-  | "post_login_welcome_dismissed";
+  | "post_login_welcome_dismissed"
+  | "campaign_landed"
+  | "campaign_banner_shown"
+  | "campaign_banner_clicked"
+  | "launch_page_viewed"
+  | "promo_code_copied"
+  // `checkout_started` intentionally shares its name with the event in apps/web
+  // so both surfaces form one funnel; they are separated by `source`. The `plan`
+  // and `interval` property names must stay identical on both sides.
+  | "checkout_started"
+  | "checkout_redirected"
+  | "checkout_failed";
 
 /** First-party ingest proxy — never eu.i.posthog.com in the browser. */
 const POSTHOG_PROXY = "https://x.construct.computer";
 /** EU cloud UI host — dashboard links only; ingest stays on `api_host`. */
 const POSTHOG_UI_HOST = "https://eu.posthog.com";
+/**
+ * Shared with apps/web (v2 repo) — both must use the same value or the
+ * cross-subdomain identity handoff silently splits into two persons.
+ * Bumping this suffix forces a clean slate; only do it in lockstep, and expect
+ * a one-time step-change in "new users" on the day it ships.
+ */
+const POSTHOG_PERSISTENCE_NAME = "construct_ph_v2";
 
 function resolvePostHogHost(): string {
   const configured = import.meta.env.VITE_POSTHOG_HOST?.trim();
@@ -49,6 +67,12 @@ export function initializeAnalytics() {
     // Ceiling: PII in replay/network (incl. beta email); tighten via masks + project scrubbing.
     // Credentials are the hard line: `scrubNetworkCapture` drops password and BYOK
     // key payloads before they reach the recording. See scrub-network-capture.ts.
+    //
+    // Do NOT wire `sanitize-event.ts` in as `before_send`, and do not add
+    // `sanitize_properties`. It strips every query string from `$current_url`,
+    // which would delete the `ref`/`cid`/`sid`/`utm_*` params that campaign
+    // attribution depends on, and would also break PostHog's own `$initial_utm_*`
+    // parsing (it reads `$current_url`). The module is deliberately unreferenced.
     posthog.init(key, {
       api_host: resolvePostHogHost(),
       ui_host: POSTHOG_UI_HOST,
@@ -62,7 +86,14 @@ export function initializeAnalytics() {
       capture_exceptions: true,
       capture_heatmaps: true,
       capture_dead_clicks: true,
-      cross_subdomain_cookie: false,
+      // Signup happens on os.construct.computer, so a host-scoped cookie would
+      // sever anonymous identity (and campaign super properties) at exactly the
+      // hop we need to measure. `persistence_name` is bumped alongside this so a
+      // stale host-only `ph_*` cookie can't race the new domain-scoped one —
+      // posthog-js reads the first match, and precedence is not guaranteed.
+      // Must stay in lockstep with apps/web in the v2 repo.
+      cross_subdomain_cookie: true,
+      persistence_name: POSTHOG_PERSISTENCE_NAME,
       disable_session_recording: false,
       disable_surveys: false,
       enable_recording_console_log: true,
@@ -109,6 +140,30 @@ export function identifyAnalyticsUser(user: {
 
 export function resetAnalyticsUser(): void {
   void initializeAnalytics().then((posthog) => posthog?.reset());
+}
+
+/**
+ * Attach campaign attribution to everything this browser sends.
+ *
+ * `register` puts the values on every subsequent event as super properties.
+ * `setPersonProperties(undefined, …)` writes the second argument as `$set_once`,
+ * so first-touch values survive the `identify()` that happens at signup and land
+ * on the person profile — which is what makes "this account came from campaign
+ * X" answerable inside PostHog, independent of the D1 column.
+ */
+export function registerCampaignAttribution(
+  properties: Record<string, string | number>,
+): void {
+  if (Object.keys(properties).length === 0) return;
+  void initializeAnalytics().then((posthog) => {
+    if (!posthog) return;
+    posthog.register(properties);
+    const initial: Record<string, string | number> = {};
+    for (const [key, value] of Object.entries(properties)) {
+      initial[`initial_${key}`] = value;
+    }
+    posthog.setPersonProperties(undefined, initial);
+  });
 }
 
 export function captureAnalytics(

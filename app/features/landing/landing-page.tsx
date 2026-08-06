@@ -15,6 +15,7 @@ import { Link } from "react-router";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 import { useAuth } from "../auth/auth-provider";
 import { captureAnalytics } from "../analytics/analytics.client";
+import { readAttributionCookie } from "../analytics/campaign-attribution.client";
 import { createCheckout } from "../../platform/api/billing";
 import { getOsOrigin } from "../../platform/env";
 
@@ -26,6 +27,7 @@ import {
 } from "~/content/landing";
 
 import { StartLink, useOpenAccessDialog } from "./beta-access";
+import { CampaignBanner } from "./campaign-banner";
 import { AutoVideo, useRevealOnView } from "./media";
 import {
   maxAnnualMonthsFree,
@@ -89,13 +91,33 @@ function PricingCta({
       onClick={() => {
         void (async () => {
           setBusy(true);
-          const result = await createCheckout(
-            planId,
-            period === "annual" ? "year" : "month",
-          );
+          const interval = period === "annual" ? "year" : "month";
+          const promoCode = readAttributionCookie()?.p;
+          // `plan` and `interval` names match the apps/web event so both
+          // surfaces roll up into one checkout funnel, split by `source`.
+          captureAnalytics("checkout_started", {
+            plan: planId,
+            interval,
+            source: `pricing-${planId}`,
+            ...(promoCode ? { promo_code: promoCode } : {}),
+          });
+          const result = await createCheckout(planId, interval, promoCode);
           setBusy(false);
-          if (result.success) window.location.href = result.data.checkoutUrl;
-          else window.location.href = `/account?plan=${planId}`;
+          if (result.success) {
+            captureAnalytics("checkout_redirected", {
+              plan: planId,
+              interval,
+              source: `pricing-${planId}`,
+            });
+            window.location.href = result.data.checkoutUrl;
+          } else {
+            captureAnalytics("checkout_failed", {
+              plan: planId,
+              interval,
+              source: `pricing-${planId}`,
+            });
+            window.location.href = `/account?plan=${planId}`;
+          }
         })();
       }}
     >
@@ -949,6 +971,7 @@ export function LandingPage() {
       className="landing-page relative min-h-dvh w-full overflow-x-clip bg-white text-[#4e4646]"
     >
       <SiteHeader />
+      <CampaignBanner />
       <main id="main">
         <Hero />
         <WhatConstructIs />
