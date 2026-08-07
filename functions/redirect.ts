@@ -2,6 +2,15 @@ import type { PagesFunction } from "./types";
 
 const MAX_PARAM_LENGTH = 2048;
 
+// The only thing we ever encode into `p` is the click-tracking URL listmonk generates for
+// a campaign link, so that is the only host this endpoint will forward to. Without this,
+// `/redirect` is an open redirect: anyone could hand out a construct.computer link that
+// lands on their own page, borrowing our domain's reputation.
+//
+// Campaign links are built in the mail-campaign repo (see its redirect/README.md). If a
+// campaign ever needs to point somewhere else, add the host here first.
+const ALLOWED_HOSTS = new Set(["listmonk.construct.computer"]);
+
 function reject(status: number): Response {
   return new Response(null, { status, headers: { "Cache-Control": "no-store" } });
 }
@@ -10,6 +19,7 @@ function asHttpUrl(value: string): string | null {
   try {
     const target = new URL(value);
     if (target.protocol !== "https:" && target.protocol !== "http:") return null;
+    if (!ALLOWED_HOSTS.has(target.hostname)) return null;
     return target.toString();
   } catch {
     return null;
