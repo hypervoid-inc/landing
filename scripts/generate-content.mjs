@@ -97,7 +97,14 @@ try {
 for (const [relativePath, content] of Object.entries(crawlerFiles)) {
   const destination = path.join(root, "public", relativePath);
   await mkdir(path.dirname(destination), { recursive: true });
-  await writeFile(destination, content);
+  // `format:check` runs over `public/`, and Prettier owns .json and .html. Run
+  // the generated ones through it here so a fresh generate never fails the
+  // check. Everything else (feeds, text files, the extensionless catalog) has
+  // no Prettier parser and is written verbatim.
+  const formatted = /\.(json|html)$/.test(relativePath)
+    ? await format(content, { filepath: destination })
+    : content;
+  await writeFile(destination, formatted);
 }
 
 // OG images are committed artifacts built by `pnpm og`, not build output. They

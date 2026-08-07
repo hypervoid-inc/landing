@@ -1,0 +1,317 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Construct Computer site API",
+    "summary": "Public endpoints served from construct.computer.",
+    "description": "The endpoints behind the construct.computer marketing site. Beta signup is a browser-facing form endpoint protected by Cloudflare Turnstile, so it is only callable from a real page load on this origin. The health endpoint is open and unauthenticated.",
+    "version": "1.0.0",
+    "termsOfService": "https://construct.computer/terms/",
+    "contact": {
+      "name": "Construct Computer support",
+      "email": "support@construct.computer",
+      "url": "https://construct.computer/support/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://construct.computer",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Report site API health",
+        "description": "Liveness check for the site API. Takes no parameters, reads no storage, and is safe to poll.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "The site API is serving requests.",
+            "content": {
+              "application/health+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                },
+                "example": {
+                  "status": "pass",
+                  "serviceId": "construct-computer-site-api",
+                  "description": "Construct Computer site API"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "The endpoint was called with a method other than GET or HEAD.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "method_not_allowed",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/beta-signup": {
+      "post": {
+        "operationId": "createBetaSignup",
+        "summary": "Join the private beta waitlist",
+        "description": "Records an email address against the CTA that produced it. Every call needs a Cloudflare Turnstile token minted on construct.computer for the `beta_signup` action, so this endpoint is not usable outside the site. Repeat submissions of the same address succeed without creating a duplicate.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BetaSignup"
+              },
+              "example": {
+                "email": "founder@example.com",
+                "ctaSource": "hero",
+                "referral": "reddit",
+                "turnstileToken": "0.abc123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The address was recorded, or was already on the list. The response body is identical either way.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ok"
+                },
+                "example": {
+                  "ok": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The body was not JSON, or it failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "invalid_request",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The Origin header was rejected, or Turnstile verification failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "verification_failed",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "The endpoint was called with a method other than POST.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "method_not_allowed",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "The request body was larger than 8 KiB.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "payload_too_large",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Content-Type was not application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "unsupported_media_type",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Verification or storage failed. Nothing was recorded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "internal_error",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Health": {
+        "type": "object",
+        "description": "Health response in the format of draft-inadarei-api-health-check.",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["pass", "fail"]
+          },
+          "serviceId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": ["status"]
+      },
+      "Ok": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "const": true
+          }
+        },
+        "required": ["ok"]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": [
+                  "invalid_request",
+                  "origin_rejected",
+                  "verification_failed",
+                  "method_not_allowed",
+                  "payload_too_large",
+                  "unsupported_media_type",
+                  "internal_error"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "description": "Human-readable and deliberately non-specific. Do not branch on it, branch on `code`."
+              }
+            },
+            "required": ["code", "message"]
+          }
+        },
+        "required": ["error"]
+      },
+      "BetaSignup": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["email", "ctaSource", "referral", "turnstileToken"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254,
+            "description": "Trimmed and lowercased before storage."
+          },
+          "ctaSource": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Which call to action produced the signup. Any non-empty string is accepted; these are the values the site sends.",
+            "examples": [
+              "hero",
+              "nav",
+              "footer",
+              "about",
+              "guide",
+              "workflow-research",
+              "workflow-channels",
+              "pricing-lite",
+              "pricing-starter",
+              "pricing-pro"
+            ]
+          },
+          "referral": {
+            "type": "string",
+            "enum": [
+              "twitter",
+              "reddit",
+              "hackernews",
+              "producthunt",
+              "linkedin",
+              "discord",
+              "other"
+            ],
+            "description": "Where the visitor heard about Construct."
+          },
+          "referralOther": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120,
+            "description": "Required when `referral` is \"other\", ignored otherwise."
+          },
+          "turnstileToken": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048,
+            "description": "A Cloudflare Turnstile token for the `beta_signup` action, issued to construct.computer."
+          },
+          "honeypot": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Bot trap. A filled value returns 200 without recording anything."
+          }
+        }
+      }
+    }
+  }
+}
