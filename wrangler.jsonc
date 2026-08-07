@@ -16,5 +16,7 @@
     "TURNSTILE_EXPECTED_ACTION": "beta_signup",
     "TURNSTILE_TEST_MODE": "false",
     "ALLOWED_ORIGIN_HOSTNAME": "construct.computer",
+    "LISTMONK_BASE_URL": "https://listmonk.construct.computer",
+    "LISTMONK_NEWSLETTER_LIST_UUID": "7c3e7b8c-7e05-4482-a5eb-a20c7505dbf6",
   },
 }

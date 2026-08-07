@@ -79,6 +79,44 @@ describe("betaSignupSchema", () => {
     expect(result.referralOther).toBe("A newsletter");
   });
 
+  it("allows newsletter footer payloads without referral", () => {
+    const result = betaSignupSchema.parse({
+      email: "founder@example.com",
+      name: " Ada ",
+      ctaSource: "footer",
+      turnstileToken: "token",
+    });
+    expect(result.name).toBe("Ada");
+    expect(result.referral).toBeUndefined();
+  });
+
+  it("allows server ingest payloads without turnstileToken", () => {
+    expect(
+      betaSignupSchema.safeParse({
+        email: "user@example.com",
+        ctaSource: "auth-google",
+        referral: "other",
+        referralOther: "auth-google",
+        meta: {
+          subscribedVia: "construct_auth",
+          authProvider: "google",
+          constructUserId: "user-1",
+          campaignRef: "mailinglist",
+        },
+      }).success,
+    ).toBe(true);
+  });
+
+  it("rejects unknown meta keys", () => {
+    expect(
+      betaSignupSchema.safeParse({
+        email: "user@example.com",
+        ctaSource: "footer",
+        meta: { evil: "x" },
+      }).success,
+    ).toBe(false);
+  });
+
   it("rejects unknown referral values", () => {
     expect(
       betaSignupSchema.safeParse({ ...validBody, referral: "somewhere" })
@@ -97,13 +135,17 @@ describe("POST /api/beta-signup", () => {
   beforeEach(() => {
     vi.stubGlobal(
       "fetch",
-      vi.fn(async () =>
-        Response.json({
-          success: true,
-          action: "beta_signup",
-          hostname: "construct.example",
-        }),
-      ),
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = String(input);
+        if (url.includes("turnstile")) {
+          return Response.json({
+            success: true,
+            action: "beta_signup",
+            hostname: "construct.example",
+          });
+        }
+        return Response.json({ data: true });
+      }),
     );
   });
 
@@ -123,7 +165,7 @@ describe("POST /api/beta-signup", () => {
     );
 
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ ok: true });
+    expect(await response.json()).toEqual({ ok: true, listmonk: true });
     expect(db.rows).toEqual([
       {
         email: "person@example.com",
@@ -136,6 +178,256 @@ describe("POST /api/beta-signup", () => {
     expect(JSON.stringify(db.rows)).not.toContain("test browser");
   });
 
+  it("defaults referral and forwards the email to Listmonk", async () => {
+    const db = createDb();
+    const fetchMock = vi.mocked(fetch);
+    const response = await handle(
+      request({
+        email: "founder@example.com",
+        name: "Ada",
+        ctaSource: "footer",
+        turnstileToken: "verified-token",
+      }),
+      createEnv(db),
+    );
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ ok: true, listmonk: true });
+    expect(db.rows).toEqual([
+      {
+        email: "founder@example.com",
+        ctaSource: "footer",
+        referral: "other",
+        referralOther: "newsletter",
+      },
+    ]);
+    const listmonkCall = fetchMock.mock.calls.find(([url]) =>
+      String(url).includes("/api/public/subscription"),
+    );
+    expect(listmonkCall).toBeTruthy();
+    expect(JSON.parse(String(listmonkCall?.[1]?.body))).toEqual({
+      email: "founder@example.com",
+      name: "Ada",
+      list_uuids: ["7c3e7b8c-7e05-4482-a5eb-a20c7505dbf6"],
+    });
+  });
+
+  it("returns listmonk:false when Listmonk subscribe fails", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = String(input);
+        if (url.includes("turnstile")) {
+          return Response.json({
+            success: true,
+            action: "beta_signup",
+            hostname: "construct.example",
+          });
+        }
+        return new Response(null, { status: 502 });
+      }),
+    );
+    const response = await handle(request(), createEnv());
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ ok: true, listmonk: false });
+  });
+
+  it("skips Listmonk when LISTMONK_BASE_URL is empty", async () => {
+    const db = createDb();
+    const fetchMock = vi.mocked(fetch);
+    const response = await handle(request(), {
+      ...createEnv(db),
+      LISTMONK_BASE_URL: "",
+    });
+    expect(await response.json()).toEqual({ ok: true, listmonk: true });
+    expect(
+      fetchMock.mock.calls.some(([url]) =>
+        String(url).includes("/api/public/subscription"),
+      ),
+    ).toBe(false);
+    expect(db.rows).toHaveLength(1);
+  });
+
+  it("accepts server ingest with shared secret and no Turnstile", async () => {
+    const db = createDb();
+    const fetchMock = vi.mocked(fetch);
+    const response = await handle(
+      request(
+        {
+          email: "os-user@example.com",
+          name: "Os User",
+          ctaSource: "auth-google",
+          referral: "other",
+          referralOther: "auth-google",
+          meta: {
+            subscribedVia: "construct_auth",
+            authProvider: "google",
+            constructUserId: "user-9",
+            utmSource: "twitter",
+          },
+        },
+        {
+          headers: {
+            "content-type": "application/json",
+            authorization: "Bearer ingest-secret",
+          },
+        },
+      ),
+      {
+        ...createEnv(db),
+        SIGNUP_INGEST_SECRET: "ingest-secret",
+        LISTMONK_BASE_URL: "",
+      },
+    );
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ ok: true, listmonk: true });
+    expect(db.rows).toEqual([
+      {
+        email: "os-user@example.com",
+        ctaSource: "auth-google",
+        referral: "other",
+        referralOther: "auth-google",
+      },
+    ]);
+    expect(
+      fetchMock.mock.calls.some(([url]) => String(url).includes("turnstile")),
+    ).toBe(false);
+  });
+
+  it("strips privileged meta on the Turnstile browser path", async () => {
+    const db = createDb();
+    const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(input);
+      if (url.includes("turnstile")) {
+        return Response.json({
+          success: true,
+          action: "beta_signup",
+          hostname: "construct.example",
+        });
+      }
+      if (url.endsWith("/api/subscribers") && init?.method === "POST") {
+        return Response.json({ data: { id: 1 } });
+      }
+      return Response.json({ data: true });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await handle(
+      request({
+        email: "spoof@example.com",
+        ctaSource: "footer",
+        turnstileToken: "verified-token",
+        meta: {
+          subscribedVia: "construct_auth",
+          authProvider: "google",
+          constructUserId: "evil-id",
+          campaignRef: "mailinglist",
+        },
+      }),
+      {
+        ...createEnv(db),
+        LISTMONK_BASE_URL: "https://listmonk.test",
+        LISTMONK_NEWSLETTER_LIST_ID: "7",
+        LISTMONK_API_USER: "api",
+        LISTMONK_API_TOKEN: "token",
+      },
+    );
+
+    const create = fetchMock.mock.calls.find(
+      ([url, init]) =>
+        String(url).endsWith("/api/subscribers") &&
+        (init as RequestInit | undefined)?.method === "POST",
+    );
+    const body = JSON.parse(String(create?.[1]?.body));
+    expect(body.attribs.subscribed_via).toBe("landing_footer");
+    expect(body.attribs.construct_user_id).toBeUndefined();
+    expect(body.attribs.auth_provider).toBeUndefined();
+    expect(body.attribs.campaign_ref).toBe("mailinglist");
+  });
+
+  it("uses private Listmonk API with attribs when credentials are set", async () => {
+    const db = createDb();
+    const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(input);
+      if (url.includes("turnstile")) {
+        return Response.json({
+          success: true,
+          action: "beta_signup",
+          hostname: "construct.example",
+        });
+      }
+      if (url.endsWith("/api/subscribers") && init?.method === "POST") {
+        return Response.json({ data: { id: 1 } });
+      }
+      return Response.json({ data: true });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await handle(
+      request({
+        email: "founder@example.com",
+        name: "Ada",
+        ctaSource: "footer",
+        turnstileToken: "verified-token",
+        meta: {
+          subscribedVia: "landing_footer",
+          campaignRef: "mailinglist",
+          utmSource: "email",
+        },
+      }),
+      {
+        ...createEnv(db),
+        LISTMONK_BASE_URL: "https://listmonk.test",
+        LISTMONK_NEWSLETTER_LIST_ID: "7",
+        LISTMONK_API_USER: "api",
+        LISTMONK_API_TOKEN: "token",
+      },
+    );
+
+    expect(response.status).toBe(200);
+    const create = fetchMock.mock.calls.find(
+      ([url, init]) =>
+        String(url).endsWith("/api/subscribers") &&
+        (init as RequestInit | undefined)?.method === "POST",
+    );
+    expect(create).toBeTruthy();
+    const body = JSON.parse(String(create?.[1]?.body));
+    expect(body.attribs).toMatchObject({
+      source: "footer",
+      subscribed_via: "landing_footer",
+      campaign_ref: "mailinglist",
+      utm_source: "email",
+    });
+    expect(
+      fetchMock.mock.calls.some(([url]) =>
+        String(url).includes("/api/public/subscription"),
+      ),
+    ).toBe(false);
+  });
+
+  it("rejects a wrong ingest secret and still requires Turnstile", async () => {
+    const response = await handle(
+      request(
+        {
+          email: "os-user@example.com",
+          ctaSource: "auth-google",
+        },
+        {
+          headers: {
+            "content-type": "application/json",
+            authorization: "Bearer wrong",
+          },
+        },
+      ),
+      {
+        ...createEnv(),
+        SIGNUP_INGEST_SECRET: "ingest-secret",
+      },
+    );
+    expect(response.status).toBe(400);
+  });
+
   it("returns the same success for duplicate emails", async () => {
     const db = createDb();
     const env = createEnv(db);
@@ -146,8 +438,8 @@ describe("POST /api/beta-signup", () => {
       env,
     );
 
-    expect(await first.json()).toEqual({ ok: true });
-    expect(await duplicate.json()).toEqual({ ok: true });
+    expect(await first.json()).toEqual({ ok: true, listmonk: true });
+    expect(await duplicate.json()).toEqual({ ok: true, listmonk: true });
     expect(db.rows).toHaveLength(1);
   });
 
@@ -159,7 +451,7 @@ describe("POST /api/beta-signup", () => {
     );
 
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ ok: true });
+    expect(await response.json()).toEqual({ ok: true, listmonk: true });
     expect(db.rows).toHaveLength(0);
   });
 
@@ -182,13 +474,16 @@ describe("POST /api/beta-signup", () => {
   it("supports Cloudflare test-key responses in explicit local test mode", async () => {
     vi.stubGlobal(
       "fetch",
-      vi.fn(async () =>
-        Response.json({
-          success: true,
-          hostname: "construct.example",
-          metadata: { result_with_testing_key: true },
-        }),
-      ),
+      vi.fn(async (input: RequestInfo | URL) => {
+        if (String(input).includes("turnstile")) {
+          return Response.json({
+            success: true,
+            hostname: "construct.example",
+            metadata: { result_with_testing_key: true },
+          });
+        }
+        return Response.json({ data: true });
+      }),
     );
 
     const response = await handle(request(), {
@@ -264,13 +559,16 @@ describe("POST /api/beta-signup", () => {
 
     vi.stubGlobal(
       "fetch",
-      vi.fn(async () =>
-        Response.json({
-          success: true,
-          action: "beta_signup",
-          hostname: "construct.example",
-        }),
-      ),
+      vi.fn(async (input: RequestInfo | URL) => {
+        if (String(input).includes("turnstile")) {
+          return Response.json({
+            success: true,
+            action: "beta_signup",
+            hostname: "construct.example",
+          });
+        }
+        return Response.json({ data: true });
+      }),
     );
     const databaseFailure = await handle(request(), createEnv(createDb(true)));
 

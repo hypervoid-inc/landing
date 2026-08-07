@@ -160,11 +160,13 @@ describe("OpenAPI description", () => {
     const schema = openApiDocument.components.schemas.BetaSignup;
     const body: Record<string, unknown> = {
       email: "founder@example.com",
+      name: "Ada",
       ctaSource: "hero",
       referral: "other",
       referralOther: "a friend",
       turnstileToken: "0.abc123",
       honeypot: "",
+      meta: { campaignRef: "mailinglist" },
     };
 
     // The documented shape is exactly the accepted shape, in both directions.

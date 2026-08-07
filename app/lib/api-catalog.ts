@@ -123,9 +123,9 @@ export const openApiDocument = {
     "/api/beta-signup": {
       post: {
         operationId: "createBetaSignup",
-        summary: "Join the private beta waitlist",
+        summary: "Subscribe to the newsletter",
         description:
-          "Records an email address against the CTA that produced it. Every call needs a Cloudflare Turnstile token minted on construct.computer for the `beta_signup` action, so this endpoint is not usable outside the site. Repeat submissions of the same address succeed without creating a duplicate.",
+          "Records an email in D1 and subscribes it to the Construct Listmonk newsletter. Every call needs a Cloudflare Turnstile token minted on construct.computer for the `beta_signup` action. Repeat submissions of the same address succeed without creating a duplicate D1 row.",
         requestBody: {
           required: true,
           content: {
@@ -133,8 +133,8 @@ export const openApiDocument = {
               schema: { $ref: "#/components/schemas/BetaSignup" },
               example: {
                 email: "founder@example.com",
-                ctaSource: "hero",
-                referral: "reddit",
+                name: "Ada",
+                ctaSource: "footer",
                 turnstileToken: "0.abc123",
               },
             },
@@ -143,11 +143,11 @@ export const openApiDocument = {
         responses: {
           "200": {
             description:
-              "The address was recorded, or was already on the list. The response body is identical either way.",
+              "The address was recorded in D1 (or was already on the list). `listmonk` is true when Listmonk sync succeeded or was intentionally skipped (disabled / unsubscribe / blocklist respected); false means D1 saved but Listmonk failed — callers may retry.",
             content: {
               "application/json": {
-                schema: { $ref: "#/components/schemas/Ok" },
-                example: { ok: true },
+                schema: { $ref: "#/components/schemas/BetaSignupOk" },
+                example: { ok: true, listmonk: true },
               },
             },
           },
@@ -197,6 +197,18 @@ export const openApiDocument = {
         properties: { ok: { type: "boolean", const: true } },
         required: ["ok"],
       },
+      BetaSignupOk: {
+        type: "object",
+        properties: {
+          ok: { type: "boolean", const: true },
+          listmonk: {
+            type: "boolean",
+            description:
+              "True when Listmonk dual-write succeeded or was intentionally not required (Listmonk disabled, or existing subscriber unsubscribed/blocklisted without re-add).",
+          },
+        },
+        required: ["ok", "listmonk"],
+      },
       Error: {
         type: "object",
         properties: {
@@ -221,13 +233,19 @@ export const openApiDocument = {
       BetaSignup: {
         type: "object",
         additionalProperties: false,
-        required: ["email", "ctaSource", "referral", "turnstileToken"],
+        required: ["email", "ctaSource"],
         properties: {
           email: {
             type: "string",
             format: "email",
             maxLength: 254,
             description: "Trimmed and lowercased before storage.",
+          },
+          name: {
+            type: "string",
+            maxLength: 200,
+            description:
+              "Optional display name. Forwarded to Listmonk only — not stored in D1.",
           },
           ctaSource: {
             type: "string",
@@ -239,7 +257,8 @@ export const openApiDocument = {
           referral: {
             type: "string",
             enum: [...REFERRAL_SOURCES],
-            description: "Where the visitor heard about Construct.",
+            description:
+              "Optional. Where the visitor heard about Construct. Omitted footer newsletter signups are stored as other/newsletter.",
           },
           referralOther: {
             type: "string",
@@ -253,13 +272,36 @@ export const openApiDocument = {
             minLength: 1,
             maxLength: 2048,
             description:
-              "A Cloudflare Turnstile token for the `beta_signup` action, issued to construct.computer.",
+              "Cloudflare Turnstile token for browser posts. Omitted when the Construct API calls with SIGNUP_INGEST_SECRET.",
           },
           honeypot: {
             type: "string",
             maxLength: 200,
             description:
               "Bot trap. A filled value returns 200 without recording anything.",
+          },
+          meta: {
+            type: "object",
+            additionalProperties: false,
+            description:
+              "Allowlisted attribution fields written to Listmonk subscriber attribs (when API credentials are configured).",
+            properties: {
+              subscribedVia: {
+                type: "string",
+                maxLength: 64,
+                examples: ["landing_footer", "construct_auth"],
+              },
+              authProvider: { type: "string", maxLength: 32 },
+              constructUserId: { type: "string", maxLength: 64 },
+              campaignRef: { type: "string", maxLength: 64 },
+              campaignId: { type: "string", maxLength: 64 },
+              campaignSubscriberId: { type: "string", maxLength: 64 },
+              utmSource: { type: "string", maxLength: 64 },
+              utmMedium: { type: "string", maxLength: 64 },
+              utmCampaign: { type: "string", maxLength: 64 },
+              promoCode: { type: "string", maxLength: 16 },
+              landingPath: { type: "string", maxLength: 128 },
+            },
           },
         },
       },
@@ -319,12 +361,23 @@ function code(value: string): string {
 const fields = [
   ["email", "string", "yes", "Max 254 characters. Trimmed and lowercased."],
   [
+    "name",
+    "string",
+    "no",
+    "Optional. Forwarded to Listmonk only (not stored in D1).",
+  ],
+  [
     "ctaSource",
     "string",
     "yes",
     `Which call to action produced the signup, for example ${CTA_SOURCES[0]} or ${CTA_SOURCES[1]}.`,
   ],
-  ["referral", "enum", "yes", `One of ${REFERRAL_SOURCES.join(", ")}.`],
+  [
+    "referral",
+    "enum",
+    "no",
+    `One of ${REFERRAL_SOURCES.join(", ")}. Defaults to other/newsletter when omitted.`,
+  ],
   [
     "referralOther",
     "string",
@@ -334,14 +387,20 @@ const fields = [
   [
     "turnstileToken",
     "string",
-    "yes",
-    "Turnstile token for the beta_signup action, issued to construct.computer.",
+    "browser",
+    "Turnstile token for browser posts. Server ingest uses SIGNUP_INGEST_SECRET instead.",
   ],
   [
     "honeypot",
     "string",
     "no",
     "Bot trap. A filled value is accepted and dropped.",
+  ],
+  [
+    "meta",
+    "object",
+    "no",
+    "Allowlisted attribution (subscribedVia, authProvider, constructUserId, campaign/utm fields) → Listmonk attribs when API credentials are set.",
   ],
 ] as const;
 
@@ -471,7 +530,12 @@ export function apiDocsHtml(): string {
     </table>
 
     <h3>Response</h3>
-    <pre><code>{ "ok": true }</code></pre>
+    <pre><code>{ "ok": true, "listmonk": true }</code></pre>
+    <p>
+      <code>listmonk</code> is <code>false</code> when D1 saved the signup but
+      Listmonk sync failed (retry-safe for authenticated ingest). Browser UX
+      still treats HTTP 200 as success.
+    </p>
 
     <h2>Errors</h2>
     <table>
