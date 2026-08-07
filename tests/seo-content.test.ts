@@ -112,6 +112,39 @@ describe("generated discovery content", () => {
     expect(robots).not.toContain("Disallow:");
   });
 
+  /**
+   * Content Signals are per group: a crawler matching a named group never sees
+   * the `*` group, so a signal that appears only once reaches nobody it is
+   * aimed at.
+   */
+  it("declares content signals in every user-agent group", () => {
+    const robots = crawlerFiles["robots.txt"];
+    const groups = robots.match(/^User-agent: .+$/gm) ?? [];
+    const signals = robots.match(/^Content-Signal: .+$/gm) ?? [];
+
+    expect(groups.length).toBeGreaterThan(1);
+    expect(signals).toHaveLength(groups.length);
+    expect(new Set(signals)).toEqual(
+      new Set(["Content-Signal: search=yes, ai-input=yes, ai-train=yes"]),
+    );
+  });
+
+  it("carries the Content Signals policy text the signals refer to", () => {
+    const robots = crawlerFiles["robots.txt"];
+
+    expect(robots).toContain(
+      "# As a condition of accessing this website, you agree to",
+    );
+    expect(robots).toContain("# ai-train: training or fine-tuning AI models.");
+    expect(robots).toContain("# UNION DIRECTIVE 2019/790 ON COPYRIGHT");
+    // The policy block is comments only. A stray uncommented line would be
+    // parsed as a directive.
+    const policy = robots.slice(0, robots.indexOf("User-agent:"));
+    for (const line of policy.split("\n")) {
+      expect(line === "" || line.startsWith("#"), line).toBe(true);
+    }
+  });
+
   it("gives every sitemap URL a lastmod", () => {
     const sitemap = sitemapXml(canonicalRoutes);
 

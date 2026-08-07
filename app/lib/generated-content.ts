@@ -149,15 +149,70 @@ function llmsFull(): string {
   ].join("\n");
 }
 
+/**
+ * Content Signals (contentsignals.org), stated separately from access because
+ * they answer a different question. `Allow: /` says a crawler may fetch the
+ * page; the signals say what it may do with what it fetched.
+ *
+ * All three are yes. Reach is the constraint this site is under, not leakage:
+ * being indexed, cited in answers, and learned from all end at the same place,
+ * which is a model that knows what Construct is. Under clause (c) of the policy
+ * an omitted signal grants nothing, so each permission is stated rather than
+ * left blank.
+ */
+const contentSignal = "Content-Signal: search=yes, ai-input=yes, ai-train=yes";
+
+/**
+ * The policy text is reproduced as published rather than paraphrased. It is the
+ * part that carries the legal weight, and a reworded copy would be a different
+ * license than the one every other participating site is offering.
+ */
+const contentSignalsPolicy = [
+  "# As a condition of accessing this website, you agree to",
+  "# abide by the following content signals:",
+  "",
+  "# (a)  If a content-signal = yes, you may collect content",
+  "# for the corresponding use.",
+  "# (b)  If a content-signal = no, you may not collect content",
+  "# for the corresponding use.",
+  "# (c)  If the website operator does not include a content",
+  "# signal for a corresponding use, the website operator",
+  "# neither grants nor restricts permission via content signal",
+  "# with respect to the corresponding use.",
+  "",
+  "# The content signals and their meanings are:",
+  "",
+  "# search: building a search index and providing search",
+  "# results (e.g., returning hyperlinks and short excerpts",
+  "# from your website's contents).  Search does not include",
+  "# providing AI-generated search summaries.",
+  "# ai-input: inputting content into one or more AI models",
+  "# (e.g., retrieval augmented generation, grounding, or other",
+  "# real-time taking of content for generative AI search",
+  "# answers).",
+  "# ai-train: training or fine-tuning AI models.",
+  "",
+  "# ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS",
+  "# RESERVATIONS OF RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN",
+  "# UNION DIRECTIVE 2019/790 ON COPYRIGHT AND RELATED RIGHTS",
+  "# IN THE DIGITAL SINGLE MARKET.",
+];
+
 export const crawlerFiles = {
   "sitemap.xml": sitemapXml(canonicalRoutes),
   "rss.xml": rssXml(),
   "atom.xml": atomXml(),
   "robots.txt": [
+    ...contentSignalsPolicy,
+    "",
     "User-agent: *",
+    contentSignal,
     "Allow: /",
     "",
     "# Answer engines and AI crawlers are welcome on all public content.",
+    // The signal is repeated in every group on purpose: a crawler that matches
+    // a named group ignores the `*` group entirely, and these named groups are
+    // exactly the crawlers the signals are addressed to.
     ...[
       "GPTBot",
       "OAI-SearchBot",
@@ -169,7 +224,12 @@ export const crawlerFiles = {
       "Applebot-Extended",
       "Bingbot",
       "CCBot",
-    ].flatMap((agent) => [`User-agent: ${agent}`, "Allow: /", ""]),
+    ].flatMap((agent) => [
+      `User-agent: ${agent}`,
+      contentSignal,
+      "Allow: /",
+      "",
+    ]),
     `Sitemap: ${siteUrl}/sitemap.xml`,
     "",
   ].join("\n"),
