@@ -1,0 +1,28 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://construct.computer/api/",
+      "service-desc": [
+        {
+          "href": "https://construct.computer/openapi.json",
+          "type": "application/json",
+          "title": "Construct Computer site API (OpenAPI 3.1)"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://construct.computer/docs/api/",
+          "type": "text/html",
+          "title": "Construct Computer site API reference"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://construct.computer/api/health",
+          "type": "application/health+json",
+          "title": "Construct Computer site API health"
+        }
+      ]
+    }
+  ]
+}

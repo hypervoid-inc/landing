@@ -22,6 +22,19 @@
 /robots.txt
   Cache-Control: public, max-age=300, must-revalidate
 
+# RFC 9727 requires the catalog be served as application/linkset+json. The file
+# is extensionless, so Cloudflare cannot infer that. CORS is open on the
+# discovery documents because that is the whole point of publishing them.
+# No Cache-Control here on purpose: Pages appends rather than replaces, and a
+# second directive set would only make the header ambiguous. The `/*` rule
+# already caches these correctly.
+/.well-known/api-catalog
+  Access-Control-Allow-Origin: *
+  Content-Type: application/linkset+json
+
+/openapi.json
+  Access-Control-Allow-Origin: *
+
 https://construct-landing.pages.dev/*
   X-Robots-Tag: noindex, nofollow
 

@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Construct Computer site API reference</title>
+    <meta
+      name="description"
+      content="Reference for the public endpoints on construct.computer: beta signup and health."
+    />
+    <link rel="canonical" href="https://construct.computer/docs/api/" />
+    <link
+      rel="service-desc"
+      href="https://construct.computer/openapi.json"
+      type="application/json"
+    />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <style>
+      :root {
+        --brand: #01b4c8;
+        --ink: #4e4646;
+        --muted: #627c86;
+        --line: #dcecef;
+        --canvas: #f7fbfc;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0 auto;
+        max-width: 46rem;
+        padding: 3rem 1.25rem 5rem;
+        background: #fff;
+        color: var(--ink);
+        font:
+          400 16px/1.65 Inter,
+          "Segoe UI",
+          system-ui,
+          sans-serif;
+        -webkit-text-size-adjust: 100%;
+      }
+      h1 {
+        font-size: 1.9rem;
+        line-height: 1.2;
+        margin: 0 0 0.5rem;
+      }
+      h2 {
+        font-size: 1.15rem;
+        margin: 3rem 0 0.75rem;
+      }
+      h3 {
+        font-size: 0.95rem;
+        margin: 2rem 0 0.5rem;
+      }
+      a {
+        color: var(--brand);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+      }
+      p,
+      li {
+        color: var(--ink);
+      }
+      .lede {
+        color: var(--muted);
+        font-size: 1.05rem;
+        margin: 0 0 2rem;
+      }
+      code,
+      pre {
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+        font-size: 0.875em;
+      }
+      code {
+        background: var(--canvas);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 0.1em 0.35em;
+      }
+      pre {
+        background: var(--canvas);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 1rem;
+        overflow-x: auto;
+      }
+      pre code {
+        background: none;
+        border: 0;
+        padding: 0;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 0.5rem 0 1rem;
+        display: block;
+        overflow-x: auto;
+      }
+      th,
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 0.55rem 0.75rem 0.55rem 0;
+        text-align: left;
+        vertical-align: top;
+        font-size: 0.9rem;
+      }
+      th {
+        color: var(--muted);
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .method {
+        font-weight: 600;
+        color: var(--brand);
+      }
+      footer {
+        margin-top: 4rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ink: #e6edef;
+          --muted: #9fb3bb;
+          --line: #24343a;
+          --canvas: #101a1e;
+        }
+        body {
+          background: #0b1316;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Construct Computer site API</h1>
+    <p class="lede">
+      Two public endpoints, served from <code>https://construct.computer</code>.
+      The machine-readable version of this page is the
+      <a href="https://construct.computer/openapi.json">OpenAPI 3.1 document</a
+      >, discoverable through the
+      <a href="https://construct.computer/.well-known/api-catalog"
+        >RFC 9727 API catalog</a
+      >.
+    </p>
+
+    <h2>Conventions</h2>
+    <ul>
+      <li>
+        Base URL: <code>https://construct.computer</code>. All paths are
+        absolute from there.
+      </li>
+      <li>
+        Requests and responses are JSON. Send
+        <code>Content-Type: application/json</code> on writes.
+      </li>
+      <li>
+        Errors carry <code>{ "error": { "code", "message" } }</code>. Branch on
+        <code>code</code>, never on <code>message</code>.
+      </li>
+      <li>Request bodies are capped at 8 KiB.</li>
+    </ul>
+
+    <h2><span class="method">GET</span> /api/health</h2>
+    <p>
+      Liveness check. No parameters, no storage reads, safe to poll. Responds
+      <code>200</code> with <code>application/health+json</code>.
+    </p>
+    <pre><code>curl https://construct.computer/api/health
+
+{
+  "status": "pass",
+  "serviceId": "construct-computer-site-api",
+  "description": "Construct Computer site API"
+}</code></pre>
+
+    <h2><span class="method">POST</span> /api/beta-signup</h2>
+    <p>
+      Records an email address against the call to action that produced it.
+      Every call needs a Cloudflare Turnstile token minted on construct.computer
+      for the <code>beta_signup</code> action, so this endpoint is only usable
+      from the site itself. It is listed here for completeness and for automated
+      discovery, not as an integration point. Submitting an address that is
+      already on the list returns the same <code>200</code> and creates no
+      duplicate.
+    </p>
+
+    <h3>Request body</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Type</th>
+          <th>Required</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>email</code></td>
+          <td>string</td>
+          <td>yes</td>
+          <td>Max 254 characters. Trimmed and lowercased.</td>
+        </tr>
+        <tr>
+          <td><code>ctaSource</code></td>
+          <td>string</td>
+          <td>yes</td>
+          <td>
+            Which call to action produced the signup, for example hero or nav.
+          </td>
+        </tr>
+        <tr>
+          <td><code>referral</code></td>
+          <td>enum</td>
+          <td>yes</td>
+          <td>
+            One of twitter, reddit, hackernews, producthunt, linkedin, discord,
+            other.
+          </td>
+        </tr>
+        <tr>
+          <td><code>referralOther</code></td>
+          <td>string</td>
+          <td>conditional</td>
+          <td>
+            Required when referral is &quot;other&quot;. 2 to 120 characters.
+          </td>
+        </tr>
+        <tr>
+          <td><code>turnstileToken</code></td>
+          <td>string</td>
+          <td>yes</td>
+          <td>
+            Turnstile token for the beta_signup action, issued to
+            construct.computer.
+          </td>
+        </tr>
+        <tr>
+          <td><code>honeypot</code></td>
+          <td>string</td>
+          <td>no</td>
+          <td>Bot trap. A filled value is accepted and dropped.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Response</h3>
+    <pre><code>{ "ok": true }</code></pre>
+
+    <h2>Errors</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Code</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>400</td>
+          <td><code>invalid_request</code></td>
+          <td>The body was not JSON, or it failed validation.</td>
+        </tr>
+        <tr>
+          <td>403</td>
+          <td><code>origin_rejected</code></td>
+          <td>An Origin header was sent and it was not construct.computer.</td>
+        </tr>
+        <tr>
+          <td>403</td>
+          <td><code>verification_failed</code></td>
+          <td>The Turnstile token was missing, stale, or issued elsewhere.</td>
+        </tr>
+        <tr>
+          <td>405</td>
+          <td><code>method_not_allowed</code></td>
+          <td>The endpoint was called with the wrong HTTP method.</td>
+        </tr>
+        <tr>
+          <td>413</td>
+          <td><code>payload_too_large</code></td>
+          <td>The request body was larger than 8 KiB.</td>
+        </tr>
+        <tr>
+          <td>415</td>
+          <td><code>unsupported_media_type</code></td>
+          <td>Content-Type was not application/json.</td>
+        </tr>
+        <tr>
+          <td>500</td>
+          <td><code>internal_error</code></td>
+          <td>Verification or storage failed. The request was not recorded.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Discovery</h2>
+    <ul>
+      <li>
+        <a href="https://construct.computer/.well-known/api-catalog"
+          >/.well-known/api-catalog</a
+        >, an RFC 9727 linkset
+      </li>
+      <li>
+        <a href="https://construct.computer/openapi.json">/openapi.json</a>, the
+        OpenAPI 3.1 description
+      </li>
+      <li>
+        <a href="https://construct.computer/llms.txt">/llms.txt</a> and
+        <a href="https://construct.computer/llms-full.txt">/llms-full.txt</a>,
+        product context for models
+      </li>
+      <li>
+        <a href="https://construct.computer/.well-known/security.txt"
+          >/.well-known/security.txt</a
+        >, how to report a vulnerability
+      </li>
+    </ul>
+
+    <footer>
+      Questions: <a href="https://construct.computer/support/">support</a>.
+      Vulnerabilities:
+      <a href="mailto:security@construct.computer"
+        >security@construct.computer</a
+      >.
+    </footer>
+  </body>
+</html>

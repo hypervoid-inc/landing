@@ -1453,6 +1453,42 @@ test("permanently redirects legacy resource URLs", async ({ request }) => {
   }
 });
 
+/**
+ * The RFC 9727 media type comes from `_headers`, not from the file, so only a
+ * served response proves it. Same for the targets: a catalog whose links 404 is
+ * worse than no catalog.
+ */
+test("serves a discoverable API catalog", async ({ request }) => {
+  const response = await request.get("/.well-known/api-catalog");
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain(
+    "application/linkset+json",
+  );
+
+  const { linkset } = JSON.parse(await response.text());
+  expect(linkset.length).toBeGreaterThan(0);
+
+  for (const entry of linkset) {
+    expect(entry.anchor).toBeTruthy();
+    for (const relation of ["service-desc", "service-doc", "status"]) {
+      for (const { href } of entry[relation]) {
+        const target = await request.get(new URL(href).pathname);
+        expect(target.status(), href).toBe(200);
+      }
+    }
+  }
+});
+
+test("reports health for the site API", async ({ request }) => {
+  const response = await request.get("/api/health");
+
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain(
+    "application/health+json",
+  );
+  expect((await response.json()).status).toBe("pass");
+});
+
 test("returns a real 404 for unknown URLs", async ({ request }) => {
   const response = await request.get("/definitely-not-a-page", {
     maxRedirects: 0,

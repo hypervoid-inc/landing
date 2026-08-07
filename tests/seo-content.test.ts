@@ -64,6 +64,9 @@ describe("generated discovery content", () => {
       "llms.txt",
       "llms-full.txt",
       ".well-known/security.txt",
+      ".well-known/api-catalog",
+      "openapi.json",
+      "docs/api/index.html",
     ]);
   });
 

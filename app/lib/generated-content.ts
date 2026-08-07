@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 
+import { apiCatalog, apiDocsHtml, openApiDocument } from "./api-catalog";
 import { resourceEntries } from "../content/resources";
 import { getResourceFaqs } from "../content/faqs";
 import { landingFaq } from "../content/landing";
@@ -175,4 +176,10 @@ export const crawlerFiles = {
   "llms.txt": llmsIndex(),
   "llms-full.txt": llmsFull(),
   ".well-known/security.txt": `Contact: mailto:security@construct.computer\nExpires: 2027-07-26T00:00:00.000Z\nPreferred-Languages: en\nCanonical: ${siteUrl}/.well-known/security.txt\n`,
+  // RFC 9727 discovery: the catalog names the API, the OpenAPI document
+  // describes it, and the HTML page documents it for humans. `_headers` serves
+  // the catalog as application/linkset+json, which the RFC requires.
+  ".well-known/api-catalog": `${JSON.stringify(apiCatalog, null, 2)}\n`,
+  "openapi.json": `${JSON.stringify(openApiDocument, null, 2)}\n`,
+  "docs/api/index.html": apiDocsHtml(),
 } as const;
