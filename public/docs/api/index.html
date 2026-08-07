@@ -204,6 +204,12 @@
           <td>Max 254 characters. Trimmed and lowercased.</td>
         </tr>
         <tr>
+          <td><code>name</code></td>
+          <td>string</td>
+          <td>no</td>
+          <td>Optional. Forwarded to Listmonk only (not stored in D1).</td>
+        </tr>
+        <tr>
           <td><code>ctaSource</code></td>
           <td>string</td>
           <td>yes</td>
@@ -214,10 +220,10 @@
         <tr>
           <td><code>referral</code></td>
           <td>enum</td>
-          <td>yes</td>
+          <td>no</td>
           <td>
             One of twitter, reddit, hackernews, producthunt, linkedin, discord,
-            other.
+            other. Defaults to other/newsletter when omitted.
           </td>
         </tr>
         <tr>
@@ -231,10 +237,10 @@
         <tr>
           <td><code>turnstileToken</code></td>
           <td>string</td>
-          <td>yes</td>
+          <td>browser</td>
           <td>
-            Turnstile token for the beta_signup action, issued to
-            construct.computer.
+            Turnstile token for browser posts. Server ingest uses
+            SIGNUP_INGEST_SECRET instead.
           </td>
         </tr>
         <tr>
@@ -243,11 +249,26 @@
           <td>no</td>
           <td>Bot trap. A filled value is accepted and dropped.</td>
         </tr>
+        <tr>
+          <td><code>meta</code></td>
+          <td>object</td>
+          <td>no</td>
+          <td>
+            Allowlisted attribution (subscribedVia, authProvider,
+            constructUserId, campaign/utm fields) → Listmonk attribs when API
+            credentials are set.
+          </td>
+        </tr>
       </tbody>
     </table>
 
     <h3>Response</h3>
-    <pre><code>{ "ok": true }</code></pre>
+    <pre><code>{ "ok": true, "listmonk": true }</code></pre>
+    <p>
+      <code>listmonk</code> is <code>false</code> when D1 saved the signup but
+      Listmonk sync failed (retry-safe for authenticated ingest). Browser UX
+      still treats HTTP 200 as success.
+    </p>
 
     <h2>Errors</h2>
     <table>

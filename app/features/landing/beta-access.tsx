@@ -34,6 +34,7 @@ import {
   shouldOpenPostLoginWelcomePreview,
 } from "../auth/post-login-welcome";
 import { captureAnalytics } from "../analytics/analytics.client";
+import { readAttributionCookie } from "../analytics/campaign-attribution.client";
 import { usePrefersReducedMotion } from "./media";
 import "./beta-access.css";
 
@@ -366,6 +367,7 @@ function AccessDialog({
     setSubmitting(true);
     setError("");
     try {
+      const attr = readAttributionCookie();
       const payload = betaSignupSchema.safeParse({
         email: normalized,
         ctaSource: source,
@@ -373,6 +375,17 @@ function AccessDialog({
         referralOther: referral === "other" ? other.trim() : undefined,
         turnstileToken,
         honeypot,
+        meta: {
+          subscribedVia: "landing_footer",
+          ...(attr?.r ? { campaignRef: attr.r } : {}),
+          ...(attr?.c ? { campaignId: attr.c } : {}),
+          ...(attr?.s ? { campaignSubscriberId: attr.s } : {}),
+          ...(attr?.us ? { utmSource: attr.us } : {}),
+          ...(attr?.um ? { utmMedium: attr.um } : {}),
+          ...(attr?.uc ? { utmCampaign: attr.uc } : {}),
+          ...(attr?.p ? { promoCode: attr.p } : {}),
+          ...(attr?.lp ? { landingPath: attr.lp } : {}),
+        },
       });
       if (!payload.success) {
         setError("Please check your email, referral, and verification.");

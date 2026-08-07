@@ -102,7 +102,7 @@ export const clippyCopy: readonly string[] = [
   CLIPPY_HIDE_LABEL,
 ];
 
-/** Threaded into BetaLink, so the existing signup funnel shows which beat converts. */
+/** Threaded into StartLink analytics so the auth funnel shows which beat converts. */
 export function ctaSource(pageKind: ClippyPageKind, beat: number): string {
   return `clippy_${pageKind.replace("-", "_")}_${beat + 1}`;
 }
