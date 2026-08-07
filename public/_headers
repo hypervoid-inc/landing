@@ -22,6 +22,17 @@
 /robots.txt
   Cache-Control: public, max-age=300, must-revalidate
 
+# RFC 8288 Link headers on the homepage: an agent that fetches one page learns
+# where the machine-readable descriptions are without guessing at well-known
+# paths, and without parsing HTML. RFC 9727 section 3 defines api-catalog.
+# Scoped to `/` rather than `/*` on purpose. Pages matches paths, not content
+# types, so `/*` would hang four Link headers off every image and script too.
+/
+  Link: </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"
+  Link: </openapi.json>; rel="service-desc"; type="application/json"
+  Link: </docs/api/>; rel="service-doc"; type="text/html"
+  Link: </llms.txt>; rel="describedby"; type="text/plain"
+
 # RFC 9727 requires the catalog be served as application/linkset+json. The file
 # is extensionless, so Cloudflare cannot infer that. CORS is open on the
 # discovery documents because that is the whole point of publishing them.

@@ -18,12 +18,33 @@ const headers = readFileSync(
   "utf8",
 );
 
-/** What each catalog `href` has to resolve to for the entry to be honest. */
-const publishedTargets = new Map<string, () => boolean>([
-  [`${siteUrl}/openapi.json`, () => "openapi.json" in crawlerFiles],
-  [`${siteUrl}/docs/api/`, () => "docs/api/index.html" in crawlerFiles],
-  [`${siteUrl}/api/health`, () => typeof health === "function"],
+/**
+ * What every advertised path has to resolve to. Both the catalog and the
+ * homepage Link headers are checked against this, so neither can point at
+ * something the build does not produce.
+ */
+const publishedPaths = new Map<string, () => boolean>([
+  ["/openapi.json", () => "openapi.json" in crawlerFiles],
+  ["/docs/api/", () => "docs/api/index.html" in crawlerFiles],
+  ["/llms.txt", () => "llms.txt" in crawlerFiles],
+  ["/.well-known/api-catalog", () => ".well-known/api-catalog" in crawlerFiles],
+  ["/api/health", () => typeof health === "function"],
 ]);
+
+function expectPublished(path: string) {
+  const exists = publishedPaths.get(path);
+  expect(exists, `advertises an unpublished path: ${path}`).toBeDefined();
+  expect(exists!(), path).toBe(true);
+}
+
+/** `_headers` parsed into pattern -> the header lines that rule declares. */
+const headerRules = new Map<string, string[]>();
+let pattern = "";
+for (const line of headers.split("\n")) {
+  if (line.startsWith("#") || line.trim() === "") continue;
+  if (line.startsWith(" ")) headerRules.get(pattern)?.push(line.trim());
+  else headerRules.set((pattern = line.trim()), []);
+}
 
 describe("RFC 9727 API catalog", () => {
   const [entry, ...rest] = apiCatalog.linkset;
@@ -61,9 +82,8 @@ describe("RFC 9727 API catalog", () => {
       entry!.status,
     ]) {
       for (const { href } of links) {
-        const exists = publishedTargets.get(href);
-        expect(exists, `unresolvable catalog href: ${href}`).toBeDefined();
-        expect(exists!(), href).toBe(true);
+        expect(new URL(href).origin).toBe(siteUrl);
+        expectPublished(new URL(href).pathname);
       }
     }
   });
@@ -77,9 +97,51 @@ describe("RFC 9727 API catalog", () => {
 
   /** The RFC mandates the media type, and the file is extensionless. */
   it("is served as application/linkset+json", () => {
-    expect(headers).toMatch(
-      /^\/\.well-known\/api-catalog\n(?:\s{2}.+\n)*\s{2}Content-Type: application\/linkset\+json$/m,
+    expect(headerRules.get("/.well-known/api-catalog")).toContain(
+      "Content-Type: application/linkset+json",
     );
+  });
+});
+
+/**
+ * RFC 8288 Link headers on the homepage. Cloudflare merges the four lines into
+ * one comma-separated header, which the RFC allows; the e2e suite asserts the
+ * merged form off a real response. This covers the declaration itself.
+ */
+describe("homepage link headers", () => {
+  const links = (headerRules.get("/") ?? [])
+    .filter((line) => line.startsWith("Link:"))
+    .map((line) => line.slice("Link:".length).trim());
+
+  it("advertises the discovery documents by registered relation", () => {
+    const byRelation = new Map(
+      links.map((link) => [
+        /rel="([^"]+)"/.exec(link)?.[1],
+        /^<([^>]+)>/.exec(link)?.[1],
+      ]),
+    );
+
+    expect([...byRelation.keys()].sort()).toEqual([
+      "api-catalog",
+      "describedby",
+      "service-desc",
+      "service-doc",
+    ]);
+    expect(byRelation.get("api-catalog")).toBe("/.well-known/api-catalog");
+    expect(byRelation.get("service-desc")).toBe("/openapi.json");
+    expect(byRelation.get("service-doc")).toBe("/docs/api/");
+  });
+
+  it("points every relation at a published path with a media type", () => {
+    for (const link of links) {
+      const target = /^<([^>]+)>/.exec(link)?.[1];
+      expect(target, link).toBeDefined();
+      // Relative references only: an absolute URL here would break on the
+      // preview deployments, which serve the same file from *.pages.dev.
+      expect(target!.startsWith("/"), link).toBe(true);
+      expect(link, link).toMatch(/type="[\w.+-]+\/[\w.+-]+"/);
+      expectPublished(target!);
+    }
   });
 });
 
