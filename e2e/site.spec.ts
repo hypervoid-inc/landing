@@ -327,7 +327,11 @@ test("uses one shared header, footer, and favicon across page types", async ({
     await expect(page.getByRole("navigation", { name: "Primary" })).toHaveText(
       "PricingBlogAffiliates",
     );
-    await expect(page.locator("footer")).toContainText("Get product updates");
+    await expect(page.locator("footer")).toContainText("Subscribe");
+    await expect(page.locator("footer").getByLabel("Name")).toBeVisible();
+    await expect(
+      page.locator("footer").getByLabel("Email address"),
+    ).toBeVisible();
     await expect(page.locator("footer")).toContainText("vs ChatGPT");
     await expect(page.locator("footer")).not.toContainText("Guides");
     await expect(
@@ -536,8 +540,9 @@ test("keeps the mobile footer compact and aligned", async ({ page }) => {
   const company = await companyNav.boundingBox();
   const comparisons = await comparisonsNav.boundingBox();
 
-  // Affiliates company link + CTA; CI Linux fonts sit a few px taller than macOS.
-  expect(footer?.height).toBeLessThan(800);
+  // Inline newsletter (name + email + Turnstile) is taller than the old CTA link.
+  // CI Linux fonts sit a few px taller than macOS.
+  expect(footer?.height).toBeLessThan(1100);
   expect(Math.abs((company?.y ?? 0) - (comparisons?.y ?? 0))).toBeLessThan(2);
   expect(comparisons?.x).toBeGreaterThan((company?.x ?? 0) + 100);
   await expect(companyNav).toHaveCSS("align-items", "center");
@@ -547,8 +552,8 @@ test("keeps the mobile footer compact and aligned", async ({ page }) => {
     "center",
   );
   await expect(
-    page.getByRole("link", { name: "Get Construct product updates by email" }),
-  ).toHaveCSS("width", "350px");
+    page.locator("footer").getByRole("button", { name: "Subscribe" }),
+  ).toBeVisible();
 });
 
 test("serves responsive atmosphere images with stable chip dimensions", async ({
@@ -1097,7 +1102,7 @@ test("every landing button responds to a real click", async ({
     route.fulfill({ body: "ok" }),
   );
 
-  // Warm CTAs open the on-site auth dialog; footer updates keep email + referral.
+  // Warm CTAs open the on-site auth dialog; footer keeps inline email + name.
   const startActions = [
     "Start using Construct",
     "Start Now",
@@ -1145,21 +1150,13 @@ test("every landing button responds to a real click", async ({
   }
 
   // The footer keeps the one email capture, for readers who are not ready yet.
-  await page
-    .getByRole("link", {
-      name: "Get Construct product updates by email",
-      exact: true,
-    })
-    .click();
+  await expect(page.locator("footer").getByLabel("Name")).toBeVisible();
   await expect(
-    page.getByRole("dialog").getByRole("heading", {
-      name: "Follow what Construct ships",
-    }),
+    page.locator("footer").getByLabel("Email address"),
   ).toBeVisible();
   await expect(
-    page.getByText("Where did you learn about Construct?"),
+    page.locator("footer").getByRole("button", { name: "Subscribe" }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Close dialog" }).click();
 
   await context.route("https://cal.com/construct/15min", (route) =>
     route.fulfill({ body: "ok" }),
@@ -1521,48 +1518,19 @@ test("returns a real 404 for unknown URLs", async ({ request }) => {
   expect(await response.text()).toContain("Page not found");
 });
 
-test("presents the updates dialog centered and animated", async ({ page }) => {
-  await page.setViewportSize({ width: 1024, height: 768 });
-  await page.goto("/");
-  await page
-    .getByRole("link", { name: "Get Construct product updates by email" })
-    .click();
-  await expect(
-    page
-      .getByRole("dialog")
-      .getByRole("heading", { name: "Follow what Construct ships" }),
-  ).toBeVisible();
-  await expect(page.locator(".beta-dialog-overlay")).toHaveCSS(
-    "animation-name",
-    "beta-overlay-in",
-  );
-  await expect(page.locator(".beta-dialog-content")).toHaveCSS(
-    "animation-name",
-    "beta-dialog-in",
-  );
-  const dialog = await page.locator(".beta-dialog-content").boundingBox();
-  expect(
-    Math.abs((dialog?.x ?? 0) + (dialog?.width ?? 0) / 2 - 1024 / 2),
-  ).toBeLessThan(2);
-  expect(
-    Math.abs((dialog?.y ?? 0) + (dialog?.height ?? 0) / 2 - 768 / 2),
-  ).toBeLessThan(14);
-});
-
-test("submits the updates opt-in through Turnstile and D1", async ({
+test("submits the footer newsletter through Turnstile and D1", async ({
   page,
 }) => {
   await page.goto("/");
-  await page
-    .getByRole("link", { name: "Get Construct product updates by email" })
-    .click();
-  await page.getByLabel("Email address").fill("playwright@example.com");
-  await page.getByRole("button", { name: "Reddit" }).click();
-  await expect(page.getByRole("button", { name: "Continue" })).toBeEnabled({
+  const footer = page.locator("footer");
+  await footer.scrollIntoViewIfNeeded();
+  await footer.getByLabel("Name").fill("Test User");
+  await footer.getByLabel("Email address").fill("playwright@example.com");
+  await expect(footer.getByRole("button", { name: "Subscribe" })).toBeEnabled({
     timeout: 15_000,
   });
-  await page.getByRole("button", { name: "Continue" }).click();
-  await expect(page.getByText("You're on the list,")).toBeVisible({
+  await footer.getByRole("button", { name: "Subscribe" }).click();
+  await expect(footer.getByText("You're on the list")).toBeVisible({
     timeout: 15_000,
   });
 });

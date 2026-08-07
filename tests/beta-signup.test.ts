@@ -6,6 +6,7 @@ import { betaSignupSchema } from "../shared/beta-signup-schema";
 
 const validBody = {
   email: " Person@Example.COM ",
+  name: "Ada",
   ctaSource: "hero",
   referral: "reddit",
   turnstileToken: "verified-token",
@@ -94,6 +95,7 @@ describe("betaSignupSchema", () => {
     expect(
       betaSignupSchema.safeParse({
         email: "user@example.com",
+        name: "Ada",
         ctaSource: "auth-google",
         referral: "other",
         referralOther: "auth-google",
@@ -107,10 +109,32 @@ describe("betaSignupSchema", () => {
     ).toBe(true);
   });
 
+  it("rejects email local-part as name", () => {
+    expect(
+      betaSignupSchema.safeParse({
+        email: "ada@example.com",
+        name: "ada",
+        ctaSource: "footer",
+        turnstileToken: "token",
+      }).success,
+    ).toBe(false);
+  });
+
+  it("rejects missing name", () => {
+    expect(
+      betaSignupSchema.safeParse({
+        email: "ada@example.com",
+        ctaSource: "footer",
+        turnstileToken: "token",
+      }).success,
+    ).toBe(false);
+  });
+
   it("rejects unknown meta keys", () => {
     expect(
       betaSignupSchema.safeParse({
         email: "user@example.com",
+        name: "Ada",
         ctaSource: "footer",
         meta: { evil: "x" },
       }).success,
@@ -316,6 +340,7 @@ describe("POST /api/beta-signup", () => {
     await handle(
       request({
         email: "spoof@example.com",
+        name: "Spoof User",
         ctaSource: "footer",
         turnstileToken: "verified-token",
         meta: {

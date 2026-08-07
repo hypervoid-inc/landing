@@ -233,7 +233,7 @@ export const openApiDocument = {
       BetaSignup: {
         type: "object",
         additionalProperties: false,
-        required: ["email", "ctaSource"],
+        required: ["email", "name", "ctaSource"],
         properties: {
           email: {
             type: "string",
@@ -243,9 +243,10 @@ export const openApiDocument = {
           },
           name: {
             type: "string",
+            minLength: 2,
             maxLength: 200,
             description:
-              "Optional display name. Forwarded to Listmonk only — not stored in D1.",
+              "Required person name for Listmonk (not the email local-part). Not stored in D1.",
           },
           ctaSource: {
             type: "string",
@@ -293,6 +294,7 @@ export const openApiDocument = {
               },
               authProvider: { type: "string", maxLength: 32 },
               constructUserId: { type: "string", maxLength: 64 },
+              username: { type: "string", maxLength: 64 },
               campaignRef: { type: "string", maxLength: 64 },
               campaignId: { type: "string", maxLength: 64 },
               campaignSubscriberId: { type: "string", maxLength: 64 },
@@ -363,8 +365,8 @@ const fields = [
   [
     "name",
     "string",
-    "no",
-    "Optional. Forwarded to Listmonk only (not stored in D1).",
+    "yes",
+    "Required person name for Listmonk (not the email local-part). Not stored in D1.",
   ],
   [
     "ctaSource",

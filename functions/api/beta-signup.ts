@@ -88,6 +88,7 @@ function stripPrivilegedBrowserMeta(data: BetaSignup): BetaSignup {
   delete campaign.constructUserId;
   delete campaign.authProvider;
   delete campaign.subscribedVia;
+  delete campaign.username;
   const meta: SignupMeta | undefined =
     Object.keys(campaign).length > 0 ? campaign : undefined;
   return { ...data, meta };
@@ -135,6 +136,7 @@ async function persistSignup(
       subscribedVia: resolveSubscribedVia(data),
       authProvider: meta.authProvider,
       constructUserId: meta.constructUserId,
+      username: meta.username,
       campaignRef: meta.campaignRef,
       campaignId: meta.campaignId,
       campaignSubscriberId: meta.campaignSubscriberId,

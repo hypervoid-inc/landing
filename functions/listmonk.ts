@@ -10,6 +10,7 @@
  * actually succeeded (or was intentionally skipped — empty base URL).
  */
 
+import { isLegitPersonName } from "../shared/person-name";
 import type { BetaSignupEnv } from "./types";
 
 export const DEFAULT_LISTMONK_BASE = "https://listmonk.construct.computer";
@@ -32,6 +33,7 @@ const FIRST_TOUCH_KEYS = new Set([
   "subscribed_at",
   "auth_provider",
   "construct_user_id",
+  "construct_username",
   "campaign_ref",
   "campaign_id",
   "campaign_subscriber_id",
@@ -66,6 +68,7 @@ export function buildListmonkAttribs(input: {
   subscribedVia: "landing_footer" | "construct_auth" | string;
   authProvider?: string;
   constructUserId?: string;
+  username?: string;
   campaignRef?: string;
   campaignId?: string;
   campaignSubscriberId?: string;
@@ -85,6 +88,7 @@ export function buildListmonkAttribs(input: {
   if (input.referralOther) attribs.referral_other = input.referralOther;
   if (input.authProvider) attribs.auth_provider = input.authProvider;
   if (input.constructUserId) attribs.construct_user_id = input.constructUserId;
+  if (input.username) attribs.construct_username = input.username;
   if (input.campaignRef) attribs.campaign_ref = input.campaignRef;
   if (input.campaignId) attribs.campaign_id = input.campaignId;
   if (input.campaignSubscriberId) {
@@ -238,8 +242,8 @@ async function subscribePrivate(
   const listId = await resolveNewsletterListId(env, base, auth);
   if (!listId) return false;
 
-  const displayName =
-    name?.trim() || email.split("@")[0] || "Subscriber";
+  const displayName = name?.trim() ?? "";
+  if (!isLegitPersonName(displayName, email)) return false;
 
   const create = await fetch(`${base}/api/subscribers`, {
     method: "POST",
@@ -300,8 +304,9 @@ async function subscribePublic(
   env: BetaSignupEnv,
   base: string,
   email: string,
-  name?: string,
+  name: string,
 ): Promise<boolean> {
+  if (!isLegitPersonName(name, email)) return false;
   const listUuid = (
     env.LISTMONK_NEWSLETTER_LIST_UUID ?? DEFAULT_NEWSLETTER_LIST_UUID
   ).trim();
@@ -311,7 +316,7 @@ async function subscribePublic(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email,
-      ...(name ? { name } : {}),
+      name,
       list_uuids: [listUuid],
     }),
   });
@@ -331,11 +336,16 @@ export async function subscribeListmonk(
   const base = listmonkBase(env);
   if (!base) return { ok: true };
 
+  const displayName = name?.trim() ?? "";
+  if (!isLegitPersonName(displayName, email)) return { ok: false };
+
   try {
     if (env.LISTMONK_API_USER?.trim() && env.LISTMONK_API_TOKEN?.trim()) {
-      return { ok: await subscribePrivate(env, base, email, name, attribs) };
+      return {
+        ok: await subscribePrivate(env, base, email, displayName, attribs),
+      };
     }
-    return { ok: await subscribePublic(env, base, email, name) };
+    return { ok: await subscribePublic(env, base, email, displayName) };
   } catch {
     return { ok: false };
   }

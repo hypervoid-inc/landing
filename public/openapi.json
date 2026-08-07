@@ -270,7 +270,7 @@
       "BetaSignup": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["email", "ctaSource"],
+        "required": ["email", "name", "ctaSource"],
         "properties": {
           "email": {
             "type": "string",
@@ -280,8 +280,9 @@
           },
           "name": {
             "type": "string",
+            "minLength": 2,
             "maxLength": 200,
-            "description": "Optional display name. Forwarded to Listmonk only — not stored in D1."
+            "description": "Required person name for Listmonk (not the email local-part). Not stored in D1."
           },
           "ctaSource": {
             "type": "string",
@@ -345,6 +346,10 @@
                 "maxLength": 32
               },
               "constructUserId": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "username": {
                 "type": "string",
                 "maxLength": 64
               },
