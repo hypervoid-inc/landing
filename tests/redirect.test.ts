@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { onRequest } from "../functions/redirect";
 
@@ -7,6 +7,10 @@ import { onRequest } from "../functions/redirect";
 const TRACKED =
   "https://listmonk.construct.computer/link/3f2b91d4-6c58-4a72-b0e3-7d1a9f4c2e85/8a1c33f0-2e77-4b19-a5d2-1f9e4c7b6a08/9d4e7c21-8b3a-4f60-9e11-6c2a5d8f0b73";
 
+const SUBSCRIBER = "9d4e7c21-8b3a-4f60-9e11-6c2a5d8f0b73";
+const CAMPAIGN = "8a1c33f0-2e77-4b19-a5d2-1f9e4c7b6a08";
+const LANDING = "https://construct.computer/launch/?ref=mailinglist&utm_campaign=prelaunch-2026-08";
+
 function base64url(value: string) {
   return btoa(value)
     .replace(/\+/g, "-")
@@ -14,32 +18,95 @@ function base64url(value: string) {
     .replace(/=+$/, "");
 }
 
-function redirectFor(raw: string | null) {
-  const url = raw === null ? "https://construct.example/redirect" : `https://construct.example/redirect?p=${encodeURIComponent(raw)}`;
-  return onRequest({ request: new Request(url), env: {} });
+/** Stand in for listmonk: books the click, answers with a redirect to the real destination. */
+function listmonkReturning(location: string | null, status = 302) {
+  return vi.fn(async () =>
+    location === null
+      ? new Response(null, { status })
+      : new Response(null, { status, headers: { Location: location } }),
+  );
+}
+
+function redirectFor(raw: string | null, extra: Record<string, string> = {}, method = "GET") {
+  const url = new URL("https://construct.example/redirect");
+  if (raw !== null) url.searchParams.set("p", raw);
+  for (const [key, value] of Object.entries(extra)) url.searchParams.set(key, value);
+  return onRequest({ request: new Request(url.toString(), { method }), env: {} });
 }
 
 describe("redirect", () => {
-  it("redirects to a tracked listmonk destination", async () => {
+  let listmonk: ReturnType<typeof listmonkReturning>;
+
+  beforeEach(() => {
+    listmonk = listmonkReturning(LANDING);
+    vi.stubGlobal("fetch", listmonk);
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("books the click with listmonk and forwards to the destination it names", async () => {
     const response = await redirectFor(TRACKED);
+    expect(listmonk).toHaveBeenCalledOnce();
+    expect(listmonk).toHaveBeenCalledWith(TRACKED, expect.objectContaining({ redirect: "manual" }));
+    expect(response.status).toBe(302);
+    expect(response.headers.get("Location")).toBe(LANDING);
+  });
+
+  it("carries subscriber and campaign ids onto our own pages", async () => {
+    const response = await redirectFor(base64url(TRACKED), { s: SUBSCRIBER, c: CAMPAIGN });
+    const location = new URL(response.headers.get("Location")!);
+    expect(location.searchParams.get("sid")).toBe(SUBSCRIBER);
+    expect(location.searchParams.get("cid")).toBe(CAMPAIGN);
+    // The UTMs listmonk stored must survive alongside them.
+    expect(location.searchParams.get("utm_campaign")).toBe("prelaunch-2026-08");
+  });
+
+  it("does not leak the subscriber id to third-party destinations", async () => {
+    vi.stubGlobal("fetch", listmonkReturning("https://discord.gg/puArEQHYN9?utm_content=discord-body"));
+    const response = await redirectFor(TRACKED, { s: SUBSCRIBER, c: CAMPAIGN });
+    const location = new URL(response.headers.get("Location")!);
+    expect(location.searchParams.has("sid")).toBe(false);
+    expect(location.searchParams.has("cid")).toBe(false);
+    expect(location.searchParams.get("utm_content")).toBe("discord-body");
+  });
+
+  it("falls back to listmonk when it is unreachable, so the click still lands", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => {
+        throw new Error("network down");
+      }),
+    );
+    const response = await redirectFor(TRACKED, { s: SUBSCRIBER });
     expect(response.status).toBe(302);
     expect(response.headers.get("Location")).toBe(TRACKED);
   });
 
-  it("redirects to an http destination", async () => {
-    const response = await redirectFor("http://listmonk.construct.computer/link/a/b/c");
+  it("falls back when listmonk answers without a redirect", async () => {
+    vi.stubGlobal("fetch", listmonkReturning(null, 200));
+    expect((await redirectFor(TRACKED)).headers.get("Location")).toBe(TRACKED);
+
+    vi.stubGlobal("fetch", listmonkReturning(null, 302));
+    expect((await redirectFor(TRACKED)).headers.get("Location")).toBe(TRACKED);
+  });
+
+  it("ignores a non-http(s) destination from listmonk", async () => {
+    vi.stubGlobal("fetch", listmonkReturning("javascript:alert(1)"));
+    expect((await redirectFor(TRACKED)).headers.get("Location")).toBe(TRACKED);
+  });
+
+  it("does not book a click for HEAD, which is what mail scanners send", async () => {
+    const response = await redirectFor(TRACKED, {}, "HEAD");
+    expect(listmonk).not.toHaveBeenCalled();
     expect(response.status).toBe(302);
+    expect(response.headers.get("Location")).toBe(TRACKED);
   });
 
   it("redirects to a base64-encoded destination", async () => {
     expect((await redirectFor(btoa(TRACKED))).status).toBe(302);
-    expect((await redirectFor(btoa(TRACKED))).headers.get("Location")).toBe(TRACKED);
-  });
-
-  it("redirects to a base64url-encoded destination", async () => {
-    const response = await redirectFor(base64url(TRACKED));
-    expect(response.status).toBe(302);
-    expect(response.headers.get("Location")).toBe(TRACKED);
+    expect((await redirectFor(base64url(TRACKED))).status).toBe(302);
   });
 
   it("rejects missing, invalid, or non-http(s) targets", async () => {
@@ -61,10 +128,7 @@ describe("redirect", () => {
   });
 
   it("rejects methods other than GET/HEAD", async () => {
-    const response = await onRequest({
-      request: new Request(`https://construct.example/redirect?p=${encodeURIComponent(TRACKED)}`, { method: "POST" }),
-      env: {},
-    });
+    const response = await redirectFor(TRACKED, {}, "POST");
     expect(response.status).toBe(405);
   });
 });
