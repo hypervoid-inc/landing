@@ -94,8 +94,7 @@ const HOMEPAGE_CATALOG = {
 };
 
 function fulfillJson(route: Route, body: unknown, status = 200) {
-  const origin =
-    route.request().headers().origin ?? "http://localhost:8788";
+  const origin = route.request().headers().origin ?? "http://localhost:8788";
   const headers = {
     "Access-Control-Allow-Origin": origin,
     "Access-Control-Allow-Credentials": "true",
@@ -472,9 +471,7 @@ test("shows post-login welcome after dialog magic verify", async ({ page }) => {
   await expect(
     dialog.getByRole("link", { name: "Open Construct OS" }),
   ).toBeVisible();
-  await expect(
-    dialog.getByText(/persistent cloud workspace/i),
-  ).toBeVisible();
+  await expect(dialog.getByText(/persistent cloud workspace/i)).toBeVisible();
 
   await dialog.getByRole("button", { name: "Stay on the site" }).click();
   await expect(dialog).toBeHidden();
@@ -485,7 +482,10 @@ test("reopens welcome from seeded post-login flag when authenticated", async ({
 }) => {
   await page.addInitScript(() => {
     // Seed once per tab — subsequent navigations must not re-arm the flag.
-    if (sessionStorage.getItem("construct.landing.postLoginWelcome.seeded") === "1") {
+    if (
+      sessionStorage.getItem("construct.landing.postLoginWelcome.seeded") ===
+      "1"
+    ) {
       return;
     }
     sessionStorage.setItem("construct.landing.postLoginWelcome.seeded", "1");
@@ -656,9 +656,7 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     await page.locator("#pricing").scrollIntoViewIfNeeded();
 
     for (const plan of pricingPlans) {
-      await expect(
-        page.getByRole("button", { name: plan.cta }),
-      ).toBeVisible();
+      await expect(page.getByRole("button", { name: plan.cta })).toBeVisible();
     }
 
     const cards = page.locator(".pricing-card");
@@ -828,7 +826,9 @@ test("toggles pricing between monthly and annual rates", async ({ page }) => {
   await expect(amount(cards.nth(1))).toHaveText("$59", { timeout: 1000 });
   await expect(amount(cards.nth(2))).toHaveText("$299", { timeout: 1000 });
   await expect(cards.nth(0).locator(".pricing-price-was")).not.toBeVisible();
-  await expect(cards.nth(0).locator(".pricing-price-savings")).not.toBeVisible();
+  await expect(
+    cards.nth(0).locator(".pricing-price-savings"),
+  ).not.toBeVisible();
   await expect(cards.nth(1)).not.toContainText("trial");
   await expect(cards.nth(2)).not.toContainText("trial");
 
@@ -852,17 +852,13 @@ test("applies live catalog recommended plan and trial highlight", async ({
         ? {
             ...plan,
             month: { ...plan.month, trialDays: 7 },
-            year: plan.year
-              ? { ...plan.year, trialDays: 7 }
-              : plan.year,
+            year: plan.year ? { ...plan.year, trialDays: 7 } : plan.year,
           }
         : plan.id === "lite"
           ? {
               ...plan,
               month: { ...plan.month, trialDays: null },
-              year: plan.year
-                ? { ...plan.year, trialDays: null }
-                : plan.year,
+              year: plan.year ? { ...plan.year, trialDays: null } : plan.year,
             }
           : plan,
     ),
@@ -880,7 +876,9 @@ test("applies live catalog recommended plan and trial highlight", async ({
   await expect(cards.nth(1)).not.toHaveAttribute("data-recommended");
   await expect(cards.nth(2)).toContainText("7-day trial");
   await expect(cards.nth(0)).not.toContainText("7-day trial");
-  await expect(page.locator("#pricing")).toContainText("Plans start at $9/month");
+  await expect(page.locator("#pricing")).toContainText(
+    "Plans start at $9/month",
+  );
 });
 
 test("keeps the landing hero clear and reserves lazy media space", async ({
@@ -1476,6 +1474,32 @@ test("serves a discoverable API catalog", async ({ request }) => {
         expect(target.status(), href).toBe(200);
       }
     }
+  }
+});
+
+/**
+ * Cloudflare merges the four `_headers` lines into one comma-separated Link
+ * header. That merge only happens on a served response, so only a served
+ * response can prove the relations survived it.
+ */
+test("advertises discovery documents in homepage Link headers", async ({
+  request,
+}) => {
+  const response = await request.get("/");
+  const link = response.headers().link ?? "";
+
+  expect(link).toBeTruthy();
+  for (const relation of [
+    "api-catalog",
+    "service-desc",
+    "service-doc",
+    "describedby",
+  ]) {
+    expect(link, relation).toContain(`rel="${relation}"`);
+  }
+
+  for (const [, target] of link.matchAll(/<([^>]+)>/g)) {
+    expect((await request.get(target!)).status(), target).toBe(200);
   }
 });
 
