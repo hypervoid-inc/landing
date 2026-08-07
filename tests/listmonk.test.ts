@@ -25,6 +25,7 @@ describe("buildListmonkAttribs", () => {
       campaignId: "cid-1",
       utmSource: "email",
       landingPath: "/launch",
+      username: "ada_l",
     });
     expect(attribs.source).toBe("footer");
     expect(attribs.cta_source).toBe("footer");
@@ -32,6 +33,7 @@ describe("buildListmonkAttribs", () => {
     expect(attribs.campaign_ref).toBe("mailinglist");
     expect(attribs.utm_source).toBe("email");
     expect(attribs.landing_path).toBe("/launch");
+    expect(attribs.construct_username).toBe("ada_l");
     expect(typeof attribs.subscribed_at).toBe("string");
   });
 });
@@ -59,10 +61,26 @@ describe("subscribeListmonk", () => {
     const result = await subscribeListmonk(
       { LISTMONK_BASE_URL: "" } as BetaSignupEnv,
       "a@b.com",
-      undefined,
+      "Ada",
       {},
     );
     expect(result).toEqual({ ok: true });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("returns ok:false when name is missing or email-local", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const result = await subscribeListmonk(
+      {
+        LISTMONK_BASE_URL: "https://listmonk.test",
+        LISTMONK_NEWSLETTER_LIST_UUID: "list-uuid",
+      } as BetaSignupEnv,
+      "ada@example.com",
+      "ada",
+      {},
+    );
+    expect(result).toEqual({ ok: false });
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
@@ -103,7 +121,7 @@ describe("subscribeListmonk", () => {
         LISTMONK_NEWSLETTER_LIST_UUID: "list-uuid",
       } as BetaSignupEnv,
       "a@b.com",
-      undefined,
+      "Ada",
       {},
     );
     expect(result).toEqual({ ok: false });
@@ -186,7 +204,7 @@ describe("subscribeListmonk", () => {
     const result = await subscribeListmonk(
       privateEnv,
       "a@b.com",
-      undefined,
+      "Ada",
       buildListmonkAttribs({
         ctaSource: "auth-google",
         referral: "other",
@@ -234,7 +252,7 @@ describe("subscribeListmonk", () => {
     const result = await subscribeListmonk(
       privateEnv,
       "a@b.com",
-      undefined,
+      "Ada",
       buildListmonkAttribs({
         ctaSource: "auth-google",
         referral: "other",
@@ -279,7 +297,7 @@ describe("subscribeListmonk", () => {
     });
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await subscribeListmonk(privateEnv, "a@b.com", undefined, {});
+    const result = await subscribeListmonk(privateEnv, "a@b.com", "Ada", {});
     expect(result).toEqual({ ok: true });
     expect(
       fetchMock.mock.calls.some(([url, init]) =>

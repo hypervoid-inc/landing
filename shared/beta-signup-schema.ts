@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { isLegitPersonName } from "./person-name";
+
 export const CTA_SOURCES = [
   "hero",
   "nav",
@@ -25,13 +27,15 @@ export const REFERRAL_SOURCES = [
 
 /** Allowlisted campaign / identity fields for Listmonk attribs.
  * Browser Turnstile posts strip constructUserId / authProvider / subscribedVia
- * server-side; those are ingest-only.
+ * / username server-side; those are ingest-only.
  */
 export const signupMetaSchema = z
   .object({
     subscribedVia: z.string().trim().min(1).max(64).optional(),
     authProvider: z.string().trim().min(1).max(32).optional(),
     constructUserId: z.string().trim().min(1).max(64).optional(),
+    /** Construct account username — ingest-only. */
+    username: z.string().trim().min(1).max(64).optional(),
     campaignRef: z.string().trim().min(1).max(64).optional(),
     campaignId: z.string().trim().min(1).max(64).optional(),
     campaignSubscriberId: z.string().trim().min(1).max(64).optional(),
@@ -47,8 +51,8 @@ export const signupMetaSchema = z
 export const betaSignupSchema = z
   .object({
     email: z.string().trim().toLowerCase().email().max(254),
-    /** Optional display name — forwarded to Listmonk only, not stored in D1. */
-    name: z.string().trim().max(200).optional(),
+    /** Required person name — forwarded to Listmonk, not stored in D1. */
+    name: z.string().trim().min(2).max(200),
     ctaSource: z.string().min(1),
     /**
      * Optional on the newsletter footer form. When omitted we store
@@ -63,6 +67,13 @@ export const betaSignupSchema = z
   })
   .strict()
   .superRefine((value, context) => {
+    if (!isLegitPersonName(value.name, value.email)) {
+      context.addIssue({
+        code: "custom",
+        path: ["name"],
+        message: "A real name is required (not your email address)",
+      });
+    }
     if (value.referral === "other" && !value.referralOther) {
       context.addIssue({
         code: "custom",

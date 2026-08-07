@@ -3,7 +3,8 @@ import { Link, useLocation } from "react-router";
 
 import { companyLinks, comparisonLinks } from "../../content/landing";
 import { useAuth } from "../../features/auth/auth-provider";
-import { BetaLink, StartLink } from "../../features/landing/beta-access";
+import { StartLink } from "../../features/landing/beta-access";
+import { NewsletterForm } from "../../features/landing/newsletter-form";
 import { UserMenu } from "./user-menu";
 
 function navCurrent(pathname: string, href: string): "page" | undefined {
@@ -196,13 +197,7 @@ export function SiteFooter() {
                 </svg>
               </SocialLink>
             </div>
-            <BetaLink
-              source="footer"
-              label="Get Construct product updates by email"
-              className="site-cta mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-black px-5 py-3 text-[13px] font-semibold text-white shadow-[0_4px_4px_rgba(0,0,0,.15)] sm:mt-2 sm:w-fit sm:py-2.5"
-            >
-              Get product updates <span aria-hidden>↗</span>
-            </BetaLink>
+            <NewsletterForm />
           </div>
           <FooterColumn title="Company" label="Company" links={companyLinks} />
           <FooterColumn
