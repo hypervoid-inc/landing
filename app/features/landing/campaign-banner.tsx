@@ -6,15 +6,11 @@ import { captureAnalytics } from "../analytics/analytics.client";
 import { readAttributionCookie } from "../analytics/campaign-attribution.client";
 import type { CampaignAttribution } from "../analytics/campaign-attribution";
 
-const DISMISS_KEY = "construct.landing.campaignBanner";
-
-function dismissed(): boolean {
-  try {
-    return sessionStorage.getItem(DISMISS_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
+/**
+ * In-memory only — survives SPA remounts while the JS context lives, clears on
+ * hard refresh. Matches Clippy: dismiss for this visit, not across reloads.
+ */
+let dismissedThisVisit = false;
 
 /**
  * Campaign banner for visitors arriving from the email.
@@ -32,7 +28,7 @@ export function CampaignBanner() {
 
   useEffect(() => {
     const reveal = () => {
-      if (dismissed()) return;
+      if (dismissedThisVisit) return;
       const stored = readAttributionCookie();
       // Any campaign id qualifies, not just `ref=mailinglist`, so future
       // campaigns work without a code change.
@@ -74,11 +70,7 @@ export function CampaignBanner() {
           aria-label="Dismiss offer banner"
           className="ml-1 text-sm text-[var(--color-ink-subtle)]"
           onClick={() => {
-            try {
-              sessionStorage.setItem(DISMISS_KEY, "1");
-            } catch {
-              // Private mode; banner simply reappears next load.
-            }
+            dismissedThisVisit = true;
             setAttribution(null);
           }}
         >
