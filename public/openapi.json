@@ -377,6 +377,10 @@
                 "type": "string",
                 "maxLength": 64
               },
+              "utmContent": {
+                "type": "string",
+                "maxLength": 64
+              },
               "promoCode": {
                 "type": "string",
                 "maxLength": 16

@@ -42,6 +42,7 @@ export const signupMetaSchema = z
     utmSource: z.string().trim().min(1).max(64).optional(),
     utmMedium: z.string().trim().min(1).max(64).optional(),
     utmCampaign: z.string().trim().min(1).max(64).optional(),
+    utmContent: z.string().trim().min(1).max(64).optional(),
     promoCode: z.string().trim().min(1).max(16).optional(),
     landingPath: z.string().trim().min(1).max(128).optional(),
   })

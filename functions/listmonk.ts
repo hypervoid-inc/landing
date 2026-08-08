@@ -40,6 +40,7 @@ const FIRST_TOUCH_KEYS = new Set([
   "utm_source",
   "utm_medium",
   "utm_campaign",
+  "utm_content",
   "promo_code",
   "landing_path",
 ]);
@@ -75,6 +76,7 @@ export function buildListmonkAttribs(input: {
   utmSource?: string;
   utmMedium?: string;
   utmCampaign?: string;
+  utmContent?: string;
   promoCode?: string;
   landingPath?: string;
 }): ListmonkAttribs {
@@ -97,6 +99,7 @@ export function buildListmonkAttribs(input: {
   if (input.utmSource) attribs.utm_source = input.utmSource;
   if (input.utmMedium) attribs.utm_medium = input.utmMedium;
   if (input.utmCampaign) attribs.utm_campaign = input.utmCampaign;
+  if (input.utmContent) attribs.utm_content = input.utmContent;
   if (input.promoCode) attribs.promo_code = input.promoCode;
   if (input.landingPath) attribs.landing_path = input.landingPath;
   return attribs;
@@ -203,6 +206,51 @@ async function findSubscriber(
       row.attribs && typeof row.attribs === "object" ? row.attribs : {},
     lists,
   };
+}
+
+const SUBSCRIBER_UUID_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export function isSubscriberUuid(value: string): boolean {
+  return SUBSCRIBER_UUID_PATTERN.test(value.trim());
+}
+
+/**
+ * Resolve a Listmonk subscriber UUID to a normalized email.
+ * Returns null when credentials are missing, the UUID is invalid, or no row.
+ * Never throws; never logs the email.
+ */
+export async function findSubscriberEmailByUuid(
+  env: BetaSignupEnv,
+  uuid: string,
+): Promise<string | null> {
+  const trimmed = uuid.trim();
+  if (!isSubscriberUuid(trimmed)) return null;
+
+  const base = listmonkBase(env);
+  if (!base) return null;
+  const user = env.LISTMONK_API_USER?.trim();
+  const token = env.LISTMONK_API_TOKEN?.trim();
+  if (!user || !token) return null;
+
+  const auth = basicAuth(user, token);
+  const safe = trimmed.replace(/'/g, "''");
+  try {
+    const response = await fetch(
+      `${base}/api/subscribers?query=${encodeURIComponent(
+        `subscribers.uuid = '${safe}'`,
+      )}&per_page=1`,
+      { headers: { Authorization: auth } },
+    );
+    if (!response.ok) return null;
+    const body = (await response.json()) as {
+      data?: { results?: Array<{ email?: string }> };
+    };
+    const email = body.data?.results?.[0]?.email?.trim().toLowerCase() ?? "";
+    return email.includes("@") ? email : null;
+  } catch {
+    return null;
+  }
 }
 
 async function patchAttribs(
