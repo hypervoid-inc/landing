@@ -143,6 +143,7 @@ async function persistSignup(
       utmSource: meta.utmSource,
       utmMedium: meta.utmMedium,
       utmCampaign: meta.utmCampaign,
+      utmContent: meta.utmContent,
       promoCode: meta.promoCode,
       landingPath: meta.landingPath,
     }),

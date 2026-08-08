@@ -23,11 +23,15 @@ Configure these production values:
 | `VITE_TURNSTILE_SITE_KEY`     | Build variable                                          |
 | `VITE_POSTHOG_KEY`            | Build variable                                          |
 | `VITE_POSTHOG_HOST`           | Build variable, normally `https://x.construct.computer` |
+| `POSTHOG_PROJECT_KEY`         | Encrypted Pages secret (campaign-touch server capture)  |
+| `POSTHOG_HOST`                | Runtime variable, optional; default `https://x.construct.computer` |
 | `TURNSTILE_SECRET_KEY`        | Encrypted Pages secret                                  |
 | `TURNSTILE_EXPECTED_HOSTNAME` | Runtime variable, `construct.computer`                  |
 | `TURNSTILE_EXPECTED_ACTION`   | Runtime variable, `beta_signup`                         |
 | `TURNSTILE_TEST_MODE`         | Runtime variable, `false`                               |
 | `ALLOWED_ORIGIN_HOSTNAME`     | Runtime variable, `construct.computer`                  |
+| `LISTMONK_API_USER`           | Encrypted Pages secret (attribs + campaign-touch)       |
+| `LISTMONK_API_TOKEN`          | Encrypted Pages secret                                  |
 
 Never use Cloudflare's dummy Turnstile keys in production.
 
@@ -37,10 +41,11 @@ Never use Cloudflare's dummy Turnstile keys in production.
 2. Redirect `www.construct.computer` to `https://construct.computer` with a permanent zone Redirect Rule.
 3. Enable applicable managed WAF rules.
 4. Add a rate-limiting rule for `POST /api/beta-signup`; start with a Managed Challenge after 10 requests per IP in 10 seconds and tune from observed traffic.
-5. Keep verified search bots out of generic challenge rules.
-6. Confirm Managed Robots and AI crawler settings do not override `public/robots.txt`.
-7. Enable Crawler Hints for IndexNow notifications.
-8. Protect preview deployments with Cloudflare Access when possible. `_headers` also marks Pages preview hosts `noindex`.
+5. Add a rate-limiting rule for `POST /api/campaign-touch` (subscriber UUID → email); start with a Managed Challenge after 20 requests per IP in 10 seconds. The endpoint returns opaque 404s for misses — still throttle enumeration.
+6. Keep verified search bots out of generic challenge rules.
+7. Confirm Managed Robots and AI crawler settings do not override `public/robots.txt`.
+8. Enable Crawler Hints for IndexNow notifications.
+9. Protect preview deployments with Cloudflare Access when possible. `_headers` also marks Pages preview hosts `noindex`.
 
 Static requests bypass Functions through `_routes.json`. DDoS absorption, bot screening, and request-rate enforcement belong at Cloudflare's edge rather than in a per-instance JavaScript counter.
 

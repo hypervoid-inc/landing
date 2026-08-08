@@ -9,6 +9,7 @@ import {
 } from "./campaign-attribution";
 
 const ROOT_DOMAIN = "construct.computer";
+const TOUCH_SESSION_KEY = "construct_campaign_touch";
 
 /**
  * `Domain=.construct.computer` is what carries attribution across the hop to
@@ -63,15 +64,18 @@ export function writePromoCode(code: string): void {
  * hundred milliseconds must still carry attribution to os.construct.computer.
  * PostHog initialisation can wait; this cannot.
  *
- * Returns the merged attribution (or null), plus whether this load was the
- * first touch — the caller uses that to avoid re-firing `campaign_landed`.
+ * Returns the merged attribution (or null), whether this load was the first
+ * touch, and the raw this-navigation parse when it carried `s` (for campaign-
+ * touch — do not use first-touch-merged cookie fields for that).
  */
 export function captureCampaignOnLoad(): {
   attribution: CampaignAttribution | null;
   isFirstTouch: boolean;
+  /** This URL's parse when it includes `s`; null for cookie-only returns. */
+  click: CampaignAttribution | null;
 } {
   if (typeof window === "undefined") {
-    return { attribution: null, isFirstTouch: false };
+    return { attribution: null, isFirstTouch: false, click: null };
   }
 
   const existing = readAttributionCookie();
@@ -79,10 +83,66 @@ export function captureCampaignOnLoad(): {
     window.location.search,
     window.location.pathname,
   );
+  const click = incoming?.s ? incoming : null;
 
-  if (!incoming) return { attribution: existing, isFirstTouch: false };
+  if (!incoming) {
+    return { attribution: existing, isFirstTouch: false, click: null };
+  }
 
   const merged = mergeFirstTouch(existing, incoming);
   if (merged) writeAttributionCookie(merged);
-  return { attribution: merged, isFirstTouch: existing === null };
+  return {
+    attribution: merged,
+    isFirstTouch: existing === null,
+    click,
+  };
+}
+
+/**
+ * Resolve Listmonk subscriber UUID → email via first-party campaign-touch.
+ * One attempt per tab session for a given sid. Pass the **this-click** sid and
+ * UTMs from the URL — not first-touch-merged cookie fields (those may omit `s`).
+ */
+export async function touchCampaignSubscriber(input: {
+  sid: string;
+  utmCampaign?: string;
+  utmContent?: string;
+  landingPath?: string;
+}): Promise<string | null> {
+  if (typeof window === "undefined") return null;
+  const sid = input.sid.trim();
+  if (!sid) return null;
+
+  try {
+    if (sessionStorage.getItem(TOUCH_SESSION_KEY) === sid) return null;
+  } catch {
+    // sessionStorage may be blocked; still attempt the touch once.
+  }
+
+  try {
+    const response = await fetch("/api/campaign-touch", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({
+        sid,
+        ...(input.utmCampaign ? { utm_campaign: input.utmCampaign } : {}),
+        ...(input.utmContent ? { utm_content: input.utmContent } : {}),
+        ...(input.landingPath ? { landing_path: input.landingPath } : {}),
+      }),
+    });
+    if (!response.ok) return null;
+    const body = (await response.json()) as { email?: unknown };
+    const email =
+      typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+    if (!email.includes("@")) return null;
+    try {
+      sessionStorage.setItem(TOUCH_SESSION_KEY, sid);
+    } catch {
+      // ignore
+    }
+    return email;
+  } catch {
+    return null;
+  }
 }

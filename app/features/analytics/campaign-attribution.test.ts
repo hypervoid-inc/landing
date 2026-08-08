@@ -19,7 +19,7 @@ describe("attribution wire contract", () => {
 
   it("pins the short key shape", () => {
     const parsed = parseCampaignParams(
-      "?ref=mailinglist&cid=abc&sid=def&utm_source=newsletter&utm_medium=email&utm_campaign=launch&code=LAUNCH20",
+      "?ref=mailinglist&cid=abc&sid=def&utm_source=newsletter&utm_medium=email&utm_campaign=launch&utm_content=cta-body-1&code=LAUNCH20",
       "/launch/",
     );
     expect(Object.keys(parsed ?? {}).sort()).toEqual([
@@ -31,6 +31,7 @@ describe("attribution wire contract", () => {
       "t",
       "uc",
       "um",
+      "uo",
       "us",
     ]);
   });
@@ -43,8 +44,49 @@ describe("parseCampaignParams", () => {
   });
 
   it("maps known params to short keys", () => {
-    const parsed = parseCampaignParams("?ref=mailinglist&cid=camp-1&sid=sub-2");
-    expect(parsed).toMatchObject({ r: "mailinglist", c: "camp-1", s: "sub-2" });
+    const parsed = parseCampaignParams(
+      "?ref=mailinglist&cid=camp-1&sid=sub-2&utm_content=cta-body-1",
+    );
+    expect(parsed).toMatchObject({
+      r: "mailinglist",
+      c: "camp-1",
+      s: "sub-2",
+      uo: "cta-body-1",
+      us: "newsletter",
+      um: "email",
+    });
+  });
+
+  it("accepts short query keys used by email CTAs", () => {
+    const parsed = parseCampaignParams(
+      "?s=sub-2&uc=prelaunch-2026-08&uo=cta-body-1",
+      "/launch/",
+    );
+    expect(parsed).toMatchObject({
+      s: "sub-2",
+      uc: "prelaunch-2026-08",
+      uo: "cta-body-1",
+      r: "mailinglist",
+      us: "newsletter",
+      um: "email",
+      lp: "/launch/",
+    });
+  });
+
+  it("prefers short keys when both short and long names are present", () => {
+    const parsed = parseCampaignParams(
+      "?s=short-sid&sid=long-sid&uo=short-uo&utm_content=long-uo",
+    );
+    expect(parsed?.s).toBe("short-sid");
+    expect(parsed?.uo).toBe("short-uo");
+  });
+
+  it("does not invent email defaults without a subscriber id", () => {
+    const parsed = parseCampaignParams("?uc=ads-campaign&uo=hero");
+    expect(parsed).toMatchObject({ uc: "ads-campaign", uo: "hero" });
+    expect(parsed?.r).toBeUndefined();
+    expect(parsed?.us).toBeUndefined();
+    expect(parsed?.um).toBeUndefined();
   });
 
   it("uppercases promo codes and accepts either param name", () => {
@@ -117,10 +159,16 @@ describe("parseAttributionCookie", () => {
 describe("toAnalyticsProperties", () => {
   it("expands short keys into readable property names", () => {
     expect(
-      toAnalyticsProperties({ r: "mailinglist", c: "camp-1", p: "LAUNCH20" }),
+      toAnalyticsProperties({
+        r: "mailinglist",
+        c: "camp-1",
+        uo: "cta-body-1",
+        p: "LAUNCH20",
+      }),
     ).toEqual({
       campaign_ref: "mailinglist",
       campaign_id: "camp-1",
+      utm_content: "cta-body-1",
       campaign_promo_code: "LAUNCH20",
     });
   });

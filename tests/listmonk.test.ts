@@ -2,6 +2,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
   buildListmonkAttribs,
+  findSubscriberEmailByUuid,
+  isSubscriberUuid,
   mergeListmonkAttribs,
   subscribeListmonk,
 } from "../functions/listmonk";
@@ -41,14 +43,62 @@ describe("buildListmonkAttribs", () => {
 describe("mergeListmonkAttribs", () => {
   it("keeps first-touch keys and records last_touch", () => {
     const merged = mergeListmonkAttribs(
-      { source: "footer", campaign_ref: "email" },
-      { source: "auth-google", campaign_ref: "other", utm_source: "twitter" },
+      { source: "footer", campaign_ref: "email", utm_content: "cta-body-1" },
+      {
+        source: "auth-google",
+        campaign_ref: "other",
+        utm_source: "twitter",
+        utm_content: "hero",
+      },
     );
     expect(merged.source).toBe("footer");
     expect(merged.campaign_ref).toBe("email");
+    expect(merged.utm_content).toBe("cta-body-1");
     expect(merged.utm_source).toBe("twitter");
     expect(merged.last_touch_source).toBe("auth-google");
     expect(typeof merged.last_touch_at).toBe("string");
+  });
+});
+
+describe("findSubscriberEmailByUuid", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("rejects non-UUID input without calling Listmonk", async () => {
+    expect(isSubscriberUuid("not-a-uuid")).toBe(false);
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    await expect(
+      findSubscriberEmailByUuid(privateEnv, "not-a-uuid"),
+    ).resolves.toBeNull();
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("returns normalized email for a valid subscriber UUID", async () => {
+    const uuid = "7c3e7b8c-7e05-4482-a5eb-a20c7505dbf6";
+    expect(isSubscriberUuid(uuid)).toBe(true);
+    const fetchMock = vi.fn<typeof fetch>(async () =>
+      Response.json({
+        data: { results: [{ email: "Ada@Example.COM" }] },
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(findSubscriberEmailByUuid(privateEnv, uuid)).resolves.toBe(
+      "ada@example.com",
+    );
+    expect(String(fetchMock.mock.calls[0]?.[0])).toContain("subscribers.uuid");
+  });
+
+  it("returns null when credentials are missing", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    await expect(
+      findSubscriberEmailByUuid(
+        { LISTMONK_BASE_URL: "https://listmonk.test" } as BetaSignupEnv,
+        "7c3e7b8c-7e05-4482-a5eb-a20c7505dbf6",
+      ),
+    ).resolves.toBeNull();
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
 

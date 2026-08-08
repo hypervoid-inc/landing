@@ -26,9 +26,14 @@ export type BetaSignupEnv = {
    * Bearer / X-Construct-Signup-Ingest skips Turnstile.
    */
   SIGNUP_INGEST_SECRET?: string;
+  /** PostHog project key for server-side campaign-touch identify/capture. */
+  POSTHOG_PROJECT_KEY?: string;
+  /** PostHog ingest host; default first-party proxy. */
+  POSTHOG_HOST?: string;
 };
 
 export type PagesFunction<Env> = (context: {
   request: Request;
   env: Env;
+  waitUntil?: (promise: Promise<unknown>) => void;
 }) => Response | Promise<Response>;

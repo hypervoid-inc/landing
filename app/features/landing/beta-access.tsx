@@ -383,6 +383,7 @@ function AccessDialog({
           ...(attr?.us ? { utmSource: attr.us } : {}),
           ...(attr?.um ? { utmMedium: attr.um } : {}),
           ...(attr?.uc ? { utmCampaign: attr.uc } : {}),
+          ...(attr?.uo ? { utmContent: attr.uo } : {}),
           ...(attr?.p ? { promoCode: attr.p } : {}),
           ...(attr?.lp ? { landingPath: attr.lp } : {}),
         },

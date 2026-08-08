@@ -64,6 +64,10 @@ function redirectTo(location: string): Response {
  * recipient and cannot carry per-subscriber values, so if the browser followed it directly
  * that identity would be lost.
  *
+ * Product email campaigns must NOT wrap destinations in `/redirect`: Listmonk then
+ * attributes the click to the redirect URL instead of the real destination, which hides
+ * which placement (`utm_content`) was clicked. Prefer plain `{{ TrackLink \`https://…\` }}`.
+ *
  * Returns null if listmonk is slow, down, or answers with anything but a redirect. The
  * caller then falls back to handing the browser to listmonk, which is what it did before,
  * so a listmonk outage costs a click record but never the click itself.

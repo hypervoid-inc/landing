@@ -1,8 +1,9 @@
 /**
  * Campaign attribution capture.
  *
- * Email campaigns land on `construct.computer` with `?ref=…&cid=…&sid=…&utm_*`,
- * but signup happens on `os.construct.computer` and the account row lives behind
+ * Email campaigns land on `construct.computer` with short query keys
+ * (`?s=…&uc=…&uo=…`) or legacy long names (`?ref=…&cid=…&sid=…&utm_*`).
+ * Signup happens on `os.construct.computer` and the account row lives behind
  * `api.construct.computer`. This module owns the portable representation that
  * survives both hops: a compact cookie scoped to `.construct.computer`.
  *
@@ -46,6 +47,8 @@ export type CampaignAttribution = {
   um?: string;
   /** `utm_campaign` */
   uc?: string;
+  /** `utm_content` — link placement, e.g. `cta-body-1`. */
+  uo?: string;
   /** Promo code (`code` or `promo`), uppercased. */
   p?: string;
   /** Landing path of the first touch. */
@@ -54,15 +57,25 @@ export type CampaignAttribution = {
   t?: number;
 };
 
-const PARAM_TO_KEY: ReadonlyArray<readonly [string, keyof CampaignAttribution]> =
-  [
-    ["ref", "r"],
-    ["cid", "c"],
-    ["sid", "s"],
-    ["utm_source", "us"],
-    ["utm_medium", "um"],
-    ["utm_campaign", "uc"],
-  ];
+/** Short cookie-key aliases first, then legacy long query names. */
+const PARAM_ALIASES: ReadonlyArray<
+  readonly [readonly string[], keyof CampaignAttribution]
+> = [
+  [["r", "ref"], "r"],
+  [["c", "cid"], "c"],
+  [["s", "sid"], "s"],
+  [["us", "utm_source"], "us"],
+  [["um", "utm_medium"], "um"],
+  [["uc", "utm_campaign"], "uc"],
+  [["uo", "utm_content"], "uo"],
+];
+
+/** Filled when `s` is present so email CTAs can omit constant UTM noise. */
+const EMAIL_CLICK_DEFAULTS = {
+  r: "mailinglist",
+  us: "newsletter",
+  um: "email",
+} as const;
 
 function clean(value: string | null): string | undefined {
   if (!value) return undefined;
@@ -81,6 +94,17 @@ function cleanPath(value: string | undefined): string | undefined {
   return PATH_PATTERN.test(value) ? value : undefined;
 }
 
+function pickParam(
+  params: URLSearchParams,
+  names: readonly string[],
+): string | undefined {
+  for (const name of names) {
+    const value = clean(params.get(name));
+    if (value) return value;
+  }
+  return undefined;
+}
+
 /**
  * Parse campaign params out of a query string.
  *
@@ -97,8 +121,8 @@ export function parseCampaignParams(
   );
 
   const parsed: CampaignAttribution = {};
-  for (const [param, key] of PARAM_TO_KEY) {
-    const value = clean(params.get(param));
+  for (const [names, key] of PARAM_ALIASES) {
+    const value = pickParam(params, names);
     if (value) parsed[key] = value as never;
   }
 
@@ -106,6 +130,12 @@ export function parseCampaignParams(
   if (promo) parsed.p = promo;
 
   if (Object.keys(parsed).length === 0) return null;
+
+  if (parsed.s) {
+    if (!parsed.r) parsed.r = EMAIL_CLICK_DEFAULTS.r;
+    if (!parsed.us) parsed.us = EMAIL_CLICK_DEFAULTS.us;
+    if (!parsed.um) parsed.um = EMAIL_CLICK_DEFAULTS.um;
+  }
 
   const path = cleanPath(pathname);
   if (path) parsed.lp = path;
@@ -147,7 +177,7 @@ export function parseAttributionCookie(
     if (!decoded || typeof decoded !== "object") return null;
     const source = decoded as Record<string, unknown>;
     const out: CampaignAttribution = {};
-    for (const key of ["r", "c", "s", "us", "um", "uc"] as const) {
+    for (const key of ["r", "c", "s", "us", "um", "uc", "uo"] as const) {
       const value = source[key];
       if (typeof value === "string" && VALUE_PATTERN.test(value)) {
         out[key] = value;
@@ -179,6 +209,7 @@ export function toAnalyticsProperties(
   if (value.us) props.utm_source = value.us;
   if (value.um) props.utm_medium = value.um;
   if (value.uc) props.utm_campaign = value.uc;
+  if (value.uo) props.utm_content = value.uo;
   if (value.p) props.campaign_promo_code = value.p;
   if (value.lp) props.campaign_landing_path = value.lp;
   if (value.t) props.campaign_captured_at = value.t;

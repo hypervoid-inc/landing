@@ -301,6 +301,7 @@ export const openApiDocument = {
               utmSource: { type: "string", maxLength: 64 },
               utmMedium: { type: "string", maxLength: 64 },
               utmCampaign: { type: "string", maxLength: 64 },
+              utmContent: { type: "string", maxLength: 64 },
               promoCode: { type: "string", maxLength: 16 },
               landingPath: { type: "string", maxLength: 128 },
             },
