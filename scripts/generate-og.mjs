@@ -17,6 +17,7 @@ import {
 } from "./og/poster.mjs";
 import { publish } from "./og/publish.mjs";
 import { loadCards } from "./og/routes.mjs";
+import { preflight } from "./og/typeset.mjs";
 
 /**
  * Builds `public/og/` from the committed cards in `assets/og/`.
@@ -37,10 +38,14 @@ const root = process.cwd();
 
 /**
  * Writes one image and returns its manifest signature. A hand-made card in
- * `assets/og/` wins outright; otherwise the generated card is cropped and
- * published. There is no fallback plate: a route with no card is reported and
- * left alone, because shipping a placeholder that looks finished is how one
- * quietly stays in the set.
+ * `assets/og/` wins outright; otherwise the generated photograph is cropped,
+ * typeset, and published. There is no fallback plate: a route with no card is
+ * reported and left alone, because shipping a placeholder that looks finished
+ * is how one quietly stays in the set.
+ *
+ * A hand-made card gets no type layer. It is already a finished card, and
+ * setting a headline over one would land it wherever that card's own
+ * composition happens to be empty.
  */
 async function publishOne(card) {
   const { custom, poster } = await readSources(card.name, card.stem);
@@ -49,7 +54,12 @@ async function publishOne(card) {
 
   await writeFile(
     path.join(outputDirectory, `${card.stem}.jpg`),
-    await publish(source, { fullFrame: card.fullFrame }),
+    await publish(source, {
+      fullFrame: card.fullFrame,
+      type: custom
+        ? undefined
+        : { eyebrow: card.eyebrow, headline: card.headline },
+    }),
   );
   return signature({
     stem: card.stem,
@@ -62,6 +72,9 @@ async function publishOne(card) {
 }
 
 async function render(cards, all) {
+  // Before anything is written, not per card: a missing typeface would
+  // otherwise be found out after half the set had been republished in it.
+  await preflight();
   await mkdir(outputDirectory, { recursive: true });
   const manifest = all ? {} : await readManifest();
   const missing = [];

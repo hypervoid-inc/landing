@@ -13,7 +13,7 @@ export function PrivacyPage() {
       title="Privacy Policy"
       metadata={
         <>
-          Last updated: <time dateTime="2026-07-20">July 20, 2026</time>
+          Last updated: <time dateTime="2026-08-09">August 9, 2026</time>
         </>
       }
     >
@@ -219,7 +219,10 @@ export function PrivacyPage() {
       <Section title="4. Third-Party Services & Data Sharing">
         <p>
           We do not sell your personal information. Your data may be shared with
-          or processed by third parties only in the following circumstances:
+          or processed by third parties only in the following circumstances. A
+          current list of Construct infrastructure{" "}
+          <InlineLink href="/sub-processors/">sub-processors</InlineLink> is
+          published separately.
         </p>
         <Subheading>4.1 Services You Connect</Subheading>
         <p>
@@ -269,16 +272,23 @@ export function PrivacyPage() {
         </List>
         <Subheading>4.2 Platform & Infrastructure</Subheading>
         <p>
-          Construct runs on Cloudflare (Workers, Durable Objects, D1, R2,
-          Sandbox SDK, AI Gateway). Data-at-rest and in-transit for platform
-          state is handled by Cloudflare. Application logs flow to Cloudflare's
-          observability services.
+          Construct runs on Cloudflare (Workers, Pages, Durable Objects, D1, R2,
+          Queues, Vectorize, Sandbox, Workers AI, AI Gateway, Turnstile, and
+          Email Sending / Routing). Data-at-rest and in-transit for platform
+          state is handled by Cloudflare. Application logs and traces flow to
+          Cloudflare’s observability services. We use{" "}
+          <Emph>Sentry</Emph> for error monitoring and{" "}
+          <Emph>PostHog</Emph> for product analytics (see section 2.6). Affiliate
+          attribution may involve <Emph>PartnerStack</Emph> when you arrive
+          through a partner link.
         </p>
         <Subheading>4.3 Email & Payments</Subheading>
         <p>
-          We use <Emph>Resend</Emph> to deliver transactional emails (magic-link
-          sign-in, usage alerts). We use <Emph>Dodo Payments</Emph> to process
-          subscriptions; Dodo holds payment-method data and sends us signed
+          We use Cloudflare Email Sending to deliver transactional emails
+          (magic-link sign-in, invites, usage alerts, and founder follow-ups)
+          and Cloudflare Email Routing for native agent inboxes. We use{" "}
+          <Emph>Dodo Payments</Emph> to process subscriptions; Dodo holds
+          payment-method data, sends billing receipts, and sends us signed
           webhooks for subscription lifecycle events. Your email address is
           shared with these providers solely for these purposes.
         </p>

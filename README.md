@@ -56,4 +56,4 @@ The homepage social image source is `assets/og/home.png`. Generation copies it t
 
 ## Verification
 
-`pnpm check && pnpm test:e2e` is the release gate. It verifies all canonical pages, legacy redirects, the real 404 response, the ordered resource grid, Turnstile plus D1 signup, and automated accessibility checks.
+`pnpm check && pnpm test:e2e` is the release gate. It verifies all canonical pages, the real 404 response, the ordered resource grid, Turnstile plus D1 signup, and automated accessibility checks.

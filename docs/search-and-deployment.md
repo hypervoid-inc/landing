@@ -51,17 +51,9 @@ Static requests bypass Functions through `_routes.json`. DDoS absorption, bot sc
 
 ## URL Contract
 
-The canonical editorial namespace is singular `/blog/`. `_redirects` permanently maps previous routes:
+The canonical editorial namespace is singular `/blog/` (comparisons live at `/blog/construct-vs-<slug>/`). Canonicals use trailing slashes. Do not invent alternate path schemes in internal links, feeds, or the sitemap. Do not redirect unrelated missing pages to the homepage.
 
-| Previous                   | Canonical                       |
-| -------------------------- | ------------------------------- |
-| `/blogs/*`                 | `/blog/*`                       |
-| `/ai-employee/`            | `/blog/ai-employee/`            |
-| `/ai-workflow-automation/` | `/blog/ai-workflow-automation/` |
-| `/ai-agent-memory/`        | `/blog/ai-agent-memory/`        |
-| `/vs/<slug>/`              | `/blog/construct-vs-<slug>/`    |
-
-Do not add redirected URLs to internal links, feeds, or the sitemap. Do not redirect unrelated missing pages to the homepage.
+`_redirects` only maps `/security.txt` → `/.well-known/security.txt`.
 
 ## Google Search Console
 
@@ -88,7 +80,6 @@ Google does not guarantee crawling, indexing, rich results, or rankings. `llms.t
 ## Post-Launch Checks
 
 - Request every sitemap URL and require `200`.
-- Request every legacy URL without following redirects and require one permanent hop.
 - Request a random unknown URL and require `404`.
 - Validate representative pages with Google's Rich Results Test.
 - Check social cards in the major platform debuggers.

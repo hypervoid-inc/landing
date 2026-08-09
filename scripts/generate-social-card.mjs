@@ -21,10 +21,10 @@ import { referenceImages } from "./og/brand-references.mjs";
  * pages.
  *
  * Separate from `pnpm og:generate` on purpose. That set is route-bound, high-key
- * white, and 16:9 into a frame that draws the type; these are one-offs, dark,
- * and 5:2. What they share is the part worth sharing: the Gemini client, the
- * brand reference images, the spend ledger, and the rule that type is drawn as
- * vector text rather than generated.
+ * white, and 16:9; these are one-offs, dark, and 5:2. What they share is the
+ * part worth sharing: the Gemini client, the brand reference images, the spend
+ * ledger, and the rule that type is drawn as vector text rather than generated —
+ * which the route cards adopted from here.
  *
  *   pnpm social <name>                   generate art, then set the type
  *   pnpm social <name> --candidates 3    options to choose between

@@ -1,14 +1,1 @@
-/blogs /blog/ 301
-/blogs/:slug /blog/:slug/ 301
-/blogs/:slug/ /blog/:slug/ 301
-/ai-employee /blog/ai-employee/ 301
-/ai-employee/ /blog/ai-employee/ 301
-/ai-workflow-automation /blog/ai-workflow-automation/ 301
-/ai-workflow-automation/ /blog/ai-workflow-automation/ 301
-/ai-agent-memory /blog/ai-agent-memory/ 301
-/ai-agent-memory/ /blog/ai-agent-memory/ 301
-/vs /blog/ 301
-/vs/ /blog/ 301
-/vs/:slug /blog/construct-vs-:slug/ 301
-/vs/:slug/ /blog/construct-vs-:slug/ 301
 /security.txt /.well-known/security.txt 301

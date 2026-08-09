@@ -13,8 +13,10 @@
 playwright-report/
 test-results/
 
-# Unpromoted style plates, and a local record of what generation cost.
+# Unpromoted style plates, the undo copies `pnpm og:fix` leaves behind, and a
+# local record of what generation cost.
 # `assets/og/poster/candidates/` is deliberately NOT ignored: the alternates
 # kept there are worth having, and generating them again costs money.
 /assets/og/style/master-*.webp
+*.before.webp
 /assets/og/generation-log.jsonl

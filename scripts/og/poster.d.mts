@@ -9,11 +9,20 @@ export declare const stylePlatePath: string;
 /** The references attached to a call, style plate first when one exists. */
 export declare function posterReferences(): ReferenceImage[];
 
+/**
+ * The prompt for one photograph. The headline and badge are deliberately not
+ * part of it: they are set in code at publish time and the model never sees
+ * them.
+ */
 export declare function buildPosterPrompt(card: {
-  eyebrow: string;
-  headline: readonly string[];
   scene: string;
   note?: string;
 }): string;
+
+/** The card being repaired, then the mascot turnaround. */
+export declare function repairReferences(card: string): ReferenceImage[];
+
+/** The image-to-image pass that replaces a bad mascot and changes nothing else. */
+export declare function buildRepairPrompt(): string;
 
 export declare function promptHeader(): string;

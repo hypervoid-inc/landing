@@ -12,7 +12,7 @@ export function TermsPage() {
       title="Terms & Conditions"
       metadata={
         <>
-          Last updated: <time dateTime="2026-07-20">July 20, 2026</time>
+          Last updated: <time dateTime="2026-08-09">August 9, 2026</time>
         </>
       }
     >
@@ -92,7 +92,7 @@ export function TermsPage() {
         <p>
           To use the platform, you must create an account using one of our
           supported authentication methods (Google OAuth or email magic-link via
-          Resend). You agree to:
+          Cloudflare Email Sending). You agree to:
         </p>
         <List>
           <li>
@@ -310,8 +310,9 @@ export function TermsPage() {
             by you through BYOK
           </li>
           <li>
-            <Emph>Infrastructure & tooling</Emph> - Cloudflare services,
-            Composio, Resend (transactional email), and Dodo Payments (billing)
+            <Emph>Infrastructure & tooling</Emph> - Cloudflare services
+            (including Email Sending / Routing), Composio, Sentry, PostHog, and
+            Dodo Payments (billing)
           </li>
           <li>
             <Emph>Custom MCP and workspace apps</Emph> configured or created for

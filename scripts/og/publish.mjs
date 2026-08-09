@@ -1,19 +1,27 @@
 import sharp from "sharp";
 
+import { HEIGHT, TYPE_VERSION, WIDTH, typeLayer } from "./typeset.mjs";
+
 /**
- * Turns a generated card into the file that ships.
+ * Turns a generated photograph into the file that ships.
  *
- * There is nothing to compose any more: the type is rendered inside the card,
- * so publishing is a crop and an encode. What is left here is the part that
- * still has to be exactly right every time, and the version number that marks
- * every committed image stale when it changes.
+ * Publishing is a crop, a type layer, and an encode. The type used to come out
+ * of the model with the rest of the card; it is now set here, at exact pixel
+ * positions, which is what makes the wordmark, the badge, the headline and the
+ * domain identical across every card instead of merely similar. See
+ * `scripts/og/typeset.mjs` for why.
+ *
+ * One consequence worth knowing: a headline edit is now a republish, not a
+ * regeneration. `pnpm og` alone picks it up, and the model is never called.
  */
 
-export const WIDTH = 1200;
-export const HEIGHT = 630;
+export { WIDTH, HEIGHT };
 
-/** Bump when publishing changes, to force every image to be rewritten. */
-export const PUBLISH_VERSION = 4;
+/**
+ * Bump when publishing changes, to force every image to be rewritten. Tracks
+ * the type layer too, so a change to the typography marks the set stale.
+ */
+export const PUBLISH_VERSION = 5 + TYPE_VERSION;
 
 /**
  * Published images are JPEG, flattened onto white.
@@ -24,15 +32,11 @@ export const PUBLISH_VERSION = 4;
  *
  * Flattening also drops the alpha channel. An OG image must be opaque, because
  * clients composite it onto backgrounds we do not control and a transparent
- * region can come out black. `4:4:4` is not the usual default and is worth the
- * bytes here: these cards are saturated blue with white type on top, and
- * chroma subsampling puts coloured fringes on exactly that.
+ * region can come out black.
  *
- * 88 rather than the 92 the old vector-type cards used. These are photographs
- * of dark studio scenes, which cost far more to store than a flat gradient did:
- * at 92 the set ran about 4.2MB against a 4MB budget, and at 88 it runs 3.7MB
- * with no visible difference on the type, which is the only place artefacts
- * would show.
+ * `4:4:4` is not the default and is worth the bytes: chroma subsampling puts
+ * coloured fringes on hard type edges, and the type here is a flat vector layer
+ * sitting on a pale ground, which is the worst case for it.
  */
 const JPEG_QUALITY = 88;
 
@@ -43,21 +47,27 @@ const JPEG_QUALITY = 88;
  * Normally that is a centre crop, and the contract reserves a safe band at the
  * top and bottom so the crop only ever eats empty studio.
  *
- * `fullFrame` cards are scaled to fit instead, accepting a 6.7% vertical
- * squash. That is for a card composed as a poster rather than a photograph:
- * type running to all four edges, a wordmark up the full height, a rule along
- * the bottom. Cropping one of those clips the composition, while squashing it
- * is imperceptible — condensed type gets very slightly more condensed and
- * nothing else in the frame has a shape the eye holds a reference for. Reach
- * for it only when the composition genuinely uses the whole frame; a squashed
- * photograph of a real object looks wrong straight away.
+ * `fullFrame` scales to fit instead, accepting a 6.7% vertical squash. It is
+ * for a hand-made card composed to all four edges, where cropping would clip
+ * the composition and the squash is imperceptible. A photograph of a real
+ * object squashed by 6.7% looks wrong straight away, so it is never right for a
+ * generated card.
  */
-export function publish(input, { fullFrame = false } = {}) {
-  return sharp(input)
+export async function publish(input, { fullFrame = false, type } = {}) {
+  const photograph = await sharp(input)
     .resize(WIDTH, HEIGHT, {
       fit: fullFrame ? "fill" : "cover",
       position: "centre",
     })
+    .toBuffer();
+
+  const composed = type
+    ? await sharp(photograph)
+        .composite([{ input: await typeLayer(type) }])
+        .toBuffer()
+    : photograph;
+
+  return sharp(composed)
     .flatten({ background: "#ffffff" })
     .jpeg({ quality: JPEG_QUALITY, mozjpeg: true, chromaSubsampling: "4:4:4" })
     .toBuffer();

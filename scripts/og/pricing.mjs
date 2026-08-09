@@ -18,7 +18,21 @@ export const modelPricing = {
   "gemini-2.5-flash-image": { input: 0.3, output: 0, perImage: 0.039 },
 };
 
-export const defaultModel = "gemini-3-pro-image";
+/**
+ * Nano Banana 2, and the reason the set finally holds its mascot.
+ *
+ * `gemini-3-pro-image` was the default until 2026-08-09 and is a generation
+ * older despite the "pro". On the same prompt and the same references it
+ * produced the mascot correctly about one card in three — the rest came back
+ * as bones, cubes, ghosts with legs, or two shapes joined end to end — and no
+ * amount of rewriting the contract moved that number. Swapping to this model
+ * fixed all three of the worst cards on the first try, and costs about 20% less
+ * a call.
+ *
+ * It is also the model that is not being switched off: Google shuts down
+ * several older image models, the pro preview among them, on 2026-08-17.
+ */
+export const defaultModel = "gemini-3.1-flash-image";
 
 export function ratesFor(model) {
   const rates = modelPricing[model];

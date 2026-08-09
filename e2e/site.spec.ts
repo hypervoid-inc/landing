@@ -1434,18 +1434,12 @@ test("shows every capability without scroll animation when motion is reduced", a
   );
 });
 
-test("permanently redirects legacy resource URLs", async ({ request }) => {
-  const redirects = [
-    ["/blogs", "/blog/"],
-    ["/ai-employee/", "/blog/ai-employee/"],
-    ["/vs/chatgpt/", "/blog/construct-vs-chatgpt/"],
-  ] as const;
-
-  for (const [source, destination] of redirects) {
-    const response = await request.get(source, { maxRedirects: 0 });
-    expect(response.status(), source).toBe(301);
-    expect(response.headers().location).toBe(destination);
-  }
+test("redirects /security.txt to the well-known location", async ({
+  request,
+}) => {
+  const response = await request.get("/security.txt", { maxRedirects: 0 });
+  expect(response.status()).toBe(301);
+  expect(response.headers().location).toBe("/.well-known/security.txt");
 });
 
 /**

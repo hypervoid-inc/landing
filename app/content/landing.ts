@@ -283,6 +283,7 @@ export const companyLinks = [
   ["Careers", "/careers/"],
   ["Support", "/support/"],
   ["Privacy Policy", "/privacy/"],
+  ["Sub-processors", "/sub-processors/"],
   ["Terms", "/terms/"],
 ] as const;
 

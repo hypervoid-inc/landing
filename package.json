@@ -16,6 +16,7 @@
     "generate:content": "node scripts/generate-content.mjs",
     "lint": "eslint .",
     "og": "node scripts/generate-og.mjs",
+    "og:fix": "node scripts/generate-art.mjs --fix",
     "og:generate": "node scripts/generate-art.mjs",
     "og:master": "node scripts/generate-art.mjs --master",
     "og:pick": "node scripts/generate-art.mjs --pick",

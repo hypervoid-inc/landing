@@ -12,6 +12,7 @@ export type ClippyPageKind = "blog-post" | "blog-browse" | "home" | "page";
  */
 const SUPPRESSED = new Set([
   "/privacy",
+  "/sub-processors",
   "/terms",
   "/editorial-policy",
   "/support",
