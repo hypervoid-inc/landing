@@ -21,9 +21,9 @@ import { authorSameAs, authors, listedAuthors } from "../app/content/authors";
 describe("generated discovery content", () => {
   /**
    * Published cards are the source put through the encoder every other card
-   * goes through, never the source verbatim. Sources are 16:9 WebP and the
-   * published slot is a 1200x630 JPEG, so a copy that skipped the crop would
-   * ship the wrong aspect ratio to every social crawler.
+   * goes through, never the source verbatim. The homepage source is a 16:9
+   * hand-made PNG and the published slot is a 1200x630 JPEG, so a copy that
+   * skipped the fit would ship the wrong aspect ratio to every social crawler.
    *
    * This checks structure rather than exact bytes because mozjpeg output varies
    * across platforms: the committed file is generated on macOS while CI runs on
@@ -33,7 +33,7 @@ describe("generated discovery content", () => {
    */
   it("re-encodes the homepage card rather than copying its source", () => {
     const source = readFileSync(
-      new URL("../assets/og/poster/home.webp", import.meta.url),
+      new URL("../assets/og/home.png", import.meta.url),
     );
     const jpg = readFileSync(new URL("../public/og/home.jpg", import.meta.url));
 

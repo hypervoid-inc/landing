@@ -8,6 +8,7 @@ export default [
   route("editorial-policy", "routes/editorial-policy.tsx"),
   route("support", "routes/support.tsx"),
   route("privacy", "routes/privacy.tsx"),
+  route("sub-processors", "routes/sub-processors.tsx"),
   route("terms", "routes/terms.tsx"),
   route("blog", "routes/blog-index.tsx"),
   route("blog/tag/:tag", "routes/tag.tsx"),

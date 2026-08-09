@@ -40,6 +40,7 @@ describe("clippy page kinds", () => {
   it("stays silent on legal, support, error, and unknown pages", () => {
     for (const path of [
       "/privacy/",
+      "/sub-processors/",
       "/terms/",
       "/editorial-policy/",
       "/support/",

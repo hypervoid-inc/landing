@@ -195,7 +195,15 @@ export const canonicalRoutes: readonly CanonicalRoute[] = [
     description:
       "How Construct Computer collects, stores, encrypts, and shares data across the agent workspace, memory system, integrations, and billing provider.",
     kind: "page",
-    lastModified: "2026-07-20",
+    lastModified: "2026-08-09",
+  }),
+  route({
+    path: "/sub-processors",
+    title: "Sub-processors - Construct Computer",
+    description:
+      "Third-party vendors Construct uses to host, authenticate, integrate, bill, email, observe, and run models for the construct.computer platform.",
+    kind: "page",
+    lastModified: "2026-08-09",
   }),
   route({
     path: "/terms",
@@ -203,7 +211,7 @@ export const canonicalRoutes: readonly CanonicalRoute[] = [
     description:
       "Terms of service for Construct Computer: subscription plans, acceptable use, agent actions, model BYOK, and proprietary platform licensing.",
     kind: "page",
-    lastModified: "2026-07-20",
+    lastModified: "2026-08-09",
   }),
   route({
     path: "/blog",
