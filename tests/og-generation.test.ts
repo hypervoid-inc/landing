@@ -218,14 +218,21 @@ describe("the type layer", () => {
     expect(RESERVED.top).toBeLessThan(0.25);
   });
 
-  it("sets the same wordmark, badge, and domain on every card", async () => {
-    const one = await typeLayer({ eyebrow: "GUIDE", headline: ["ONE"] });
-    const two = await typeLayer({ eyebrow: "GUIDE", headline: ["ONE"] });
-    expect(one.equals(two)).toBe(true);
+  // typeLayer probes glyph ink through sharp; two renders take several seconds.
+  it(
+    "sets the same wordmark, badge, and domain on every card",
+    async () => {
+      const [one, two] = await Promise.all([
+        typeLayer({ eyebrow: "GUIDE", headline: ["ONE"] }),
+        typeLayer({ eyebrow: "GUIDE", headline: ["ONE"] }),
+      ]);
+      expect(one.equals(two)).toBe(true);
 
-    const { width, height } = await sharp(one).metadata();
-    expect([width, height]).toEqual([1200, 630]);
-  });
+      const { width, height } = await sharp(one).metadata();
+      expect([width, height]).toEqual([1200, 630]);
+    },
+    20_000,
+  );
 
   /**
    * A four-line headline is a content mistake, and silently setting it at a

@@ -621,7 +621,7 @@ function PricingCard({
     const maxWidth = stack.offsetWidth;
     const activeWidth = amount.offsetWidth;
     periodLabel.style.transform = `translateX(${activeWidth - maxWidth}px)`;
-  }, [displayPrice]);
+  }, []);
 
   useLayoutEffect(() => {
     syncAmountLayout();
@@ -630,7 +630,7 @@ function PricingCard({
     const observer = new ResizeObserver(() => syncAmountLayout());
     observer.observe(stack);
     return () => observer.disconnect();
-  }, [syncAmountLayout]);
+  }, [syncAmountLayout, displayPrice]);
 
   return (
     <article
