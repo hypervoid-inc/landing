@@ -52,15 +52,23 @@ test("collapses to the sprite and reopens on the same beat", async ({
   page,
 }) => {
   await page.goto(POST);
+  const root = page.locator(widget);
+  await expect(root).toHaveAttribute("data-variant", "desktop");
+  await expect(root).toHaveAttribute("data-placed", "true");
+  await expect(root).toHaveAttribute("style", /translate3d/);
+
   await page.getByRole("button", { name: "What are you?" }).click();
-  await expect(page.locator(widget)).toContainText("I am Construct");
+  await expect(root).toContainText("I am Construct");
 
   await page.getByRole("button", { name: "Minimize Construct" }).click();
   await expect(page.locator(".clippy-bubble")).toHaveCount(0);
   await expect(page.locator(".clippy-sprite")).toBeVisible();
+  // Still on the desktop drag path after collapse — not mobile bottom anchoring.
+  await expect(root).toHaveAttribute("data-variant", "desktop");
+  await expect(root).toHaveAttribute("style", /translate3d/);
 
   await page.getByRole("button", { name: "Open Construct message" }).click();
-  await expect(page.locator(widget)).toContainText("I am Construct");
+  await expect(root).toContainText("I am Construct");
 });
 
 test("keeps its beat and stays hidden across client side navigation", async ({
@@ -171,6 +179,31 @@ test.describe("mobile", () => {
     // The card must not push its own actions out of the viewport.
     const actions = await page.locator(".clippy-actions").boundingBox();
     expect(actions!.x + actions!.width).toBeLessThanOrEqual(375);
+  });
+
+  test("keeps the collapsed sprite and close fully on screen", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto(POST);
+    await expect(page.locator(widget)).toHaveAttribute("data-variant", "mobile");
+
+    await page.getByRole("button", { name: "Minimize Construct" }).click();
+    await expect(page.locator(".clippy-card")).toHaveCount(0);
+    await expect(page.locator(widget)).toHaveAttribute("data-open", "false");
+
+    const viewport = page.viewportSize()!;
+    for (const target of [
+      page.locator(".clippy-sprite"),
+      page.getByRole("button", { name: "Hide Construct" }),
+    ]) {
+      const box = await target.boundingBox();
+      expect(box).not.toBeNull();
+      expect(box!.x).toBeGreaterThanOrEqual(0);
+      expect(box!.y).toBeGreaterThanOrEqual(0);
+      expect(box!.x + box!.width).toBeLessThanOrEqual(viewport.width);
+      expect(box!.y + box!.height).toBeLessThanOrEqual(viewport.height);
+    }
   });
 });
 
