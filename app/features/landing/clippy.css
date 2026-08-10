@@ -222,6 +222,11 @@
   transform: none !important; /* drag is desktop only */
 }
 
+/* Collapsed: hug the in-flow sprite instead of a full-bleed zero-height strip. */
+.clippy-widget[data-variant="mobile"][data-open="false"] {
+  right: auto;
+}
+
 /*
  * The sprite peeks over the card's corner rather than standing beside it. Side
  * by side leaves roughly 250px of inner card width at 390px wide, which is not
@@ -232,11 +237,16 @@
 }
 
 .clippy-widget[data-variant="mobile"] .clippy-sprite {
+  z-index: 1;
+  width: 68px;
+}
+
+/* Absolute only while open — collapsed keeps the sprite in flow so bottom:12px
+   pins the whole mascot, not a zero-height shell with the CRT hanging below. */
+.clippy-widget[data-variant="mobile"][data-open="true"] .clippy-sprite {
   position: absolute;
   top: 0;
   left: 10px;
-  z-index: 1;
-  width: 68px;
 }
 
 /*
