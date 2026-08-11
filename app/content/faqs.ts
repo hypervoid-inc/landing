@@ -264,6 +264,38 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "No. You describe the tool your team needs in plain language; Construct handles writing, validating, and publishing the app, and can update it later as the process changes.",
     },
   ],
+  "agent-task-half-life": [
+    {
+      question: "Why does my AI agent keep failing partway through a task?",
+      answer:
+        "Usually because the run is too long, not because the task is too hard. Agent failure behaves like a constant rate per minute of work rather than something that only strikes on difficult steps, so a job's success probability falls off as it gets longer. An agent that gets 95% of its steps right finishes a ten-step job about 60% of the time and a 48-step job about 8.5% of the time, with no step having regressed.",
+    },
+    {
+      question: "Why do multi-step agent workflows fail more than single tasks?",
+      answer:
+        "Because the per-step success rates multiply. Ten steps at 95% each is 0.95 to the tenth power, or roughly 60%. The same agent on a 48-step job lands near 8.5%. Reliability that reads as excellent per step is unreliable per job, and the gap widens with every step you add.",
+    },
+    {
+      question: "Will a more capable model fix agent reliability?",
+      answer:
+        "Only partly. METR finds the task length agents handle at 50% reliability has been doubling roughly every seven months, so models are genuinely improving at long work. But 50% reliability is a coin flip, and a model one tier better moves your per-step rate a few points while leaving the number of steps untouched. Restructuring a 48-step run into eight 6-step runs changes the exponent, which is where the larger gain is.",
+    },
+    {
+      question: "How do I stop an agent from redoing work when it retries?",
+      answer:
+        "Make every iteration leave a durable artifact, then scope the instruction to the work that remains. \"Write the reports\" is not resumable; \"write the report for any client that does not already have one dated this month\" is. In Construct the artifact is a file in the persistent workspace, so a rerun reads the directory, sees what already exists, and works only on the rest.",
+    },
+    {
+      question: "How does Construct handle a job that fails halfway?",
+      answer:
+        "Finished work lands in the workspace filesystem as it is produced, so a run that dies at step thirty leaves the first twenty-nine steps' output behind. The next scheduled or on-demand run picks up from what exists rather than starting over, and the Activity feed's bounded action summaries let you trace the failure to a step. Construct does not currently insert a mandatory approval gate before every external side effect, so steps with irreversible effects still need supervision before running unattended.",
+    },
+    {
+      question: "When is this pattern the wrong fit?",
+      answer:
+        "When the steps are order-dependent all the way through with no natural loop, there is no seam to cut. When a step has an irreversible external effect such as a payment or a message to a customer, retries are not free and idempotency has to be designed in. And when the work is fully deterministic, a rule-based automation platform will run it more cheaply and predictably than any agent.",
+    },
+  ],
 };
 
 export function getResourceFaqs(slug: string): readonly FaqItem[] {

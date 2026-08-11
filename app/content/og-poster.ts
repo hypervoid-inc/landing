@@ -156,6 +156,11 @@ export const ogPosters: Record<string, PosterCard> = {
     scene:
       "The mascot sitting on top of the middle of three shrink-wrapped software boxes standing upright in a row, that box pulled forward and turned to face the camera.",
   },
+  "blog-agent-task-half-life": {
+    headline: ["YOUR AGENT HAS", "A HALF-LIFE"],
+    scene:
+      "The mascot sitting on top of a dot-matrix printer, a long run of fanfold paper feeding out of it and folding into a stack on the bench below, the topmost sheet torn straight across halfway down.",
+  },
   "blog-running-ai-agents-on-cloudflare-not-vms": {
     headline: ["EVERY AGENT", "GETS A COMPUTER"],
     scene:

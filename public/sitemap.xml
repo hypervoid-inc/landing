@@ -38,7 +38,11 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/</loc>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-11</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/agent-task-half-life/</loc>
+    <lastmod>2026-08-11</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/running-ai-agents-on-cloudflare-not-vms/</loc>
@@ -102,11 +106,11 @@
   </url>
   <url>
     <loc>https://construct.computer/authors/</loc>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-11</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/authors/ankush/</loc>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-11</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/authors/nischal/</loc>
@@ -118,7 +122,7 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/ai-agent/</loc>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-11</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/ai-employee/</loc>
@@ -134,11 +138,11 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/product/</loc>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-11</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/workflow-automation/</loc>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-11</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/zapier/</loc>

@@ -3,6 +3,18 @@ import type { BlogFrontmatter } from "../schema";
 
 export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
   {
+    slug: "agent-task-half-life",
+    title: "Your agent has a half-life",
+    description:
+      "Why AI agents keep failing on long multi-step jobs: a 95% reliable agent finishes 48 steps 8.5% of the time. The fix is a resumable run, not a better model.",
+    published: "2026-08-11",
+    seoTitle: "Why AI Agents Keep Failing on Long Multi-Step Tasks",
+    author: "ankush",
+    tags: ["ai-agent", "reliability", "workflow-automation", "product"],
+    kind: "article",
+    draft: false,
+  },
+  {
     slug: "ai-agent-memory",
     title: "AI Agent Memory You Can Control",
     description:
