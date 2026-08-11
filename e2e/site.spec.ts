@@ -233,14 +233,67 @@ test("shows MDX tags on article cards and article pages", async ({ page }) => {
     .getByRole("heading", { name: "AI Agent vs Zapier Automation" })
     .locator("..")
     .locator("..");
-  await expect(card.getByRole("list", { name: "Resource tags" })).toContainText(
-    "zapier",
-  );
+  // Cards name their tag list after the post, so several on one page stay
+  // distinguishable; the article's own list keeps the generic name.
+  await expect(
+    card.getByRole("list", { name: "Tags for AI Agent vs Zapier Automation" }),
+  ).toContainText("zapier");
 
   await page.goto("/blog/ai-agent-vs-zapier/");
   await expect(page.getByRole("list", { name: "Resource tags" })).toContainText(
     "ai-agent",
   );
+});
+
+test("offers onward reading from a post on every viewport", async ({
+  page,
+}) => {
+  const post = "/blog/agent-task-half-life/";
+
+  // Desktop: the sticky rail is the only surface that is viewport-gated.
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(post);
+  const rail = page.getByRole("navigation", { name: "Read next" });
+  await expect(rail).toBeVisible();
+  const railLinks = rail.getByRole("link");
+  await expect(railLinks).toHaveCount(3);
+  for (const link of await railLinks.all()) {
+    const href = await link.getAttribute("href");
+    // Canonical trailing-slash internal links, per the project rule.
+    expect(href).toMatch(/^\/blog\/[a-z0-9-]+\/$/);
+    expect(href).not.toBe(post);
+    // Compact OG thumb beside the title — not a full-column crop.
+    const thumb = link.locator("img");
+    await expect(thumb).toBeVisible();
+    const box = await thumb.boundingBox();
+    expect(box?.width ?? 0).toBeGreaterThan(70);
+    expect(box?.width ?? 0).toBeLessThan(140);
+  }
+
+  // The rail stays put while the article scrolls past it. Both samples are
+  // taken after it has stuck: unscrolled it still sits at its natural offset.
+  await page.evaluate(() => window.scrollTo(0, 1600));
+  await page.waitForTimeout(300);
+  const stuck = await rail.boundingBox();
+  await page.evaluate(() => window.scrollTo(0, 3200));
+  await page.waitForTimeout(300);
+  expect((await rail.boundingBox())?.y).toBeCloseTo(stuck?.y ?? -1, 0);
+  // and it clears the sticky header (`lg:h-14` = 56px) rather than sliding under it.
+  expect(stuck?.y ?? 0).toBeGreaterThanOrEqual(56);
+
+  // The end-of-post grid is present at every width. Counted by card rather
+  // than list item, since each card nests its own tag list.
+  const related = page.getByRole("region", { name: "Keep reading" });
+  await expect(related.getByRole("article")).toHaveCount(4);
+
+  // Mobile: rail gone, grid and mid-article link remain.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(post);
+  await expect(rail).toBeHidden();
+  await expect(related.getByRole("article")).toHaveCount(4);
+  await expect(
+    page.getByRole("link", { name: "AI Workflow Automation" }).first(),
+  ).toHaveAttribute("href", "/blog/ai-workflow-automation/");
 });
 
 test("shows the complete author profile on editorial resources", async ({
@@ -1529,7 +1582,9 @@ test("submits the footer newsletter through Turnstile and D1", async ({
   });
 });
 
-for (const path of ["/", "/blog/"]) {
+// A post is its own layout: the desktop rail, the related grid, and the FAQ
+// list only exist here, so the index page's pass says nothing about them.
+for (const path of ["/", "/blog/", "/blog/agent-task-half-life/"]) {
   test(`${path} has no automated accessibility violations`, async ({
     page,
   }) => {

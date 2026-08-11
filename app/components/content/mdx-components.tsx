@@ -2,17 +2,20 @@ import type { ComponentPropsWithoutRef } from "react";
 import { useMDXComponents } from "@mdx-js/react";
 
 import { BetaCta } from "./beta-cta";
+import { ReadNext } from "./related-links";
 
 type MDXComponents = ReturnType<typeof useMDXComponents>;
 
+/**
+ * `tabIndex` is what makes the horizontal scroll reachable by keyboard, and is
+ * enough on its own. The wrapper deliberately carries no `role="region"`: a
+ * post with two tables would then expose two landmarks with the same name,
+ * which `landmark-unique` fails and which is genuinely worse for a screen
+ * reader than no landmark at all. The `caption` still names the table.
+ */
 function Table({ children, ...props }: ComponentPropsWithoutRef<"table">) {
   return (
-    <div
-      className="my-6 overflow-x-auto"
-      role="region"
-      aria-label="Article table"
-      tabIndex={0}
-    >
+    <div className="my-6 overflow-x-auto" tabIndex={0}>
       <table
         {...props}
         className="w-full min-w-[520px] border-collapse text-sm"
@@ -33,8 +36,6 @@ function CodeBlock({ children, ...props }: ComponentPropsWithoutRef<"pre">) {
   return (
     <div
       className="my-6 overflow-x-auto rounded-lg border border-[#e5e7eb] bg-[#fafafa]"
-      role="region"
-      aria-label="Code block"
       tabIndex={0}
     >
       <pre
@@ -69,6 +70,7 @@ function ExternalAwareLink({
 export const mdxComponents: MDXComponents = {
   // Capitalised entries are authorable in MDX with no import, e.g. `<BetaCta />`.
   BetaCta,
+  ReadNext,
   h2: ({ children }) => (
     <h2 className="font-geist mt-10 mb-4 text-[22px] italic leading-tight text-[#4e4646] lg:text-[26px]">
       {children}

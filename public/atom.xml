@@ -3,7 +3,20 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-07-31T00:00:00Z</updated>
+  <updated>2026-08-11T00:00:00Z</updated>
+  <entry>
+    <title>Your agent has a half-life</title>
+    <id>https://construct.computer/blog/agent-task-half-life/</id>
+    <link href="https://construct.computer/blog/agent-task-half-life/"/>
+    <author><name>Ankush</name></author>
+    <published>2026-08-11T00:00:00Z</published>
+    <updated>2026-08-11T00:00:00Z</updated>
+    <category term="ai-agent"/>
+    <category term="reliability"/>
+    <category term="workflow-automation"/>
+    <category term="product"/>
+    <summary>Why AI agents keep failing on long multi-step jobs: a 95% reliable agent finishes 48 steps 8.5% of the time. The fix is a resumable run, not a better model.</summary>
+  </entry>
   <entry>
     <title>All our Agents get computers, we pay for almost none</title>
     <id>https://construct.computer/blog/running-ai-agents-on-cloudflare-not-vms/</id>

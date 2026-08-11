@@ -4,12 +4,20 @@ import { SiteFooter, SiteHeader } from "../layout/site-layout";
 
 export type Breadcrumb = { readonly label: string; readonly to: string };
 
+/**
+ * Vertical gap between the sticky site header and the top of a stuck rail.
+ * The header is `sticky top-0` at `h-12` / `lg:h-14` (48–56px), so anything
+ * below it has to clear that plus breathing room or it slides under the blur.
+ */
+const RAIL_TOP = "top-[5.5rem]";
+
 export function ContentShell({
   title,
   metadata,
   breadcrumbs = [{ label: "Home", to: "/" }],
   breadcrumbTitle,
   article = false,
+  aside,
   children,
 }: {
   title: string;
@@ -17,6 +25,16 @@ export function ContentShell({
   breadcrumbs?: readonly Breadcrumb[];
   breadcrumbTitle?: string;
   article?: boolean;
+  /**
+   * Optional desktop-only rail beside the article.
+   *
+   * Only blog posts pass one, so every other content page keeps the plain
+   * centred column. When present the container widens at `xl` and the article
+   * column is pinned at its usual `48rem`, so the reading measure, type scale,
+   * and every page without a rail stay pixel-identical: the rail is additive
+   * space at the margin rather than a resize of the content.
+   */
+  aside?: ReactNode;
   children: ReactNode;
 }) {
   const Content = article ? "article" : "div";
@@ -25,40 +43,60 @@ export function ContentShell({
       <SiteHeader />
       <main
         id="main"
-        className="mx-auto w-full max-w-3xl flex-1 px-5 pb-20 pt-10 sm:px-6 lg:pt-16"
+        className={`mx-auto w-full flex-1 px-5 pb-20 pt-10 sm:px-6 lg:pt-16 ${
+          aside
+            ? "max-w-3xl xl:grid xl:max-w-[73.75rem] xl:grid-cols-[minmax(0,48rem)_18.75rem] xl:gap-12"
+            : "max-w-3xl"
+        }`}
       >
-        <nav
-          aria-label="Breadcrumb"
-          className="text-[13px] leading-5 text-[#8a9aa2]"
-        >
-          <ol className="flex flex-wrap items-center gap-2">
-            {breadcrumbs.map((item) => (
-              <li key={item.to} className="flex items-center gap-2">
-                <Link
-                  to={item.to}
-                  className="transition-colors hover:text-[#01b4c8]"
-                >
-                  {item.label}
-                </Link>
-                <span aria-hidden>/</span>
-              </li>
-            ))}
-            <li aria-current="page">{breadcrumbTitle ?? title}</li>
-          </ol>
-        </nav>
-        <Content>
-          <h1 className="font-geist mt-8 text-[36px] italic leading-[1.1] tracking-[-0.02em] sm:text-[44px] lg:text-[52px]">
-            {title}
-          </h1>
-          {metadata && (
-            <div className="mt-4 text-[13px] leading-5 text-[#526b75]">
-              {metadata}
+        {/* `min-w-0` stops a wide table or code block inside the article from
+            forcing the grid track past its declared 48rem. */}
+        <div className="col-start-1 row-start-1 min-w-0">
+          <nav
+            aria-label="Breadcrumb"
+            className="text-[13px] leading-5 text-[#8a9aa2]"
+          >
+            <ol className="flex flex-wrap items-center gap-2">
+              {breadcrumbs.map((item) => (
+                <li key={item.to} className="flex items-center gap-2">
+                  <Link
+                    to={item.to}
+                    className="transition-colors hover:text-[#01b4c8]"
+                  >
+                    {item.label}
+                  </Link>
+                  <span aria-hidden>/</span>
+                </li>
+              ))}
+              <li aria-current="page">{breadcrumbTitle ?? title}</li>
+            </ol>
+          </nav>
+          <Content>
+            <h1 className="font-geist mt-8 text-[36px] italic leading-[1.1] tracking-[-0.02em] sm:text-[44px] lg:text-[52px]">
+              {title}
+            </h1>
+            {metadata && (
+              <div className="mt-4 text-[13px] leading-5 text-[#526b75]">
+                {metadata}
+              </div>
+            )}
+            <div className="resource-content mt-12 space-y-10 text-[15px] leading-[1.7] text-[#627c86] lg:text-[16px]">
+              {children}
             </div>
-          )}
-          <div className="resource-content mt-12 space-y-10 text-[15px] leading-[1.7] text-[#627c86] lg:text-[16px]">
-            {children}
+          </Content>
+        </div>
+        {aside && (
+          // Last in the DOM so keyboard and screen-reader users reach the whole
+          // post before its sidebar, then put back alongside it by explicit
+          // grid placement rather than source order.
+          <div className="col-start-2 row-start-1 hidden min-w-0 xl:block">
+            <div
+              className={`sticky ${RAIL_TOP} max-h-[calc(100dvh-7rem)] overflow-y-auto`}
+            >
+              {aside}
+            </div>
           </div>
-        </Content>
+        )}
       </main>
       <SiteFooter />
     </div>

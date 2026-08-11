@@ -14,12 +14,16 @@ import { StartLink } from "../../features/landing/beta-access";
 export function BetaCta({
   children,
   source = "blog_inline",
+  className = "my-8",
 }: {
   children?: ReactNode;
   source?: string;
+  /** Wrapper spacing. Overridden by the desktop rail, where `my-8` is too much
+   * air inside a small card. */
+  className?: string;
 }) {
   return (
-    <p className="my-8 text-center">
+    <p className={`${className} text-center`}>
       <StartLink
         source={source}
         className="inline-flex items-center gap-2.5 rounded-full border border-[#b6ecfb] bg-[#f2fcfe] py-2 pl-4 pr-5 text-[15px] font-medium text-[#017b89] no-underline transition-colors hover:bg-[#e8faff]"

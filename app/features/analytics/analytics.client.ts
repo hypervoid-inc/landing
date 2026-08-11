@@ -30,7 +30,10 @@ type AnalyticsEvent =
   // and `interval` property names must stay identical on both sides.
   | "checkout_started"
   | "checkout_redirected"
-  | "checkout_failed";
+  | "checkout_failed"
+  // Onward reading from a post. `source` separates the surfaces (end-of-post
+  // grid, mid-article read-next, desktop rail) so they can be compared.
+  | "related_post_clicked";
 
 /** First-party ingest proxy — never eu.i.posthog.com in the browser. */
 const POSTHOG_PROXY = "https://x.construct.computer";

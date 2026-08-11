@@ -26,6 +26,8 @@ import {
   type AuthorLinkIcon,
 } from "../../content/authors";
 import { getResourceFaqs } from "../../content/faqs";
+import { getRelatedResources } from "../../content/related";
+import { trackRelatedClick } from "../../components/content/related-links";
 import {
   getResource,
   resourceEntries,
@@ -84,7 +86,14 @@ export function BlogIndexPage() {
   );
 }
 
-function ResourceCard({ entry }: { entry: ResourceEntry }) {
+function ResourceCard({
+  entry,
+  onSelect,
+}: {
+  entry: ResourceEntry;
+  /** Fired when the card's own link is taken, for onward-reading analytics. */
+  onSelect?: () => void;
+}) {
   const path = `/blog/${entry.slug}/`;
   const image = getRoute(path.slice(0, -1))?.image;
   return (
@@ -95,6 +104,7 @@ function ResourceCard({ entry }: { entry: ResourceEntry }) {
       */}
       <Link
         to={path}
+        onClick={onSelect}
         className="absolute inset-0 z-[1]"
         aria-label={entry.title}
       />
@@ -121,6 +131,7 @@ function ResourceCard({ entry }: { entry: ResourceEntry }) {
         </p>
         <TagList
           tags={entry.tags}
+          label={`Tags for ${entry.title}`}
           className="pointer-events-auto relative z-[2] mt-4"
         />
       </div>
@@ -138,6 +149,7 @@ export function ResourcePage({ slug }: { slug: string }) {
       title={post.title}
       article
       breadcrumbs={blogBreadcrumbs}
+      aside={<ResourceRail slug={entry.slug} />}
       metadata={
         <>
           <AuthorByline author={entry.author}>
@@ -159,7 +171,112 @@ export function ResourcePage({ slug }: { slug: string }) {
       <ResourceFaq slug={entry.slug} />
       {/* Rendered here rather than authored so every post closes on one. */}
       <BetaCta source="blog_end">Try Construct</BetaCta>
+      <RelatedResources slug={entry.slug} />
     </ContentShell>
+  );
+}
+
+/**
+ * The desktop rail: three onward links and a standing call to action.
+ *
+ * Thumbnails sit beside the title at ~96px wide (the social card's 1200×630
+ * ratio), not full-column — a stacked 300px crop of the OG art reads as an ad
+ * unit and crowds the CTA below.
+ *
+ * The CTA underneath is the point of the rail. Everywhere else a reader only
+ * meets one by scrolling past it; here one stays on screen for the whole read.
+ */
+function ResourceRail({ slug }: { slug: string }) {
+  const related = getRelatedResources(slug, 3);
+  if (!related.length) return null;
+  return (
+    <div className="space-y-6">
+      <nav aria-labelledby="rail-heading">
+        <h2
+          id="rail-heading"
+          className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8a9aa2]"
+        >
+          Read next
+        </h2>
+        <ul className="mt-3 list-none space-y-4 p-0">
+          {related.map((item) => {
+            const path = `/blog/${item.slug}/`;
+            const image = getRoute(path.slice(0, -1))?.image;
+            return (
+              <li key={item.slug}>
+                <Link
+                  to={path}
+                  onClick={() => trackRelatedClick("blog_rail", item.slug)}
+                  className="group flex gap-3"
+                >
+                  {image && (
+                    <img
+                      src={new URL(image).pathname}
+                      alt=""
+                      width="1200"
+                      height="630"
+                      loading="lazy"
+                      className="mt-0.5 aspect-[1200/630] w-[6.25rem] shrink-0 rounded-md object-cover"
+                    />
+                  )}
+                  <span className="min-w-0">
+                    <span className="block text-[14px] leading-5 text-[#4e4646] transition-colors group-hover:text-[#01b4c8]">
+                      {item.title}
+                    </span>
+                    <span className="mt-0.5 block text-[11px] capitalize text-[#8a9aa2]">
+                      {item.kind} · {formatShortDate(item.published)}
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <div className="rounded-xl border border-[#b6ecfb] bg-[#f2fcfe] p-4 text-center">
+        <p className="text-[13px] leading-5 text-[#016d79]">
+          An AI employee with its own computer, memory, and tools.
+        </p>
+        <BetaCta source="blog_rail" className="mt-3">
+          Try Construct
+        </BetaCta>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Matches the `h2` in `mdxComponents`, so the sections appended after a post
+ * body read as part of it. `.resource-content` is only a hook class with no
+ * stylesheet behind it, so a bare `h2` here would render at browser default
+ * beside the italic headings the article itself uses.
+ */
+const sectionHeading =
+  "font-geist text-[22px] italic leading-tight text-[#4e4646] lg:text-[26px]";
+
+/**
+ * The end-of-post card grid. Deliberately below the closing `BetaCta`: the
+ * conversion ask should not sit underneath four thumbnails.
+ */
+function RelatedResources({ slug }: { slug: string }) {
+  const related = getRelatedResources(slug);
+  if (!related.length) return null;
+  return (
+    <section aria-labelledby="related-heading">
+      <h2 id="related-heading" className={sectionHeading}>
+        Keep reading
+      </h2>
+      <ol className="mt-6 grid list-none gap-6 p-0 sm:grid-cols-2">
+        {related.map((entry) => (
+          <li key={entry.slug}>
+            <ResourceCard
+              entry={entry}
+              onSelect={() => trackRelatedClick("blog_related", entry.slug)}
+            />
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 }
 
@@ -172,7 +289,9 @@ function ResourceFaq({ slug }: { slug: string }) {
   if (!faqs.length) return null;
   return (
     <section aria-labelledby="faq-heading">
-      <h2 id="faq-heading">Frequently asked questions</h2>
+      <h2 id="faq-heading" className={sectionHeading}>
+        Frequently asked questions
+      </h2>
       <dl className="mt-6 space-y-6">
         {faqs.map((faq) => (
           <div key={faq.question}>
@@ -372,16 +491,20 @@ export function TagPage({ tag }: { tag: string }) {
 function TagList({
   tags,
   className,
+  label = "Resource tags",
 }: {
   tags?: readonly string[];
   className?: string;
+  /**
+   * Distinguishes one card's tags from another's. A post page now carries the
+   * article's own list plus one per related card, and several lists sharing a
+   * name leaves a screen reader with no way to tell which belongs to what.
+   */
+  label?: string;
 }) {
   if (!tags?.length) return null;
   return (
-    <ul
-      aria-label="Resource tags"
-      className={`flex flex-wrap gap-2 ${className ?? ""}`}
-    >
+    <ul aria-label={label} className={`flex flex-wrap gap-2 ${className ?? ""}`}>
       {tags.map((tag) => (
         <li key={tag}>
           {hubTags.includes(tag) ? (
@@ -447,11 +570,13 @@ function AuthorByline({
         <p>{author.bio}</p>
         <p>
           {children} ·{" "}
+          {/* Underlined rather than hover-only: sitting mid-sentence, colour
+              alone is not enough to mark it as a link (axe `link-in-text-block`). */}
           <a
             href={author.twitter}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#017b89] hover:underline"
+            className="text-[#017b89] underline underline-offset-2"
           >
             {author.twitterHandle}
           </a>
