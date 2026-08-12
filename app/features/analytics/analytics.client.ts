@@ -24,6 +24,14 @@ type AnalyticsEvent =
   | "campaign_banner_shown"
   | "campaign_banner_clicked"
   | "launch_page_viewed"
+  | "launch_social_clicked"
+  // `/launch` conversion path. `launch_cta_clicked` carries `position` so the
+  // hero, codes, and footer CTAs can be compared; `launch_section_viewed`
+  // carries `section` so a bounce at the hero is distinguishable from a read
+  // that reached the offer and still did not convert.
+  | "launch_cta_clicked"
+  | "launch_walkthrough_clicked"
+  | "launch_section_viewed"
   | "promo_code_copied"
   | "ph_banner_shown"
   | "ph_badge_clicked"
