@@ -13,17 +13,14 @@ import { ProductHuntBadge } from "../product-hunt/product-hunt-badge";
 import { productHuntCopy } from "../product-hunt/config";
 import { useProductHuntPhase } from "../product-hunt/use-product-hunt-phase";
 import { StartLink } from "./beta-access";
+import { WALKTHROUGH_URL } from "./cta-links";
+import { FounderNote } from "./founder-note";
 import { INTEGRATION_MARKS } from "./integration-marks";
 import { usePrefersReducedMotion, useRevealOnView } from "./media";
+import { usePointerParallax } from "./use-pointer-parallax";
 import { mergePricingPlans } from "./merge-pricing-catalog";
 import { usePlanCatalog } from "./use-plan-catalog";
 import "./launch-page.css";
-
-/**
- * Low-commitment CTA for campaign traffic that will not start a trial on the
- * first visit. Same form the GTM email offers, so the page keeps the promise.
- */
-const WALKTHROUGH_URL = "https://forms.gle/fpu7xAUbBC6EQKzQ6";
 
 const PROMO_CODES = [
   {
@@ -216,71 +213,7 @@ function LaunchCollage() {
   const ref = useRef<HTMLDivElement>(null);
   const [sceneIndex, setSceneIndex] = useState(0);
 
-  /**
-   * Parallax driven by the pointer anywhere on the page, measured against the
-   * viewport centre, so the hero keeps responding after the reader has scrolled
-   * past it or moved away from the artwork. Writes are coalesced into one frame
-   * because pointermove fires far more often than the display refreshes.
-   */
-  useEffect(() => {
-    if (reducedMotion) return;
-    const node = ref.current;
-    if (!node) return;
-
-    let frame = 0;
-    let settleTimer = 0;
-    let away = true;
-    let nx = 0;
-    let ny = 0;
-
-    const apply = () => {
-      frame = 0;
-      node.style.setProperty("--mx", `${nx * 22}px`);
-      node.style.setProperty("--my", `${ny * 18}px`);
-    };
-    const schedule = () => {
-      if (frame) return;
-      frame = requestAnimationFrame(apply);
-    };
-    /** Hold the slow curve long enough for the ease to finish, then release. */
-    const settleFor = (ms: number) => {
-      node.dataset.settling = "";
-      window.clearTimeout(settleTimer);
-      settleTimer = window.setTimeout(() => {
-        delete node.dataset.settling;
-      }, ms);
-    };
-
-    const onMove = (event: PointerEvent) => {
-      // First move after re-entering: ease across the gap rather than jump to
-      // wherever the pointer reappeared.
-      if (away) {
-        away = false;
-        settleFor(900);
-      }
-      nx = event.clientX / Math.max(window.innerWidth, 1) - 0.5;
-      ny = event.clientY / Math.max(window.innerHeight, 1) - 0.5;
-      schedule();
-    };
-    // Pointer left the window entirely: drift back to centre.
-    const onLeave = (event: PointerEvent) => {
-      if (event.relatedTarget || away) return;
-      away = true;
-      settleFor(900);
-      nx = 0;
-      ny = 0;
-      schedule();
-    };
-
-    window.addEventListener("pointermove", onMove, { passive: true });
-    document.addEventListener("pointerout", onLeave);
-    return () => {
-      if (frame) cancelAnimationFrame(frame);
-      window.clearTimeout(settleTimer);
-      window.removeEventListener("pointermove", onMove);
-      document.removeEventListener("pointerout", onLeave);
-    };
-  }, [reducedMotion]);
+  usePointerParallax(ref);
 
   const scene = HERO_SCENES[sceneIndex] ?? HERO_SCENES[0];
   const advance = () =>
@@ -530,7 +463,6 @@ export function LaunchPage() {
               >
                 <StartLink
                   source="launch-hero"
-                  intent="start"
                   authedChildren="Open Construct"
                   className={cn(
                     "site-cta inline-flex min-h-12 items-center rounded-full bg-[var(--color-ink)]",
@@ -663,48 +595,7 @@ export function LaunchPage() {
           </section>
 
           <section className="launch-founder" aria-labelledby="launch-founder">
-            <figure
-              className="launch-founder-card reveal-item"
-              data-reveal-delay="1"
-            >
-              <img
-                src="/assets/landing/founder/ankush.webp"
-                alt=""
-                aria-hidden
-                width={96}
-                height={96}
-                className="launch-founder-avatar"
-                loading="lazy"
-                decoding="async"
-              />
-              <div>
-                <h2
-                  id="launch-founder"
-                  className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-ink-subtle)]"
-                >
-                  Why I built it
-                </h2>
-                <blockquote className="launch-founder-quote">
-                  <p>
-                    I built developer tools before this. The last one reached
-                    30,000 users and was acquired. The engineering was never the
-                    problem. I was also the ops team: invoicing, CRM, support,
-                    follow-ups, all of it running through me on top of shipping.
-                    I did all of it myself and it wrecked me.
-                  </p>
-                  <p className="mt-3">
-                    Hiring was the obvious answer and the runway math said no.
-                    So I ran every agent I could find. Too expensive to leave
-                    running, too slow when it mattered, and not one of them
-                    could act on its own. The models were ready. Nothing around
-                    them was. So I built the thing I had been looking for.
-                  </p>
-                </blockquote>
-                <figcaption className="launch-founder-name">
-                  Ankush, co-founder, Construct
-                </figcaption>
-              </div>
-            </figure>
+            <FounderNote headingId="launch-founder" />
           </section>
 
           <div className="launch-offer-band">
@@ -744,7 +635,6 @@ export function LaunchPage() {
               <div className="reveal-item mt-6" data-reveal-delay="3">
                 <StartLink
                   source="launch-codes"
-                  intent="start"
                   authedChildren="Open Construct"
                   className={cn(
                     "site-cta inline-flex min-h-11 items-center rounded-full bg-[var(--color-ink)]",
@@ -813,7 +703,6 @@ export function LaunchPage() {
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 <StartLink
                   source="launch-footer"
-                  intent="start"
                   authedChildren="Open Construct"
                   className={cn(
                     "site-cta inline-flex min-h-12 items-center rounded-full bg-[var(--color-ink)]",
@@ -929,7 +818,6 @@ export function LaunchPage() {
         </div>
         <StartLink
           source="launch-sticky"
-          intent="start"
           authedChildren="Open"
           className={cn(
             "site-cta inline-flex min-h-11 shrink-0 items-center rounded-full",

@@ -36,7 +36,7 @@ test("walks a blog reader through three beats into the auth dialog", async ({
 
   await page.getByRole("button", { name: "What are you?" }).click();
   await expect(tip).toContainText(
-    "I am Construct, your AI coworker with a cloud computer",
+    "I am Construct, your AI employee with a cloud computer",
   );
 
   await page.getByRole("button", { name: "Show me" }).click();
@@ -48,7 +48,7 @@ test("walks a blog reader through three beats into the auth dialog", async ({
   await tip.getByRole("link", { name: "Try Construct" }).click();
   const dialog = page.getByRole("dialog");
   await expect(
-    dialog.getByRole("heading", { name: /Start with Construct/i }),
+    dialog.getByRole("heading", { name: /Create your Construct account/i }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Close dialog" }).click();
 });
@@ -58,7 +58,7 @@ test("opens the auth dialog from the first beat too", async ({ page }) => {
   await page.locator(".clippy-pill").click();
   const dialog = page.getByRole("dialog");
   await expect(
-    dialog.getByRole("heading", { name: /Start with Construct/i }),
+    dialog.getByRole("heading", { name: /Create your Construct account/i }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Close dialog" }).click();
 });

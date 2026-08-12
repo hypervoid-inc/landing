@@ -599,52 +599,6 @@
   padding: var(--launch-section-y) var(--launch-gutter);
 }
 
-.launch-founder-card {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 0;
-  border-radius: 18px;
-  border: 1px solid color-mix(in srgb, var(--color-brand) 16%, transparent);
-  background: linear-gradient(180deg, #f7fbfc 0%, #fff 70%);
-  padding: 1.5rem 1.4rem;
-}
-
-@media (min-width: 640px) {
-  .launch-founder-card {
-    flex-direction: row;
-    gap: 1.25rem;
-    padding: 1.75rem 1.75rem 1.6rem;
-  }
-}
-
-.launch-founder-avatar {
-  height: 3.25rem;
-  width: 3.25rem;
-  flex-shrink: 0;
-  border-radius: 999px;
-  object-fit: cover;
-  box-shadow: 0 2px 10px rgb(37 72 82 / 14%);
-}
-
-.launch-founder-quote {
-  margin: 0.65rem 0 0;
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  color: var(--color-ink-muted);
-}
-
-.launch-founder-quote p {
-  margin: 0;
-}
-
-.launch-founder-name {
-  margin-top: 0.9rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--color-ink);
-}
-
 /* ── FAQ ───────────────────────────────────────────────────────────────────
  * Self-contained: landing.css (which owns the homepage `.faq-content`
  * animation) is not loaded on this route.

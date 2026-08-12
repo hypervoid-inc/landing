@@ -1,0 +1,62 @@
+/*
+ * Tinted card so the note reads as an aside in a different voice, not another
+ * marketing block. Self-contained: used on both `/` and `/launch`, which load
+ * different stylesheets.
+ */
+.founder-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  border-radius: 18px;
+  border: 1px solid rgb(1 180 200 / 16%);
+  background: linear-gradient(180deg, #f7fbfc 0%, #fff 70%);
+  padding: 1.5rem 1.4rem;
+}
+
+@media (min-width: 640px) {
+  .founder-card {
+    flex-direction: row;
+    gap: 1.25rem;
+    padding: 1.75rem 1.75rem 1.6rem;
+  }
+}
+
+.founder-avatar {
+  height: 3.25rem;
+  width: 3.25rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  object-fit: cover;
+  box-shadow: 0 2px 10px rgb(37 72 82 / 14%);
+}
+
+.founder-eyebrow {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #7d949c;
+}
+
+.founder-quote {
+  margin: 0.65rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: #627c86;
+}
+
+.founder-quote p {
+  margin: 0;
+}
+
+.founder-quote .founder-quote-p {
+  margin-top: 0.75rem;
+}
+
+.founder-name {
+  margin-top: 0.9rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #4e4646;
+}
