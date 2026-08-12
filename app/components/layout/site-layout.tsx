@@ -34,6 +34,7 @@ export function SiteHeader() {
   const { pathname } = useLocation();
   const { status, user } = useAuth();
   const chromeRef = useRef<HTMLDivElement>(null);
+  const campaignLanding = pathname.startsWith("/launch");
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 8);
@@ -77,31 +78,37 @@ export function SiteHeader() {
             <span className="text-[#4e4646]">Construct</span>
             <span className="text-[#01b4c8]">Computer</span>
           </Link>
-          <nav
-            aria-label="Primary"
-            className="ml-auto flex items-center text-[12px] text-[#627c86] sm:text-[13px]"
-          >
-            <Link
-              to="/#pricing"
-              className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
+          {/* `/launch` is a paid-campaign landing page: the nav links only
+              leak traffic off the offer, so it keeps just logo + CTA. */}
+          {campaignLanding ? (
+            <div className="ml-auto" />
+          ) : (
+            <nav
+              aria-label="Primary"
+              className="ml-auto flex items-center text-[12px] text-[#627c86] sm:text-[13px]"
             >
-              Pricing
-            </Link>
-            <Link
-              to="/blog/"
-              aria-current={navCurrent(pathname, "/blog")}
-              className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
-            >
-              Blog
-            </Link>
-            <Link
-              to="/affiliates/"
-              aria-current={navCurrent(pathname, "/affiliates")}
-              className="hidden min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:inline-flex"
-            >
-              Affiliates
-            </Link>
-          </nav>
+              <Link
+                to="/#pricing"
+                className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
+              >
+                Pricing
+              </Link>
+              <Link
+                to="/blog/"
+                aria-current={navCurrent(pathname, "/blog")}
+                className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
+              >
+                Blog
+              </Link>
+              <Link
+                to="/affiliates/"
+                aria-current={navCurrent(pathname, "/affiliates")}
+                className="hidden min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:inline-flex"
+              >
+                Affiliates
+              </Link>
+            </nav>
+          )}
           {status === "authenticated" && user ? (
             <UserMenu user={user} />
           ) : (

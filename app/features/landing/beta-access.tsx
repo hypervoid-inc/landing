@@ -54,10 +54,18 @@ const referrals = [
 
 export type AccessDialogMode = "auth" | "updates";
 
+/**
+ * `start` reframes the auth dialog for people who have never had an account —
+ * campaign traffic landing on /launch. Same Google + email-code plumbing; it
+ * only stops the copy from implying a prior Construct OS account is required.
+ */
+export type AccessDialogIntent = "signin" | "start";
+
 export type OpenAccessDialogOptions = {
   mode: AccessDialogMode;
   source: string;
   plan?: string;
+  intent?: AccessDialogIntent;
 };
 
 type OpenAccessDialog = (options: OpenAccessDialogOptions) => void;
@@ -99,6 +107,7 @@ export function StartLink({
   label,
   source = "unknown",
   authedChildren,
+  intent,
   onClick: onBeforeClick,
 }: {
   children: ReactNode;
@@ -107,6 +116,8 @@ export function StartLink({
   source?: string;
   /** When signed in, render this instead of `children` (e.g. "Open OS"). */
   authedChildren?: ReactNode;
+  /** `start` = audience has no account yet (campaign landing pages). */
+  intent?: AccessDialogIntent;
   onClick?: () => void;
 }) {
   const { status } = useAuth();
@@ -121,8 +132,11 @@ export function StartLink({
       return;
     }
     event.preventDefault();
-    captureAnalytics("auth_dialog_opened", { source });
-    openDialog({ mode: "auth", source });
+    captureAnalytics("auth_dialog_opened", {
+      source,
+      ...(intent ? { intent } : {}),
+    });
+    openDialog({ mode: "auth", source, intent });
   };
 
   return (
@@ -209,6 +223,7 @@ function AccessDialog({
   mode,
   source,
   plan,
+  intent = "signin",
   initialPhase = "form",
   onOpenChange,
 }: {
@@ -216,6 +231,7 @@ function AccessDialog({
   mode: AccessDialogMode;
   source: string;
   plan?: string;
+  intent?: AccessDialogIntent;
   initialPhase?: "form" | "success";
   onOpenChange: (open: boolean) => void;
 }) {
@@ -485,13 +501,27 @@ function AccessDialog({
                 <X aria-hidden className="h-5 w-5" />
               </Dialog.Close>
               <Dialog.Title className="text-balance text-center text-[26px] leading-8">
-                Start with{" "}
-                <span className="font-serif italic text-[#01b4c8]">
-                  Construct
-                </span>
+                {intent === "start" ? (
+                  <>
+                    Create your{" "}
+                    <span className="font-serif italic text-[#01b4c8]">
+                      Construct
+                    </span>{" "}
+                    account
+                  </>
+                ) : (
+                  <>
+                    Start with{" "}
+                    <span className="font-serif italic text-[#01b4c8]">
+                      Construct
+                    </span>
+                  </>
+                )}
               </Dialog.Title>
               <Dialog.Description className="mt-3 text-center text-[15px] leading-[21px] text-[#627c86]">
-                Sign in with the same account you use for Construct OS.
+                {intent === "start"
+                  ? "Continue with Google, or get a code by email. If you're new, this creates your account."
+                  : "Sign in with the same account you use for Construct OS."}
               </Dialog.Description>
               <AuthSignInForm
                 appearance="dialog"
@@ -499,13 +529,27 @@ function AccessDialog({
                 postLoginWelcome={{ source, plan }}
               />
               <p className="mt-4 text-center text-[12px] leading-[17px] text-[#627c86]">
-                Need a password reset or to create an account?{" "}
-                <a
-                  href={plan ? `/login?plan=${plan}` : "/login"}
-                  className="whitespace-nowrap text-[#01b4c8] underline underline-offset-2"
-                >
-                  Full sign-in page
-                </a>
+                {intent === "start" ? (
+                  <>
+                    Already have an account? The same buttons sign you in.{" "}
+                    <a
+                      href={plan ? `/login?plan=${plan}` : "/login"}
+                      className="whitespace-nowrap text-[#01b4c8] underline underline-offset-2"
+                    >
+                      Full sign-in page
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    Need a password reset or to create an account?{" "}
+                    <a
+                      href={plan ? `/login?plan=${plan}` : "/login"}
+                      className="whitespace-nowrap text-[#01b4c8] underline underline-offset-2"
+                    >
+                      Full sign-in page
+                    </a>
+                  </>
+                )}
               </p>
             </>
           ) : null}
@@ -768,6 +812,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
   const [source, setSource] = useState("unknown");
   const [mode, setMode] = useState<AccessDialogMode>("auth");
   const [plan, setPlan] = useState<string | undefined>();
+  const [intent, setIntent] = useState<AccessDialogIntent>("signin");
   const [initialPhase, setInitialPhase] = useState<"form" | "success">("form");
   const handledWelcome = useRef(false);
   const previewOpened = useRef(false);
@@ -782,6 +827,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
       setMode("auth");
       setSource("url-preview");
       setPlan(undefined);
+      setIntent("signin");
       setInitialPhase("success");
       setOpen(true);
     });
@@ -812,6 +858,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
       setMode("auth");
       setSource(payload.source || "oauth-return");
       setPlan(undefined);
+      setIntent("signin");
       setInitialPhase("success");
       setOpen(true);
     });
@@ -823,6 +870,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
         setMode(options.mode);
         setSource(options.source);
         setPlan(options.plan);
+        setIntent(options.intent ?? "signin");
         setInitialPhase("form");
         setOpen(true);
       }}
@@ -831,11 +879,12 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
         {children}
         {open && (
           <AccessDialog
-            key={`${mode}-${source}-${plan ?? ""}-${initialPhase}`}
+            key={`${mode}-${source}-${plan ?? ""}-${intent}-${initialPhase}`}
             open
             mode={mode}
             source={source}
             plan={plan}
+            intent={intent}
             initialPhase={initialPhase}
             onOpenChange={setOpen}
           />

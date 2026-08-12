@@ -91,15 +91,27 @@ test("holographic foil layers on Product Hunt badges", async ({ page }) => {
   await expect(badge.locator(".ph-badge-glare")).toHaveCount(1);
 });
 
-test("launch page shows trial CTA and Product Hunt secondary in pre", async ({
+test("launch page shows desire hero, signup CTA, and walkthrough secondary", async ({
   page,
 }) => {
   await page.goto("/launch/?ph=pre");
 
   await expect(
-    page.getByRole("link", { name: /Start your trial/i }),
+    page.getByRole("heading", {
+      level: 1,
+      name: /Your AI employee is on shift/i,
+    }),
+  ).toBeVisible();
+  // Campaign traffic has no account yet: the primary CTA must say so, and the
+  // secondary must be the low-commitment walkthrough, not Product Hunt.
+  await expect(
+    page.getByRole("link", { name: /Create your account/i }).first(),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: /Follow our Product Hunt launch/i }).first(),
+    page.getByRole("link", { name: /Book a walkthrough/i }).first(),
   ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /Join Discord/i }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: /Follow on X/i })).toBeVisible();
 });
