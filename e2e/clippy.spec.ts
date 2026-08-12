@@ -5,10 +5,25 @@ import { expect, test } from "@playwright/test";
  * `?clippy=now` collapses the dwell delay to zero. A query param is the only
  * override that reaches a root mounted widget without bundler surgery, and it is
  * inert for a prerendered SPA.
+ * `?ph=off` keeps sticky chrome header-only so Clippy geometry stays stable.
  */
-const POST = "/blog/ai-agent-memory/?clippy=now";
+const POST = "/blog/ai-agent-memory/?clippy=now&ph=off";
 
 const widget = "aside.clippy-widget";
+
+test.beforeEach(async ({ page }) => {
+  const originalGoto = page.goto.bind(page);
+  page.goto = ((url, options) => {
+    const target = new URL(String(url), "http://localhost:8788");
+    if (!target.searchParams.has("ph")) {
+      target.searchParams.set("ph", "off");
+    }
+    return originalGoto(
+      `${target.pathname}${target.search}${target.hash}`,
+      options,
+    );
+  }) as typeof page.goto;
+});
 
 test("walks a blog reader through three beats into the auth dialog", async ({
   page,

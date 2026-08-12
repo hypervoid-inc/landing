@@ -5,11 +5,12 @@ import { SiteFooter, SiteHeader } from "../layout/site-layout";
 export type Breadcrumb = { readonly label: string; readonly to: string };
 
 /**
- * Vertical gap between the sticky site header and the top of a stuck rail.
- * The header is `sticky top-0` at `h-12` / `lg:h-14` (48–56px), so anything
- * below it has to clear that plus breathing room or it slides under the blur.
+ * Vertical gap between sticky site chrome (optional PH banner + header) and a
+ * stuck rail. Driven by `--site-chrome-height` so the rail tracks the campaign
+ * strip without hardcoding 5.5rem.
  */
-const RAIL_TOP = "top-[5.5rem]";
+const RAIL_TOP = "top-[calc(var(--site-chrome-height)+0.75rem)]";
+const RAIL_MAX_H = "max-h-[calc(100dvh-var(--site-chrome-height)-1.5rem)]";
 
 export function ContentShell({
   title,
@@ -89,9 +90,14 @@ export function ContentShell({
           // Last in the DOM so keyboard and screen-reader users reach the whole
           // post before its sidebar, then put back alongside it by explicit
           // grid placement rather than source order.
-          <div className="col-start-2 row-start-1 hidden min-w-0 xl:block">
+          <div className="col-start-2 row-start-1 hidden min-w-0 overflow-visible xl:block">
+            {/*
+              Padding + matching negative margin: overflow-y-auto otherwise clips
+              PH card shadows and the translateY(-1px) hover lift at the edges.
+              Extra bottom padding — coral blur is ~24–28px and was hard-clipping.
+            */}
             <div
-              className={`sticky ${RAIL_TOP} max-h-[calc(100dvh-7rem)] overflow-y-auto`}
+              className={`resource-rail-scroll sticky ${RAIL_TOP} ${RAIL_MAX_H} overflow-x-clip overflow-y-auto px-4 pb-8 pt-4 -mx-4 -mb-8 -mt-4`}
             >
               {aside}
             </div>

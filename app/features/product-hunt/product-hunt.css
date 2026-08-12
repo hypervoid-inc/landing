@@ -1,0 +1,501 @@
+:root {
+  --ph-coral: #ff6154;
+  --ph-coral-strong: #e8574b;
+  --ph-coral-soft: #ffe8e5;
+  --ph-banner-height: 0px;
+  --site-header-height: 3rem; /* h-12 */
+  --site-chrome-height: calc(
+    var(--ph-banner-height) + var(--site-header-height)
+  );
+  --ph-holo-x: 50%;
+  --ph-holo-y: 50%;
+  --ph-holo-x-inv: 50%;
+  --ph-holo-y-inv: 50%;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --site-header-height: 3.5rem; /* lg:h-14 */
+  }
+}
+
+.ph-banner {
+  position: relative;
+  z-index: 1;
+  min-height: 2.75rem;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, #000 12%, var(--ph-coral));
+  background: var(--ph-coral);
+  color: #fff;
+  --mx: 50%;
+  --my: 50%;
+}
+
+.ph-banner::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(
+    420px circle at var(--mx) var(--my),
+    rgb(255 255 255 / 22%),
+    transparent 55%
+  );
+  opacity: 0.9;
+  transition: opacity 160ms ease;
+}
+
+/* Periodic diagonal shine — runs every ~4.5s, independent of mouse spotlight. */
+.ph-banner::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 36%,
+    rgb(255 255 255 / 0%) 42%,
+    rgb(255 255 255 / 38%) 50%,
+    rgb(255 255 255 / 0%) 58%,
+    transparent 64%
+  );
+  background-size: 220% 100%;
+  background-position: 120% 0;
+  animation: ph-banner-shine 4.5s ease-in-out infinite;
+}
+
+@keyframes ph-banner-shine {
+  0%,
+  62% {
+    background-position: 120% 0;
+    opacity: 0;
+  }
+  68% {
+    opacity: 1;
+  }
+  82% {
+    background-position: -20% 0;
+    opacity: 1;
+  }
+  88%,
+  100% {
+    background-position: -20% 0;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-banner::before,
+  .ph-banner::after {
+    display: none;
+    animation: none;
+  }
+}
+
+.ph-banner-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 2.75rem;
+  width: 100%;
+  max-width: 1500px;
+  margin-inline: auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem 1rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+
+.ph-countdown {
+  display: inline-flex;
+  gap: 0.35rem;
+  font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.ph-countdown-unit {
+  display: inline-flex;
+  min-width: 1.75rem;
+  justify-content: center;
+  border-radius: 0.35rem;
+  background: rgb(0 0 0 / 16%);
+  padding: 0.15rem 0.3rem;
+}
+
+.ph-embed {
+  overflow: visible;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
+  padding: 1.25rem;
+  max-width: 500px;
+  text-align: center;
+  transition:
+    transform var(--dur-hover, 160ms) cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow var(--dur-hover, 160ms) ease,
+    border-color var(--dur-hover, 160ms) ease;
+}
+
+.ph-embed-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+  text-align: center;
+}
+
+.ph-embed-copy {
+  min-width: 0;
+}
+
+.ph-embed-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-top: 0.75rem;
+  border-radius: 8px;
+  background: var(--ph-coral);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgb(255 97 84 / 22%);
+  transition:
+    transform var(--dur-hover, 160ms) cubic-bezier(0.23, 1, 0.32, 1),
+    background-color var(--dur-hover, 160ms) ease,
+    box-shadow var(--dur-hover, 160ms) ease;
+}
+
+.ph-embed-cta:active {
+  transform: scale(0.97);
+}
+
+/* Official PH badge — light-mode holo (white+coral plate on light pages). */
+.ph-badge {
+  display: inline-block;
+  overflow: visible;
+  line-height: 0;
+  border-radius: 10px;
+  /* Shadow lives on `.ph-badge-face` so it tilts with the 3D rake. */
+  transition:
+    transform var(--dur-hover, 160ms) cubic-bezier(0.23, 1, 0.32, 1),
+    filter var(--dur-hover, 160ms) ease;
+}
+
+.ph-badge-face {
+  position: relative;
+  display: block;
+  /* Visible so the rotating coral lift isn’t clipped off the face. */
+  overflow: visible;
+  isolation: isolate;
+  border-radius: 10px;
+  /* SVG already paints the opaque plate — no wrapper fill. */
+  background: transparent;
+  /* Shadow on the transformed face — avoids a flat halo gap when tilting. */
+  box-shadow: 0 10px 28px rgb(255 97 84 / 22%);
+  transform: perspective(700px) rotateX(var(--ph-tilt-x, 0deg))
+    rotateY(var(--ph-tilt-y, 0deg));
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow var(--dur-hover, 160ms) ease;
+}
+
+.ph-badge img {
+  position: relative;
+  z-index: 0;
+  display: block;
+  height: auto;
+  max-width: 100%;
+  opacity: 1;
+  filter: none;
+}
+
+.ph-badge-foil,
+.ph-badge-sparkle,
+.ph-badge-glare {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  /* Clip holo layers to the rounded plate without clipping the face shadow. */
+  overflow: hidden;
+}
+
+/*
+ * Coral-biased spectrum on hard-light — pops on white without color-dodge bleach.
+ * Transparent mid-stops keep the PH wordmark crisp.
+ */
+.ph-badge-foil {
+  background: linear-gradient(
+    125deg,
+    transparent 0%,
+    transparent 28%,
+    rgb(255 97 84 / 55%) 36%,
+    rgb(255 180 90 / 50%) 42%,
+    rgb(255 120 200 / 45%) 48%,
+    rgb(80 200 230 / 50%) 54%,
+    rgb(255 97 84 / 55%) 60%,
+    transparent 68%,
+    transparent 100%
+  );
+  background-size: 300% 300%;
+  background-position: var(--ph-holo-x-inv, 50%) var(--ph-holo-y-inv, 50%);
+  mix-blend-mode: hard-light;
+  opacity: 0.75;
+}
+
+/* Dark/coral flecks via color-burn — readable glitter on a white plate. */
+.ph-badge-sparkle {
+  background-image:
+    radial-gradient(circle at 12% 28%, rgb(255 97 84 / 85%) 0 0.85px, transparent 1.3px),
+    radial-gradient(circle at 38% 62%, rgb(40 20 20 / 70%) 0 0.65px, transparent 1.1px),
+    radial-gradient(circle at 71% 18%, rgb(255 97 84 / 80%) 0 0.9px, transparent 1.4px),
+    radial-gradient(circle at 84% 74%, rgb(60 30 30 / 65%) 0 0.55px, transparent 1px),
+    radial-gradient(circle at 22% 84%, rgb(200 70 60 / 75%) 0 0.7px, transparent 1.2px),
+    radial-gradient(circle at 56% 40%, rgb(30 80 100 / 55%) 0 0.65px, transparent 1.1px),
+    radial-gradient(circle at 9% 52%, rgb(255 97 84 / 60%) 0 0.5px, transparent 0.95px),
+    radial-gradient(circle at 93% 36%, rgb(180 60 120 / 70%) 0 0.75px, transparent 1.25px),
+    radial-gradient(circle at 48% 90%, rgb(40 20 20 / 60%) 0 0.55px, transparent 1px),
+    radial-gradient(circle at 64% 8%, rgb(255 97 84 / 75%) 0 0.7px, transparent 1.2px);
+  background-size: 140% 140%;
+  background-position: var(--ph-holo-x-inv, 50%) var(--ph-holo-y, 50%);
+  mix-blend-mode: color-burn;
+  opacity: 0.3;
+}
+
+/* Narrow soft-light specular — catch light without full-face wash. */
+.ph-badge-glare {
+  background:
+    radial-gradient(
+      40% 55% at var(--ph-holo-x, 50%) var(--ph-holo-y, 50%),
+      rgb(255 255 255 / 55%) 0%,
+      rgb(255 255 255 / 0%) 28%
+    ),
+    linear-gradient(
+      115deg,
+      transparent 47.5%,
+      rgb(255 255 255 / 40%) 49%,
+      rgb(255 255 255 / 70%) 50%,
+      rgb(255 255 255 / 40%) 51%,
+      transparent 52.5%
+    );
+  background-size:
+    150% 150%,
+    260% 260%;
+  background-position:
+    var(--ph-holo-x, 50%) var(--ph-holo-y, 50%),
+    var(--ph-holo-x, 50%) var(--ph-holo-y, 50%);
+  mix-blend-mode: soft-light;
+  opacity: calc(0.28 + var(--ph-pointer-from-center, 0.35) * 0.35);
+}
+
+.ph-badge:active {
+  transform: scale(0.97);
+}
+
+/* Hero CTA row — sit the official badge next to Start Now. */
+.hero-ph-badge {
+  flex-shrink: 0;
+}
+
+.hero-ph-badge .ph-badge-face,
+.hero-ph-badge img {
+  width: min(250px, 100%);
+  height: auto;
+}
+
+/* Compact official badge — fits the sticky strip (~32px tall). */
+.ph-badge.ph-banner-badge {
+  flex-shrink: 0;
+}
+
+.ph-badge.ph-banner-badge .ph-badge-face,
+.ph-badge.ph-banner-badge img {
+  height: 2rem;
+  width: auto;
+  max-width: none;
+}
+
+.ph-badge.ph-banner-badge .ph-badge-face {
+  border-radius: 6px;
+  /* Coral strip already saturates the page; keep a soft dark lift instead. */
+  box-shadow: 0 4px 14px rgb(0 0 0 / 18%);
+}
+
+.landing-cta-ph {
+  border: 1px solid color-mix(in srgb, var(--ph-coral) 35%, #fff);
+  background: var(--ph-coral);
+  color: #fff;
+  box-shadow:
+    inset 0 -4px 12px rgb(255 255 255 / 28%),
+    inset 0 3px 10px rgb(255 255 255 / 22%),
+    0 8px 22px rgb(255 97 84 / 28%);
+  transition:
+    transform var(--dur-hover, 160ms) cubic-bezier(0.23, 1, 0.32, 1),
+    background-color var(--dur-hover, 160ms) ease,
+    box-shadow var(--dur-hover, 160ms) ease,
+    border-color var(--dur-hover, 160ms) ease;
+}
+
+.landing-cta-ph:active {
+  transform: scale(0.97);
+}
+
+.ph-blog-cta {
+  position: relative;
+  z-index: 0;
+  overflow: visible;
+  border: 1px solid color-mix(in srgb, var(--ph-coral) 35%, #fff);
+  border-radius: 14px;
+  background: #fff;
+  padding: 1.15rem 1.25rem;
+  text-align: center;
+  box-shadow: 0 8px 24px rgb(255 97 84 / 10%);
+  transition:
+    transform var(--dur-hover, 160ms) cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow var(--dur-hover, 160ms) ease,
+    border-color var(--dur-hover, 160ms) ease;
+}
+
+.ph-blog-cta-actions {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  overflow: visible;
+}
+
+.ph-blog-cta-eyebrow {
+  margin: 0;
+  color: var(--ph-coral-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ph-blog-cta-title {
+  margin: 0.4rem 0 0;
+  color: var(--color-ink, #4e4646);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.ph-blog-cta-lead {
+  margin: 0.35rem 0 0;
+  color: var(--color-ink, #4e4646);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+/**
+ * Same lift grammar as `.footer-affiliate-badge`: translateY(-1px) + richer
+ * shadow / border. Coral-tinted for Product Hunt surfaces.
+ */
+@media (hover: hover) and (pointer: fine) {
+  .ph-embed:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--ph-coral) 55%, #fff);
+    box-shadow: 0 8px 20px rgb(255 97 84 / 18%);
+  }
+
+  .ph-embed-cta:hover,
+  .landing-cta-ph:hover {
+    transform: translateY(-1px);
+    background: var(--ph-coral-strong);
+    box-shadow: 0 10px 24px rgb(255 97 84 / 32%);
+  }
+
+  .landing-cta-ph:hover {
+    border-color: var(--ph-coral-strong);
+    box-shadow:
+      inset 0 -4px 12px rgb(255 255 255 / 28%),
+      inset 0 3px 10px rgb(255 255 255 / 22%),
+      0 10px 24px rgb(255 97 84 / 32%);
+  }
+
+  .ph-embed-cta:hover:active,
+  .landing-cta-ph:hover:active {
+    transform: scale(0.97);
+  }
+
+  .ph-badge:hover {
+    transform: translateY(-1px);
+  }
+
+  .ph-badge:hover .ph-badge-face {
+    box-shadow: 0 14px 34px rgb(255 97 84 / 30%);
+  }
+
+  .ph-badge:hover:active {
+    transform: scale(0.97);
+  }
+
+  .ph-badge.ph-banner-badge:hover .ph-badge-face {
+    box-shadow: 0 8px 20px rgb(0 0 0 / 22%);
+  }
+
+  .ph-blog-cta:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--ph-coral) 60%, #fff);
+    box-shadow: 0 12px 28px rgb(255 97 84 / 18%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-banner-badge,
+  .ph-banner-badge:hover,
+  .ph-banner-badge:active,
+  .ph-embed,
+  .ph-embed:hover,
+  .ph-embed-cta,
+  .ph-embed-cta:hover,
+  .ph-embed-cta:active,
+  .ph-badge,
+  .ph-badge:hover,
+  .ph-badge:active,
+  .ph-badge-face,
+  .landing-cta-ph,
+  .landing-cta-ph:hover,
+  .landing-cta-ph:active,
+  .ph-blog-cta,
+  .ph-blog-cta:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .ph-badge-foil,
+  .ph-badge-sparkle,
+  .ph-badge-glare {
+    opacity: 0.14;
+    background-position: 50% 50%;
+    filter: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .ph-badge-face {
+    transform: none;
+  }
+
+  .ph-badge-foil,
+  .ph-badge-sparkle,
+  .ph-badge-glare {
+    opacity: 0.2;
+    background-position: 50% 50%;
+    filter: none;
+  }
+}

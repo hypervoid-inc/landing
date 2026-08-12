@@ -147,6 +147,10 @@ test.beforeEach(async ({ page }) => {
     if (!target.searchParams.has("clippy")) {
       target.searchParams.set("clippy", "off");
     }
+    // Keep sticky geometry header-only unless a suite opts into ?ph=.
+    if (!target.searchParams.has("ph")) {
+      target.searchParams.set("ph", "off");
+    }
     return originalGoto(
       `${target.pathname}${target.search}${target.hash}`,
       options,
@@ -1279,6 +1283,13 @@ test("eases the workflow into and out of its pinned position", async ({
   await expect(motion).toHaveCSS("will-change", "transform");
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
 
+  const pinOffset = await page.evaluate(() => {
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue("--site-chrome-height")
+      .trim();
+    return Number.parseFloat(raw) || 56;
+  });
+
   const sectionTop = await section.evaluate(
     (element) => element.getBoundingClientRect().top + window.scrollY,
   );
@@ -1309,7 +1320,7 @@ test("eases the workflow into and out of its pinned position", async ({
     sectionTop + 120,
   );
   await page.waitForTimeout(16);
-  expect((await sticky.boundingBox())?.y).toBeCloseTo(56, 0);
+  expect((await sticky.boundingBox())?.y).toBeCloseTo(pinOffset, 0);
   expect(await transformY()).toBeGreaterThan(5);
   await page.waitForTimeout(350);
   expect(Math.abs(await transformY())).toBeLessThan(4);
@@ -1318,7 +1329,7 @@ test("eases the workflow into and out of its pinned position", async ({
     Math.abs(
       (centeredMotion?.y ?? 0) +
         (centeredMotion?.height ?? 0) / 2 -
-        (56 + (900 - 56) / 2),
+        (pinOffset + (900 - pinOffset) / 2),
     ),
   ).toBeLessThan(4);
 
@@ -1336,12 +1347,12 @@ test("eases the workflow into and out of its pinned position", async ({
     (y) => window.scrollTo({ top: y, behavior: "instant" }),
     sectionExit - 96,
   );
-  expect((await sticky.boundingBox())?.y).toBeCloseTo(56, 0);
+  expect((await sticky.boundingBox())?.y).toBeCloseTo(pinOffset, 0);
   await page.evaluate(
     (y) => window.scrollTo({ top: y, behavior: "instant" }),
     sectionExit + 24,
   );
-  expect((await sticky.boundingBox())?.y).toBeCloseTo(32, 0);
+  expect((await sticky.boundingBox())?.y).toBeCloseTo(pinOffset - 24, 0);
 });
 
 test("opens the auth dialog from the animated workflow CTA", async ({

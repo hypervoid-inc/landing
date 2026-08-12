@@ -21,6 +21,7 @@ import {
   type ClippyRecord,
 } from "./clippy-state";
 import { CLIPPY_EDGE_MARGIN, type ClippyPosition } from "./clippy-position";
+import { useSiteChromeHeight } from "../product-hunt/use-chrome";
 import { useClippyDrag } from "./use-clippy-drag";
 import { useDesktop, usePrefersReducedMotion } from "./media";
 import "./clippy.css";
@@ -51,6 +52,7 @@ export function ClippyCta() {
   const [visible, setVisible] = useState(false);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [gaze, setGaze] = useState({ x: 0, y: 0 });
+  const chromeHeight = useSiteChromeHeight(56);
 
   const frameRef = useRef<HTMLDivElement>(null);
   const shownAtRef = useRef(0);
@@ -143,7 +145,7 @@ export function ClippyCta() {
     enabled: desktop && showing,
     widgetWidth: size.width,
     widgetHeight: size.height,
-    headerHeight: 56,
+    headerHeight: chromeHeight,
     margin: CLIPPY_EDGE_MARGIN,
     initialPosition: record.position,
     onPlaced,

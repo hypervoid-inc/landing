@@ -1,0 +1,286 @@
+.launch-page {
+  --launch-coral: #ff6154;
+  --launch-coral-soft: #ffe8e5;
+}
+
+.launch-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(90% 80% at 80% 0%, rgb(1 180 200 / 16%), transparent 55%),
+    radial-gradient(70% 60% at 10% 20%, rgb(255 97 84 / 12%), transparent 50%),
+    linear-gradient(180deg, #f7fbfc 0%, #fff 55%, #fff 100%);
+}
+
+.launch-hero-beams,
+.launch-hero-clouds {
+  pointer-events: none;
+  position: absolute;
+  inset-inline: 0;
+  width: 100%;
+  opacity: 0.85;
+}
+
+.launch-hero-beams {
+  top: -8%;
+  z-index: 0;
+}
+
+.launch-hero-clouds {
+  top: 12%;
+  z-index: 0;
+}
+
+.launch-hero-inner {
+  position: relative;
+  z-index: 1;
+  margin-inline: auto;
+  display: grid;
+  width: 100%;
+  max-width: 1500px;
+  gap: 2.5rem;
+  padding: 3.5rem 1.25rem 3rem;
+}
+
+@media (min-width: 1024px) {
+  .launch-hero-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    align-items: center;
+    gap: 3rem;
+    padding: 4.5rem 4rem 4rem;
+  }
+}
+
+.launch-collage {
+  position: relative;
+  min-height: 280px;
+  --mx: 0px;
+  --my: 0px;
+}
+
+.launch-collage::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 12% 8% 8%;
+  z-index: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 40%, rgb(1 180 200 / 22%), transparent 55%),
+    radial-gradient(circle at 70% 65%, rgb(255 97 84 / 14%), transparent 50%);
+  filter: blur(36px);
+}
+
+.launch-collage-chat,
+.launch-collage-report {
+  position: absolute;
+  z-index: 1;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+  /* Soft rectangular feather — dissolves hard card edges into atmosphere */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-composite: intersect;
+  filter: drop-shadow(0 22px 44px rgb(37 72 82 / 12%));
+}
+
+.launch-collage-chat {
+  left: 4%;
+  top: 8%;
+  width: min(78%, 420px);
+  transform: translate3d(
+    calc(var(--mx) * 0.35),
+    calc(var(--my) * 0.25),
+    0
+  );
+}
+
+.launch-collage-report {
+  right: 2%;
+  bottom: 0;
+  width: min(62%, 320px);
+  transform: translate3d(
+    calc(var(--mx) * -0.28),
+    calc(var(--my) * -0.2),
+    0
+  );
+  /* Dense white plate — feather harder so it melts into clouds */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 82%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 82%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.launch-collage-chat img,
+.launch-collage-report img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .launch-collage-chat,
+  .launch-collage-report {
+    transform: none;
+    transition: none;
+  }
+}
+
+.launch-benefits {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1100px;
+  padding: 1rem 1.25rem 3rem;
+}
+
+@media (min-width: 1024px) {
+  .launch-benefits {
+    padding-inline: 4rem;
+  }
+}
+
+.launch-benefit-grid {
+  display: grid;
+  gap: 1.75rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .launch-benefit-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.launch-benefit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.launch-benefit-visual {
+  position: relative;
+  isolation: isolate;
+  /* Room for soft glow / feather bleed */
+  margin-inline: -0.35rem;
+}
+
+.launch-benefit-visual::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 12% 8%;
+  z-index: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(1 180 200 / 16%) 0%,
+    rgb(221 250 255 / 28%) 42%,
+    transparent 72%
+  );
+  filter: blur(32px);
+}
+
+/* Wash cyan plate edges into page white so art floats */
+.launch-benefit-visual::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(
+    ellipse 72% 68% at 50% 46%,
+    transparent 28%,
+    rgb(255 255 255 / 55%) 58%,
+    #fff 78%
+  );
+}
+
+.launch-benefit-visual img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-composite: intersect;
+  filter: drop-shadow(0 12px 24px rgb(37 72 82 / 6%));
+}
+
+.launch-codes {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 720px;
+  padding: 0 1.25rem 4rem;
+}
+
+.launch-code {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  border: 1px solid color-mix(in srgb, var(--color-brand) 28%, transparent);
+  border-radius: 18px;
+  background: linear-gradient(
+    165deg,
+    rgb(255 255 255 / 92%) 0%,
+    rgb(247 251 252 / 78%) 100%
+  );
+  padding: 1.1rem 1.25rem;
+  text-align: left;
+  box-shadow: 0 10px 30px rgb(1 180 200 / 6%);
+  backdrop-filter: blur(8px);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.launch-code:hover {
+  border-color: color-mix(in srgb, var(--color-brand) 55%, transparent);
+  box-shadow: 0 14px 34px rgb(1 180 200 / 12%);
+}
+
+.launch-code:active {
+  transform: scale(0.985);
+}
+
+.launch-ph-strip {
+  border-top: 1px solid color-mix(in srgb, var(--launch-coral) 28%, #fff);
+  background: #fff;
+  padding: 2.5rem 1.25rem 3.5rem;
+}
+
+.launch-ph-strip-inner {
+  margin-inline: auto;
+  display: flex;
+  width: 100%;
+  max-width: 720px;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}

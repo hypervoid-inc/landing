@@ -28,6 +28,7 @@ import {
 
 import { StartLink, useOpenAccessDialog } from "./beta-access";
 import { CampaignBanner } from "./campaign-banner";
+import { ProductHuntBadge } from "../product-hunt/product-hunt-badge";
 import { AutoVideo, useRevealOnView } from "./media";
 import {
   maxAnnualMonthsFree,
@@ -135,6 +136,10 @@ const pricingIcons: Record<PricingIcon, LucideIcon> = {
   key: KeyRound,
 };
 
+function HeroProductHuntCta() {
+  return <ProductHuntBadge surface="hero" className="hero-ph-badge" />;
+}
+
 function HeroHeadline() {
   return (
     <div className="hero-headline max-w-[560px] text-center xl:text-left">
@@ -165,20 +170,21 @@ function HeroHeadline() {
         </span>
       </p>
       <div
-        className="reveal-item flex items-center justify-center gap-5 xl:justify-start"
+        className="hero-cta-row reveal-item mt-7 flex w-full flex-col items-center gap-3 xl:mt-8 xl:flex-row xl:flex-wrap xl:items-center xl:justify-start xl:gap-5"
         data-reveal="mount"
         data-reveal-delay="3"
       >
         <StartLink
           source="hero"
-          className="landing-cta mt-7 min-h-[57px] w-[227px] px-5 text-[21px] xl:mt-8"
+          className="landing-cta inline-flex h-[57px] w-full max-w-[227px] items-center justify-center px-5 text-[21px]"
           authedChildren="Open OS"
         >
           Start Now
         </StartLink>
+        <HeroProductHuntCta />
         <Link
           to="/affiliates/"
-          className="hero-affiliate mt-8 hidden max-w-[150px] text-xs leading-4 text-[#627c86] transition-colors hover:text-[#01b4c8] xl:block"
+          className="hero-affiliate mt-1 hidden max-w-[150px] text-xs leading-4 text-[#627c86] transition-colors hover:text-[#01b4c8] xl:mt-0 xl:block"
         >
           Affiliate program: 50% now, then 20% <span aria-hidden>→</span>
         </Link>

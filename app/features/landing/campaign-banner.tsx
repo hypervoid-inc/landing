@@ -5,6 +5,8 @@ import { cn } from "../../lib/cn";
 import { captureAnalytics } from "../analytics/analytics.client";
 import { readAttributionCookie } from "../analytics/campaign-attribution.client";
 import type { CampaignAttribution } from "../analytics/campaign-attribution";
+import { isPhBannerActive } from "../product-hunt/chrome";
+import { useProductHuntPhase } from "../product-hunt/use-product-hunt-phase";
 
 /**
  * In-memory only — survives SPA remounts while the JS context lives, clears on
@@ -20,11 +22,14 @@ let dismissedThisVisit = false;
  * server-side markup contains no banner. Emitting one during the first client
  * render would be a hydration mismatch. Same pattern as ClippyCta and the
  * scrolled state in SiteHeader.
+ *
+ * Suppressed while the Product Hunt sticky bar is active so strips never stack.
  */
 export function CampaignBanner() {
   const [attribution, setAttribution] = useState<CampaignAttribution | null>(
     null,
   );
+  const { mounted, phase } = useProductHuntPhase();
 
   useEffect(() => {
     const reveal = () => {
@@ -41,12 +46,13 @@ export function CampaignBanner() {
     reveal();
   }, []);
 
+  if (mounted && isPhBannerActive(phase)) return null;
   if (!attribution) return null;
 
   return (
     <div
       className={cn(
-        "w-full border-b border-[var(--color-line)] bg-[var(--color-surface-subtle)]",
+        "w-full border-b border-[var(--color-line)] bg-[var(--color-surface-subtle,#f7fbfc)]",
         "px-5 py-3",
       )}
     >

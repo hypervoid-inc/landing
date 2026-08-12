@@ -12,7 +12,9 @@ import { Analytics } from "./features/analytics/analytics";
 import { AuthProvider } from "./features/auth/auth-provider";
 import { BetaAccessProvider } from "./features/landing/beta-access";
 import { ClippyCta } from "./features/landing/clippy-cta";
+import { ProductHuntChrome } from "./features/product-hunt/product-hunt-chrome";
 import "./app.css";
+import "./features/product-hunt/product-hunt.css";
 
 export const links: Route.LinksFunction = () => [
   {
@@ -83,6 +85,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BetaAccessProvider>
+        <ProductHuntChrome />
         <Outlet />
         <ClippyCta />
       </BetaAccessProvider>
