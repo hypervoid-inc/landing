@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { workflowDemos, type WorkflowDemo } from "~/content/landing";
 
 import { StartLink } from "./beta-access";
+import { readSiteChromeHeightPx } from "../product-hunt/chrome";
 import { useDesktop, usePrefersReducedMotion } from "./media";
 import {
   clamp,
@@ -299,7 +300,8 @@ export function WorkflowSection() {
     const section = sectionRef.current;
     const content = contentRef.current;
     if (!section || !content) return;
-    const pinOffset = desktop ? 56 : 48;
+    const pinOffset = () =>
+      readSiteChromeHeightPx(desktop ? 56 : 48);
     let currentProgress = 0;
     let targetProgress = 0;
     let currentPin = 0;
@@ -313,14 +315,16 @@ export function WorkflowSection() {
       content.style.transform = `translate3d(0, ${currentPin}px, 0)`;
     };
     const readTargets = () => {
+      const offset = pinOffset();
+      section.style.setProperty("--workflow-pin-offset", `${offset}px`);
       const rect = section.getBoundingClientRect();
       const distance = Math.max(
-        rect.height - window.innerHeight + pinOffset,
+        rect.height - window.innerHeight + offset,
         1,
       );
-      targetProgress = clamp((pinOffset - rect.top) / distance);
+      targetProgress = clamp((offset - rect.top) / distance);
       targetPin =
-        pinOffset + getSoftPinOffset(targetProgress, distance, pinOffset);
+        offset + getSoftPinOffset(targetProgress, distance, offset);
     };
     const animate = (time: number) => {
       const elapsed = Math.min(time - (previousTime || time - 16), 64);

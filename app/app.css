@@ -84,13 +84,14 @@ input,
 a:focus-visible,
 button:focus-visible,
 [tabindex]:focus-visible {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: var(--site-chrome-height, 5rem);
   scroll-margin-bottom: 2rem;
 }
 
 /* Shared press / hover vocabulary for black CTAs and affiliate pill. */
 .site-cta,
-.site-cta-pill {
+.site-cta-pill,
+.footer-affiliate-badge {
   transition:
     transform var(--dur-hover) var(--ease-snap),
     background-color var(--dur-hover) var(--ease-snap),
@@ -103,8 +104,90 @@ button:focus-visible,
   transition: transform var(--dur-hover) var(--ease-snap);
 }
 
+/**
+ * Footer affiliates chip — same badge grammar as the Product Hunt widget:
+ * rounded rect, leading mark, two-line copy, trailing metric.
+ */
+.footer-affiliate-badge {
+  display: inline-flex;
+  height: 54px;
+  width: 250px;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid #01b4c8;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0 0.75rem 0 0.55rem;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.footer-affiliate-badge-mark {
+  display: grid;
+  height: 2.25rem;
+  width: 2.25rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 9999px;
+  background: #01b4c8;
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.footer-affiliate-badge-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.05rem;
+  text-align: left;
+}
+
+.footer-affiliate-badge-eyebrow {
+  color: #01b4c8;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.footer-affiliate-badge-title {
+  color: #018fa0;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.footer-affiliate-badge-meta {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.05rem;
+  color: #01b4c8;
+  line-height: 1;
+}
+
+.footer-affiliate-badge-arrow {
+  font-size: 0.5rem;
+  line-height: 1;
+}
+
+.footer-affiliate-badge-rate {
+  font-size: 0.875rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
 .site-cta:active,
-.site-cta-pill:active {
+.site-cta-pill:active,
+.footer-affiliate-badge:active {
   transform: scale(0.97);
   transition-duration: var(--dur-press);
 }
@@ -132,6 +215,16 @@ button:focus-visible,
 
   .site-cta-pill:hover .site-cta-pill-arrow {
     transform: translateX(0.125rem);
+  }
+
+  .footer-affiliate-badge:hover {
+    transform: translateY(-1px);
+    border-color: #018fa0;
+    box-shadow: 0 8px 20px rgba(1, 180, 200, 0.18);
+  }
+
+  .footer-affiliate-badge:hover:active {
+    transform: scale(0.97);
   }
 }
 
@@ -270,7 +363,9 @@ button:focus-visible,
   .site-cta:hover,
   .site-cta:active,
   .site-cta-pill:hover,
-  .site-cta-pill:active {
+  .site-cta-pill:active,
+  .footer-affiliate-badge:hover,
+  .footer-affiliate-badge:active {
     transform: none;
   }
 

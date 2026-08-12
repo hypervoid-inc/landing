@@ -70,9 +70,11 @@ Author: Ankush
 Published: 2026-08-11
 Tags: ai-agent, reliability, workflow-automation, product
 
+Valve named a game *Half-Life* after the physics joke hiding in plain sight: how long something lasts before half of it is gone. Your agent has one of those. It just does not get a hazmat suit or a crowbar out of the deal.
+
 Take an agent that gets 95% of its individual steps right. That is a good agent. Now give it a ten-step job.
 
-It finishes six times out of ten.
+It finishes six times out of ten. The other four times, it fails halfway. Literally. A half-life.
 
 Nothing broke. No step regressed. 0.95 to the tenth power is 0.60, and that is the whole story. Reliability that looks excellent per step is mediocre per job, and it gets worse in a way most people do not feel until they schedule something and walk away.
 

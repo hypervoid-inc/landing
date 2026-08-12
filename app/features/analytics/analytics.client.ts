@@ -25,6 +25,11 @@ type AnalyticsEvent =
   | "campaign_banner_clicked"
   | "launch_page_viewed"
   | "promo_code_copied"
+  | "ph_banner_shown"
+  | "ph_badge_clicked"
+  | "ph_embed_clicked"
+  | "ph_cta_clicked"
+  | "ph_confetti_fired"
   // `checkout_started` intentionally shares its name with the event in apps/web
   // so both surfaces form one funnel; they are separated by `source`. The `plan`
   // and `interval` property names must stay identical on both sides.

@@ -1,6 +1,7 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { useMDXComponents } from "@mdx-js/react";
 
+import { ProductHuntEmbed } from "../../features/product-hunt/product-hunt-embed";
 import { BetaCta } from "./beta-cta";
 import { ReadNext } from "./related-links";
 
@@ -71,6 +72,7 @@ export const mdxComponents: MDXComponents = {
   // Capitalised entries are authorable in MDX with no import, e.g. `<BetaCta />`.
   BetaCta,
   ReadNext,
+  ProductHuntEmbed,
   h2: ({ children }) => (
     <h2 className="font-geist mt-10 mb-4 text-[22px] italic leading-tight text-[#4e4646] lg:text-[26px]">
       {children}

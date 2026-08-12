@@ -1,10 +1,13 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "react-router";
 
 import { companyLinks, comparisonLinks } from "../../content/landing";
 import { useAuth } from "../../features/auth/auth-provider";
 import { StartLink } from "../../features/landing/beta-access";
 import { NewsletterForm } from "../../features/landing/newsletter-form";
+import { setSiteChromeHeightPx } from "../../features/product-hunt/chrome";
+import { ProductHuntBadge } from "../../features/product-hunt/product-hunt-badge";
+import { ProductHuntBanner } from "../../features/product-hunt/product-hunt-banner";
 import { UserMenu } from "./user-menu";
 
 function navCurrent(pathname: string, href: string): "page" | undefined {
@@ -22,10 +25,15 @@ function navCurrent(pathname: string, href: string): "page" | undefined {
   return current === path ? "page" : undefined;
 }
 
+/**
+ * Sticky site chrome: nav + Product Hunt banner (when active).
+ * Used on every page with a site header — landing, blog, legal, auth.
+ */
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
   const { status, user } = useAuth();
+  const chromeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 8);
@@ -34,64 +42,82 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", update);
   }, []);
 
+  useEffect(() => {
+    const node = chromeRef.current;
+    if (!node) return;
+    const measure = () =>
+      setSiteChromeHeightPx(node.getBoundingClientRect().height);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(node);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
   return (
-    <header
-      className={`site-header sticky top-0 z-50 w-full border-b transition-[background-color,border-color,box-shadow] duration-200 ${scrolled ? "border-[#dcecef] bg-white/90 shadow-[0_6px_20px_rgba(37,72,82,.06)] backdrop-blur-xl backdrop-saturate-150" : "border-transparent bg-white/80 backdrop-blur-md"}`}
-    >
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[100] focus:bg-black focus:px-3 focus:py-2 focus:text-xs focus:text-white"
+    <div ref={chromeRef} className="site-sticky-chrome sticky top-0 z-50">
+      <header
+        className={`site-header w-full border-b transition-[background-color,border-color,box-shadow] duration-200 ${scrolled ? "border-[#dcecef] bg-white/90 shadow-[0_6px_20px_rgba(37,72,82,.06)] backdrop-blur-xl backdrop-saturate-150" : "border-transparent bg-white/80 backdrop-blur-md"}`}
       >
-        Skip to main content
-      </a>
-      <div className="mx-auto flex h-12 w-full max-w-[1500px] items-center gap-1.5 px-3 sm:gap-4 sm:px-6 lg:h-14 lg:px-16">
-        <Link
-          to="/"
-          aria-label="Construct Computer - home"
-          className="font-display whitespace-nowrap text-[15px] italic leading-6 tracking-[-.015em] sm:text-[16px] lg:text-[18px] lg:leading-7"
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[100] focus:bg-black focus:px-3 focus:py-2 focus:text-xs focus:text-white"
         >
-          <span className="text-[#4e4646]">Construct</span>
-          <span className="text-[#01b4c8]">Computer</span>
-        </Link>
-        <nav
-          aria-label="Primary"
-          className="ml-auto flex items-center text-[12px] text-[#627c86] sm:text-[13px]"
-        >
+          Skip to main content
+        </a>
+        <div className="mx-auto flex h-12 w-full max-w-[1500px] items-center gap-1.5 px-3 sm:gap-4 sm:px-6 lg:h-14 lg:px-16">
           <Link
-            to="/#pricing"
-            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
+            to="/"
+            aria-label="Construct Computer - home"
+            className="font-display whitespace-nowrap text-[15px] italic leading-6 tracking-[-.015em] sm:text-[16px] lg:text-[18px] lg:leading-7"
           >
-            Pricing
+            <span className="text-[#4e4646]">Construct</span>
+            <span className="text-[#01b4c8]">Computer</span>
           </Link>
-          <Link
-            to="/blog/"
-            aria-current={navCurrent(pathname, "/blog")}
-            className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
+          <nav
+            aria-label="Primary"
+            className="ml-auto flex items-center text-[12px] text-[#627c86] sm:text-[13px]"
           >
-            Blog
-          </Link>
-          <Link
-            to="/affiliates/"
-            aria-current={navCurrent(pathname, "/affiliates")}
-            className="hidden min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:inline-flex"
-          >
-            Affiliates
-          </Link>
-        </nav>
-        {status === "authenticated" && user ? (
-          <UserMenu user={user} />
-        ) : (
-          <StartLink
-            source="nav"
-            label="Start using Construct"
-            className="site-cta inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] sm:px-3 lg:px-4 lg:text-xs"
-          >
-            <span className="sm:hidden">Start now</span>
-            <span className="hidden sm:inline">Start Now</span>
-          </StartLink>
-        )}
-      </div>
-    </header>
+            <Link
+              to="/#pricing"
+              className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
+            >
+              Pricing
+            </Link>
+            <Link
+              to="/blog/"
+              aria-current={navCurrent(pathname, "/blog")}
+              className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
+            >
+              Blog
+            </Link>
+            <Link
+              to="/affiliates/"
+              aria-current={navCurrent(pathname, "/affiliates")}
+              className="hidden min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:inline-flex"
+            >
+              Affiliates
+            </Link>
+          </nav>
+          {status === "authenticated" && user ? (
+            <UserMenu user={user} />
+          ) : (
+            <StartLink
+              source="nav"
+              label="Start using Construct"
+              className="site-cta inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] sm:px-3 lg:px-4 lg:text-xs"
+            >
+              <span className="sm:hidden">Start now</span>
+              <span className="hidden sm:inline">Start Now</span>
+            </StartLink>
+          )}
+        </div>
+      </header>
+      <ProductHuntBanner />
+    </div>
   );
 }
 
@@ -207,21 +233,28 @@ export function SiteFooter() {
           />
         </div>
         <div className="flex flex-col items-center gap-3 border-t border-[#e5e7eb] py-5 text-center sm:py-6 lg:flex-row-reverse lg:justify-between lg:gap-4 lg:text-left">
-          <Link
-            to="/affiliates/"
-            className="site-cta-pill group inline-flex min-h-10 items-center gap-2 rounded-full border border-[#35949a]/50 bg-white px-2.5 py-1.5 text-[13px] font-semibold leading-[18px] text-[#014e59] shadow-[0_6px_18px_rgba(57,148,154,.14)]"
-          >
-            <span className="inline-flex items-center rounded-full bg-[#01b4c8] px-2 py-1 text-[9px] font-black uppercase tracking-[.12em] text-white">
-              New
-            </span>
-            <span className="sm:hidden">Affiliates · 50%</span>
-            <span className="hidden sm:inline">
-              Affiliates: 50% for first 25, then 20%
-            </span>
-            <span aria-hidden className="site-cta-pill-arrow">
-              →
-            </span>
-          </Link>
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-end">
+            <ProductHuntBadge surface="footer" />
+            <Link
+              to="/affiliates/"
+              className="footer-affiliate-badge"
+              aria-label="Affiliates: 50% for first 25, then 20%"
+            >
+              <span className="footer-affiliate-badge-mark" aria-hidden>
+                %
+              </span>
+              <span className="footer-affiliate-badge-copy">
+                <span className="footer-affiliate-badge-eyebrow">Join our</span>
+                <span className="footer-affiliate-badge-title">
+                  Affiliate program
+                </span>
+              </span>
+              <span className="footer-affiliate-badge-meta" aria-hidden>
+                <span className="footer-affiliate-badge-arrow">▲</span>
+                <span className="footer-affiliate-badge-rate">50%</span>
+              </span>
+            </Link>
+          </div>
           <p className="text-xs leading-[18px] text-[#8a9aa2]">
             © {new Date().getFullYear()} Construct
           </p>

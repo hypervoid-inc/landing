@@ -198,7 +198,7 @@
     line-height: 25px;
   }
 
-  .hero-headline .landing-cta {
+  .hero-headline .hero-cta-row {
     margin-top: clamp(40px, 12vw, 54px);
   }
 
@@ -907,11 +907,13 @@
     margin-top: 14px;
   }
 
-  /* Keeps the affiliate note centred on the CTA when the short-viewport rule
-     tightens the CTA's own margin. */
-  .hero-headline .landing-cta,
-  .hero-headline .hero-affiliate {
+  /* Keeps the CTA row spacing tight on short viewports. */
+  .hero-headline .hero-cta-row {
     margin-top: 14px;
+  }
+
+  .hero-headline .hero-affiliate {
+    margin-top: 0;
   }
 }
 
@@ -1051,6 +1053,7 @@
 
   .landing-page .hero-interactive,
   .landing-page .landing-cta,
+  .landing-page .landing-cta-ph,
   .landing-page .pricing-button,
   .landing-page .billing-toggle-thumb,
   .landing-page .billing-toggle-option,

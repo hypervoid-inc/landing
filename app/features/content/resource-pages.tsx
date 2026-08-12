@@ -17,6 +17,7 @@ import {
 import { BetaCta } from "../../components/content/beta-cta";
 import { mdxComponents } from "../../components/content/mdx-components";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
+import { ProductHuntLaunchCta } from "../product-hunt/product-hunt-launch-cta";
 import { getBlogPost } from "../../content/blog";
 import {
   getAuthor,
@@ -53,6 +54,7 @@ export function BlogIndexPage() {
       breadcrumbTitle="Blog"
       metadata="Practical writing from Construct on AI agents, workflows, memory, and tools that get work done."
     >
+      <ProductHuntLaunchCta surface="blog" className="mb-8" />
       <section aria-labelledby="all-resources-heading">
         <h2
           id="all-resources-heading"
@@ -167,6 +169,8 @@ export function ResourcePage({ slug }: { slug: string }) {
         </>
       }
     >
+      {/* Mobile-only — desktop readers get the sticky rail CTA instead. */}
+      <ProductHuntLaunchCta surface="blog" className="mb-10 xl:hidden" />
       <post.Content components={mdxComponents} />
       <ResourceFaq slug={entry.slug} />
       {/* Rendered here rather than authored so every post closes on one. */}
@@ -183,56 +187,57 @@ export function ResourcePage({ slug }: { slug: string }) {
  * ratio), not full-column — a stacked 300px crop of the OG art reads as an ad
  * unit and crowds the CTA below.
  *
- * The CTA underneath is the point of the rail. Everywhere else a reader only
- * meets one by scrolling past it; here one stays on screen for the whole read.
+ * Product Hunt CTA sits at the bottom of the rail so it lands nearer mid-viewport
+ * while reading (banner + mobile top CTA + pre-footer strip cover other moments).
  */
 function ResourceRail({ slug }: { slug: string }) {
   const related = getRelatedResources(slug, 3);
-  if (!related.length) return null;
   return (
     <div className="space-y-6">
-      <nav aria-labelledby="rail-heading">
-        <h2
-          id="rail-heading"
-          className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8a9aa2]"
-        >
-          Read next
-        </h2>
-        <ul className="mt-3 list-none space-y-4 p-0">
-          {related.map((item) => {
-            const path = `/blog/${item.slug}/`;
-            const image = getRoute(path.slice(0, -1))?.image;
-            return (
-              <li key={item.slug}>
-                <Link
-                  to={path}
-                  onClick={() => trackRelatedClick("blog_rail", item.slug)}
-                  className="group flex gap-3"
-                >
-                  {image && (
-                    <img
-                      src={new URL(image).pathname}
-                      alt=""
-                      width="1200"
-                      height="630"
-                      loading="lazy"
-                      className="mt-0.5 aspect-[1200/630] w-[6.25rem] shrink-0 rounded-md object-cover"
-                    />
-                  )}
-                  <span className="min-w-0">
-                    <span className="block text-[14px] leading-5 text-[#4e4646] transition-colors group-hover:text-[#01b4c8]">
-                      {item.title}
+      {related.length > 0 && (
+        <nav aria-labelledby="rail-heading">
+          <h2
+            id="rail-heading"
+            className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8a9aa2]"
+          >
+            Read next
+          </h2>
+          <ul className="mt-3 list-none space-y-4 p-0">
+            {related.map((item) => {
+              const path = `/blog/${item.slug}/`;
+              const image = getRoute(path.slice(0, -1))?.image;
+              return (
+                <li key={item.slug}>
+                  <Link
+                    to={path}
+                    onClick={() => trackRelatedClick("blog_rail", item.slug)}
+                    className="group flex gap-3"
+                  >
+                    {image && (
+                      <img
+                        src={new URL(image).pathname}
+                        alt=""
+                        width="1200"
+                        height="630"
+                        loading="lazy"
+                        className="mt-0.5 aspect-[1200/630] w-[6.25rem] shrink-0 rounded-md object-cover"
+                      />
+                    )}
+                    <span className="min-w-0">
+                      <span className="block text-[14px] leading-5 text-[#4e4646] transition-colors group-hover:text-[#01b4c8]">
+                        {item.title}
+                      </span>
+                      <span className="mt-0.5 block text-[11px] capitalize text-[#8a9aa2]">
+                        {item.kind} · {formatShortDate(item.published)}
+                      </span>
                     </span>
-                    <span className="mt-0.5 block text-[11px] capitalize text-[#8a9aa2]">
-                      {item.kind} · {formatShortDate(item.published)}
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )}
       <div className="rounded-xl border border-[#b6ecfb] bg-[#f2fcfe] p-4 text-center">
         <p className="text-[13px] leading-5 text-[#016d79]">
           An AI employee with its own computer, memory, and tools.
@@ -241,6 +246,7 @@ function ResourceRail({ slug }: { slug: string }) {
           Try Construct
         </BetaCta>
       </div>
+      <ProductHuntLaunchCta surface="blog" />
     </div>
   );
 }
@@ -456,6 +462,7 @@ export function TagPage({ tag }: { tag: string }) {
       breadcrumbs={blogBreadcrumbs}
       metadata={`${entries.length} Construct resources on ${label}.`}
     >
+      <ProductHuntLaunchCta surface="blog" className="mb-8" />
       <section aria-labelledby="tag-resources-heading">
         <h2 id="tag-resources-heading" className="sr-only">
           Resources tagged {label}
