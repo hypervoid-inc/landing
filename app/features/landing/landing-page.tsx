@@ -11,7 +11,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 import { useAuth } from "../auth/auth-provider";
 import { captureAnalytics } from "../analytics/analytics.client";
@@ -28,6 +27,8 @@ import {
 
 import { StartLink, useOpenAccessDialog } from "./beta-access";
 import { CampaignBanner } from "./campaign-banner";
+import { FounderNote } from "./founder-note";
+import { WALKTHROUGH_URL } from "./cta-links";
 import { ProductHuntBadge } from "../product-hunt/product-hunt-badge";
 import { AutoVideo, useRevealOnView } from "./media";
 import {
@@ -37,6 +38,7 @@ import {
   trialHighlightForPeriod,
   type PricingPlanView,
 } from "./merge-pricing-catalog";
+import { usePointerParallax } from "./use-pointer-parallax";
 import { usePriceTicker } from "./price-ticker";
 import { usePlanCatalog } from "./use-plan-catalog";
 import { WorkflowSection } from "./workflow-section";
@@ -141,6 +143,15 @@ function HeroProductHuntCta() {
 }
 
 function HeroHeadline() {
+  const catalog = usePlanCatalog();
+  const plans = useMemo(
+    () => mergePricingPlans(catalog.plans, catalog.recommendedPlan),
+    [catalog.plans, catalog.recommendedPlan],
+  );
+  const floor = pricingFloorLabel(plans) ?? "$9";
+  const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth ?? null;
+  const trialLabel = trialDays ? `${trialDays} days` : "7 days";
+
   return (
     <div className="hero-headline max-w-[560px] text-center xl:text-left">
       <div
@@ -160,11 +171,11 @@ function HeroHeadline() {
         data-reveal-delay="2"
       >
         <span className="xl:hidden">
-          Your constraint is hours, not ideas. Construct gives an AI coworker a
+          Your constraint is hours, not ideas. Construct gives an AI employee a
           real computer so the work finishes while you do something else.
         </span>
         <span className="hidden xl:inline">
-          Your constraint is hours, not ideas. Construct gives an AI coworker a
+          Your constraint is hours, not ideas. Construct gives an AI employee a
           real computer so research, inbox, and follow-ups finish while you do
           something else.
         </span>
@@ -178,16 +189,47 @@ function HeroHeadline() {
           source="hero"
           className="landing-cta inline-flex h-[57px] w-full max-w-[227px] items-center justify-center px-5 text-[21px]"
           authedChildren="Open OS"
+          onClick={() => {
+            captureAnalytics("cta_clicked", {
+              position: "hero",
+              action: "start",
+            });
+          }}
         >
           Start Now
         </StartLink>
-        <HeroProductHuntCta />
-        <Link
-          to="/affiliates/"
-          className="hero-affiliate mt-1 hidden max-w-[150px] text-xs leading-4 text-[#627c86] transition-colors hover:text-[#01b4c8] xl:mt-0 xl:block"
+        {/* Low-commitment path for readers who will not sign up on a first
+            visit. Without it the hero's only exit is the primary CTA. */}
+        <a
+          href={WALKTHROUGH_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hero-secondary-cta"
+          onClick={() => {
+            captureAnalytics("walkthrough_clicked", { position: "hero" });
+          }}
         >
-          Affiliate program: 50% now, then 20% <span aria-hidden>→</span>
-        </Link>
+          Book a walkthrough
+        </a>
+      </div>
+      {/* The homepage otherwise shows no price until the pricing section. */}
+      <p
+        className="reveal-item mx-auto mt-4 max-w-[360px] text-[13px] leading-[19px] text-[#7d949c] xl:mx-0 xl:max-w-[520px]"
+        data-reveal="mount"
+        data-reveal-delay="3"
+      >
+        {trialLabel} of Pro free. Then plans from{" "}
+        <span className="font-semibold text-[#4e4646]">{floor}/month</span>.
+        Cancel any time.
+      </p>
+      {/* Its own row. Inside the CTA row the fixed-width badge wrapped to a
+          second line anyway and left the two pills looking unbalanced. */}
+      <div
+        className="hero-ph-row reveal-item"
+        data-reveal="mount"
+        data-reveal-delay="4"
+      >
+        <HeroProductHuntCta />
       </div>
     </div>
   );
@@ -221,6 +263,11 @@ function WorkflowChip({
 }
 
 function Hero() {
+  // The scene owns `--mx` / `--my`; each layer scales them by its own depth so
+  // the collage separates instead of sliding as one flat plate.
+  const sceneRef = useRef<HTMLDivElement>(null);
+  usePointerParallax(sceneRef);
+
   return (
     <section
       aria-labelledby="landing-title"
@@ -233,7 +280,7 @@ function Hero() {
         <div className="hero-copy relative z-20">
           <HeroHeadline />
         </div>
-        <div className="hero-scene relative isolate">
+        <div ref={sceneRef} className="hero-scene relative isolate">
           <div className="hero-portal absolute aspect-square">
             <div
               className="reveal-item h-full w-full"
@@ -612,8 +659,7 @@ function PricingCard({
   const targetPrice =
     period === "annual" ? plan.annualMonthlyPrice : plan.price;
   const displayPrice = usePriceTicker(targetPrice);
-  const highlight =
-    trialHighlightForPeriod(plan, period) ?? plan.highlight;
+  const highlight = trialHighlightForPeriod(plan, period) ?? plan.highlight;
 
   const stackRef = useRef<HTMLSpanElement>(null);
   const amountRef = useRef<HTMLSpanElement>(null);
@@ -967,6 +1013,66 @@ function FaqSection() {
   );
 }
 
+/**
+ * Final ask. Without it the page ended on the FAQ accordion, whose only button
+ * is a support mailto, so a reader who got all the way down had to scroll back
+ * up to act.
+ */
+function ClosingCta() {
+  const catalog = usePlanCatalog();
+  const plans = useMemo(
+    () => mergePricingPlans(catalog.plans, catalog.recommendedPlan),
+    [catalog.plans, catalog.recommendedPlan],
+  );
+  const floor = pricingFloorLabel(plans) ?? "$9";
+  const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth ?? null;
+  const trialLabel = trialDays ? `${trialDays} days` : "7 days";
+
+  return (
+    <section aria-labelledby="closing-heading" className="closing-cta">
+      <div className="closing-cta-inner reveal-item" data-reveal-delay="1">
+        <h2 id="closing-heading" className="closing-cta-title">
+          Hire your first{" "}
+          <span className="font-display italic text-[#01b4c8]">
+            AI employee
+          </span>{" "}
+          tonight
+        </h2>
+        <p className="closing-cta-lead">
+          {trialLabel} of Pro free, then plans from {floor}/month. Cancel any
+          time from your account.
+        </p>
+        <div className="closing-cta-row">
+          <StartLink
+            source="closing"
+            authedChildren="Open OS"
+            className="landing-cta inline-flex h-[57px] w-full max-w-[227px] items-center justify-center px-5 text-[21px]"
+            onClick={() => {
+              captureAnalytics("cta_clicked", {
+                position: "closing",
+                action: "start",
+              });
+            }}
+          >
+            Start Now
+          </StartLink>
+          <a
+            href={WALKTHROUGH_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-secondary-cta"
+            onClick={() => {
+              captureAnalytics("walkthrough_clicked", { position: "closing" });
+            }}
+          >
+            Book a walkthrough
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function LandingPage() {
   const rootRef = useRef<HTMLDivElement>(null);
   useRevealOnView(rootRef);
@@ -1013,8 +1119,16 @@ export function LandingPage() {
           </div>
         </div>
         <WorkSection />
+        {/* Trust before price: who built this, then what it costs. */}
+        <section
+          aria-labelledby="founder-heading"
+          className="mx-auto w-full max-w-[860px] px-5 py-10 xl:py-14"
+        >
+          <FounderNote headingId="founder-heading" />
+        </section>
         <PricingSection />
         <FaqSection />
+        <ClosingCta />
       </main>
       <SiteFooter />
     </div>

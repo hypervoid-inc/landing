@@ -79,7 +79,7 @@ const OPENERS: Record<ClippyPageKind, string> = {
 
 const SHARED_BEATS: readonly ClippyBeat[] = [
   {
-    line: "I am Construct, your AI coworker with a cloud computer.",
+    line: "I am Construct, your AI employee with a cloud computer.",
     advance: "Show me",
   },
   { line: "Research, inbox, reports, done while your hours go elsewhere." },

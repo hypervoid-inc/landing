@@ -32,6 +32,11 @@ type AnalyticsEvent =
   | "launch_cta_clicked"
   | "launch_walkthrough_clicked"
   | "launch_section_viewed"
+  // Homepage equivalents. `position` separates the many CTAs the page carries
+  // (hero, pricing cards, workflow demos, closing block) so they can be
+  // compared instead of collapsing into one undifferentiated dialog-open.
+  | "cta_clicked"
+  | "walkthrough_clicked"
   | "promo_code_copied"
   | "ph_banner_shown"
   | "ph_badge_clicked"

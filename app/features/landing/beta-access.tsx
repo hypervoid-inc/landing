@@ -55,9 +55,14 @@ const referrals = [
 export type AccessDialogMode = "auth" | "updates";
 
 /**
- * `start` reframes the auth dialog for people who have never had an account —
- * campaign traffic landing on /launch. Same Google + email-code plumbing; it
- * only stops the copy from implying a prior Construct OS account is required.
+ * `start` reframes the auth dialog for people who have never had an account.
+ * Same Google + email-code plumbing; it only stops the copy from implying a
+ * prior Construct OS account is required.
+ *
+ * This is the default for every `StartLink`, because those are the warm CTAs
+ * on marketing surfaces where the reader is by definition not signed in.
+ * `signin` is for surfaces a returning user reaches deliberately: /login, and
+ * the post-OAuth handoff.
  */
 export type AccessDialogIntent = "signin" | "start";
 
@@ -107,7 +112,7 @@ export function StartLink({
   label,
   source = "unknown",
   authedChildren,
-  intent,
+  intent = "start",
   onClick: onBeforeClick,
 }: {
   children: ReactNode;
@@ -116,7 +121,7 @@ export function StartLink({
   source?: string;
   /** When signed in, render this instead of `children` (e.g. "Open OS"). */
   authedChildren?: ReactNode;
-  /** `start` = audience has no account yet (campaign landing pages). */
+  /** Defaults to `start`: these CTAs are aimed at people without an account. */
   intent?: AccessDialogIntent;
   onClick?: () => void;
 }) {
@@ -870,7 +875,10 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
         setMode(options.mode);
         setSource(options.source);
         setPlan(options.plan);
-        setIntent(options.intent ?? "signin");
+        // Signup-first unless a caller explicitly asks otherwise. Callers that
+        // reach this directly (pricing cards) are marketing CTAs too, and the
+        // returning-user paths below set `signin` for themselves.
+        setIntent(options.intent ?? "start");
         setInitialPhase("form");
         setOpen(true);
       }}

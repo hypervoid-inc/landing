@@ -173,6 +173,64 @@
   transform-origin: top right;
 }
 
+/* ── Hero parallax ─────────────────────────────────────────────────────────
+ * `.hero-scene` publishes --mx/--my; each layer consumes them at its own depth
+ * so the collage separates in Z rather than sliding as one flat plate.
+ *
+ * Deliberately the standalone `translate` property, not `transform`: these
+ * layers already carry `transform` values that differ per breakpoint
+ * (translateX(-50%), translateX(-62%), scale(0.62), scale(0.72), none).
+ * `translate` composes ahead of `transform`, so the parallax stacks on top of
+ * every one of them without a single existing declaration being rewritten, and
+ * the innermost scale never multiplies the offset.
+ */
+.hero-portal,
+.hero-report,
+.hero-chat,
+.hero-search,
+.hero-workflow {
+  transition: translate var(--parallax-dur, 220ms)
+    var(--parallax-ease, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+/* Backdrop barely moves; the foreground chips move most. */
+.hero-portal {
+  translate: calc(var(--mx, 0px) * 0.3) calc(var(--my, 0px) * 0.3);
+}
+
+.hero-report {
+  translate: calc(var(--mx, 0px) * 1) calc(var(--my, 0px) * 1);
+}
+
+.hero-chat {
+  translate: calc(var(--mx, 0px) * 1.25) calc(var(--my, 0px) * 1.25);
+}
+
+.hero-search {
+  translate: calc(var(--mx, 0px) * 1.1) calc(var(--my, 0px) * 1.1);
+}
+
+.hero-workflow {
+  translate: calc(var(--mx, 0px) * 1.4) calc(var(--my, 0px) * 1.4);
+}
+
+/* Crossing the window edge has no stream of positions to follow, so ease it. */
+.hero-scene[data-settling] {
+  --parallax-dur: 900ms;
+  --parallax-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-portal,
+  .hero-report,
+  .hero-chat,
+  .hero-search,
+  .hero-workflow {
+    translate: none;
+    transition: none;
+  }
+}
+
 .what-section {
   margin-top: clamp(-42px, -9vw, -24px);
   background: linear-gradient(to bottom, transparent 0, #fff 42px, #fff 100%);
@@ -911,9 +969,124 @@
   .hero-headline .hero-cta-row {
     margin-top: 14px;
   }
+}
 
-  .hero-headline .hero-affiliate {
-    margin-top: 0;
+/* Campaign badge sits under the offer line, matching the hero's alignment. */
+.hero-ph-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+@media (min-width: 1280px) {
+  .hero-ph-row {
+    justify-content: flex-start;
+  }
+}
+
+/* ── Closing CTA ─────────────────────────────────────────────────────────── */
+.closing-cta {
+  padding: 0 20px 72px;
+}
+
+@media (min-width: 1280px) {
+  .closing-cta {
+    padding-bottom: 112px;
+  }
+}
+
+.closing-cta-inner {
+  margin-inline: auto;
+  display: flex;
+  width: 100%;
+  max-width: 620px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.closing-cta-title {
+  text-wrap: balance;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.02em;
+  color: #4e4646;
+}
+
+@media (min-width: 1024px) {
+  .closing-cta-title {
+    font-size: clamp(36px, 3.24vw, 51.8px);
+    line-height: 1.12;
+  }
+}
+
+.closing-cta-lead {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 21px;
+  color: #627c86;
+}
+
+.closing-cta-row {
+  margin-top: 28px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .closing-cta-row {
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+  }
+}
+
+/*
+ * Secondary hero CTA. Quieter than the filled primary but still a real target,
+ * for readers who want a conversation before an account.
+ */
+.hero-secondary-cta {
+  display: inline-flex;
+  height: 57px;
+  width: 100%;
+  max-width: 227px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgb(1 180 200 / 40%);
+  background: #fff;
+  padding-inline: 20px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #018fa0;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hero-secondary-cta:hover {
+  border-color: rgb(1 180 200 / 70%);
+  background: #f2fbfc;
+}
+
+.hero-secondary-cta:active {
+  transform: scale(0.97);
+}
+
+@media (min-width: 1280px) {
+  .hero-secondary-cta {
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-secondary-cta {
+    transition: none;
   }
 }
 

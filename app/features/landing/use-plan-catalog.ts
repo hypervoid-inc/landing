@@ -16,6 +16,19 @@ const INITIAL: PlanCatalogState = {
   settled: false,
 };
 
+/**
+ * Shared in-flight request. The catalog is public, immutable for the life of a
+ * page view, and now read by more than one section (hero price anchor and the
+ * pricing grid), so every consumer waits on the same fetch instead of issuing
+ * its own.
+ */
+let pending: ReturnType<typeof getPlanCatalog> | null = null;
+
+function loadCatalog() {
+  pending ??= getPlanCatalog();
+  return pending;
+}
+
 /** One-shot public catalog fetch for the marketing homepage. No polling. */
 export function usePlanCatalog(): PlanCatalogState {
   const [state, setState] = useState<PlanCatalogState>(INITIAL);
@@ -23,7 +36,7 @@ export function usePlanCatalog(): PlanCatalogState {
   useEffect(() => {
     let cancelled = false;
     void (async () => {
-      const res = await getPlanCatalog();
+      const res = await loadCatalog();
       if (cancelled) return;
       if (!res.success) {
         setState((s) => ({ ...s, settled: true }));

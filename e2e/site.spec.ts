@@ -469,7 +469,7 @@ test("opens the auth dialog from Start Now without leaving the site", async ({
     .click();
   const dialog = page.getByRole("dialog");
   await expect(
-    dialog.getByRole("heading", { name: /Start with Construct/i }),
+    dialog.getByRole("heading", { name: /Create your Construct account/i }),
   ).toBeVisible();
   await expect(
     dialog.getByRole("link", { name: "Continue with Google" }),
@@ -1068,7 +1068,7 @@ test("keeps the landing hero clear and reserves lazy media space", async ({
     .click();
   const heroDialog = page.getByRole("dialog");
   await expect(
-    heroDialog.getByRole("heading", { name: /Start with Construct/i }),
+    heroDialog.getByRole("heading", { name: /Create your Construct account/i }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Close dialog" }).click();
   await expect(heroDialog).toHaveCount(0);
@@ -1181,7 +1181,7 @@ test("every landing button responds to a real click", async ({
       await links.nth(index).click();
       const dialog = page.getByRole("dialog");
       await expect(
-        dialog.getByRole("heading", { name: /Start with Construct/i }),
+        dialog.getByRole("heading", { name: /Create your Construct account/i }),
         `${name} #${index + 1}`,
       ).toBeVisible();
       await expect(
@@ -1200,7 +1200,7 @@ test("every landing button responds to a real click", async ({
     await cta.click();
     const dialog = page.getByRole("dialog");
     await expect(
-      dialog.getByRole("heading", { name: /Start with Construct/i }),
+      dialog.getByRole("heading", { name: /Create your Construct account/i }),
     ).toBeVisible();
     await page.getByRole("button", { name: "Close dialog" }).click();
     await expect(dialog).toHaveCount(0);
@@ -1380,7 +1380,7 @@ test("opens the auth dialog from the animated workflow CTA", async ({
       .click();
     const dialog = page.getByRole("dialog");
     await expect(
-      dialog.getByRole("heading", { name: /Start with Construct/i }),
+      dialog.getByRole("heading", { name: /Create your Construct account/i }),
     ).toBeVisible();
     await page.getByRole("button", { name: "Close dialog" }).click();
     await expect(dialog).toHaveCount(0);
