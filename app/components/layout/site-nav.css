@@ -1,0 +1,426 @@
+/* Desktop rail ------------------------------------------------------------ */
+
+.site-nav-rail {
+  position: relative;
+}
+
+/**
+ * The hover/active fill is one pill that travels, not a fill per trigger — the
+ * same moving thumb as `.billing-toggle-thumb` on the pricing card. It sits
+ * behind the labels and is 32px tall inside the 56px bar, so the tint reads as
+ * a chip rather than filling the header edge to edge.
+ */
+.site-nav-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 0;
+  height: 2rem;
+  margin-top: -1rem;
+  border-radius: 999px;
+  background: var(--color-brand-tint);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-nav-thumb[data-visible] {
+  opacity: 1;
+}
+
+/* Only after the first measurement, so it never slides in from x=0. */
+.site-nav-thumb[data-ready] {
+  transition:
+    opacity var(--dur-hover) var(--ease-snap),
+    transform 220ms var(--ease-snap),
+    width 220ms var(--ease-snap);
+}
+
+.site-nav-trigger {
+  position: relative;
+  z-index: 1;
+  color: var(--color-ink);
+  transition: color var(--dur-hover) var(--ease-snap);
+}
+
+.site-nav-trigger[data-current] {
+  color: #014e59;
+  font-weight: 500;
+}
+
+/* An open menu has to look held down; `[data-open]` outranks `[data-current]`. */
+.site-nav-trigger[data-open] {
+  color: var(--color-brand-strong);
+}
+
+.site-nav-trigger[data-open] .site-nav-chevron {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-nav-trigger:hover {
+    color: var(--color-brand-strong);
+  }
+}
+
+/* Current-page rule. Same 2px cyan track as `.workflow-step-track` in the
+   capability walkthrough. Held 6px off the bottom so the panel, which now tucks
+   4px up into the bar, passes underneath it instead of clipping it. */
+.site-nav-track {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 6px;
+  left: 0.75rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-brand);
+  animation: site-nav-track-in 260ms var(--ease-snap) both;
+}
+
+@keyframes site-nav-track-in {
+  from {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.site-nav-chevron {
+  opacity: 0.8;
+  transition:
+    transform 180ms var(--ease-snap),
+    opacity var(--dur-hover) var(--ease-snap);
+}
+
+.site-nav-chevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+/* Dropdown panel --------------------------------------------------------- */
+
+/**
+ * All three menus share one panel. Opening a second menu does not swap boxes,
+ * it moves and resizes the box already on screen while the contents cross-fade,
+ * so the dropdown reads as one object the nav is steering.
+ *
+ * Split in two on purpose: the dock owns position, leaving the frame's own
+ * transform free for the entry animation. One element cannot do both.
+ */
+/* Tucked 4px up into the bar rather than floating below it: the panel then
+   overlaps the header's own bottom edge, so no strip of the campaign banner
+   shows through above it, and the pointer crosses no dead gap on the way in. */
+.site-nav-dock {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 60;
+  margin-top: -0.25rem;
+}
+
+.site-nav-dock[data-morph] {
+  transition: transform var(--dur-panel) var(--ease-snap);
+}
+
+.site-nav-panel {
+  position: relative;
+  /* Clips the outgoing copy to the travelling frame, which is what sells the
+     morph — and what makes width/height animatable at all. */
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  /* Card weight, not modal weight: a contact shadow plus one soft lift. */
+  box-shadow:
+    0 1px 2px rgb(37 72 82 / 6%),
+    0 18px 40px rgb(37 72 82 / 12%);
+  animation: site-nav-panel-in 180ms var(--ease-snap) both;
+}
+
+/* Measured in a layout effect, so this only ever covers the fallback path. */
+.site-nav-panel:not([data-measured]) {
+  visibility: hidden;
+}
+
+.site-nav-panel[data-morph] {
+  transition:
+    width var(--dur-panel) var(--ease-snap),
+    height var(--dur-panel) var(--ease-snap);
+}
+
+.site-nav-panel[data-motion="none"] {
+  animation: none;
+}
+
+@keyframes site-nav-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Both copies sit at the frame's origin so the frame can crop them as it
+   travels; the outgoing one is painted under the incoming one. */
+.site-nav-panel-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: site-nav-body-in 200ms var(--ease-snap) both;
+}
+
+.site-nav-panel-body[data-exiting] {
+  animation: site-nav-body-out 160ms var(--ease-snap) both;
+  pointer-events: none;
+}
+
+@keyframes site-nav-body-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes site-nav-body-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.site-nav-item {
+  color: var(--color-ink);
+  transition:
+    background-color var(--dur-hover) var(--ease-snap),
+    color var(--dur-hover) var(--ease-snap);
+}
+
+.site-nav-item[data-current],
+.site-nav-item:focus-visible {
+  background: var(--color-brand-tint);
+  color: #014e59;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-nav-item:hover {
+    background: var(--color-brand-tint);
+    color: #014e59;
+  }
+}
+
+/* Gives the plain list menus the affordance the mega menu gets from its
+   preview card, without adding a second column to a four-item list. */
+.site-nav-item-arrow {
+  flex-shrink: 0;
+  color: var(--color-brand);
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0;
+  transform: translateX(-0.25rem);
+  transition:
+    opacity var(--dur-hover) var(--ease-snap),
+    transform var(--dur-hover) var(--ease-snap);
+}
+
+.site-nav-item[data-current] .site-nav-item-arrow,
+.site-nav-item:focus-visible .site-nav-item-arrow {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-nav-item:hover .site-nav-item-arrow {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.site-nav-preview {
+  transition:
+    border-color var(--dur-hover) var(--ease-snap),
+    box-shadow var(--dur-hover) var(--ease-snap);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-nav-preview:hover {
+    border-color: color-mix(in srgb, var(--color-brand) 45%, transparent);
+    box-shadow: 0 6px 18px rgb(1 180 200 / 12%);
+  }
+}
+
+.site-nav-preview-body {
+  animation: fade-in 160ms var(--ease-snap) both;
+}
+
+/* Mobile sheet ----------------------------------------------------------- */
+
+/**
+ * The quiet half of the mobile header. The black "Start now" pill next to it is
+ * the only element allowed to shout, so this stays a flat brand tint with no
+ * border — a bordered white box read as a second, competing button.
+ */
+.site-nav-sheet-button {
+  background: var(--color-brand-tint);
+  color: var(--color-brand-strong);
+  transition:
+    transform var(--dur-press) var(--ease-snap),
+    background-color var(--dur-hover) var(--ease-snap),
+    color var(--dur-hover) var(--ease-snap);
+}
+
+.site-nav-sheet-button:active {
+  transform: scale(0.92);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-nav-sheet-button:hover {
+    background: color-mix(in srgb, var(--color-brand) 14%, #fff);
+    color: #014e59;
+  }
+}
+
+/* Opaque because the panel slides in over the page; fade it so the swap to
+   white is not a flash. */
+.site-nav-sheet-overlay {
+  background: #fff;
+}
+
+.site-nav-sheet-overlay[data-state="open"] {
+  animation: fade-in 160ms var(--ease-snap) both;
+}
+
+.site-nav-sheet-overlay[data-state="closed"] {
+  animation: site-nav-fade-out 200ms var(--ease-snap) both;
+}
+
+.site-nav-sheet-panel {
+  transform-origin: right center;
+  animation: site-nav-sheet-in 320ms var(--ease-snap) both;
+}
+
+.site-nav-sheet-panel[data-state="closed"] {
+  animation: site-nav-sheet-out 280ms var(--ease-snap) both;
+}
+
+@keyframes site-nav-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateX(12%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes site-nav-sheet-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(12%);
+  }
+}
+
+@keyframes site-nav-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Radix measures the content and exposes it as a custom property; without
+   these keyframes the submenu snaps open. */
+.site-nav-accordion {
+  overflow: hidden;
+}
+
+.site-nav-accordion[data-state="open"] {
+  animation: site-nav-accordion-down var(--dur-panel) var(--ease-snap);
+}
+
+.site-nav-accordion[data-state="closed"] {
+  animation: site-nav-accordion-up var(--dur-panel) var(--ease-snap);
+}
+
+@keyframes site-nav-accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes site-nav-accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav-panel,
+  .site-nav-sheet-panel,
+  .site-nav-preview-body,
+  .site-nav-panel-body {
+    animation: fade-in 180ms var(--ease-snap) both;
+    transform: none;
+  }
+
+  /* Cut the travel, keep the crop: the panel still resizes, just instantly. */
+  .site-nav-dock[data-morph],
+  .site-nav-panel[data-morph] {
+    transition: none;
+  }
+
+  .site-nav-panel-body[data-exiting] {
+    animation: site-nav-fade-out 120ms var(--ease-snap) both;
+  }
+
+  .site-nav-sheet-panel[data-state="closed"] {
+    animation: site-nav-fade-out 180ms var(--ease-snap) both;
+    transform: none;
+  }
+
+  .site-nav-accordion[data-state="open"],
+  .site-nav-accordion[data-state="closed"] {
+    animation-duration: 1ms;
+  }
+
+  .site-nav-track {
+    animation: none;
+  }
+
+  .site-nav-thumb[data-ready],
+  .site-nav-trigger,
+  .site-nav-item,
+  .site-nav-item-arrow,
+  .site-nav-preview,
+  .site-nav-sheet-button,
+  .site-nav-chevron {
+    transition: none;
+  }
+
+  .site-nav-sheet-button:active {
+    transform: none;
+  }
+}

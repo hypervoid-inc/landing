@@ -94,7 +94,10 @@ describe("content validation", () => {
     const sources = [
       ...readdirSync(blogDirectory)
         .filter((name) => name.endsWith(".mdx"))
-        .map((name) => [name, readFileSync(`${blogDirectory}/${name}`, "utf8")]),
+        .map((name) => [
+          name,
+          readFileSync(`${blogDirectory}/${name}`, "utf8"),
+        ]),
       ["landing.ts", JSON.stringify(landingFaq)],
       ["route-manifest", JSON.stringify(canonicalRoutes)],
       ["clippy-state.ts", clippyCopy.join("\n")],
@@ -174,5 +177,23 @@ describe("canonical route manifest", () => {
     expect(canonicalRoutes.some((route) => route.path.startsWith("/vs"))).toBe(
       false,
     );
+  });
+
+  it("registers pricing and every use-case page as canonical marketing routes", () => {
+    expect(canonicalRoutes.some((route) => route.path === "/pricing")).toBe(
+      true,
+    );
+    expect(canonicalRoutes.some((route) => route.path === "/use-cases")).toBe(
+      true,
+    );
+    expect(
+      canonicalRoutes.filter((route) => route.path.startsWith("/use-cases/"))
+        .length,
+    ).toBe(7);
+    expect(
+      canonicalRoutes
+        .filter((route) => route.kind === "use-case")
+        .every((route) => route.path.startsWith("/use-cases")),
+    ).toBe(true);
   });
 });

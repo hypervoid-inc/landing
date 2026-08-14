@@ -1,86 +1,53 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { workflowDemos, type WorkflowDemo } from "~/content/landing";
+import { cn } from "~/lib/cn";
 
 import { StartLink } from "./beta-access";
 import { readSiteChromeHeightPx } from "../product-hunt/chrome";
 import { useDesktop, usePrefersReducedMotion } from "./media";
 import {
-  clamp,
-  getMobileWorkflowViewportMode,
-  getHeldWorkflowPosition,
-  getSoftPinOffset,
-  getWorkflowScrollScreens,
-  lerp,
-  smoothStep,
-  type MobileWorkflowViewportMode,
+  getActiveWorkflowIndex,
+  getWorkflowFocusLine,
+  getWorkflowScrollTarget,
+  getWorkflowSlotTop,
+  getWorkflowStageIndex,
+  getWorkflowStageProgress,
+  getWorkflowStageScrollTarget,
 } from "./workflow-motion";
 
-function useMobileWorkflowViewportMode() {
-  const [mode, setMode] = useState<MobileWorkflowViewportMode>("normal");
-
-  useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      setMode(getMobileWorkflowViewportMode(window.innerHeight));
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("resize", schedule);
-    window.addEventListener("orientationchange", schedule);
-    return () => {
-      if (frame) cancelAnimationFrame(frame);
-      window.removeEventListener("resize", schedule);
-      window.removeEventListener("orientationchange", schedule);
-    };
-  }, []);
-
-  return mode;
-}
-
-function WorkflowMedia({
+/**
+ * One video screen, pinned beside the copy. Every demo's video lives here and
+ * swaps by cross-fade, so the frame itself never moves while you scroll.
+ */
+function WorkflowScreen({
   demo,
-  distance,
-  dominant,
+  active,
 }: {
   demo: WorkflowDemo;
-  distance: number;
-  dominant: boolean;
+  active: boolean;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
-  const wasDominant = useRef(false);
 
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
-    if (dominant && !wasDominant.current) video.currentTime = 0;
-    wasDominant.current = dominant;
+    if (!active) {
+      video.pause();
+      return;
+    }
 
+    video.currentTime = 0;
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry?.isIntersecting && dominant) {
-        void video.play().catch(() => undefined);
-      } else {
-        video.pause();
-      }
+      if (entry?.isIntersecting) void video.play().catch(() => undefined);
+      else video.pause();
     });
     observer.observe(video);
     return () => {
       observer.disconnect();
       video.pause();
     };
-  }, [dominant]);
-
-  const exiting = smoothStep(clamp(-distance));
-  const entering = smoothStep(clamp(1 - distance));
-
-  const style = {
-    opacity: distance < 0 ? 1 - exiting : entering,
-    transform: `translateY(${distance < 0 ? lerp(0, 10, exiting) : lerp(-10, 0, entering)}px)`,
-    zIndex: Math.round(20 - Math.abs(distance) * 10),
-  };
+  }, [active]);
 
   return (
     <video
@@ -88,153 +55,79 @@ function WorkflowMedia({
       muted
       loop
       playsInline
-      preload="metadata"
+      preload={active ? "metadata" : "none"}
       poster={demo.poster}
-      aria-label={dominant ? demo.ariaLabel : undefined}
-      aria-hidden={!dominant}
-      style={style}
-      className="absolute inset-0 h-full w-full object-cover"
+      aria-label={active ? demo.ariaLabel : undefined}
+      aria-hidden={!active}
+      data-active={active ? "true" : undefined}
+      className="workflow-screen-video absolute inset-0 h-full w-full object-cover"
     >
       <source src={demo.video} type="video/mp4" />
     </video>
   );
 }
 
-function WorkflowCopy({
+function WorkflowCard({
   demo,
-  distance,
-  desktop,
-  viewportMode,
+  active,
 }: {
   demo: WorkflowDemo;
-  distance: number;
-  desktop: boolean;
-  viewportMode: MobileWorkflowViewportMode;
+  active: boolean;
 }) {
-  const exiting = smoothStep(clamp(-distance));
-  const entering = smoothStep(clamp(1 - distance));
-  const short = !desktop && viewportMode === "short";
-  const preview = desktop;
-  const preEnter = smoothStep(
-    ((desktop ? 1.24 : 1.22) - distance) / (desktop ? 0.24 : 0.22),
-  );
-  if (
-    distance <= -1.05 ||
-    distance >= (preview ? (desktop ? 1.24 : 1.22) : 1.05)
-  )
-    return null;
-
-  const titleAnchor = 0;
-  const exitTitle = desktop ? -36 : short ? -16 : -24;
-  const nextAnchor = desktop ? 300 : short ? 0 : 205;
-  const belowAnchor = desktop ? 380 : short ? 0 : 260;
-  const y =
-    distance < 0
-      ? lerp(titleAnchor, exitTitle, exiting)
-      : distance <= 1
-        ? lerp(nextAnchor, titleAnchor, entering)
-        : lerp(belowAnchor, nextAnchor, preEnter);
-  const opacity =
-    distance < 0
-      ? 1 - exiting
-      : distance <= 1
-        ? lerp(preview ? 0.58 : 0, 1, entering)
-        : lerp(0, preview ? 0.58 : 0, preEnter);
-  const descriptionOpacity =
-    distance < 0
-      ? 1 - exiting
-      : smoothStep(
-          (entering - (desktop ? 0.58 : preview ? 0.68 : 0.16)) /
-            (desktop ? 0.42 : preview ? 0.32 : 0.68),
-        );
-  const nextOpacity =
-    preview && distance > 0 ? (distance <= 1 ? 1 - entering : preEnter) : 0;
-  const support = smoothStep(
-    1 - Math.abs(distance) / (desktop ? 0.54 : short ? 0.3 : 0.42),
-  );
-  const headlineClass = desktop
-    ? "text-[clamp(24px,2vw,31px)] leading-tight text-[#4e4646]"
-    : viewportMode === "short"
-      ? "max-w-[350px] text-[22px] leading-[28px] text-[#4e4646]"
-      : viewportMode === "compact"
-        ? "max-w-[350px] text-[24px] leading-[30px] text-[#4e4646]"
-        : "max-w-[350px] text-[26px] leading-[32px] text-[#4e4646]";
-  const descriptionClass = desktop
-    ? "mt-7 max-w-[300px] text-[clamp(14px,1.05vw,16px)] leading-[21px] text-[#627c86]"
-    : short
-      ? "mt-3 max-w-[340px] text-[14px] leading-[19px] text-[#627c86]"
-      : "mt-4 max-w-[340px] text-[15px] leading-[21px] text-[#627c86]";
-  const ctaClass = desktop
-    ? "landing-cta min-h-[57px] w-[280px] px-5 text-[20px]"
-    : short
-      ? "landing-cta min-h-10 min-w-[218px] px-5 text-[15px]"
-      : "landing-cta min-h-11 min-w-[230px] px-5 text-[16px]";
-
   return (
-    <>
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0"
-        style={{
-          opacity,
-          transform: `translateY(${y}px)`,
-          zIndex: Math.round(20 - Math.abs(distance) * 10),
-        }}
-      >
-        <p
-          className="mb-2 text-sm text-[#78909a] lg:mb-3 lg:text-[16.8px]"
-          style={{ opacity: nextOpacity }}
-        >
-          Up Next
-        </p>
-        {/*
-          Both the mobile and desktop copies of this block stay in the DOM so
-          the right one paints before hydration. Only the mobile copy is a real
-          heading — the desktop twin is demoted to avoid emitting every workflow
-          title twice, and Google indexes the mobile DOM anyway.
-        */}
-        {desktop ? (
-          <p className={headlineClass}>
-            {demo.title}{" "}
-            <span className="font-display italic text-[#01b4c8]">
-              {demo.accent}
-            </span>
-          </p>
-        ) : (
-          <h3 className={headlineClass}>
-            {demo.title}{" "}
-            <span className="font-display italic text-[#01b4c8]">
-              {demo.accent}
-            </span>
-          </h3>
-        )}
-        <p className={descriptionClass} style={{ opacity: descriptionOpacity }}>
-          {demo.description}
-        </p>
-      </div>
-      <div
-        className="absolute inset-x-0 bottom-0"
-        style={{
-          opacity: support,
-          transform: `translateY(${(desktop ? 12 : 10) * (1 - support)}px)`,
-          pointerEvents: support > 0.85 ? "auto" : "none",
-        }}
-      >
-        <StartLink source={`workflow-${demo.id}`} className={ctaClass}>
-          {demo.cta}
-        </StartLink>
-        {(desktop || viewportMode !== "short") && (
-          <p
-            className={
-              desktop
-                ? "mt-4 text-base capitalize text-[#78909a]"
-                : "mt-3 text-[13px] capitalize text-[#78909a]"
-            }
+    <div className="workflow-card" data-active={active ? "true" : undefined}>
+      <div className="workflow-card-body">
+        <h3 className="workflow-card-title">
+          {demo.title}{" "}
+          <span className="font-display italic text-[#01b4c8]">
+            {demo.accent}
+          </span>
+        </h3>
+        <p className="workflow-card-copy">{demo.description}</p>
+        {/* One row: a natural-width button with its caption alongside, so the
+            muted line reads as attached to the action instead of orphaned
+            under it. Wraps on narrow cards. */}
+        <div className="workflow-card-actions">
+          <StartLink
+            source={`workflow-${demo.id}`}
+            className="landing-cta min-h-[42px] px-7 text-[15px] lg:min-h-[46px] lg:px-8 lg:text-[16px]"
           >
-            {demo.mutedAction}
-          </p>
-        )}
+            {demo.cta}
+          </StartLink>
+          <p className="workflow-card-note">{demo.mutedAction}</p>
+        </div>
       </div>
-    </>
+    </div>
+  );
+}
+
+function WorkflowStepper({
+  active,
+  onSelect,
+}: {
+  active: number;
+  onSelect: (index: number) => void;
+}) {
+  return (
+    <div
+      className="workflow-stepper"
+      role="tablist"
+      aria-label="Capability walkthrough"
+    >
+      {workflowDemos.map((demo, index) => (
+        <button
+          key={demo.id}
+          type="button"
+          role="tab"
+          aria-selected={active === index}
+          aria-label={`${demo.title} ${demo.accent}`}
+          onClick={() => onSelect(index)}
+          className="workflow-step"
+        >
+          <span aria-hidden className="workflow-step-track" />
+        </button>
+      ))}
+    </div>
   );
 }
 
@@ -288,184 +181,199 @@ function StaticWorkflow() {
 
 export function WorkflowSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const motionRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const slotRef = useRef(0);
   const reducedMotion = usePrefersReducedMotion();
   const desktop = useDesktop();
-  const viewportMode = useMobileWorkflowViewportMode();
-  const [progress, setProgress] = useState(0);
-  const scrollScreens = getWorkflowScrollScreens(workflowDemos.length, desktop);
+  const [active, setActive] = useState(0);
+
+  // The screen is centred in the pinned viewport, so only layout knows where
+  // its top edge lands. Publish that as --workflow-slot and the sticky cards
+  // park on the same line, at any viewport size. Desktop only: below lg the
+  // cards are stacked in the stage, not parked on a line.
+  useEffect(() => {
+    if (reducedMotion || !desktop) return;
+    const section = sectionRef.current;
+    const screen = screenRef.current;
+    if (!section || !screen) return;
+
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const viewer = screen.parentElement;
+      if (!viewer || !viewer.offsetParent) return;
+      const slot = Math.round(
+        screen.getBoundingClientRect().top -
+          viewer.getBoundingClientRect().top,
+      );
+      slotRef.current = slot;
+      section.style.setProperty("--workflow-slot", `${slot}px`);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+
+    measure();
+    window.addEventListener("resize", schedule);
+    const observer = new ResizeObserver(schedule);
+    observer.observe(screen);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("resize", schedule);
+      observer.disconnect();
+    };
+  }, [desktop, reducedMotion]);
 
   useEffect(() => {
     if (reducedMotion) return;
-    const section = sectionRef.current;
-    const content = contentRef.current;
-    if (!section || !content) return;
-    const pinOffset = () =>
-      readSiteChromeHeightPx(desktop ? 56 : 48);
-    let currentProgress = 0;
-    let targetProgress = 0;
-    let currentPin = 0;
-    let targetPin = 0;
-    let animationFrame = 0;
-    let restoreFrame = 0;
-    let previousTime = 0;
+    const rail = railRef.current;
+    const motion = motionRef.current;
+    const stage = stageRef.current;
+    if (!rail || !motion || !stage) return;
 
-    const render = () => {
-      setProgress(clamp(currentProgress));
-      content.style.transform = `translate3d(0, ${currentPin}px, 0)`;
-    };
-    const readTargets = () => {
-      const offset = pinOffset();
-      section.style.setProperty("--workflow-pin-offset", `${offset}px`);
-      const rect = section.getBoundingClientRect();
-      const distance = Math.max(
-        rect.height - window.innerHeight + offset,
-        1,
-      );
-      targetProgress = clamp((offset - rect.top) / distance);
-      targetPin =
-        offset + getSoftPinOffset(targetProgress, distance, offset);
-    };
-    const animate = (time: number) => {
-      const elapsed = Math.min(time - (previousTime || time - 16), 64);
-      previousTime = time;
-      currentProgress +=
-        (targetProgress - currentProgress) * (1 - Math.exp(-elapsed / 100));
-      currentPin += (targetPin - currentPin) * (1 - Math.exp(-elapsed / 75));
-      render();
+    let frame = 0;
+    const read = () => {
+      frame = 0;
+      const chrome = readSiteChromeHeightPx();
 
-      if (
-        Math.abs(targetProgress - currentProgress) > 0.0001 ||
-        Math.abs(targetPin - currentPin) > 0.05
-      ) {
-        animationFrame = requestAnimationFrame(animate);
-      } else {
-        currentProgress = targetProgress;
-        currentPin = targetPin;
-        animationFrame = 0;
-        previousTime = 0;
-        render();
+      // Below lg the stage is pinned and the cards sit on top of one another,
+      // so there is nothing to measure: progress through the container's
+      // runway is the whole story.
+      if (!desktop) {
+        const rect = motion.getBoundingClientRect();
+        setActive(
+          getWorkflowStageIndex(
+            getWorkflowStageProgress(
+              rect.top,
+              rect.height,
+              stage.offsetHeight,
+              chrome,
+            ),
+            workflowDemos.length,
+          ),
+        );
+        return;
       }
+
+      // Cards are sticky, so measure the cards themselves rather than their
+      // runways: a card holds the focus line for as long as it holds the slot,
+      // and hands over mid-push as the next card rises past the line.
+      const cards = [...rail.querySelectorAll<HTMLElement>(".workflow-card")];
+      const focusLine = getWorkflowFocusLine(window.innerHeight, chrome);
+      setActive(
+        getActiveWorkflowIndex(
+          cards.map((card) => card.getBoundingClientRect()),
+          focusLine,
+        ),
+      );
     };
-    const updateFromScroll = () => {
-      readTargets();
-      if (!animationFrame) animationFrame = requestAnimationFrame(animate);
-    };
-    const syncRestoredScroll = () => {
-      cancelAnimationFrame(animationFrame);
-      animationFrame = 0;
-      previousTime = 0;
-      readTargets();
-      currentProgress = targetProgress;
-      currentPin = targetPin;
-      render();
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(read);
     };
 
-    window.addEventListener("scroll", updateFromScroll, { passive: true });
-    window.addEventListener("resize", syncRestoredScroll);
-    window.addEventListener("pageshow", syncRestoredScroll);
-    window.addEventListener("load", syncRestoredScroll);
-    syncRestoredScroll();
-    restoreFrame = requestAnimationFrame(() => {
-      restoreFrame = requestAnimationFrame(syncRestoredScroll);
-    });
-
+    read();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    window.addEventListener("pageshow", schedule);
     return () => {
-      cancelAnimationFrame(animationFrame);
-      cancelAnimationFrame(restoreFrame);
-      window.removeEventListener("scroll", updateFromScroll);
-      window.removeEventListener("resize", syncRestoredScroll);
-      window.removeEventListener("pageshow", syncRestoredScroll);
-      window.removeEventListener("load", syncRestoredScroll);
-      content.style.transform = "";
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      window.removeEventListener("pageshow", schedule);
     };
-  }, [desktop, reducedMotion, scrollScreens]);
+  }, [desktop, reducedMotion]);
 
   if (reducedMotion) return <StaticWorkflow />;
 
-  const position = getHeldWorkflowPosition(progress, workflowDemos.length);
-  const active = Math.min(Math.round(position), workflowDemos.length - 1);
-  const railProgress = position / Math.max(workflowDemos.length - 1, 1);
+  const scrollToDemo = (index: number) => {
+    const chrome = readSiteChromeHeightPx();
+
+    // On the sticky stage the panels are stacked, so a jump lands in the
+    // middle of the demo's share of the runway rather than on a card.
+    if (!desktop) {
+      const motion = motionRef.current;
+      const stage = stageRef.current;
+      if (!motion || !stage) return;
+      const rect = motion.getBoundingClientRect();
+      window.scrollTo({
+        top: getWorkflowStageScrollTarget(
+          window.scrollY,
+          rect.top,
+          rect.height,
+          stage.offsetHeight,
+          chrome,
+          index,
+          workflowDemos.length,
+        ),
+        behavior: "smooth",
+      });
+      return;
+    }
+
+    const panel = railRef.current?.querySelectorAll<HTMLElement>(
+      ".workflow-panel",
+    )[index];
+    if (!panel) return;
+    const slotTop = slotRef.current
+      ? chrome + slotRef.current
+      : getWorkflowSlotTop(window.innerHeight, chrome);
+    window.scrollTo({
+      top: getWorkflowScrollTarget(
+        window.scrollY,
+        panel.getBoundingClientRect().top,
+        slotTop,
+      ),
+      behavior: "smooth",
+    });
+  };
 
   return (
     <section
       ref={sectionRef}
       aria-labelledby="workflow-heading"
-      className="workflow-section relative w-full"
+      className="workflow-section relative w-full px-5 lg:px-10 xl:px-16"
       style={
-        {
-          "--workflow-scroll-space": `${scrollScreens * 100}svh`,
-          "--workflow-pin-offset": `${desktop ? 56 : 48}px`,
-        } as CSSProperties
+        // Below lg the container carries one screen of runway per demo.
+        { "--workflow-demos": String(workflowDemos.length) } as CSSProperties
       }
     >
       <h2 id="workflow-heading" className="sr-only">
         Workflow demos
       </h2>
-      <div className="workflow-sticky sticky flex w-full items-center px-5 py-6 lg:px-10 xl:px-16">
-        <div
-          ref={contentRef}
-          className="workflow-motion mx-auto grid w-full max-w-[1400px] grid-cols-1 items-center gap-4 lg:grid-cols-[minmax(300px,.95fr)_minmax(0,2.6fr)] lg:gap-7 xl:grid-cols-[minmax(320px,1fr)_minmax(0,3fr)] xl:gap-10"
-        >
-          <div className="order-1 relative mx-auto aspect-[3/2] w-full max-w-[440px] overflow-hidden rounded-[12px] bg-white lg:order-2 lg:max-w-none lg:rounded-[16px]">
-            {workflowDemos.map((demo, index) => {
-              const distance = index - position;
-              return distance <= -1.05 || distance >= 1.05 ? null : (
-                <WorkflowMedia
+      <div
+        className="workflow-motion mx-auto w-full max-w-[1520px]"
+        ref={motionRef}
+      >
+        {/* display:contents from lg up, where the viewer and the rail are the
+            two columns of the grid. Below lg it is the sticky stage that holds
+            them together. */}
+        <div className="workflow-stage" ref={stageRef}>
+          <div className="workflow-viewer">
+            <div className="workflow-screen" ref={screenRef}>
+              {workflowDemos.map((demo, index) => (
+                <WorkflowScreen
                   key={demo.id}
                   demo={demo}
-                  distance={distance}
-                  dominant={active === index}
+                  active={active === index}
                 />
-              );
-            })}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-linear-to-br from-white/20 via-transparent to-[#ddfaff]/30"
-            />
+              ))}
+            </div>
+            <WorkflowStepper active={active} onSelect={scrollToDemo} />
           </div>
-          <aside className="order-2 relative mx-auto w-full max-w-[420px] lg:order-1 lg:max-w-none lg:pl-8">
-            <div
-              aria-hidden
-              className="relative mx-auto h-6 w-full max-w-[260px] lg:absolute lg:inset-y-0 lg:left-0 lg:h-auto lg:w-px"
-            >
-              <span className="absolute inset-x-0 top-1/2 h-px bg-[#9dddea]/70 lg:inset-y-0 lg:left-0 lg:right-auto lg:top-0 lg:h-auto lg:w-px" />
-              <span
-                className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4cd8ff] shadow-[0_0_14px_rgba(76,216,255,.6)] lg:hidden"
-                style={{ left: `${railProgress * 100}%` }}
-              />
-              <span
-                className="absolute left-0 hidden h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4cd8ff] shadow-[0_0_14px_rgba(76,216,255,.6)] lg:block"
-                style={{ top: `${railProgress * 100}%` }}
-              />
-            </div>
-            <div
-              className={`relative mt-3 overflow-visible lg:mt-0 lg:min-h-[min(600px,calc(100svh-96px))] ${viewportMode === "short" ? "min-h-[230px]" : viewportMode === "compact" ? "min-h-[300px]" : "min-h-[360px]"}`}
-            >
-              <div className="contents lg:hidden">
-                {workflowDemos.map((demo, index) => (
-                  <WorkflowCopy
-                    key={demo.id}
-                    demo={demo}
-                    distance={index - position}
-                    desktop={false}
-                    viewportMode={viewportMode}
-                  />
-                ))}
-              </div>
-              <div className="hidden lg:contents">
-                {workflowDemos.map((demo, index) => (
-                  <WorkflowCopy
-                    key={demo.id}
-                    demo={demo}
-                    distance={index - position}
-                    desktop
-                    viewportMode="normal"
-                  />
-                ))}
-              </div>
-            </div>
-          </aside>
+          <div className="workflow-rail" ref={railRef}>
+            {workflowDemos.map((demo, index) => (
+              <article
+                key={demo.id}
+                className={cn("workflow-panel", index === 0 && "is-first")}
+                data-active={active === index ? "true" : undefined}
+              >
+                <WorkflowCard demo={demo} active={active === index} />
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -34,22 +34,30 @@
   transform-origin: center;
 }
 
+.workflow-video {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+}
+
+.workflow-video video {
+  transform: scale(1.015);
+  transform-origin: center;
+}
+
 .landing-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #d9f8ff;
   border-radius: 54px;
-  background: #4cd8ff;
-  color: #fff;
-  /* Heaviest weight the variable font carries. White on the brand cyan is a
-     deliberate house choice (the axe color-contrast rule is disabled for it in
-     e2e/site.spec.ts), so the label leans on stroke weight to stay readable. */
-  font-weight: 900;
+  background: var(--color-brand);
+  padding: 1px 30px 0;
+  color: var(--color-primary-foreground);
+  font-family: var(--font-geist);
+  font-weight: 400;
+  line-height: 1;
   text-align: center;
-  box-shadow:
-    inset 0 -5px 14px rgb(255 255 255 / 92%),
-    inset 0 4px 14px rgb(255 255 255 / 91%);
+  box-shadow: var(--shadow-cta-glow);
   transition:
     transform var(--dur-press) var(--ease-snap),
     box-shadow var(--dur-hover) var(--ease-snap);
@@ -63,10 +71,7 @@
 @media (hover: hover) and (pointer: fine) {
   .landing-cta:hover {
     transform: translateY(-1px);
-    box-shadow:
-      inset 0 -5px 14px rgb(255 255 255 / 92%),
-      inset 0 4px 14px rgb(255 255 255 / 91%),
-      0 10px 24px rgb(1 180 200 / 28%);
+    box-shadow: var(--shadow-cta-glow-hover);
   }
 
   .landing-cta:hover:active {
@@ -80,21 +85,395 @@
   padding-top: clamp(72px, 18svh, 132px);
 }
 
+/* Capability walkthrough.
+   One video screen that never moves and only ever cross-fades between demos,
+   with the copy for the demo it is showing next to it. No scroll hijacking and
+   no transform pinning at either size - the browser scrolls and CSS sticky
+   does the holding.
+   Desktop is two columns: the screen is sticky on the right while the copy
+   cards travel up past it in normal flow. Below lg there is no room beside the
+   screen, so the whole stage - screen, stepper, and one card under it - is
+   sticky as a unit and the cards cross-fade in place, which costs one screen
+   of height for the section instead of one per demo. */
 .workflow-section {
-  min-height: calc(
-    100svh - var(--workflow-pin-offset, 48px) +
-      var(--workflow-scroll-space, 110svh)
-  );
-}
-
-.workflow-sticky {
-  top: var(--workflow-pin-offset, 48px);
-  min-height: calc(100svh - var(--workflow-pin-offset, 48px));
+  padding-block: clamp(56px, 8svh, 96px);
+  --workflow-chrome: var(--site-chrome-height, 56px);
+  /* Distance from the chrome down to the top of the pinned video screen, which
+     is also where the active card parks. Measured and overwritten by
+     WorkflowSection; this is the pre-measurement estimate only. */
+  --workflow-slot: 14svh;
+  /* Scroll a demo holds the sticky stage for, below lg. */
+  --workflow-runway: 72svh;
 }
 
 .workflow-motion {
-  backface-visibility: hidden;
-  will-change: transform;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* From lg up the viewer and the rail are the grid's two columns, so the stage
+   steps out of the way; below lg it is the sticky frame around both. */
+.workflow-stage {
+  display: contents;
+}
+
+.workflow-viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.workflow-card {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  /* A tinted hairline instead of white: on a pale fill a white border has no
+     edge to give, and the card dissolves into the page behind it. */
+  border: 1px solid color-mix(in srgb, var(--color-brand) 16%, transparent);
+  /* A slight top-down gradient plus an inside highlight along the top edge
+     gives the fill some material instead of one flat pastel block. */
+  background: linear-gradient(180deg, #e6fcff 0%, #d2f4ff 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 1px 2px rgba(37, 72, 82, 0.05),
+    0 14px 34px rgba(37, 72, 82, 0.1);
+  transition:
+    opacity 420ms var(--ease-snap, ease),
+    border-color 420ms var(--ease-snap, ease),
+    box-shadow 420ms var(--ease-snap, ease);
+}
+
+.workflow-card-body {
+  padding: 24px 22px 26px;
+}
+
+.workflow-card-title {
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.022em;
+  color: var(--color-ink);
+  /* Evens the lines so the italic accent phrase is not left dangling a word
+     onto its own line. */
+  text-wrap: balance;
+}
+
+.workflow-card-copy {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+  text-wrap: pretty;
+}
+
+.workflow-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 20px;
+  margin-top: 26px;
+}
+
+.workflow-card-note {
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: 0.005em;
+  color: var(--color-ink-subtle);
+}
+
+/* The global --shadow-cta-glow puts two 14px white inset blurs on the pill.
+   At this button's size that covers most of its height and the fill reads as
+   out of focus, so this scopes the same glassy highlight at a strength the
+   button can carry while keeping a solid core. */
+.workflow-card .landing-cta {
+  box-shadow:
+    inset 0 -3px 7px rgb(255 255 255 / 42%),
+    inset 0 2px 6px rgb(255 255 255 / 38%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .workflow-card .landing-cta:hover {
+    box-shadow:
+      inset 0 -3px 7px rgb(255 255 255 / 42%),
+      inset 0 2px 6px rgb(255 255 255 / 38%),
+      0 8px 20px rgb(1 180 200 / 30%);
+  }
+}
+
+/* The screen never moves. Every demo's video is stacked inside it and they
+   swap by opacity alone. */
+.workflow-screen {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  /* Matches the corner radius of the app window inside the recordings, so the
+     frame reads as the window's own edge rather than a rounder mask over it. */
+  border-radius: 6px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(37, 72, 82, 0.08),
+    0 18px 44px rgba(37, 72, 82, 0.12);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+}
+
+.workflow-screen-video {
+  opacity: 0;
+  transform: scale(1.015);
+  transform-origin: center;
+  transition: opacity 480ms var(--ease-snap, ease);
+}
+
+.workflow-screen-video[data-active] {
+  opacity: 1;
+}
+
+.workflow-stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline: 2px;
+}
+
+.workflow-step {
+  flex: 1;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding-block: 8px;
+}
+
+.workflow-step-track {
+  display: block;
+  height: 2px;
+  border-radius: 999px;
+  background: #9dddea;
+  opacity: 0.45;
+  transition:
+    opacity var(--dur-hover) var(--ease-snap),
+    background-color var(--dur-hover) var(--ease-snap);
+}
+
+.workflow-step[aria-selected="true"] .workflow-step-track {
+  background: #01b4c8;
+  opacity: 1;
+}
+
+.workflow-step:focus-visible {
+  outline: 2px solid color-mix(in srgb, #01b4c8 70%, transparent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .workflow-step:hover .workflow-step-track {
+    opacity: 0.85;
+  }
+}
+
+/* The sticky stage. The container carries a runway of one screen per demo, the
+   stage pins to the chrome and holds the middle of the viewport for all of it,
+   and WorkflowSection turns how far you are through that runway into the demo
+   the screen is showing. */
+@media (max-width: 1023px) {
+  .workflow-motion {
+    position: relative;
+    /* Start, not stretch: the stage has to stay one screen tall so it has a
+       runway to be sticky through, instead of growing to fill it. */
+    align-items: start;
+    min-height: calc(
+      100svh - var(--workflow-chrome) + var(--workflow-demos, 3) *
+        var(--workflow-runway)
+    );
+  }
+
+  .workflow-stage {
+    position: sticky;
+    top: var(--workflow-chrome);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(14px, 2.6svh, 26px);
+    min-height: calc(100svh - var(--workflow-chrome));
+    /* Keeps the phone composition on tablets instead of a screen wide enough
+       to eat the whole stage in video. */
+    width: 100%;
+    max-width: 540px;
+    margin-inline: auto;
+  }
+
+  .workflow-viewer {
+    gap: 8px;
+  }
+
+  /* Every card in the same cell: the rail is as tall as the tallest one, so
+     the copy can swap without the screen above it shifting. */
+  .workflow-rail {
+    display: grid;
+    grid-template-areas: "stack";
+  }
+
+  .workflow-panel {
+    grid-area: stack;
+    opacity: 0;
+    /* Hidden, not just transparent, so the cards behind the active one are out
+       of the tab order and the accessibility tree. */
+    visibility: hidden;
+    transform: translateY(12px);
+    transition:
+      opacity 380ms var(--ease-snap, ease),
+      transform 380ms var(--ease-snap, ease),
+      visibility 0s linear 380ms;
+  }
+
+  .workflow-panel[data-active] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+}
+
+/* Short viewports - landscape phones and small laptops in a split - have to
+   fit the same stage in far less height, so the screen is capped by height
+   rather than width and the card tightens up around it. */
+@media (max-width: 1023px) and (max-height: 720px) {
+  .workflow-stage {
+    gap: 10px;
+  }
+
+  .workflow-viewer {
+    width: 100%;
+    max-width: calc(36svh * 1.5);
+    margin-inline: auto;
+  }
+
+  .workflow-card-body {
+    padding: 18px 18px 20px;
+  }
+
+  .workflow-card-title {
+    font-size: 22px;
+  }
+
+  .workflow-card-copy {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .workflow-card-actions {
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 1023px) and (max-height: 560px) {
+  .workflow-card-note {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .workflow-motion {
+    grid-template-columns: minmax(0, 0.76fr) minmax(0, 1.24fr);
+    gap: clamp(28px, 3.2vw, 56px);
+    align-items: start;
+  }
+
+  /* Copy on the left, pinned screen on the right. */
+  .workflow-rail {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1;
+    grid-row: 1;
+    gap: 0;
+  }
+
+  .workflow-viewer {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: var(--workflow-chrome);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    height: calc(100svh - var(--workflow-chrome));
+    /* Centred in the pinned viewport. WorkflowSection measures where that puts
+       the screen's top edge and writes it back as --workflow-slot, so the
+       active card parks on exactly that line. */
+    justify-content: center;
+    /* Grow with the column, but never taller than the viewport. Capping width
+       by the available height keeps the 3:2 intact instead of letting the
+       screen run off the bottom on short, wide displays. */
+    width: 100%;
+    max-width: calc(
+      (100svh - var(--workflow-chrome) - var(--workflow-slot) - 76px) * 1.5
+    );
+  }
+
+  /* Hold, then push.
+     Each card is sticky inside its own runway, so it parks in the slot and
+     holds the screen while you read it. When the runway runs out the card is
+     dragged up by its own panel - and because the next panel starts exactly
+     where this one ends, the next card is right behind it and shoves it off
+     the top. No JS: the runway length is the hold, the handover is free. */
+  .workflow-panel {
+    display: block;
+    min-height: 78svh;
+    padding-top: 14px;
+  }
+
+  .workflow-card {
+    position: sticky;
+    top: calc(var(--workflow-chrome) + var(--workflow-slot));
+  }
+
+  /* A dashed ghost until it is the active one, so the cards above and below
+     read as what you have passed and what is coming next. */
+  .workflow-card {
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--color-brand) 45%, transparent);
+    background: none;
+    opacity: 0.42;
+    box-shadow: none;
+  }
+
+  .workflow-card[data-active] {
+    border-style: solid;
+    border-color: color-mix(in srgb, var(--color-brand) 16%, transparent);
+    background: linear-gradient(180deg, #e6fcff 0%, #d2f4ff 100%);
+    opacity: 1;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.85),
+      0 1px 2px rgba(37, 72, 82, 0.05),
+      0 14px 34px rgba(37, 72, 82, 0.1);
+  }
+
+  .workflow-card-body {
+    padding: 32px 34px 34px;
+  }
+
+  .workflow-card-actions {
+    margin-top: 28px;
+  }
+
+  .workflow-card-title {
+    font-size: clamp(26px, 2.1vw, 32px);
+    line-height: 1.16;
+  }
+
+  .workflow-card-copy {
+    margin-top: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workflow-card,
+  .workflow-panel,
+  .workflow-screen-video,
+  .workflow-step-track {
+    transition: none;
+  }
 }
 
 .hero-portal {
@@ -193,7 +572,8 @@
     var(--parallax-ease, cubic-bezier(0.23, 1, 0.32, 1));
 }
 
-/* Backdrop barely moves; the foreground chips move most. */
+/* Temporarily disabled — do not delete. Hero collage pointer parallax.
+ * Backdrop barely moves; the foreground chips move most.
 .hero-portal {
   translate: calc(var(--mx, 0px) * 0.3) calc(var(--my, 0px) * 0.3);
 }
@@ -213,6 +593,7 @@
 .hero-workflow {
   translate: calc(var(--mx, 0px) * 1.4) calc(var(--my, 0px) * 1.4);
 }
+*/
 
 /* Crossing the window edge has no stream of positions to follow, so ease it. */
 .hero-scene[data-settling] {
@@ -238,7 +619,7 @@
 
 @media (max-width: 767px) {
   .hero-stage {
-    min-height: calc(100svh - 49px);
+    min-height: calc(100svh - var(--site-chrome-height, 56px));
     align-content: space-evenly;
     row-gap: clamp(52px, 14vw, 72px);
     padding-top: clamp(28px, 8vw, 44px);
@@ -324,74 +705,132 @@
   }
 
   .hero-portal {
-    top: 51%;
+    top: 52%;
+    left: 58%;
     width: min(720px, 72vw, 88svh);
   }
 
   .hero-report {
-    top: 4%;
+    top: 0;
+    left: 0;
     width: min(38vw, 350px);
+    transform: none;
   }
 
   .hero-chat {
-    top: 58%;
-    left: -2%;
+    top: auto;
+    bottom: 6%;
+    left: 0;
     width: min(28vw, 260px);
   }
 
   .hero-search {
     right: 0;
-    bottom: 8%;
+    bottom: 4%;
     width: min(40vw, 390px);
   }
 
   .hero-workflow {
-    top: 28%;
-    right: -42px;
+    top: 12%;
+    right: -48px;
     transform: scale(0.72);
   }
 
   .what-section {
     margin-top: -52px;
-    padding-bottom: max(96px, calc((100svh - 620px) / 2 + 12px));
-    padding-top: 56px;
+    padding-bottom: 40px;
+    padding-top: 24px;
   }
 }
 
+.faq-item {
+  transition: background-color var(--dur-enter) var(--ease-snap);
+}
+
+.faq-icon {
+  transition: transform var(--dur-enter) var(--ease-snap);
+}
+
+/* Radix measures the panel and exposes --radix-accordion-content-height.
+   `0fr`/`1fr` grid rows snap in Safari; these keyframes interpolate the
+   measured height so open/close tracks the content instead of popping. */
 .faq-content {
-  display: grid;
-  grid-template-rows: 0fr;
   overflow: hidden;
-  transition:
-    grid-template-rows 200ms var(--ease-snap),
-    visibility 0s linear 200ms;
-  visibility: hidden;
 }
 
 .faq-content[data-state="open"] {
-  grid-template-rows: 1fr;
-  visibility: visible;
-  transition:
-    grid-template-rows 200ms var(--ease-snap),
-    visibility 0s;
+  animation: faq-open 240ms var(--ease-snap);
 }
 
-.faq-content-inner {
-  overflow: hidden;
-  min-height: 0;
+.faq-content[data-state="closed"] {
+  animation: faq-close 180ms var(--ease-snap);
 }
 
-.faq-content-inner > * {
-  opacity: 0;
-  transition: opacity 120ms var(--ease-snap);
+.faq-content[data-state="open"] .faq-content-inner {
+  animation: faq-inner-in 200ms var(--ease-snap) 30ms both;
 }
 
-.faq-content[data-state="open"] .faq-content-inner > * {
-  opacity: 1;
+.faq-content[data-state="closed"] .faq-content-inner {
+  animation: faq-inner-out 120ms var(--ease-snap) both;
+}
+
+@keyframes faq-open {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes faq-close {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes faq-inner-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes faq-inner-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
 }
 
 .feature-grid > :nth-child(2) {
   align-self: stretch;
+}
+
+.pricing-grid {
+  /**
+   * Pin offset for the mobile deck: clear of the sticky site chrome.
+   *
+   * A pinned card taller than the room left below that chrome would have its
+   * last benefits stranded off the fold with no way to scroll to them, so on
+   * short viewports the offset gives way and lets the card ride up under the
+   * header instead. 350px covers the tallest plan at phone widths.
+   */
+  --pricing-stack-top: min(
+    calc(var(--site-chrome-height, 56px) + 10px),
+    calc(100svh - 350px)
+  );
 }
 
 .pricing-card {
@@ -733,22 +1172,20 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #d9f8ff;
-  border-radius: 32px;
-  background: #4cd8ff;
-  color: #fff;
+  border-radius: 54px;
+  background: var(--color-brand);
+  color: var(--color-primary-foreground);
+  font-family: var(--font-geist);
   font-size: 17px;
-  font-weight: 900;
-  box-shadow:
-    inset 0 -5px 14px rgb(255 255 255 / 92%),
-    inset 0 4px 14px rgb(255 255 255 / 91%),
-    0 12px 26px rgb(1 180 200 / 22%);
+  font-weight: 400;
+  box-shadow: var(--shadow-cta-glow);
   transition:
     transform var(--dur-press) var(--ease-snap),
     box-shadow var(--dur-hover) var(--ease-snap);
 }
 
 .pricing-card:not([data-recommended]) .pricing-button {
-  border-color: rgb(1 180 200 / 28%);
+  border: 1px solid rgb(1 180 200 / 28%);
   background: #effbfc;
   color: #014e59;
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 80%);
@@ -762,13 +1199,11 @@
 @media (hover: hover) and (pointer: fine) {
   .pricing-button:hover {
     transform: translateY(-1px);
-    box-shadow:
-      inset 0 -5px 14px rgb(255 255 255 / 92%),
-      inset 0 4px 14px rgb(255 255 255 / 91%),
-      0 16px 32px rgb(1 180 200 / 30%);
+    box-shadow: var(--shadow-cta-glow-hover);
   }
 
   .pricing-card:not([data-recommended]) .pricing-button:hover {
+    background: #effbfc;
     box-shadow:
       inset 0 0 0 1px rgb(255 255 255 / 80%),
       0 8px 20px rgb(1 180 200 / 14%);
@@ -784,6 +1219,127 @@
   left: 50%;
   width: 760px;
   transform: translateX(-50%);
+}
+
+/**
+ * Enterprise panel on phones.
+ *
+ * The panel ran 872px, past the viewport, on a layout borrowed from desktop:
+ * claims that rewrapped to four lines, four full-width chips, and 220px of
+ * artwork. Everything it says is still here, sized to the screen it is on.
+ */
+@media (max-width: 639px) {
+  /* Each claim is one line, the way it reads on desktop. At a fixed size the
+     longer one wrapped and the promise arrived in four ragged lines, so the size
+     tracks the viewport instead and the lines hold down to a 320px phone. */
+  .enterprise-claim {
+    font-size: min(3.72vw, 17px);
+    line-height: 1.5;
+  }
+
+  .enterprise-claim > span {
+    white-space: nowrap;
+  }
+
+  /**
+   * Four assurances in a 2x2, one line each. Columns size to their own content
+   * rather than splitting the row in half, so the two long labels borrow the
+   * width the two short ones were wasting. The type size is derived from what is
+   * left: the pair of widest labels costs about 21.5px of width per 1px of type,
+   * and the rest of the row goes to the ticks, the gutter, and the padding that
+   * keeps text off the pill's edge. Below 375px there is no size left that is
+   * still readable, so those phones wrap instead.
+   */
+  .enterprise-chips {
+    grid-template-columns: auto auto;
+  }
+
+  .enterprise-chip {
+    gap: 4px;
+    padding: 5px 12px 5px 8px;
+    font-size: clamp(10px, calc(4.656vw - 7.36px), 14px);
+    line-height: 1.35;
+  }
+
+  .enterprise-chip svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* The artwork stays whole, just smaller: cropping it to a band bought height
+     at the cost of cutting the agent's own edges. */
+  .enterprise-art {
+    margin-top: 8px;
+    pointer-events: none;
+  }
+
+  .enterprise-art img {
+    max-height: 168px;
+    width: auto;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 639px) {
+  .enterprise-chip {
+    white-space: nowrap;
+  }
+}
+
+/**
+ * Mobile pricing deck.
+ *
+ * Phones get one long single-file column of plans, so the third card is a
+ * scroll away from the first and nothing can be compared. Here every card pins
+ * at the same offset, so scrolling deals them into a stack: each card rises
+ * over the pinned one before it and covers it outright.
+ *
+ * `display: contents` on the grid is what makes the runway long enough. The
+ * cards become children of the section's positioned wrapper, so they stay
+ * pinned through the enterprise panel below them, and that panel slides up over
+ * the finished deck. Left inside the grid, their pinning would have ended at
+ * the last card's own bottom edge, which unstacks the deck in reverse right
+ * where the reader is still looking at it.
+ */
+@media (max-width: 639px) {
+  .pricing-grid {
+    display: contents;
+  }
+
+  .pricing-grid > .pricing-card {
+    position: sticky;
+    top: var(--pricing-stack-top);
+    /* The grid's own `mx-auto`, `max-w`, and `gap` go with its box. */
+    max-width: 430px;
+    margin: 20px auto 0;
+  }
+
+  .pricing-grid > .pricing-card:first-child {
+    margin-top: 32px;
+  }
+
+  /**
+   * The last shadow layer is a skirt, not a shadow: the card's own silhouette
+   * in flat white, dropped below it.
+   *
+   * Plans are not all the same height, so a shorter card pinned over a taller
+   * one would leave a strip of the card behind poking out beneath it. On the
+   * section's white ground the skirt is invisible, and it hides whatever it
+   * lands on. Cards still to come and the enterprise panel paint after it, so
+   * it never covers anything the reader still needs.
+   */
+  .pricing-grid > .pricing-card {
+    box-shadow:
+      0 18px 48px rgb(57 148 154 / 8%),
+      0 120px 0 4px #fff;
+  }
+
+  .pricing-grid > .pricing-card[data-recommended] {
+    box-shadow:
+      0 0 0 1px rgb(1 180 200 / 35%),
+      0 12px 40px rgb(1 180 200 / 18%),
+      0 18px 48px rgb(57 148 154 / 10%),
+      0 120px 0 4px #fff;
+  }
 }
 
 @media (min-width: 640px) {
@@ -886,7 +1442,7 @@
   }
 
   .hero-scene {
-    grid-column: 2;
+    grid-column: 1 / -1;
     grid-row: 1;
     width: 100%;
     height: min(820px, calc(100svh - 70px));
@@ -894,38 +1450,42 @@
   }
 
   .hero-portal {
-    top: 50%;
-    width: min(110%, 980px, 100svh);
+    top: 52%;
+    left: 68%;
+    width: min(72%, 780px, 80svh);
   }
 
   .hero-copy {
     grid-column: 1;
     grid-row: 1;
+    z-index: 25;
     padding-left: 8px;
   }
 
   .hero-report {
-    top: 2%;
+    top: -90px;
+    /* Even gutter between the copy column and the workflow chips. */
+    left: calc((20% + 90% - 216px - 424px) / 2);
     width: 424px;
-    transform: translateX(-62%);
+    transform: none;
   }
 
   .hero-chat {
     top: auto;
-    bottom: 9%;
-    left: -3%;
+    bottom: 4%;
+    left: 28%;
     width: 320px;
   }
 
   .hero-search {
-    right: 0;
-    bottom: 9%;
+    right: 4%;
+    bottom: 3%;
     width: 455px;
   }
 
   .hero-workflow {
-    top: 12%;
-    right: -12px;
+    top: 8%;
+    right: 3%;
     transform: none;
   }
 
@@ -939,8 +1499,8 @@
 
   .what-section {
     margin-top: -64px;
-    padding-bottom: max(96px, calc((100svh - 820px) / 2 + 12px));
-    padding-top: 76px;
+    padding-bottom: 48px;
+    padding-top: 28px;
   }
 }
 
@@ -954,11 +1514,19 @@
   }
 
   .hero-report {
+    top: 0;
+    left: calc((41% + 97% - 216px - 360px) / 2);
     width: 360px;
   }
 
   .hero-chat {
     width: 270px;
+    bottom: 6%;
+    left: 30%;
+  }
+
+  .hero-search {
+    bottom: 6%;
   }
 
   .hero-headline > p {
@@ -971,15 +1539,15 @@
   }
 }
 
-/* Campaign badge sits under the offer line, matching the hero's alignment. */
-.hero-ph-row {
+/* Walkthrough sits under the offer line, matching the hero's alignment. */
+.hero-walkthrough-row {
   display: flex;
   justify-content: center;
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
-@media (min-width: 1280px) {
-  .hero-ph-row {
+@media (min-width: 1024px) {
+  .hero-walkthrough-row {
     justify-content: flex-start;
   }
 }
@@ -1045,37 +1613,34 @@
 }
 
 /*
- * Secondary hero CTA. Quieter than the filled primary but still a real target,
- * for readers who want a conversation before an account.
+ * Secondary CTA as a text link so Start Now is the only filled control.
+ * Keep a 44px tap target without drawing a second pill.
  */
 .hero-secondary-cta {
   display: inline-flex;
-  height: 57px;
-  width: 100%;
-  max-width: 227px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  border: 1px solid rgb(1 180 200 / 40%);
-  background: #fff;
-  padding-inline: 20px;
-  font-size: 17px;
-  font-weight: 600;
-  color: #018fa0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-brand);
+  font-family: var(--font-geist);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.3;
   text-decoration: none;
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+  text-underline-offset: 3px;
+  transition: color var(--dur-hover) var(--ease-snap);
 }
 
 .hero-secondary-cta:hover {
-  border-color: rgb(1 180 200 / 70%);
-  background: #f2fbfc;
+  color: var(--color-brand-strong);
+  text-decoration: underline;
 }
 
 .hero-secondary-cta:active {
-  transform: scale(0.97);
+  color: var(--color-brand-strong);
 }
 
 @media (min-width: 1280px) {
@@ -1090,7 +1655,22 @@
   }
 }
 
+/* Long display lines, not a short title. 31px on a 390px viewport wraps
+   into a wall of type; the floor is a real heading, the preferred term
+   tracks the phone, and the cap is the size the desktop layout already pins. */
+.work-headline {
+  text-wrap: balance;
+  font-size: clamp(1.375rem, 2.6vw + 0.875rem, 1.9375rem);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+
 @media (min-width: 1024px) {
+  .work-headline {
+    font-size: clamp(31px, 2.05vw, 32.8px);
+    line-height: 46px;
+  }
+
   .feature-grid > :nth-child(2) {
     aspect-ratio: 712 / 346;
     object-fit: cover;
@@ -1107,9 +1687,12 @@
     height: clamp(390px, 32.5vw, 520px);
   }
 
+  /* Height follows the video plus the closing headline and CTA. A pinned
+     clamp matched a video-only stack and overflow:hidden clipped those two. */
   .work-panel {
-    height: clamp(620px, 60vw, 944px);
-    padding: clamp(56px, 6.75vw, 108px) 0 0;
+    height: auto;
+    min-height: clamp(620px, 60vw, 944px);
+    padding: clamp(56px, 6.75vw, 108px) 0 clamp(48px, 5vw, 80px);
     border-radius: clamp(40px, 5vw, 79px);
   }
 
@@ -1159,6 +1742,15 @@
     height: 58px;
     max-width: none;
     font-size: 18px;
+  }
+
+  /* Plan-card buttons fill their card, but the Enterprise one sits in a row
+     beside the email link, where uncapping it lets it stretch the whole row. */
+  .enterprise-actions .pricing-button {
+    width: auto;
+    max-width: 299px;
+    flex: 0 0 auto;
+    padding-inline: 48px;
   }
 
   .pricing-benefits ul {
@@ -1213,6 +1805,30 @@
   animation-delay: 560ms;
 }
 
+/* Hero collage: one overlay per beat so the orbit reads as a sequence,
+ * not a single pop. Wider than the page-wide 140ms steps. */
+.hero-scene .reveal-item[data-reveal-delay="1"][data-reveal-visible] {
+  animation-delay: 160ms;
+}
+.hero-scene .reveal-item[data-reveal-delay="2"][data-reveal-visible] {
+  animation-delay: 360ms;
+}
+.hero-scene .reveal-item[data-reveal-delay="3"][data-reveal-visible] {
+  animation-delay: 560ms;
+}
+.hero-scene .reveal-item[data-reveal-delay="4"][data-reveal-visible] {
+  animation-delay: 760ms;
+}
+.hero-scene .reveal-item[data-reveal-delay="5"][data-reveal-visible] {
+  animation-delay: 960ms;
+}
+.hero-scene .reveal-item[data-reveal-delay="6"][data-reveal-visible] {
+  animation-delay: 1160ms;
+}
+.hero-scene .reveal-item[data-reveal-delay="7"][data-reveal-visible] {
+  animation-delay: 1360ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .landing-page {
     scroll-behavior: auto;
@@ -1230,8 +1846,7 @@
   .landing-page .pricing-button,
   .landing-page .billing-toggle-thumb,
   .landing-page .billing-toggle-option,
-  .landing-page .faq-content,
-  .landing-page .faq-content-inner > *,
+  .landing-page .faq-item,
   .landing-page .pricing-price-period,
   .landing-page .pricing-price-was,
   .landing-page .pricing-price-savings {
@@ -1239,15 +1854,99 @@
     transform: none !important;
   }
 
-  .landing-page .faq-content {
-    display: block;
+  .landing-page .faq-icon {
+    transition: none !important;
   }
 
-  .landing-page .faq-content[data-state="closed"] {
+  /* 1ms, not none: Radix Presence waits for animationend to unmount. */
+  .landing-page .faq-content[data-state="open"],
+  .landing-page .faq-content[data-state="closed"],
+  .landing-page .faq-content[data-state="open"] .faq-content-inner,
+  .landing-page .faq-content[data-state="closed"] .faq-content-inner {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+
+  /* The mobile deck is scroll-driven overlap, so it falls back to the plain
+     column. Spacing already comes from the cards themselves. */
+  .landing-page .pricing-grid > .pricing-card {
+    position: relative;
+  }
+}
+
+/* Mobile hero is headline plus one action. The Product Hunt badge, the offer
+   line, and the email-compose card are all desktop-only so the fold stays on
+   the headline and Start Now. Cuts off at 1023px so the 1024px layout, which
+   the layout specs pin, is untouched. */
+@media (max-width: 1023px) {
+  .hero-ph-badge,
+  .hero-offer-line,
+  .hero-report {
     display: none;
   }
+}
 
-  .landing-page .faq-content-inner > * {
-    opacity: 1;
+/* Single-column hero only. From 768px up the stage is already a two-column
+   grid that centres itself, so none of the spacing below applies there.
+
+   The copy row is sized to everything above the mascot's peek, then centres
+   its own content, so the headline and buttons always sit with equal air above
+   and below no matter the phone height, while the mascot stays parked half off
+   the bottom edge. --hero-peek is half the portal diameter so the circle's
+   center sits on the viewport bottom; the rest of the video (and the search
+   bar) arrive on scroll. Chat and one workflow chip overlap the visible half. */
+@media (max-width: 767px) {
+  .hero-stage {
+    --hero-peek: min(52vw, 200px, 29svh);
+    align-content: start;
+    row-gap: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: calc(100svh - var(--site-chrome-height, 56px));
+  }
+
+  .hero-copy {
+    display: grid;
+    align-content: center;
+    min-height: calc(
+      100svh - var(--site-chrome-height, 56px) - var(--hero-peek)
+    );
+  }
+
+  .hero-scene {
+    /* Floor of 430px keeps the lazy-media reservation the layout spec pins. */
+    height: clamp(430px, 104vw, 520px);
+    margin-top: 0;
+  }
+
+  .hero-portal {
+    /* Center of the square (translate -50% -50%) lands on the fold. */
+    top: var(--hero-peek);
+    width: min(104vw, 400px, 58svh);
+  }
+
+  .hero-chat {
+    top: 12%;
+    left: 0;
+    width: min(48vw, 190px);
+  }
+
+  .hero-search {
+    right: 2%;
+    bottom: 8%;
+    width: min(78vw, 320px);
+  }
+
+  .hero-workflow {
+    top: 8%;
+    right: 0;
+    transform: scale(0.78);
+    transform-origin: top right;
+  }
+
+  /* One Gmail chip on the visible half. Meet and Docs stay desktop/tablet. */
+  .hero-workflow > :nth-child(1),
+  .hero-workflow > :nth-child(3) {
+    display: none;
   }
 }

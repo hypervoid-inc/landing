@@ -1,15 +1,29 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 /**
  * `?clippy=now` collapses the dwell delay to zero. A query param is the only
  * override that reaches a root mounted widget without bundler surgery, and it is
  * inert for a prerendered SPA.
  * `?ph=off` keeps sticky chrome header-only so Clippy geometry stays stable.
+ * Clippy still waits for a trusted gesture (click, key, or wheel) before opening.
  */
 const POST = "/blog/ai-agent-memory/?clippy=now&ph=off";
 
 const widget = "aside.clippy-widget";
+
+/** Harmless keydown that counts as the first interaction. */
+async function engage(page: Page) {
+  await expect(page.locator("main")).toBeVisible();
+  // useEffect listeners attach after paint; a key before that is lost.
+  await page.waitForTimeout(150);
+  await page.keyboard.press("Shift");
+}
+
+async function gotoAndEngage(page: Page, url: string) {
+  await page.goto(url);
+  await engage(page);
+}
 
 test.beforeEach(async ({ page }) => {
   const originalGoto = page.goto.bind(page);
@@ -25,23 +39,25 @@ test.beforeEach(async ({ page }) => {
   }) as typeof page.goto;
 });
 
-test("walks a blog reader through three beats into the auth dialog", async ({
-  page,
-}) => {
+test("stays closed until the first interaction", async ({ page }) => {
   await page.goto(POST);
+  await expect(page.locator("main")).toBeVisible();
+  // Hydration would open the tip immediately with `?clippy=now` if the gate
+  // were missing, so wait a beat before asserting it stayed closed.
+  await page.waitForTimeout(400);
+  await expect(page.locator(widget)).toHaveCount(0);
+  await engage(page);
+  await expect(page.locator(widget)).toBeVisible();
+});
+
+test("opens the auth dialog from the single CTA", async ({ page }) => {
+  await gotoAndEngage(page, POST);
 
   const tip = page.getByRole("complementary", { name: "Construct" });
   await expect(tip).toBeVisible();
   await expect(tip).toContainText("It looks like you're researching AI agents");
-
-  await page.getByRole("button", { name: "What are you?" }).click();
-  await expect(tip).toContainText(
-    "I am Construct, your AI employee with a cloud computer",
-  );
-
-  await page.getByRole("button", { name: "Show me" }).click();
-  await expect(tip).toContainText("Research, inbox, reports");
-  await expect(page.locator(".clippy-chip")).toHaveCount(0);
+  await expect(tip.getByRole("button")).toHaveCount(1);
+  await expect(tip.getByRole("link")).toHaveCount(1);
 
   // Scoped to the tip: blog bodies now carry their own inline CTAs, so an
   // unscoped link lookup matches those too.
@@ -53,27 +69,17 @@ test("walks a blog reader through three beats into the auth dialog", async ({
   await page.getByRole("button", { name: "Close dialog" }).click();
 });
 
-test("opens the auth dialog from the first beat too", async ({ page }) => {
-  await page.goto(POST);
-  await page.locator(".clippy-pill").click();
-  const dialog = page.getByRole("dialog");
-  await expect(
-    dialog.getByRole("heading", { name: /Create your Construct account/i }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Close dialog" }).click();
-});
-
-test("collapses to the sprite and reopens on the same beat", async ({
+test("collapses to the sprite and reopens on the same line", async ({
   page,
 }) => {
-  await page.goto(POST);
+  await gotoAndEngage(page, POST);
   const root = page.locator(widget);
   await expect(root).toHaveAttribute("data-variant", "desktop");
   await expect(root).toHaveAttribute("data-placed", "true");
   await expect(root).toHaveAttribute("style", /translate3d/);
-
-  await page.getByRole("button", { name: "What are you?" }).click();
-  await expect(root).toContainText("I am Construct");
+  await expect(root).toContainText(
+    "It looks like you're researching AI agents",
+  );
 
   await page.getByRole("button", { name: "Minimize Construct" }).click();
   await expect(page.locator(".clippy-bubble")).toHaveCount(0);
@@ -83,19 +89,25 @@ test("collapses to the sprite and reopens on the same beat", async ({
   await expect(root).toHaveAttribute("style", /translate3d/);
 
   await page.getByRole("button", { name: "Open Construct message" }).click();
-  await expect(root).toContainText("I am Construct");
+  await expect(root).toContainText(
+    "It looks like you're researching AI agents",
+  );
 });
 
-test("keeps its beat and stays hidden across client side navigation", async ({
-  page,
-}) => {
-  await page.goto(POST);
-  await page.getByRole("button", { name: "What are you?" }).click();
+test("stays hidden across client side navigation", async ({ page }) => {
+  await gotoAndEngage(page, POST);
   await page.getByRole("button", { name: "Minimize Construct" }).click();
   await page.getByRole("button", { name: "Hide Construct" }).click();
   await expect(page.locator(widget)).toHaveCount(0);
 
-  await page.getByRole("link", { name: "Blog", exact: true }).first().click();
+  await page
+    .getByRole("navigation", { name: "Primary" })
+    .getByRole("button", { name: "Resources" })
+    .click();
+  await page
+    .getByRole("navigation", { name: "Primary" })
+    .getByRole("link", { name: "Blog", exact: true })
+    .click();
   await expect(page).toHaveURL(/\/blog\/$/);
   await expect(page.locator(widget)).toHaveCount(0);
 });
@@ -103,17 +115,19 @@ test("keeps its beat and stays hidden across client side navigation", async ({
 test("reappears after a hard refresh even when previously dismissed", async ({
   page,
 }) => {
-  await page.goto(POST);
+  await gotoAndEngage(page, POST);
   await page.getByRole("button", { name: "Minimize Construct" }).click();
   await page.getByRole("button", { name: "Hide Construct" }).click();
   await expect(page.locator(widget)).toHaveCount(0);
 
   await page.reload();
+  await expect(page.locator(widget)).toHaveCount(0);
+  await engage(page);
   await expect(page.locator(widget)).toBeVisible();
 });
 
 test("dismisses with the Escape key", async ({ page }) => {
-  await page.goto(POST);
+  await gotoAndEngage(page, POST);
   await expect(page.locator(widget)).toBeVisible();
 
   await page.keyboard.press("Escape");
@@ -130,7 +144,7 @@ test("can be dragged around the viewport without firing a click", async ({
   // press aimed at a freshly measured box can miss and select page text instead.
   // Reduced motion trips the CSS kill switch, as in the landing button test.
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto(POST);
+  await gotoAndEngage(page, POST);
   const root = page.locator(widget);
   await expect(root).toHaveAttribute("data-placed", "true");
   const before = await root.getAttribute("style");
@@ -150,7 +164,7 @@ test("can be dragged around the viewport without firing a click", async ({
 });
 
 test("stays silent on the privacy policy", async ({ page }) => {
-  await page.goto("/privacy/?clippy=now");
+  await gotoAndEngage(page, "/privacy/?clippy=now");
   await expect(page.locator("main")).toBeVisible();
   await expect(page.locator(widget)).toHaveCount(0);
 });
@@ -162,7 +176,7 @@ test("still appears when the reader already subscribed", async ({ page }) => {
       JSON.stringify({ granted: true, grantedAt: Date.now() }),
     );
   });
-  await page.goto(POST);
+  await gotoAndEngage(page, POST);
   await expect(page.locator(widget)).toBeVisible();
 });
 
@@ -175,11 +189,22 @@ test.describe("mobile", () => {
     // getBoundingClientRect includes transforms, and the entrance spring is
     // still scaling the card, so measure with motion off to get true sizes.
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto(POST);
+    await gotoAndEngage(page, POST);
     await expect(page.locator(".clippy-card")).toBeVisible();
     await expect(page.locator(".clippy-bubble")).toHaveCount(0);
+    await expect(page.locator(".clippy-pill")).toHaveCount(1);
+    await expect(
+      page.getByRole("button", { name: "What are you?" }),
+    ).toHaveCount(0);
+    const clamp = await page
+      .locator(".clippy-card .clippy-line")
+      .evaluate((node) => getComputedStyle(node).webkitLineClamp);
+    expect(clamp).toBe("2");
     // Drag is desktop only, so no transform is ever applied.
-    await expect(page.locator(widget)).toHaveAttribute("data-variant", "mobile");
+    await expect(page.locator(widget)).toHaveAttribute(
+      "data-variant",
+      "mobile",
+    );
 
     const close = page.getByRole("button", { name: "Minimize Construct" });
     const hit = await close.evaluate((node) => {
@@ -200,8 +225,11 @@ test.describe("mobile", () => {
     page,
   }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto(POST);
-    await expect(page.locator(widget)).toHaveAttribute("data-variant", "mobile");
+    await gotoAndEngage(page, POST);
+    await expect(page.locator(widget)).toHaveAttribute(
+      "data-variant",
+      "mobile",
+    );
 
     await page.getByRole("button", { name: "Minimize Construct" }).click();
     await expect(page.locator(".clippy-card")).toHaveCount(0);
@@ -226,7 +254,7 @@ for (const path of ["/?clippy=now", "/blog/?clippy=now"]) {
   test(`${path} has no accessibility violations with the tip open`, async ({
     page,
   }) => {
-    await page.goto(path);
+    await gotoAndEngage(page, path);
     await expect(
       page.getByRole("complementary", { name: "Construct" }),
     ).toBeVisible();

@@ -7,6 +7,7 @@ import { sanitizePathname } from "../analytics/sanitize-event";
 import { StartLink, useBetaDialogOpen } from "./beta-access";
 import {
   CLIPPY_CTA_LABEL,
+  CLIPPY_ENGAGEMENT_EVENTS,
   CLIPPY_HIDE_LABEL,
   CLIPPY_MINIMIZE_LABEL,
   CLIPPY_MIN_DWELL_MS,
@@ -17,6 +18,7 @@ import {
   initialClippyRecord,
   initialClippyTimer,
   resolveClippyDelay,
+  shouldRevealClippy,
   tickClippyTimer,
   type ClippyRecord,
 } from "./clippy-state";
@@ -43,10 +45,10 @@ export function ClippyCta() {
   const betaDialogOpen = useBetaDialogOpen();
 
   /*
-   * Dismiss, beat, and drag position live in React state only. A hard refresh
-   * remounts clean so the tip always re-arms after the dwell delay, including
-   * for beta users. SPA navigations keep this tree mounted, so a dismiss
-   * sticks until that refresh.
+   * Dismiss and drag position live in React state only. A hard refresh remounts
+   * clean so the tip always re-arms after the dwell delay, including for beta
+   * users. SPA navigations keep this tree mounted, so a dismiss sticks until
+   * that refresh.
    */
   const [record, setRecord] = useState<ClippyRecord>(initialClippyRecord);
   const [visible, setVisible] = useState(false);
@@ -57,26 +59,27 @@ export function ClippyCta() {
   const frameRef = useRef<HTMLDivElement>(null);
   const shownAtRef = useRef(0);
   const lastOutsideFocusRef = useRef<HTMLElement | null>(null);
-  const pendingFocusRef = useRef(false);
+  const hasInteractedRef = useRef(false);
+  const tickRef = useRef<() => void>(() => {});
 
   const pageKind = getClippyPageKind(location.pathname);
   const path = String(sanitizePathname(location.pathname));
-  const beats = pageKind ? beatsFor(pageKind) : [];
-  const beatIndex = Math.min(record.beat, Math.max(0, beats.length - 1));
-  const beat = beats[beatIndex];
-  const isLastBeat = beatIndex >= beats.length - 1;
+  const beat = pageKind ? beatsFor(pageKind)[0] : undefined;
 
   const persist = useCallback((next: ClippyRecord) => {
     setRecord(next);
   }, []);
 
-  // Dwell timer. Requires both banked time and a minimum stay on this page, so
-  // arriving on a new post with the full delay already banked does not pop
-  // instantly. Beta access never suppresses the tip.
+  // Dwell timer. Requires banked time, a minimum stay on this page, and a first
+  // trusted gesture, so a parked tab or a page that just painted never pops.
+  // Beta access never suppresses the tip.
   const armed = record.state !== "hidden";
   const delay = armed && pageKind ? resolveClippyDelay(location.search) : null;
   useEffect(() => {
-    if (delay === null || visible) return;
+    if (delay === null || visible) {
+      tickRef.current = () => {};
+      return;
+    }
     const mountedAt = Date.now();
     const minDwell = Math.min(delay, CLIPPY_MIN_DWELL_MS);
 
@@ -87,12 +90,18 @@ export function ClippyCta() {
         document.visibilityState === "visible",
       );
       if (
-        bankedTimer.elapsedMs >= delay &&
-        Date.now() - mountedAt >= minDwell
+        shouldRevealClippy({
+          hasInteracted: hasInteractedRef.current,
+          elapsedMs: bankedTimer.elapsedMs,
+          delayMs: delay,
+          dwellMs: Date.now() - mountedAt,
+          minDwellMs: minDwell,
+        })
       ) {
         setVisible(true);
       }
     };
+    tickRef.current = tick;
     // Re-anchor on tab switch so the hidden stretch is never credited.
     const onVisibility = () => {
       bankedTimer = { ...bankedTimer, lastTickMs: null };
@@ -102,10 +111,31 @@ export function ClippyCta() {
     document.addEventListener("visibilitychange", onVisibility);
     tick();
     return () => {
+      tickRef.current = () => {};
       window.clearInterval(id);
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [delay, visible]);
+
+  useEffect(() => {
+    if (hasInteractedRef.current) return;
+    const arm = (event: Event) => {
+      if (!event.isTrusted) return;
+      hasInteractedRef.current = true;
+      for (const type of CLIPPY_ENGAGEMENT_EVENTS) {
+        window.removeEventListener(type, arm);
+      }
+      tickRef.current();
+    };
+    for (const type of CLIPPY_ENGAGEMENT_EVENTS) {
+      window.addEventListener(type, arm, { passive: true });
+    }
+    return () => {
+      for (const type of CLIPPY_ENGAGEMENT_EVENTS) {
+        window.removeEventListener(type, arm);
+      }
+    };
+  }, []);
 
   const showing = visible && record.state !== "hidden" && pageKind !== null;
 
@@ -131,7 +161,7 @@ export function ClippyCta() {
     const observer = new ResizeObserver(measure);
     observer.observe(node);
     return () => observer.disconnect();
-  }, [showing, record.state, beatIndex, desktop]);
+  }, [showing, record.state, desktop]);
 
   const onPlaced = useCallback(
     (position: ClippyPosition) => {
@@ -202,7 +232,6 @@ export function ClippyCta() {
       captureAnalytics(to === "hidden" ? "clippy_hidden" : "clippy_collapsed", {
         page_kind: pageKind,
         path,
-        beat: beatIndex + 1,
         visible_ms: Date.now() - shownAtRef.current,
         reason,
       });
@@ -211,7 +240,7 @@ export function ClippyCta() {
         (lastOutsideFocusRef.current ?? document.body).focus?.();
       }
     },
-    [beatIndex, pageKind, path, persist, record],
+    [pageKind, path, persist, record],
   );
 
   // Escape collapses first, then hides. Never fights Radix's own handling.
@@ -225,28 +254,9 @@ export function ClippyCta() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [showing, betaDialogOpen, dismiss, record.state]);
 
-  // The chip vanishes on the last beat, so send focus to the CTA it became.
-  useEffect(() => {
-    if (!pendingFocusRef.current || !isLastBeat) return;
-    pendingFocusRef.current = false;
-    frameRef.current
-      ?.querySelector<HTMLAnchorElement>(".clippy-pill")
-      ?.focus();
-  }, [isLastBeat, beatIndex]);
-
   if (!visible || record.state === "hidden" || !pageKind || !beat) return null;
 
   const open = record.state === "open";
-
-  const advance = () => {
-    captureAnalytics("clippy_advanced", {
-      page_kind: pageKind,
-      path,
-      beat: beatIndex + 2,
-    });
-    if (beatIndex + 1 >= beats.length - 1) pendingFocusRef.current = true;
-    persist({ ...record, beat: beatIndex + 1 });
-  };
 
   const reopen = () => {
     if (drag.consumeSuppressedClick()) return;
@@ -274,19 +284,13 @@ export function ClippyCta() {
     <>
       <p className="clippy-line">{beat.line}</p>
       <div className="clippy-actions">
-        {beat.advance && (
-          <button type="button" className="clippy-chip" onClick={advance}>
-            {beat.advance}
-          </button>
-        )}
         <StartLink
-          source={ctaSource(pageKind, beatIndex)}
+          source={ctaSource(pageKind)}
           className="clippy-pill"
           onClick={() =>
             captureAnalytics("clippy_cta_clicked", {
               page_kind: pageKind,
               path,
-              beat: beatIndex + 1,
               visible_ms: Date.now() - shownAtRef.current,
             })
           }
@@ -318,15 +322,11 @@ export function ClippyCta() {
         {open &&
           (desktop ? (
             <div className="clippy-bubble">
-              <div className="clippy-copy" key={beatIndex}>
-                {copy}
-              </div>
+              <div className="clippy-copy">{copy}</div>
             </div>
           ) : (
             <div className="clippy-card">
-              <div className="clippy-copy" key={beatIndex}>
-                {copy}
-              </div>
+              <div className="clippy-copy">{copy}</div>
               {closeButton}
             </div>
           ))}
@@ -372,8 +372,7 @@ export function ClippyCta() {
         </div>
       </div>
 
-      {/* Stable live region. The visible copy is keyed per beat, and replacing a
-          live region rather than mutating it stops screen readers announcing. */}
+      {/* Stable live region. Replacing it on remount would skip the announcement. */}
       <span className="sr-only" role="status" aria-live="polite">
         {open ? beat.line : ""}
       </span>

@@ -25,9 +25,11 @@ export function ProductHuntBadge({
   useLayoutEffect(() => {
     const face = faceRef.current;
     if (!face) return;
+    // Temporarily disabled on the nav banner — do not delete.
+    if (surface === "banner") return;
     registerPhHoloBadge(face);
     return () => unregisterPhHoloBadge(face);
-  }, [mounted, phase]);
+  }, [mounted, phase, surface]);
 
   if (!mounted || (phase !== "pre" && phase !== "live")) {
     return null;

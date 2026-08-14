@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 
 import { captureAnalytics } from "../analytics/analytics.client";
-import { usePrefersReducedMotion } from "../landing/media";
+// Temporarily unused while the mouse spotlight is disabled — do not delete.
+// import { usePrefersReducedMotion } from "../landing/media";
 import { setPhBannerHeightPx } from "./chrome";
 import { productHuntCopy } from "./config";
 import { ProductHuntBadge } from "./product-hunt-badge";
@@ -14,7 +15,8 @@ import "./product-hunt.css";
  */
 export function ProductHuntBanner() {
   const { mounted, phase, parts, countdownLabel } = useProductHuntPhase();
-  const reducedMotion = usePrefersReducedMotion();
+  // Temporarily unused while the mouse spotlight is disabled — do not delete.
+  // const reducedMotion = usePrefersReducedMotion();
   const barRef = useRef<HTMLDivElement>(null);
   const shownRef = useRef(false);
 
@@ -48,30 +50,31 @@ export function ProductHuntBanner() {
     captureAnalytics("ph_banner_shown", { phase });
   }, [visible, phase]);
 
+  // Temporarily disabled — do not delete. Mouse-follow spotlight on the PH banner.
   // Spotlight tracks the pointer anywhere on the page (not only over the bar).
-  useEffect(() => {
-    if (!visible || reducedMotion) return;
-    const node = barRef.current;
-    if (!node) return;
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-
-    let frame = 0;
-    const onMove = (event: PointerEvent) => {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        const x = (event.clientX / Math.max(window.innerWidth, 1)) * 100;
-        const y = (event.clientY / Math.max(window.innerHeight, 1)) * 100;
-        node.style.setProperty("--mx", `${x}%`);
-        node.style.setProperty("--my", `${y}%`);
-      });
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", onMove);
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, [visible, reducedMotion]);
+  // useEffect(() => {
+  //   if (!visible || reducedMotion) return;
+  //   const node = barRef.current;
+  //   if (!node) return;
+  //   if (window.matchMedia("(pointer: coarse)").matches) return;
+  //
+  //   let frame = 0;
+  //   const onMove = (event: PointerEvent) => {
+  //     if (frame) return;
+  //     frame = requestAnimationFrame(() => {
+  //       frame = 0;
+  //       const x = (event.clientX / Math.max(window.innerWidth, 1)) * 100;
+  //       const y = (event.clientY / Math.max(window.innerHeight, 1)) * 100;
+  //       node.style.setProperty("--mx", `${x}%`);
+  //       node.style.setProperty("--my", `${y}%`);
+  //     });
+  //   };
+  //   window.addEventListener("pointermove", onMove, { passive: true });
+  //   return () => {
+  //     window.removeEventListener("pointermove", onMove);
+  //     if (frame) cancelAnimationFrame(frame);
+  //   };
+  // }, [visible, reducedMotion]);
 
   if (!visible) return null;
 
@@ -89,20 +92,30 @@ export function ProductHuntBanner() {
       aria-label={ariaLabel}
     >
       <div className="ph-banner-inner">
-        <span className="text-[13px] font-semibold leading-5 sm:text-sm">
-          {copy.bannerLead}
+        <span className="ph-banner-lead text-[13px] font-semibold leading-5 sm:text-sm">
+          <span className="ph-banner-lead-short">{copy.bannerLeadShort}</span>
+          <span className="ph-banner-lead-full">{copy.bannerLead}</span>
         </span>
         {phase === "pre" && (
           <span className="ph-countdown" aria-hidden="true">
-            <span className="ph-countdown-unit">{parts.days}d</span>
-            <span className="ph-countdown-unit">
-              {String(parts.hours).padStart(2, "0")}h
+            {/* Narrow phones collapse the four pills into one clock so the
+                strip stays a single line without dropping any unit. */}
+            <span className="ph-countdown-compact">
+              {parts.days}d {String(parts.hours).padStart(2, "0")}:
+              {String(parts.minutes).padStart(2, "0")}:
+              {String(parts.seconds).padStart(2, "0")}
             </span>
-            <span className="ph-countdown-unit">
-              {String(parts.minutes).padStart(2, "0")}m
-            </span>
-            <span className="ph-countdown-unit">
-              {String(parts.seconds).padStart(2, "0")}s
+            <span className="ph-countdown-units">
+              <span className="ph-countdown-unit">{parts.days}d</span>
+              <span className="ph-countdown-unit">
+                {String(parts.hours).padStart(2, "0")}h
+              </span>
+              <span className="ph-countdown-unit">
+                {String(parts.minutes).padStart(2, "0")}m
+              </span>
+              <span className="ph-countdown-unit">
+                {String(parts.seconds).padStart(2, "0")}s
+              </span>
             </span>
           </span>
         )}

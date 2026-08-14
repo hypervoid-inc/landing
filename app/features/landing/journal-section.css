@@ -1,0 +1,323 @@
+/*
+ * "From the build log" — the latest three posts, sitting between the FAQ and
+ * the closing CTA.
+ *
+ * The band is tinted rather than white so the section reads as its own chapter
+ * against the white FAQ above and the white closing ask below, and it fades back
+ * to white at both edges so neither seam draws a line across the page.
+ */
+.journal-section {
+  --journal-mono:
+    ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+
+  position: relative;
+  scroll-margin-top: 4rem;
+  padding: 8px 20px 72px;
+  background: linear-gradient(
+    180deg,
+    #fff 0%,
+    #f2fbfc 12%,
+    #f2fbfc 84%,
+    #fff 100%
+  );
+}
+
+@media (min-width: 1280px) {
+  .journal-section {
+    padding: 32px 64px 104px;
+  }
+}
+
+.journal-inner {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1395px;
+}
+
+.journal-head {
+  border-bottom: 1px solid #dcedf0;
+  padding-bottom: 26px;
+}
+
+@media (min-width: 900px) {
+  .journal-head {
+    padding-bottom: 32px;
+  }
+}
+
+.journal-title {
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 600px) {
+  .journal-title {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1024px) {
+  .journal-title {
+    font-size: clamp(36px, 3.24vw, 51.8px);
+    line-height: 1.12;
+  }
+}
+
+/* Subtitle and View All share one row; the link sits on the right, aligned
+   to the bottom of the line the way the hero's "Book a walkthrough" sits. */
+.journal-head-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: 14px;
+}
+
+.journal-lead {
+  margin: 0;
+  font-size: 15px;
+  line-height: 21px;
+  color: #627c86;
+}
+
+@media (min-width: 900px) {
+  .journal-lead {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1280px) {
+  .journal-lead {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
+
+.journal-view-all {
+  flex: none;
+  gap: 6px;
+  margin-inline-end: 28px;
+  white-space: nowrap;
+}
+
+.journal-arrow {
+  height: 15px;
+  width: 15px;
+  flex: none;
+  transition: transform var(--dur-hover) var(--ease-snap);
+}
+
+.journal-view-all:hover .journal-arrow,
+.journal-view-all:focus-visible .journal-arrow {
+  transform: translateX(3px);
+}
+
+.journal-grid {
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+@media (min-width: 900px) {
+  .journal-grid {
+    margin-top: 34px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+.journal-grid > li {
+  display: flex;
+}
+
+.journal-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e1eef1;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--dur-panel) var(--ease-snap),
+    border-color var(--dur-hover) var(--ease-snap),
+    box-shadow var(--dur-panel) var(--ease-snap);
+}
+
+.journal-card:hover,
+.journal-card:focus-within {
+  transform: translateY(-4px);
+  border-color: #8adcdf;
+  box-shadow: 0 18px 40px rgb(57 148 154 / 14%);
+}
+
+.journal-card-hit {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+.journal-card-visual {
+  overflow: hidden;
+  background: #eaf6f8;
+}
+
+.journal-card-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1200 / 630;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-snap);
+}
+
+.journal-card:hover .journal-card-image,
+.journal-card:focus-within .journal-card-image {
+  transform: scale(1.04);
+}
+
+.journal-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 20px 20px 18px;
+}
+
+.journal-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--journal-mono);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #8a9aa2;
+}
+
+.journal-card-kind {
+  color: var(--color-brand-strong);
+}
+
+.journal-card-sep {
+  color: #b9ccd1;
+}
+
+.journal-card-title {
+  margin-top: 13px;
+  font-family: var(--font-geist);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 25px;
+  letter-spacing: -0.015em;
+  color: #4e4646;
+  transition: color var(--dur-hover) var(--ease-snap);
+}
+
+@media (min-width: 1280px) {
+  .journal-card-title {
+    font-size: 22px;
+    line-height: 27px;
+  }
+}
+
+.journal-card:hover .journal-card-title,
+.journal-card:focus-within .journal-card-title {
+  color: var(--color-brand);
+}
+
+.journal-card-copy {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  margin-top: 10px;
+  font-size: 14.5px;
+  line-height: 21px;
+  color: #627c86;
+}
+
+/* `margin-top: auto` pins the byline to the bottom so three cards of unequal
+   copy still line their author rows up across the row. */
+.journal-card-foot {
+  margin-top: auto;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.journal-card-author {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  line-height: 16px;
+  color: #4e4646;
+}
+
+.journal-card-avatar {
+  height: 28px;
+  width: 28px;
+  flex: none;
+  border-radius: 999px;
+  object-fit: cover;
+  background: #eaf6f8;
+}
+
+.journal-card-read {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--journal-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #9fb3b9;
+  transition: color var(--dur-hover) var(--ease-snap);
+}
+
+.journal-card:hover .journal-card-read,
+.journal-card:focus-within .journal-card-read {
+  color: var(--color-brand);
+}
+
+.journal-card-read .journal-arrow {
+  height: 13px;
+  width: 13px;
+}
+
+.journal-card:hover .journal-card-read .journal-arrow,
+.journal-card:focus-within .journal-card-read .journal-arrow {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journal-card,
+  .journal-card-image,
+  .journal-arrow {
+    transition: none;
+  }
+
+  .journal-card:hover,
+  .journal-card:focus-within,
+  .journal-card:hover .journal-card-image,
+  .journal-card:focus-within .journal-card-image,
+  .journal-view-all:hover .journal-arrow,
+  .journal-view-all:focus-visible .journal-arrow,
+  .journal-card:hover .journal-card-read .journal-arrow,
+  .journal-card:focus-within .journal-card-read .journal-arrow {
+    transform: none;
+  }
+}

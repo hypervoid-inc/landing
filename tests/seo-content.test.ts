@@ -287,6 +287,11 @@ describe("route metadata", () => {
     expect(routeJsonLd(noFaq).some((node) => node["@type"] === "FAQPage")).toBe(
       false,
     );
+
+    const pricing = canonicalRoutes.find(({ path }) => path === "/pricing")!;
+    expect(
+      routeJsonLd(pricing).some((node) => node["@type"] === "FAQPage"),
+    ).toBe(true);
   });
 
   it("every FAQ key maps to a real resource", () => {
