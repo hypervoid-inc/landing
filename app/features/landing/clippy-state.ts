@@ -49,14 +49,16 @@ export function getClippyPageKind(pathname: string): ClippyPageKind | null {
   ) {
     return "blog-browse";
   }
-  return "page";
+  if (kind === "page" || kind === "pricing" || kind === "use-case") {
+    return "page";
+  }
+  const _exhaustive: never = kind;
+  return _exhaustive;
 }
 
 export type ClippyBeat = {
   /** Speech bubble copy. Clamped to 2 lines in a ~248px bubble, so cap at 70 chars. */
   readonly line: string;
-  /** Reply chip label. Absent on the final beat, where only the CTA remains. */
-  readonly advance?: string;
 };
 
 export const CLIPPY_CTA_LABEL = "Try Construct";
@@ -77,35 +79,22 @@ const OPENERS: Record<ClippyPageKind, string> = {
   page: "It looks like you're exploring Construct. Want to try it?",
 };
 
-const SHARED_BEATS: readonly ClippyBeat[] = [
-  {
-    line: "I am Construct, your AI employee with a cloud computer.",
-    advance: "Show me",
-  },
-  { line: "Research, inbox, reports, done while your hours go elsewhere." },
-];
-
 export function beatsFor(pageKind: ClippyPageKind): readonly ClippyBeat[] {
-  return [
-    { line: OPENERS[pageKind], advance: "What are you?" },
-    ...SHARED_BEATS,
-  ];
+  return [{ line: OPENERS[pageKind] }];
 }
 
 /** Every reader facing string, for the house style dash check. */
 export const clippyCopy: readonly string[] = [
   ...Object.values(OPENERS),
-  ...SHARED_BEATS.flatMap((beat) => [beat.line, beat.advance ?? ""]),
-  "What are you?",
   CLIPPY_CTA_LABEL,
   CLIPPY_MINIMIZE_LABEL,
   CLIPPY_REOPEN_LABEL,
   CLIPPY_HIDE_LABEL,
 ];
 
-/** Threaded into StartLink analytics so the auth funnel shows which beat converts. */
-export function ctaSource(pageKind: ClippyPageKind, beat: number): string {
-  return `clippy_${pageKind.replace("-", "_")}_${beat + 1}`;
+/** Threaded into StartLink analytics so the auth funnel shows which page converts. */
+export function ctaSource(pageKind: ClippyPageKind): string {
+  return `clippy_${pageKind.replace("-", "_")}_1`;
 }
 
 export type ClippyTimer = {
@@ -135,17 +124,40 @@ export function tickClippyTimer(
   return { elapsedMs: timer.elapsedMs + delta, lastTickMs: now };
 }
 
+/**
+ * Click, key, or wheel. Hover and scroll-restoration do not count: pointermove
+ * would fire on every desktop landing, and `scroll` fires when React Router
+ * restores position.
+ */
+export const CLIPPY_ENGAGEMENT_EVENTS = [
+  "pointerdown",
+  "keydown",
+  "wheel",
+] as const;
+
+export function shouldRevealClippy(input: {
+  readonly hasInteracted: boolean;
+  readonly elapsedMs: number;
+  readonly delayMs: number;
+  readonly dwellMs: number;
+  readonly minDwellMs: number;
+}): boolean {
+  return (
+    input.hasInteracted &&
+    input.elapsedMs >= input.delayMs &&
+    input.dwellMs >= input.minDwellMs
+  );
+}
+
 export type ClippyVisibleState = "open" | "collapsed" | "hidden";
 
 export type ClippyRecord = {
   readonly state: ClippyVisibleState;
-  readonly beat: number;
   readonly position: { readonly x: number; readonly y: number } | null;
 };
 
 export const initialClippyRecord: ClippyRecord = {
   state: "open",
-  beat: 0,
   position: null,
 };
 

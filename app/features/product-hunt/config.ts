@@ -50,6 +50,8 @@ export function productHuntCopy(phase: "pre" | "live") {
       eyebrow: "Launching on Product Hunt",
       cta: "Follow our launch",
       bannerLead: "Launching on Product Hunt in",
+      // Narrow phones: the badge beside it already reads "Product Hunt".
+      bannerLeadShort: "Launching in",
       homepageLead:
         "We’re launching on Product Hunt soon. Follow Construct so you don’t miss day one.",
       launchSecondary: "Follow our Product Hunt launch",
@@ -59,6 +61,7 @@ export function productHuntCopy(phase: "pre" | "live") {
     eyebrow: "Live on Product Hunt",
     cta: "Upvote our launch",
     bannerLead: "We’re live on Product Hunt",
+    bannerLeadShort: "We’re live on Product Hunt",
     homepageLead:
       "We’re live on Product Hunt. Your upvote helps more founders find Construct.",
     launchSecondary: "Upvote our Product Hunt launch",

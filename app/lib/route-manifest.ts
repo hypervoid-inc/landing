@@ -1,5 +1,6 @@
 import { resourceEntries } from "../content/resources";
 import { listedAuthors, type Author } from "../content/authors";
+import { useCases } from "../content/use-cases";
 
 export const siteUrl = "https://construct.computer";
 
@@ -13,6 +14,8 @@ export const siteRevised = "2026-08-03";
 export type RouteKind =
   | "home"
   | "page"
+  | "pricing"
+  | "use-case"
   | "blog-index"
   | "blog-post"
   | "guide"
@@ -149,6 +152,34 @@ export const canonicalRoutes: readonly CanonicalRoute[] = [
     lastModified: siteRevised,
     imageVersion: "2",
   }),
+  route({
+    path: "/pricing",
+    title: "Simple Pricing for an AI Employee | Construct",
+    displayTitle: "Simple Pricing",
+    description:
+      "Plans for solo founders and small teams. Lite, Starter, and Pro from $9/month, with a 7-day Pro trial, annual savings, and enterprise options.",
+    kind: "pricing",
+    lastModified: "2026-08-14",
+  }),
+  route({
+    path: "/use-cases",
+    title: "Use Cases for an AI Employee | Construct",
+    displayTitle: "Use Cases",
+    description:
+      "How Construct encodes workflows, builds internal tools, schedules jobs, shares a team workspace, inspects memory, works across channels, and delivers cited research.",
+    kind: "use-case",
+    lastModified: "2026-08-14",
+  }),
+  ...useCases.map((entry) =>
+    route({
+      path: `/use-cases/${entry.slug}`,
+      title: entry.seoTitle,
+      displayTitle: entry.title,
+      description: entry.description,
+      kind: "use-case",
+      lastModified: "2026-08-14",
+    }),
+  ),
   route({
     path: "/about",
     title: "About - Construct Computer",

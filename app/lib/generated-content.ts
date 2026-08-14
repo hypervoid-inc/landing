@@ -137,7 +137,13 @@ function llmsFull(): string {
     "## Company pages",
     "",
     ...canonicalRoutes
-      .filter(({ kind }) => kind === "home" || kind === "page")
+      .filter(
+        ({ kind }) =>
+          kind === "home" ||
+          kind === "page" ||
+          kind === "pricing" ||
+          kind === "use-case",
+      )
       .map(
         (route) =>
           `- [${route.displayTitle ?? route.title}](${route.canonical}): ${route.description}`,

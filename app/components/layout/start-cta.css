@@ -1,0 +1,137 @@
+/**
+ * Start CTA — the black nav pill treated as a small screen.
+ *
+ * Three states, all built from the brand cyan the logo already uses:
+ *   idle    a lit black surface, quiet
+ *   hover   the pill glows from inside and one band of light sweeps across it
+ *   press   a power-on ring leaves the pill's edge
+ *
+ * Press / lift / background come from `.site-cta` in app.css; everything here
+ * layers on top of that shared vocabulary rather than replacing it.
+ */
+.start-cta {
+  position: relative;
+  /* A hairline of light along the top edge so the pill reads as a lit
+     surface rather than a flat black cut-out. */
+  background-image: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 12%),
+    rgb(255 255 255 / 0%) 46%
+  );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 14%),
+    0 4px 12px rgb(0 0 0 / 16%);
+}
+
+/* The power-on ring. Lives on the pill itself, so it is free to expand past
+   the edge while the sweep stays clipped to its own box. */
+.start-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgb(1 180 200 / 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.start-cta-sheen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.start-cta-sheen::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  bottom: -60%;
+  left: -70%;
+  width: 42%;
+  transform: skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    rgb(126 240 255 / 0%),
+    rgb(126 240 255 / 45%),
+    rgb(126 240 255 / 0%)
+  );
+  opacity: 0;
+}
+
+/* Above the sweep, which is painted across the whole pill. */
+.start-cta-label {
+  position: relative;
+  white-space: nowrap;
+  transition: text-shadow var(--dur-hover) var(--ease-snap);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .start-cta:hover {
+    /* Cyan bled into the lift shadow: the machine is answering, not just
+       rising off the page. */
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 18%),
+      inset 0 0 18px rgb(1 180 200 / 22%),
+      0 6px 16px rgb(0 0 0 / 20%),
+      0 4px 18px rgb(1 180 200 / 22%);
+  }
+
+  .start-cta:hover .start-cta-label {
+    text-shadow: 0 0 12px rgb(126 240 255 / 55%);
+  }
+
+  .start-cta:hover .start-cta-sheen::after {
+    animation: start-cta-sweep 620ms var(--ease-snap);
+  }
+}
+
+/* Press / power-on ------------------------------------------------------- */
+
+.start-cta-booting::after {
+  animation: start-cta-power-on 620ms var(--ease-snap);
+}
+
+.start-cta-booting .start-cta-sheen::after {
+  animation: start-cta-sweep 620ms var(--ease-snap);
+}
+
+.start-cta-booting .start-cta-label {
+  text-shadow: 0 0 14px rgb(126 240 255 / 75%);
+}
+
+@keyframes start-cta-sweep {
+  from {
+    left: -70%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  to {
+    left: 120%;
+    opacity: 0;
+  }
+}
+
+@keyframes start-cta-power-on {
+  from {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.28);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the colour states — they carry the meaning — and drop the travel. */
+  .start-cta-sheen::after,
+  .start-cta:hover .start-cta-sheen::after,
+  .start-cta-booting .start-cta-sheen::after,
+  .start-cta-booting::after {
+    animation: none;
+  }
+}

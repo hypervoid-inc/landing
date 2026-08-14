@@ -1,6 +1,10 @@
 import type { Properties } from "posthog-js";
 
 import { scrubNetworkCapture } from "./scrub-network-capture";
+import {
+  pinPopoverSurveyAppearance,
+  watchPostHogSurveyHosts,
+} from "./survey-position";
 
 type AnalyticsEvent =
   | "app_opened"
@@ -11,7 +15,6 @@ type AnalyticsEvent =
   | "beta_opened"
   | "affiliate_link_clicked"
   | "clippy_shown"
-  | "clippy_advanced"
   | "clippy_cta_clicked"
   | "clippy_collapsed"
   | "clippy_reopened"
@@ -70,7 +73,8 @@ function resolvePostHogHost(): string {
   return configured === POSTHOG_PROXY ? configured : POSTHOG_PROXY;
 }
 
-type PostHogClient = typeof import("posthog-js/dist/module.full.no-external").default;
+type PostHogClient =
+  typeof import("posthog-js/dist/module.full.no-external").default;
 
 let postHogPromise: Promise<PostHogClient | null> | null = null;
 
@@ -81,9 +85,8 @@ export function initializeAnalytics() {
     if (!import.meta.env.PROD || !key) return null;
 
     // Pre-bundle replay/surveys/exceptions — proxy lazy-load stuck at lazy_loading.
-    const { default: posthog } = await import(
-      "posthog-js/dist/module.full.no-external"
-    );
+    const { default: posthog } =
+      await import("posthog-js/dist/module.full.no-external");
     // ponytail: intentional max capture for product ops — unmask + network bodies.
     // Ceiling: PII in replay/network (incl. beta email); tighten via masks + project scrubbing.
     // Credentials are the hard line: `scrubNetworkCapture` drops password and BYOK
@@ -137,6 +140,14 @@ export function initializeAnalytics() {
         events_burst_limit: 500,
       },
     });
+    // Popovers default to bottom-right and render inside open shadow DOM, so
+    // rewrite appearance.position and inject a host stylesheet. See survey-position.ts.
+    posthog.onSurveysLoaded((surveys) => {
+      pinPopoverSurveyAppearance(surveys);
+    });
+    if (document.body) {
+      watchPostHogSurveyHosts(document.body);
+    }
     return posthog;
   })();
   return postHogPromise;

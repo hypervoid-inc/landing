@@ -12,45 +12,42 @@
 
 ## Product FAQ
 
-**Who is Construct for?**
-
-Solo founders, early startups, and small businesses that need ops leverage without adding headcount or a full automation stack. If growth is capped by what you personally have time to touch, Construct is built for that gap.
-
-**What is an AI employee?**
-
-An AI employee is an agent that can accept an outcome, choose tools, and complete multi-step work. Construct gives that agent a persistent workspace for files, memory, and schedules. It also provides reusable workflows, a native inbox, connected apps, live browser runs, and a sandbox terminal.
-
 **How is Construct different from ChatGPT or Claude?**
 
-Chat assistants are excellent for answers and drafts. Construct is built for execution that persists beyond a thread: it can create files, run scheduled jobs, reuse linear workflows, and keep inspectable memory, chat tool records, and a full Activity audit log in one web desktop.
+Chat assistants are built for answers and drafts inside a thread. Construct is built for work that outlives the thread: it keeps a persistent workspace with files, memory, and schedules, runs jobs on its own, and records every action in an Activity audit log you can read afterwards.
 
-**What work can Construct complete?**
+**What work can it actually complete?**
 
-Construct can research and write cited reports, analyze workspace files, read and send native email, use connected Gmail actions, update supported applications, run scripts, create artifacts, and delegate bounded subtasks to temporary agents. It is most useful when a job crosses several tools or needs to run again later.
+Research and cited reports, analysis of files in your workspace, reading and sending native email, updating connected apps, running scripts, building internal tools, and delegating bounded subtasks to temporary agents. It earns its keep when a job crosses several tools or has to run again next week.
 
-**Can Construct run recurring work?**
+**Which apps can it connect to?**
 
-Yes. Construct's native Calendar schedules one-time or recurring agent jobs and workflow runs. You or the agent can encode a repeatable process as a reusable, versioned workflow. Each workflow can contain agent steps, connected-app actions, and in-app notifications.
+Construct reads supported applications from its live integration catalog, including Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable, and you can add your own MCP tools. You can message it from Slack and Telegram directly, and from Discord using slash commands.
 
-**Which apps can Construct connect to?**
+**Can I see and control what it does?**
 
-Construct discovers supported applications from its live integration catalog, including tools such as Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable. You can also connect custom MCP tools. Slack and Telegram accept direct messages; Discord currently uses slash commands.
+Yes. The desktop shows files, live browser activity, terminal transcripts, workflows, memories, and tool records. Activity is a full audit log of every action, what it touched, when it ran, and why. You can interrupt a run mid turn, answer its questions, and correct or delete anything it remembers.
 
-**Can I see and control what the agent does?**
+**Do you train on my data?**
 
-Yes. The web desktop exposes files, live browser activity, terminal transcripts, workflows, memories, notifications, and chat tool records. Activity is a full audit log: every action the agent takes, what it affected, when it ran, and why. You can inspect results, interrupt a running turn, answer questions, and correct or forget long-term memory.
+No. You own the files, memories, and apps your agent produces, and the licence you grant Construct covers storing, processing, and displaying that content solely to run the service for you. Workspaces use scoped file, memory, and sandbox resources, stored model keys and bot credentials are encrypted, and closing your account deletes the workspace data.
 
-**Is my data private and secure?**
+**What happens when a job fails partway through?**
 
-Personal and team workspaces use scoped file, memory, and sandbox resources. Team members intentionally share team resources. Construct-stored model keys and Slack or Discord bot credentials are encrypted, while Composio manages its own OAuth connections. Activity keeps an audit log of every agent action with what it affected, when it ran, and why.
-
-**How is Construct priced?**
-
-Construct offers Lite ($9/month) to try Construct yourself, Starter ($59/month) for daily agent work with native email and schedules, and Pro ($299/month) for deeper runs and BYOK. Annual billing lowers the monthly equivalent, with up to 4 months free on Starter and Pro. Plans increase task steps, concurrent temporary-agent jobs, storage, and scheduled-job capacity. Native agent email starts on Starter. Check the current pricing page before purchasing.
+Finished work lands in the workspace as it is produced, so a run that dies at step thirty keeps the first twenty-nine steps. The next run picks up from what already exists instead of starting over, and Activity lets you trace the failure to a step. Steps with irreversible external effects, such as a payment or a customer email, still need supervision before you let them run unattended.
 
 ## Company pages
 
 - [AI Employee for Solo Founders and Small Teams | Construct](https://construct.computer/): AI employee for startups, small businesses, and solo founders. Own cloud computer, your tools connected, work that finishes while you are away. From $9/month.
+- [Simple Pricing](https://construct.computer/pricing/): Plans for solo founders and small teams. Lite, Starter, and Pro from $9/month, with a 7-day Pro trial, annual savings, and enterprise options.
+- [Use Cases](https://construct.computer/use-cases/): How Construct encodes workflows, builds internal tools, schedules jobs, shares a team workspace, inspects memory, works across channels, and delivers cited research.
+- [Stop rebuilding the same process every Monday](https://construct.computer/use-cases/workflows/): Encode a process once with agent steps, connected apps, and notifications. Version it, schedule it, and anyone on the team can run the same outcome again.
+- [Replace the spreadsheet that became the product](https://construct.computer/use-cases/internal-tools/): Describe the tool your team needs. Construct writes, validates, and publishes a working internal app into your cloud desktop instead of leaving you with another shared sheet.
+- [Reminders do not finish the work](https://construct.computer/use-cases/scheduling/): Schedule an agent prompt, connected-app action, or complete workflow. Construct runs it once or on a cadence and keeps the result history instead of another unread reminder.
+- [One AI employee is not a team product until the team can share it](https://construct.computer/use-cases/team-workspaces/): Bring people, your AI employee, files, apps, and shared conversations into one workspace, with invitations, roles, and access controls that match how the company actually works.
+- [Chat history is not memory you can audit](https://construct.computer/use-cases/memory/): Preferences, decisions, and project context stay with evidence and history. Review, correct, or forget anything Construct learns so nothing important lives only in a thread.
+- [The work is not waiting in a browser tab](https://construct.computer/use-cases/channels/): Message Construct from the web, Slack, Telegram, Discord slash commands, or its native email inbox. Routing and access policies vary by channel so the same agent does not become a leak.
+- [A search dump is not a brief you can send](https://construct.computer/use-cases/research/): Construct gathers sources, compares details, and turns a messy question into cited research a founder can review, correct, or forward without rebuilding the argument.
 - [About - Construct Computer](https://construct.computer/about/): Construct builds an AI employee for solo founders and small teams: own cloud computer, memory, schedules, workflows, browser and terminal tools, and connected apps.
 - [Careers - Construct Computer](https://construct.computer/careers/): Construct isn't actively hiring, but we'd love to hear from people who want to build AI agents, work interfaces, memory systems, and reliable execution tools.
 - [Affiliate Program - Construct Computer](https://construct.computer/affiliates/): Partner with Construct. First 25 affiliates earn 50% of referred revenue for up to 12 months; then the rate drops to 20%. Apply via PartnerStack.

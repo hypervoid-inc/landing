@@ -496,6 +496,9 @@ function AccessDialog({
             }
           }}
           className="beta-dialog-content fixed left-1/2 top-1/2 z-[101] w-[calc(100%_-_2rem)] max-w-[420px] -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-[28px] border border-[#d9f8ff]/80 bg-white px-8 py-9 font-sans text-[#4e4646] shadow-[0_24px_80px_rgba(1,180,200,.18)] focus:outline-none"
+          {...(phase === "form" && mode === "auth" && intent === "start"
+            ? { "aria-describedby": undefined }
+            : {})}
         >
           {phase === "form" && mode === "auth" ? (
             <>
@@ -523,11 +526,11 @@ function AccessDialog({
                   </>
                 )}
               </Dialog.Title>
-              <Dialog.Description className="mt-3 text-center text-[15px] leading-[21px] text-[#627c86]">
-                {intent === "start"
-                  ? "Continue with Google, or get a code by email. If you're new, this creates your account."
-                  : "Sign in with the same account you use for Construct OS."}
-              </Dialog.Description>
+              {intent === "start" ? null : (
+                <Dialog.Description className="mt-3 text-center text-[15px] leading-[21px] text-[#627c86]">
+                  Sign in with the same account you use for Construct OS.
+                </Dialog.Description>
+              )}
               <AuthSignInForm
                 appearance="dialog"
                 onSuccess={handleAuthSuccess}
@@ -610,7 +613,7 @@ function AccessDialog({
                         aria-pressed={referral === id}
                         disabled={submitting}
                         onClick={() => setReferral(id)}
-                        className={`rounded-full border px-3 py-1.5 text-xs font-medium ${referral === id ? "border-[#4cd8ff] bg-[#4cd8ff] font-black text-white" : "border-[#c5e8ef] bg-[#f8feff]"}`}
+                        className={`rounded-full border px-3 py-1.5 text-xs font-medium ${referral === id ? "border-brand bg-brand font-black text-white" : "border-[#c5e8ef] bg-[#f8feff]"}`}
                       >
                         {label}
                       </button>

@@ -82,51 +82,42 @@ export const pricingPlans = [
   features: ReadonlyArray<readonly [string, PricingIcon]>;
 }>;
 
+/**
+ * Six questions a buyer actually has to answer before paying, in the order
+ * they tend to ask them. Deliberately excludes anything the page already
+ * answers: pricing sits directly above this section, and the walkthrough
+ * covers scheduling and workflows.
+ */
 export const landingFaq = [
-  {
-    question: "Who is Construct for?",
-    answer:
-      "Solo founders, early startups, and small businesses that need ops leverage without adding headcount or a full automation stack. If growth is capped by what you personally have time to touch, Construct is built for that gap.",
-  },
-  {
-    question: "What is an AI employee?",
-    answer:
-      "An AI employee is an agent that can accept an outcome, choose tools, and complete multi-step work. Construct gives that agent a persistent workspace for files, memory, and schedules. It also provides reusable workflows, a native inbox, connected apps, live browser runs, and a sandbox terminal.",
-  },
   {
     question: "How is Construct different from ChatGPT or Claude?",
     answer:
-      "Chat assistants are excellent for answers and drafts. Construct is built for execution that persists beyond a thread: it can create files, run scheduled jobs, reuse linear workflows, and keep inspectable memory, chat tool records, and a full Activity audit log in one web desktop.",
+      "Chat assistants are built for answers and drafts inside a thread. Construct is built for work that outlives the thread: it keeps a persistent workspace with files, memory, and schedules, runs jobs on its own, and records every action in an Activity audit log you can read afterwards.",
   },
   {
-    question: "What work can Construct complete?",
+    question: "What work can it actually complete?",
     answer:
-      "Construct can research and write cited reports, analyze workspace files, read and send native email, use connected Gmail actions, update supported applications, run scripts, create artifacts, and delegate bounded subtasks to temporary agents. It is most useful when a job crosses several tools or needs to run again later.",
+      "Research and cited reports, analysis of files in your workspace, reading and sending native email, updating connected apps, running scripts, building internal tools, and delegating bounded subtasks to temporary agents. It earns its keep when a job crosses several tools or has to run again next week.",
   },
   {
-    question: "Can Construct run recurring work?",
+    question: "Which apps can it connect to?",
     answer:
-      "Yes. Construct's native Calendar schedules one-time or recurring agent jobs and workflow runs. You or the agent can encode a repeatable process as a reusable, versioned workflow. Each workflow can contain agent steps, connected-app actions, and in-app notifications.",
+      "Construct reads supported applications from its live integration catalog, including Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable, and you can add your own MCP tools. You can message it from Slack and Telegram directly, and from Discord using slash commands.",
   },
   {
-    question: "Which apps can Construct connect to?",
+    question: "Can I see and control what it does?",
     answer:
-      "Construct discovers supported applications from its live integration catalog, including tools such as Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable. You can also connect custom MCP tools. Slack and Telegram accept direct messages; Discord currently uses slash commands.",
+      "Yes. The desktop shows files, live browser activity, terminal transcripts, workflows, memories, and tool records. Activity is a full audit log of every action, what it touched, when it ran, and why. You can interrupt a run mid turn, answer its questions, and correct or delete anything it remembers.",
   },
   {
-    question: "Can I see and control what the agent does?",
+    question: "Do you train on my data?",
     answer:
-      "Yes. The web desktop exposes files, live browser activity, terminal transcripts, workflows, memories, notifications, and chat tool records. Activity is a full audit log: every action the agent takes, what it affected, when it ran, and why. You can inspect results, interrupt a running turn, answer questions, and correct or forget long-term memory.",
+      "No. You own the files, memories, and apps your agent produces, and the licence you grant Construct covers storing, processing, and displaying that content solely to run the service for you. Workspaces use scoped file, memory, and sandbox resources, stored model keys and bot credentials are encrypted, and closing your account deletes the workspace data.",
   },
   {
-    question: "Is my data private and secure?",
+    question: "What happens when a job fails partway through?",
     answer:
-      "Personal and team workspaces use scoped file, memory, and sandbox resources. Team members intentionally share team resources. Construct-stored model keys and Slack or Discord bot credentials are encrypted, while Composio manages its own OAuth connections. Activity keeps an audit log of every agent action with what it affected, when it ran, and why.",
-  },
-  {
-    question: "How is Construct priced?",
-    answer:
-      "Construct offers Lite ($9/month) to try Construct yourself, Starter ($59/month) for daily agent work with native email and schedules, and Pro ($299/month) for deeper runs and BYOK. Annual billing lowers the monthly equivalent, with up to 4 months free on Starter and Pro. Plans increase task steps, concurrent temporary-agent jobs, storage, and scheduled-job capacity. Native agent email starts on Starter. Check the current pricing page before purchasing.",
+      "Finished work lands in the workspace as it is produced, so a run that dies at step thirty keeps the first twenty-nine steps. The next run picks up from what already exists instead of starting over, and Activity lets you trace the failure to a step. Steps with irreversible external effects, such as a payment or a customer email, still need supervision before you let them run unattended.",
   },
 ] as const;
 

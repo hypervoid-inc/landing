@@ -1,9 +1,9 @@
 /*
  * Ported from the v2 desktop app's Clippy widget (v2 globals.css 107-506), minus
- * the agent-state glows and plus a conversation, a dismiss affordance, and a
- * mobile card. The sprite crop percentages and the 9.6s/13.1s ambient pair are
- * verbatim from v2 and should not be "tidied": the mismatched periods are what
- * stop the motion looking looped.
+ * the agent-state glows and plus a dismiss affordance and a mobile card. The
+ * sprite crop percentages and the 9.6s/13.1s ambient pair are verbatim from v2
+ * and should not be "tidied": the mismatched periods are what stop the motion
+ * looking looped.
  */
 
 .clippy-widget {
@@ -162,27 +162,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   pointer-events: auto;
-}
-
-/* Both actions are plain white pills. Weight is the only hierarchy. */
-.clippy-chip {
-  height: 30px;
-  padding: 0 14px;
-  border: 1px solid #e5e7eb;
-  border-radius: 999px;
-  background: #fff;
-  color: #111;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color 160ms ease;
-}
-
-.clippy-chip:hover {
-  background: #f3f3f3;
 }
 
 /*
@@ -228,9 +208,8 @@
 }
 
 /*
- * The sprite peeks over the card's corner rather than standing beside it. Side
- * by side leaves roughly 250px of inner card width at 390px wide, which is not
- * enough for the chip and the CTA on one row.
+ * The sprite peeks over the card's corner rather than standing beside it, so
+ * the line and the CTA keep the full inner width.
  */
 .clippy-widget[data-variant="mobile"] .clippy-frame {
   display: block;
@@ -283,18 +262,13 @@
   padding-right: 24px;
   text-align: left;
   text-shadow: none;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 2;
 }
 
-/* Stacked and full width, primary first. Two pills side by side do not fit a
-   360px card once the labels are real sentences. */
 .clippy-card .clippy-actions {
-  flex-direction: column-reverse;
-  align-items: stretch;
   margin-top: 14px;
 }
 
-.clippy-card .clippy-chip,
 .clippy-card .clippy-pill {
   width: 100%;
   height: 44px;
@@ -499,5 +473,4 @@
     opacity: 1;
     transform: none;
   }
-
 }

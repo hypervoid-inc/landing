@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   CLIPPY_DELAY_MS,
+  CLIPPY_MIN_DWELL_MS,
   beatsFor,
   clippyCopy,
   ctaSource,
@@ -9,6 +10,7 @@ import {
   initialClippyTimer,
   resetClippyDelayOverride,
   resolveClippyDelay,
+  shouldRevealClippy,
   tickClippyTimer,
   type ClippyPageKind,
 } from "./clippy-state";
@@ -30,6 +32,9 @@ describe("clippy page kinds", () => {
     expect(getClippyPageKind("/blog/construct-vs-zapier/")).toBe("blog-post");
     expect(getClippyPageKind("/about/")).toBe("page");
     expect(getClippyPageKind("/careers/")).toBe("page");
+    expect(getClippyPageKind("/pricing/")).toBe("page");
+    expect(getClippyPageKind("/use-cases/")).toBe("page");
+    expect(getClippyPageKind("/use-cases/memory/")).toBe("page");
   });
 
   it("treats both trailing slash forms the same", () => {
@@ -54,13 +59,11 @@ describe("clippy page kinds", () => {
 });
 
 describe("clippy script", () => {
-  it("runs three beats for every page kind, with a chip on all but the last", () => {
+  it("runs one line for every page kind, with no advance chip", () => {
     for (const kind of pageKinds) {
       const beats = beatsFor(kind);
-      expect(beats, kind).toHaveLength(3);
-      expect(beats[0]?.advance, kind).toBeTruthy();
-      expect(beats[1]?.advance, kind).toBeTruthy();
-      expect(beats[2]?.advance, kind).toBeUndefined();
+      expect(beats, kind).toHaveLength(1);
+      expect(beats[0]?.line, kind).toBeTruthy();
     }
   });
 
@@ -71,8 +74,9 @@ describe("clippy script", () => {
 
   /**
    * The desktop bubble sizes to its content but caps at ~288px, leaving roughly
-   * 248px of inner width and two clamped lines. Longer copy is silently
-   * truncated with an ellipsis rather than wrapping, so the ceiling is real.
+   * 248px of inner width and two clamped lines. Mobile uses the same clamp.
+   * Longer copy is silently truncated with an ellipsis rather than wrapping,
+   * so the ceiling is real.
    */
   it("keeps every line inside the two line clamp budget", () => {
     for (const kind of pageKinds) {
@@ -86,9 +90,9 @@ describe("clippy script", () => {
     expect(clippyCopy.join(" ")).not.toMatch(/[–—]/);
   });
 
-  it("names the analytics source by page kind and beat", () => {
-    expect(ctaSource("blog-post", 0)).toBe("clippy_blog_post_1");
-    expect(ctaSource("home", 2)).toBe("clippy_home_3");
+  it("names the analytics source by page kind", () => {
+    expect(ctaSource("blog-post")).toBe("clippy_blog_post_1");
+    expect(ctaSource("home")).toBe("clippy_home_1");
   });
 });
 
@@ -119,6 +123,33 @@ describe("clippy dwell timer", () => {
     let timer = tickClippyTimer(initialClippyTimer, 0, true);
     timer = tickClippyTimer(timer, 3_600_000, true);
     expect(timer.elapsedMs).toBe(2_000);
+  });
+});
+
+describe("clippy reveal gate", () => {
+  const ready = {
+    elapsedMs: CLIPPY_DELAY_MS,
+    delayMs: CLIPPY_DELAY_MS,
+    dwellMs: CLIPPY_MIN_DWELL_MS,
+    minDwellMs: CLIPPY_MIN_DWELL_MS,
+  };
+
+  it("stays closed until the reader has interacted", () => {
+    expect(shouldRevealClippy({ ...ready, hasInteracted: false })).toBe(false);
+  });
+
+  it("opens once dwell, delay, and a first interaction are all met", () => {
+    expect(shouldRevealClippy({ ...ready, hasInteracted: true })).toBe(true);
+  });
+
+  it("still waits for the delay after an interaction", () => {
+    expect(
+      shouldRevealClippy({
+        ...ready,
+        hasInteracted: true,
+        elapsedMs: CLIPPY_DELAY_MS - 1,
+      }),
+    ).toBe(false);
   });
 });
 

@@ -32,8 +32,17 @@
   "careers": "7e451e0ce5a27d3e",
   "editorial-policy": "45e54a44afdfbf3c",
   "home": "4f9e07452649cefd",
+  "pricing": "6283e0f21efab0dd",
   "privacy": "2b369dcbe3ee3411",
   "sub-processors": "846d899ca26d4a34",
   "support": "d843f5a66a4324bd",
-  "terms": "76c2686679dee480"
+  "terms": "76c2686679dee480",
+  "use-cases": "6bc219fc87fd1f86",
+  "use-cases-channels": "05f16517e5b93dbe",
+  "use-cases-internal-tools": "9e3d5d9984157b8e",
+  "use-cases-memory": "3a467a050f28aaf6",
+  "use-cases-research": "04436b036b9c5809",
+  "use-cases-scheduling": "b9ac7950790edeb4",
+  "use-cases-team-workspaces": "61a6b63b7ff813f2",
+  "use-cases-workflows": "5cabd7d19b11e8b0"
 }

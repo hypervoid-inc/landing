@@ -64,6 +64,8 @@ export type PosterCard = {
 const eyebrowLabels: Record<RouteKind, string> = {
   home: "AI EMPLOYEE",
   page: "COMPANY",
+  pricing: "PRICING",
+  "use-case": "USE CASE",
   "blog-index": "LIBRARY",
   "blog-post": "ARTICLE",
   guide: "GUIDE",
@@ -143,6 +145,52 @@ export const ogPosters: Record<string, PosterCard> = {
     headline: ["TERMS AND", "CONDITIONS"],
     scene:
       "The mascot sitting on top of a thick bound contract lying closed, a heavy bulldog clip along its edge and a plain wax seal set on the cover beside it.",
+  },
+
+  pricing: {
+    headline: ["SIMPLE", "PRICING"],
+    scene:
+      "The mascot sitting on top of a mechanical price gun lying on its side, a short stack of peel-off price stickers fanned beside it and one sticker half applied to a closed cardboard box.",
+  },
+  "use-cases": {
+    headline: ["USE CASES"],
+    scene:
+      "The mascot sitting on top of a fan of seven labelled hanging folders spread across a desk blotter, the nearest tab lifted just clear of the rest.",
+  },
+  "use-cases-workflows": {
+    headline: ["ENCODE THE", "PROCESS ONCE"],
+    scene:
+      "The mascot sitting on top of a fanfold procedure binder standing open to a typed checklist, a rubber date stamp resting on the facing page.",
+  },
+  "use-cases-internal-tools": {
+    headline: ["TOOLS BUILT", "IN YOUR", "WORKSPACE"],
+    scene:
+      "The mascot sitting on top of a small assembled switchboard panel standing upright on the bench, a parts tray of spare knobs and a screwdriver laid out below it.",
+  },
+  "use-cases-scheduling": {
+    headline: ["SCHEDULE THE", "OUTCOME"],
+    scene:
+      "The mascot sitting on top of a mechanical desk calendar with today's leaf flipped forward, a wound brass timer standing beside it and a stamped job ticket in the tray below.",
+  },
+  "use-cases-team-workspaces": {
+    headline: ["ONE WORKSPACE", "FOR THE TEAM"],
+    scene:
+      "The mascot sitting on top of a shared steel inbox tray holding three identical in-trays stacked, a set of unused desk nameplates lined along the front edge.",
+  },
+  "use-cases-memory": {
+    headline: ["MEMORY YOU", "CAN INSPECT"],
+    scene:
+      "The mascot sitting on top of a wooden card-index cabinet with one drawer pulled open, a single typed card clipped to a review flag standing in the tray.",
+  },
+  "use-cases-channels": {
+    headline: ["WORK ACROSS", "CHANNELS"],
+    scene:
+      "The mascot sitting on top of a beige desk intercom with three channel buttons, a coiled handset cord and a separate wall phone jack plate lying beside it.",
+  },
+  "use-cases-research": {
+    headline: ["RESEARCH YOU", "CAN SEND"],
+    scene:
+      "The mascot sitting on top of a finished bound briefing folder with a metal paper fastener through the spine, a stack of source photocopies clipped beside it.",
   },
 
   blog: {

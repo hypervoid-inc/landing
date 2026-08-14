@@ -3,27 +3,13 @@ import { Link, useLocation } from "react-router";
 
 import { companyLinks, comparisonLinks } from "../../content/landing";
 import { useAuth } from "../../features/auth/auth-provider";
-import { StartLink } from "../../features/landing/beta-access";
 import { NewsletterForm } from "../../features/landing/newsletter-form";
 import { setSiteChromeHeightPx } from "../../features/product-hunt/chrome";
 import { ProductHuntBadge } from "../../features/product-hunt/product-hunt-badge";
 import { ProductHuntBanner } from "../../features/product-hunt/product-hunt-banner";
+import { StartCta } from "./start-cta";
 import { UserMenu } from "./user-menu";
-
-function navCurrent(pathname: string, href: string): "page" | undefined {
-  if (href.startsWith("/#")) return undefined;
-  const path = href.endsWith("/") ? href.slice(0, -1) || "/" : href;
-  const current =
-    pathname.endsWith("/") && pathname.length > 1
-      ? pathname.slice(0, -1)
-      : pathname;
-  if (path === "/blog") {
-    return current === "/blog" || current.startsWith("/blog/")
-      ? "page"
-      : undefined;
-  }
-  return current === path ? "page" : undefined;
-}
+import { SiteNav } from "./site-nav";
 
 /**
  * Sticky site chrome: nav + Product Hunt banner (when active).
@@ -61,7 +47,7 @@ export function SiteHeader() {
   return (
     <div ref={chromeRef} className="site-sticky-chrome sticky top-0 z-50">
       <header
-        className={`site-header w-full border-b transition-[background-color,border-color,box-shadow] duration-200 ${scrolled ? "border-[#dcecef] bg-white/90 shadow-[0_6px_20px_rgba(37,72,82,.06)] backdrop-blur-xl backdrop-saturate-150" : "border-transparent bg-white/80 backdrop-blur-md"}`}
+        className={`site-header relative z-[2] w-full border-b transition-[background-color,border-color,box-shadow] duration-200 ${scrolled ? "border-[#dcecef] bg-white/90 shadow-[0_6px_20px_rgba(37,72,82,.06)] backdrop-blur-xl backdrop-saturate-150" : "border-transparent bg-white/80 backdrop-blur-md"}`}
       >
         <a
           href="#main"
@@ -69,7 +55,9 @@ export function SiteHeader() {
         >
           Skip to main content
         </a>
-        <div className="mx-auto flex h-12 w-full max-w-[1500px] items-center gap-1.5 px-3 sm:gap-4 sm:px-6 lg:h-14 lg:px-16">
+        {/* gap-2 so the menu button and the CTA read as one right-hand cluster
+            rather than two controls jammed together. */}
+        <div className="mx-auto flex h-12 w-full max-w-[1500px] items-center gap-2 px-3 sm:gap-4 sm:px-6 lg:h-14 lg:px-16">
           <Link
             to="/"
             aria-label="Construct Computer - home"
@@ -80,46 +68,18 @@ export function SiteHeader() {
           </Link>
           {/* `/launch` is a paid-campaign landing page: the nav links only
               leak traffic off the offer, so it keeps just logo + CTA. */}
-          {campaignLanding ? (
-            <div className="ml-auto" />
-          ) : (
-            <nav
-              aria-label="Primary"
-              className="ml-auto flex items-center text-[12px] text-[#627c86] sm:text-[13px]"
-            >
-              <Link
-                to="/#pricing"
-                className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
-              >
-                Pricing
-              </Link>
-              <Link
-                to="/blog/"
-                aria-current={navCurrent(pathname, "/blog")}
-                className="inline-flex min-h-11 items-center rounded-full px-1.5 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:px-2"
-              >
-                Blog
-              </Link>
-              <Link
-                to="/affiliates/"
-                aria-current={navCurrent(pathname, "/affiliates")}
-                className="hidden min-h-11 items-center rounded-full px-2 transition-colors hover:bg-[#effbfc] hover:text-[#018fa0] sm:inline-flex"
-              >
-                Affiliates
-              </Link>
-            </nav>
-          )}
+          {campaignLanding ? <div className="ml-auto" /> : <SiteNav />}
           {status === "authenticated" && user ? (
             <UserMenu user={user} />
           ) : (
-            <StartLink
+            <StartCta
               source="nav"
               label="Start using Construct"
-              className="site-cta inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-black px-2.5 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] sm:px-3 lg:px-4 lg:text-xs"
+              className="min-h-10 shrink-0 px-2.5 text-[11px] sm:px-3 lg:px-4 lg:text-xs"
             >
               <span className="sm:hidden">Start now</span>
               <span className="hidden sm:inline">Start Now</span>
-            </StartLink>
+            </StartCta>
           )}
         </div>
       </header>

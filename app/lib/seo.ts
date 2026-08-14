@@ -143,7 +143,9 @@ function breadcrumbs(route: CanonicalRoute): JsonLd {
       ? { name: "Blog", path: "/blog" }
       : route.kind === "author"
         ? { name: "Authors", path: "/authors" }
-        : null;
+        : route.kind === "use-case" && route.path !== "/use-cases"
+          ? { name: "Use Cases", path: "/use-cases" }
+          : null;
   const items = [
     { name: "Home", url: `${siteUrl}/` },
     ...(parent
@@ -175,6 +177,10 @@ export function routeJsonLd(route: CanonicalRoute): JsonLd[] {
       faqPageJsonLd(landingFaq),
     );
   } else values.push(breadcrumbs(route));
+
+  if (route.kind === "pricing") {
+    values.push(faqPageJsonLd(landingFaq));
+  }
 
   if (isEditorial(route)) {
     const author = editorialAuthor(route);
