@@ -5,6 +5,7 @@ import {
   PH_FORUM_PATH,
   PH_GO_LIVE_MS,
   PH_PRODUCT_PATH,
+  productHuntHref,
 } from "../app/features/product-hunt/config";
 
 const BEFORE = PH_GO_LIVE_MS - 60_000;
@@ -51,6 +52,21 @@ describe("/ph shortlink", () => {
     const url = destination(BEFORE, "utm_content=stream");
     expect(url.searchParams.get("utm_content")).toBe("stream");
     expect(url.pathname).toBe(PH_FORUM_PATH);
+  });
+
+  it("forwards on-site badge attribution through to Product Hunt", () => {
+    const href = productHuntHref("banner");
+    const query = href.slice(href.indexOf("?") + 1);
+    const pre = destination(BEFORE, query);
+    const live = destination(AFTER, query);
+    expect(pre.pathname).toBe(PH_FORUM_PATH);
+    expect(live.pathname).toBe(PH_PRODUCT_PATH);
+    for (const url of [pre, live]) {
+      expect(url.origin).toBe("https://www.producthunt.com");
+      expect(url.searchParams.get("utm_source")).toBe("banner");
+      expect(url.searchParams.get("utm_medium")).toBe("badge");
+      expect(url.searchParams.get("utm_content")).toBe("banner");
+    }
   });
 
   it("ignores non-utm params, so nothing can steer the destination", () => {

@@ -39,6 +39,21 @@ export type ProductHuntSurface =
   /** The /ph shortlink — printed on the livestream, read off a screen. */
   | "shortlink";
 
+function phAttribution(surface: ProductHuntSurface): URLSearchParams {
+  const params = new URLSearchParams();
+  params.set(
+    "utm_source",
+    surface === "footer" ? "badge-featured" : surface,
+  );
+  params.set(
+    "utm_medium",
+    surface === "footer" || surface === "banner" ? "badge" : "embed",
+  );
+  params.set("utm_campaign", "badge-construct-computer");
+  params.set("utm_content", surface);
+  return params;
+}
+
 function phUrl(
   path: string,
   surface: ProductHuntSurface,
@@ -46,14 +61,20 @@ function phUrl(
 ): string {
   const url = new URL(path, PH_PRODUCT_ORIGIN);
   if (embed) url.searchParams.set("embed", "true");
-  url.searchParams.set("utm_source", surface === "footer" ? "badge-featured" : surface);
-  url.searchParams.set(
-    "utm_medium",
-    surface === "footer" || surface === "banner" ? "badge" : "embed",
-  );
-  url.searchParams.set("utm_campaign", "badge-construct-computer");
-  url.searchParams.set("utm_content", surface);
+  for (const [key, value] of phAttribution(surface)) {
+    url.searchParams.set(key, value);
+  }
   return url.toString();
+}
+
+/**
+ * On-site href for every Product Hunt CTA. `/ph` is a Pages Function that
+ * picks the real destination from the clock (discussion page before go-live,
+ * product page after) so badges do not hardcode a URL that goes stale at
+ * 12:01 AM PT.
+ */
+export function productHuntHref(surface: ProductHuntSurface): string {
+  return `/ph?${phAttribution(surface).toString()}`;
 }
 
 export function productHuntUrl(surface: ProductHuntSurface): string {

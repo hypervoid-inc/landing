@@ -82,6 +82,35 @@ test("shows banner on blog pages", async ({ page }) => {
   ).toHaveCount(1);
 });
 
+test("campaign badges go through /ph instead of linking to Product Hunt", async ({
+  page,
+}) => {
+  await page.goto("/?ph=pre");
+  const badges = page.locator("a.ph-badge");
+  await expect(badges.first()).toBeVisible();
+  const count = await badges.count();
+  expect(count).toBeGreaterThan(0);
+  for (let index = 0; index < count; index += 1) {
+    const href = await badges.nth(index).getAttribute("href");
+    expect(href, `badge ${index}`).toMatch(/^\/ph\?/);
+    expect(href).not.toContain("producthunt.com");
+  }
+});
+
+test("/ph redirects to Product Hunt", async ({ request }) => {
+  const pre = await request.get("/ph?ph=pre", { maxRedirects: 0 });
+  expect(pre.status()).toBe(302);
+  const preLocation = new URL(pre.headers().location ?? "");
+  expect(preLocation.origin).toBe("https://www.producthunt.com");
+  expect(preLocation.pathname).toBe("/p/construct-computer");
+
+  const live = await request.get("/ph?ph=live", { maxRedirects: 0 });
+  expect(live.status()).toBe(302);
+  const liveLocation = new URL(live.headers().location ?? "");
+  expect(liveLocation.origin).toBe("https://www.producthunt.com");
+  expect(liveLocation.pathname).toBe("/products/construct-computer");
+});
+
 test("holographic foil layers on Product Hunt badges", async ({ page }) => {
   await page.goto("/?ph=pre");
   const badge = page.locator(".ph-badge").first();

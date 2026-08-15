@@ -5,7 +5,7 @@ import {
   PH_BADGE_IMG,
   PH_PRODUCT_NAME,
   PH_TAGLINE,
-  productHuntUrl,
+  productHuntHref,
   type ProductHuntSurface,
 } from "./config";
 import { registerPhHoloBadge, unregisterPhHoloBadge } from "./holo-pointer";
@@ -37,7 +37,7 @@ export function ProductHuntBadge({
 
   return (
     <a
-      href={productHuntUrl(surface)}
+      href={productHuntHref(surface)}
       target="_blank"
       rel="noopener noreferrer"
       className={["ph-badge", className].filter(Boolean).join(" ")}
