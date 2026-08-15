@@ -125,7 +125,7 @@ export function posterReferences() {
 
 const percent = (value) => `${Math.round(value * 100)}%`;
 
-export const STUDIO = `THE STUDIO — identical on every card, never redesign it
+const STUDIO_GROUND = `THE STUDIO — identical on every card, never redesign it
 A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
@@ -135,9 +135,19 @@ Not an illustration, not flat vector, not cel shading, not a painting, not a UI 
 
 COLOUR — the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
-No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
+No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.`;
 
-THE MASCOT — a manufactured object, present and hero on every card
+/**
+ * The mascot's contract, which is the one part of this file that is true no
+ * matter what room the photograph is taken in.
+ *
+ * Exported separately so a one-off shot in a different studio — see
+ * `scripts/generate-social-card.mjs` — can bring its own ground, light, and
+ * palette while keeping the object itself word for word identical. The mascot
+ * is the thing that drifts, and it should never drift for a reason as
+ * incidental as the wall being a different colour.
+ */
+export const MASCOT = `THE MASCOT — a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
@@ -150,10 +160,27 @@ ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted re
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
-Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
+Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.`;
 
-THE OBJECTS — real things, photographed
-Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.`;
+/**
+ * The prop vocabulary. Exported for the same reason as `MASCOT`: the era and
+ * the materials are the brand, and they hold whatever the room is doing.
+ *
+ * The last sentence is the restraint clause, and it is separated out because a
+ * wide banner is the one place it is deliberately relaxed.
+ */
+export const OBJECTS = `THE OBJECTS — real things, photographed
+Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate.`;
+
+/**
+ * The whole studio, assembled. Byte-identical to the single string this
+ * replaced, which is what stops the refactor from re-basing all 34 cards.
+ */
+export const STUDIO = `${STUDIO_GROUND}
+
+${MASCOT}
+
+${OBJECTS} One hero object, two at the very most.`;
 
 /**
  * Writing on the objects themselves is allowed and wanted: it is what makes a
@@ -188,11 +215,27 @@ Also keep the top ${percent(RESERVED.top)} of the frame clear across the full wi
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.`;
 
-export const FORBIDDEN = `ABSOLUTELY NOT
-Above all: no swarm of floating translucent UI panels, no glowing glass cards hanging in mid-air, no dashed concentric orbit rings, no floating rounded app tiles, no circuit traces, no cyan gradient haze, no particles. That is generic AI-company filler, it is what an image model reaches for by default, and it is the single thing this set exists to avoid. Photograph real objects instead.
-No dark background of any kind, no navy or black studio, no dramatic rim lighting, no spotlight, and no moody low-key exposure. This is a bright room.
-The mascot is never rendered as clear glass, crystal, acrylic, chrome, or polished stone, and never as a thin flat-faced slab with a hard edge. It is soft, milky, and inflated.
-No text overlaid on the photograph. No humans, faces, hands, or body parts. No QR codes, price starbursts, rating stars, or year badges. No paper texture, halftone dots, film grain, scan lines, folds, or tears laid over the image. No chrome, gold, or iridescence. No neon cyberpunk, glitch effects, wireframe globes, brains wired with circuits, humanoid robots, handshakes, lightbulbs, gears, or jigsaw pieces. No isometric or aerial three-quarter view. No busy collage: one hero idea, photographed clearly, with real air around it.`;
+/**
+ * The clause the whole art direction exists for. Every contract in this repo
+ * carries it verbatim, whatever room it is shooting in.
+ */
+export const FORBIDDEN_FILLER = `ABSOLUTELY NOT
+Above all: no swarm of floating translucent UI panels, no glowing glass cards hanging in mid-air, no dashed concentric orbit rings, no floating rounded app tiles, no circuit traces, no cyan gradient haze, no particles. That is generic AI-company filler, it is what an image model reaches for by default, and it is the single thing this set exists to avoid. Photograph real objects instead.`;
+
+/** The only clause a differently-lit shot has to replace rather than inherit. */
+const FORBIDDEN_BRIGHT = `No dark background of any kind, no navy or black studio, no dramatic rim lighting, no spotlight, and no moody low-key exposure. This is a bright room.`;
+
+export const FORBIDDEN_MASCOT = `The mascot is never rendered as clear glass, crystal, acrylic, chrome, or polished stone, and never as a thin flat-faced slab with a hard edge. It is soft, milky, and inflated.`;
+
+export const FORBIDDEN_FRAME = `No text overlaid on the photograph. No humans, faces, hands, or body parts. No QR codes, price starbursts, rating stars, or year badges. No paper texture, halftone dots, film grain, scan lines, folds, or tears laid over the image. No chrome, gold, or iridescence. No neon cyberpunk, glitch effects, wireframe globes, brains wired with circuits, humanoid robots, handshakes, lightbulbs, gears, or jigsaw pieces. No isometric or aerial three-quarter view.`;
+
+/** Relaxed on a wide banner, which is composed to be dense on purpose. */
+const FORBIDDEN_RESTRAINT = ` No busy collage: one hero idea, photographed clearly, with real air around it.`;
+
+export const FORBIDDEN = `${FORBIDDEN_FILLER}
+${FORBIDDEN_BRIGHT}
+${FORBIDDEN_MASCOT}
+${FORBIDDEN_FRAME}${FORBIDDEN_RESTRAINT}`;
 
 /**
  * The complete prompt for one card. Everything except the CARD block is
