@@ -3,7 +3,7 @@ import {
   PH_LOGO_IMG,
   PH_PRODUCT_NAME,
   PH_TAGLINE,
-  productHuntUrl,
+  productHuntHref,
   type ProductHuntSurface,
 } from "./config";
 import { useProductHuntPhase } from "./use-product-hunt-phase";
@@ -50,7 +50,7 @@ export function ProductHuntEmbed({
         </div>
       </div>
       <a
-        href={productHuntUrl(surface)}
+        href={productHuntHref(surface)}
         target="_blank"
         rel="noopener noreferrer"
         className="ph-embed-cta"
