@@ -10,6 +10,12 @@ export const PH_GO_LIVE_MS = Date.parse("2026-08-23T07:01:00.000Z");
 export const PH_END_MS = PH_GO_LIVE_MS + 7 * 24 * 60 * 60 * 1000;
 
 export const PH_PRODUCT_PATH = "/products/construct-computer";
+/**
+ * The discussion page. Before go-live it is the ONLY surface carrying a
+ * Follow button — /products/ has nothing to follow until a launch is live —
+ * so every pre-launch "follow us" CTA has to point here, not there.
+ */
+export const PH_FORUM_PATH = "/p/construct-computer";
 export const PH_PRODUCT_ORIGIN = "https://www.producthunt.com";
 
 export const PH_POST_ID = "1186033";
@@ -18,7 +24,7 @@ export const PH_LOGO_IMG =
   "https://ph-files.imgix.net/a30c48be-7563-43ac-8434-5babf5ffa7ef.png?auto=compress,format&codec=mozjpeg&cs=strip&fit=crop&h=80&w=80";
 
 export const PH_TAGLINE =
-  "An AI employee with a computer, an email, and a to-do list";
+  "A real computer for your AI coworker";
 export const PH_PRODUCT_NAME = "Construct Computer";
 
 export const PH_CONFETTI_SESSION_KEY = "ph_confetti_2026";
@@ -29,11 +35,17 @@ export type ProductHuntSurface =
   | "embed"
   | "hero"
   | "launch"
-  | "blog";
+  | "blog"
+  /** The /ph shortlink — printed on the livestream, read off a screen. */
+  | "shortlink";
 
-export function productHuntUrl(surface: ProductHuntSurface): string {
-  const url = new URL(PH_PRODUCT_PATH, PH_PRODUCT_ORIGIN);
-  url.searchParams.set("embed", "true");
+function phUrl(
+  path: string,
+  surface: ProductHuntSurface,
+  { embed = true }: { embed?: boolean } = {},
+): string {
+  const url = new URL(path, PH_PRODUCT_ORIGIN);
+  if (embed) url.searchParams.set("embed", "true");
   url.searchParams.set("utm_source", surface === "footer" ? "badge-featured" : surface);
   url.searchParams.set(
     "utm_medium",
@@ -42,6 +54,18 @@ export function productHuntUrl(surface: ProductHuntSurface): string {
   url.searchParams.set("utm_campaign", "badge-construct-computer");
   url.searchParams.set("utm_content", surface);
   return url.toString();
+}
+
+export function productHuntUrl(surface: ProductHuntSurface): string {
+  return phUrl(PH_PRODUCT_PATH, surface);
+}
+
+/**
+ * Where to send someone who wants to be told when we launch. `embed=true` is
+ * omitted deliberately: this is a link a person follows, not a badge embed.
+ */
+export function productHuntFollowUrl(surface: ProductHuntSurface): string {
+  return phUrl(PH_FORUM_PATH, surface, { embed: false });
 }
 
 export function productHuntCopy(phase: "pre" | "live") {
