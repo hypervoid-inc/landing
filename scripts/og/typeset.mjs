@@ -25,6 +25,13 @@ import sharp from "sharp";
  * `scripts/og/poster.mjs` imports `RESERVED` from here so the regions the
  * prompt asks the model to keep clear are the same numbers this file sets type
  * into. They cannot drift apart.
+ *
+ * The measurement, placement, and bloom helpers are exported because
+ * `scripts/generate-social-card.mjs` sets the same type on a 2000x800 banner.
+ * Only `typeLayer` below is bound to 1200x630; everything under it takes its
+ * sizes and positions as arguments, so a second layout reuses the craft — ink
+ * measured off a real render, not estimated from a width table — rather than
+ * reimplementing it and drifting.
  */
 
 export const WIDTH = 1200;
@@ -43,18 +50,26 @@ export const TYPE_VERSION = 2;
  * weight 900 — is close enough to look deliberate and wrong enough to reset the
  * whole set's typography.
  */
-const DISPLAY = { family: "Helvetica Neue", weight: 900, stretch: "condensed" };
-const TEXT = { family: "Helvetica Neue", weight: 500, stretch: "normal" };
+export const DISPLAY = {
+  family: "Helvetica Neue",
+  weight: 900,
+  stretch: "condensed",
+};
+export const TEXT = {
+  family: "Helvetica Neue",
+  weight: 500,
+  stretch: "normal",
+};
 
 /**
  * The palette, taken from the landing page's own tokens in `app/app.css`
  * (`--color-ink`, `--color-ink-muted`, `--color-brand`, `--color-brand-strong`)
  * so a card and the page it links to are the same two greys and the same cyan.
  */
-const INK = "#4e4646";
-const INK_MUTED = "#627c86";
-const BRAND = "#01b4c8";
-const BRAND_STRONG = "#018fa0";
+export const INK = "#4e4646";
+export const INK_MUTED = "#627c86";
+export const BRAND = "#01b4c8";
+export const BRAND_STRONG = "#018fa0";
 
 /** 5.33% each side. Everything on the card hangs off these two edges. */
 const MARGIN = 64;
@@ -234,7 +249,7 @@ async function inkBox(markup, width, height) {
  * One string's ink, as multiples of font size: how far its first glyph sits
  * from the drawing origin, how wide it runs, and how tall its capitals are.
  */
-async function metrics(text, style, tracking) {
+export async function metrics(text, style, tracking) {
   const key = `${style.family}|${style.weight}|${style.stretch}|${tracking}|${text}`;
   const hit = cache.get(key);
   if (hit) return hit;
@@ -263,7 +278,15 @@ async function metrics(text, style, tracking) {
  * position anything) and a `draw(fill)` so the same glyphs can be re-emitted in white underneath
  * themselves for the halo.
  */
-async function place({ text, style, cap, tracking, left, baseline, fill }) {
+export async function place({
+  text,
+  style,
+  cap,
+  tracking,
+  left,
+  baseline,
+  fill,
+}) {
   const measured = await metrics(text, style, tracking);
   const size = cap / measured.cap;
   const width = measured.width * size;
@@ -365,7 +388,7 @@ async function headlineBlock(lines) {
  * single group composites to exactly the same pixels, so it would build no
  * density at all.
  */
-function bloom(id, block) {
+export function bloom(id, block) {
   const { cap } = block;
   const dilate = Math.max(1, cap * BLOOM.padDilate);
   const padBlur = Math.max(2, cap * BLOOM.padBlur);
