@@ -1161,10 +1161,24 @@ test("scrolls the journal cards as a snap carousel on mobile", async ({
     .poll(() => page.evaluate(() => window.scrollY), { timeout: 2000 })
     .toBeGreaterThan(scrollBefore + 200);
 
+  // Lenis still coasts after the +200 assertion, and the pointer is sitting
+  // on a card. Either one makes sequential bounding-box reads disagree by
+  // ~8–10px and look like a wrapped row. Freeze scroll, park the pointer,
+  // then sample all three cards in one frame.
+  const settledY = await page.evaluate(() => window.scrollY);
+  await scrollPageInstant(page, settledY);
+  await page.mouse.move(0, 0);
+
   await page.setViewportSize({ width: 1280, height: 900 });
   await expect(grid).toHaveCSS("overflow-x", "visible");
-  const desktop = await Promise.all(
-    [0, 1, 2].map((index) => cards.nth(index).boundingBox()),
+  await grid.evaluate((el) => {
+    el.scrollLeft = 0;
+  });
+  const desktop = await cards.evaluateAll((nodes) =>
+    nodes.slice(0, 3).map((node) => {
+      const box = node.getBoundingClientRect();
+      return { x: box.x, y: box.y };
+    }),
   );
   expect(Math.abs((desktop[0]?.y ?? 0) - (desktop[1]?.y ?? 0))).toBeLessThan(4);
   expect(Math.abs((desktop[0]?.y ?? 0) - (desktop[2]?.y ?? 0))).toBeLessThan(4);
