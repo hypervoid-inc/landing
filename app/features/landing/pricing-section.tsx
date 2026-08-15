@@ -239,16 +239,16 @@ function PricingCard({
   return (
     <article
       className={`pricing-card reveal-item relative isolate w-full overflow-hidden rounded-[26px] bg-white shadow-[0_18px_48px_rgba(57,148,154,.08)]${plan.badge ? "" : " xl:shadow-none"}`}
+      data-plan={plan.id}
       data-recommended={plan.badge ? "" : undefined}
       data-reveal-delay={String(revealDelay)}
     >
-      {" "}
       <div
         aria-hidden
         className="pricing-border pointer-events-none absolute inset-0 z-20 rounded-[26px] border border-[#35949a]/50"
       />
       {plan.badge ? (
-        <span className="pricing-badge absolute left-3 top-14 z-30 inline-flex items-center rounded-full bg-[#01b4c8] px-2.5 py-1 text-[8px] font-black uppercase tracking-[.12em] text-white sm:left-auto sm:right-5 sm:top-5 sm:text-[9px]">
+        <span className="pricing-badge z-30 inline-flex items-center rounded-full bg-[#01b4c8] px-2.5 py-1 text-[8px] font-black uppercase tracking-[.12em] text-white sm:text-[9px]">
           {plan.badge}
         </span>
       ) : null}
@@ -260,60 +260,60 @@ function PricingCard({
           height="608"
           loading="lazy"
           decoding="async"
-          className={`pricing-image h-full w-full object-cover ${plan.name === "Lite" ? "object-[84%_center] sm:object-center" : plan.name === "Starter" ? "object-[66%_center] sm:object-center" : "object-center"}`}
+          className="pricing-image h-full w-full object-cover"
         />
-        <div className="pricing-summary absolute z-10 text-[#014e59]">
-          <div>
-            <Title className="font-display text-[29px] leading-none xl:text-[38px]">
-              {plan.name}
-            </Title>
-            {plan.name === "Lite" ? (
-              <p className="mt-2 max-w-[150px] text-[10px] leading-[13px] text-[#17707d] xl:max-w-[190px] xl:text-xs xl:leading-4">
-                {plan.description}
-              </p>
-            ) : null}
-          </div>
-          <div className="pricing-price" data-period={period}>
-            <span className="pricing-price-was" aria-hidden>
-              {plan.price}
-            </span>
-            <div className="pricing-price-row flex flex-wrap items-end gap-x-[5px]">
-              <span ref={stackRef} className="pricing-price-stack">
-                <span className="pricing-price-sizer" aria-hidden>
-                  <span className="pricing-price-amount font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]">
-                    {plan.price}
-                  </span>
-                  <span className="pricing-price-amount font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]">
-                    {plan.annualMonthlyPrice}
-                  </span>
+      </div>
+      <div className="pricing-summary">
+        <div className="pricing-heading">
+          <Title className="font-display text-[29px] leading-none xl:text-[38px]">
+            {plan.name}
+          </Title>
+          {plan.name === "Lite" ? (
+            <p className="mt-2 max-w-[150px] text-[10px] leading-[13px] text-[#17707d] xl:max-w-[190px] xl:text-xs xl:leading-4">
+              {plan.description}
+            </p>
+          ) : null}
+        </div>
+        <div className="pricing-price" data-period={period}>
+          <span className="pricing-price-was" aria-hidden>
+            {plan.price}
+          </span>
+          <div className="pricing-price-row flex flex-wrap items-end gap-x-[5px]">
+            <span ref={stackRef} className="pricing-price-stack">
+              <span className="pricing-price-sizer" aria-hidden>
+                <span className="pricing-price-amount font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]">
+                  {plan.price}
                 </span>
-                <span
-                  ref={amountRef}
-                  className="pricing-price-amount pricing-price-amount-live font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]"
-                >
-                  {displayPrice}
+                <span className="pricing-price-amount font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]">
+                  {plan.annualMonthlyPrice}
                 </span>
               </span>
               <span
-                ref={periodLabelRef}
-                className="pricing-price-period mb-0.5 whitespace-nowrap text-xs text-[#17707d] xl:mb-1 xl:text-sm"
+                ref={amountRef}
+                className="pricing-price-amount pricing-price-amount-live font-display text-[45px] leading-[.8] xl:text-[clamp(48px,3.9vw,56px)]"
               >
-                / month
+                {displayPrice}
               </span>
-            </div>
-            <p
-              className="pricing-price-savings"
-              aria-hidden={period !== "annual"}
+            </span>
+            <span
+              ref={periodLabelRef}
+              className="pricing-price-period mb-0.5 whitespace-nowrap text-xs text-[#17707d] xl:mb-1 xl:text-sm"
             >
-              {plan.annualSavingsLabel}
-            </p>
+              / month
+            </span>
           </div>
+          <p
+            className="pricing-price-savings"
+            aria-hidden={period !== "annual"}
+          >
+            {plan.annualSavingsLabel}
+          </p>
         </div>
       </div>
-      <div className="pricing-content relative z-10 flex flex-1 flex-col">
+      <div className="pricing-content relative z-10">
         <PricingCta plan={plan} period={period} />
         {highlight ? (
-          <p className="mt-2.5 text-center text-[14px] font-semibold leading-[17px] text-[#129a5f] xl:text-[15px] xl:leading-[18px]">
+          <p className="pricing-highlight mt-2.5 text-center text-[14px] font-semibold leading-[17px] text-[#129a5f] xl:text-[15px] xl:leading-[18px]">
             {highlight}
           </p>
         ) : null}
@@ -542,23 +542,23 @@ export function FaqSection() {
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="relative w-full scroll-mt-16 px-5 py-16 xl:px-16 xl:py-24"
+      className="relative w-full scroll-mt-16 px-5 py-12 xl:px-16 xl:py-24"
     >
-      <div className="mx-auto grid w-full max-w-[1395px] items-start gap-10 xl:grid-cols-[minmax(300px,420px)_minmax(0,1fr)] xl:gap-[clamp(80px,10vw,170px)]">
+      <div className="mx-auto grid w-full max-w-[1395px] items-start gap-8 xl:grid-cols-[minmax(300px,420px)_minmax(0,1fr)] xl:gap-[clamp(80px,10vw,170px)]">
         <div
           className="reveal-item text-center xl:pt-2 xl:text-left"
           data-reveal-delay="1"
         >
           <h2
             id="faq-heading"
-            className="text-balance text-[32px] capitalize leading-[38px] tracking-[-0.02em] lg:text-[clamp(36px,3.24vw,51.8px)] lg:leading-[1.12]"
+            className="text-balance text-[24px] capitalize leading-7 tracking-[-0.02em] lg:text-[clamp(36px,3.24vw,51.8px)] lg:leading-[1.12]"
           >
             <span className="text-[#4e4646]">Frequently Asked</span>{" "}
             <span className="font-display italic text-[#01b4c8]">
               Questions
             </span>
           </h2>
-          <p className="mx-auto mt-4 max-w-[371px] text-[15px] leading-[21px] text-[#627c86] xl:mx-0 xl:mt-5 xl:text-base">
+          <p className="mx-auto mt-3 max-w-[371px] text-[14px] leading-5 text-[#627c86] xl:mx-0 xl:mt-5 xl:text-base">
             We believe clarity and transparency with our users, thus if you have
             more queries contact us at{" "}
             <a
@@ -570,36 +570,36 @@ export function FaqSection() {
           </p>
           <a
             href="mailto:hello@construct.computer"
-            className="landing-cta mt-7 min-h-[50px] min-w-[190px] px-[30px] text-[17px] xl:mt-10 xl:h-[57px] xl:w-[227px] xl:text-[21px]"
+            className="landing-cta mt-6 min-h-[44px] min-w-[190px] px-[30px] text-[15px] xl:mt-10 xl:h-[57px] xl:min-h-[57px] xl:w-[227px] xl:text-[21px]"
           >
             Send Us Hello
           </a>
         </div>
         <Accordion.Root
           type="multiple"
-          className="flex flex-col gap-4 xl:gap-[31px]"
+          className="flex flex-col gap-2.5 xl:gap-[31px]"
         >
           {landingFaq.map((item, index) => (
             <Accordion.Item
               key={item.question}
               value={`faq-${index}`}
-              className="faq-item reveal-item overflow-hidden rounded-[22px] bg-[#f8f8f8] data-[state=open]:bg-[#f3f3f3] xl:rounded-3xl"
+              className="faq-item reveal-item overflow-hidden rounded-2xl bg-[#f8f8f8] data-[state=open]:bg-[#f3f3f3] xl:rounded-3xl"
               data-reveal-delay={String(Math.min(index, 3) + 1)}
             >
               <Accordion.Header>
-                <Accordion.Trigger className="group flex w-full items-center justify-between gap-4 px-5 py-5 text-left xl:gap-6 xl:px-[55px] xl:py-[30px]">
-                  <span className="text-lg font-medium leading-[22px] tracking-[-.4px] text-[#565656] xl:text-[26px] xl:leading-7 xl:tracking-[-1px]">
+                <Accordion.Trigger className="group flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left xl:gap-6 xl:px-[55px] xl:py-[30px]">
+                  <span className="text-[15px] font-medium leading-5 tracking-[-.4px] text-[#565656] xl:text-[26px] xl:leading-7 xl:tracking-[-1px]">
                     {item.question}
                   </span>
                   <Plus
                     aria-hidden
-                    className="faq-icon h-6 w-6 shrink-0 text-[#565656] group-data-[state=open]:rotate-45 xl:h-7 xl:w-7"
+                    className="faq-icon h-5 w-5 shrink-0 text-[#565656] group-data-[state=open]:rotate-45 xl:h-7 xl:w-7"
                   />
                 </Accordion.Trigger>
               </Accordion.Header>
               <Accordion.Content className="faq-content">
                 <div className="faq-content-inner">
-                  <p className="px-5 pb-5 text-[15px] leading-[21px] text-[#627c86] xl:px-[55px] xl:pb-7 xl:text-base xl:leading-[22px]">
+                  <p className="px-4 pb-3.5 text-[14px] leading-[19px] text-[#627c86] xl:px-[55px] xl:pb-7 xl:text-base xl:leading-[22px]">
                     {item.answer}
                   </p>
                 </div>

@@ -114,25 +114,69 @@
   transform: translateX(3px);
 }
 
+/*
+ * Phone: a snap carousel that peeks the next card. Negative margin cancels
+ * the section's 20px gutter so the track can scroll edge-to-edge; matching
+ * padding puts slide 1 on the same line as the heading. Desktop restores
+ * the three-column grid.
+ */
 .journal-grid {
-  margin: 26px 0 0;
-  padding: 0;
+  margin: 18px -20px 0;
+  padding: 8px 20px 12px;
   list-style: none;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 20px;
+  scrollbar-width: none;
+  /* overflow-x: auto otherwise implies pan-x only, so a vertical swipe
+     starting on a card would not move the page. */
+  touch-action: pan-x pan-y;
+}
+
+.journal-grid::-webkit-scrollbar {
+  display: none;
 }
 
 @media (min-width: 900px) {
   .journal-grid {
-    margin-top: 34px;
+    display: grid;
+    margin: 34px 0 0;
+    padding: 0;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
+    overflow: visible;
+    overscroll-behavior-x: auto;
+    scroll-snap-type: none;
+    scroll-padding-inline: 0;
+    touch-action: auto;
   }
 }
 
 .journal-grid > li {
   display: flex;
+  flex: 0 0 calc(100% - 2.5rem);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.journal-grid > li:last-child {
+  scroll-snap-align: end;
+}
+
+@media (min-width: 900px) {
+  .journal-grid > li {
+    flex: unset;
+    scroll-snap-align: unset;
+  }
+
+  .journal-grid > li:last-child {
+    scroll-snap-align: unset;
+  }
 }
 
 .journal-card {
@@ -152,11 +196,27 @@
     box-shadow var(--dur-panel) var(--ease-snap);
 }
 
-.journal-card:hover,
+.journal-card:active {
+  transform: scale(0.97);
+  transition-duration: var(--dur-press);
+}
+
 .journal-card:focus-within {
   transform: translateY(-4px);
   border-color: #8adcdf;
   box-shadow: 0 18px 40px rgb(57 148 154 / 14%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .journal-card:hover {
+    transform: translateY(-4px);
+    border-color: #8adcdf;
+    box-shadow: 0 18px 40px rgb(57 148 154 / 14%);
+  }
+
+  .journal-card:hover:active {
+    transform: scale(0.97);
+  }
 }
 
 .journal-card-hit {
@@ -164,11 +224,40 @@
   inset: 0;
   z-index: 2;
   border-radius: inherit;
+  touch-action: pan-x pan-y;
 }
 
 .journal-card-visual {
+  position: relative;
   overflow: hidden;
-  background: #eaf6f8;
+  background: #fff;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 calc(100% - 40px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 calc(100% - 40px),
+    transparent 100%
+  );
+}
+
+.journal-card-visual::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 58%,
+    rgb(255 255 255 / 42%) 82%,
+    #fff 100%
+  );
+  content: "";
+  pointer-events: none;
 }
 
 .journal-card-image {
@@ -179,9 +268,14 @@
   transition: transform 600ms var(--ease-snap);
 }
 
-.journal-card:hover .journal-card-image,
 .journal-card:focus-within .journal-card-image {
   transform: scale(1.04);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .journal-card:hover .journal-card-image {
+    transform: scale(1.04);
+  }
 }
 
 .journal-card-body {
@@ -229,9 +323,14 @@
   }
 }
 
-.journal-card:hover .journal-card-title,
 .journal-card:focus-within .journal-card-title {
   color: var(--color-brand);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .journal-card:hover .journal-card-title {
+    color: var(--color-brand);
+  }
 }
 
 .journal-card-copy {
@@ -288,9 +387,14 @@
   transition: color var(--dur-hover) var(--ease-snap);
 }
 
-.journal-card:hover .journal-card-read,
 .journal-card:focus-within .journal-card-read {
   color: var(--color-brand);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .journal-card:hover .journal-card-read {
+    color: var(--color-brand);
+  }
 }
 
 .journal-card-read .journal-arrow {
@@ -298,9 +402,14 @@
   width: 13px;
 }
 
-.journal-card:hover .journal-card-read .journal-arrow,
 .journal-card:focus-within .journal-card-read .journal-arrow {
   transform: translateX(3px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .journal-card:hover .journal-card-read .journal-arrow {
+    transform: translateX(3px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -312,6 +421,7 @@
 
   .journal-card:hover,
   .journal-card:focus-within,
+  .journal-card:active,
   .journal-card:hover .journal-card-image,
   .journal-card:focus-within .journal-card-image,
   .journal-view-all:hover .journal-arrow,

@@ -202,9 +202,10 @@
   transform: none !important; /* drag is desktop only */
 }
 
-/* Collapsed: hug the in-flow sprite instead of a full-bleed zero-height strip. */
+/* Collapsed: drop the left pin so the shell shrinks to the sprite and parks
+   on the right, clear of centered page CTAs. */
 .clippy-widget[data-variant="mobile"][data-open="false"] {
-  right: auto;
+  left: auto;
 }
 
 /*

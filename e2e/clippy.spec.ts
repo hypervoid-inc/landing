@@ -236,8 +236,14 @@ test.describe("mobile", () => {
     await expect(page.locator(widget)).toHaveAttribute("data-open", "false");
 
     const viewport = page.viewportSize()!;
+    const sprite = page.locator(".clippy-sprite");
+    const spriteBox = await sprite.boundingBox();
+    expect(spriteBox).not.toBeNull();
+    // Parked on the right so it does not sit on top of page CTAs.
+    expect(spriteBox!.x).toBeGreaterThan(viewport.width / 2);
+
     for (const target of [
-      page.locator(".clippy-sprite"),
+      sprite,
       page.getByRole("button", { name: "Hide Construct" }),
     ]) {
       const box = await target.boundingBox();

@@ -3,6 +3,26 @@
   min-width: 320px;
   font-family: "Segoe UI", "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  --avail-w: calc(100vw - 2.5rem);
+  --avail-h: calc(100svh - var(--site-chrome-height, 56px));
+}
+
+@media (min-width: 1024px) {
+  .landing-page {
+    --avail-w: calc(100vw - 8rem);
+  }
+}
+
+/* Contain the 1400×820 overlay into the live viewport so laptops shrink
+   instead of crowding, and large monitors grow toward the signed-off density. */
+@media (min-width: 1280px) {
+  .landing-page {
+    --landing-scale: clamp(
+      0.72,
+      min(calc(var(--avail-w) / 1400px), calc(var(--avail-h) / 820px)),
+      1.28
+    );
+  }
 }
 
 .landing-page .font-display {
@@ -82,6 +102,7 @@
 .hero-stage {
   display: grid;
   grid-template-rows: auto auto;
+  max-width: 1400px;
   padding-top: clamp(72px, 18svh, 132px);
 }
 
@@ -104,6 +125,14 @@
   --workflow-slot: 14svh;
   /* Scroll a demo holds the sticky stage for, below lg. */
   --workflow-runway: 72svh;
+  /* Space kept between copy cards on desktop so the next one pushes from a
+     distance instead of colliding. Tracks the video: about the leftover after
+     two cards, so a pair sits evenly beside the screen. */
+  --workflow-card-gap: clamp(
+    80px,
+    calc(var(--workflow-screen-height, 48svh) * 0.34),
+    176px
+  );
 }
 
 .workflow-motion {
@@ -125,26 +154,13 @@
 
 .workflow-card {
   width: 100%;
-  overflow: hidden;
-  border-radius: 12px;
-  /* A tinted hairline instead of white: on a pale fill a white border has no
-     edge to give, and the card dissolves into the page behind it. */
-  border: 1px solid color-mix(in srgb, var(--color-brand) 16%, transparent);
-  /* A slight top-down gradient plus an inside highlight along the top edge
-     gives the fill some material instead of one flat pastel block. */
-  background: linear-gradient(180deg, #e6fcff 0%, #d2f4ff 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    0 1px 2px rgba(37, 72, 82, 0.05),
-    0 14px 34px rgba(37, 72, 82, 0.1);
-  transition:
-    opacity 420ms var(--ease-snap, ease),
-    border-color 420ms var(--ease-snap, ease),
-    box-shadow 420ms var(--ease-snap, ease);
+  background: none;
+  border: 0;
+  box-shadow: none;
 }
 
 .workflow-card-body {
-  padding: 24px 22px 26px;
+  padding: 0;
 }
 
 .workflow-card-title {
@@ -229,10 +245,28 @@
 }
 
 .workflow-stepper {
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-inline: 2px;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+}
+
+.workflow-stepper-line {
+  position: absolute;
+  pointer-events: none;
+  background: rgb(157 221 234 / 70%);
+}
+
+.workflow-stepper-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #4cd8ff;
+  box-shadow: 0 0 14px rgb(76 216 255 / 60%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .workflow-step {
@@ -240,23 +274,9 @@
   cursor: pointer;
   border: 0;
   background: none;
-  padding-block: 8px;
-}
-
-.workflow-step-track {
-  display: block;
-  height: 2px;
-  border-radius: 999px;
-  background: #9dddea;
-  opacity: 0.45;
-  transition:
-    opacity var(--dur-hover) var(--ease-snap),
-    background-color var(--dur-hover) var(--ease-snap);
-}
-
-.workflow-step[aria-selected="true"] .workflow-step-track {
-  background: #01b4c8;
-  opacity: 1;
+  padding: 0;
+  min-width: 0;
+  min-height: 0;
 }
 
 .workflow-step:focus-visible {
@@ -265,10 +285,27 @@
   border-radius: 4px;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .workflow-step:hover .workflow-step-track {
-    opacity: 0.85;
-  }
+/* Under the video: one horizontal track, traveling dot, equal hit targets. */
+.workflow-stepper-inline {
+  min-height: 28px;
+  padding-block: 8px;
+}
+
+.workflow-stepper-inline .workflow-stepper-line {
+  top: 50%;
+  right: 2px;
+  left: 2px;
+  height: 1px;
+}
+
+.workflow-stepper-inline .workflow-stepper-dot {
+  top: 50%;
+  left: 0;
+}
+
+/* Desktop rail lives in the copy column; hide it until lg. */
+.workflow-stepper-rail {
+  display: none;
 }
 
 /* The sticky stage. The container carries a runway of one screen per demo, the
@@ -308,7 +345,7 @@
 
   /* Every card in the same cell: the rail is as tall as the tallest one, so
      the copy can swap without the screen above it shifting. */
-  .workflow-rail {
+  .workflow-panels {
     display: grid;
     grid-template-areas: "stack";
   }
@@ -348,10 +385,6 @@
     margin-inline: auto;
   }
 
-  .workflow-card-body {
-    padding: 18px 18px 20px;
-  }
-
   .workflow-card-title {
     font-size: 22px;
   }
@@ -381,14 +414,6 @@
   }
 
   /* Copy on the left, pinned screen on the right. */
-  .workflow-rail {
-    display: flex;
-    flex-direction: column;
-    grid-column: 1;
-    grid-row: 1;
-    gap: 0;
-  }
-
   .workflow-viewer {
     grid-column: 2;
     grid-row: 1;
@@ -397,60 +422,96 @@
     display: flex;
     flex-direction: column;
     gap: 18px;
-    height: calc(100svh - var(--workflow-chrome));
+    box-sizing: border-box;
+    height: var(--avail-h, calc(100svh - var(--workflow-chrome)));
+    /* Breathing room on short laptops so the 3:2 is not edge-to-edge. */
+    padding-block: clamp(12px, 3.5svh, 40px);
     /* Centred in the pinned viewport. WorkflowSection measures where that puts
        the screen's top edge and writes it back as --workflow-slot, so the
        active card parks on exactly that line. */
     justify-content: center;
-    /* Grow with the column, but never taller than the viewport. Capping width
-       by the available height keeps the 3:2 intact instead of letting the
-       screen run off the bottom on short, wide displays. */
+    /* Fill the column, but never taller than the leftover viewport: width is
+       min(column, height×1.5) so the 3:2 stays intact. */
     width: 100%;
-    max-width: calc(
-      (100svh - var(--workflow-chrome) - var(--workflow-slot) - 76px) * 1.5
-    );
+    max-width: min(100%, calc(var(--avail-h, 72svh) * 1.5));
   }
 
-  /* Hold, then push.
+  /* Hold, then push from a distance.
      Each card is sticky inside its own runway, so it parks in the slot and
-     holds the screen while you read it. When the runway runs out the card is
-     dragged up by its own panel - and because the next panel starts exactly
-     where this one ends, the next card is right behind it and shoves it off
-     the top. No JS: the runway length is the hold, the handover is free. */
+     holds the screen while you read it. Flex gap between panels is outside
+     each card's containing block, so when the runway runs out the next card
+     shoves this one off from that spacing instead of touching it. */
+  .workflow-rail {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    grid-column: 1;
+    grid-row: 1;
+    column-gap: 24px;
+    align-items: start;
+  }
+
+  .workflow-stepper-inline {
+    display: none;
+  }
+
+  .workflow-stepper-rail {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1;
+    grid-row: 1;
+    position: sticky;
+    top: calc(var(--workflow-chrome) + var(--workflow-slot));
+    align-self: start;
+    width: 28px;
+    height: var(--workflow-screen-height, 48svh);
+    padding: 0;
+    isolation: isolate;
+    z-index: 1;
+  }
+
+  .workflow-stepper-rail .workflow-stepper-line {
+    inset: 0 auto 0 50%;
+    width: 1px;
+  }
+
+  .workflow-stepper-rail .workflow-stepper-dot {
+    left: 50%;
+    top: 0;
+  }
+
+  .workflow-panels {
+    display: flex;
+    flex-direction: column;
+    grid-column: 2;
+    gap: var(--workflow-card-gap);
+    min-width: 0;
+  }
+
   .workflow-panel {
     display: block;
     min-height: 78svh;
-    padding-top: 14px;
+  }
+
+  /* Extra hold so the viewer stays pinned through Channels. Without this the
+     section unpins during Research and the last two cards blur mid-list. */
+  .workflow-panel:last-child {
+    min-height: calc(78svh + 100svh - var(--workflow-chrome));
   }
 
   .workflow-card {
     position: sticky;
     top: calc(var(--workflow-chrome) + var(--workflow-slot));
-  }
-
-  /* A dashed ghost until it is the active one, so the cards above and below
-     read as what you have passed and what is coming next. */
-  .workflow-card {
-    border-style: dashed;
-    border-color: color-mix(in srgb, var(--color-brand) 45%, transparent);
-    background: none;
     opacity: 0.42;
-    box-shadow: none;
+    transition: opacity 420ms var(--ease-snap, ease);
   }
 
   .workflow-card[data-active] {
-    border-style: solid;
-    border-color: color-mix(in srgb, var(--color-brand) 16%, transparent);
-    background: linear-gradient(180deg, #e6fcff 0%, #d2f4ff 100%);
     opacity: 1;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.85),
-      0 1px 2px rgba(37, 72, 82, 0.05),
-      0 14px 34px rgba(37, 72, 82, 0.1);
   }
 
-  .workflow-card-body {
-    padding: 32px 34px 34px;
+  .workflow-card.is-edge,
+  .workflow-stepper-rail.is-edge {
+    transition: none;
   }
 
   .workflow-card-actions {
@@ -458,7 +519,7 @@
   }
 
   .workflow-card-title {
-    font-size: clamp(26px, 2.1vw, 32px);
+    font-size: clamp(26px, 2.1vw, calc(32px * var(--landing-scale, 1)));
     line-height: 1.16;
   }
 
@@ -471,7 +532,7 @@
   .workflow-card,
   .workflow-panel,
   .workflow-screen-video,
-  .workflow-step-track {
+  .workflow-stepper-dot {
     transition: none;
   }
 }
@@ -487,6 +548,28 @@
 
 .hero-copy {
   width: 100%;
+}
+
+.hero-headline {
+  max-width: 560px;
+}
+
+.hero-headline-title {
+  display: flex;
+  flex-direction: column;
+  font-size: 38px;
+  line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+  .hero-headline {
+    max-width: none;
+  }
+
+  .hero-headline-line {
+    display: block;
+    white-space: nowrap;
+  }
 }
 
 .hero-scene {
@@ -626,7 +709,7 @@
     padding-bottom: clamp(32px, 9vw, 48px);
   }
 
-  .hero-headline > div {
+  .hero-headline-title {
     line-height: 1.18;
   }
 
@@ -679,6 +762,13 @@
     grid-template-rows: minmax(590px, calc(100svh - 48px));
     align-items: center;
     padding-top: 0;
+  }
+
+  /* Tracks into the 51.8px overlay headline so 1024–1279 desktops don't
+     sit on the 38px phone size next to a full collage. */
+  .hero-headline-title {
+    font-size: clamp(38px, 4.6vw, 51.8px);
+    line-height: 1.12;
   }
 
   .hero-scene {
@@ -828,22 +918,28 @@
 .pricing-grid {
   /**
    * Pin offset for the mobile deck: clear of the sticky site chrome.
-   *
-   * A pinned card taller than the room left below that chrome would have its
-   * last benefits stranded off the fold with no way to scroll to them, so on
-   * short viewports the offset gives way and lets the card ride up under the
-   * header instead. 350px covers the tallest plan at phone widths.
+   * Each card then fills the remaining viewport so one full plan is on
+   * screen — name through CTA — and the next card deals over it.
    */
-  --pricing-stack-top: min(
-    calc(var(--site-chrome-height, 56px) + 10px),
-    calc(100svh - 350px)
-  );
+  --pricing-stack-top: calc(var(--site-chrome-height, 56px) + 10px);
 }
 
+/**
+ * Mobile-first stacked card: art on top (name, price, and badge overlaid,
+ * fading to white), then benefits, then the CTA. From 640px the same overlay
+ * sits on the art with the CTA overlapping its bottom edge.
+ */
 .pricing-card {
   display: grid;
-  grid-template-columns: minmax(0, 42%) minmax(0, 58%);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto;
+  grid-template-areas:
+    "visual"
+    "benefits"
+    "cta"
+    "highlight";
   min-height: 0;
+  padding-bottom: 12px;
 }
 
 .pricing-card[data-recommended] {
@@ -862,39 +958,38 @@
 }
 
 .pricing-visual {
-  width: calc(100% + 56px);
-  min-height: 100%;
+  grid-area: visual;
+  width: 100%;
+  height: clamp(156px, 20svh, 184px);
+  min-height: 0;
   background: #fff;
   -webkit-mask-image: linear-gradient(
-    to right,
+    to bottom,
     #000 0%,
-    #000 calc(100% - 56px),
+    #000 calc(100% - 40px),
     transparent 100%
   );
   mask-image: linear-gradient(
-    to right,
+    to bottom,
     #000 0%,
-    #000 calc(100% - 56px),
+    #000 calc(100% - 40px),
     transparent 100%
   );
 }
 
-/**
- * Legibility scrim for the plan name and price. The artwork is bright and
- * high-key, so this lifts the top and bottom edges toward white rather than
- * darkening them — the same inversion the type went through.
- */
 .pricing-visual::after {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(
     to bottom,
-    rgb(255 255 255 / 78%) 0%,
-    rgb(255 255 255 / 10%) 30%,
-    rgb(255 255 255 / 10%) 58%,
-    rgb(255 255 255 / 88%) 100%
+    transparent 0%,
+    transparent 58%,
+    rgb(255 255 255 / 42%) 82%,
+    #fff 100%
   );
   content: "";
+  pointer-events: none;
 }
 
 .pricing-image {
@@ -903,31 +998,74 @@
   /* Full strength: the art is already pale, and fading it further onto white
      left it washed out rather than subtle. */
   opacity: 1;
+  object-position: var(--pricing-image-position, center);
+  /* object-position X is a no-op while cover is width-bound; this actually pans. */
+  transform: translateX(var(--pricing-image-shift, 0%));
+}
+
+/**
+ * Phone pan: Lite/Starter/Pro each frame their own subject. Desktop is
+ * the full 870×608 frame.
+ */
+.pricing-card[data-plan="lite"] {
+  --pricing-image-position: 70% center;
+  --pricing-image-shift: 12%;
+}
+
+.pricing-card[data-plan="starter"] {
+  --pricing-image-position: 58% center;
+  --pricing-image-shift: 12%;
+}
+
+.pricing-card[data-plan="pro"] {
+  --pricing-image-position: center;
+  --pricing-image-shift: 18%;
 }
 
 .pricing-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 30;
   text-shadow: none;
 }
 
 .pricing-summary {
+  position: absolute;
   inset: 0 auto 0 0;
-  width: calc(100% - 56px);
   display: flex;
+  grid-area: visual;
+  z-index: 10;
+  width: 64%;
   flex-direction: column;
   justify-content: space-between;
-  /* Shrink each block to its text, so the pad behind it stops where the words
-     do instead of stretching across the whole summary column. */
   align-items: flex-start;
-  padding: 16px 12px 18px;
+  padding: 16px 12px 18px 16px;
+  pointer-events: none;
+  color: #014e59;
   /**
    * Legibility comes from the type itself rather than from a scrim over the
    * artwork. Stacked white blurs bleed outward far enough to wash the image
-   * pale directly behind the words, while leaving the rest of the scene at full
-   * strength — a shaped halo instead of a rectangle laid across the whole card.
+   * pale directly behind the words, while leaving the rest of the scene at
+   * full strength — a shaped halo instead of a rectangle laid across the
+   * whole card.
    */
   text-shadow:
     0 0 4px #fff,
     0 0 10px rgb(255 255 255 / 80%);
+}
+
+.pricing-heading,
+.pricing-price {
+  color: #014e59;
+}
+
+.pricing-heading {
+  min-width: 0;
+}
+
+.pricing-summary > * {
+  position: relative;
 }
 
 /**
@@ -939,10 +1077,6 @@
  * whose edges still dissolve, so it reads as a bloom rather than the boxed
  * scrim this replaced.
  */
-.pricing-summary > * {
-  position: relative;
-}
-
 .pricing-summary > *::before {
   position: absolute;
   z-index: -1;
@@ -953,31 +1087,29 @@
   content: "";
 }
 
-.pricing-content {
-  position: relative;
-  z-index: 1;
-  min-width: 0;
-  padding: 14px 12px 16px clamp(20px, 6vw, 26px);
-  background: linear-gradient(
-    90deg,
-    transparent 0,
-    rgb(255 255 255 / 55%) 28px,
-    #fff 56px
-  );
+.pricing-card > .pricing-content {
+  display: contents;
 }
 
 .pricing-benefits {
-  margin-top: 16px;
+  grid-area: benefits;
+  min-width: 0;
+  margin-top: 0;
+  padding: 4px 16px 8px;
+}
+
+.pricing-benefits > p {
+  margin-bottom: 8px;
 }
 
 .pricing-benefits ul {
-  gap: 7px;
-  font-size: 12px;
-  line-height: 15px;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 16px;
 }
 
 .pricing-benefits li {
-  gap: 7px;
+  gap: 8px;
 }
 
 .pricing-benefits svg {
@@ -986,8 +1118,26 @@
 }
 
 .pricing-price {
+  min-width: 0;
   /* Reserve annual three-line stack so monthly↔annual never animates height. */
-  min-height: 88px;
+  min-height: 76px;
+}
+
+.pricing-card .pricing-button {
+  grid-area: cta;
+  width: auto;
+  max-width: none;
+  height: 48px;
+  margin-inline: 16px;
+  font-size: 16px;
+  justify-self: stretch;
+}
+
+.pricing-highlight {
+  grid-area: highlight;
+  min-width: 0;
+  margin-top: 8px;
+  padding-inline: 16px;
 }
 
 .pricing-price-stack {
@@ -1015,7 +1165,7 @@
 }
 
 .pricing-price-amount {
-  font-size: 40px;
+  font-size: 36px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -1085,11 +1235,6 @@
     opacity 160ms var(--ease-snap),
     transform 160ms var(--ease-snap),
     visibility 0s linear 160ms;
-}
-
-.pricing-content .pricing-button {
-  height: 40px;
-  font-size: 12px;
 }
 
 .billing-toggle {
@@ -1318,6 +1463,10 @@
     /* The grid's own `mx-auto`, `max-w`, and `gap` go with its box. */
     max-width: 430px;
     margin: 20px auto 0;
+    max-height: calc(
+      100svh - var(--pricing-stack-top) -
+        max(12px, env(safe-area-inset-bottom, 0px))
+    );
   }
 
   .pricing-grid > .pricing-card:first-child {
@@ -1351,12 +1500,21 @@
 
 @media (min-width: 640px) {
   .pricing-card {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "visual"
+      "content";
+    height: auto;
+    max-height: none;
+    padding-bottom: 0;
   }
 
   .pricing-visual {
+    grid-area: visual;
     width: 100%;
+    height: auto;
     aspect-ratio: 870 / 608;
     min-height: 0;
     margin-bottom: -72px;
@@ -1374,8 +1532,14 @@
     );
   }
 
-  /* No scrim at this width: the halo on `.pricing-summary` does the work, and
-     any wash across the artwork flattens it. */
+  .pricing-image {
+    --pricing-image-position: center;
+    --pricing-image-shift: 0%;
+  }
+
+  /* No wash at this width: the halo on `.pricing-summary` does the work, and
+     any gradient across the artwork flattens it. The mask still fades the
+     bottom edge into the content column. */
   .pricing-visual::after {
     background: none;
   }
@@ -1385,8 +1549,23 @@
     padding: 22px 18px 98px;
   }
 
+  .pricing-benefits,
+  .pricing-highlight,
+  .pricing-card .pricing-button {
+    grid-area: auto;
+  }
+
+  .pricing-badge {
+    top: 20px;
+    right: 20px;
+  }
+
   .pricing-price {
     min-height: 104px;
+  }
+
+  .pricing-price-amount {
+    font-size: 40px;
   }
 
   .pricing-summary .pricing-price-amount {
@@ -1404,7 +1583,12 @@
     line-height: 18px;
   }
 
-  .pricing-content {
+  .pricing-card > .pricing-content {
+    display: flex;
+    grid-area: content;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
     padding: 18px 20px 24px;
     background: linear-gradient(
       180deg,
@@ -1414,13 +1598,27 @@
     );
   }
 
-  .pricing-content .pricing-button {
+  .pricing-card .pricing-button {
+    width: 100%;
+    max-width: 299px;
     height: 54px;
+    margin-inline: 0;
     font-size: 17px;
+    justify-self: auto;
+  }
+
+  .pricing-highlight {
+    margin-top: 10px;
+    padding-inline: 0;
   }
 
   .pricing-benefits {
     margin-top: 24px;
+    padding: 0;
+  }
+
+  .pricing-benefits > p {
+    margin-bottom: 12px;
   }
 
   .pricing-benefits ul {
@@ -1444,6 +1642,7 @@
     grid-template-columns: minmax(460px, 0.82fr) minmax(700px, 1.18fr);
     grid-template-rows: 1fr;
     align-items: center;
+    max-width: 100%;
     min-height: max(620px, calc(100svh - 56px));
     padding-top: 0;
   }
@@ -1452,14 +1651,14 @@
     grid-column: 1 / -1;
     grid-row: 1;
     width: 100%;
-    height: min(820px, calc(100svh - 70px));
+    height: min(calc(820px * var(--landing-scale)), calc(100svh - 70px));
     margin-top: 0;
   }
 
   .hero-portal {
     top: 52%;
     left: 68%;
-    width: min(72%, 780px, 80svh);
+    width: min(72%, calc(780px * var(--landing-scale)), 80svh);
   }
 
   .hero-copy {
@@ -1469,11 +1668,23 @@
     padding-left: 8px;
   }
 
+  .hero-headline-title {
+    font-size: calc(51.8px * var(--landing-scale));
+    line-height: calc(58px * var(--landing-scale));
+  }
+
+  .hero-cta-row .landing-cta {
+    height: calc(57px * var(--landing-scale));
+    max-width: calc(227px * var(--landing-scale));
+    font-size: calc(21px * var(--landing-scale));
+  }
+
   .hero-report {
-    top: -90px;
-    /* Even gutter between the copy column and the workflow chips. */
-    left: calc((20% + 90% - 216px - 424px) / 2);
-    width: 424px;
+    top: 0;
+    /* Even gutter between the copy column and the workflow chips.
+       Chip width never drops below 216px so labels stay on one line. */
+    left: calc((110% - (216px + 424px * var(--landing-scale))) / 2);
+    width: calc(424px * var(--landing-scale));
     transform: none;
   }
 
@@ -1481,19 +1692,31 @@
     top: auto;
     bottom: 4%;
     left: 28%;
-    width: 320px;
+    width: calc(320px * var(--landing-scale));
   }
 
   .hero-search {
     right: 4%;
     bottom: 3%;
-    width: 455px;
+    width: calc(455px * var(--landing-scale));
   }
 
   .hero-workflow {
     top: 8%;
     right: 3%;
     transform: none;
+  }
+
+  .hero-workflow .hero-interactive {
+    width: max(216px, calc(216px * var(--landing-scale)));
+    height: max(38px, calc(38px * var(--landing-scale)));
+    gap: max(14px, calc(14px * var(--landing-scale)));
+    font-size: max(12px, calc(12px * var(--landing-scale)));
+  }
+
+  .hero-workflow .hero-interactive img {
+    width: max(28px, calc(28px * var(--landing-scale)));
+    height: max(28px, calc(28px * var(--landing-scale)));
   }
 
   .hero-workflow > :nth-child(2) {
@@ -1662,14 +1885,19 @@
   }
 }
 
-/* Long display lines, not a short title. 31px on a 390px viewport wraps
-   into a wall of type; the floor is a real heading, the preferred term
-   tracks the phone, and the cap is the size the desktop layout already pins. */
+/* Long display lines. ~18px on a 390px phone keeps each headline to two
+   lines without hyphenating Half-Finished; 16px is the 320px floor. */
 .work-headline {
   text-wrap: balance;
-  font-size: clamp(1.375rem, 2.6vw + 0.875rem, 1.9375rem);
+  font-size: clamp(1rem, 3vw + 0.4rem, 1.9375rem);
   line-height: 1.22;
   letter-spacing: -0.02em;
+}
+
+@media (max-width: 1023px) {
+  .work-headline .font-display {
+    white-space: nowrap;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -1681,6 +1909,10 @@
   .feature-grid > :nth-child(2) {
     aspect-ratio: 712 / 346;
     object-fit: cover;
+  }
+
+  #capabilities {
+    padding-inline: clamp(24px, 4vw, 64px);
   }
 
   .work-section {
@@ -1749,6 +1981,10 @@
     height: 58px;
     max-width: none;
     font-size: 18px;
+  }
+
+  .pricing-card .pricing-button {
+    max-width: none;
   }
 
   /* Plan-card buttons fill their card, but the Enterprise one sits in a row

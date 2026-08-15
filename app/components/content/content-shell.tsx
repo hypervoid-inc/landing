@@ -97,6 +97,7 @@ export function ContentShell({
               Extra bottom padding — coral blur is ~24–28px and was hard-clipping.
             */}
             <div
+              data-lenis-prevent
               className={`resource-rail-scroll sticky ${RAIL_TOP} ${RAIL_MAX_H} overflow-x-clip overflow-y-auto px-4 pb-8 pt-4 -mx-4 -mb-8 -mt-4`}
             >
               {aside}

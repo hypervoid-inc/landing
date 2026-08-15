@@ -412,7 +412,7 @@
 
 .hero-ph-badge .ph-badge-face,
 .hero-ph-badge img {
-  width: min(250px, 100%);
+  width: min(calc(250px * var(--landing-scale, 1)), 100%);
   height: auto;
 }
 

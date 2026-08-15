@@ -1,19 +1,29 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { workflowDemos, type WorkflowDemo } from "~/content/landing";
-import { cn } from "~/lib/cn";
+import { scrollPageTo } from "~/lib/page-scroll";
 
 import { StartLink } from "./beta-access";
 import { readSiteChromeHeightPx } from "../product-hunt/chrome";
 import { useDesktop, usePrefersReducedMotion } from "./media";
 import {
   getActiveWorkflowIndex,
+  getWorkflowFirstReveal,
   getWorkflowFocusLine,
+  getWorkflowLastReveal,
+  getWorkflowPushOffset,
+  getWorkflowRailFollow,
+  getWorkflowRailProgress,
   getWorkflowScrollTarget,
   getWorkflowSlotTop,
   getWorkflowStageIndex,
   getWorkflowStageProgress,
   getWorkflowStageScrollTarget,
+  getWorkflowStickyTop,
+  getWorkflowVisualBounds,
+  WORKFLOW_EDGE_BLUR_PX,
+  WORKFLOW_EDGE_POINTER_CUTOFF,
+  type WorkflowPushOffset,
 } from "./workflow-motion";
 
 /**
@@ -104,16 +114,20 @@ function WorkflowCard({
 function WorkflowStepper({
   active,
   onSelect,
+  variant,
 }: {
   active: number;
   onSelect: (index: number) => void;
+  variant: "rail" | "inline";
 }) {
   return (
     <div
-      className="workflow-stepper"
+      className={`workflow-stepper workflow-stepper-${variant}`}
       role="tablist"
       aria-label="Capability walkthrough"
     >
+      <span aria-hidden className="workflow-stepper-line" />
+      <span aria-hidden className="workflow-stepper-dot" />
       {workflowDemos.map((demo, index) => (
         <button
           key={demo.id}
@@ -123,12 +137,76 @@ function WorkflowStepper({
           aria-label={`${demo.title} ${demo.accent}`}
           onClick={() => onSelect(index)}
           className="workflow-step"
-        >
-          <span aria-hidden className="workflow-step-track" />
-        </button>
+        />
       ))}
     </div>
   );
+}
+
+function paintRailDot(dot: HTMLElement, progress: number, vertical: boolean) {
+  if (vertical) {
+    dot.style.top = `${progress * 100}%`;
+    dot.style.left = "";
+    return;
+  }
+  dot.style.left = `${progress * 100}%`;
+  dot.style.top = "";
+}
+
+function paintEdge(element: HTMLElement, reveal: number | null) {
+  if (reveal == null) {
+    element.classList.remove("is-edge");
+    element.style.opacity = "";
+    element.style.filter = "";
+    return;
+  }
+
+  element.classList.add("is-edge");
+  element.style.opacity = String(reveal);
+  element.style.filter =
+    reveal >= 0.99 ? "none" : `blur(${(1 - reveal) * WORKFLOW_EDGE_BLUR_PX}px)`;
+}
+
+function paintCardReveal(card: HTMLElement, reveal: number | null) {
+  paintEdge(card, reveal);
+  card.style.pointerEvents =
+    reveal != null && reveal < WORKFLOW_EDGE_POINTER_CUTOFF ? "none" : "";
+}
+
+function paintPushBodies(
+  bodies: readonly (HTMLElement | null)[],
+  push: WorkflowPushOffset | null,
+) {
+  bodies.forEach((body, index) => {
+    if (!body) return;
+    if (
+      push != null &&
+      (index === push.index || index === push.index + 1) &&
+      Math.abs(push.offsetY) >= 0.5
+    ) {
+      body.style.transform = `translate3d(0, ${push.offsetY}px, 0)`;
+      return;
+    }
+    body.style.transform = "";
+  });
+}
+
+function clearPushBodies(rail: HTMLElement) {
+  rail.querySelectorAll<HTMLElement>(".workflow-card-body").forEach((body) => {
+    body.style.transform = "";
+  });
+}
+
+function paintRailFollow(
+  stepper: HTMLElement,
+  targetTop: number,
+  reveal: number | null,
+) {
+  const naturalTop = stepper.getBoundingClientRect().top;
+  const offsetY = Math.round(targetTop - naturalTop);
+  stepper.style.transform =
+    Math.abs(offsetY) < 1 ? "" : `translate3d(0, ${offsetY}px, 0)`;
+  paintEdge(stepper, reveal);
 }
 
 function StaticWorkflow() {
@@ -205,12 +283,16 @@ export function WorkflowSection() {
       frame = 0;
       const viewer = screen.parentElement;
       if (!viewer || !viewer.offsetParent) return;
+      const screenBox = screen.getBoundingClientRect();
       const slot = Math.round(
-        screen.getBoundingClientRect().top -
-          viewer.getBoundingClientRect().top,
+        screenBox.top - viewer.getBoundingClientRect().top,
       );
       slotRef.current = slot;
       section.style.setProperty("--workflow-slot", `${slot}px`);
+      section.style.setProperty(
+        "--workflow-screen-height",
+        `${Math.round(screenBox.height)}px`,
+      );
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(measure);
@@ -229,46 +311,112 @@ export function WorkflowSection() {
 
   useEffect(() => {
     if (reducedMotion) return;
+    const section = sectionRef.current;
     const rail = railRef.current;
     const motion = motionRef.current;
     const stage = stageRef.current;
-    if (!rail || !motion || !stage) return;
+    const screen = screenRef.current;
+    if (!section || !rail || !motion || !stage) return;
 
     let frame = 0;
     const read = () => {
       frame = 0;
       const chrome = readSiteChromeHeightPx();
+      const dots = section.querySelectorAll<HTMLElement>(
+        ".workflow-stepper-dot",
+      );
 
       // Below lg the stage is pinned and the cards sit on top of one another,
       // so there is nothing to measure: progress through the container's
       // runway is the whole story.
       if (!desktop) {
         const rect = motion.getBoundingClientRect();
-        setActive(
-          getWorkflowStageIndex(
-            getWorkflowStageProgress(
-              rect.top,
-              rect.height,
-              stage.offsetHeight,
-              chrome,
-            ),
-            workflowDemos.length,
-          ),
+        const progress = getWorkflowStageProgress(
+          rect.top,
+          rect.height,
+          stage.offsetHeight,
+          chrome,
         );
+        setActive(getWorkflowStageIndex(progress, workflowDemos.length));
+        dots.forEach((dot) => paintRailDot(dot, progress, false));
         return;
       }
 
-      // Cards are sticky, so measure the cards themselves rather than their
-      // runways: a card holds the focus line for as long as it holds the slot,
-      // and hands over mid-push as the next card rises past the line.
+      if (!screen) return;
+
+      // Layout from panels, then a shared bezier correction on the pair that
+      // currently straddles the slot so the push eases in and out.
       const cards = [...rail.querySelectorAll<HTMLElement>(".workflow-card")];
-      const focusLine = getWorkflowFocusLine(window.innerHeight, chrome);
-      setActive(
-        getActiveWorkflowIndex(
-          cards.map((card) => card.getBoundingClientRect()),
-          focusLine,
+      const panels = [...rail.querySelectorAll<HTMLElement>(".workflow-panel")];
+      const panelBoxes = panels.map((panel) => panel.getBoundingClientRect());
+      const heights = cards.map((card) => card.offsetHeight);
+      const screenBox = screen.getBoundingClientRect();
+      const slotTop = screenBox.top;
+      const layoutTops = panelBoxes.map((box, index) =>
+        getWorkflowStickyTop(
+          box.top,
+          box.bottom,
+          heights[index]!,
+          slotTop,
         ),
       );
+      const push = getWorkflowPushOffset(layoutTops, slotTop);
+      const bodies = cards.map((card) =>
+        card.querySelector<HTMLElement>(".workflow-card-body"),
+      );
+      paintPushBodies(bodies, push);
+
+      const focusLine = getWorkflowFocusLine(window.innerHeight, chrome);
+      const bounds = getWorkflowVisualBounds(layoutTops, heights, push);
+      const nextActive = getActiveWorkflowIndex(bounds, focusLine);
+      setActive(nextActive);
+
+      const progress = getWorkflowRailProgress(panelBoxes, focusLine);
+      dots.forEach((dot) => paintRailDot(dot, progress, true));
+
+      const videoBottom = screenBox.bottom;
+      const viewerTop =
+        screen.parentElement?.getBoundingClientRect().top ?? slotTop;
+      const last = cards.length - 1;
+      let firstReveal: number | null = null;
+      let lastReveal: number | null = null;
+      cards.forEach((card, index) => {
+        let reveal: number | null = null;
+        // Edge blur tracks the sticky shell vs the video, not the eased body
+        // and not the JS sticky formula. That formula clamps to live screen
+        // top, which parks the first card too early (rail top sits above the
+        // centered video) and misses the last card once the viewer unpins.
+        const box = card.getBoundingClientRect();
+        if (index === 0 && nextActive === 0) {
+          firstReveal = getWorkflowFirstReveal(
+            box.top,
+            slotTop,
+            viewerTop,
+            chrome,
+          );
+          reveal = firstReveal;
+        }
+        if (index === last) {
+          lastReveal = getWorkflowLastReveal(
+            box.top,
+            box.bottom,
+            slotTop,
+            videoBottom,
+            viewerTop,
+            chrome,
+          );
+          if (lastReveal != null) reveal = lastReveal;
+        }
+        paintCardReveal(card, reveal);
+      });
+      const stepper = section.querySelector<HTMLElement>(
+        ".workflow-stepper-rail",
+      );
+      if (stepper) {
+        stepper.style.transform = "";
+        const follow = getWorkflowRailFollow(firstReveal, lastReveal);
+        paintRailFollow(stepper, slotTop + follow.offsetY, follow.reveal);
+      }
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(read);
@@ -283,6 +431,7 @@ export function WorkflowSection() {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
       window.removeEventListener("pageshow", schedule);
+      clearPushBodies(rail);
     };
   }, [desktop, reducedMotion]);
 
@@ -298,8 +447,8 @@ export function WorkflowSection() {
       const stage = stageRef.current;
       if (!motion || !stage) return;
       const rect = motion.getBoundingClientRect();
-      window.scrollTo({
-        top: getWorkflowStageScrollTarget(
+      scrollPageTo(
+        getWorkflowStageScrollTarget(
           window.scrollY,
           rect.top,
           rect.height,
@@ -308,26 +457,23 @@ export function WorkflowSection() {
           index,
           workflowDemos.length,
         ),
-        behavior: "smooth",
-      });
+      );
       return;
     }
 
-    const panel = railRef.current?.querySelectorAll<HTMLElement>(
-      ".workflow-panel",
-    )[index];
+    const panel =
+      railRef.current?.querySelectorAll<HTMLElement>(".workflow-panel")[index];
     if (!panel) return;
     const slotTop = slotRef.current
       ? chrome + slotRef.current
       : getWorkflowSlotTop(window.innerHeight, chrome);
-    window.scrollTo({
-      top: getWorkflowScrollTarget(
+    scrollPageTo(
+      getWorkflowScrollTarget(
         window.scrollY,
         panel.getBoundingClientRect().top,
         slotTop,
       ),
-      behavior: "smooth",
-    });
+    );
   };
 
   return (
@@ -344,7 +490,7 @@ export function WorkflowSection() {
         Workflow demos
       </h2>
       <div
-        className="workflow-motion mx-auto w-full max-w-[1520px]"
+        className="workflow-motion page-rail mx-auto w-full"
         ref={motionRef}
       >
         {/* display:contents from lg up, where the viewer and the rail are the
@@ -361,18 +507,29 @@ export function WorkflowSection() {
                 />
               ))}
             </div>
-            <WorkflowStepper active={active} onSelect={scrollToDemo} />
+            <WorkflowStepper
+              variant="inline"
+              active={active}
+              onSelect={scrollToDemo}
+            />
           </div>
           <div className="workflow-rail" ref={railRef}>
-            {workflowDemos.map((demo, index) => (
-              <article
-                key={demo.id}
-                className={cn("workflow-panel", index === 0 && "is-first")}
-                data-active={active === index ? "true" : undefined}
-              >
-                <WorkflowCard demo={demo} active={active === index} />
-              </article>
-            ))}
+            <WorkflowStepper
+              variant="rail"
+              active={active}
+              onSelect={scrollToDemo}
+            />
+            <div className="workflow-panels">
+              {workflowDemos.map((demo, index) => (
+                <article
+                  key={demo.id}
+                  className="workflow-panel"
+                  data-active={active === index ? "true" : undefined}
+                >
+                  <WorkflowCard demo={demo} active={active === index} />
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </div>

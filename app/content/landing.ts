@@ -210,6 +210,18 @@ export const workflowDemos = [
       "Construct Memories showing evidence-backed preferences and procedures",
   },
   {
+    id: "research",
+    title: "Research About",
+    accent: "Any Topic",
+    description:
+      "Construct gathers sources, compares details, and turns messy questions into cited research you can review or share.",
+    cta: "Research a Topic",
+    mutedAction: "See Report Samples Generated",
+    video: "/assets/landing/workflows/research.mp4",
+    poster: "/assets/landing/workflows/research-poster.jpg",
+    ariaLabel: "Construct researching a topic in the product interface",
+  },
+  {
     id: "channels",
     title: "Work Together",
     accent: "Across Channels",
@@ -221,18 +233,6 @@ export const workflowDemos = [
     poster: "/assets/landing/workflows/channels-poster.jpg",
     ariaLabel:
       "Construct available through Slack, Telegram, Discord slash commands, native email, and the web",
-  },
-  {
-    id: "research",
-    title: "Research About",
-    accent: "Any Topic",
-    description:
-      "Construct gathers sources, compares details, and turns messy questions into cited research you can review or share.",
-    cta: "Research a Topic",
-    mutedAction: "See Report Samples Generated",
-    video: "/assets/landing/workflows/research.mp4",
-    poster: "/assets/landing/workflows/research-poster.jpg",
-    ariaLabel: "Construct researching a topic in the product interface",
   },
 ] as const;
 
@@ -266,7 +266,9 @@ export const featureCards = [
     wide: false,
   },
   {
-    src: "/assets/landing/features/automations.webp",
+    video: "/assets/landing/features/automations.mp4",
+    webm: "/assets/landing/features/automations.webm",
+    poster: "/assets/landing/features/automations-poster.webp",
     alt: "Runs linear workflows and delegates bounded parallel work to temporary agents",
     wide: false,
   },
