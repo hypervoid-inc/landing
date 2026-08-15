@@ -755,7 +755,7 @@ test("keeps lower landing sections proportional across desktop widths", async ({
     "background-color",
     "rgb(1, 180, 200)",
   );
-  await expect(page.locator(".feature-grid img").first()).toHaveCSS(
+  await expect(page.locator(".feature-grid .feature-card").first()).toHaveCSS(
     "background-color",
     "rgb(255, 255, 255)",
   );
@@ -1306,7 +1306,7 @@ test.skip("keeps the landing hero clear and reserves lazy media space", async ({
   expect(boxesOverlap(chat, startNow)).toBe(false);
   expect(boxesOverlap(chip, startNow)).toBe(false);
   await expect(
-    page.locator('.feature-grid img[src$="schedules.webp"]'),
+    page.locator(".feature-grid .feature-card").first(),
   ).toHaveAttribute("width", "346");
   await expect(
     page.locator('.feature-grid img[src$="integrations.webp"]'),

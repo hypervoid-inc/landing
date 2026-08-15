@@ -94,16 +94,26 @@ export function useDesktop() {
 
 export function AutoVideo({
   src,
+  webm,
   poster,
   label,
   className,
   decorative = false,
+  width,
+  height,
+  preload = "metadata",
+  ...rest
 }: {
   src: string;
+  webm?: string;
   poster: string;
   label?: string;
   className?: string;
   decorative?: boolean;
+  width?: number;
+  height?: number;
+  preload?: "none" | "metadata" | "auto";
+  "data-reveal-delay"?: string;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const reducedMotion = usePrefersReducedMotion();
@@ -132,12 +142,16 @@ export function AutoVideo({
       muted
       loop
       playsInline
-      preload="metadata"
+      preload={preload}
       poster={poster}
+      width={width}
+      height={height}
       aria-label={decorative ? undefined : label}
       aria-hidden={decorative || undefined}
       className={className ?? "h-full w-full object-cover"}
+      {...rest}
     >
+      {webm ? <source src={webm} type="video/webm" /> : null}
       <source src={src} type="video/mp4" />
     </video>
   );

@@ -240,7 +240,9 @@ export type WorkflowDemo = (typeof workflowDemos)[number];
 
 export const featureCards = [
   {
-    src: "/assets/landing/features/schedules.webp",
+    video: "/assets/landing/features/schedules.mp4",
+    webm: "/assets/landing/features/schedules.webm",
+    poster: "/assets/landing/features/schedules-poster.webp",
     alt: "Schedules repeating agent jobs and workflow runs with calendar-based automation",
     wide: false,
   },
@@ -250,12 +252,16 @@ export const featureCards = [
     wide: true,
   },
   {
-    src: "/assets/landing/features/social-manager.webp",
+    video: "/assets/landing/features/social-manager.mp4",
+    webm: "/assets/landing/features/social-manager.webm",
+    poster: "/assets/landing/features/social-manager-poster.webp",
     alt: "Uses supported connected social applications when the required actions are available",
     wide: false,
   },
   {
-    src: "/assets/landing/features/cloud-control.webp",
+    video: "/assets/landing/features/cloud-control.mp4",
+    webm: "/assets/landing/features/cloud-control.webm",
+    poster: "/assets/landing/features/cloud-control-poster.webp",
     alt: "Cloud workspace available through a responsive mobile web interface",
     wide: false,
   },

@@ -33,7 +33,7 @@ export const referenceImages = [
     note: "The supporting vocabulary of floating rounded chips and app tiles.",
   },
   {
-    file: "public/assets/landing/features/cloud-control.webp",
+    file: "public/assets/landing/features/cloud-control-poster.webp",
     note: "Glass surface treatment and the soft cyan-to-white gradient.",
   },
   {
