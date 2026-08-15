@@ -153,6 +153,61 @@
   padding: 0.15rem 0.3rem;
 }
 
+/*
+ * Dithered edge grain: sparse deep-coral pixels from an inline-SVG tile,
+ * masked so the texture lives at the strip's outer edges and dissolves
+ * before the centered copy — the grain carries the craft, the text keeps
+ * a flat ground. Pure CSS: no canvas, no JS, static under reduced motion.
+ */
+.ph-banner-grain {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cg fill='%23a63a31' fill-opacity='.5'%3E%3Crect width='4' height='4'/%3E%3Crect x='8' y='8' width='4' height='4'/%3E%3Crect x='4' y='12' width='4' height='4'/%3E%3Crect x='12' y='4' width='4' height='4'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    transparent 32%,
+    transparent 68%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    transparent 32%,
+    transparent 68%,
+    #000 100%
+  );
+}
+
+/* Phones: 4px cells vanish on dense screens and the clean zone is wide
+   relative to the strip — chunkier, denser cells on a short plateau at
+   each edge so the grain actually reads before it dissolves. */
+@media (max-width: 639.98px) {
+  .ph-banner-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cg fill='%23a63a31' fill-opacity='.6'%3E%3Crect width='5' height='5'/%3E%3Crect x='10' y='10' width='5' height='5'/%3E%3Crect x='5' y='15' width='5' height='5'/%3E%3Crect x='15' y='5' width='5' height='5'/%3E%3Crect x='15' y='15' width='5' height='5'/%3E%3Crect y='10' width='5' height='5'/%3E%3C/g%3E%3C/svg%3E");
+    -webkit-mask-image: linear-gradient(
+      to right,
+      #000 0%,
+      #000 6%,
+      transparent 24%,
+      transparent 76%,
+      #000 94%,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      #000 0%,
+      #000 6%,
+      transparent 24%,
+      transparent 76%,
+      #000 94%,
+      #000 100%
+    );
+  }
+}
+
 @media (min-width: 640px) {
   .ph-banner-inner {
     gap: 0.65rem 1rem;

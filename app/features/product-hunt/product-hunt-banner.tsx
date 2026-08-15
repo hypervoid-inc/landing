@@ -91,6 +91,7 @@ export function ProductHuntBanner() {
       role="region"
       aria-label={ariaLabel}
     >
+      <span className="ph-banner-grain" aria-hidden="true" />
       <div className="ph-banner-inner">
         <span className="ph-banner-lead text-[13px] font-semibold leading-5 sm:text-sm">
           <span className="ph-banner-lead-short">{copy.bannerLeadShort}</span>
