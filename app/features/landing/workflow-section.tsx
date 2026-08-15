@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 
 import { workflowDemos, type WorkflowDemo } from "~/content/landing";
 import { scrollPageTo } from "~/lib/page-scroll";
@@ -26,9 +26,11 @@ import {
   type WorkflowPushOffset,
 } from "./workflow-motion";
 
+const WORKFLOW_VIDEO_FADE_MS = 480;
+
 /**
- * One video screen, pinned beside the copy. Every demo's video lives here and
- * swaps by cross-fade, so the frame itself never moves while you scroll.
+ * One video screen, pinned beside the copy. The active clip and the one
+ * fading out live here; they swap by opacity against the white fill.
  */
 function WorkflowScreen({
   demo,
@@ -39,6 +41,20 @@ function WorkflowScreen({
 }) {
   const ref = useRef<HTMLVideoElement>(null);
 
+  useLayoutEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    if (!active) {
+      video.removeAttribute("data-active");
+      return;
+    }
+    video.removeAttribute("data-active");
+    const frame = requestAnimationFrame(() => {
+      video.setAttribute("data-active", "true");
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [active]);
+
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
@@ -47,7 +63,6 @@ function WorkflowScreen({
       return;
     }
 
-    video.currentTime = 0;
     const observer = new IntersectionObserver(([entry]) => {
       if (entry?.isIntersecting) void video.play().catch(() => undefined);
       else video.pause();
@@ -65,12 +80,11 @@ function WorkflowScreen({
       muted
       loop
       playsInline
-      preload={active ? "metadata" : "none"}
+      preload={active ? "auto" : "metadata"}
       poster={demo.poster}
       aria-label={active ? demo.ariaLabel : undefined}
       aria-hidden={!active}
-      data-active={active ? "true" : undefined}
-      className="workflow-screen-video absolute inset-0 h-full w-full object-cover"
+      className="workflow-screen-video"
     >
       <source src={demo.video} type="video/mp4" />
     </video>
@@ -224,13 +238,12 @@ function StaticWorkflow() {
             key={demo.id}
             className="overflow-hidden rounded-[12px] bg-white/75 shadow-sm lg:rounded-[16px]"
           >
-            <div className="relative aspect-[3/2] w-full overflow-hidden">
+            <div className="workflow-screen">
               <img
                 src={demo.poster}
                 alt={demo.ariaLabel}
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-cover"
               />
             </div>
             <div className="p-6 lg:p-8">
@@ -267,6 +280,21 @@ export function WorkflowSection() {
   const reducedMotion = usePrefersReducedMotion();
   const desktop = useDesktop();
   const [active, setActive] = useState(0);
+  const [outgoing, setOutgoing] = useState<number | null>(null);
+  const activeRef = useRef(0);
+
+  const commitActive = useCallback((next: number) => {
+    if (next === activeRef.current) return;
+    setOutgoing(activeRef.current);
+    activeRef.current = next;
+    setActive(next);
+  }, []);
+
+  useEffect(() => {
+    if (outgoing == null) return;
+    const fade = window.setTimeout(() => setOutgoing(null), WORKFLOW_VIDEO_FADE_MS);
+    return () => window.clearTimeout(fade);
+  }, [outgoing]);
 
   // The screen is centred in the pinned viewport, so only layout knows where
   // its top edge lands. Publish that as --workflow-slot and the sticky cards
@@ -337,7 +365,7 @@ export function WorkflowSection() {
           stage.offsetHeight,
           chrome,
         );
-        setActive(getWorkflowStageIndex(progress, workflowDemos.length));
+        commitActive(getWorkflowStageIndex(progress, workflowDemos.length));
         dots.forEach((dot) => paintRailDot(dot, progress, false));
         return;
       }
@@ -369,7 +397,7 @@ export function WorkflowSection() {
       const focusLine = getWorkflowFocusLine(window.innerHeight, chrome);
       const bounds = getWorkflowVisualBounds(layoutTops, heights, push);
       const nextActive = getActiveWorkflowIndex(bounds, focusLine);
-      setActive(nextActive);
+      commitActive(nextActive);
 
       const progress = getWorkflowRailProgress(panelBoxes, focusLine);
       dots.forEach((dot) => paintRailDot(dot, progress, true));
@@ -433,7 +461,7 @@ export function WorkflowSection() {
       window.removeEventListener("pageshow", schedule);
       clearPushBodies(rail);
     };
-  }, [desktop, reducedMotion]);
+  }, [commitActive, desktop, reducedMotion]);
 
   if (reducedMotion) return <StaticWorkflow />;
 
@@ -499,13 +527,20 @@ export function WorkflowSection() {
         <div className="workflow-stage" ref={stageRef}>
           <div className="workflow-viewer">
             <div className="workflow-screen" ref={screenRef}>
-              {workflowDemos.map((demo, index) => (
-                <WorkflowScreen
-                  key={demo.id}
-                  demo={demo}
-                  active={active === index}
-                />
-              ))}
+              {(outgoing == null || outgoing === active
+                ? [active]
+                : [outgoing, active]
+              ).map((index) => {
+                const demo = workflowDemos[index];
+                if (!demo) return null;
+                return (
+                  <WorkflowScreen
+                    key={demo.id}
+                    demo={demo}
+                    active={index === active}
+                  />
+                );
+              })}
             </div>
             <WorkflowStepper
               variant="inline"

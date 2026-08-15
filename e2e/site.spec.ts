@@ -1499,11 +1499,11 @@ test.skip("keeps the landing hero clear and reserves lazy media space", async ({
     page.locator(".feature-grid .feature-card").first(),
   ).toHaveAttribute("width", "346");
   await expect(
-    page.locator('.feature-grid img[src$="integrations.webp"]'),
+    page.locator(".feature-grid .feature-card-wide"),
   ).toHaveAttribute("width", "712");
   const grid = await page.locator(".feature-grid").boundingBox();
   const wideCard = await page
-    .locator('.feature-grid img[src$="integrations.webp"]')
+    .locator(".feature-grid .feature-card-wide")
     .boundingBox();
   expect(grid?.height).toBeLessThan(600);
   expect(wideCard?.height).toBeLessThan(200);

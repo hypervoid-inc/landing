@@ -29,7 +29,7 @@ export const referenceImages = [
     note: "Material and atmosphere: frosted glass panels, pale circuit traces, cyan light falling off to white.",
   },
   {
-    file: "public/assets/landing/features/integrations.webp",
+    file: "public/assets/landing/features/integrations-poster.webp",
     note: "The supporting vocabulary of floating rounded chips and app tiles.",
   },
   {
