@@ -247,7 +247,9 @@ export const featureCards = [
     wide: false,
   },
   {
-    src: "/assets/landing/features/integrations.webp",
+    video: "/assets/landing/features/integrations.mp4",
+    webm: "/assets/landing/features/integrations.webm",
+    poster: "/assets/landing/features/integrations-poster.webp",
     alt: "Live connected-app catalog with tools such as Drive, Gmail, GitHub, and messaging channels",
     wide: true,
   },

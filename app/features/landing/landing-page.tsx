@@ -369,45 +369,24 @@ function FeatureGrid() {
         Construct capabilities
       </h2>
       <div className="feature-grid mx-auto grid w-full max-w-[1574px] grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-5">
-        {featureCards.map((card, index) => {
-          const className = `feature-card reveal-item block h-auto w-full overflow-hidden rounded-[18px] bg-white object-cover shadow-[0_8px_32px_rgba(71,156,223,.12)] ${card.wide ? "feature-card-wide lg:col-span-2" : ""}`;
-          const delay = String(Math.min(index, 3) + 1);
-
-          if ("video" in card) {
-            return (
-              <div
-                key={card.video}
-                className={className}
-                data-reveal-delay={delay}
-              >
-                <AutoVideo
-                  src={card.video}
-                  webm={card.webm}
-                  poster={card.poster}
-                  label={card.alt}
-                  width={346}
-                  height={346}
-                  preload="none"
-                  className="block h-auto w-full object-cover"
-                />
-              </div>
-            );
-          }
-
-          return (
-            <img
-              key={card.src}
-              src={card.src}
-              alt={card.alt}
+        {featureCards.map((card, index) => (
+          <div
+            key={card.video}
+            className={`feature-card reveal-item relative block w-full overflow-hidden rounded-[18px] bg-white shadow-[0_8px_32px_rgba(71,156,223,.12)] ${card.wide ? "feature-card-wide lg:col-span-2" : ""}`}
+            data-reveal-delay={String(Math.min(index, 3) + 1)}
+          >
+            <AutoVideo
+              src={card.video}
+              webm={card.webm}
+              poster={card.poster}
+              label={card.alt}
               width={card.wide ? 712 : 346}
               height={346}
-              loading="lazy"
-              decoding="async"
-              className={className}
-              data-reveal-delay={delay}
+              preload="auto"
+              className="absolute inset-0 size-full object-cover"
             />
-          );
-        })}
+          </div>
+        ))}
       </div>
     </section>
   );
