@@ -1,1 +1,17 @@
 /security.txt /.well-known/security.txt 301
+
+# Shortlinks. These are read off a screen — livestream lower thirds, slides,
+# email — so they have to stay short and stay ours to repoint.
+#
+# 302, not 301: a permanent redirect gets cached by browsers and intermediaries,
+# and the whole point of owning the shortlink is being able to change where it
+# goes without chasing down every place it was already printed.
+/discord https://discord.gg/puArEQHYN9 302
+/discord/ https://discord.gg/puArEQHYN9 302
+
+# /ph is deliberately NOT a static rule: its destination changes at go-live
+# (before launch, Follow only exists on the discussion page; the upvote only
+# appears on the product page once live). It is served by functions/ph.ts,
+# which reads the same PH_GO_LIVE_MS as the rest of the site. This rule only
+# normalises the trailing slash onto that Function.
+/ph/ /ph 301
