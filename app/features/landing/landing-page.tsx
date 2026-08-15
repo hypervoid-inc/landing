@@ -35,7 +35,7 @@ function HeroHeadline() {
   const trialLabel = trialDays ? `${trialDays} days` : "7 days";
 
   return (
-    <div className="hero-headline max-w-[560px] text-center sm:text-left lg:text-left xl:text-left">
+    <div className="hero-headline mx-auto max-w-[560px] text-center md:mx-0 md:text-left">
       <div
         aria-hidden="true"
         className="reveal-item font-display text-balance text-[38px] capitalize italic leading-[1.1] tracking-[-0.02em] text-[#4e4646] xl:text-[51.8px] xl:leading-[58px]"

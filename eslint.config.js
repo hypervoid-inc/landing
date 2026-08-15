@@ -3,7 +3,17 @@ import reactHooks from "eslint-plugin-react-hooks";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["build", ".react-router", ".wrangler", "node_modules"] },
+  {
+    ignores: [
+      "build",
+      ".react-router",
+      ".wrangler",
+      "node_modules",
+      // Playwright output — trace bundles are minified JS, not source.
+      "test-results",
+      "playwright-report",
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   reactHooks.configs.flat.recommended,
