@@ -11,6 +11,15 @@ import { canonicalRoutes } from "../app/lib/route-manifest";
 
 const API = "https://api.construct.computer/api";
 
+/** Jump without Lenis coasting — native scrollTo is overwritten mid-lerp. */
+async function scrollPageInstant(page: Page, top: number) {
+  await page.evaluate((y) => {
+    const hook = window.__scrollPageTo;
+    if (typeof hook === "function") hook(y, { immediate: true });
+    else window.scrollTo({ top: y, behavior: "instant" });
+  }, top);
+}
+
 /** Matches static marketing fallbacks so layout/toggle specs stay stable. */
 const HOMEPAGE_CATALOG = {
   recommendedPlan: "starter" as const,
@@ -734,10 +743,24 @@ test("keeps lower landing sections proportional across desktop widths", async ({
       .locator(".work-panel > p")
       .evaluate((element) => getComputedStyle(element).fontSize),
   );
-  expect(phoneHeadline).toBeGreaterThanOrEqual(22);
-  expect(phoneHeadline).toBeLessThan(28);
+  expect(phoneHeadline).toBeGreaterThanOrEqual(16);
+  expect(phoneHeadline).toBeLessThan(21);
   expect(phoneHeadline).toBeLessThan(desktopHeadline);
   expect(phoneLoop).toBe(phoneHeadline);
+  const phoneLines = await page.locator("#work-heading").evaluate((element) => {
+    const lineHeight = Number.parseFloat(getComputedStyle(element).lineHeight);
+    return Math.round(element.getBoundingClientRect().height / lineHeight);
+  });
+  const phoneLoopLines = await page
+    .locator(".work-panel > p")
+    .evaluate((element) => {
+      const lineHeight = Number.parseFloat(
+        getComputedStyle(element).lineHeight,
+      );
+      return Math.round(element.getBoundingClientRect().height / lineHeight);
+    });
+  expect(phoneLines).toBe(2);
+  expect(phoneLoopLines).toBe(2);
 
   await page.setViewportSize({ width: 320, height: 568 });
   await page.goto("/");
@@ -746,8 +769,26 @@ test("keeps lower landing sections proportional across desktop widths", async ({
       .locator("#work-heading")
       .evaluate((element) => getComputedStyle(element).fontSize),
   );
-  expect(compactHeadline).toBeGreaterThanOrEqual(22);
+  expect(compactHeadline).toBeGreaterThanOrEqual(16);
   expect(compactHeadline).toBeLessThanOrEqual(phoneHeadline);
+  const compactLines = await page
+    .locator("#work-heading")
+    .evaluate((element) => {
+      const lineHeight = Number.parseFloat(
+        getComputedStyle(element).lineHeight,
+      );
+      return Math.round(element.getBoundingClientRect().height / lineHeight);
+    });
+  const compactLoopLines = await page
+    .locator(".work-panel > p")
+    .evaluate((element) => {
+      const lineHeight = Number.parseFloat(
+        getComputedStyle(element).lineHeight,
+      );
+      return Math.round(element.getBoundingClientRect().height / lineHeight);
+    });
+  expect(compactLines).toBe(2);
+  expect(compactLoopLines).toBe(2);
 
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
@@ -760,6 +801,48 @@ test("keeps lower landing sections proportional across desktop widths", async ({
     "rgb(255, 255, 255)",
   );
   await expect(page.locator(".work-section")).toHaveCSS("z-index", "0");
+  const featureGrid = await page.locator(".feature-grid").boundingBox();
+  const workPanel = await page.locator(".work-panel").boundingBox();
+  expect(
+    Math.abs((featureGrid?.width ?? 0) - (workPanel?.width ?? 0)),
+  ).toBeLessThan(2);
+});
+
+test("contains the hero and fills the workflow screen across desktop sizes", async ({
+  page,
+}) => {
+  const measure = async (width: number, height: number) => {
+    await page.setViewportSize({ width, height });
+    await page.goto("/?ph=off");
+    const headline = Number.parseFloat(
+      await page
+        .locator(".hero-headline-title")
+        .evaluate((element) => getComputedStyle(element).fontSize),
+    );
+    const chrome = await page.evaluate(() => {
+      const raw = getComputedStyle(document.documentElement)
+        .getPropertyValue("--site-chrome-height")
+        .trim();
+      return Number.parseFloat(raw) || 56;
+    });
+    const stage = await page.locator(".hero-stage").boundingBox();
+    const report = await page.locator(".hero-report").boundingBox();
+    await page.locator(".workflow-section").scrollIntoViewIfNeeded();
+    const screen = await page.locator(".workflow-screen").boundingBox();
+    return { headline, chrome, stage, report, screen };
+  };
+
+  const laptop = await measure(1280, 800);
+  const mid = await measure(1440, 900);
+  const monitor = await measure(1920, 1080);
+
+  expect(laptop.headline).toBeLessThan(monitor.headline);
+  expect(laptop.report?.width ?? 0).toBeLessThan(monitor.report?.width ?? 0);
+  expect(
+    (laptop.stage?.y ?? 0) + (laptop.stage?.height ?? 0),
+  ).toBeLessThanOrEqual(800 + 1);
+  expect(laptop.stage?.y ?? 0).toBeGreaterThanOrEqual(laptop.chrome - 1);
+  expect(mid.screen?.width ?? 0).toBeLessThan(monitor.screen?.width ?? 0);
 });
 
 test("keeps pricing artwork and plan details in separate readable zones", async ({
@@ -785,9 +868,13 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     for (const i of [0, 1, 2]) {
       await cards.nth(i).scrollIntoViewIfNeeded();
       await expect(cards.nth(i)).toHaveAttribute("data-reveal-visible", "");
-      await cards.nth(i).evaluate((el) =>
-        Promise.all(el.getAnimations().map((animation) => animation.finished)),
-      );
+      await cards
+        .nth(i)
+        .evaluate((el) =>
+          Promise.all(
+            el.getAnimations().map((animation) => animation.finished),
+          ),
+        );
     }
 
     for (const plan of pricingPlans) {
@@ -822,24 +909,20 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     await expect(badge).toHaveCSS("text-shadow", "none");
     await expect(badge).toHaveCSS("box-shadow", "none");
     await expect(badge).toHaveCSS("background-color", "rgb(1, 180, 200)");
-    await expect(badge).toHaveCSS("top", width < 640 ? "56px" : "20px");
+    await expect(badge).toHaveCSS("top", width < 640 ? "16px" : "20px");
     // Sub-pixel tolerance: the CSS assertion above is the real contract, and
     // measured boxes land fractionally off it depending on font metrics and
     // device pixel ratio. A 0.5px window made this fail on a stock run.
     expect(
       Math.abs(
-        (badgeBox?.y ?? 0) - (starterBox?.y ?? 0) - (width < 640 ? 56 : 20),
+        (badgeBox?.y ?? 0) - (starterBox?.y ?? 0) - (width < 640 ? 16 : 20),
       ),
     ).toBeLessThan(1.5);
-    if (width < 640) {
-      expect((badgeBox?.x ?? 0) - (starterBox?.x ?? 0)).toBeCloseTo(12, 0);
-    } else {
-      expect(
-        (starterBox?.x ?? 0) +
-          (starterBox?.width ?? 0) -
-          ((badgeBox?.x ?? 0) + (badgeBox?.width ?? 0)),
-      ).toBeCloseTo(20, 0);
-    }
+    expect(
+      (starterBox?.x ?? 0) +
+        (starterBox?.width ?? 0) -
+        ((badgeBox?.x ?? 0) + (badgeBox?.width ?? 0)),
+    ).toBeCloseTo(width < 640 ? 16 : 20, 0);
     await expect(page.locator("#pricing")).not.toContainText(
       "Concurrent Temporary Agent Jobs",
     );
@@ -852,36 +935,60 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
       );
       const cardBox = await card.boundingBox();
       const visual = await card.locator(".pricing-visual").boundingBox();
-      const image = await card.locator(".pricing-image").boundingBox();
+      // Phone cards pan the art with translateX; strip that so we still
+      // assert the image fills the visual, not the shifted paint box.
+      const image = await card.locator(".pricing-image").evaluate((el) => {
+        const box = el.getBoundingClientRect();
+        const matrix = new DOMMatrix(getComputedStyle(el).transform);
+        return {
+          x: box.x - matrix.m41,
+          y: box.y - matrix.m42,
+          width: box.width,
+          height: box.height,
+        };
+      });
       const summary = await card.locator(".pricing-summary").boundingBox();
       const price = await card.locator(".pricing-price").boundingBox();
-      const content = await card.locator(".pricing-content").boundingBox();
       const button = await card.locator(".pricing-button").boundingBox();
       const benefits = await card.locator(".pricing-benefits").boundingBox();
 
-      expect(image?.x).toBeCloseTo(visual?.x ?? 0, 0);
-      expect(image?.y).toBeCloseTo(visual?.y ?? 0, 0);
-      expect(image?.width).toBeCloseTo(visual?.width ?? 0, 0);
-      expect(image?.height).toBeCloseTo(visual?.height ?? 0, 0);
-      expect((summary?.y ?? 0) + (summary?.height ?? 0)).toBeLessThanOrEqual(
-        (visual?.y ?? 0) + (visual?.height ?? 0) + 1,
-      );
+      expect(image.x).toBeCloseTo(visual?.x ?? 0, 0);
+      expect(image.y).toBeCloseTo(visual?.y ?? 0, 0);
+      expect(image.width).toBeCloseTo(visual?.width ?? 0, 0);
+      expect(image.height).toBeCloseTo(visual?.height ?? 0, 0);
 
       if (width < 640) {
-        expect((summary?.x ?? 0) + (summary?.width ?? 0)).toBeLessThanOrEqual(
-          (content?.x ?? 0) + 1,
+        const heading = await card.locator(".pricing-heading").boundingBox();
+        expect(visual?.y ?? 0).toBeCloseTo(cardBox?.y ?? 0, 0);
+        expect((heading?.y ?? 0) + (heading?.height ?? 0)).toBeLessThanOrEqual(
+          (visual?.y ?? 0) + (visual?.height ?? 0) + 1,
         );
-        expect((visual?.x ?? 0) + (visual?.width ?? 0)).toBeGreaterThan(
-          (content?.x ?? 0) + 50,
+        expect((summary?.y ?? 0) + (summary?.height ?? 0)).toBeLessThanOrEqual(
+          (visual?.y ?? 0) + (visual?.height ?? 0) + 1,
         );
-        expect(visual?.height).toBeCloseTo(cardBox?.height ?? 0, 1);
+        expect((price?.y ?? 0) + (price?.height ?? 0)).toBeLessThanOrEqual(
+          (visual?.y ?? 0) + (visual?.height ?? 0) + 1,
+        );
+        expect(benefits?.y ?? 0).toBeGreaterThan(
+          (visual?.y ?? 0) + (visual?.height ?? 0) - 8,
+        );
+        expect(button?.y ?? 0).toBeGreaterThanOrEqual(
+          (benefits?.y ?? 0) + (benefits?.height ?? 0) - 1,
+        );
         expect((button?.x ?? 0) + (button?.width ?? 0)).toBeLessThanOrEqual(
           (cardBox?.x ?? 0) + (cardBox?.width ?? 0) - 11,
         );
-        expect(benefits?.y).toBeGreaterThan(
-          (button?.y ?? 0) + (button?.height ?? 0) + 12,
+        expect((cardBox?.y ?? 0) + (cardBox?.height ?? 0)).toBeLessThanOrEqual(
+          900 + 1,
+        );
+        await expect(card.locator(".pricing-visual")).not.toHaveCSS(
+          "mask-image",
+          "none",
         );
       } else {
+        expect((summary?.y ?? 0) + (summary?.height ?? 0)).toBeLessThanOrEqual(
+          (visual?.y ?? 0) + (visual?.height ?? 0) + 1,
+        );
         expect((visual?.width ?? 0) / (visual?.height ?? 1)).toBeCloseTo(
           870 / 608,
           2,
@@ -931,8 +1038,8 @@ test("stacks the pricing plans into a deck on mobile", async ({ page }) => {
   const cards = page.locator(".pricing-card");
   await expect(cards.first()).toHaveCSS("position", "sticky");
 
-  // Scroll far enough that every card has reached its pin. Instant: html
-  // uses scroll-behavior: smooth, and a short timeout cannot cover the page.
+  // Scroll far enough that every card has reached its pin. Instant: Lenis
+  // and css smooth would otherwise ease the jump past a short timeout.
   await page.evaluate(() => {
     const panel = document.querySelector(".enterprise-panel");
     if (!panel) return;
@@ -943,9 +1050,11 @@ test("stacks the pricing plans into a deck on mobile", async ({ page }) => {
   });
   for (const i of [0, 1, 2]) {
     await expect(cards.nth(i)).toHaveAttribute("data-reveal-visible", "");
-    await cards.nth(i).evaluate((el) =>
-      Promise.all(el.getAnimations().map((animation) => animation.finished)),
-    );
+    await cards
+      .nth(i)
+      .evaluate((el) =>
+        Promise.all(el.getAnimations().map((animation) => animation.finished)),
+      );
   }
   await expect
     .poll(async () =>
@@ -973,6 +1082,7 @@ test("stacks the pricing plans into a deck on mobile", async ({ page }) => {
         top: Math.round(box.top),
         left: Math.round(box.left),
         width: Math.round(box.width),
+        height: Math.round(box.height),
         pinnedAt: Math.round(parseFloat(style.top)),
         shadow: style.boxShadow,
       };
@@ -989,11 +1099,77 @@ test("stacks the pricing plans into a deck on mobile", async ({ page }) => {
     expect(Math.abs(card.top - card.pinnedAt)).toBeLessThanOrEqual(1);
     // The white skirt covers the taller card behind a shorter one.
     expect(card.shadow).toContain("rgb(255, 255, 255) 0px 120px 0px 4px");
+    // One full card is on screen: the pin plus the card never run past the fold.
+    expect(card.top + card.height).toBeLessThanOrEqual(780 + 1);
   }
 
   // The deck is a phone layout: the desktop columns stay in normal flow.
   await page.setViewportSize({ width: 1280, height: 900 });
   await expect(cards.first()).toHaveCSS("position", "relative");
+});
+
+test("scrolls the journal cards as a snap carousel on mobile", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/?ph=off");
+
+  const grid = page.locator(".journal-grid");
+  const gridTop = await grid.evaluate(
+    (el) => el.getBoundingClientRect().top + window.scrollY,
+  );
+  await scrollPageInstant(page, gridTop - 180);
+  await expect(grid).toHaveAttribute("data-reveal-visible", "");
+  await grid.evaluate((el) =>
+    Promise.all(el.getAnimations().map((animation) => animation.finished)),
+  );
+
+  await expect(grid).toHaveCSS("overflow-x", "auto");
+
+  const cards = page.locator(".journal-card");
+  await expect(cards).toHaveCount(3);
+
+  const first = await cards.nth(0).boundingBox();
+  const second = await cards.nth(1).boundingBox();
+  expect(second?.x ?? 0).toBeGreaterThan(first?.x ?? 0);
+  expect(first?.width ?? 0).toBeLessThan(390);
+
+  for (const [index, entry] of resourceEntries.slice(0, 3).entries()) {
+    await expect(cards.nth(index).locator(".journal-card-hit")).toHaveAttribute(
+      "href",
+      `/blog/${entry.slug}/`,
+    );
+  }
+
+  const startX = second?.x ?? 0;
+  await grid.evaluate((el) => {
+    const item = el.children[1];
+    if (!(item instanceof HTMLElement)) return;
+    el.scrollTo({ left: item.offsetLeft, behavior: "instant" });
+  });
+  await expect
+    .poll(async () => {
+      const box = await cards.nth(1).boundingBox();
+      return box?.x ?? Infinity;
+    })
+    .toBeLessThan(startX - 40);
+
+  const scrollBefore = await page.evaluate(() => window.scrollY);
+  await grid.hover();
+  await page.mouse.wheel(0, 600);
+  await expect
+    .poll(() => page.evaluate(() => window.scrollY), { timeout: 2000 })
+    .toBeGreaterThan(scrollBefore + 200);
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await expect(grid).toHaveCSS("overflow-x", "visible");
+  const desktop = await Promise.all(
+    [0, 1, 2].map((index) => cards.nth(index).boundingBox()),
+  );
+  expect(Math.abs((desktop[0]?.y ?? 0) - (desktop[1]?.y ?? 0))).toBeLessThan(4);
+  expect(Math.abs((desktop[0]?.y ?? 0) - (desktop[2]?.y ?? 0))).toBeLessThan(4);
+  expect(desktop[1]?.x ?? 0).toBeGreaterThan(desktop[0]?.x ?? 0);
+  expect(desktop[2]?.x ?? 0).toBeGreaterThan(desktop[1]?.x ?? 0);
 });
 
 test("toggles pricing between monthly and annual rates", async ({ page }) => {
@@ -1512,6 +1688,154 @@ test("keeps the workflow video pinned while the copy scrolls past it", async ({
   expect((await screen.boundingBox())?.y ?? 0).toBeLessThan(chromeHeight);
 });
 
+test("keeps the workflow rail vertical and the copy unboxed on desktop", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/?ph=off");
+
+  const section = page.locator(".workflow-section");
+  const rail = page.locator(".workflow-stepper-rail");
+  const screen = page.locator(".workflow-screen");
+  const firstCard = page.locator(".workflow-card").first();
+  await section.scrollIntoViewIfNeeded();
+
+  const goTo = async (y: number) => {
+    await page.evaluate(
+      (top) => window.scrollTo({ top, behavior: "instant" }),
+      y,
+    );
+    await page.waitForTimeout(160);
+  };
+
+  const sectionTop = await section.evaluate(
+    (element) => element.getBoundingClientRect().top + window.scrollY,
+  );
+
+  await expect(rail).toBeVisible();
+  await expect(page.locator(".workflow-stepper-inline")).toBeHidden();
+
+  const filterOf = (locator: ReturnType<typeof page.locator>) =>
+    locator.evaluate((element) => getComputedStyle(element).filter);
+
+  await goTo(Math.max(0, sectionTop - 500));
+  const enteringOpacity = await firstCard.evaluate((element) =>
+    Number(getComputedStyle(element).opacity),
+  );
+  expect(enteringOpacity).toBeLessThan(0.2);
+  const enteringRail = await rail.boundingBox();
+  const enteringScreen = await screen.boundingBox();
+  if (enteringRail && enteringScreen) {
+    expect(Math.abs(enteringRail.y - enteringScreen.y)).toBeLessThan(36);
+  }
+  const enteringRailOpacity = await rail.evaluate((element) =>
+    Number(getComputedStyle(element).opacity),
+  );
+  expect(Math.abs(enteringRailOpacity - enteringOpacity)).toBeLessThan(0.2);
+  expect(await filterOf(rail)).not.toBe("none");
+
+  let parkedY = sectionTop;
+  const parkLimit = sectionTop + 900;
+  while (parkedY <= parkLimit) {
+    await goTo(parkedY);
+    const card = await firstCard.boundingBox();
+    const screenBox = await screen.boundingBox();
+    const opacity = await firstCard.evaluate((element) =>
+      Number(getComputedStyle(element).opacity),
+    );
+    if (
+      opacity > 0.9 &&
+      card &&
+      screenBox &&
+      Math.abs(card.y - screenBox.y) < 36
+    ) {
+      break;
+    }
+    parkedY += 80;
+  }
+
+  const railBox = await rail.boundingBox();
+  const cardBox = await firstCard.boundingBox();
+  const parkedScreen = await screen.boundingBox();
+  expect((railBox?.x ?? 0) + (railBox?.width ?? 0)).toBeLessThanOrEqual(
+    (cardBox?.x ?? 0) + 1,
+  );
+  expect(Math.abs((railBox?.y ?? 0) - (parkedScreen?.y ?? 0))).toBeLessThan(36);
+  expect(Math.abs((cardBox?.y ?? 0) - (parkedScreen?.y ?? 0))).toBeLessThan(36);
+
+  await expect(firstCard).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(firstCard).toHaveCSS("border-top-width", "0px");
+  const parkedOpacity = await firstCard.evaluate((element) =>
+    Number(getComputedStyle(element).opacity),
+  );
+  expect(parkedOpacity).toBeGreaterThan(0.9);
+
+  const nextCard = page.locator(".workflow-card").nth(1);
+  const nextOpacity = await nextCard.evaluate((element) =>
+    Number(getComputedStyle(element).opacity),
+  );
+  expect(nextOpacity).toBeGreaterThan(0.3);
+  expect(nextOpacity).toBeLessThan(0.6);
+  expect(await filterOf(nextCard)).toBe("none");
+
+  const lastCard = page.locator(".workflow-card").last();
+  const penultimateCard = page
+    .locator(".workflow-card")
+    .nth(workflowDemos.length - 2);
+  expect(await filterOf(lastCard)).toBe("none");
+  expect(await filterOf(penultimateCard)).toBe("none");
+
+  const sectionHeight = await section.evaluate(
+    (element) => element.getBoundingClientRect().height,
+  );
+  await goTo(sectionTop + sectionHeight * 0.7);
+  expect(await filterOf(penultimateCard)).toBe("none");
+  const midLast = await lastCard.boundingBox();
+  const midScreen = await screen.boundingBox();
+  if (midLast && midScreen && midLast.y <= midScreen.y + midScreen.height) {
+    expect(await filterOf(lastCard)).toBe("none");
+  }
+
+  const lateRail = await rail.boundingBox();
+  const lateScreen = await screen.boundingBox();
+  expect(Math.abs((lateRail?.y ?? 0) - (lateScreen?.y ?? 0))).toBeLessThan(48);
+
+  let leaveY = sectionTop + sectionHeight * 0.65;
+  const leaveLimit = sectionTop + sectionHeight + 200;
+  const chromePx = await page.evaluate(() => {
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue("--site-chrome-height")
+      .trim();
+    return Number.parseFloat(raw) || 56;
+  });
+  while (leaveY <= leaveLimit) {
+    await goTo(leaveY);
+    const lastBox = await lastCard.boundingBox();
+    const screenBox = await screen.boundingBox();
+    const viewerTop = await page
+      .locator(".workflow-viewer")
+      .evaluate((element) => element.getBoundingClientRect().top);
+    const lastIsActive =
+      (await lastCard.getAttribute("data-active")) === "true";
+    if (
+      lastIsActive &&
+      lastBox &&
+      screenBox &&
+      viewerTop < chromePx - 1 &&
+      lastBox.y + lastBox.height > screenBox.y + screenBox.height + 8
+    ) {
+      break;
+    }
+    leaveY += 80;
+  }
+  expect(await filterOf(lastCard)).not.toBe("none");
+  expect(await filterOf(rail)).not.toBe("none");
+  const leavingRailOpacity = await rail.evaluate((element) =>
+    Number(getComputedStyle(element).opacity),
+  );
+  expect(leavingRailOpacity).toBeLessThan(0.9);
+});
+
 test("advances the active workflow card as the copy crosses the focus line", async ({
   page,
 }) => {
@@ -1597,7 +1921,7 @@ test("keeps workflow progress interactive after restoring a reload", async ({
     (element) => element.getBoundingClientRect().height,
   );
   const restoredY = sectionTop + sectionHeight * 0.45;
-  await page.evaluate((y) => window.scrollTo(0, y), restoredY);
+  await scrollPageInstant(page, restoredY);
   await page.waitForTimeout(500);
 
   const activeTitle = () =>
@@ -1616,16 +1940,16 @@ test("keeps workflow progress interactive after restoring a reload", async ({
 
   const scrollBeforeWheel = await page.evaluate(() => window.scrollY);
   await page.mouse.wheel(0, 1400);
-  await page.waitForTimeout(700);
-  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(
-    scrollBeforeWheel + 1000,
-  );
+  await expect
+    .poll(() => page.evaluate(() => window.scrollY), { timeout: 2000 })
+    .toBeGreaterThan(scrollBeforeWheel + 1000);
   const afterForwardScroll = await activeTitle();
   expect(afterForwardScroll).not.toBe(afterReload);
 
   await page.mouse.wheel(0, -1400);
-  await page.waitForTimeout(700);
-  expect(await activeTitle()).not.toBe(afterForwardScroll);
+  await expect
+    .poll(() => activeTitle(), { timeout: 2000 })
+    .not.toBe(afterForwardScroll);
 
   const liveSectionTop = await section.evaluate(
     (element) => element.getBoundingClientRect().top + window.scrollY,
@@ -1635,7 +1959,7 @@ test("keeps workflow progress interactive after restoring a reload", async ({
   );
   const videoRestoreY =
     liveSectionTop - 56 + (liveSectionHeight - 900 + 56) * 0.92;
-  await page.evaluate((y) => window.scrollTo(0, y), videoRestoreY);
+  await scrollPageInstant(page, videoRestoreY);
   await page.waitForTimeout(700);
   await page.reload();
   await page.waitForTimeout(700);
@@ -1650,8 +1974,35 @@ test("keeps workflow progress interactive after restoring a reload", async ({
   await expect(activeVideo).toHaveCount(1);
 
   await page.mouse.wheel(0, -1400);
-  await page.waitForTimeout(700);
-  expect(await activeTitle()).not.toBe(restoredVideoTitle);
+  await expect
+    .poll(() => activeTitle(), { timeout: 2000 })
+    .not.toBe(restoredVideoTitle);
+});
+
+test("smooths document scroll with Lenis unless motion is reduced", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await expect
+    .poll(() =>
+      page.locator("html").evaluate((el) => el.classList.contains("lenis")),
+    )
+    .toBe(true);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  await expect
+    .poll(() =>
+      page.locator("html").evaluate((el) => el.classList.contains("lenis")),
+    )
+    .toBe(false);
+
+  const before = await page.evaluate(() => window.scrollY);
+  await page.mouse.wheel(0, 800);
+  await expect
+    .poll(() => page.evaluate(() => window.scrollY), { timeout: 2000 })
+    .toBeGreaterThan(before + 200);
 });
 
 test("shows every capability without scroll animation when motion is reduced", async ({
@@ -1670,7 +2021,7 @@ test("shows every capability without scroll animation when motion is reduced", a
     "/assets/landing/workflows/workflow-poster.jpg",
   );
   await expect(stories.nth(1)).toContainText("Build Tools For Your Work");
-  await expect(stories.last()).toContainText("Research About Any Topic");
+  await expect(stories.last()).toContainText("Work Together Across Channels");
   for (const demo of workflowDemos) {
     if ("video" in demo) {
       const poster = stories.locator(`img[src="${demo.poster}"]`);

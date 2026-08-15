@@ -25,7 +25,7 @@ export const referenceImages = [
     note: "The mascot's material as the brand renders it: soft, milky, semi-opaque pale ice-blue with one gentle highlight. Match the material, not this image's angle or composition.",
   },
   {
-    file: "public/assets/landing/features/automations.webp",
+    file: "public/assets/landing/features/automations-poster.webp",
     note: "Material and atmosphere: frosted glass panels, pale circuit traces, cyan light falling off to white.",
   },
   {

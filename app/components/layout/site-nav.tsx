@@ -311,10 +311,7 @@ function DesktopNav({ pathname }: { pathname: string }) {
     if (curr) {
       setExitingId(curr);
       window.clearTimeout(exitTimer.current);
-      exitTimer.current = window.setTimeout(
-        () => setExitingId(null),
-        MORPH_MS,
-      );
+      exitTimer.current = window.setTimeout(() => setExitingId(null), MORPH_MS);
     } else {
       setExitingId(null);
       setBox(null);
@@ -519,7 +516,11 @@ function DesktopNav({ pathname }: { pathname: string }) {
                 />
               </div>
             ) : null}
-            <div key={openMenu.id} ref={bodyRef} className="site-nav-panel-body">
+            <div
+              key={openMenu.id}
+              ref={bodyRef}
+              className="site-nav-panel-body"
+            >
               <MenuPanelContent
                 menu={openMenu}
                 pathname={pathname}
@@ -618,7 +619,10 @@ function MobileNav({ pathname }: { pathname: string }) {
               </button>
             </Dialog.Close>
           </div>
-          <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+          <div
+            data-lenis-prevent
+            className="min-h-0 flex-1 overflow-y-auto px-5 py-4"
+          >
             <Accordion.Root type="multiple" className="flex flex-col">
               {primaryNav.map((item) =>
                 item.kind === "link" ? (

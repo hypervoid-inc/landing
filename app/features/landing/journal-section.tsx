@@ -1,3 +1,4 @@
+import { useEffect, useRef, type RefObject } from "react";
 import { Link } from "react-router";
 
 import { trackRelatedClick } from "../../components/content/related-links";
@@ -8,6 +9,112 @@ import "./journal-section.css";
 
 /** Three fills one desktop row exactly, so the grid never leaves an orphan. */
 const LATEST_COUNT = 3;
+
+/** Matches the carousel breakpoint in journal-section.css. */
+const CAROUSEL_QUERY = "(max-width: 899px)";
+
+/** Apple-style hysteresis: wait for intent before locking an axis. */
+const AXIS_LOCK_PX = 10;
+
+/**
+ * Nested overflow-x on iOS captures the whole touch and will not chain a
+ * vertical pan to the page. Once the drag is clearly vertical, take the
+ * gesture and move the document 1:1 with the finger.
+ */
+function useCarouselPageDrag(ref: RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const query = window.matchMedia(CAROUSEL_QUERY);
+    let startX = 0;
+    let startY = 0;
+    let lastY = 0;
+    let axis: "x" | "y" | null = null;
+    let tracking = false;
+    let suppressClick = false;
+
+    const reset = () => {
+      tracking = false;
+      axis = null;
+    };
+
+    const onStart = (event: TouchEvent) => {
+      if (event.touches.length !== 1) return;
+      const touch = event.touches[0]!;
+      startX = touch.clientX;
+      startY = touch.clientY;
+      lastY = touch.clientY;
+      axis = null;
+      tracking = true;
+      suppressClick = false;
+    };
+
+    const onMove = (event: TouchEvent) => {
+      if (!tracking || event.touches.length !== 1) return;
+      const touch = event.touches[0]!;
+      if (axis === null) {
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+        if (Math.abs(dx) < AXIS_LOCK_PX && Math.abs(dy) < AXIS_LOCK_PX) return;
+        axis = Math.abs(dy) > Math.abs(dx) ? "y" : "x";
+      }
+      if (axis !== "y") {
+        lastY = touch.clientY;
+        return;
+      }
+      if (event.cancelable) event.preventDefault();
+      const delta = lastY - touch.clientY;
+      lastY = touch.clientY;
+      if (delta === 0) return;
+      window.scrollBy({ top: delta, behavior: "instant" });
+    };
+
+    const onEnd = (event: TouchEvent) => {
+      if (event.touches.length > 0) return;
+      if (axis === "y") suppressClick = true;
+      reset();
+    };
+
+    const onClickCapture = (event: Event) => {
+      if (!suppressClick) return;
+      event.preventDefault();
+      event.stopPropagation();
+      suppressClick = false;
+    };
+
+    const attach = () => {
+      node.addEventListener("touchstart", onStart, { passive: true });
+      node.addEventListener("touchmove", onMove, {
+        passive: false,
+        capture: true,
+      });
+      node.addEventListener("touchend", onEnd);
+      node.addEventListener("touchcancel", onEnd);
+      node.addEventListener("click", onClickCapture, true);
+    };
+
+    const detach = () => {
+      node.removeEventListener("touchstart", onStart);
+      node.removeEventListener("touchmove", onMove, true);
+      node.removeEventListener("touchend", onEnd);
+      node.removeEventListener("touchcancel", onEnd);
+      node.removeEventListener("click", onClickCapture, true);
+    };
+
+    const sync = () => {
+      detach();
+      if (query.matches) attach();
+    };
+
+    sync();
+    query.addEventListener("change", sync);
+    return () => {
+      query.removeEventListener("change", sync);
+      detach();
+    };
+  }, [ref]);
+}
 
 /**
  * Formatted here rather than through `formatShortDate` in `content-shell`:
@@ -120,6 +227,8 @@ function JournalCard({ entry }: { entry: ResourceEntry }) {
  */
 export function JournalSection() {
   const posts = resourceEntries.slice(0, LATEST_COUNT);
+  const trackRef = useRef<HTMLOListElement>(null);
+  useCarouselPageDrag(trackRef);
   if (!posts.length) return null;
 
   return (
@@ -151,13 +260,16 @@ export function JournalSection() {
             </Link>
           </div>
         </div>
-        <ol className="journal-grid">
-          {posts.map((entry, index) => (
-            <li
-              key={entry.slug}
-              className="reveal-item"
-              data-reveal-delay={String(Math.min(index, 3) + 1)}
-            >
+        <ol
+          ref={trackRef}
+          className="journal-grid reveal-item"
+          data-reveal-delay="2"
+          data-lenis-prevent-horizontal
+          tabIndex={0}
+          aria-label="Latest posts"
+        >
+          {posts.map((entry) => (
+            <li key={entry.slug}>
               <JournalCard entry={entry} />
             </li>
           ))}

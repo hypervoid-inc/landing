@@ -55,8 +55,9 @@ encode_one "$downloads/1stCard.webm" schedules
 # Denser motion; slightly higher CRF to stay within the card size budget.
 encode_one "$downloads/3rdCard.webm" social-manager 35 26
 encode_one "$downloads/4thCard.webm" cloud-control
+encode_one "$downloads/5thCard.webm" automations
 
 echo
 echo "Encoded sizes:"
-ls -lh "$out_dir"/{schedules,social-manager,cloud-control}.{webm,mp4} \
-  "$out_dir"/{schedules,social-manager,cloud-control}-poster.webp
+ls -lh "$out_dir"/{schedules,social-manager,cloud-control,automations}.{webm,mp4} \
+  "$out_dir"/{schedules,social-manager,cloud-control,automations}-poster.webp

@@ -35,17 +35,22 @@ function HeroHeadline() {
   const trialLabel = trialDays ? `${trialDays} days` : "7 days";
 
   return (
-    <div className="hero-headline mx-auto max-w-[560px] text-center md:mx-0 md:text-left">
+    <div className="hero-headline mx-auto text-center md:mx-0 md:text-left">
       <div
         aria-hidden="true"
-        className="reveal-item font-display text-balance text-[38px] capitalize italic leading-[1.1] tracking-[-0.02em] text-[#4e4646] xl:text-[51.8px] xl:leading-[58px]"
+        className="hero-headline-title reveal-item font-display capitalize italic tracking-[-0.02em] text-[#4e4646]"
         data-reveal="mount"
         data-reveal-delay="1"
       >
-        <span>An </span>
-        <span className="text-[#01b4c8]">AI Employee </span>
-        <span>You Can Actually </span>
-        <span className="text-[#01b4c8]">Work With</span>
+        <span className="hero-headline-line">
+          <span>An </span>
+          <span className="text-[#01b4c8]">AI Employee</span>
+          <span> You</span>
+        </span>
+        <span className="hero-headline-line">
+          <span>Can Actually </span>
+          <span className="text-[#01b4c8]">Work With</span>
+        </span>
       </div>
       {/* <p
         className="reveal-item mx-auto mt-5 max-w-[360px] text-[15px] leading-[21px] text-[#627c86] xl:mx-0 xl:mt-6 xl:max-w-[520px] xl:text-base xl:leading-[22px]"
@@ -152,12 +157,12 @@ function Hero() {
   return (
     <section
       aria-labelledby="landing-title"
-      className="hero-section relative mx-auto w-full max-w-[1500px] overflow-hidden px-5 sm:px-6 lg:px-16"
+      className="hero-section page-rail relative mx-auto w-full overflow-hidden px-5 sm:px-6 lg:px-16"
     >
       <h1 id="landing-title" className="sr-only">
         An AI employee you can actually work with
       </h1>
-      <div className="hero-stage relative isolate mx-auto w-full max-w-[1400px]">
+      <div className="hero-stage relative isolate mx-auto w-full">
         <div className="hero-copy relative z-30">
           <HeroHeadline />
         </div>
@@ -358,19 +363,23 @@ function FeatureGrid() {
     <section
       id="capabilities"
       aria-labelledby="capabilities-heading"
-      className="relative z-30 scroll-mt-16 pb-4 pt-12 lg:pb-6 lg:pt-20"
+      className="relative z-30 scroll-mt-16 px-5 pb-4 pt-12 lg:pb-6 lg:pt-20"
     >
       <h2 id="capabilities-heading" className="sr-only">
         Construct capabilities
       </h2>
-      <div className="feature-grid mx-auto grid w-full max-w-[1078px] grid-cols-1 gap-4 px-5 lg:grid-cols-3 lg:gap-5 lg:px-0">
+      <div className="feature-grid mx-auto grid w-full max-w-[1574px] grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-5">
         {featureCards.map((card, index) => {
           const className = `feature-card reveal-item block h-auto w-full overflow-hidden rounded-[18px] bg-white object-cover shadow-[0_8px_32px_rgba(71,156,223,.12)] ${card.wide ? "feature-card-wide lg:col-span-2" : ""}`;
           const delay = String(Math.min(index, 3) + 1);
 
           if ("video" in card) {
             return (
-              <div key={card.video} className={className} data-reveal-delay={delay}>
+              <div
+                key={card.video}
+                className={className}
+                data-reveal-delay={delay}
+              >
                 <AutoVideo
                   src={card.video}
                   webm={card.webm}

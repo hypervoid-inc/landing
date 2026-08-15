@@ -8,6 +8,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { SmoothScroll } from "./components/layout/smooth-scroll";
 import { Analytics } from "./features/analytics/analytics";
 import { AuthProvider } from "./features/auth/auth-provider";
 import { BetaAccessProvider } from "./features/landing/beta-access";
@@ -85,6 +86,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BetaAccessProvider>
+        <SmoothScroll />
         <ProductHuntChrome />
         <Outlet />
         <ClippyCta />

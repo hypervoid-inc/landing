@@ -1,6 +1,7 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/inter";
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 @theme {
   --font-sans:
@@ -44,8 +45,7 @@
     inset 0 4px 14px rgb(255 255 255 / 91%);
   --shadow-cta-glow-hover:
     inset 0 -5px 14px rgb(255 255 255 / 92%),
-    inset 0 4px 14px rgb(255 255 255 / 91%),
-    0 10px 24px rgb(1 180 200 / 28%);
+    inset 0 4px 14px rgb(255 255 255 / 91%), 0 10px 24px rgb(1 180 200 / 28%);
 }
 
 :root {
@@ -53,11 +53,35 @@
   --dur-hover: 160ms;
   --dur-enter: 220ms;
   --dur-panel: 260ms;
+  /* 1 on most pages. Landing overwrites this with a contain-fit from 1280px. */
+  --landing-scale: 1;
+}
+
+/* Shared content rail: header, hero, footer. Fills width on desktop instead
+   of shrinking with --landing-scale, which would add gutters on laptops. */
+.page-rail {
+  max-width: 93.75rem;
+}
+
+@media (min-width: 1024px) {
+  .page-rail {
+    max-width: min(92vw, 1920px);
+  }
 }
 
 html {
   min-width: 320px;
+}
+
+html:not(.lenis) {
   scroll-behavior: smooth;
+}
+
+/* Lenis sets iframe { pointer-events: none } while coasting so embeds don't
+   eat the wheel. That also blocks Turnstile's auto-solve, so the footer signup
+   never unlocks. We have no wheel-capturing embeds; keep iframes interactive. */
+.lenis.lenis-smooth iframe {
+  pointer-events: auto;
 }
 
 body {

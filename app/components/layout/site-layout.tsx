@@ -57,7 +57,7 @@ export function SiteHeader() {
         </a>
         {/* gap-2 so the menu button and the CTA read as one right-hand cluster
             rather than two controls jammed together. */}
-        <div className="mx-auto flex h-12 w-full max-w-[1500px] items-center gap-2 px-3 sm:gap-4 sm:px-6 lg:h-14 lg:px-16">
+        <div className="page-rail mx-auto flex h-12 w-full items-center gap-2 px-3 sm:gap-4 sm:px-6 lg:h-14 lg:px-16">
           <Link
             to="/"
             aria-label="Construct Computer - home"
@@ -145,7 +145,7 @@ function FooterColumn({
 export function SiteFooter() {
   return (
     <footer className="relative isolate overflow-hidden border-t border-[#e5e7eb] bg-[#fafafa]">
-      <div className="mx-auto w-full max-w-[1500px] px-5 sm:px-6 lg:px-16">
+      <div className="page-rail mx-auto w-full px-5 sm:px-6 lg:px-16">
         <div className="grid grid-cols-2 gap-x-6 gap-y-9 py-10 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_1fr_1fr] lg:gap-16 lg:py-16">
           <div className="col-span-2 flex flex-col items-center gap-4 text-center sm:gap-6 lg:col-span-1 lg:items-start lg:text-left">
             <Link
