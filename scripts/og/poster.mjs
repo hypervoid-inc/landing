@@ -125,7 +125,7 @@ export function posterReferences() {
 
 const percent = (value) => `${Math.round(value * 100)}%`;
 
-const STUDIO = `THE STUDIO — identical on every card, never redesign it
+export const STUDIO = `THE STUDIO — identical on every card, never redesign it
 A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
@@ -161,7 +161,7 @@ Everything sharing the frame with the mascot is a tangible object from the world
  * render. It is fenced tightly because a garbled label is worse than no label,
  * and it is now the only writing in the frame at all.
  */
-const IN_WORLD_TEXT = `WRITING ON THE OBJECTS — the only writing anywhere in this image
+export const IN_WORLD_TEXT = `WRITING ON THE OBJECTS — the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
 It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.`;
 
@@ -188,7 +188,7 @@ Also keep the top ${percent(RESERVED.top)} of the frame clear across the full wi
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.`;
 
-const FORBIDDEN = `ABSOLUTELY NOT
+export const FORBIDDEN = `ABSOLUTELY NOT
 Above all: no swarm of floating translucent UI panels, no glowing glass cards hanging in mid-air, no dashed concentric orbit rings, no floating rounded app tiles, no circuit traces, no cyan gradient haze, no particles. That is generic AI-company filler, it is what an image model reaches for by default, and it is the single thing this set exists to avoid. Photograph real objects instead.
 No dark background of any kind, no navy or black studio, no dramatic rim lighting, no spotlight, and no moody low-key exposure. This is a bright room.
 The mascot is never rendered as clear glass, crystal, acrylic, chrome, or polished stone, and never as a thin flat-faced slab with a hard edge. It is soft, milky, and inflated.

@@ -7,6 +7,7 @@
     "node": ">=24"
   },
   "scripts": {
+    "banner": "node scripts/generate-banner.mjs",
     "build": "pnpm generate:content && react-router build && node scripts/finalize-build.mjs",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
     "deploy": "pnpm check && pnpm test:e2e && pnpm build && wrangler pages deploy build/client --project-name landing-new --branch main",
@@ -21,9 +22,9 @@
     "og:master": "node scripts/generate-art.mjs --master",
     "og:pick": "node scripts/generate-art.mjs --pick",
     "og:prompts": "node scripts/generate-og.mjs --prompts",
+    "preview": "wrangler pages dev",
     "retheme": "node scripts/retheme-asset.mjs",
     "social": "node scripts/generate-social-card.mjs",
-    "preview": "wrangler pages dev",
     "test": "vitest run",
     "test:e2e": "playwright test",
     "typecheck": "react-router typegen && tsc"
