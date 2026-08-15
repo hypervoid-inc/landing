@@ -105,6 +105,7 @@ function useCarouselPageDrag(ref: RefObject<HTMLElement | null>) {
     const sync = () => {
       detach();
       if (query.matches) attach();
+      else node.scrollLeft = 0;
     };
 
     sync();
