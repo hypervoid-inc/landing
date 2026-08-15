@@ -818,6 +818,13 @@
   align-self: stretch;
 }
 
+.feature-card > video {
+  display: block;
+  width: 100%;
+  /* Crop residual decoder fringe that border-radius cannot clip on <video>. */
+  transform: scale(1.012);
+}
+
 .pricing-grid {
   /**
    * Pin offset for the mobile deck: clear of the sticky site chrome.
