@@ -539,6 +539,34 @@ test.describe("/account", () => {
     await expect(menu.getByRole("link", { name: "Account" })).toBeVisible();
   });
 
+  test("morphs the nav dropdown onto the account pill", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await stubApi(page);
+    await page.goto("/");
+
+    const primary = page.getByRole("navigation", { name: "Primary" });
+    await expect(
+      primary.getByRole("button", { name: "Account menu for Ankush Singh" }),
+    ).toBeVisible();
+    await primary.getByRole("button", { name: "Resources" }).hover();
+    await expect(
+      primary.getByRole("link", { name: "Blog", exact: true }),
+    ).toBeVisible();
+
+    await primary
+      .getByRole("button", { name: "Account menu for Ankush Singh" })
+      .hover();
+    await expect(page.locator(".site-nav-panel")).toHaveCount(1);
+    const menu = primary.getByRole("group", { name: "Account" });
+    await expect(menu).toBeVisible();
+    await expect(menu.getByRole("link", { name: "Account" })).toBeVisible();
+    await expect(menu.getByRole("link", { name: "Open OS" })).toBeVisible();
+    await expect(menu.getByRole("button", { name: "Log out" })).toBeVisible();
+    await expect(
+      primary.getByRole("link", { name: "Blog", exact: true }),
+    ).toHaveCount(0);
+  });
+
   test("keeps sticky chrome visible when the account menu opens after scroll", async ({
     page,
   }) => {

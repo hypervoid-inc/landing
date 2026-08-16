@@ -10,6 +10,7 @@ import {
 import { Link } from "react-router";
 
 import { useAuth } from "../../features/auth/auth-provider";
+import { cn } from "../../lib/cn";
 import type { AuthUser } from "../../platform/api/schemas";
 import { getOsOrigin } from "../../platform/env";
 import "./site-nav.css";
@@ -24,7 +25,17 @@ function canHover(): boolean {
   return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 }
 
-function MenuAvatar({ user, name }: { user: AuthUser; name: string }) {
+export function accountDisplayName(user: AuthUser): string {
+  return user.displayName?.trim() || user.username;
+}
+
+export function AccountMenuAvatar({
+  user,
+  name,
+}: {
+  user: AuthUser;
+  name: string;
+}) {
   if (user.avatarUrl) {
     return (
       <img
@@ -49,12 +60,75 @@ function MenuAvatar({ user, name }: { user: AuthUser; name: string }) {
   );
 }
 
+export const accountTriggerClassName =
+  "site-cta inline-flex min-h-10 max-w-[11.5rem] shrink-0 items-center gap-1.5 rounded-full bg-black px-2 py-1 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] sm:max-w-[14rem] sm:gap-2 sm:px-2.5 sm:text-xs lg:px-3";
+
 const itemClassName =
   "site-nav-item flex min-h-9 w-full items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-[13px] font-medium";
 
-export function UserMenu({ user }: { user: AuthUser }) {
+/** Shared by the nav rail panel and the standalone (mobile / launch) menu. */
+export function AccountPanelBody({
+  user,
+  onNavigate,
+}: {
+  user: AuthUser;
+  onNavigate: () => void;
+}) {
   const { logout } = useAuth();
-  const name = user.displayName?.trim() || user.username;
+  const name = accountDisplayName(user);
+
+  return (
+    <div className="w-[13.5rem] p-2">
+      <div className="px-2.5 py-2">
+        <p className="truncate text-[13px] font-semibold text-[#4e4646]">
+          {name}
+        </p>
+        {user.email ? (
+          <p className="mt-0.5 truncate text-[11px] text-[#627c86]">
+            {user.email}
+          </p>
+        ) : null}
+      </div>
+
+      <div className="my-1 h-px bg-[#eff3f5]" />
+
+      <Link to="/account" className={itemClassName} onClick={onNavigate}>
+        <span className="min-w-0 truncate">Account</span>
+        <span aria-hidden className="site-nav-item-arrow">
+          →
+        </span>
+      </Link>
+      <a href={getOsOrigin()} className={itemClassName} onClick={onNavigate}>
+        <span className="min-w-0 truncate">Open OS</span>
+        <span aria-hidden className="site-nav-item-arrow">
+          →
+        </span>
+      </a>
+
+      <div className="my-1 h-px bg-[#eff3f5]" />
+
+      <button
+        type="button"
+        className="flex min-h-9 w-full items-center rounded-lg px-2.5 py-1.5 text-left text-[13px] font-medium text-[#9b3b3b] transition-colors hover:bg-[#fef2f2] focus-visible:bg-[#fef2f2]"
+        onClick={() => {
+          onNavigate();
+          void logout();
+        }}
+      >
+        Log out
+      </button>
+    </div>
+  );
+}
+
+export function UserMenu({
+  user,
+  className,
+}: {
+  user: AuthUser;
+  className?: string;
+}) {
+  const name = accountDisplayName(user);
   const panelId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const openTimer = useRef(0);
@@ -131,7 +205,10 @@ export function UserMenu({ user }: { user: AuthUser }) {
   return (
     <div
       ref={rootRef}
-      className="relative flex shrink-0 self-stretch items-center"
+      className={cn(
+        "relative flex shrink-0 self-stretch items-center",
+        className,
+      )}
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
     >
@@ -142,7 +219,7 @@ export function UserMenu({ user }: { user: AuthUser }) {
         aria-haspopup="true"
         aria-controls={open ? panelId : undefined}
         data-open={open ? "" : undefined}
-        className="site-cta inline-flex min-h-10 max-w-[11.5rem] shrink-0 items-center gap-1.5 rounded-full bg-black px-2 py-1 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] sm:max-w-[14rem] sm:gap-2 sm:px-2.5 sm:text-xs lg:px-3"
+        className={accountTriggerClassName}
         onClick={() => {
           if (open) {
             if (!canHover()) close();
@@ -152,7 +229,7 @@ export function UserMenu({ user }: { user: AuthUser }) {
         }}
         onKeyDown={onTriggerKeyDown}
       >
-        <MenuAvatar user={user} name={name} />
+        <AccountMenuAvatar user={user} name={name} />
         <span className="min-w-0 truncate">{name}</span>
         <ChevronDown
           aria-hidden
@@ -168,48 +245,11 @@ export function UserMenu({ user }: { user: AuthUser }) {
             id={panelId}
             role="group"
             aria-label="Account"
-            className="site-nav-panel w-[13.5rem] p-2"
+            className="site-nav-panel"
             data-measured=""
             data-motion={motion === "keyboard" ? "none" : undefined}
           >
-            <div className="px-2.5 py-2">
-              <p className="truncate text-[13px] font-semibold text-[#4e4646]">
-                {name}
-              </p>
-              {user.email ? (
-                <p className="mt-0.5 truncate text-[11px] text-[#627c86]">
-                  {user.email}
-                </p>
-              ) : null}
-            </div>
-
-            <div className="my-1 h-px bg-[#eff3f5]" />
-
-            <Link to="/account" className={itemClassName} onClick={close}>
-              <span className="min-w-0 truncate">Account</span>
-              <span aria-hidden className="site-nav-item-arrow">
-                →
-              </span>
-            </Link>
-            <a href={getOsOrigin()} className={itemClassName} onClick={close}>
-              <span className="min-w-0 truncate">Open OS</span>
-              <span aria-hidden className="site-nav-item-arrow">
-                →
-              </span>
-            </a>
-
-            <div className="my-1 h-px bg-[#eff3f5]" />
-
-            <button
-              type="button"
-              className="flex min-h-9 w-full items-center rounded-lg px-2.5 py-1.5 text-left text-[13px] font-medium text-[#9b3b3b] transition-colors hover:bg-[#fef2f2] focus-visible:bg-[#fef2f2]"
-              onClick={() => {
-                close();
-                void logout();
-              }}
-            >
-              Log out
-            </button>
+            <AccountPanelBody user={user} onNavigate={close} />
           </div>
         </div>
       ) : null}

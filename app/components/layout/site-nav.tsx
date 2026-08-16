@@ -21,7 +21,14 @@ import {
   type NavMenu,
 } from "../../content/nav";
 import { cn } from "../../lib/cn";
+import type { AuthUser } from "../../platform/api/schemas";
 import { StartCta } from "./start-cta";
+import {
+  AccountMenuAvatar,
+  AccountPanelBody,
+  accountDisplayName,
+  accountTriggerClassName,
+} from "./user-menu";
 import "./site-nav.css";
 
 const OPEN_MS = 100;
@@ -31,7 +38,7 @@ const MORPH_MS = 260;
 const EDGE_GUTTER = 16;
 
 type Motion = "pointer" | "keyboard";
-type MenuId = NavMenu["id"];
+type MenuId = NavMenu["id"] | "account";
 
 /**
  * The rail is the whole desktop nav: the triggers, the sliding thumb behind
@@ -71,6 +78,32 @@ const triggerClass =
 function CurrentTrack() {
   // 2px cyan rule, same idiom as the walkthrough stepper's `.workflow-step-track`.
   return <span aria-hidden className="site-nav-track" />;
+}
+
+/** Incoming or exiting copy for the shared rail panel, including Account. */
+function RailPanelBody({
+  id,
+  menus,
+  pathname,
+  accountUser,
+  onNavigate,
+}: {
+  id: MenuId;
+  menus: Map<NavMenu["id"], NavMenu>;
+  pathname: string;
+  accountUser: AuthUser | null | undefined;
+  onNavigate: () => void;
+}) {
+  if (id === "account") {
+    return accountUser ? (
+      <AccountPanelBody user={accountUser} onNavigate={onNavigate} />
+    ) : null;
+  }
+  const menu = menus.get(id);
+  if (!menu) return null;
+  return (
+    <MenuPanelContent menu={menu} pathname={pathname} onNavigate={onNavigate} />
+  );
 }
 
 /**
@@ -232,7 +265,84 @@ function DesktopMenu({
   );
 }
 
-function DesktopNav({ pathname }: { pathname: string }) {
+function DesktopAccountMenu({
+  user,
+  open,
+  rail,
+}: {
+  user: AuthUser;
+  open: boolean;
+  rail: Rail;
+}) {
+  const openTimer = useRef<number>(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const name = accountDisplayName(user);
+
+  useEffect(() => () => window.clearTimeout(openTimer.current), []);
+
+  const onPointerEnter = () => {
+    if (!canHover()) return;
+    rail.cancelClose();
+    window.clearTimeout(openTimer.current);
+    openTimer.current = window.setTimeout(() => {
+      if (!rootRef.current?.matches(":hover")) return;
+      rail.open("account", "pointer");
+    }, OPEN_MS);
+  };
+
+  const onTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      if (open) rail.close("account");
+      else rail.open("account", "keyboard");
+    }
+    if (event.key === "ArrowDown" && !open) {
+      event.preventDefault();
+      rail.open("account", "keyboard");
+    }
+  };
+
+  return (
+    <div
+      ref={rootRef}
+      className="relative flex shrink-0 self-stretch items-center"
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={() => window.clearTimeout(openTimer.current)}
+    >
+      <button
+        type="button"
+        data-nav-trigger=""
+        data-thumb-skip=""
+        data-open={open ? "" : undefined}
+        aria-label={`Account menu for ${name}`}
+        aria-expanded={open}
+        aria-haspopup="true"
+        aria-controls={open ? rail.panelId : undefined}
+        className={cn("relative z-[1]", accountTriggerClassName)}
+        onClick={() => {
+          if (open) {
+            if (!canHover()) rail.close("account");
+            return;
+          }
+          rail.open("account", canHover() ? "pointer" : "keyboard");
+        }}
+        onKeyDown={onTriggerKeyDown}
+      >
+        <AccountMenuAvatar user={user} name={name} />
+        <span className="min-w-0 truncate">{name}</span>
+        <MenuChevron open={open} />
+      </button>
+    </div>
+  );
+}
+
+function DesktopNav({
+  pathname,
+  accountUser,
+}: {
+  pathname: string;
+  accountUser: AuthUser | null | undefined;
+}) {
   const railRef = useRef<HTMLElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<number>(0);
@@ -283,7 +393,9 @@ function DesktopNav({ pathname }: { pathname: string }) {
   const rest = useCallback(() => {
     const root = railRef.current;
     hover(
-      root?.querySelector<HTMLElement>("[data-nav-trigger][data-open]") ??
+      root?.querySelector<HTMLElement>(
+        "[data-nav-trigger][data-open]:not([data-thumb-skip])",
+      ) ??
         root?.querySelector<HTMLElement>("[data-nav-trigger][data-current]") ??
         null,
     );
@@ -420,14 +532,11 @@ function DesktopNav({ pathname }: { pathname: string }) {
     [],
   );
 
-  const openMenu = openId ? menus.get(openId) : undefined;
-  const exitingMenu = exitingId ? menus.get(exitingId) : undefined;
-
   return (
     <nav
       ref={railRef}
       aria-label="Primary"
-      className="site-nav-rail ml-auto hidden self-stretch text-[13px] lg:flex"
+      className="site-nav-rail ml-auto hidden self-stretch gap-2 text-[13px] lg:flex"
       onPointerEnter={cancelClose}
       onPointerLeave={() => {
         rest();
@@ -483,7 +592,14 @@ function DesktopNav({ pathname }: { pathname: string }) {
           ),
         )}
       </ul>
-      {openMenu ? (
+      {accountUser ? (
+        <DesktopAccountMenu
+          user={accountUser}
+          open={openId === "account"}
+          rail={rail}
+        />
+      ) : null}
+      {openId ? (
         // The dock carries position only, leaving the frame's own transform
         // free for its entry animation.
         <div
@@ -494,36 +610,38 @@ function DesktopNav({ pathname }: { pathname: string }) {
           <div
             id={panelId}
             role="group"
-            aria-label={openMenu.label}
+            aria-label={
+              openId === "account" ? "Account" : menus.get(openId)?.label
+            }
             className="site-nav-panel"
             data-morph={morph ? "" : undefined}
             data-measured={box ? "" : undefined}
             data-motion={motion === "keyboard" ? "none" : undefined}
             style={box ? { width: box.w, height: box.h } : undefined}
           >
-            {exitingMenu ? (
+            {exitingId ? (
               <div
-                key={exitingMenu.id}
+                key={exitingId}
                 className="site-nav-panel-body"
                 data-exiting=""
                 aria-hidden
                 inert
               >
-                <MenuPanelContent
-                  menu={exitingMenu}
+                <RailPanelBody
+                  id={exitingId}
+                  menus={menus}
                   pathname={pathname}
+                  accountUser={accountUser}
                   onNavigate={() => close()}
                 />
               </div>
             ) : null}
-            <div
-              key={openMenu.id}
-              ref={bodyRef}
-              className="site-nav-panel-body"
-            >
-              <MenuPanelContent
-                menu={openMenu}
+            <div key={openId} ref={bodyRef} className="site-nav-panel-body">
+              <RailPanelBody
+                id={openId}
+                menus={menus}
                 pathname={pathname}
+                accountUser={accountUser}
                 onNavigate={() => close()}
               />
             </div>
@@ -693,11 +811,15 @@ function MobileNav({ pathname }: { pathname: string }) {
   );
 }
 
-export function SiteNav() {
+export function SiteNav({
+  accountUser,
+}: {
+  accountUser?: AuthUser | null;
+} = {}) {
   const { pathname } = useLocation();
   return (
     <>
-      <DesktopNav pathname={pathname} />
+      <DesktopNav pathname={pathname} accountUser={accountUser} />
       <MobileNav pathname={pathname} />
     </>
   );

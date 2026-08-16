@@ -101,7 +101,7 @@
 /* Dropdown panel --------------------------------------------------------- */
 
 /**
- * All three menus share one panel. Opening a second menu does not swap boxes,
+ * Nav menus and Account share one panel. Opening a second menu does not swap boxes,
  * it moves and resizes the box already on screen while the contents cross-fade,
  * so the dropdown reads as one object the nav is steering.
  *
