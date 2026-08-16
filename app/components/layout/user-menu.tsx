@@ -1,10 +1,28 @@
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDown } from "lucide-react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
 import { Link } from "react-router";
 
 import { useAuth } from "../../features/auth/auth-provider";
 import type { AuthUser } from "../../platform/api/schemas";
 import { getOsOrigin } from "../../platform/env";
+import "./site-nav.css";
+
+/** Keep in step with the desktop nav rail in `site-nav.tsx`. */
+const OPEN_MS = 100;
+const CLOSE_MS = 180;
+
+type Motion = "pointer" | "keyboard";
+
+function canHover(): boolean {
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
 
 function MenuAvatar({ user, name }: { user: AuthUser; name: string }) {
   if (user.avatarUrl) {
@@ -32,73 +50,169 @@ function MenuAvatar({ user, name }: { user: AuthUser; name: string }) {
 }
 
 const itemClassName =
-  "flex cursor-pointer items-center rounded-lg px-2.5 py-2 text-[13px] font-medium text-[#4e4646] outline-none data-[highlighted]:bg-[#effbfc] data-[highlighted]:text-[#014e59]";
+  "site-nav-item flex min-h-9 w-full items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-[13px] font-medium";
 
 export function UserMenu({ user }: { user: AuthUser }) {
   const { logout } = useAuth();
   const name = user.displayName?.trim() || user.username;
+  const panelId = useId();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const openTimer = useRef(0);
+  const closeTimer = useRef(0);
+  const [open, setOpen] = useState(false);
+  const [motion, setMotion] = useState<Motion>("pointer");
+
+  const close = useCallback(() => {
+    window.clearTimeout(openTimer.current);
+    window.clearTimeout(closeTimer.current);
+    setOpen(false);
+  }, []);
+
+  const openMenu = useCallback((how: Motion) => {
+    window.clearTimeout(openTimer.current);
+    window.clearTimeout(closeTimer.current);
+    setMotion(how);
+    setOpen(true);
+  }, []);
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(openTimer.current);
+      window.clearTimeout(closeTimer.current);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: Event) => {
+      if ((event as globalThis.KeyboardEvent).key === "Escape") close();
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      if (rootRef.current?.contains(event.target as Node)) return;
+      close();
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [open, close]);
+
+  const onPointerEnter = () => {
+    if (!canHover()) return;
+    window.clearTimeout(closeTimer.current);
+    window.clearTimeout(openTimer.current);
+    openTimer.current = window.setTimeout(() => {
+      if (!rootRef.current?.matches(":hover")) return;
+      openMenu("pointer");
+    }, OPEN_MS);
+  };
+
+  const onPointerLeave = () => {
+    window.clearTimeout(openTimer.current);
+    if (!canHover()) return;
+    closeTimer.current = window.setTimeout(() => close(), CLOSE_MS);
+  };
+
+  const onTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      if (open) close();
+      else openMenu("keyboard");
+    }
+    if (event.key === "ArrowDown" && !open) {
+      event.preventDefault();
+      openMenu("keyboard");
+    }
+  };
 
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild>
-        <button
-          type="button"
-          aria-label={`Account menu for ${name}`}
-          className="site-cta inline-flex min-h-10 max-w-[11.5rem] shrink-0 items-center gap-1.5 rounded-full bg-black px-2 py-1 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] sm:max-w-[14rem] sm:gap-2 sm:px-2.5 sm:text-xs lg:px-3"
-        >
-          <MenuAvatar user={user} name={name} />
-          <span className="min-w-0 truncate">{name}</span>
-          <ChevronDown
-            aria-hidden
-            className="size-3.5 shrink-0 opacity-70"
-            strokeWidth={2.5}
-          />
-        </button>
-      </DropdownMenu.Trigger>
+    <div
+      ref={rootRef}
+      className="relative flex shrink-0 self-stretch items-center"
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
+    >
+      <button
+        type="button"
+        aria-label={`Account menu for ${name}`}
+        aria-expanded={open}
+        aria-haspopup="true"
+        aria-controls={open ? panelId : undefined}
+        data-open={open ? "" : undefined}
+        className="site-cta inline-flex min-h-10 max-w-[11.5rem] shrink-0 items-center gap-1.5 rounded-full bg-black px-2 py-1 text-[11px] font-semibold text-white shadow-[0_4px_12px_rgba(0,0,0,.16)] sm:max-w-[14rem] sm:gap-2 sm:px-2.5 sm:text-xs lg:px-3"
+        onClick={() => {
+          if (open) {
+            if (!canHover()) close();
+            return;
+          }
+          openMenu(canHover() ? "pointer" : "keyboard");
+        }}
+        onKeyDown={onTriggerKeyDown}
+      >
+        <MenuAvatar user={user} name={name} />
+        <span className="min-w-0 truncate">{name}</span>
+        <ChevronDown
+          aria-hidden
+          data-open={open ? "true" : undefined}
+          className="site-nav-chevron size-3.5 shrink-0 opacity-70"
+          strokeWidth={2.5}
+        />
+      </button>
 
-      <DropdownMenu.Portal>
-        <DropdownMenu.Content
-          align="end"
-          sideOffset={8}
-          collisionPadding={12}
-          className="z-[60] min-w-[13.5rem] overflow-hidden rounded-xl border border-[#dcecef] bg-white p-1.5 shadow-[0_16px_40px_rgba(37,72,82,.14)] data-[state=open]:animate-[fade-in_140ms_var(--ease-snap)]"
-        >
-          <div className="px-2.5 py-2">
-            <p className="truncate text-[13px] font-semibold text-[#4e4646]">
-              {name}
-            </p>
-            {user.email ? (
-              <p className="mt-0.5 truncate text-[11px] text-[#627c86]">
-                {user.email}
-              </p>
-            ) : null}
-          </div>
-
-          <DropdownMenu.Separator className="my-1 h-px bg-[#eff3f5]" />
-
-          <DropdownMenu.Item asChild>
-            <Link to="/account" className={itemClassName}>
-              Account
-            </Link>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item asChild>
-            <a href={getOsOrigin()} className={itemClassName}>
-              Open OS
-            </a>
-          </DropdownMenu.Item>
-
-          <DropdownMenu.Separator className="my-1 h-px bg-[#eff3f5]" />
-
-          <DropdownMenu.Item
-            className={`${itemClassName} text-[#9b3b3b] data-[highlighted]:bg-[#fef2f2] data-[highlighted]:text-[#9b3b3b]`}
-            onSelect={() => {
-              void logout();
-            }}
+      {open ? (
+        <div className="site-nav-dock" data-align="end">
+          <div
+            id={panelId}
+            role="group"
+            aria-label="Account"
+            className="site-nav-panel w-[13.5rem] p-2"
+            data-measured=""
+            data-motion={motion === "keyboard" ? "none" : undefined}
           >
-            Log out
-          </DropdownMenu.Item>
-        </DropdownMenu.Content>
-      </DropdownMenu.Portal>
-    </DropdownMenu.Root>
+            <div className="px-2.5 py-2">
+              <p className="truncate text-[13px] font-semibold text-[#4e4646]">
+                {name}
+              </p>
+              {user.email ? (
+                <p className="mt-0.5 truncate text-[11px] text-[#627c86]">
+                  {user.email}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="my-1 h-px bg-[#eff3f5]" />
+
+            <Link to="/account" className={itemClassName} onClick={close}>
+              <span className="min-w-0 truncate">Account</span>
+              <span aria-hidden className="site-nav-item-arrow">
+                →
+              </span>
+            </Link>
+            <a href={getOsOrigin()} className={itemClassName} onClick={close}>
+              <span className="min-w-0 truncate">Open OS</span>
+              <span aria-hidden className="site-nav-item-arrow">
+                →
+              </span>
+            </a>
+
+            <div className="my-1 h-px bg-[#eff3f5]" />
+
+            <button
+              type="button"
+              className="flex min-h-9 w-full items-center rounded-lg px-2.5 py-1.5 text-left text-[13px] font-medium text-[#9b3b3b] transition-colors hover:bg-[#fef2f2] focus-visible:bg-[#fef2f2]"
+              onClick={() => {
+                close();
+                void logout();
+              }}
+            >
+              Log out
+            </button>
+          </div>
+        </div>
+      ) : null}
+    </div>
   );
 }

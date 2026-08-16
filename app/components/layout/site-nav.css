@@ -119,6 +119,11 @@
   margin-top: -0.25rem;
 }
 
+.site-nav-dock[data-align="end"] {
+  left: auto;
+  right: 0;
+}
+
 .site-nav-dock[data-morph] {
   transition: transform var(--dur-panel) var(--ease-snap);
 }

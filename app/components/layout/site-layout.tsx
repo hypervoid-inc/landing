@@ -11,6 +11,16 @@ import { StartCta } from "./start-cta";
 import { UserMenu } from "./user-menu";
 import { SiteNav } from "./site-nav";
 
+function isDocumentScrollLocked() {
+  const { body, documentElement } = document;
+  return (
+    body.hasAttribute("data-scroll-locked") ||
+    documentElement.hasAttribute("data-scroll-locked") ||
+    body.style.overflow === "hidden" ||
+    documentElement.style.overflow === "hidden"
+  );
+}
+
 /**
  * Sticky site chrome: nav + Product Hunt banner (when active).
  * Used on every page with a site header — landing, blog, legal, auth.
@@ -41,6 +51,56 @@ export function SiteHeader() {
     return () => {
       ro.disconnect();
       window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  // Radix dialogs (Start Now, mobile sheet, confirm) lock body scroll.
+  // `overflow: hidden` on body unsticks `position: sticky`, so the nav and
+  // PH bar jump to their in-flow slot — off-screen once you have scrolled.
+  // Translate the paint back to the viewport without `position: fixed`,
+  // which would collapse the in-flow slot and jump the page.
+  useEffect(() => {
+    const node = chromeRef.current;
+    if (!node) return;
+
+    const clearPin = () => {
+      delete node.dataset.pinned;
+      node.style.transform = "";
+    };
+
+    const syncPin = () => {
+      if (!isDocumentScrollLocked()) {
+        clearPin();
+        return;
+      }
+      node.dataset.pinned = "";
+      const pin = () => {
+        if (!isDocumentScrollLocked()) {
+          clearPin();
+          return;
+        }
+        node.style.transform = "";
+        const top = node.getBoundingClientRect().top;
+        if (Math.abs(top) > 0.5) {
+          node.style.transform = `translateY(${-top}px)`;
+        }
+      };
+      pin();
+      requestAnimationFrame(pin);
+    };
+
+    const observer = new MutationObserver(syncPin);
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["data-scroll-locked", "style"],
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-scroll-locked", "style"],
+    });
+    return () => {
+      observer.disconnect();
+      clearPin();
     };
   }, []);
 
