@@ -128,9 +128,16 @@ export function SiteHeader() {
           </Link>
           {/* `/launch` is a paid-campaign landing page: the nav links only
               leak traffic off the offer, so it keeps just logo + CTA. */}
-          {campaignLanding ? <div className="ml-auto" /> : <SiteNav />}
+          {campaignLanding ? (
+            <div className="ml-auto" />
+          ) : (
+            <SiteNav accountUser={status === "authenticated" ? user : null} />
+          )}
           {status === "authenticated" && user ? (
-            <UserMenu user={user} />
+            <UserMenu
+              user={user}
+              className={campaignLanding ? undefined : "lg:hidden"}
+            />
           ) : (
             <StartCta
               source="nav"
