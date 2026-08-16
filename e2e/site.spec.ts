@@ -498,6 +498,35 @@ test("opens the auth dialog from Start Now without leaving the site", async ({
   await page.getByRole("button", { name: "Close dialog" }).click();
 });
 
+test("keeps sticky chrome visible when Start Now opens after scroll", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto("/");
+
+  await scrollPageInstant(page, 800);
+  await expect
+    .poll(() => page.evaluate(() => window.scrollY))
+    .toBeGreaterThan(8);
+
+  await page
+    .locator("header")
+    .getByRole("link", { name: "Start using Construct" })
+    .click();
+
+  const chrome = page.locator(".site-sticky-chrome");
+  await expect(chrome).toBeInViewport();
+  await expect(page.locator("header")).toBeInViewport();
+  const box = await chrome.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.y).toBeLessThan(8);
+  await expect(
+    page.getByRole("dialog").getByRole("heading", {
+      name: /Create your Construct account/i,
+    }),
+  ).toBeVisible();
+});
+
 test("opens post-login welcome from ?welcome=1 without auth", async ({
   page,
 }) => {

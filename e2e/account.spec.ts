@@ -172,8 +172,7 @@ const BYOK_MODELS = {
  * `credentials: "include"`, and browsers reject a wildcard ACAO on those.
  */
 function json(route: Route, body: unknown, status = 200) {
-  const origin =
-    route.request().headers().origin ?? "http://localhost:8788";
+  const origin = route.request().headers().origin ?? "http://localhost:8788";
   const headers = {
     "Access-Control-Allow-Origin": origin,
     "Access-Control-Allow-Credentials": "true",
@@ -209,6 +208,15 @@ function appErrors(messages: string[]): string[] {
   );
 }
 
+/** Jump without Lenis coasting — native scrollTo is overwritten mid-lerp. */
+async function scrollPageInstant(page: Page, top: number) {
+  await page.evaluate((y) => {
+    const hook = window.__scrollPageTo;
+    if (typeof hook === "function") hook(y, { immediate: true });
+    else window.scrollTo({ top: y, behavior: "instant" });
+  }, top);
+}
+
 async function stubApi(
   page: Page,
   overrides: Partial<Record<string, unknown>> = {},
@@ -217,7 +225,11 @@ async function stubApi(
     const path = new URL(route.request().url()).pathname;
     if (path.endsWith("/auth/me")) return json(route, overrides.me ?? USER);
     if (path.endsWith("/v1/billing/plan"))
-      return json(route, overrides.plan ?? PLAN, (overrides.planStatus as number) ?? 200);
+      return json(
+        route,
+        overrides.plan ?? PLAN,
+        (overrides.planStatus as number) ?? 200,
+      );
     if (path.endsWith("/v1/billing/plans"))
       return json(route, overrides.catalog ?? CATALOG);
     if (path.endsWith("/v1/workspaces"))
@@ -351,9 +363,7 @@ test.describe("/account", () => {
     await page.getByRole("button", { name: "Monthly" }).click();
     await expect(page.getByText("Current")).toHaveCount(0);
     await expect(page.getByText("Your annual plan")).toBeVisible();
-    await expect(
-      page.getByText(/You're billed annually/i),
-    ).toBeVisible();
+    await expect(page.getByText(/You're billed annually/i)).toBeVisible();
   });
 
   test("shows the annual list price struck through", async ({ page }) => {
@@ -363,9 +373,7 @@ test.describe("/account", () => {
     await expect(page.getByText("$108")).toBeVisible();
   });
 
-  test("shows Recommended and trial CTA from the catalog", async ({
-    page,
-  }) => {
+  test("shows Recommended and trial CTA from the catalog", async ({ page }) => {
     await stubApi(page, {
       plan: {
         ...PLAN,
@@ -399,7 +407,9 @@ test.describe("/account", () => {
     await stubApi(page, { plan: { error: "boom" }, planStatus: 500 });
     await page.goto("/account");
 
-    await expect(page.getByRole("button", { name: /try again/i })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /try again/i }),
+    ).toBeVisible();
     await expect(page.locator("body")).not.toContainText("Loading plan");
   });
 
@@ -444,7 +454,9 @@ test.describe("/account", () => {
     await page.goto("/account");
 
     await expandSection(page, "Bring your own key");
-    await expect(page.getByText(/on the starter plan and above/i)).toBeVisible();
+    await expect(
+      page.getByText(/on the starter plan and above/i),
+    ).toBeVisible();
     // No key input should exist when the plan doesn't permit BYOK.
     await expect(page.getByRole("button", { name: "Connect" })).toHaveCount(0);
   });
@@ -485,6 +497,7 @@ test.describe("/account", () => {
   test("opens the header account menu with Account, Open OS, and Log out", async ({
     page,
   }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
     await stubApi(page);
     await page.goto("/account");
 
@@ -497,17 +510,57 @@ test.describe("/account", () => {
     await expect(header.getByRole("link", { name: /^Open OS/ })).toHaveCount(0);
 
     await menuButton.click();
-    const menu = page.getByRole("menu");
+    const menu = page.getByRole("group", { name: "Account" });
     await expect(menu).toBeVisible();
-    await expect(menu.getByRole("menuitem", { name: "Account" })).toBeVisible();
-    await expect(menu.getByRole("menuitem", { name: "Open OS" })).toHaveAttribute(
+    await expect(menu.getByRole("link", { name: "Account" })).toBeVisible();
+    await expect(menu.getByRole("link", { name: "Open OS" })).toHaveAttribute(
       "href",
       "https://os.construct.computer",
     );
-    await expect(menu.getByRole("menuitem", { name: "Log out" })).toBeVisible();
+    await expect(menu.getByRole("button", { name: "Log out" })).toBeVisible();
 
-    await menu.getByRole("menuitem", { name: "Account" }).click();
+    await menu.getByRole("link", { name: "Account" }).click();
     await expect(page).toHaveURL(/\/account\/?$/);
+  });
+
+  test("opens the account menu on hover like the desktop nav", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await stubApi(page);
+    await page.goto("/account");
+
+    const menuButton = page.getByRole("button", {
+      name: "Account menu for Ankush Singh",
+    });
+    await menuButton.hover();
+    const menu = page.getByRole("group", { name: "Account" });
+    await expect(menu).toBeVisible();
+    await expect(menu.getByRole("link", { name: "Account" })).toBeVisible();
+  });
+
+  test("keeps sticky chrome visible when the account menu opens after scroll", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await stubApi(page);
+    await page.goto("/account");
+
+    await scrollPageInstant(page, 600);
+    await expect
+      .poll(() => page.evaluate(() => window.scrollY))
+      .toBeGreaterThan(8);
+
+    const chrome = page.locator(".site-sticky-chrome");
+    const menuButton = page.getByRole("button", {
+      name: "Account menu for Ankush Singh",
+    });
+    await menuButton.click();
+
+    await expect(chrome).toBeInViewport();
+    await expect(page.locator("header")).toBeInViewport();
+    await expect(page.getByRole("group", { name: "Account" })).toBeVisible();
+    await expect(menuButton).toBeVisible();
   });
 });
 
