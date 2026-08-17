@@ -1,11 +1,19 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
 version: 2
 updates:
-  - package-ecosystem: "" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # PostHog npm packages only — lockfiles pin exact versions, so `pnpm install`
+  # never picks up new SDKs. Weekly PRs, human review, no automerge (PostHog
+  # Shai-Hulud guidance). GitHub's default 3-day cooldown applies.
+  # https://posthog.com/docs/health-checks/keeping-sdks-current
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: "weekly"
+      interval: weekly
+    allow:
+      - dependency-name: "posthog-js"
+      - dependency-name: "@posthog/*"
+    groups:
+      posthog:
+        patterns:
+          - "posthog-js"
+          - "@posthog/*"
+    open-pull-requests-limit: 5
