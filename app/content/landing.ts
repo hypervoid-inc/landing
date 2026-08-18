@@ -18,7 +18,7 @@ export const pricingPlans = [
       "Construct mascot completing a focused task at a personal workspace",
     features: [
       ["Entry plan - start exploring", "footprints"],
-      ["1 AI agent", "workflow"],
+      ["Up to 2 AI agents", "workflow"],
       ["Up to 50 steps per task", "footprints"],
       ["2 parallel background jobs", "tabs"],
       ["100 MB cloud storage", "cloud"],
@@ -43,7 +43,7 @@ export const pricingPlans = [
       ["Background & scheduled tasks", "tabs"],
       ["30-minute command runtime", "timer"],
       ["1 GB cloud storage", "cloud"],
-      ["Up to 5 agents - coming soon", "workflow"],
+      ["Up to 5 agents", "workflow"],
     ],
   },
   {
@@ -65,7 +65,7 @@ export const pricingPlans = [
       ["1-hour command runtime", "timer"],
       ["3 GB cloud storage", "cloud"],
       ["Bring your own model keys (BYOK)", "key"],
-      ["Up to 15 agents - coming soon", "workflow"],
+      ["Up to 15 agents", "workflow"],
     ],
   },
 ] as const satisfies ReadonlyArray<{
