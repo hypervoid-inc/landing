@@ -28,7 +28,7 @@ const HOMEPAGE_CATALOG = {
       id: "lite",
       name: "Lite",
       limits: {
-        maxAgents: 1,
+        maxAgents: 2,
         multiAgentEnabled: false,
         maxConcurrentSessionsPerAgent: 1,
         maxIterations: 50,
