@@ -28,12 +28,10 @@ export function ProductHuntLaunchCta({
       aria-label="Product Hunt launch"
     >
       <p className="ph-blog-cta-eyebrow">{copy.eyebrow}</p>
-      <p className="ph-blog-cta-title">
-        {phase === "pre"
-          ? "Follow our Product Hunt launch"
-          : "Upvote our Product Hunt launch"}
-      </p>
-      <p className="ph-blog-cta-lead">{copy.homepageLead}</p>
+      <p className="ph-blog-cta-title">{copy.launchSecondary}</p>
+      {phase === "pre" && (
+        <p className="ph-blog-cta-lead">{copy.homepageLead}</p>
+      )}
       <div className="ph-blog-cta-actions">
         <ProductHuntBadge surface={surface} />
       </div>

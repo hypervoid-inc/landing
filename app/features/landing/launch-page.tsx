@@ -627,7 +627,7 @@ export function LaunchPage() {
               <p className="mt-4 text-xs leading-relaxed text-[var(--color-ink-subtle)]">
                 Enter your code at checkout.{" "}
                 {phase === "live"
-                  ? "Launch-week codes while the Product Hunt campaign is live."
+                  ? "Launch-week codes, good through the end of launch week."
                   : phase === "hidden"
                     ? "Codes apply at checkout while the offer lasts."
                     : "Both hold until we go live on Product Hunt."}

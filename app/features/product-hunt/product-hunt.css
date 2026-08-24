@@ -257,6 +257,18 @@
   min-width: 0;
 }
 
+/* Award chip. Only surface where the win is spelled out in text, because the
+   embed card carries no badge artwork. */
+.ph-embed-award {
+  margin: 0 0 0.35rem;
+  color: var(--ph-coral-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .ph-embed-cta {
   display: inline-flex;
   align-items: center;
