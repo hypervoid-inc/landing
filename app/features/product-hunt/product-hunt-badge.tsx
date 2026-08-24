@@ -2,9 +2,11 @@ import { useLayoutEffect, useRef } from "react";
 
 import { captureAnalytics } from "../analytics/analytics.client";
 import {
-  PH_BADGE_IMG,
+  PH_FEATURED_BADGE_IMG,
   PH_PRODUCT_NAME,
   PH_TAGLINE,
+  PH_TOP_POST_BADGE_IMG,
+  productHuntCopy,
   productHuntHref,
   type ProductHuntSurface,
 } from "./config";
@@ -47,10 +49,16 @@ export function ProductHuntBadge({
     >
       <span className="ph-badge-face" ref={faceRef}>
         <img
-          alt={`${PH_PRODUCT_NAME} - ${PH_TAGLINE} | Product Hunt`}
+          // The award only exists inside the badge artwork, so the alt text is
+          // where it lives for screen readers and for a failed image load.
+          alt={
+            phase === "live"
+              ? productHuntCopy("live").bannerRegion
+              : `${PH_PRODUCT_NAME} - ${PH_TAGLINE} | Product Hunt`
+          }
           width={250}
           height={54}
-          src={PH_BADGE_IMG}
+          src={phase === "live" ? PH_TOP_POST_BADGE_IMG : PH_FEATURED_BADGE_IMG}
           loading="lazy"
           decoding="async"
         />

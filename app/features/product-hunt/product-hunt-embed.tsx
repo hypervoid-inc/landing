@@ -3,6 +3,7 @@ import {
   PH_LOGO_IMG,
   PH_PRODUCT_NAME,
   PH_TAGLINE,
+  productHuntCopy,
   productHuntHref,
   type ProductHuntSurface,
 } from "./config";
@@ -27,6 +28,7 @@ export function ProductHuntEmbed({
   if (!force && (!mounted || !active)) return null;
 
   const resolvedPhase = active ? phase : "pre";
+  const copy = productHuntCopy(resolvedPhase);
 
   return (
     <div className={`${className} ph-embed font-sans`}>
@@ -41,6 +43,11 @@ export function ProductHuntEmbed({
           className="h-16 w-16 shrink-0 rounded-lg object-cover"
         />
         <div className="ph-embed-copy">
+          {resolvedPhase === "live" && (
+            /* This card carries no badge artwork, so the award is stated here
+               once and nowhere else in the card. */
+            <p className="ph-embed-award">#1 Product of the Day</p>
+          )}
           <h3 className="m-0 text-lg font-semibold leading-snug text-[#1a1a1a]">
             {PH_PRODUCT_NAME}
           </h3>
@@ -61,9 +68,7 @@ export function ProductHuntEmbed({
           });
         }}
       >
-        {resolvedPhase === "pre"
-          ? "Check out our Product Hunt launch →"
-          : "Upvote our Product Hunt launch →"}
+        {copy.cta} →
       </a>
     </div>
   );

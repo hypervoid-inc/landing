@@ -31,10 +31,10 @@ test("shows follow countdown banner in pre phase", async ({ page }) => {
   expect(Number.parseFloat(height)).toBeGreaterThan(20);
 });
 
-test("shows upvote banner in live phase", async ({ page }) => {
+test("shows product of the day banner in live phase", async ({ page }) => {
   await page.goto("/?ph=live");
 
-  const banner = page.getByRole("region", { name: /live on Product Hunt/i });
+  const banner = page.getByRole("region", { name: /#1 Product of the Day/i });
   await expect(banner).toBeVisible();
   await expect(banner.locator(".ph-banner-badge")).toBeVisible();
   await expect(banner.locator(".ph-countdown")).toHaveCount(0);
@@ -50,7 +50,7 @@ test("shows campaign chrome on auth routes too", async ({ page }) => {
   // live chrome on login directly.
   await page.goto("/login/?ph=live");
   await expect(
-    page.getByRole("region", { name: /live on Product Hunt/i }),
+    page.getByRole("region", { name: /#1 Product of the Day/i }),
   ).toBeVisible();
 });
 

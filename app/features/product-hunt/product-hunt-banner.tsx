@@ -79,10 +79,12 @@ export function ProductHuntBanner() {
   if (!visible) return null;
 
   const copy = productHuntCopy(phase);
+  // The visible lead is a thank-you in live phase; the region still needs to
+  // name what it is, so the label comes from `bannerRegion`, not the lead.
   const ariaLabel =
     phase === "pre"
-      ? `${copy.bannerLead} ${countdownLabel}`
-      : copy.bannerLead;
+      ? `${copy.bannerRegion} in ${countdownLabel}`
+      : copy.bannerRegion;
 
   return (
     <div
