@@ -34,16 +34,42 @@ export async function getPlanCatalog() {
   return apiRequest("/v1/billing/plans", { schema: PlanCatalogSchema });
 }
 
+/**
+ * Dodo restricts these campaign codes to a single product. Sending them on
+ * any other plan/interval 422s the whole checkout. Unknown codes pass through
+ * so the API can still apply an unrestricted promo.
+ */
+const PROMO_RESTRICTED_TO: Record<
+  string,
+  { plan: PaidPlanId; interval: BillingInterval }
+> = {
+  LAUNCH20: { plan: "pro", interval: "month" },
+  LAUNCH40: { plan: "pro", interval: "year" },
+};
+
+export function checkoutPromoCode(
+  code: string | undefined,
+  plan: PaidPlanId,
+  interval: BillingInterval,
+): string | undefined {
+  if (!code) return undefined;
+  const restriction = PROMO_RESTRICTED_TO[code];
+  if (!restriction) return code;
+  return restriction.plan === plan && restriction.interval === interval
+    ? code
+    : undefined;
+}
+
 export async function createCheckout(
   plan: PaidPlanId,
   interval: BillingInterval = "month",
   /**
    * Campaign promo code, read from the attribution cookie at the call site.
-   * The server validates it against Dodo and falls back to an undiscounted
-   * session when it is unknown or expired, so a stale code never blocks a sale.
+   * Attached only when this cart is a product the code covers.
    */
   promoCode?: string,
 ) {
+  const applied = checkoutPromoCode(promoCode, plan, interval);
   return apiRequest("/v1/billing/checkout", {
     method: "POST",
     schema: CheckoutSchema,
@@ -51,7 +77,7 @@ export async function createCheckout(
       plan,
       interval,
       returnOrigin: getReturnOrigin(),
-      ...(promoCode ? { promoCode } : {}),
+      ...(applied ? { promoCode: applied } : {}),
     }),
   });
 }
