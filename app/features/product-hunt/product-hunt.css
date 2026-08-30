@@ -66,11 +66,20 @@
 }
 
 .ph-proof--footer {
-  width: 250px;
+  /* Two 250px badges + the row gap, shrinking to the rail on small screens. */
+  width: min(calc(500px + 0.3rem), 100%);
 }
 
-.ph-proof--footer .ph-proof-badges,
-.ph-proof--footer .ph-proof-link,
+.ph-proof--footer .ph-proof-badges {
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.ph-proof--footer .ph-proof-link {
+  width: min(250px, calc((100% - 0.3rem) / 2));
+}
+
 .ph-proof--footer .ph-proof-badge,
 .ph-proof--rail .ph-proof-badges,
 .ph-proof--rail .ph-proof-link,
@@ -144,22 +153,6 @@
   opacity: 1;
   transform: translate3d(0, 0, 0);
   transition-delay: 140ms;
-}
-
-@media (min-width: 1024px) {
-  .ph-proof--footer {
-    width: auto;
-  }
-
-  .ph-proof--footer .ph-proof-badges {
-    width: auto;
-    flex-direction: row;
-  }
-
-  .ph-proof--footer .ph-proof-link,
-  .ph-proof--footer .ph-proof-badge {
-    width: 250px;
-  }
 }
 
 @media (hover: hover) and (pointer: fine) {
