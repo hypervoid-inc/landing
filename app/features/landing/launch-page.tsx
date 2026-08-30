@@ -141,9 +141,9 @@ const SCENE_MAX_MS = 20000;
 /** Objections that decide a paid signup from a cold campaign list. */
 const FAQ = [
   {
-    question: "What happens when the free trial ends?",
+    question: "What happens when the trial ends?",
     answer:
-      "Nothing charges automatically without you picking a plan at checkout, and that is where your launch code applies. Plans start at the Lite tier and go up to Pro, which is what the trial runs on.",
+      "After the trial, billing continues on the plan you picked at checkout unless you change or cancel from your account. That is also where your launch code applies. Plans start at the Lite tier and go up to Pro, which is what the trial runs on.",
   },
   {
     question: "Do I have to integrate anything first?",
@@ -376,10 +376,9 @@ export function LaunchPage() {
 
   const merged = mergePricingPlans(plans, recommendedPlan);
   const pro = merged.find((plan) => plan.id === "pro");
-  // A noun phrase, not the pricing-card adjective ("7-day trial"), so it reads
-  // in running copy: "7 days of Pro free", "Start with 7 days of Pro free".
+  // Adjective form for running copy: "7-day trial on Pro".
   const trialDays = pro?.trialDaysMonth ?? null;
-  const trialLabel = trialDays ? `${trialDays} days` : "7 days";
+  const trialLabel = trialDays ? `${trialDays}-day` : "7-day";
   // Entry price anchors the discount codes. The trial itself runs on Pro, so
   // the two numbers are deliberately kept apart in the copy.
   const entryPrice = merged.find((plan) => plan.id === "lite")?.price ?? "$9";
@@ -444,7 +443,7 @@ export function LaunchPage() {
                 data-reveal="mount"
                 data-reveal-delay="2"
               >
-                {trialLabel} of Pro free, the full desktop. Plans from{" "}
+                {trialLabel} trial on Pro, the full desktop. Plans from{" "}
                 <span className="font-semibold text-[var(--color-ink)]">
                   {entryPrice}/month
                 </span>{" "}
@@ -602,9 +601,9 @@ export function LaunchPage() {
                   Your launch offer
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-[var(--color-ink-muted)]">
-                  Start with {trialLabel} of Pro free. After the trial, pick one
-                  code at checkout: 20% off your first three months on monthly,
-                  or 40% off a full year on annual.
+                  Start with a {trialLabel} trial on Pro. After the trial, pick
+                  one code at checkout: 20% off your first three months on
+                  monthly, or 40% off a full year on annual.
                 </p>
               </div>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -686,7 +685,7 @@ export function LaunchPage() {
                 Hire your first AI employee tonight
               </h2>
               <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--color-ink-muted)]">
-                {trialLabel} of Pro free, then plans from {entryPrice}/month.
+                {trialLabel} trial on Pro, then plans from {entryPrice}/month.
                 Cancel any time from your account.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
@@ -788,7 +787,7 @@ export function LaunchPage() {
       >
         <div className="launch-sticky-cta-copy">
           <span className="launch-sticky-cta-lead">
-            {trialLabel} of Pro free
+            {trialLabel} trial on Pro
           </span>
           <span className="launch-sticky-cta-sub">
             then from {entryPrice}/month

@@ -12,7 +12,7 @@ export const pricingPlans = [
     cta: "Start with Lite",
     description: "Try Construct for yourself",
     badge: null,
-    highlight: "7-day trial",
+    highlight: null,
     image: "/assets/landing/pricing/lite-v3.webp",
     imageAlt:
       "Construct mascot completing a focused task at a personal workspace",
@@ -54,7 +54,7 @@ export const pricingPlans = [
     cta: "Go Pro",
     description: "Full desktop power + your own model keys",
     badge: null,
-    highlight: null,
+    highlight: "7-day trial",
     image: "/assets/landing/pricing/pro-v3.webp",
     imageAlt:
       "Construct agents orchestrating browser, terminal, files, and schedules",

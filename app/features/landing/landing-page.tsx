@@ -27,7 +27,7 @@ function HeroHeadline() {
   );
   const floor = pricingFloorLabel(plans) ?? "$9";
   const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth ?? null;
-  const trialLabel = trialDays ? `${trialDays} days` : "7 days";
+  const trialLabel = trialDays ? `${trialDays}-day` : "7-day";
 
   return (
     <div className="hero-headline mx-auto text-center md:mx-0 md:text-left">
@@ -96,7 +96,7 @@ function HeroHeadline() {
         data-reveal="mount"
         data-reveal-delay="3"
       >
-        {trialLabel} of Pro free. Then plans from{" "}
+        {trialLabel} trial on Pro. Then plans from{" "}
         <span className="font-semibold text-[#4e4646]">{floor}/month</span>.
         Cancel any time.
       </p>
@@ -481,7 +481,7 @@ function ClosingCta() {
   );
   const floor = pricingFloorLabel(plans) ?? "$9";
   const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth ?? null;
-  const trialLabel = trialDays ? `${trialDays} days` : "7 days";
+  const trialLabel = trialDays ? `${trialDays}-day` : "7-day";
 
   return (
     <section aria-labelledby="closing-heading" className="closing-cta">
@@ -494,7 +494,7 @@ function ClosingCta() {
           tonight
         </h2>
         <p className="closing-cta-lead">
-          {trialLabel} of Pro free, then plans from {floor}/month. Cancel any
+          {trialLabel} trial on Pro, then plans from {floor}/month. Cancel any
           time from your account.
         </p>
         <div className="closing-cta-row">

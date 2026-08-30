@@ -8,7 +8,7 @@ export function meta(): MetaDescriptor[] {
     {
       name: "description",
       content:
-        "An AI employee with its own computer. Hand it the list before bed and it works through the night. Start a free Pro trial and claim your launch pricing.",
+        "An AI employee with its own computer. Hand it the list before bed and it works through the night. Start a 7-day Pro trial and claim your launch pricing.",
     },
     // Kept out of search so it doesn't compete with `/`, and because the offer
     // is time-boxed to the campaign.
