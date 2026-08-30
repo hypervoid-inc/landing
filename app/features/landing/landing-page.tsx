@@ -5,11 +5,10 @@ import { captureAnalytics } from "../analytics/analytics.client";
 import { featureCards } from "~/content/landing";
 
 import { StartLink } from "./beta-access";
-import { CampaignBanner } from "./campaign-banner";
 // we temporearily commented and dont delete
 // import { FounderNote } from "./founder-note";
 import { WALKTHROUGH_URL } from "./cta-links";
-import { ProductHuntBadge } from "../product-hunt/product-hunt-badge";
+import { ProductHuntProof } from "../product-hunt/product-hunt-proof";
 import { AutoVideo, useRevealOnView } from "./media";
 import { mergePricingPlans, pricingFloorLabel } from "./merge-pricing-catalog";
 // Temporarily disabled — do not delete. Hero collage pointer parallax.
@@ -19,10 +18,6 @@ import { FaqSection, PricingSection } from "./pricing-section";
 import { usePlanCatalog } from "./use-plan-catalog";
 import { WorkflowSection } from "./workflow-section";
 import "./landing.css";
-
-function HeroProductHuntCta() {
-  return <ProductHuntBadge surface="hero" className="hero-ph-badge" />;
-}
 
 function HeroHeadline() {
   const catalog = usePlanCatalog();
@@ -52,6 +47,15 @@ function HeroHeadline() {
           <span className="text-[#01b4c8]">Work With</span>
         </span>
       </div>
+      <ProductHuntProof
+        surface="home-mobile-hero"
+        variant="hero-mobile"
+        awards="daily"
+        motion="inherit"
+        revealOnMount
+        revealDelay="2"
+        className="reveal-item mx-auto mt-7"
+      />
       {/* <p
         className="reveal-item mx-auto mt-5 max-w-[360px] text-[15px] leading-[21px] text-[#627c86] xl:mx-0 xl:mt-6 xl:max-w-[520px] xl:text-base xl:leading-[22px]"
         data-reveal="mount"
@@ -85,7 +89,6 @@ function HeroHeadline() {
         >
           Start Now
         </StartLink>
-        <HeroProductHuntCta />
       </div>
       {/* The homepage otherwise shows no price until the pricing section. */}
       <p
@@ -535,8 +538,15 @@ export function LandingPage() {
       className="landing-page relative min-h-dvh w-full overflow-x-clip bg-white text-[#4e4646]"
     >
       <SiteHeader />
-      <CampaignBanner />
       <main id="main">
+        <ProductHuntProof
+          surface="home-corner"
+          variant="corner"
+          motion="inherit"
+          revealOnMount
+          revealDelay="4"
+          className="reveal-item"
+        />
         <Hero />
         <WhatConstructIs />
         <div className="landing-atmosphere relative w-full bg-[linear-gradient(to_bottom,#fff_0%,#fff_4%,#ddfaff_15%,#ddfaff_45%,#fefefe_75%,#fff_100%)]">

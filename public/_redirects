@@ -8,10 +8,3 @@
 # goes without chasing down every place it was already printed.
 /discord https://discord.gg/puArEQHYN9 302
 /discord/ https://discord.gg/puArEQHYN9 302
-
-# /ph is deliberately NOT a static rule: its destination changes at go-live
-# (before launch, Follow only exists on the discussion page; the upvote only
-# appears on the product page once live). It is served by functions/ph.ts,
-# which reads the same PH_GO_LIVE_MS as the rest of the site. This rule only
-# normalises the trailing slash onto that Function.
-/ph/ /ph 301

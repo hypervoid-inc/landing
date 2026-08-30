@@ -1,10 +1,17 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 
 import { workflowDemos, type WorkflowDemo } from "~/content/landing";
 import { scrollPageTo } from "~/lib/page-scroll";
 
 import { StartLink } from "./beta-access";
-import { readSiteChromeHeightPx } from "../product-hunt/chrome";
+import { readSiteChromeHeightPx } from "../../components/layout/site-chrome";
 import { useDesktop, usePrefersReducedMotion } from "./media";
 import {
   getActiveWorkflowIndex,
@@ -292,7 +299,10 @@ export function WorkflowSection() {
 
   useEffect(() => {
     if (outgoing == null) return;
-    const fade = window.setTimeout(() => setOutgoing(null), WORKFLOW_VIDEO_FADE_MS);
+    const fade = window.setTimeout(
+      () => setOutgoing(null),
+      WORKFLOW_VIDEO_FADE_MS,
+    );
     return () => window.clearTimeout(fade);
   }, [outgoing]);
 
@@ -381,12 +391,7 @@ export function WorkflowSection() {
       const screenBox = screen.getBoundingClientRect();
       const slotTop = screenBox.top;
       const layoutTops = panelBoxes.map((box, index) =>
-        getWorkflowStickyTop(
-          box.top,
-          box.bottom,
-          heights[index]!,
-          slotTop,
-        ),
+        getWorkflowStickyTop(box.top, box.bottom, heights[index]!, slotTop),
       );
       const push = getWorkflowPushOffset(layoutTops, slotTop);
       const bodies = cards.map((card) =>
@@ -517,10 +522,7 @@ export function WorkflowSection() {
       <h2 id="workflow-heading" className="sr-only">
         Workflow demos
       </h2>
-      <div
-        className="workflow-motion page-rail mx-auto w-full"
-        ref={motionRef}
-      >
+      <div className="workflow-motion page-rail mx-auto w-full" ref={motionRef}>
         {/* display:contents from lg up, where the viewer and the rail are the
             two columns of the grid. Below lg it is the sticky stage that holds
             them together. */}

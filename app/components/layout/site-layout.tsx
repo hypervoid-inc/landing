@@ -4,9 +4,8 @@ import { Link, useLocation } from "react-router";
 import { companyLinks, comparisonLinks } from "../../content/landing";
 import { useAuth } from "../../features/auth/auth-provider";
 import { NewsletterForm } from "../../features/landing/newsletter-form";
-import { setSiteChromeHeightPx } from "../../features/product-hunt/chrome";
-import { ProductHuntBadge } from "../../features/product-hunt/product-hunt-badge";
-import { ProductHuntBanner } from "../../features/product-hunt/product-hunt-banner";
+import { ProductHuntProof } from "../../features/product-hunt/product-hunt-proof";
+import { setSiteChromeHeightPx } from "./site-chrome";
 import { StartCta } from "./start-cta";
 import { UserMenu } from "./user-menu";
 import { SiteNav } from "./site-nav";
@@ -22,8 +21,7 @@ function isDocumentScrollLocked() {
 }
 
 /**
- * Sticky site chrome: nav + Product Hunt banner (when active).
- * Used on every page with a site header — landing, blog, legal, auth.
+ * Sticky site navigation shared by landing, content, legal, and auth pages.
  */
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -150,7 +148,6 @@ export function SiteHeader() {
           )}
         </div>
       </header>
-      <ProductHuntBanner />
     </div>
   );
 }
@@ -266,9 +263,9 @@ export function SiteFooter() {
             links={comparisonLinks}
           />
         </div>
-        <div className="flex flex-col items-center gap-3 border-t border-[#e5e7eb] py-5 text-center sm:py-6 lg:flex-row-reverse lg:justify-between lg:gap-4 lg:text-left">
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-end">
-            <ProductHuntBadge surface="footer" />
+        <div className="flex flex-col items-center gap-2 border-t border-[#e5e7eb] py-3 text-center sm:gap-3 sm:py-6 lg:flex-row-reverse lg:justify-between lg:gap-4 lg:text-left">
+          <div className="flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-3">
+            <ProductHuntProof surface="footer" variant="footer" />
             <Link
               to="/affiliates/"
               className="footer-affiliate-badge"

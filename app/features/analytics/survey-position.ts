@@ -1,5 +1,5 @@
 /**
- * Pin PostHog popover surveys to the bottom-left corner.
+ * Pin PostHog popover surveys above the bottom-left proof/utility zone.
  *
  * PostHog's default is bottom-right (`SurveyPosition.Right` / `"right"`), which
  * collides with Clippy. Appearance is configured per survey in the dashboard;
@@ -36,13 +36,14 @@ type PinableSurvey = {
 };
 
 /**
- * Shadow-DOM CSS. `.ph-survey` is `position: fixed; bottom: 0` with `right` or
- * `left` set inline. Page CSS cannot reach it. Skip anything that already set
- * `top` (top/middle/next-to-trigger placements).
+ * Shadow-DOM CSS. `.ph-survey` is fixed with its horizontal edge set inline.
+ * Page CSS cannot reach it, so reserve the lower-left proof/utility zone here.
+ * Skip surveys that already carry an intentional top/middle placement.
  */
 export const SURVEY_POPUP_LEFT_CSS = `.ph-survey:not([style*="top"]) {
   left: 30px !important;
   right: auto !important;
+  bottom: 110px !important;
 }`;
 
 export function pinPopoverSurveyAppearance(surveys: PinableSurvey[]): void {

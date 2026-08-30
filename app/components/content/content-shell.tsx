@@ -5,9 +5,8 @@ import { SiteFooter, SiteHeader } from "../layout/site-layout";
 export type Breadcrumb = { readonly label: string; readonly to: string };
 
 /**
- * Vertical gap between sticky site chrome (optional PH banner + header) and a
- * stuck rail. Driven by `--site-chrome-height` so the rail tracks the campaign
- * strip without hardcoding 5.5rem.
+ * Vertical gap between the measured sticky header and a stuck rail. Driven by
+ * `--site-chrome-height` so the rail never relies on a duplicated header size.
  */
 const RAIL_TOP = "top-[calc(var(--site-chrome-height)+0.75rem)]";
 const RAIL_MAX_H = "max-h-[calc(100dvh-var(--site-chrome-height)-1.5rem)]";

@@ -55,6 +55,14 @@
   --dur-panel: 260ms;
   /* 1 on most pages. Landing overwrites this with a contain-fit from 1280px. */
   --landing-scale: 1;
+  --site-header-height: 3rem;
+  --site-chrome-height: var(--site-header-height);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --site-header-height: 3.5rem;
+  }
 }
 
 /* Shared content rail: header, hero, footer. Fills width on desktop instead

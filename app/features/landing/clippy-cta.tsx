@@ -23,7 +23,7 @@ import {
   type ClippyRecord,
 } from "./clippy-state";
 import { CLIPPY_EDGE_MARGIN, type ClippyPosition } from "./clippy-position";
-import { useSiteChromeHeight } from "../product-hunt/use-chrome";
+import { useSiteChromeHeight } from "../../components/layout/use-site-chrome";
 import { useClippyDrag } from "./use-clippy-drag";
 import { useDesktop, usePrefersReducedMotion } from "./media";
 import "./clippy.css";

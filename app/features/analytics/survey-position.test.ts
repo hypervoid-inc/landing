@@ -74,6 +74,7 @@ describe("SURVEY_POPUP_LEFT_CSS", () => {
     expect(POSTHOG_SURVEY_POPUP_POSITION).toBe("left");
     expect(SURVEY_POPUP_LEFT_CSS).toContain("left: 30px !important");
     expect(SURVEY_POPUP_LEFT_CSS).toContain("right: auto !important");
+    expect(SURVEY_POPUP_LEFT_CSS).toContain("bottom: 110px !important");
     expect(SURVEY_POPUP_LEFT_CSS).toContain('.ph-survey:not([style*="top"])');
   });
 });

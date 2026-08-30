@@ -788,30 +788,6 @@
   gap: 0.65rem 0.85rem;
 }
 
-.launch-community-badge.ph-badge .ph-badge-face {
-  box-shadow: 0 4px 14px rgb(37 72 82 / 10%);
-}
-
-/* PH is a footnote on this page: the GTM list is largely not on Product Hunt. */
-.launch-community-ph {
-  margin-top: 1.6rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.7rem;
-  border-top: 1px solid color-mix(in srgb, var(--color-brand) 14%, transparent);
-  padding-top: 1.4rem;
-  width: 100%;
-}
-
-.launch-community-ph-note {
-  margin: 0;
-  max-width: 24rem;
-  font-size: 0.8125rem;
-  line-height: 1.55;
-  color: var(--color-ink-subtle);
-}
-
 .launch-community-link {
   display: inline-flex;
   min-height: 2.5rem;

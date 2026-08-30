@@ -24,8 +24,6 @@ type AnalyticsEvent =
   | "post_login_welcome_os"
   | "post_login_welcome_dismissed"
   | "campaign_landed"
-  | "campaign_banner_shown"
-  | "campaign_banner_clicked"
   | "launch_page_viewed"
   | "launch_social_clicked"
   // `/launch` conversion path. `launch_cta_clicked` carries `position` so the
@@ -41,11 +39,7 @@ type AnalyticsEvent =
   | "cta_clicked"
   | "walkthrough_clicked"
   | "promo_code_copied"
-  | "ph_banner_shown"
-  | "ph_badge_clicked"
-  | "ph_embed_clicked"
-  | "ph_cta_clicked"
-  | "ph_confetti_fired"
+  | "product_hunt_proof_clicked"
   // `checkout_started` intentionally shares its name with the event in apps/web
   // so both surfaces form one funnel; they are separated by `source`. The `plan`
   // and `interval` property names must stay identical on both sides.
