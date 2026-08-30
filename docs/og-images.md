@@ -345,38 +345,6 @@ it is already published. **Do not start a new card in it** — its glowing panel
 and orbit rings are the failure mode named at the top of this file, written
 before the rebase.
 
-## Inline banners, which are not generated at all
-
-`pnpm banner <name>` writes a long, low strip into `assets/social/` from
-`scripts/generate-banner.mjs`. It never calls Gemini, and that is deliberate
-rather than a shortcut.
-
-A banner's entire content is a date and a URL. That is precisely the half
-`typeset.mjs` exists to take away from the model, and `poster.mjs` forbids it
-drawing type at all — a garbled `construct.computer/ph` is a dead link sitting
-in the middle of a post. The shape rules generation out independently: the
-widest ratio Gemini offers is 21:9 and these run at 5:1, so more than half of
-every frame would be cropped away and the model would be composing for a frame
-it never sees.
-
-So the ground is a flat fill, the type is `typeset.mjs`'s own measured-ink
-placement, and the mascot is the shipped artwork composited in. It costs
-nothing, it is pixel-identical on every run, and the URL is always spelled
-correctly.
-
-Two things worth knowing before editing it:
-
-- **The mascot comes from `public/icon-512.png`, not the turnaround.** The GIF's
-  frames carry an opaque white rectangle behind the object, so a cutout taken
-  from it brings a white box along and a shadow built from its alpha comes back
-  a blurred square. `mascot-sheet.mjs` never hits this because it composites
-  onto a white sheet.
-- **The drop shadow pads before it blurs.** The cutout fills its buffer edge to
-  edge, and a blur that clamps against the boundary fills in the concave corners
-  between the lobes and reads as a grey box. Padding happens while the image is
-  still RGBA, because `extend` on a single-channel image does not honour the
-  background and comes back opaque.
-
 ## Where each piece lives
 
 | Concern                                 | File                          | Changing it affects     |
@@ -387,7 +355,6 @@ Two things worth knowing before editing it:
 | What one card says and photographs      | `app/content/og-poster.ts`    | one card                |
 | The badge for a route kind              | `app/content/og-poster.ts`    | every card of that kind |
 | Crop and encode                         | `scripts/og/publish.mjs`      | every card              |
-| An inline article banner                | `scripts/generate-banner.mjs` | one banner              |
 
 If one card comes out wrong, fix its **scene**, or run `pnpm og:fix`. Only
 re-base the **contract** when the whole set should change — and regenerate

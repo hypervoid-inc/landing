@@ -3,7 +3,7 @@ import { useSyncExternalStore } from "react";
 import {
   readSiteChromeHeightPx,
   subscribeSiteChromeHeight,
-} from "./chrome";
+} from "./site-chrome";
 
 export function useSiteChromeHeight(fallback = 56) {
   return useSyncExternalStore(

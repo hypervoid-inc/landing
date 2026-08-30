@@ -4,7 +4,7 @@ import Lenis from "lenis";
 import {
   readSiteChromeHeightPx,
   subscribeSiteChromeHeight,
-} from "../../features/product-hunt/chrome";
+} from "./site-chrome";
 import { setPageScroller } from "../../lib/page-scroll";
 
 /** Mermail's expo ease-out — also Lenis's own default curve. */

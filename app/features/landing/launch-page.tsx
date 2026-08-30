@@ -9,9 +9,6 @@ import {
   readAttributionCookie,
   writePromoCode,
 } from "../analytics/campaign-attribution.client";
-import { ProductHuntBadge } from "../product-hunt/product-hunt-badge";
-import { productHuntCopy } from "../product-hunt/config";
-import { useProductHuntPhase } from "../product-hunt/use-product-hunt-phase";
 import { StartLink } from "./beta-access";
 import { WALKTHROUGH_URL } from "./cta-links";
 import { FounderNote } from "./founder-note";
@@ -353,8 +350,6 @@ export function LaunchPage() {
   useRevealOnView(pageRef);
 
   const { plans, recommendedPlan, settled } = usePlanCatalog();
-  const { mounted, phase } = useProductHuntPhase();
-  const phActive = mounted && (phase === "pre" || phase === "live");
   const heroRef = useRef<HTMLElement>(null);
   const [stickyCta, setStickyCta] = useState(false);
 
@@ -381,7 +376,6 @@ export function LaunchPage() {
 
   const merged = mergePricingPlans(plans, recommendedPlan);
   const pro = merged.find((plan) => plan.id === "pro");
-  const copy = phActive ? productHuntCopy(phase) : null;
   // A noun phrase, not the pricing-card adjective ("7-day trial"), so it reads
   // in running copy: "7 days of Pro free", "Start with 7 days of Pro free".
   const trialDays = pro?.trialDaysMonth ?? null;
@@ -424,7 +418,7 @@ export function LaunchPage() {
                 data-reveal="mount"
                 data-reveal-delay="1"
               >
-                {phase === "live" ? "Launch week offer" : "Pre-launch offer"}
+                Product Hunt offer
               </p>
               <h1
                 className="reveal-item mt-4 max-w-xl font-display text-4xl italic leading-[1.05] tracking-[-0.02em] text-[var(--color-ink)] sm:text-5xl lg:text-[3.5rem]"
@@ -625,12 +619,7 @@ export function LaunchPage() {
                 ))}
               </div>
               <p className="mt-4 text-xs leading-relaxed text-[var(--color-ink-subtle)]">
-                Enter your code at checkout.{" "}
-                {phase === "live"
-                  ? "Launch-week codes, good through the end of launch week."
-                  : phase === "hidden"
-                    ? "Codes apply at checkout while the offer lasts."
-                    : "Both hold until we go live on Product Hunt."}
+                Enter your code at checkout. Codes apply while the offer lasts.
               </p>
               <div className="reveal-item mt-6" data-reveal-delay="3">
                 <StartLink
@@ -786,17 +775,6 @@ export function LaunchPage() {
                   Follow on X
                 </a>
               </div>
-              {phActive && copy && (
-                <div className="launch-community-ph">
-                  <p className="launch-community-ph-note">
-                    {copy.homepageLead}
-                  </p>
-                  <ProductHuntBadge
-                    surface="launch"
-                    className="launch-community-badge"
-                  />
-                </div>
-              )}
             </div>
           </section>
         </div>

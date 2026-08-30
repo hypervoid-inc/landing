@@ -2114,7 +2114,6 @@
 
   .landing-page .hero-interactive,
   .landing-page .landing-cta,
-  .landing-page .landing-cta-ph,
   .landing-page .pricing-button,
   .landing-page .billing-toggle-thumb,
   .landing-page .billing-toggle-option,
@@ -2146,12 +2145,9 @@
   }
 }
 
-/* Mobile hero is headline plus one action. The Product Hunt badge, the offer
-   line, and the email-compose card are all desktop-only so the fold stays on
-   the headline and Start Now. Cuts off at 1023px so the 1024px layout, which
-   the layout specs pin, is untouched. */
+/* Mobile hero is headline plus one action. The offer line and email-compose
+   card are desktop-only so the fold stays on the headline and Start Now. */
 @media (max-width: 1023px) {
-  .hero-ph-badge,
   .hero-offer-line,
   .hero-report {
     display: none;

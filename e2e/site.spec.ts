@@ -1481,7 +1481,7 @@ test.skip("keeps the landing hero clear and reserves lazy media space", async ({
   await expect(page.locator(".hero-workflow > :nth-child(2)")).toBeVisible();
   await expect(page.locator(".hero-workflow > :nth-child(1)")).toBeHidden();
   await expect(page.locator(".hero-workflow > :nth-child(3)")).toBeHidden();
-  for (const hidden of [".hero-report", ".hero-ph-badge", ".hero-offer-line"]) {
+  for (const hidden of [".hero-report", ".hero-offer-line"]) {
     await expect(page.locator(hidden)).toBeHidden();
   }
 
@@ -1659,9 +1659,6 @@ test("every landing button responds to a real click", async ({
     ]);
   for (const href of internalLinks) {
     if (!href || href === "/") continue;
-    // /ph is a Pages Function that 302s off-site. Clicking it here would
-    // leave construct.computer (or open a tab) instead of staying on a page.
-    if (href === "/ph" || href.startsWith("/ph?")) continue;
     await page.locator(`a[href="${href}"]`).first().click();
     await expect(page).toHaveURL(new URL(href, "http://localhost:8788").href);
     await page.goBack();

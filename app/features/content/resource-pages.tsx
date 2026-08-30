@@ -17,7 +17,7 @@ import {
 import { BetaCta } from "../../components/content/beta-cta";
 import { mdxComponents } from "../../components/content/mdx-components";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
-import { ProductHuntLaunchCta } from "../product-hunt/product-hunt-launch-cta";
+import { ProductHuntProof } from "../product-hunt/product-hunt-proof";
 import { getBlogPost } from "../../content/blog";
 import {
   getAuthor,
@@ -54,7 +54,6 @@ export function BlogIndexPage() {
       breadcrumbTitle="Blog"
       metadata="Practical writing from Construct on AI agents, workflows, memory, and tools that get work done."
     >
-      <ProductHuntLaunchCta surface="blog" className="mb-8" />
       <section aria-labelledby="all-resources-heading">
         <h2
           id="all-resources-heading"
@@ -169,8 +168,6 @@ export function ResourcePage({ slug }: { slug: string }) {
         </>
       }
     >
-      {/* Mobile-only — desktop readers get the sticky rail CTA instead. */}
-      <ProductHuntLaunchCta surface="blog" className="mb-10 xl:hidden" />
       <post.Content components={mdxComponents} />
       <ResourceFaq slug={entry.slug} />
       {/* Rendered here rather than authored so every post closes on one. */}
@@ -187,8 +184,8 @@ export function ResourcePage({ slug }: { slug: string }) {
  * ratio), not full-column — a stacked 300px crop of the OG art reads as an ad
  * unit and crowds the CTA below.
  *
- * Product Hunt CTA sits at the bottom of the rail so it lands nearer mid-viewport
- * while reading (banner + mobile top CTA + pre-footer strip cover other moments).
+ * Product Hunt proof sits at the bottom of the rail so it lands nearer
+ * mid-viewport while reading without interrupting the article itself.
  */
 function ResourceRail({ slug }: { slug: string }) {
   const related = getRelatedResources(slug, 3);
@@ -246,7 +243,7 @@ function ResourceRail({ slug }: { slug: string }) {
           Try Construct
         </BetaCta>
       </div>
-      <ProductHuntLaunchCta surface="blog" />
+      <ProductHuntProof surface="blog-article" variant="rail" />
     </div>
   );
 }
@@ -462,7 +459,6 @@ export function TagPage({ tag }: { tag: string }) {
       breadcrumbs={blogBreadcrumbs}
       metadata={`${entries.length} Construct resources on ${label}.`}
     >
-      <ProductHuntLaunchCta surface="blog" className="mb-8" />
       <section aria-labelledby="tag-resources-heading">
         <h2 id="tag-resources-heading" className="sr-only">
           Resources tagged {label}
@@ -511,7 +507,10 @@ function TagList({
 }) {
   if (!tags?.length) return null;
   return (
-    <ul aria-label={label} className={`flex flex-wrap gap-2 ${className ?? ""}`}>
+    <ul
+      aria-label={label}
+      className={`flex flex-wrap gap-2 ${className ?? ""}`}
+    >
       {tags.map((tag) => (
         <li key={tag}>
           {hubTags.includes(tag) ? (
