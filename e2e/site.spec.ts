@@ -644,8 +644,15 @@ test("keeps the mobile footer compact and aligned", async ({ page }) => {
   const comparisons = await comparisonsNav.boundingBox();
 
   // Inline newsletter (name + email + Turnstile) is taller than the old CTA link.
+  // Two Product Hunt badges sit in a row so they do not stack the footer.
   // CI Linux fonts sit a few px taller than macOS.
   expect(footer?.height).toBeLessThan(1100);
+  const footerBadges = page.locator(
+    'footer [data-product-hunt-proof="footer"] .ph-proof-badge',
+  );
+  const daily = await footerBadges.nth(0).boundingBox();
+  const weekly = await footerBadges.nth(1).boundingBox();
+  expect(Math.abs((daily?.y ?? 0) - (weekly?.y ?? 0))).toBeLessThan(2);
   expect(Math.abs((company?.y ?? 0) - (comparisons?.y ?? 0))).toBeLessThan(2);
   expect(comparisons?.x).toBeGreaterThan((company?.x ?? 0) + 100);
   await expect(companyNav).toHaveCSS("align-items", "center");
