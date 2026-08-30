@@ -78,7 +78,7 @@ describe("mergePricingPlans", () => {
     const plans = mergePricingPlans(null, "starter");
     expect(plans.map((p) => p.price)).toEqual(["$9", "$59", "$299"]);
     expect(plans.find((p) => p.id === "starter")?.badge).toBe("Recommended");
-    expect(plans.find((p) => p.id === "lite")?.highlight).toBe("7-day trial");
+    expect(plans.find((p) => p.id === "pro")?.highlight).toBe("7-day trial");
   });
 
   it("merges live prices, recommended badge, and trial days", () => {

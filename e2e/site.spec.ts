@@ -40,13 +40,13 @@ const HOMEPAGE_CATALOG = {
         price: { amount: 900, currency: "USD" },
         listPrice: null,
         display: null,
-        trialDays: 7,
+        trialDays: null,
       },
       year: {
         price: { amount: 9000, currency: "USD" },
         listPrice: null,
         display: null,
-        trialDays: 7,
+        trialDays: null,
       },
     },
     {
@@ -90,13 +90,13 @@ const HOMEPAGE_CATALOG = {
         price: { amount: 29900, currency: "USD" },
         listPrice: null,
         display: null,
-        trialDays: null,
+        trialDays: 7,
       },
       year: {
         price: { amount: 238800, currency: "USD" },
         listPrice: null,
         display: null,
-        trialDays: null,
+        trialDays: 7,
       },
     },
   ],
@@ -1241,7 +1241,7 @@ test("toggles pricing between monthly and annual rates", async ({ page }) => {
     "2 months free",
   );
   await expect(cards.nth(0).locator(".pricing-price-savings")).toBeVisible();
-  await expect(cards.nth(0)).toContainText("7-day trial");
+  await expect(cards.nth(0)).not.toContainText("trial");
   await expect(amount(cards.nth(1))).toHaveText("$39");
   await expect(cards.nth(1).locator(".pricing-price-was")).toHaveText("$59");
   await expect(cards.nth(1).locator(".pricing-price-savings")).toHaveText(
@@ -1250,13 +1250,13 @@ test("toggles pricing between monthly and annual rates", async ({ page }) => {
   await expect(cards.nth(1)).not.toContainText("trial");
   await expect(amount(cards.nth(2))).toHaveText("$199");
   await expect(cards.nth(2).locator(".pricing-price-was")).toHaveText("$299");
-  await expect(cards.nth(2)).not.toContainText("trial");
+  await expect(cards.nth(2)).toContainText("7-day trial");
   await expect(page.locator("#pricing")).not.toContainText("billed");
 
   await monthly.click();
   await expect(monthly).toHaveAttribute("aria-checked", "true");
   await expect(amount(cards.nth(0))).toHaveText("$9", { timeout: 1000 });
-  await expect(cards.nth(0)).toContainText("7-day trial");
+  await expect(cards.nth(0)).not.toContainText("trial");
   await expect(amount(cards.nth(1))).toHaveText("$59", { timeout: 1000 });
   await expect(amount(cards.nth(2))).toHaveText("$299", { timeout: 1000 });
   await expect(cards.nth(0).locator(".pricing-price-was")).not.toBeVisible();
@@ -1264,7 +1264,7 @@ test("toggles pricing between monthly and annual rates", async ({ page }) => {
     cards.nth(0).locator(".pricing-price-savings"),
   ).not.toBeVisible();
   await expect(cards.nth(1)).not.toContainText("trial");
-  await expect(cards.nth(2)).not.toContainText("trial");
+  await expect(cards.nth(2)).toContainText("7-day trial");
 
   await annual.click();
   await expect(amount(cards.nth(1))).toHaveText("$39", { timeout: 1000 });
