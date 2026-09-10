@@ -141,6 +141,15 @@ describe("content validation", () => {
         expect(body, post.slug).toContain("## Sources");
         expect(body, post.slug).toMatch(/\|[^\n]+\|/);
       }
+      if (post.slug === "grokbot-alternative") {
+        const tables = body.match(/^\|[-: |]+\|$/gm) ?? [];
+        const captions = [
+          ...body.matchAll(/<ArticleTable caption="([^"]+)"/g),
+        ].map((match) => match[1]);
+        expect(captions).toHaveLength(tables.length);
+        expect(new Set(captions).size).toBe(captions.length);
+        expect(captions.length).toBeGreaterThan(1);
+      }
       for (const [, href] of body.matchAll(/\]\((\/[^)]+)\)/g)) {
         if (!href) continue;
         expect(href, `${post.slug}: ${href}`).toMatch(/\/$/);

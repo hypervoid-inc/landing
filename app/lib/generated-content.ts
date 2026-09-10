@@ -14,13 +14,19 @@ import { canonicalRoutes, siteUrl } from "./route-manifest";
  * build script and Vitest), so it never reaches a client bundle.
  */
 function bodyForSlug(slug: string): string {
-  return readFileSync(
-    new URL(`../content/blog/${slug}.mdx`, import.meta.url),
-    "utf8",
-  )
-    .replace(/^---\n[\s\S]*?\n---\n/, "")
-    .replaceAll(/<[^>]+>/g, "")
-    .trim();
+  return (
+    readFileSync(
+      new URL(`../content/blog/${slug}.mdx`, import.meta.url),
+      "utf8",
+    )
+      .replace(/^---\n[\s\S]*?\n---\n/, "")
+      .replaceAll(/\{(["']) \1\}/g, " ")
+      .replaceAll(/<[^>]+>/g, "")
+      // JSX in figures leaves indented closing tags; strip the leftover spaces.
+      .replaceAll(/[\t ]+$/gm, "")
+      .replaceAll(/\n{3,}/g, "\n\n")
+      .trim()
+  );
 }
 
 function xml(value: string): string {
