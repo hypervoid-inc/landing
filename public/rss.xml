@@ -4,6 +4,17 @@
     <link>https://construct.computer/blog/</link>
     <description>AI employee guides, practical articles, and comparisons from Construct Computer.</description>
     <item>
+      <title>Grok Bot Alternative: Construct vs Grok Bot</title>
+      <link>https://construct.computer/blog/grokbot-alternative/</link>
+      <guid>https://construct.computer/blog/grokbot-alternative/</guid>
+      <description>Compare Construct and Grok Bot on monthly pricing, workflows, integrations, memory, and model choice for small teams.</description>
+      <dc:creator>Construct Team</dc:creator>
+      <category>comparison</category>
+      <category>ai-employee</category>
+      <category>workflow-automation</category>
+      <pubDate>Thu, 10 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Your agent has a half-life</title>
       <link>https://construct.computer/blog/agent-task-half-life/</link>
       <guid>https://construct.computer/blog/agent-task-half-life/</guid>

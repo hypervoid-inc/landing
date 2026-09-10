@@ -93,6 +93,10 @@ describe("generated discovery content", () => {
       "Zapier, Make, and n8n excel when you know every trigger and action upfront",
     );
     expect(full).toContain("### Frequently asked questions");
+    expect(full).toContain("Grok Bot's interface illustration");
+    expect(full).toContain("Desktop, iOS, and Android");
+    expect(full).not.toContain('{" "}');
+    expect(full).not.toMatch(/[\t ]+$/m);
     for (const entry of resourceEntries) {
       expect(full).toContain(`## ${entry.title}`);
     }

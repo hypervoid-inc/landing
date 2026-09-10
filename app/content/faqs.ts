@@ -10,6 +10,28 @@ export type FaqItem = {
  * that the body does not support.
  */
 export const resourceFaqs: Record<string, readonly FaqItem[]> = {
+  "grokbot-alternative": [
+    {
+      question: "Is Construct a cheaper Grok Bot alternative?",
+      answer:
+        "Construct Lite starts at $9/month, below the $20 Cursor Pro and $30 SuperGrok entry subscriptions that include Grok Bot as of September 10, 2026. That compares starting subscription prices, not equal usage. Construct's scheduled tasks require Starter at $59/month; BYOK requires Pro at $299/month. Existing eligible Grok or Cursor subscribers already have Bot access included.",
+    },
+    {
+      question: "How can I extend Construct beyond its built-in tools?",
+      answer:
+        "Connect supported apps, add custom MCP tools, or ask Construct to build a private workspace app for a repeated process. Those apps have their own permissions and runtime limits. Grok Bot also has a public marketplace, so customization is not exclusive to Construct.",
+    },
+    {
+      question: "Can I use xAI model keys with Construct?",
+      answer:
+        "Yes. Construct Pro supports BYOK for xAI, OpenRouter, OpenAI, Anthropic, and Amazon Bedrock. You can configure fallback or exclusive use of your credentials. Provider charges are additional to the Construct subscription, and supported models depend on the provider connection.",
+    },
+    {
+      question: "How should I move a Grok Bot workflow to Construct?",
+      answer:
+        "Start with one procedure: bring its instructions and source files, reconnect the necessary accounts, and review an on-demand run before setting a schedule. Do not assume a one-click transfer of bots, credentials, or memory. Construct's current saved workflows are linear.",
+    },
+  ],
   "running-ai-agents-on-cloudflare-not-vms": [
     {
       question: "Does Construct still run containers?",
@@ -271,7 +293,8 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "Usually because the run is too long, not because the task is too hard. Agent failure behaves like a constant rate per minute of work rather than something that only strikes on difficult steps, so a job's success probability falls off as it gets longer. An agent that gets 95% of its steps right finishes a ten-step job about 60% of the time and a 48-step job about 8.5% of the time, with no step having regressed.",
     },
     {
-      question: "Why do multi-step agent workflows fail more than single tasks?",
+      question:
+        "Why do multi-step agent workflows fail more than single tasks?",
       answer:
         "Because the per-step success rates multiply. Ten steps at 95% each is 0.95 to the tenth power, or roughly 60%. The same agent on a 48-step job lands near 8.5%. Reliability that reads as excellent per step is unreliable per job, and the gap widens with every step you add.",
     },
@@ -283,7 +306,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How do I stop an agent from redoing work when it retries?",
       answer:
-        "Make every iteration leave a durable artifact, then scope the instruction to the work that remains. \"Write the reports\" is not resumable; \"write the report for any client that does not already have one dated this month\" is. In Construct the artifact is a file in the persistent workspace, so a rerun reads the directory, sees what already exists, and works only on the rest.",
+        'Make every iteration leave a durable artifact, then scope the instruction to the work that remains. "Write the reports" is not resumable; "write the report for any client that does not already have one dated this month" is. In Construct the artifact is a file in the persistent workspace, so a rerun reads the directory, sees what already exists, and works only on the rest.',
     },
     {
       question: "How does Construct handle a job that fails halfway?",

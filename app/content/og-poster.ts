@@ -244,6 +244,11 @@ export const ogPosters: Record<string, PosterCard> = {
     scene:
       "The mascot sitting on top of a dot-matrix printer mid-run, a continuous fanfold printout feeding out of it and concertinaing into a neat stack below.",
   },
+  "blog-grokbot-alternative": {
+    headline: ["GROKBOT", "ALTERNATIVE"],
+    scene:
+      "The mascot sitting on top of a compact beige desktop computer, beside a smaller beige CRT monitor displaying the official black circular Grok Bot avatar with two white slanted eyes. The monitor bezel reads GROK BOT. A short cable connects the two devices. Use assets/refs/grokbot/official-avatar.png as the screen reference.",
+  },
   "blog-construct-vs-chatgpt": {
     headline: ["CONSTRUCT VS", "CHATGPT, CLAUDE", "AND GEMINI"],
     scene:

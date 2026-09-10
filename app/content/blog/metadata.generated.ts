@@ -159,6 +159,18 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: false,
   },
   {
+    slug: "grokbot-alternative",
+    title: "Grok Bot Alternative: Construct vs Grok Bot",
+    description:
+      "Compare Construct and Grok Bot on monthly pricing, workflows, integrations, memory, and model choice for small teams.",
+    published: "2026-09-10",
+    seoTitle: "Grok Bot Alternative: Construct vs Grok Bot",
+    author: "construct-team",
+    tags: ["comparison", "ai-employee", "workflow-automation"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
     slug: "how-to-choose-an-ai-agent-platform-for-your-team",
     title: "How to Choose an AI Agent Platform for Your Team",
     description:

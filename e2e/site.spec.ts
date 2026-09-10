@@ -2288,6 +2288,7 @@ for (const path of [
   "/",
   "/blog/",
   "/blog/agent-task-half-life/",
+  "/blog/grokbot-alternative/",
   "/pricing/",
   "/use-cases/memory/",
 ]) {

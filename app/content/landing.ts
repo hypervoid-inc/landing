@@ -293,6 +293,7 @@ export const affiliateProgramUrl =
 
 export const comparisonLinks = [
   ["vs ChatGPT", "/blog/construct-vs-chatgpt/"],
+  ["vs Grok Bot", "/blog/grokbot-alternative/"],
   ["vs Copilot", "/blog/construct-vs-copilot/"],
   ["vs Zapier", "/blog/construct-vs-zapier/"],
   ["vs Coding agents", "/blog/construct-vs-coding-agents/"],

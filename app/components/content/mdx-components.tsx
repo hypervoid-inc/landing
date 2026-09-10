@@ -1,10 +1,36 @@
-import type { ComponentPropsWithoutRef } from "react";
+import {
+  createContext,
+  useContext,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+} from "react";
 import { useMDXComponents } from "@mdx-js/react";
 
 import { BetaCta } from "./beta-cta";
 import { ReadNext } from "./related-links";
 
 type MDXComponents = ReturnType<typeof useMDXComponents>;
+
+const TableCaptionContext = createContext<string | null>(null);
+
+/**
+ * Names a markdown table for screen readers. GFM tables cannot carry a
+ * `<caption>`, and the default "Article table" is indistinguishable when a
+ * post has more than one.
+ */
+function ArticleTable({
+  caption,
+  children,
+}: {
+  caption: string;
+  children: ReactNode;
+}) {
+  return (
+    <TableCaptionContext.Provider value={caption}>
+      {children}
+    </TableCaptionContext.Provider>
+  );
+}
 
 /**
  * `tabIndex` is what makes the horizontal scroll reachable by keyboard, and is
@@ -14,13 +40,14 @@ type MDXComponents = ReturnType<typeof useMDXComponents>;
  * reader than no landmark at all. The `caption` still names the table.
  */
 function Table({ children, ...props }: ComponentPropsWithoutRef<"table">) {
+  const caption = useContext(TableCaptionContext);
   return (
     <div className="my-6 overflow-x-auto" tabIndex={0}>
       <table
         {...props}
         className="w-full min-w-[520px] border-collapse text-sm"
       >
-        <caption className="sr-only">Article table</caption>
+        <caption className="sr-only">{caption ?? "Article table"}</caption>
         {children}
       </table>
     </div>
@@ -69,6 +96,7 @@ function ExternalAwareLink({
 
 export const mdxComponents: MDXComponents = {
   // Capitalised entries are authorable in MDX with no import, e.g. `<BetaCta />`.
+  ArticleTable,
   BetaCta,
   ReadNext,
   h2: ({ children }) => (
