@@ -8,3 +8,12 @@
 # goes without chasing down every place it was already printed.
 /discord https://discord.gg/puArEQHYN9 302
 /discord/ https://discord.gg/puArEQHYN9 302
+
+# /ph used to be a Pages Function because its destination depended on the
+# go-live clock: before launch only the discussion page had a Follow button.
+# That clock is long past and the awards are permanent, so the destination is
+# now one stable URL and this belongs here as a static rule, not a runtime
+# server. No query string on the destination, so a caller can still tag its own
+# placement the way the Function allowed — /ph?utm_content=stream is forwarded.
+/ph https://www.producthunt.com/products/construct-computer 302
+/ph/ https://www.producthunt.com/products/construct-computer 302
