@@ -433,7 +433,7 @@ describe("route metadata", () => {
     });
     expect(meta).toContainEqual({
       property: "article:modified_time",
-      content: "2026-07-27",
+      content: "2026-09-22",
     });
   });
 

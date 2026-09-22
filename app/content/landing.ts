@@ -17,9 +17,10 @@ export const pricingPlans = [
     imageAlt:
       "Construct mascot completing a focused task at a personal workspace",
     features: [
-      ["Entry plan - start exploring", "footprints"],
       ["Up to 2 AI agents", "workflow"],
       ["Up to 50 steps per task", "footprints"],
+      ["3 scheduled tasks", "tabs"],
+      ["Agent email - 10 sends/day", "mail"],
       ["2 parallel background jobs", "tabs"],
       ["100 MB cloud storage", "cloud"],
       ["5-minute command runtime", "timer"],
@@ -31,7 +32,7 @@ export const pricingPlans = [
     annualMonthlyPrice: "$39",
     annualSavingsLabel: "4 months free",
     cta: "Put Starter to work",
-    description: "Daily agent work with email & schedules",
+    description: "Daily agent work at team volume",
     badge: "Recommended",
     highlight: null,
     image: "/assets/landing/pricing/starter-v3.webp",
@@ -39,8 +40,8 @@ export const pricingPlans = [
       "Construct mascot connecting report, schedule, and workflow surfaces",
     features: [
       ["6× the usage of Lite", "footprints"],
-      ["Agent email address", "mail"],
-      ["Background & scheduled tasks", "tabs"],
+      ["Agent email - 100 sends/day", "mail"],
+      ["10 scheduled tasks", "tabs"],
       ["30-minute command runtime", "timer"],
       ["1 GB cloud storage", "cloud"],
       ["Up to 5 agents", "workflow"],
@@ -61,7 +62,8 @@ export const pricingPlans = [
     features: [
       ["32× the usage of Lite", "footprints"],
       ["Deep runs - up to 1,000 steps per task", "footprints"],
-      ["Background & scheduled tasks", "tabs"],
+      ["Agent email - 200 sends/day", "mail"],
+      ["50 scheduled tasks", "tabs"],
       ["1-hour command runtime", "timer"],
       ["3 GB cloud storage", "cloud"],
       ["Bring your own model keys (BYOK)", "key"],

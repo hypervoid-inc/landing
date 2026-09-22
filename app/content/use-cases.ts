@@ -360,8 +360,8 @@ export const useCases = [
         body: "Routing and access vary by channel. A Discord command should not automatically get the same reach as a logged-in workspace owner.",
       },
       {
-        title: "Native email on Starter and Pro",
-        body: "The agent can read threads, draft replies, and send updates from an address that belongs to the workspace instead of a personal Gmail forwarding hack.",
+        title: "Native email on every paid plan",
+        body: "The agent can read threads, draft replies, and send updates from an address that belongs to the workspace instead of a personal Gmail forwarding hack. Daily send limits scale with the plan: 10 on Lite, 100 on Starter, 200 on Pro.",
       },
       {
         title: "The run still lands in the workspace",
