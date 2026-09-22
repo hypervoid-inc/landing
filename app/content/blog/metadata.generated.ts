@@ -15,6 +15,18 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: false,
   },
   {
+    slug: "agent-verification-gap",
+    title: "Nobody merges an email",
+    description:
+      "Agents made work cheap to produce and no cheaper to check. Why software absorbed the flood, why the rest of the business did not, and the five things that make agent work checkable.",
+    published: "2026-09-22",
+    seoTitle: "Why AI Agent Work Is Hard to Verify Outside Code",
+    author: "ankush",
+    tags: ["ai-agent", "reliability", "product", "ai-employee"],
+    kind: "article",
+    draft: false,
+  },
+  {
     slug: "ai-agent-memory",
     title: "AI Agent Memory You Can Control",
     description:
@@ -32,7 +44,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     description:
       "AI agent vs virtual assistant: compare monthly cost, availability, and inspectable work records before you replace suitable VA tasks with a supervised AI employee.",
     published: "2026-07-25",
-    updated: "2026-07-27",
+    updated: "2026-09-22",
     seoTitle: "AI Agent vs Virtual Assistant: Cost Comparison",
     author: "ankush",
     tags: ["ai-agent", "virtual-assistant", "pricing", "comparison"],
@@ -57,7 +69,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     description:
       "Meet the AI employee that researches, operates tools, creates files, and runs recurring work from a persistent, supervised workspace.",
     published: "2026-07-20",
-    updated: "2026-07-27",
+    updated: "2026-09-22",
     author: "nischal",
     tags: ["ai-employee", "ai-agent", "business-automation"],
     kind: "guide",
@@ -164,6 +176,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     description:
       "Compare Construct and Grok Bot on monthly pricing, workflows, integrations, memory, and model choice for small teams.",
     published: "2026-09-10",
+    updated: "2026-09-22",
     seoTitle: "Grok Bot Alternative: Construct vs Grok Bot",
     author: "construct-team",
     tags: ["comparison", "ai-employee", "workflow-automation"],

@@ -4,6 +4,8 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
+import sharp from "sharp";
+
 import { costOf } from "./pricing.mjs";
 
 /**
@@ -36,7 +38,8 @@ export function apiKey() {
 }
 
 /**
- * Reference images, sent ahead of the prompt with a label before each one.
+ * Reference images, sent ahead of the prompt with a label before each one, at
+ * the size the model actually looks at them.
  *
  * The labels matter as much as the images: unlabelled, the model averages every
  * reference into a single mood and the mascot drifts. Told which image is the
@@ -44,21 +47,53 @@ export function apiKey() {
  *
  * A reference that fails to load is fatal rather than skipped — silently
  * dropping one would quietly produce off-brand art that still looks plausible.
+ *
+ * Two of the brand references are multi-megabyte PNGs, and base64 adds another
+ * third on top, so attaching them verbatim built a request in the tens of
+ * megabytes: past the 20MB inline-data ceiling on `generateContent`, and enough
+ * for an intermediary to drop the connection (`fetch failed`) before the API
+ * ever answered. Gemini downsamples image parts to tiles of a few hundred
+ * pixels regardless, so those bytes bought nothing. Anything longer than
+ * `REFERENCE_MAX_EDGE` is resized and re-encoded as WebP; smaller references
+ * are sent untouched, which leaves the style plate and the mascot turnaround
+ * byte-identical to the requests that produced the cards already in the set.
  */
+const REFERENCE_MAX_EDGE = 2048;
+
+async function referencePart(file) {
+  const mimeType = MIME_TYPES[path.extname(file).toLowerCase()];
+  if (!mimeType) throw new Error(`Unsupported reference image: ${file}`);
+  const source = path.join(root, file);
+  const image = sharp(source);
+  const { width = 0, height = 0 } = await image.metadata();
+  if (Math.max(width, height) <= REFERENCE_MAX_EDGE) {
+    return {
+      inlineData: {
+        mimeType,
+        data: (await readFile(source)).toString("base64"),
+      },
+    };
+  }
+  const resized = await image
+    .resize({
+      width: width >= height ? REFERENCE_MAX_EDGE : undefined,
+      height: height > width ? REFERENCE_MAX_EDGE : undefined,
+      withoutEnlargement: true,
+    })
+    .webp({ quality: 88 })
+    .toBuffer();
+  return {
+    inlineData: { mimeType: "image/webp", data: resized.toString("base64") },
+  };
+}
+
 async function referenceParts(references) {
   const parts = [];
   for (const [index, reference] of references.entries()) {
     const { file, note } = reference;
-    const mimeType = MIME_TYPES[path.extname(file).toLowerCase()];
-    if (!mimeType) throw new Error(`Unsupported reference image: ${file}`);
     parts.push(
       { text: `Reference ${index + 1} — ${note}` },
-      {
-        inlineData: {
-          mimeType,
-          data: (await readFile(path.join(root, file))).toString("base64"),
-        },
-      },
+      await referencePart(file),
     );
   }
   return parts;

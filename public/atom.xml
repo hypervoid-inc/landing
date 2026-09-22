@@ -3,14 +3,27 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-09-10T00:00:00Z</updated>
+  <updated>2026-09-22T00:00:00Z</updated>
+  <entry>
+    <title>Nobody merges an email</title>
+    <id>https://construct.computer/blog/agent-verification-gap/</id>
+    <link href="https://construct.computer/blog/agent-verification-gap/"/>
+    <author><name>Ankush</name></author>
+    <published>2026-09-22T00:00:00Z</published>
+    <updated>2026-09-22T00:00:00Z</updated>
+    <category term="ai-agent"/>
+    <category term="reliability"/>
+    <category term="product"/>
+    <category term="ai-employee"/>
+    <summary>Agents made work cheap to produce and no cheaper to check. Why software absorbed the flood, why the rest of the business did not, and the five things that make agent work checkable.</summary>
+  </entry>
   <entry>
     <title>Grok Bot Alternative: Construct vs Grok Bot</title>
     <id>https://construct.computer/blog/grokbot-alternative/</id>
     <link href="https://construct.computer/blog/grokbot-alternative/"/>
     <author><name>Construct Team</name></author>
     <published>2026-09-10T00:00:00Z</published>
-    <updated>2026-09-10T00:00:00Z</updated>
+    <updated>2026-09-22T00:00:00Z</updated>
     <category term="comparison"/>
     <category term="ai-employee"/>
     <category term="workflow-automation"/>
@@ -87,7 +100,7 @@
     <link href="https://construct.computer/blog/ai-agent-vs-virtual-assistant/"/>
     <author><name>Ankush</name></author>
     <published>2026-07-25T00:00:00Z</published>
-    <updated>2026-07-27T00:00:00Z</updated>
+    <updated>2026-09-22T00:00:00Z</updated>
     <category term="ai-agent"/>
     <category term="virtual-assistant"/>
     <category term="pricing"/>
@@ -112,7 +125,7 @@
     <link href="https://construct.computer/blog/ai-employee/"/>
     <author><name>Nischal</name></author>
     <published>2026-07-20T00:00:00Z</published>
-    <updated>2026-07-27T00:00:00Z</updated>
+    <updated>2026-09-22T00:00:00Z</updated>
     <category term="ai-employee"/>
     <category term="ai-agent"/>
     <category term="business-automation"/>

@@ -359,8 +359,20 @@ test("shows the complete author profile on editorial resources", async ({
       author.getByRole("link", { name: profile.handle }),
     ).toHaveAttribute("href", profile.twitter);
     await expect(author).toContainText("Published");
-    if (profile.updated) {
-      await expect(author).toContainText("Updated July 27, 2026");
+    // Read the revision date off the entry rather than hardcoding one: every
+    // post revised since would otherwise fail a test about author bylines.
+    // The format mirrors `formatDate` in content-shell, which cannot be
+    // imported here: it is a .tsx module and this runs outside the app build.
+    const entry = resourceEntries.find(
+      ({ slug }) => `/blog/${slug}/` === profile.path,
+    )!;
+    expect(Boolean(entry.updated), profile.path).toBe(profile.updated);
+    if (entry.updated) {
+      const revised = new Intl.DateTimeFormat("en-US", {
+        dateStyle: "long",
+        timeZone: "UTC",
+      }).format(new Date(`${entry.updated}T00:00:00Z`));
+      await expect(author).toContainText(`Updated ${revised}`);
     } else {
       await expect(author).not.toContainText("Updated");
     }
@@ -2289,6 +2301,8 @@ for (const path of [
   "/blog/",
   "/blog/agent-task-half-life/",
   "/blog/grokbot-alternative/",
+  // The only post whose figures sit in keyboard-reachable scroll regions.
+  "/blog/agent-verification-gap/",
   "/pricing/",
   "/use-cases/memory/",
 ]) {

@@ -4,6 +4,18 @@
     <link>https://construct.computer/blog/</link>
     <description>AI employee guides, practical articles, and comparisons from Construct Computer.</description>
     <item>
+      <title>Nobody merges an email</title>
+      <link>https://construct.computer/blog/agent-verification-gap/</link>
+      <guid>https://construct.computer/blog/agent-verification-gap/</guid>
+      <description>Agents made work cheap to produce and no cheaper to check. Why software absorbed the flood, why the rest of the business did not, and the five things that make agent work checkable.</description>
+      <dc:creator>Ankush</dc:creator>
+      <category>ai-agent</category>
+      <category>reliability</category>
+      <category>product</category>
+      <category>ai-employee</category>
+      <pubDate>Tue, 22 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Grok Bot Alternative: Construct vs Grok Bot</title>
       <link>https://construct.computer/blog/grokbot-alternative/</link>
       <guid>https://construct.computer/blog/grokbot-alternative/</guid>
