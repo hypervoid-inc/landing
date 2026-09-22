@@ -14,7 +14,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Is Construct a cheaper Grok Bot alternative?",
       answer:
-        "Construct Lite starts at $9/month, below the $20 Cursor Pro and $30 SuperGrok entry subscriptions that include Grok Bot as of September 10, 2026. That compares starting subscription prices, not equal usage. Construct's scheduled tasks require Starter at $59/month; BYOK requires Pro at $299/month. Existing eligible Grok or Cursor subscribers already have Bot access included.",
+        "Construct Lite starts at $9/month, below the $20 Cursor Pro and $30 SuperGrok entry subscriptions that include Grok Bot as of September 10, 2026. That compares starting subscription prices, not equal usage. Lite includes 3 scheduled tasks and agent email at 10 sends per day; Starter at $59/month raises those to 10 scheduled tasks and 100 sends per day, and BYOK requires Pro at $299/month. Existing eligible Grok or Cursor subscribers already have Bot access included.",
     },
     {
       question: "How can I extend Construct beyond its built-in tools?",
@@ -284,6 +284,36 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
       question: "Do I need to be a developer to use it?",
       answer:
         "No. You describe the tool your team needs in plain language; Construct handles writing, validating, and publishing the app, and can update it later as the process changes.",
+    },
+  ],
+  "agent-verification-gap": [
+    {
+      question:
+        "Why does an AI agent save less time than it looks like it should?",
+      answer:
+        "Because producing the work got cheap and checking it did not. Delegation only pays when the cost of checking the output, plus the chance it is wrong times what a wrong one costs you, comes in under the cost of doing the job yourself. Reading nine agent-written client emails closely enough to be responsible for them can approach the time it would have taken to write them, at which point the agent is a net loss even when every draft is correct.",
+    },
+    {
+      question: "What is the verification bottleneck in agent work?",
+      answer:
+        "The point where output volume outruns a human's capacity to approve it. Faros AI's 2026 telemetry across 22,000 developers found tasks completed per developer up 33.7% while median review time rose 441.5%. LinearB's 2026 benchmarks, drawn from 8.1 million pull requests, found AI-assisted changes wait more than five times longer for a reviewer to start, then review slightly faster than human work once someone does. The expensive part is the decision to sign off, not the reading.",
+    },
+    {
+      question:
+        "Why do agents work better for code than for other business work?",
+      answer:
+        "Code carries verification tools that other work does not have. A diff shows exactly what changed, tests and CI let a machine check it, staging lets you try it without consequences, a pull request records who approved, and revert undoes it. An email, a CRM update, or an invoice has none of those, so the entire cost of checking lands on one person with no instruments, per unit of output.",
+    },
+    {
+      question: "How do you make AI agent output easier to check?",
+      answer:
+        "Five properties do most of the work, and none need a better model: finished work as artifacts you can open rather than transcripts you must read; a draft state before anything irreversible, so an email or a bulk update becomes reviewable before it happens; provenance on anything the agent believes, so a claim can be traced to its source; a bounded record of what it touched, when, and why, which is a receipt rather than a stack trace; and reversibility where it exists, with a human confirming where it does not.",
+    },
+    {
+      question:
+        "Does Construct ask for approval before an agent sends an email?",
+      answer:
+        "Not as a mandatory gate on every external side effect. Construct gives you work as files in a persistent workspace, an Activity audit log recording what each action affected, when it ran, and why, inspectable and correctable memory, and the ability to interrupt a running turn. Steps with irreversible effects such as a customer email or a payment still need supervision before you let them run unattended.",
     },
   ],
   "agent-task-half-life": [

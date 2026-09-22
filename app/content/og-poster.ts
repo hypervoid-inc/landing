@@ -204,6 +204,11 @@ export const ogPosters: Record<string, PosterCard> = {
     scene:
       "The mascot sitting on top of the middle of three shrink-wrapped software boxes standing upright in a row, that box pulled forward and turned to face the camera.",
   },
+  "blog-agent-verification-gap": {
+    headline: ["NOBODY MERGES", "AN EMAIL"],
+    scene:
+      "The mascot sitting on top of a flatbed document scanner with its lid raised, a single typed letter lying face up on the glass, and a rubber stamp and its ink pad on the bench below.",
+  },
   "blog-agent-task-half-life": {
     headline: ["YOUR AGENT HAS", "A HALF-LIFE"],
     scene:
@@ -330,6 +335,11 @@ export const ogPosters: Record<string, PosterCard> = {
     headline: ["EVERYTHING ON", "THE PRODUCT"],
     scene:
       "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled PRODUCT.",
+  },
+  "blog-tag-reliability": {
+    headline: ["EVERYTHING ON", "RELIABILITY"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled RELIABILITY.",
   },
   "blog-tag-workflow-automation": {
     headline: ["WORKFLOW", "AUTOMATION"],
