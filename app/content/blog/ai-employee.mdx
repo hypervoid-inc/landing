@@ -52,10 +52,10 @@ An AI employee is bounded by real capacity, and the limits determine which jobs 
 | Plan    | Price | Steps per task | Command runtime | Storage |
 | ------- | ----- | -------------- | --------------- | ------- |
 | Lite    | $9    | Up to 50       | 5 minutes       | 100 MB  |
-| Starter | $59   | 6× Lite usage  | 30 minutes      | 1 GB    |
+| Starter | $59   | Up to 150      | 30 minutes      | 1 GB    |
 | Pro     | $299  | Up to 1,000    | 1 hour          | 3 GB    |
 
-Lite includes 2 parallel background jobs, 3 scheduled tasks, and agent email at 10 sends per day. Starter raises those to 10 scheduled tasks and 100 sends per day, and Pro adds bring-your-own-key support for supported model providers. Pricing and limits are current as of this post's publish date; check the pricing section on the [Construct homepage](/) before purchasing.
+Lite includes 2 parallel background jobs, 3 scheduled tasks, and a native agent email address. Starter raises that to 4 parallel jobs and 10 scheduled tasks, and Pro adds bring-your-own-key support for supported model providers. Pricing and limits are current as of this post's publish date; check the pricing section on the [Construct homepage](/) before purchasing.
 
 The practical reading: step count governs how deep a single job can go before it must be split, and command runtime governs how long a script or browser sequence can run. A research job that touches thirty sources and a data job that runs a long transformation are constrained by different numbers.
 

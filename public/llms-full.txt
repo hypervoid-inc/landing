@@ -238,7 +238,7 @@ Tags: comparison, ai-employee, workflow-automation
 
 Grok Bot is an AI teammate with a cloud computer, included on eligible Cursor and SuperGrok plans. Construct is a persistent workspace you can extend with connected tools, private apps, and your own model keys, starting at $9/month.
 
-Lite includes 3 scheduled tasks and agent email at 10 sends per day. Starter at $59 raises those to 10 scheduled tasks and 100 sends per day. Bring-your-own-key requires Pro at $299.
+Lite includes 3 scheduled tasks and a native agent email address. Starter at $59 raises that to 10 scheduled tasks and adds more agents. Bring-your-own-key requires Pro at $299.
 
 Try Construct
 
@@ -283,8 +283,8 @@ These are **USD subscription prices billed monthly**, without annual discounts. 
 
 | Subscription             | Monthly price | What to budget for                                                 |
 | ------------------------ | ------------- | ------------------------------------------------------------------ |
-| Construct Lite           | $9            | 2 agents, 50 steps per task, 3 scheduled tasks, 10 emails/day      |
-| Construct Starter        | $59           | 6× Lite usage, 10 scheduled tasks, 100 emails/day, up to 5 agents  |
+| Construct Lite           | $9            | 2 agents, 50 steps per task, 3 scheduled tasks, agent email        |
+| Construct Starter        | $59           | 6× Lite usage, 10 scheduled tasks, agent email, up to 5 agents     |
 | Construct Pro            | $299          | 32× Lite usage, up to 1,000 steps per task, BYOK, up to 15 agents  |
 | Cursor Pro with Grok Bot | $20           | Grok Bot access and included weekly Bot usage                      |
 | SuperGrok with Grok Bot  | $30           | Grok Bot access alongside the Grok subscription                    |
@@ -394,7 +394,7 @@ Pick the report, research task, or small tracker that keeps slipping into your e
 
 **Is Construct a cheaper Grok Bot alternative?**
 
-Construct Lite starts at $9/month, below the $20 Cursor Pro and $30 SuperGrok entry subscriptions that include Grok Bot as of September 10, 2026. That compares starting subscription prices, not equal usage. Lite includes 3 scheduled tasks and agent email at 10 sends per day; Starter at $59/month raises those to 10 scheduled tasks and 100 sends per day, and BYOK requires Pro at $299/month. Existing eligible Grok or Cursor subscribers already have Bot access included.
+Construct Lite starts at $9/month, below the $20 Cursor Pro and $30 SuperGrok entry subscriptions that include Grok Bot as of September 10, 2026. That compares starting subscription prices, not equal usage. Lite includes 3 scheduled tasks and a native agent email address; Starter at $59/month raises that to 10, and BYOK requires Pro at $299/month. Existing eligible Grok or Cursor subscribers already have Bot access included.
 
 **How can I extend Construct beyond its built-in tools?**
 
@@ -1084,9 +1084,9 @@ Construct's published plans, current as of this post's date and subject to chang
 
 | Plan    | Price      | Steps per task | Concurrent temporary-agent jobs | Notable                                |
 | ------- | ---------- | -------------- | ------------------------------- | -------------------------------------- |
-| Lite    | $9/month   | 50             | 2                               | 3 scheduled jobs, 10 emails/day        |
-| Starter | $59/month  | 150            | 4                               | 10 scheduled jobs, 100 emails/day      |
-| Pro     | $299/month | 1,000          | 8                               | Model BYOK, 200 emails/day             |
+| Lite    | $9/month   | 50             | 2                               | 3 scheduled jobs, agent email          |
+| Starter | $59/month  | 150            | 4                               | 10 scheduled jobs, agent email         |
+| Pro     | $299/month | 1,000          | 8                               | Model BYOK, background execution       |
 
 Even the Pro plan, built for heavy recurring workloads across up to eight concurrent temporary-agent jobs, costs less than the low end of a single full-time human VA's monthly rate. Check [construct.computer](https://construct.computer) for current prices and limits before budgeting, since commercial terms can change.
 
@@ -1309,10 +1309,10 @@ An AI employee is bounded by real capacity, and the limits determine which jobs 
 | Plan    | Price | Steps per task | Command runtime | Storage |
 | ------- | ----- | -------------- | --------------- | ------- |
 | Lite    | $9    | Up to 50       | 5 minutes       | 100 MB  |
-| Starter | $59   | 6× Lite usage  | 30 minutes      | 1 GB    |
+| Starter | $59   | Up to 150      | 30 minutes      | 1 GB    |
 | Pro     | $299  | Up to 1,000    | 1 hour          | 3 GB    |
 
-Lite includes 2 parallel background jobs, 3 scheduled tasks, and agent email at 10 sends per day. Starter raises those to 10 scheduled tasks and 100 sends per day, and Pro adds bring-your-own-key support for supported model providers. Pricing and limits are current as of this post's publish date; check the pricing section on the [Construct homepage](/) before purchasing.
+Lite includes 2 parallel background jobs, 3 scheduled tasks, and a native agent email address. Starter raises that to 4 parallel jobs and 10 scheduled tasks, and Pro adds bring-your-own-key support for supported model providers. Pricing and limits are current as of this post's publish date; check the pricing section on the [Construct homepage](/) before purchasing.
 
 The practical reading: step count governs how deep a single job can go before it must be split, and command runtime governs how long a script or browser sequence can run. A research job that touches thirty sources and a data job that runs a long transformation are constrained by different numbers.
 
@@ -1983,7 +1983,7 @@ Neither is strictly better. The first is faster, cheaper, and more predictable f
 
 ## Cost models differ more than prices
 
-Comparing monthly figures directly tends to mislead, because the two categories meter different things. Automation platforms typically price on task or operation volume: predictable per-run cost, scaling with throughput. Construct's plans meter task depth and capacity: Lite at $9 with up to 50 steps per task, Starter at $59, and Pro at $299 with deep runs up to 1,000 steps per task, with storage and command runtime rising alongside. Pricing is current as of this post's publish date and can change; check both vendors' current pricing before deciding.
+Comparing monthly figures directly tends to mislead, because the two categories meter different things. Automation platforms typically price on task or operation volume: predictable per-run cost, scaling with throughput. Construct's plans meter task depth and capacity: Lite at $9 with up to 50 steps per task, Starter at $59 with up to 150, and Pro at $299 with deep runs up to 1,000 steps per task, with storage and command runtime rising alongside. Pricing is current as of this post's publish date and can change; check both vendors' current pricing before deciding.
 
 The useful comparison is cost per completed outcome on your actual work. A high-volume, low-complexity flow is almost always cheaper on an automation platform. A low-volume job that would otherwise take a person an hour of cross-app judgment is where per-step metering can come out ahead.
 

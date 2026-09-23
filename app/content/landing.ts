@@ -3,6 +3,16 @@ export type PricingIcon =
 
 export type BillingPeriod = "monthly" | "annual";
 
+/**
+ * Plan cards. This is a separate repo from the product, so these are written
+ * by hand — but the wording and order must match `planFeatures()` in
+ * `v2/packages/billing-constants`, which generates the same cards for
+ * apps/os and apps/dash from the live tier limits. Change a tier there first,
+ * then mirror it here.
+ *
+ * Deliberately absent: the daily email send ceiling. It is enforced
+ * server-side and surfaces only when a send is refused.
+ */
 export const pricingPlans = [
   {
     name: "Lite",
@@ -17,13 +27,14 @@ export const pricingPlans = [
     imageAlt:
       "Construct mascot completing a focused task at a personal workspace",
     features: [
-      ["Up to 2 AI agents", "workflow"],
+      ["Base model usage", "footprints"],
+      ["Up to 2 agents", "workflow"],
       ["Up to 50 steps per task", "footprints"],
       ["3 scheduled tasks", "tabs"],
-      ["Agent email - 10 sends/day", "mail"],
+      ["Agent email address", "mail"],
       ["2 parallel background jobs", "tabs"],
+      ["5 min command runtime", "timer"],
       ["100 MB cloud storage", "cloud"],
-      ["5-minute command runtime", "timer"],
     ],
   },
   {
@@ -40,11 +51,13 @@ export const pricingPlans = [
       "Construct mascot connecting report, schedule, and workflow surfaces",
     features: [
       ["6× the usage of Lite", "footprints"],
-      ["Agent email - 100 sends/day", "mail"],
-      ["10 scheduled tasks", "tabs"],
-      ["30-minute command runtime", "timer"],
-      ["1 GB cloud storage", "cloud"],
       ["Up to 5 agents", "workflow"],
+      ["Up to 150 steps per task", "footprints"],
+      ["10 scheduled tasks", "tabs"],
+      ["Agent email address", "mail"],
+      ["4 parallel background jobs", "tabs"],
+      ["30 min command runtime", "timer"],
+      ["1 GB cloud storage", "cloud"],
     ],
   },
   {
@@ -61,13 +74,14 @@ export const pricingPlans = [
       "Construct agents orchestrating browser, terminal, files, and schedules",
     features: [
       ["32× the usage of Lite", "footprints"],
-      ["Deep runs - up to 1,000 steps per task", "footprints"],
-      ["Agent email - 200 sends/day", "mail"],
-      ["50 scheduled tasks", "tabs"],
-      ["1-hour command runtime", "timer"],
-      ["3 GB cloud storage", "cloud"],
-      ["Bring your own model keys (BYOK)", "key"],
       ["Up to 15 agents", "workflow"],
+      ["Deep runs — up to 1,000 steps per task", "footprints"],
+      ["50 scheduled tasks", "tabs"],
+      ["Agent email address", "mail"],
+      ["8 parallel background jobs", "tabs"],
+      ["1 hr command runtime", "timer"],
+      ["3 GB cloud storage", "cloud"],
+      ["Bring your own keys (BYOK)", "key"],
     ],
   },
 ] as const satisfies ReadonlyArray<{
