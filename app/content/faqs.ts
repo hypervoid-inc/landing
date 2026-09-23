@@ -14,7 +14,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Is Construct a cheaper Grok Bot alternative?",
       answer:
-        "Construct Lite starts at $9/month, below the $20 Cursor Pro and $30 SuperGrok entry subscriptions that include Grok Bot as of September 10, 2026. That compares starting subscription prices, not equal usage. Lite includes 3 scheduled tasks and agent email at 10 sends per day; Starter at $59/month raises those to 10 scheduled tasks and 100 sends per day, and BYOK requires Pro at $299/month. Existing eligible Grok or Cursor subscribers already have Bot access included.",
+        "Construct Lite starts at $9/month, below the $20 Cursor Pro and $30 SuperGrok entry subscriptions that include Grok Bot as of September 10, 2026. That compares starting subscription prices, not equal usage. Lite includes 3 scheduled tasks and a native agent email address; Starter at $59/month raises that to 10, and BYOK requires Pro at $299/month. Existing eligible Grok or Cursor subscribers already have Bot access included.",
     },
     {
       question: "How can I extend Construct beyond its built-in tools?",

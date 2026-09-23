@@ -361,7 +361,7 @@ export const useCases = [
       },
       {
         title: "Native email on every paid plan",
-        body: "The agent can read threads, draft replies, and send updates from an address that belongs to the workspace instead of a personal Gmail forwarding hack. Daily send limits scale with the plan: 10 on Lite, 100 on Starter, 200 on Pro.",
+        body: "The agent can read threads, draft replies, and send updates from an address that belongs to the workspace instead of a personal Gmail forwarding hack.",
       },
       {
         title: "The run still lands in the workspace",
