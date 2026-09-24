@@ -8,7 +8,7 @@ import { cn } from "../../lib/cn";
 import * as authApi from "../../platform/api/auth";
 import * as billingApi from "../../platform/api/billing";
 import { catalogIntervalView } from "../../platform/api/billing";
-import { getOsOrigin } from "../../platform/env";
+import { getAppOrigin } from "../../platform/env";
 import type {
   BillingInterval,
   PaidPlanId,
@@ -28,7 +28,7 @@ import { UsageSection } from "./sections/usage-section";
 import { usePendingActions, useAccountData } from "./use-account-data";
 
 function billingReturnMessage(status: string | null): string | null {
-  if (status === "success") return "Subscription activating — refreshing…";
+  if (status === "success") return "Subscription activating, refreshing…";
   if (status === "payment_method") return "Payment method updated.";
   return null;
 }
@@ -208,16 +208,16 @@ export function AccountPage() {
                 Finish setup
               </h2>
               <p className="mt-1 text-sm text-[var(--color-ink-muted)]">
-                Complete onboarding in Construct OS to unlock the full product.
+                Complete onboarding in Construct to unlock the full product.
               </p>
               <a
-                href={getOsOrigin()}
+                href={getAppOrigin()}
                 className={cn(
                   buttonVariants({ variant: "primary" }),
                   "mt-4 no-underline",
                 )}
               >
-                Continue in OS
+                Continue to Construct
               </a>
             </Card>
           ) : null}

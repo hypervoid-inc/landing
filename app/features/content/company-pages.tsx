@@ -6,6 +6,7 @@ import {
   Section,
 } from "../../components/content/content-shell";
 import { AffiliateLink } from "../../components/layout/affiliate-link";
+import { getAppOrigin } from "../../platform/env";
 
 export function AboutPage() {
   return (
@@ -120,10 +121,7 @@ export function AboutPage() {
       <Section title="Say hello">
         <p>
           We’re a small team shipping fast and listening hard.{" "}
-          <InlineLink href="https://os.construct.computer">
-            Start now
-          </InlineLink>
-          , join us on{" "}
+          <InlineLink href={getAppOrigin()}>Start now</InlineLink>, join us on{" "}
           <InlineLink href="https://discord.gg/puArEQHYN9">Discord</InlineLink>,
           or reach out at{" "}
           <InlineLink href="mailto:hello@construct.computer">

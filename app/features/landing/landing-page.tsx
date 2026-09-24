@@ -11,7 +11,7 @@ import { WALKTHROUGH_URL } from "./cta-links";
 import { ProductHuntProof } from "../product-hunt/product-hunt-proof";
 import { AutoVideo, useRevealOnView } from "./media";
 import { mergePricingPlans, pricingFloorLabel } from "./merge-pricing-catalog";
-// Temporarily disabled — do not delete. Hero collage pointer parallax.
+// Temporarily disabled, do not delete. Hero collage pointer parallax.
 // import { usePointerParallax } from "./use-pointer-parallax";
 import { JournalSection } from "./journal-section";
 import { FaqSection, PricingSection } from "./pricing-section";
@@ -79,7 +79,7 @@ function HeroHeadline() {
         <StartLink
           source="hero"
           className="landing-cta inline-flex h-[57px] w-full max-w-[227px] items-center justify-center px-[30px] text-[21px]"
-          authedChildren="Open OS"
+          authedChildren="Open Construct"
           onClick={() => {
             captureAnalytics("cta_clicked", {
               position: "hero",
@@ -154,7 +154,7 @@ function Hero() {
   // The scene owns `--mx` / `--my`; each layer scales them by its own depth so
   // the collage separates instead of sliding as one flat plate.
   const sceneRef = useRef<HTMLDivElement>(null);
-  // Temporarily disabled — do not delete. Hero collage pointer parallax.
+  // Temporarily disabled, do not delete. Hero collage pointer parallax.
   // usePointerParallax(sceneRef);
 
   return (
@@ -457,7 +457,7 @@ function WorkSection() {
             <StartLink
               source="work"
               className="landing-cta min-h-[57px] w-[227px] px-[30px] text-[21px]"
-              authedChildren="Open OS"
+              authedChildren="Open Construct"
             >
               Start Now
             </StartLink>
@@ -500,7 +500,7 @@ function ClosingCta() {
         <div className="closing-cta-row">
           <StartLink
             source="closing"
-            authedChildren="Open OS"
+            authedChildren="Open Construct"
             className="landing-cta inline-flex h-[57px] w-full max-w-[227px] items-center justify-center px-[30px] text-[21px]"
             onClick={() => {
               captureAnalytics("cta_clicked", {

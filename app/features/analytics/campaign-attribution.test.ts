@@ -12,7 +12,7 @@ import {
 describe("attribution wire contract", () => {
   // The v2 API parses this cookie at signup and there is no shared package
   // between the repos. If either side drifts, attribution silently zeroes out
-  // rather than failing loudly — so pin the literals here and there.
+  // rather than failing loudly, so pin the literals here and there.
   it("pins the cookie name", () => {
     expect(ATTRIBUTION_COOKIE_NAME).toBe("construct_attr");
   });

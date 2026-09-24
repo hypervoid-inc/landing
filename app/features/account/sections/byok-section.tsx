@@ -24,7 +24,7 @@ import type {
   ByokSlot,
   ByokUsage,
 } from "../../../platform/api/schemas";
-import { getOsOrigin } from "../../../platform/env";
+import { getAppOrigin } from "../../../platform/env";
 import {
   MODE_DESCRIPTION,
   MODE_LABEL,
@@ -327,10 +327,10 @@ function ProviderRow({
         <p className="mt-2 text-xs text-[var(--color-ink-subtle)]">
           Connected through xAI sign-in.{" "}
           <a
-            href={getOsOrigin()}
+            href={getAppOrigin()}
             className="text-[var(--color-brand-strong)] underline"
           >
-            Manage it in the OS
+            Manage it in Construct
           </a>
           .
         </p>

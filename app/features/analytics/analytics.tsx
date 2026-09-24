@@ -16,11 +16,11 @@ export function Analytics() {
   useEffect(() => {
     // Persist attribution synchronously, before the idle callback below.
     // Someone who clicks the hero CTA a couple of hundred milliseconds after
-    // load must still carry the campaign cookie to os.construct.computer;
+    // load must still carry the campaign cookie to app.construct.computer;
     // PostHog initialisation can wait, this cannot.
     const { attribution, isFirstTouch, click } = captureCampaignOnLoad();
 
-    // Touch from this URL's click params — not first-touch-merged cookie (may omit s).
+    // Touch from this URL's click params, not first-touch-merged cookie (may omit s).
     const touchPromise = click?.s
       ? touchCampaignSubscriber({
           sid: click.s,

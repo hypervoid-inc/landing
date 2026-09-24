@@ -24,7 +24,7 @@ export function isCredentialUrl(url: string | undefined): boolean {
   try {
     path = new URL(url, "https://construct.computer").pathname;
   } catch {
-    // Keep the raw value — matching a malformed URL is better than skipping it.
+    // Keep the raw value, matching a malformed URL is better than skipping it.
   }
   const lowered = path.toLowerCase();
   return CREDENTIAL_PATHS.some((fragment) => lowered.includes(fragment));

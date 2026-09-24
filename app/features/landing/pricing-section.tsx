@@ -16,7 +16,7 @@ import { captureAnalytics } from "../analytics/analytics.client";
 import { readAttributionCookie } from "../analytics/campaign-attribution.client";
 import { useAuth } from "../auth/auth-provider";
 import { createCheckout } from "../../platform/api/billing";
-import { getOsOrigin } from "../../platform/env";
+import { getAppOrigin } from "../../platform/env";
 import {
   landingFaq,
   type BillingPeriod,
@@ -70,8 +70,8 @@ function PricingCta({
 
   if (!user.onboardingCompleted) {
     return (
-      <a href={getOsOrigin()} className="pricing-button">
-        Finish setup in OS
+      <a href={getAppOrigin()} className="pricing-button">
+        Finish setup
       </a>
     );
   }

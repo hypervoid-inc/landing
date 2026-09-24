@@ -1,7 +1,7 @@
 import { expect, test, type Page, type Route } from "@playwright/test";
 
 /**
- * Covers /account and /login, which previously had no e2e coverage at all —
+ * Covers /account and /login, which previously had no e2e coverage at all,
  * which is how three wrong response types shipped and rendered nothing.
  *
  * The API is stubbed so these assert the client contract: given a real API
@@ -208,7 +208,7 @@ function appErrors(messages: string[]): string[] {
   );
 }
 
-/** Jump without Lenis coasting — native scrollTo is overwritten mid-lerp. */
+/** Jump without Lenis coasting, native scrollTo is overwritten mid-lerp. */
 async function scrollPageInstant(page: Page, top: number) {
   await page.evaluate((y) => {
     const hook = window.__scrollPageTo;
@@ -271,7 +271,7 @@ async function stubApi(
   });
 }
 
-/** Rare-config sections start collapsed — expand before asserting body content. */
+/** Rare-config sections start collapsed, expand before asserting body content. */
 async function expandSection(page: Page, title: string) {
   const trigger = page.getByRole("button", { name: new RegExp(title, "i") });
   await expect(trigger).toBeVisible();
@@ -358,7 +358,7 @@ test.describe("/account", () => {
     await stubApi(page);
     await page.goto("/account");
 
-    // Stub is annual Pro — Current on annual view.
+    // Stub is annual Pro, Current on annual view.
     await expect(page.getByText("Current")).toBeVisible();
     await page.getByRole("button", { name: "Monthly" }).click();
     await expect(page.getByText("Current")).toHaveCount(0);
@@ -494,7 +494,7 @@ test.describe("/account", () => {
     expect(appErrors(errors)).toEqual([]);
   });
 
-  test("opens the header account menu with Account, Open OS, and Log out", async ({
+  test("opens the header account menu with Account, Open Construct, and Log out", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
@@ -507,16 +507,17 @@ test.describe("/account", () => {
     await expect(menuButton).toBeVisible();
     const header = page.locator("header");
     await expect(header.getByRole("link", { name: "Account" })).toHaveCount(0);
-    await expect(header.getByRole("link", { name: /^Open OS/ })).toHaveCount(0);
+    await expect(
+      header.getByRole("link", { name: /^Open Construct/ }),
+    ).toHaveCount(0);
 
     await menuButton.click();
     const menu = page.getByRole("group", { name: "Account" });
     await expect(menu).toBeVisible();
     await expect(menu.getByRole("link", { name: "Account" })).toBeVisible();
-    await expect(menu.getByRole("link", { name: "Open OS" })).toHaveAttribute(
-      "href",
-      "https://os.construct.computer",
-    );
+    await expect(
+      menu.getByRole("link", { name: "Open Construct" }),
+    ).toHaveAttribute("href", "https://app.construct.computer");
     await expect(menu.getByRole("button", { name: "Log out" })).toBeVisible();
 
     await menu.getByRole("link", { name: "Account" }).click();
@@ -560,7 +561,9 @@ test.describe("/account", () => {
     const menu = primary.getByRole("group", { name: "Account" });
     await expect(menu).toBeVisible();
     await expect(menu.getByRole("link", { name: "Account" })).toBeVisible();
-    await expect(menu.getByRole("link", { name: "Open OS" })).toBeVisible();
+    await expect(
+      menu.getByRole("link", { name: "Open Construct" }),
+    ).toBeVisible();
     await expect(menu.getByRole("button", { name: "Log out" })).toBeVisible();
     await expect(
       primary.getByRole("link", { name: "Blog", exact: true }),

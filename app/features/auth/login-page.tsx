@@ -6,7 +6,7 @@ import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 import { Banner, buttonVariants } from "../../components/ui/primitives";
 import { cn } from "../../lib/cn";
 import * as authApi from "../../platform/api/auth";
-import { getOsOrigin, getTurnstileSiteKey } from "../../platform/env";
+import { getAppOrigin, getTurnstileSiteKey } from "../../platform/env";
 import { AuthPanelFrame, PANEL_DEPTH } from "./auth-panel-frame";
 import { AuthSignInForm } from "./auth-sign-in-form";
 import { useAuth } from "./auth-provider";
@@ -70,7 +70,7 @@ export function LoginPage() {
   useEffect(() => {
     if (status === "authenticated" && user) {
       if (!user.onboardingCompleted) {
-        window.location.href = getOsOrigin();
+        window.location.href = getAppOrigin();
         return;
       }
       navigate(planIntent ? `/account?plan=${planIntent}` : "/account", {
@@ -179,8 +179,8 @@ export function LoginPage() {
             </h1>
             <p className="mt-1 text-center text-sm text-[#627c86]">
               Same account as{" "}
-              <a className="text-[#018fa0] underline" href={getOsOrigin()}>
-                Construct OS
+              <a className="text-[#018fa0] underline" href={getAppOrigin()}>
+                Construct
               </a>
               .
             </p>

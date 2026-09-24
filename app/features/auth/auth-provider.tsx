@@ -43,7 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Reset is a sign-out transition, not a description of being anonymous.
   // refresh() runs on mount and on every focus/visibilitychange, so resetting
   // whenever there's no session would call posthog.reset() on each page load for
-  // logged-out visitors — regenerating the anonymous distinct_id and discarding
+  // logged-out visitors, regenerating the anonymous distinct_id and discarding
   // the campaign super properties before they can ever reach a signup.
   const applyIdentity = useCallback((next: AuthUser | null) => {
     if (next) {
@@ -89,7 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [refresh]);
 
   // The session lives in a cookie on the API host shared with the OS, so signing in
-  // or out on os.construct.computer is invisible to this tab until it asks again.
+  // or out on app.construct.computer is invisible to this tab until it asks again.
   // Different origins rule out BroadcastChannel and storage events, so revalidate
   // whenever the tab is actually looked at.
   useEffect(() => {
