@@ -6,7 +6,7 @@ export const siteUrl = "https://construct.computer";
 
 /**
  * Fallback `lastmod` for pages that carry no date of their own. Bump this when
- * the marketing or company page copy actually changes — a dishonest freshness
+ * the marketing or company page copy actually changes, a dishonest freshness
  * signal is worse than none.
  */
 export const siteRevised = "2026-08-03";
@@ -122,7 +122,7 @@ export function ogStem(path: string, image?: string): string {
 }
 
 /**
- * Every OG image is published under `/og/` as JPEG — the cards are gradient
+ * Every OG image is published under `/og/` as JPEG, the cards are gradient
  * renders that PNG stores about nine times larger for no visible gain, and
  * they double as blog thumbnails where that weight is paid fourteen times over.
  */

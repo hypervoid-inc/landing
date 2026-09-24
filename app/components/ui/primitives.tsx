@@ -322,7 +322,7 @@ export function Meter({
   detail?: string;
 }) {
   const pct = Math.max(0, Math.min(100, Math.round(value)));
-  // Colour is never the only signal — the percentage is always shown too.
+  // Colour is never the only signal, the percentage is always shown too.
   const tone =
     pct >= 90
       ? "bg-[var(--color-danger)]"

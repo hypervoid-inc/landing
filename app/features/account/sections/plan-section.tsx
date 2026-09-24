@@ -125,7 +125,7 @@ export function PlanSection({
             : plans.map((catalogPlan) => {
                 const isCurrentTier = currentPlan?.plan === catalogPlan.id;
                 // Null interval (admin grants) must not light Current on every
-                // toggle — only match when we know the billed cycle.
+                // toggle, only match when we know the billed cycle.
                 const isCurrentInterval =
                   billedInterval != null && billedInterval === interval;
                 return (

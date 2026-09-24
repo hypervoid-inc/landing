@@ -1,5 +1,5 @@
 /**
- * Person names for Listmonk — never invent from the email local-part.
+ * Person names for Listmonk, never invent from the email local-part.
  * Shared by schema validation and Listmonk subscribe.
  */
 export function isLegitPersonName(name: string, email: string): boolean {

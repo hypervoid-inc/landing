@@ -22,7 +22,7 @@ function timingSafeEqualString(a: string, b: string): boolean {
   return out === 0;
 }
 
-/** Construct API server ingest — Bearer or X-Construct-Signup-Ingest. */
+/** Construct API server ingest, Bearer or X-Construct-Signup-Ingest. */
 function isIngestAuthorized(request: Request, env: BetaSignupEnv): boolean {
   const expected = env.SIGNUP_INGEST_SECRET?.trim();
   if (!expected) return false;
@@ -81,7 +81,7 @@ async function readSmallBody(request: Request): Promise<string | null> {
   }
 }
 
-/** Browser posts may only carry campaign/utm fields — strip identity spoof keys. */
+/** Browser posts may only carry campaign/utm fields, strip identity spoof keys. */
 function stripPrivilegedBrowserMeta(data: BetaSignup): BetaSignup {
   if (!data.meta) return data;
   const campaign = { ...data.meta };

@@ -666,7 +666,7 @@
     var(--parallax-ease, cubic-bezier(0.23, 1, 0.32, 1));
 }
 
-/* Temporarily disabled — do not delete. Hero collage pointer parallax.
+/* Temporarily disabled, do not delete. Hero collage pointer parallax.
  * Backdrop barely moves; the foreground chips move most.
 .hero-portal {
   translate: calc(var(--mx, 0px) * 0.3) calc(var(--my, 0px) * 0.3);
@@ -775,7 +775,7 @@
     padding-top: 0;
   }
 
-  /* Tracks into the 51.8px overlay headline so 1024–1279 desktops don't
+  /* Tracks into the 51.8px overlay headline so 1024-1279 desktops don't
      sit on the 38px phone size next to a full collage. */
   .hero-headline-title {
     font-size: clamp(38px, 4.6vw, 51.8px);
@@ -948,7 +948,7 @@
   /**
    * Pin offset for the mobile deck: clear of the sticky site chrome.
    * Each card then fills the remaining viewport so one full plan is on
-   * screen — name through CTA — and the next card deals over it.
+   * screen, name through CTA, and the next card deals over it.
    */
   --pricing-stack-top: calc(var(--site-chrome-height, 56px) + 10px);
 }
@@ -1076,7 +1076,7 @@
    * Legibility comes from the type itself rather than from a scrim over the
    * artwork. Stacked white blurs bleed outward far enough to wash the image
    * pale directly behind the words, while leaving the rest of the scene at
-   * full strength — a shaped halo instead of a rectangle laid across the
+   * full strength, a shaped halo instead of a rectangle laid across the
    * whole card.
    */
   text-shadow:
@@ -1176,7 +1176,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Invisible max(monthly, annual) sizer — keeps stack width stable while amounts tick. */
+/* Invisible max(monthly, annual) sizer, keeps stack width stable while amounts tick. */
 .pricing-price-sizer {
   display: inline-grid;
   visibility: hidden;
@@ -2041,7 +2041,7 @@
   }
 }
 
-/* Restrained entrances — soft rise, long settle.
+/* Restrained entrances, soft rise, long settle.
  * Once JS opts in (data-reveal-enabled), items stay at opacity 0 until the
  * animation owns them. `both` applies the from-keyframe during the delay so
  * adding data-reveal-visible never flashes the final state first. */

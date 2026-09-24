@@ -42,7 +42,7 @@ export async function loadCards() {
         headline: card.headline,
         scene: card.scene,
         fullFrame: Boolean(card.fullFrame),
-        // `/og/<stem>.jpg` — the route's own name unless MDX frontmatter named
+        // `/og/<stem>.jpg`, the route's own name unless MDX frontmatter named
         // a different image, in which case that name is published instead.
         stem: path.basename(new URL(route.image).pathname, ".jpg"),
       };

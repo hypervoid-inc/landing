@@ -34,7 +34,7 @@ const renamed = canonicalRoutes.filter(
 
 /**
  * What every social crawler and the blog index rely on. These are cheap
- * structural checks on the bytes — nothing here judges how the card looks.
+ * structural checks on the bytes, nothing here judges how the card looks.
  */
 describe("OG image health", () => {
   it("publishes an image for every canonical route", () => {
@@ -80,8 +80,8 @@ describe("OG image health", () => {
    *
    * The second assertion is a mean rather than a total on purpose. A fixed
    * budget across the whole set shrinks every time a post is added, so it
-   * eventually fails for the one reason that is not a problem — the site
-   * growing — and the fix is always to raise the number. Per-image and average
+   * eventually fails for the one reason that is not a problem, the site
+   * growing, and the fix is always to raise the number. Per-image and average
    * both stay honest as the library grows.
    */
   it("stays under 300KB per image and 150KB on average", () => {
@@ -159,7 +159,7 @@ describe("committed OG images", () => {
 
     expect(
       stale,
-      `stale OG images — run \`pnpm og\` (${manifestPath})`,
+      `stale OG images, run \`pnpm og\` (${manifestPath})`,
     ).toEqual([]);
   });
 

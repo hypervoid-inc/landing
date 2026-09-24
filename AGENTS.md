@@ -1,6 +1,7 @@
 # Project Rules
 
 - Use pnpm only and commit the single `pnpm-lock.yaml`.
+- No em dash (U+2014) or en dash (U+2013) anywhere we author, including blog and marketing copy. A comma where the dash breaks a clause, a hyphen where it joins or labels. Vendored prose (`.agents/skills/**`) and lockfiles are exempt.
 - Keep all editorial resources under `/blog/<slug>/`.
 - Update `app/content/resources.ts` and the route-manifest tests when adding a resource type.
 - Internal links must use canonical trailing-slash URLs.

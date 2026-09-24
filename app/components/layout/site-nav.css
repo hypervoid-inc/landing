@@ -5,7 +5,7 @@
 }
 
 /**
- * The hover/active fill is one pill that travels, not a fill per trigger — the
+ * The hover/active fill is one pill that travels, not a fill per trigger, the
  * same moving thumb as `.billing-toggle-thumb` on the pricing card. It sits
  * behind the labels and is 32px tall inside the 56px bar, so the tint reads as
  * a chip rather than filling the header edge to edge.
@@ -131,7 +131,7 @@
 .site-nav-panel {
   position: relative;
   /* Clips the outgoing copy to the travelling frame, which is what sells the
-     morph — and what makes width/height animatable at all. */
+     morph, and what makes width/height animatable at all. */
   overflow: hidden;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-card);
@@ -270,7 +270,7 @@
 /**
  * The quiet half of the mobile header. The black "Start now" pill next to it is
  * the only element allowed to shout, so this stays a flat brand tint with no
- * border — a bordered white box read as a second, competing button.
+ * border, a bordered white box read as a second, competing button.
  */
 .site-nav-sheet-button {
   background: var(--color-brand-tint);

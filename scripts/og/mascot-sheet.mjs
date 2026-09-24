@@ -8,14 +8,14 @@ import sharp from "sharp";
  *
  * The mascot used to be referenced by `public/favicon.png` alone. That was one
  * flat front-on render, and worse, one whose left and right lobes run off the
- * edge of its own canvas — the model was being shown a clipped silhouette and
+ * edge of its own canvas, the model was being shown a clipped silhouette and
  * asked to keep it intact. Six cards in the first set came back as domes,
  * lobeless squircles, or blobs.
  *
  * A single view also cannot pin a solid. The model has to invent the depth, and
  * it invents a different depth every time: a sphere on one card, a flat slab on
  * the next. `assets/refs/construct-rotate.gif` is a full 360 turnaround of the
- * real model, so the sheet is cut straight from it — front, two three-quarters,
+ * real model, so the sheet is cut straight from it, front, two three-quarters,
  * a profile, and the back, all uncropped with air around them.
  *
  * Committed rather than built on demand: it is a reference image like any other

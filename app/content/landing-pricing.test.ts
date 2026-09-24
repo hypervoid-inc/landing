@@ -5,7 +5,7 @@ import { pricingPlans } from "./landing";
 
 /**
  * The pricing page is prerendered, so its figures are hardcoded rather than
- * fetched — correct for SEO and first paint, but it means marketing copy can
+ * fetched, correct for SEO and first paint, but it means marketing copy can
  * drift from the live catalog that /account renders.
  *
  * These bind the copy to `annualMonthsFree`, the same function the account page

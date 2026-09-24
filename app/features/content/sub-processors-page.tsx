@@ -9,7 +9,7 @@ import {
 /**
  * Inventory from Construct v2 (`apps/api` wrangler bindings, auth, billing,
  * observability, integrations) plus the landing stack (PostHog proxy,
- * PartnerStack, Turnstile). Resend is not used — mail is Cloudflare Email.
+ * PartnerStack, Turnstile). Resend is not used, mail is Cloudflare Email.
  */
 const processors = [
   {
@@ -118,7 +118,7 @@ export function SubProcessorsPage() {
         <List>
           {processors.map((processor) => (
             <li key={processor.name}>
-              <Emph>{processor.name}</Emph> — {processor.purpose}.{" "}
+              <Emph>{processor.name}</Emph>, {processor.purpose}.{" "}
               <InlineLink href={processor.site}>Privacy policy</InlineLink>
             </li>
           ))}
@@ -135,7 +135,7 @@ export function SubProcessorsPage() {
         <List>
           {modelProcessors.map((processor) => (
             <li key={processor.name}>
-              <Emph>{processor.name}</Emph> — {processor.purpose}.{" "}
+              <Emph>{processor.name}</Emph>, {processor.purpose}.{" "}
               <InlineLink href={processor.site}>Privacy policy</InlineLink>
             </li>
           ))}

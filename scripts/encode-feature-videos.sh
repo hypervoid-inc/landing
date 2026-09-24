@@ -9,7 +9,7 @@ downloads="${FEATURE_VIDEO_SRC_DIR:-$HOME/Downloads}"
 
 # Source renders include a 1px dark matte on the frame edge; cropping it
 # before scale stops lanczos from bleeding that line into the output.
-# Keep the source 60fps — dropping to 30 introduced judder on these loops.
+# Keep the source 60fps - dropping to 30 introduced judder on these loops.
 scale="crop=in_w-16:in_h-16:8:8,scale=720:720:flags=lanczos,format=yuv420p"
 poster_vf="crop=in_w-16:in_h-16:8:8,scale=720:720:flags=lanczos"
 color=(-colorspace bt709 -color_primaries bt709 -color_trc bt709)

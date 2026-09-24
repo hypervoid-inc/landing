@@ -124,7 +124,7 @@ function BlockList({
  *
  * Two things the earlier markup got wrong. The recordings are 3:2 (1440x960) or
  * 1252x900, so forcing them into `aspect-video` with `object-cover` sheared 16%
- * to 22% off the height — enough to cut the app's own header off the top. And
+ * to 22% off the height, enough to cut the app's own header off the top. And
  * the frame's 22px radius bit into UI that runs edge to edge in the capture, so
  * the video now sits on a thin canvas matte and the rounding happens outside
  * the picture. The matte also takes the letterbox bars on the 1252x900 clips,
@@ -259,7 +259,7 @@ export function UseCaseIndexPage() {
         </h1>
         <p className="mt-4 max-w-2xl text-[17px] leading-7 text-[#627c86]">
           Construct is an AI employee with its own computer. These are the jobs
-          teams actually hand it — not industry verticals, the work.
+          teams actually hand it, not industry verticals, the work.
         </p>
         <ul className="mt-12 grid list-none gap-6 p-0 sm:grid-cols-2">
           {useCases.map((entry) => (

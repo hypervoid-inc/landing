@@ -5,14 +5,14 @@ import type {
 } from "../../platform/api/schemas";
 
 export function formatBytes(n: number | undefined | null): string {
-  if (n == null) return "—";
+  if (n == null) return "-";
   if (n < 1024) return `${n} B`;
   if (n < 1024 ** 2) return `${(n / 1024).toFixed(1)} KB`;
   if (n < 1024 ** 3) return `${(n / 1024 ** 2).toFixed(1)} MB`;
   return `${(n / 1024 ** 3).toFixed(1)} GB`;
 }
 
-/** Minor units to a localized amount. Whole currency units only — no cents. */
+/** Minor units to a localized amount. Whole currency units only, no cents. */
 export function formatMoney(money: CatalogMoney | null | undefined): string | null {
   if (!money) return null;
   try {
@@ -63,14 +63,14 @@ export function formatMemberSince(iso: string | null | undefined): string | null
 export function relativeTime(
   value: string | number | null | undefined,
 ): string {
-  if (value == null) return "—";
+  if (value == null) return "-";
   const epochMs =
     typeof value === "number"
       ? value > 1e12
         ? value
         : value * 1000
       : Date.parse(value);
-  if (!Number.isFinite(epochMs)) return "—";
+  if (!Number.isFinite(epochMs)) return "-";
   const deltaMs = epochMs - Date.now();
   const abs = Math.abs(deltaMs);
   const units: Array<[Intl.RelativeTimeFormatUnit, number]> = [
@@ -91,7 +91,7 @@ export function relativeTime(
 
 export type PlanTone = "positive" | "warning" | "danger" | "neutral";
 
-/** Status colour never stands alone — the label is always rendered beside it. */
+/** Status colour never stands alone, the label is always rendered beside it. */
 export function planStatusTone(plan: BillingPlan): PlanTone {
   if (plan.paymentError) return "danger";
   if (plan.cancelAtPeriodEnd) return "warning";
@@ -112,7 +112,7 @@ export function planSummary(plan: BillingPlan): string {
       : plan.interval === "month"
         ? "Monthly"
         : null;
-  // Non-Dodo grants (admin/manual) aren't a billed cycle — say so instead of
+  // Non-Dodo grants (admin/manual) aren't a billed cycle, say so instead of
   // implying Monthly/Annual from a missing interval.
   const grant =
     !interval && plan.grantSource !== "dodo" && plan.grantSource !== "none"
@@ -122,7 +122,7 @@ export function planSummary(plan: BillingPlan): string {
 }
 
 /**
- * Catalog list price for the hero — only when we know the real billed interval
+ * Catalog list price for the hero, only when we know the real billed interval
  * on a Dodo subscription. Never invent a price from the Monthly/Annual toggle.
  */
 export function billedCatalogPriceLabel(
@@ -135,7 +135,7 @@ export function billedCatalogPriceLabel(
   return `${money}${intervalSuffix(plan.interval)}`;
 }
 
-/** "Renews 12 Mar 2027" vs "Access until 12 Mar 2027" — the distinction matters. */
+/** "Renews 12 Mar 2027" vs "Access until 12 Mar 2027", the distinction matters. */
 export function renewalLabel(plan: BillingPlan): string | null {
   const date = formatUnixDate(plan.periodEnd);
   if (!date) return null;

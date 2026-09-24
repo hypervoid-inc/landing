@@ -84,7 +84,7 @@ test("collapses to the sprite and reopens on the same line", async ({
   await page.getByRole("button", { name: "Minimize Construct" }).click();
   await expect(page.locator(".clippy-bubble")).toHaveCount(0);
   await expect(page.locator(".clippy-sprite")).toBeVisible();
-  // Still on the desktop drag path after collapse — not mobile bottom anchoring.
+  // Still on the desktop drag path after collapse, not mobile bottom anchoring.
   await expect(root).toHaveAttribute("data-variant", "desktop");
   await expect(root).toHaveAttribute("style", /translate3d/);
 

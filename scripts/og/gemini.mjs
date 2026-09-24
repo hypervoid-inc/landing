@@ -31,7 +31,7 @@ export function apiKey() {
   const key = process.env.GEMINI_API_KEY;
   if (!key) {
     throw new Error(
-      "GEMINI_API_KEY is not set. Add it to .env (already gitignored) — get one at https://aistudio.google.com/apikey",
+      "GEMINI_API_KEY is not set. Add it to .env (already gitignored), get one at https://aistudio.google.com/apikey",
     );
   }
   return key;
@@ -45,7 +45,7 @@ export function apiKey() {
  * reference into a single mood and the mascot drifts. Told which image is the
  * logo and which is only the material, it treats them differently.
  *
- * A reference that fails to load is fatal rather than skipped — silently
+ * A reference that fails to load is fatal rather than skipped, silently
  * dropping one would quietly produce off-brand art that still looks plausible.
  *
  * Two of the brand references are multi-megabyte PNGs, and base64 adds another
@@ -92,7 +92,7 @@ async function referenceParts(references) {
   for (const [index, reference] of references.entries()) {
     const { file, note } = reference;
     parts.push(
-      { text: `Reference ${index + 1} — ${note}` },
+      { text: `Reference ${index + 1}, ${note}` },
       await referencePart(file),
     );
   }
@@ -124,7 +124,7 @@ function describeFailure(body) {
 /**
  * Generates one image. Returns its bytes plus the usage and cost of the call.
  *
- * Retries only transient failures — rate limits, server errors, and empty
+ * Retries only transient failures, rate limits, server errors, and empty
  * responses, which are usually a one-off. A safety block is deterministic and
  * retrying it just spends money to fail again.
  */

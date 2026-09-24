@@ -41,7 +41,7 @@ export async function updateByokSettings(input: {
  * The key never reaches analytics: `scrubNetworkCapture` redacts request bodies
  * on /llm/byok before session replay records them.
  *
- * Responds 204 with no body, so no schema — parsing would reject an empty body.
+ * Responds 204 with no body, so no schema, parsing would reject an empty body.
  */
 export async function setByokKey(
   provider: ByokProvider,

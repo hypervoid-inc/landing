@@ -35,7 +35,7 @@ function error(
   return json({ error: { code, message } }, status, headers);
 }
 
-/** Opaque miss — same shape for invalid UUID, unknown subscriber, or lookup fail. */
+/** Opaque miss, same shape for invalid UUID, unknown subscriber, or lookup fail. */
 function notFound() {
   return error(404, "not_found");
 }

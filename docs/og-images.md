@@ -61,8 +61,8 @@ Two things follow from the split:
 
 `poster.mjs` imports `RESERVED` from `typeset.mjs`, so the region the prompt
 asks the photograph to keep clear is the same number the type is set into. They
-cannot drift apart. The prompt states it as a hard vertical line — "everything
-you photograph sits entirely to the right of it" — because a model follows that
+cannot drift apart. The prompt states it as a hard vertical line, "everything
+you photograph sits entirely to the right of it", because a model follows that
 where it rounds away a percentage.
 
 ### The bloom
@@ -70,7 +70,7 @@ where it rounds away a percentage.
 Type still has to survive a photograph that ignored the line, so each block is
 set over a white bloom: a heavily blurred white pad behind the block, plus a
 tight halo on the glyphs themselves. It is lifted from `.pricing-summary` on the
-landing page, which solves the same problem, and for the same reason — a
+landing page, which solves the same problem, and for the same reason, a
 `text-shadow` alone leaves artwork showing through the counters of an O.
 
 On a card that obeyed the framing it is invisible. On one that did not, it is
@@ -82,10 +82,10 @@ the photograph.
 
 Three things, in order of how much they actually do:
 
-1. **`assets/refs/mascot-sheet.png`** — the mascot's real 360° turnaround, cut
+1. **`assets/refs/mascot-sheet.png`**, the mascot's real 360° turnaround, cut
    from `assets/refs/construct-rotate.gif` and attached first on every call. The
    shape is what drifted worst, and a shape is fixed with images, not adjectives.
-2. **`assets/og/style/master.webp`** — one approved photograph, attached second
+2. **`assets/og/style/master.webp`**, one approved photograph, attached second
    as the studio, the light, and the staging to copy.
 3. **The contract in `scripts/og/poster.mjs`**, sent byte-identical every time.
 
@@ -108,11 +108,11 @@ assets/og/
 
 `pnpm og` resolves each route in this order:
 
-1. **`assets/og/<file>`** — a finished card, cropped and re-encoded. It gets no
+1. **`assets/og/<file>`**, a finished card, cropped and re-encoded. It gets no
    type layer: it is already a finished card, and setting a headline over one
    would land it wherever that card happens to be empty.
-2. **`assets/og/poster/<name>.webp`** — the generated photograph, typeset.
-3. None — reported, and nothing is written. There is no placeholder plate: a
+2. **`assets/og/poster/<name>.webp`**, the generated photograph, typeset.
+3. None, reported, and nothing is written. There is no placeholder plate: a
    fallback that looks finished is how a route quietly stays unillustrated.
 
 ## Generating
@@ -153,7 +153,7 @@ pnpm og:fix <name>                the mascot, if it came back wrong
 
 `pnpm og:fix` is an image-to-image pass: the model is shown the finished
 photograph and the mascot turnaround, and asked to swap that one object and
-change nothing else. The composition — usually the expensive part to get right —
+change nothing else. The composition, usually the expensive part to get right,
 survives intact.
 
 **Reach for it before touching the mascot description in `poster.mjs`.** That
@@ -169,7 +169,7 @@ Three things that do work, learned the expensive way:
    gives it legs.
 2. **Render it large.** An earlier draft of the contract said it was small
    relative to what it rests on, and that one line brought the legs straight
-   back — a small soft object next to office furniture reads as a toy creature.
+   back, a small soft object next to office furniture reads as a toy creature.
 3. **Never show it edge-on.** The first mascot sheet went all the way round,
    including the profile and the eyeless back. Edge-on it looks like two rounded
    masses joined at a waist, and the set came back full of mascots that looked
@@ -182,7 +182,7 @@ mascot reliably makes it glossier and cloudier. Repair the wrong ones only, once
 ### Choosing a style plate
 
 `pnpm og:master <name> --candidates 3` writes `assets/og/style/master-1.webp`
-and friends, generated from the written contract alone — these are the only
+and friends, generated from the written contract alone, these are the only
 calls in the set with no plate to copy. Look at all three at published size,
 then:
 
@@ -193,7 +193,7 @@ cp assets/og/style/master-2.webp assets/og/style/master.webp
 Judge them on what the rest of the set will inherit: is the ground bright and
 even, is the lower-left genuinely empty, does the object sit right of centre,
 is the mascot four-lobed and soft rather than a blob. Everything after copies
-whatever lands here, mistakes included — so if the composition is right and only
+whatever lands here, mistakes included, so if the composition is right and only
 the mascot is wrong, promote it anyway and run `pnpm og:fix --master`.
 
 **Nothing is ever regenerated.** A route is skipped when it already has a
@@ -235,13 +235,13 @@ attempt and costs ~20% less a call.
 Worth remembering the next time a card looks wrong: check what is generating it
 before rewriting how it is described. If Nano Banana 2 ever plateaus, the
 next things to try are FLUX.2 `[pro]` or FLUX Kontext on Cloudflare Workers AI,
-both of which are built around multi-reference consistency — Kontext especially
+both of which are built around multi-reference consistency, Kontext especially
 for the `og:fix` repair pass, which is exactly the job it exists for. Both would
 need their own client; nothing here is Gemini-specific except `og/gemini.mjs`.
 
 ### Generating by hand instead
 
-`pnpm og:prompts` writes `assets/og/PROMPTS.md` — the same prompts, paste-ready
+`pnpm og:prompts` writes `assets/og/PROMPTS.md`, the same prompts, paste-ready
 for a chat UI. `pnpm og --print <name>` prints one to stdout. **Attach the
 reference images listed at the top of that file**, turnaround first. Save the
 result to `assets/og/poster/<name>.webp` (16:9, ≥1600 wide), then run `pnpm og`
@@ -260,7 +260,7 @@ Commit both the source photograph and the published JPEG.
 ```
 
 **`headline`** is hand-broken, because poster type always is. At most three
-lines of sixteen characters — those are the sizes the type grid is drawn around
+lines of sixteen characters, those are the sizes the type grid is drawn around
 (104px cap for one line, 88 for two, 70 for three). A longer line is set smaller
 to fit rather than allowed past the margin, which is a card that no longer
 matches the set. The badge above it comes from the route kind, not from here.
@@ -272,7 +272,7 @@ because those would start disagreeing with the contract and the model would
 split the difference. The moment a scene asks for something abstract, the model
 falls back on floating glass panels and the card stops being a photograph.
 
-Writing **on** the objects is allowed and wanted — a product name silkscreened
+Writing **on** the objects is allowed and wanted, a product name silkscreened
 on a box, a label on a file tab. It is what makes a card read as an artifact
 rather than a render, and it is now the only writing in the frame at all. The
 contract fences it: short, plainly spelled, physically part of the object, and
@@ -294,17 +294,17 @@ image: "ai-employee-hero.png"
 
 `assets/og/ai-employee-hero.png` is then published to
 `public/og/ai-employee-hero.png` and used as that post's `og:image`, thumbnail,
-and `twitter:image`. The generated card is skipped, and so is the type layer —
+and `twitter:image`. The generated card is skipped, and so is the type layer,
 a hand-made card carries its own words.
 
-The value is a bare filename, not a path — the file always lives in
+The value is a bare filename, not a path, the file always lives in
 `assets/og/`. If it is missing, `pnpm og` fails loudly rather than writing an
 image to the wrong name and leaving the route pointing at a 404.
 
 ### The homepage card is one of these
 
-`assets/og/home.png` is a hand-made printed poster — a cut-out CRT and mascot
-over clouds, with its own display type and wordmark — and it is **never
+`assets/og/home.png` is a hand-made printed poster, a cut-out CRT and mascot
+over clouds, with its own display type and wordmark, and it is **never
 generated**. Because a hand-made image wins outright, `pnpm og:generate` skips
 the route entirely and no run can overwrite it. It is the one card in the set
 that does not match the studio direction, on purpose.
@@ -321,7 +321,7 @@ An X article cover is 5:2, not 1.91:1, so it cannot be a route card cropped.
 `pnpm social <name>` makes one at 2000×800 into `assets/social/`, and it is the
 same shoot: `scripts/generate-social-card.mjs` imports the studio, the mascot,
 the in-world writing rules, and the forbidden list from `poster.mjs` and
-attaches `posterReferences()`, so only three things differ — the canvas is 21:9
+attaches `posterReferences()`, so only three things differ, the canvas is 21:9
 (centre-cropped to 5:2), the crop band is 5% rather than 4%, and the type column
 widens to 48%.
 
@@ -341,7 +341,7 @@ Unlike the route set these are not published into `public/og/` and carry no
 manifest entry: they are uploaded by hand to the post they were made for.
 
 `supervised-agents` is the one card still on the old `dark` theme, kept because
-it is already published. **Do not start a new card in it** — its glowing panels
+it is already published. **Do not start a new card in it**, its glowing panels
 and orbit rings are the failure mode named at the top of this file, written
 before the rebase.
 
@@ -357,7 +357,7 @@ before the rebase.
 | Crop and encode                         | `scripts/og/publish.mjs`      | every card              |
 
 If one card comes out wrong, fix its **scene**, or run `pnpm og:fix`. Only
-re-base the **contract** when the whole set should change — and regenerate
+re-base the **contract** when the whole set should change, and regenerate
 everything after, or the set stops matching itself.
 
 ## Why this is not part of `pnpm build`
@@ -374,7 +374,7 @@ live route data plus the source files on disk and comparing it to
 
 ## Typeface
 
-The type layer is set in Helvetica Neue — condensed black for the wordmark and
+The type layer is set in Helvetica Neue, condensed black for the wordmark and
 headline, medium for the badge and domain. It ships with macOS; `pnpm og` runs
 a preflight and refuses to publish if the condensed cut is not resolving, since
 the fallback is regular Helvetica at weight 900, which is close enough to look

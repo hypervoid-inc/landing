@@ -87,7 +87,7 @@ describe("clippy script", () => {
   });
 
   it("keeps reader facing copy free of em and en dashes", () => {
-    expect(clippyCopy.join(" ")).not.toMatch(/[–—]/);
+    expect(clippyCopy.join(" ")).not.toMatch(/[\u2013\u2014]/);
   });
 
   it("names the analytics source by page kind", () => {

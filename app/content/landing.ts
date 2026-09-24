@@ -5,7 +5,7 @@ export type BillingPeriod = "monthly" | "annual";
 
 /**
  * Plan cards. This is a separate repo from the product, so these are written
- * by hand — but the wording and order must match `planFeatures()` in
+ * by hand, but the wording and order must match `planFeatures()` in
  * `v2/packages/billing-constants`, which generates the same cards for
  * apps/os and apps/dash from the live tier limits. Change a tier there first,
  * then mirror it here.
@@ -75,7 +75,7 @@ export const pricingPlans = [
     features: [
       ["32× the usage of Lite", "footprints"],
       ["Up to 15 agents", "workflow"],
-      ["Deep runs — up to 1,000 steps per task", "footprints"],
+      ["Deep runs, up to 1,000 steps per task", "footprints"],
       ["50 scheduled tasks", "tabs"],
       ["Agent email address", "mail"],
       ["8 parallel background jobs", "tabs"],

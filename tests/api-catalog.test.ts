@@ -223,7 +223,7 @@ describe("human API reference", () => {
 
   /** House style: no em or en dashes in anything a reader sees. */
   it("uses no em or en dashes", () => {
-    expect(page).not.toMatch(/[–—]/);
+    expect(page).not.toMatch(/[\u2013\u2014]/);
   });
 });
 

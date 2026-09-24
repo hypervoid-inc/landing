@@ -26,7 +26,7 @@ const ledgerPath = path.join(root, "assets/og/generation-log.jsonl");
 try {
   process.loadEnvFile(path.join(root, ".env"));
 } catch {
-  // No .env — the key may come from the environment instead.
+  // No .env, the key may come from the environment instead.
 }
 
 const model = process.env.GEMINI_IMAGE_MODEL ?? defaultModel;
@@ -63,7 +63,7 @@ function nearestAspect(width, height) {
 const instruction = `Recolour the attached image into the Construct Computer palette. This is a retheme, not a new illustration.
 
 PRESERVE EXACTLY
-Every object, its shape, its position, its size, and its perspective. The camera, the framing, and the composition. The mascot's pose and placement. Nothing is added, removed, or rearranged — someone comparing the two side by side should see the same scene, relit.
+Every object, its shape, its position, its size, and its perspective. The camera, the framing, and the composition. The mascot's pose and placement. Nothing is added, removed, or rearranged, someone comparing the two side by side should see the same scene, relit.
 
 CHANGE
 The palette and the lighting, from a dark navy studio to a bright, airy, high-key one.
@@ -77,11 +77,11 @@ The palette and the lighting, from a dark navy studio to a bright, airy, high-ke
 No purple, magenta, orange, red, yellow, or green anywhere. No black, no dark
 background, no vignette, no dark corners. Light falls off to pure white at every
 edge instead of into darkness. Surfaces that read as glowing screens in the dark
-should now read as frosted glass panels in daylight — softly lit, not emissive.
+should now read as frosted glass panels in daylight, softly lit, not emissive.
 
 The result must sit comfortably beside the attached brand references: same
 material, same light, same restraint. Do not render any text, letters, numbers,
-or labels — if the source contains any, replace them with the same soft grey
+or labels, if the source contains any, replace them with the same soft grey
 placeholder bars used in the references.`;
 
 const args = process.argv.slice(2);

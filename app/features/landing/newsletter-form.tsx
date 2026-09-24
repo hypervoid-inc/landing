@@ -23,7 +23,7 @@ function errorMessage(code?: string) {
 }
 
 /**
- * Inline footer newsletter signup — email + required person name + Turnstile.
+ * Inline footer newsletter signup, email + required person name + Turnstile.
  */
 export function NewsletterForm() {
   const emailId = useId();
