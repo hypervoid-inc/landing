@@ -143,7 +143,7 @@ export const openApiDocument = {
         responses: {
           "200": {
             description:
-              "The address was recorded in D1 (or was already on the list). `listmonk` is true when Listmonk sync succeeded or was intentionally skipped (disabled / unsubscribe / blocklist respected); false means D1 saved but Listmonk failed — callers may retry.",
+              "The address was recorded in D1 (or was already on the list). `listmonk` is true when Listmonk sync succeeded or was intentionally skipped (disabled / unsubscribe / blocklist respected); false means D1 saved but Listmonk failed, callers may retry.",
             content: {
               "application/json": {
                 schema: { $ref: "#/components/schemas/BetaSignupOk" },

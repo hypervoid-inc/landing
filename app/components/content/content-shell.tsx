@@ -93,7 +93,7 @@ export function ContentShell({
             {/*
               Padding + matching negative margin: overflow-y-auto otherwise clips
               PH card shadows and the translateY(-1px) hover lift at the edges.
-              Extra bottom padding — coral blur is ~24–28px and was hard-clipping.
+              Extra bottom padding, coral blur is ~24-28px and was hard-clipping.
             */}
             <div
               data-lenis-prevent

@@ -25,7 +25,7 @@ const out = path.join(posterDirectory, "candidates");
 const references = [
   {
     file: "public/favicon.png",
-    note: "THE MASCOT — its exact silhouette. A rounded square body with one semicircular bump protruding from each of its four corners, and two upright deep-navy capsule eyes set close together in the middle. Trace this outline. Never a dome, an egg, an oval, a circle, a plain squircle with no bumps, a flower, or anything with limbs. Render it as a real moulded glass object, never as a drawing.",
+    note: "THE MASCOT, its exact silhouette. A rounded square body with one semicircular bump protruding from each of its four corners, and two upright deep-navy capsule eyes set close together in the middle. Trace this outline. Never a dome, an egg, an oval, a circle, a plain squircle with no bumps, a flower, or anything with limbs. Render it as a real moulded glass object, never as a drawing.",
   },
   {
     file: "assets/refs/poster-1.png",
@@ -37,12 +37,12 @@ const references = [
   },
 ];
 
-const PHOTOGRAPHY = `THE CRITICAL RULE — the ground is graphic, the objects are photographic
+const PHOTOGRAPHY = `THE CRITICAL RULE, the ground is graphic, the objects are photographic
 The blue field, the display type, the ruled boxes and the wordmark are flat printed graphics.
 Everything else is a real photograph, cut out and placed onto that field: a genuine beige CRT monitor shot in a studio with real plastic texture, real moulded seams, real vents and a real glass screen; real photographic clouds with true depth and soft edges; and the mascot as a real object moulded from thick clear glass with true refraction, real caustics and hard specular highlights.
 Nothing in this image is illustrated, drawn, vector, cartoon, cel-shaded, anime, or line-art. No outlines drawn around any object. No flat colour fills on any object. No drawn or hatched shadows. If it is an object, it was photographed.`;
 
-const STYLE = `CONSTRUCT COMPUTER — homepage card, "POSTER" direction.
+const STYLE = `CONSTRUCT COMPUTER, homepage card, "POSTER" direction.
 
 A printed poster from the height of consumer computing: a flat saturated blue field, colossal outlined display type cutting across the frame, and a real photograph of a beige CRT monitor floating over real clouds with the glass mascot sitting on top of it.
 
@@ -122,7 +122,7 @@ for (const [index, variant] of variants.entries()) {
     );
     console.log(formatUsd(result.cost.usd));
   } catch (error) {
-    console.log(`FAILED — ${error.message}`);
+    console.log(`FAILED, ${error.message}`);
   }
 }
 

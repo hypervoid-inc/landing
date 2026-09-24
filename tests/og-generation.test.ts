@@ -92,8 +92,8 @@ describe("card content", () => {
 
   /**
    * Three lines of sixteen characters is what the type grid was drawn around.
-   * A longer line still publishes — `typeset.mjs` shrinks it to stay inside the
-   * column — but it publishes at a size no other card in the set uses, which is
+   * A longer line still publishes, `typeset.mjs` shrinks it to stay inside the
+   * column, but it publishes at a size no other card in the set uses, which is
    * the drift this whole system exists to prevent.
    */
   it("keeps headlines short enough to set at poster size", () => {
@@ -254,7 +254,7 @@ describe("the style plate", () => {
   it("is committed, and sits second in the references", () => {
     expect(
       existsSync(stylePlatePath),
-      "missing assets/og/style/master.webp — run `pnpm og:master home`",
+      "missing assets/og/style/master.webp, run `pnpm og:master home`",
     ).toBe(true);
 
     const references = posterReferences();
@@ -281,7 +281,7 @@ describe("the style plate", () => {
   /**
    * Every generated scene rests the mascot on something larger than itself.
    * Staged free-standing on the table beside a small object, the model reads it
-   * as a character and gives it legs — that failure took out most of one whole
+   * as a character and gives it legs, that failure took out most of one whole
    * set.
    *
    * Hand-made cards are exempt: nothing generates them, so their `scene` is a

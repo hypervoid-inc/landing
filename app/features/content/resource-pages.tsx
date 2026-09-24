@@ -181,7 +181,7 @@ export function ResourcePage({ slug }: { slug: string }) {
  * The desktop rail: three onward links and a standing call to action.
  *
  * Thumbnails sit beside the title at ~96px wide (the social card's 1200×630
- * ratio), not full-column — a stacked 300px crop of the OG art reads as an ad
+ * ratio), not full-column, a stacked 300px crop of the OG art reads as an ad
  * unit and crowds the CTA below.
  *
  * Product Hunt proof sits at the bottom of the rail so it lands nearer
@@ -317,7 +317,7 @@ const linkIcons: Record<AuthorLinkIcon, IconSvgElement> = {
 
 /**
  * Off-site profiles for one author. `rel="me"` states the identity claim these
- * same URLs make as schema.org `sameAs`. The icon is decorative — the visible
+ * same URLs make as schema.org `sameAs`. The icon is decorative, the visible
  * label carries the accessible name.
  */
 function AuthorLinks({

@@ -9,7 +9,7 @@ import { Button } from "./primitives";
  * (cancel, downgrade). The OS gates the same actions behind ConfirmDialog;
  * landing previously fired them straight from a single click.
  *
- * Used sparingly on purpose — confirming everything trains people to click
+ * Used sparingly on purpose, confirming everything trains people to click
  * through, which defeats the point.
  */
 export function ConfirmDialog({

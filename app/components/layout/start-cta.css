@@ -1,5 +1,5 @@
 /**
- * Start CTA — the black nav pill treated as a small screen.
+ * Start CTA, the black nav pill treated as a small screen.
  *
  * Three states, all built from the brand cyan the logo already uses:
  *   idle    a lit black surface, quiet
@@ -127,7 +127,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* Keep the colour states — they carry the meaning — and drop the travel. */
+  /* Keep the colour states, they carry the meaning, and drop the travel. */
   .start-cta-sheen::after,
   .start-cta:hover .start-cta-sheen::after,
   .start-cta-booting .start-cta-sheen::after,

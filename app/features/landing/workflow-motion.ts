@@ -168,7 +168,7 @@ export function getWorkflowEdgeReveal(
 /**
  * First-card enter only. The copy sits above the centered video until the
  * viewer pins; that distance is the blur-in. Once the viewer is on the
- * chrome, the next card may push this one off — that stays sharp.
+ * chrome, the next card may push this one off, that stays sharp.
  */
 export function getWorkflowFirstReveal(
   cardTop: number,
@@ -184,7 +184,7 @@ export function getWorkflowFirstReveal(
 
 /**
  * Last-card leave upward: 1 while the card is at or below the slot, 0 once it
- * is `range` px above. Approaching from below must not fade — that was
+ * is `range` px above. Approaching from below must not fade, that was
  * blurring Research/Channels in the middle of the list.
  */
 export function getWorkflowExitReveal(
@@ -248,7 +248,7 @@ export function getWorkflowRailFollow(
 }
 
 /**
- * CSS `ease-in-out`. Gentler than `--ease-move` so a 300–500px sticky push
+ * CSS `ease-in-out`. Gentler than `--ease-move` so a 300-500px sticky push
  * does not read as stuck, then thrown.
  */
 export const WORKFLOW_PUSH_EASE = {
@@ -331,7 +331,7 @@ export function cubicBezier(
 
 /**
  * Where sticky would put a card: clamped between the slot and the panel's
- * remaining runway. Panel rects only — transformed card boxes feed back.
+ * remaining runway. Panel rects only, transformed card boxes feed back.
  */
 export function getWorkflowStickyTop(
   panelTop: number,

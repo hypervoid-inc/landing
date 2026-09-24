@@ -43,7 +43,7 @@ type MenuId = NavMenu["id"] | "account";
 /**
  * The rail is the whole desktop nav: the triggers, the sliding thumb behind
  * them, and the single dropdown they share. Menus own no open state of their
- * own — one panel exists, and opening a menu moves and resizes it.
+ * own, one panel exists, and opening a menu moves and resizes it.
  */
 type Rail = {
   /** Move the thumb onto an element (pointer entered it). */
@@ -71,7 +71,7 @@ function MenuChevron({ open }: { open: boolean }) {
   );
 }
 
-/** Layout only — colour lives in CSS so `[data-open]` can outrank `[data-current]`. */
+/** Layout only, colour lives in CSS so `[data-open]` can outrank `[data-current]`. */
 const triggerClass =
   "site-nav-trigger inline-flex h-full items-center gap-1 px-3 whitespace-nowrap";
 

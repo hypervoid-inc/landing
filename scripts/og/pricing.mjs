@@ -23,8 +23,8 @@ export const modelPricing = {
  *
  * `gemini-3-pro-image` was the default until 2026-08-09 and is a generation
  * older despite the "pro". On the same prompt and the same references it
- * produced the mascot correctly about one card in three — the rest came back
- * as bones, cubes, ghosts with legs, or two shapes joined end to end — and no
+ * produced the mascot correctly about one card in three, the rest came back
+ * as bones, cubes, ghosts with legs, or two shapes joined end to end, and no
  * amount of rewriting the contract moved that number. Swapping to this model
  * fixed all three of the worst cards on the first try, and costs about 20% less
  * a call.
@@ -62,7 +62,7 @@ export function costOf(model, usage) {
   };
 }
 
-/** Cents matter here — runs are single-digit dollars, so never round to 2dp. */
+/** Cents matter here, runs are single-digit dollars, so never round to 2dp. */
 export function formatUsd(value) {
   return `$${value.toFixed(value < 1 ? 4 : 2)}`;
 }

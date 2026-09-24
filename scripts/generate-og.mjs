@@ -103,7 +103,7 @@ async function render(cards, all) {
 async function writePrompts(cards) {
   const sections = cards.map(
     (card) =>
-      `## \`${card.name}\`\n\n${card.title} — ${card.kind}\n\n\`\`\`text\n${buildPosterPrompt(card)}\n\`\`\`\n`,
+      `## \`${card.name}\`\n\n${card.title}, ${card.kind}\n\n\`\`\`text\n${buildPosterPrompt(card)}\n\`\`\`\n`,
   );
   await writeFile(promptsPath, `${promptHeader()}\n${sections.join("\n")}`);
   console.log(

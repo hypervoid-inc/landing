@@ -17,7 +17,7 @@ export type BetaSignupEnv = {
   LISTMONK_NEWSLETTER_LIST_UUID?: string;
   /** Numeric list ID for the private subscribers API (optional if UUID resolves). */
   LISTMONK_NEWSLETTER_LIST_ID?: string;
-  /** Listmonk API user — enables attribs via private /api/subscribers. */
+  /** Listmonk API user, enables attribs via private /api/subscribers. */
   LISTMONK_API_USER?: string;
   /** Listmonk API token (pair with LISTMONK_API_USER). */
   LISTMONK_API_TOKEN?: string;

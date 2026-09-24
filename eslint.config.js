@@ -9,7 +9,7 @@ export default tseslint.config(
       ".react-router",
       ".wrangler",
       "node_modules",
-      // Playwright output — trace bundles are minified JS, not source.
+      // Playwright output, trace bundles are minified JS, not source.
       "test-results",
       "playwright-report",
     ],

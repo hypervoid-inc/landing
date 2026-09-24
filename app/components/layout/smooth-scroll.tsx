@@ -7,7 +7,7 @@ import {
 } from "./site-chrome";
 import { setPageScroller } from "../../lib/page-scroll";
 
-/** Mermail's expo ease-out — also Lenis's own default curve. */
+/** Mermail's expo ease-out, also Lenis's own default curve. */
 const expoOut = (t: number) => Math.min(1, 1.001 - 2 ** (-10 * t));
 
 function isBodyScrollLocked() {

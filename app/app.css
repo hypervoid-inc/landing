@@ -102,7 +102,7 @@ button,
 a,
 input,
 [tabindex] {
-  /* Tight offset — a 3px gap reads as a chunky “halo,” not a focus cue. */
+  /* Tight offset, a 3px gap reads as a chunky “halo,” not a focus cue. */
   outline-offset: 1px;
 }
 
@@ -110,7 +110,7 @@ input,
   outline: 2px solid color-mix(in srgb, var(--color-brand) 70%, transparent);
 }
 
-/* Menus / lists that already paint a highlight on keyboard + pointer —
+/* Menus / lists that already paint a highlight on keyboard + pointer,
    don't stack a second focus ring on top (Radix focuses the highlighted item). */
 [data-radix-collection-item]:focus,
 [data-radix-collection-item]:focus-visible,
@@ -146,7 +146,7 @@ button:focus-visible,
 }
 
 /**
- * Footer affiliates chip — same badge grammar as the Product Hunt widget:
+ * Footer affiliates chip, same badge grammar as the Product Hunt widget:
  * rounded rect, leading mark, two-line copy, trailing metric.
  */
 .footer-affiliate-badge {

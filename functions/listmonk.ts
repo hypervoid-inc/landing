@@ -7,7 +7,7 @@
  * (no attribs) when credentials are missing.
  *
  * Returns `{ ok }` so Construct can mark newsletter sync only when Listmonk
- * actually succeeded (or was intentionally skipped — empty base URL).
+ * actually succeeded (or was intentionally skipped, empty base URL).
  */
 
 import { isLegitPersonName } from "../shared/person-name";
@@ -171,7 +171,7 @@ async function findSubscriber(
   const row = body.data?.results?.[0];
   if (!row) return null;
 
-  // Query results sometimes omit lists — fetch the full record when needed.
+  // Query results sometimes omit lists, fetch the full record when needed.
   let lists = Array.isArray(row.lists) ? row.lists : [];
   let status = row.status;
   if (lists.length === 0 || !status) {
@@ -326,7 +326,7 @@ async function subscribePrivate(
   );
   if (!patched) return false;
 
-  // Respect blocklist / prior unsubscribe — attribs updated, do not re-add.
+  // Respect blocklist / prior unsubscribe, attribs updated, do not re-add.
   if (existing.status === "blocklisted") return true;
   const membership = existing.lists.find((list) => list.id === listId);
   if (membership?.status === "unsubscribed") return true;

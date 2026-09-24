@@ -9,7 +9,7 @@ import { z } from "zod";
  * of `periodEnd`. Every one of those rendered as missing UI with no error.
  *
  * Parsing at the boundary makes a drift loud instead of invisible, and catches
- * a server-side shape change too — not just one a rebuild would have noticed.
+ * a server-side shape change too, not just one a rebuild would have noticed.
  * Unknown keys are stripped, not rejected, so the API stays free to add fields.
  */
 
@@ -53,7 +53,7 @@ export const PlanUsageSchema = z.object({
 });
 export type PlanUsage = z.infer<typeof PlanUsageSchema>;
 
-/** Owner-pool totals. The API calls this `pool` — not `ownerUsage`. */
+/** Owner-pool totals. The API calls this `pool`, not `ownerUsage`. */
 export const OwnerUsagePoolSchema = z.object({
   agentsUsed: z.number(),
   agentsMax: z.number(),
@@ -181,7 +181,7 @@ export type CatalogIntervalCommercial = z.infer<
   typeof CatalogIntervalCommercialSchema
 >;
 
-/** Per-interval commercials live on `month`/`year` — there is no `prices` map. */
+/** Per-interval commercials live on `month`/`year`, there is no `prices` map. */
 export const CatalogPlanSchema = z.object({
   id: PaidPlanIdSchema,
   name: z.string(),
@@ -236,7 +236,7 @@ export type SessionSurface = z.infer<typeof SessionSurfaceSchema>;
 
 /**
  * Session timestamps arrive as ISO strings from the API. Older stubs used unix
- * seconds — accept both and normalize to ISO so the UI has one shape.
+ * seconds, accept both and normalize to ISO so the UI has one shape.
  */
 const SessionInstantSchema = z.union([
   z.string().min(1),

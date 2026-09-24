@@ -41,7 +41,7 @@ Never use Cloudflare's dummy Turnstile keys in production.
 2. Redirect `www.construct.computer` to `https://construct.computer` with a permanent zone Redirect Rule.
 3. Enable applicable managed WAF rules.
 4. Add a rate-limiting rule for `POST /api/beta-signup`; start with a Managed Challenge after 10 requests per IP in 10 seconds and tune from observed traffic.
-5. Add a rate-limiting rule for `POST /api/campaign-touch` (subscriber UUID → email); start with a Managed Challenge after 20 requests per IP in 10 seconds. The endpoint returns opaque 404s for misses — still throttle enumeration.
+5. Add a rate-limiting rule for `POST /api/campaign-touch` (subscriber UUID → email); start with a Managed Challenge after 20 requests per IP in 10 seconds. The endpoint returns opaque 404s for misses, still throttle enumeration.
 6. Keep verified search bots out of generic challenge rules.
 7. Confirm Managed Robots and AI crawler settings do not override `public/robots.txt`.
 8. Enable Crawler Hints for IndexNow notifications.

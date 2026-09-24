@@ -40,7 +40,7 @@ import {
 } from "./og/typeset.mjs";
 
 /**
- * Wide key art for social posts — X article covers, link previews, anything
+ * Wide key art for social posts, X article covers, link previews, anything
  * that has to work at 5:2 rather than at the 1200x630 every route card is cut
  * to.
  *
@@ -48,7 +48,7 @@ import {
  * 16:9; these are one-offs at 5:2, written by hand for one post. What they
  * share is the part worth sharing: the Gemini client, the brand references, the
  * spend ledger, and the rule that type is drawn as vector text rather than
- * generated — which the route cards adopted from here.
+ * generated, which the route cards adopted from here.
  *
  *   pnpm social <name>                   generate art, then set the type
  *   pnpm social <name> --candidates 3    options to choose between
@@ -67,8 +67,8 @@ import {
  * in it and regenerating a published banner would change a live image for no
  * reason.
  *
- * Do not start a new card in `dark`. Its vocabulary — floating glass panels,
- * dashed concentric orbit rings, cyan bloom on near-black — is the exact look
+ * Do not start a new card in `dark`. Its vocabulary, floating glass panels,
+ * dashed concentric orbit rings, cyan bloom on near-black, is the exact look
  * `docs/og-images.md` names as the failure mode the whole set was rebased away
  * from, because it is what every image model reaches for unprompted and what
  * every AI company already looks like. It was written before that rebase.
@@ -82,7 +82,7 @@ const ledgerPath = path.join(root, "assets/og/generation-log.jsonl");
 try {
   process.loadEnvFile(path.join(root, ".env"));
 } catch {
-  // No .env — the key may come from the environment instead.
+  // No .env, the key may come from the environment instead.
 }
 
 const model = process.env.GEMINI_IMAGE_MODEL ?? defaultModel;
@@ -90,7 +90,7 @@ const model = process.env.GEMINI_IMAGE_MODEL ?? defaultModel;
 /**
  * X article covers are 5:2, which Gemini does not offer. 21:9 is the widest it
  * accepts and the nearest above 5:2, so art is generated there and
- * centre-cropped down — the prompt keeps the subject out of the top and bottom
+ * centre-cropped down, the prompt keeps the subject out of the top and bottom
  * bands that the crop eats.
  */
 const ASPECT_RATIO = "21:9";
@@ -162,7 +162,7 @@ function headlineSize(lines) {
 
 /**
  * The type stack: wordmark, headline, subline, domain. Set over a scrim that
- * darkens the left of the frame — the prompt asks the model to keep that side
+ * darkens the left of the frame, the prompt asks the model to keep that side
  * quiet, but a headline cannot depend on it having obliged, and unreadable is a
  * worse failure than slightly veiled.
  */
@@ -210,10 +210,10 @@ function overlaySvg({ headline, accentFrom = 1, subline }) {
  *
  * Positions are `scripts/og/typeset.mjs`'s own, scaled by 800/630 and rounded,
  * so a cover and a blog card read as the same typography at two sizes rather
- * than as two designs. Everything that does the actual work — measuring ink off
+ * than as two designs. Everything that does the actual work, measuring ink off
  * a real render, placing a string so its capitals stand exactly `cap` tall, and
  * the white bloom that keeps type legible over a photograph that ignored the
- * framing — is imported from there rather than reimplemented here.
+ * framing, is imported from there rather than reimplemented here.
  *
  * The one addition is the subline. A route card has a headline and nothing
  * else; a cover is read once, in a feed, with no page behind it, so it gets one
@@ -412,7 +412,7 @@ async function studioTypeLayer({
  * Frozen. Only `supervised-agents` is shot in it, and only because that banner
  * is already published. New cards use the studio contract below.
  */
-const styleContract = `STYLE CONTRACT — Construct Computer dark key art.
+const styleContract = `STYLE CONTRACT, Construct Computer dark key art.
 
 MEDIUM
 Soft 3D product key art: clean vector illustration crossed with a frosted-glass 3D render. Marketing-grade, weightless, precise. Not photographic, not painterly, not hand-drawn.
@@ -420,37 +420,37 @@ Soft 3D product key art: clean vector illustration crossed with a frosted-glass 
 CANVAS
 Very wide 21:9 landscape banner. Artwork runs edge to edge with no border, frame, rounded corners, or mockup presentation. The top and bottom eighth of the frame will be cropped away, so keep every important form clear of them and let those bands fall off to near-black.
 
-PALETTE — use these values and nothing else
-  #05070D  near-black navy — the dominant value, the void everything floats in
-  #0A1424  deep navy — background forms
+PALETTE, use these values and nothing else
+  #05070D  near-black navy - the dominant value, the void everything floats in
+  #0A1424  deep navy - background forms
   #10243A  navy, for panel bodies
   #14455F  desaturated teal, for edges in shadow
-  #01B4C8  brand cyan — the primary light source
-  #38C6F4  mid cyan — glass edges and rim light
-  #B6ECFB  light cyan — bright highlights
-  #F2FCFE  near-white — specular hits only, never a field
+  #01B4C8  brand cyan - the primary light source
+  #38C6F4  mid cyan - glass edges and rim light
+  #B6ECFB  light cyan - bright highlights
+  #F2FCFE  near-white - specular hits only, never a field
 No purple, magenta, orange, red, yellow, or green anywhere. No white background. Nothing is pure white except a specular highlight.
 
 LIGHT
 A dark studio lit entirely from within the subjects. One saturated cyan bloom behind the focal form, light falling off to near-black at every edge. Glass catches thin bright cyan rim light along its contours. No hard shadows, no cast shadows on a ground plane, no lens flare, no visible light source.
 
 CAMERA
-Straight-on, level with the subject, like a product shot in a blacked-out studio. Never isometric. Never a three-quarter aerial view. Never looking down onto a ground plane, platform, dais, or podium — the forms float in dark space and nothing rests on a visible surface. No horizon line, no dutch angle, no perspective distortion.
+Straight-on, level with the subject, like a product shot in a blacked-out studio. Never isometric. Never a three-quarter aerial view. Never looking down onto a ground plane, platform, dais, or podium, the forms float in dark space and nothing rests on a visible surface. No horizon line, no dutch angle, no perspective distortion.
 
 DEPTH AND DRAMA
-Three clear planes: a crisp, brightly lit focal subject in front; mid-ground forms at visibly reduced brightness; a background that dissolves into near-black. Scale reads better than quantity — one large, confident, beautifully lit form beats five small ones. Keep the glow soft and volumetric, light diffusing through air and glass, never a hard neon outline traced around a shape.
+Three clear planes: a crisp, brightly lit focal subject in front; mid-ground forms at visibly reduced brightness; a background that dissolves into near-black. Scale reads better than quantity, one large, confident, beautifully lit form beats five small ones. Keep the glow soft and volumetric, light diffusing through air and glass, never a hard neon outline traced around a shape.
 
-THE MASCOT — include it unless the SUBJECT says otherwise
-A small creature made of thick clear glass, shaped like a four-lobed rounded clover: a puffy square cloud with one soft bump at each corner. It is genuinely transparent — whatever sits behind it is visibly distorted and refracted through its body, the way a solid glass paperweight bends what is behind it. In this dark setting it is lit from within, an ice-blue #B6ECFB glow through its body with bright cyan rim light on its upper left. Two vertical rounded-capsule eyes in deep navy #1B3A6B, set close together near the centre, both the same size and perfectly upright — dark against its own lit body, which is what makes them read. No mouth, no nose, no eyebrows, no limbs, no hands, no feet, no accessories. Calm and attentive — never cute-cartoonish, never robotic, never anthropomorphised. Match the attached reference exactly, including its proportions; it is a logo, not a character to reinterpret.
+THE MASCOT, include it unless the SUBJECT says otherwise
+A small creature made of thick clear glass, shaped like a four-lobed rounded clover: a puffy square cloud with one soft bump at each corner. It is genuinely transparent, whatever sits behind it is visibly distorted and refracted through its body, the way a solid glass paperweight bends what is behind it. In this dark setting it is lit from within, an ice-blue #B6ECFB glow through its body with bright cyan rim light on its upper left. Two vertical rounded-capsule eyes in deep navy #1B3A6B, set close together near the centre, both the same size and perfectly upright, dark against its own lit body, which is what makes them read. No mouth, no nose, no eyebrows, no limbs, no hands, no feet, no accessories. Calm and attentive, never cute-cartoonish, never robotic, never anthropomorphised. Match the attached reference exactly, including its proportions; it is a logo, not a character to reinterpret.
 
-SUPPORTING FORMS — draw only from this vocabulary
+SUPPORTING FORMS, draw only from this vocabulary
 Rounded-rectangle glass panels with thin luminous cyan borders and a soft inner glow. Thin circuit traces running at 90 and 45 degrees only, dim cyan, low contrast, never crossing the focal subject. Faint dashed concentric orbit rings. Small pill-shaped chips and rounded app tiles. Everything floats with generous air around it.
 
 COMPOSITION
-The left ${Math.round(TYPE_COLUMN * 100)}% of the frame is reserved for a headline that is set afterwards: keep it near-empty — unbroken near-black, no forms, no detail, nothing that would fight large type placed over it. Stage the focal subject in the right ${100 - Math.round(TYPE_COLUMN * 100)}%, filling that side generously, with its cyan bloom spilling leftward into the empty space to tie the halves together and dying out well before the left edge.
+The left ${Math.round(TYPE_COLUMN * 100)}% of the frame is reserved for a headline that is set afterwards: keep it near-empty, unbroken near-black, no forms, no detail, nothing that would fight large type placed over it. Stage the focal subject in the right ${100 - Math.round(TYPE_COLUMN * 100)}%, filling that side generously, with its cyan bloom spilling leftward into the empty space to tie the halves together and dying out well before the left edge.
 
 ABSOLUTELY NOT
-No text, letters, numbers, words, labels, captions, UI copy, watermarks, or logos of any kind — the frame supplies all type, and any rendered text will be discarded with the image. Where a panel would carry writing, use soft blurred cyan placeholder bars instead. No humans, faces, hands, or body parts. No photorealism, film grain, noise, lens flare, or bokeh. No white or pale background. No neon cyberpunk signage, glitch effects, isometric grids, wireframe globes, brains wired with circuits, humanoid robots, handshakes, lightbulbs, gears, or jigsaw pieces. No busy collage. No flat, evenly-lit composition where nothing is the subject. No platform, dais, podium, pedestal, plinth, or floor plane beneath the subject.`;
+No text, letters, numbers, words, labels, captions, UI copy, watermarks, or logos of any kind, the frame supplies all type, and any rendered text will be discarded with the image. Where a panel would carry writing, use soft blurred cyan placeholder bars instead. No humans, faces, hands, or body parts. No photorealism, film grain, noise, lens flare, or bokeh. No white or pale background. No neon cyberpunk signage, glitch effects, isometric grids, wireframe globes, brains wired with circuits, humanoid robots, handshakes, lightbulbs, gears, or jigsaw pieces. No busy collage. No flat, evenly-lit composition where nothing is the subject. No platform, dais, podium, pedestal, plinth, or floor plane beneath the subject.`;
 
 /**
  * The route cards' own contract, widened.
@@ -465,7 +465,7 @@ No text, letters, numbers, words, labels, captions, UI copy, watermarks, or logo
  * drifts the first time the set is retuned and nobody remembers there was a
  * second copy.
  */
-const studioContract = `CONSTRUCT COMPUTER — WIDE SOCIAL BANNER
+const studioContract = `CONSTRUCT COMPUTER, WIDE SOCIAL BANNER
 You are shooting one photograph in the same studio, on the same afternoon, as the set of route cards you have been shown. Same lighting rig, same surface, same staging. Only the object being photographed and the shape of the frame change.
 
 CANVAS
@@ -476,7 +476,7 @@ ${STUDIO}
 
 ${IN_WORLD_TEXT}
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished banner has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -484,7 +484,7 @@ Picture a vertical line drawn ${Math.round(STUDIO_COLUMN * 100)}% of the way acr
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the arrangement is too wide to fit to the right of the line, shoot it from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the arrangement is too wide to fit to the right of the line, shoot it from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is nearly half the picture and it must read as deliberate, generous air.
 Also keep the top 12% of the frame clear across the full width. Nothing rises into it.
 
@@ -500,7 +500,7 @@ One finished 21:9 photograph obeying every rule above: bright, pale, calm, convi
  *
  * This exists because of where a cover is actually seen. The studio contract
  * above is high-key white, which is right on a white blog page and wrong in a
- * feed — inside X's dark UI a pale card reads as a blank rectangle and the eye
+ * feed, inside X's dark UI a pale card reads as a blank rectangle and the eye
  * slides off it. The fix is not the old `dark` theme's glowing glass panels,
  * which is the filler this whole direction exists to avoid. It is the same real
  * objects, the same era, and the same mascot, shot at night with the machines
@@ -516,14 +516,14 @@ One finished 21:9 photograph obeying every rule above: bright, pale, calm, convi
  * and the glow has to be explicitly sourced to the screens in frame, or it
  * drifts into exactly the cyan haze the filler clause forbids.
  */
-const nightContract = `CONSTRUCT COMPUTER — WIDE SOCIAL BANNER, NIGHT SHOOT
+const nightContract = `CONSTRUCT COMPUTER, WIDE SOCIAL BANNER, NIGHT SHOOT
 You are photographing the same objects, the same era, and the same mascot as the rest of this brand, in a different room. This banner is seen inside a dark social feed rather than on a white page, so the room is dark and the machines are the light.
 
 CANVAS
 Very wide 21:9 landscape banner, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 5% and the bottom 5% of the frame will be cropped away before publishing. Keep everything that matters inside the middle 90%.
 
-THE ROOM — dark, and lit only by the equipment
+THE ROOM, dark, and lit only by the equipment
 A real room after hours with the overhead lights off. The only light in the frame comes from the switched-on screens of the machines you are photographing: it falls on the beige plastic nearest each screen, picks out the edges of the cases, and dies away quickly into the dark.
 The background is near-black charcoal #05080C and stays that way. There is no window, no lamp, no practical light fitting, no visible light source of any kind other than the screens themselves. There is no coloured gel, no haze in the air, no light beams, no rays, and no glow that is not coming from a screen you can see in the frame.
 The darkness is ordinary darkness, not drama: the room is simply unlit, and the machines are simply on.
@@ -536,7 +536,7 @@ COLOUR
 Near-black charcoal #05080C for the room. On it: warm beige and grey moulded plastic, brushed aluminium and pale steel, all of it lit by screen light rather than by any lamp. The screens themselves glow a soft pale cyan-white, and brand cyan #01B4C8 is the colour of that screen light. Deep navy #1B3A6B appears only in the mascot's eyes.
 No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon signage of any kind.
 
-WHAT IS ON THE SCREENS — nothing readable
+WHAT IS ON THE SCREENS, nothing readable
 Every screen in this photograph is switched on and glowing, and none of them carries an interface. No windows, no icons, no menus, no charts, no code, no cursor, and above all no words: a screen is a soft, evenly glowing rectangle of pale light, slightly brighter at its centre, optionally with two or three very soft out-of-focus bands of lighter light across it that are far too diffuse to read as text.
 A screen with legible writing on it is a failed photograph. Leave them glowing and blank.
 
@@ -546,7 +546,7 @@ ${OBJECTS} This banner is deliberately dense: many machines rather than one, arr
 
 ${IN_WORLD_TEXT}
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished banner has words set over it afterwards, in a separate pass you are not doing. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -636,7 +636,7 @@ Nothing else is in the room. The light from the screen reaches the mascot, the t
    *
    * The scene is the boxed retail software of the era the set is shot in,
    * because that is what "everything you need to know" looked like when a
-   * product arrived as a thing rather than a signup — the box, the disc, the
+   * product arrived as a thing rather than a signup, the box, the disc, the
    * manual, all of it on the table at once. It is also the one scene in the
    * house vocabulary that can legitimately carry the product's own name
    * silkscreened across it, which the contract allows and wants.
@@ -662,11 +662,11 @@ The box is the hero and it is turned squarely to the camera. The disc and the ma
     headline: ["Agents you", "can watch"],
     accentFrom: 1,
     subline: "Supervision, not blind trust.",
-    subject: `A single hero form: a large cube of thick, genuinely transparent glass with luminous cyan edges, floating in dark space in the right half of the frame. It is an open enclosure, not a solid block — through its front face you see straight into it, and the far edges are visible through the near ones.
+    subject: `A single hero form: a large cube of thick, genuinely transparent glass with luminous cyan edges, floating in dark space in the right half of the frame. It is an open enclosure, not a solid block, through its front face you see straight into it, and the far edges are visible through the near ones.
 
-The Construct mascot floats at the centre of the cube, lit from within, the brightest thing in the frame, refracting the cyan light around it. Suspended inside the cube around the mascot, at slightly different depths and turned at gentle angles, are four small rounded glass panels carrying soft blurred cyan placeholder bars where writing would be — the work, mid-flight and visible.
+The Construct mascot floats at the centre of the cube, lit from within, the brightest thing in the frame, refracting the cyan light around it. Suspended inside the cube around the mascot, at slightly different depths and turned at gentle angles, are four small rounded glass panels carrying soft blurred cyan placeholder bars where writing would be, the work, mid-flight and visible.
 
-To the right of the cube, partly cropped by the frame edge, a cascade of five small rounded glass activity rows steps down and back into the dark, each dimmer than the one before, each with a tiny bright cyan dot at its left end — a feed of what just happened, receding.
+To the right of the cube, partly cropped by the frame edge, a cascade of five small rounded glass activity rows steps down and back into the dark, each dimmer than the one before, each with a tiny bright cyan dot at its left end, a feed of what just happened, receding.
 
 A saturated cyan bloom sits directly behind the glass cube. A faint dashed orbit ring passes behind it. Thin dim cyan circuit traces run horizontally at 90 and 45 degrees in the far background on the right side only. The left half of the frame is empty near-black, reached by nothing but the soft outer falloff of the bloom.`,
   },
@@ -702,7 +702,7 @@ const photographic = theme === "studio" || theme === "loud";
 
 /**
  * The studio contract puts its own OUTPUT line last, after the forbidden list,
- * exactly as the route cards do — so the subject is spliced in above it rather
+ * exactly as the route cards do, so the subject is spliced in above it rather
  * than appended, and the two contracts end up the same shape from the model's
  * side even though only one of them is a photograph.
  */
@@ -710,14 +710,14 @@ const contract = theme === "loud" ? nightContract : studioContract;
 const prompt = photographic
   ? contract.replace(
       "\nOUTPUT\n",
-      `\nCARD — the only part that differs between cards in this set\n${card.subject}\n\nOUTPUT\n`,
+      `\nCARD, the only part that differs between cards in this set\n${card.subject}\n\nOUTPUT\n`,
     )
   : `${styleContract}
 
 CONTEXT
 This is the cover image for "${card.title}", a post from construct.computer. It is seen inside a dark social feed at roughly the width of a phone, so it has to read at a glance and hold up shrunk.
 
-SUBJECT — the only thing that changes between cards in this set
+SUBJECT, the only thing that changes between cards in this set
 ${card.subject}
 
 OUTPUT

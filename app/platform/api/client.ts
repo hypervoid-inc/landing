@@ -24,7 +24,7 @@ export function isUnauthorized(result: ApiResult<unknown>): boolean {
   return !result.success && result.status === 401;
 }
 
-/** True when retrying could plausibly succeed — drives the Retry affordance. */
+/** True when retrying could plausibly succeed, drives the Retry affordance. */
 export function isRetryable(result: ApiResult<unknown>): boolean {
   if (result.success) return false;
   if (result.kind === "network") return true;

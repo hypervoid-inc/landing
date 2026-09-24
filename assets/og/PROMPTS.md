@@ -14,11 +14,11 @@ headline and the domain are set in code by `scripts/og/typeset.mjs` when
 
 **Every generation must attach these references**, in this order:
 
-1. `assets/refs/mascot-sheet.png` — THE MASCOT, and the single most important thing to get right. Seven photographs of ONE real moulded object — the large one at the left is its front, and the six beside it are the same object turned slightly so you can see its thickness. Photograph this exact object. Copy its outline, its proportions, its depth, and the size and placement of its two eyes directly from these pictures. It reads as a square with four soft corner bulges, as wide as it is tall, broad and full through the middle. It is an inanimate product, not a character: it has no limbs and never poses. Do not restyle it and do not improve it.
-1. `assets/og/style/master.webp` — THE STYLE PLATE — an approved photograph from this exact set. Copy its studio, its background tone and falloff, its light, its exposure, its contact shadows, its depth of field, and how large the mascot sits in the frame. Your photograph must look like it came off the same table on the same afternoon. Take the room and the light from this, but take the mascot's form from reference 1, which outranks it. Only the object being photographed differs. It carries no text, and neither does yours.
-1. `assets/refs/sys-requirements.png` — THE PALETTE AND THE FINISH. A pale, softly lit, near-white studio; a real product photographed calmly with no drama; gentle contact shadows; the mascot reading as a physical object rather than a graphic. Match this brightness, this restraint, and this quality of light exactly. Do not copy its cream tint, its ruled boxes, its layout, its hard-edged rendering of the mascot, or any of its words.
-1. `assets/refs/realistic-slip.png` — PHYSICAL CRAFT. One real object photographed against a plain bright seamless wall, with honest material, honest paper, and real air around it. Match this respect for the object and this amount of empty space. Do not copy its grey tint, its layout, or any of its words.
-1. `public/assets/landing/pricing/enterprise-agent.webp` — The mascot's material as the brand renders it: soft, milky, semi-opaque pale ice-blue, one gentle diffuse highlight, nothing visible through it. Match the material and the softness only. Do not copy this image's angle, its white tray, its background rays, or its composition.
+1. `assets/refs/mascot-sheet.png`, THE MASCOT, and the single most important thing to get right. Seven photographs of ONE real moulded object, the large one at the left is its front, and the six beside it are the same object turned slightly so you can see its thickness. Photograph this exact object. Copy its outline, its proportions, its depth, and the size and placement of its two eyes directly from these pictures. It reads as a square with four soft corner bulges, as wide as it is tall, broad and full through the middle. It is an inanimate product, not a character: it has no limbs and never poses. Do not restyle it and do not improve it.
+1. `assets/og/style/master.webp`, THE STYLE PLATE, an approved photograph from this exact set. Copy its studio, its background tone and falloff, its light, its exposure, its contact shadows, its depth of field, and how large the mascot sits in the frame. Your photograph must look like it came off the same table on the same afternoon. Take the room and the light from this, but take the mascot's form from reference 1, which outranks it. Only the object being photographed differs. It carries no text, and neither does yours.
+1. `assets/refs/sys-requirements.png`, THE PALETTE AND THE FINISH. A pale, softly lit, near-white studio; a real product photographed calmly with no drama; gentle contact shadows; the mascot reading as a physical object rather than a graphic. Match this brightness, this restraint, and this quality of light exactly. Do not copy its cream tint, its ruled boxes, its layout, its hard-edged rendering of the mascot, or any of its words.
+1. `assets/refs/realistic-slip.png`, PHYSICAL CRAFT. One real object photographed against a plain bright seamless wall, with honest material, honest paper, and real air around it. Match this respect for the object and this amount of empty space. Do not copy its grey tint, its layout, or any of its words.
+1. `public/assets/landing/pricing/enterprise-agent.webp`, The mascot's material as the brand renders it: soft, milky, semi-opaque pale ice-blue, one gentle diffuse highlight, nothing visible through it. Match the material and the softness only. Do not copy this image's angle, its white tray, its background rays, or its composition.
 
 The first two are the ones that matter. Prose describes a shape and a room;
 the turnaround and the plate *are* the shape and the room, and a run without
@@ -29,51 +29,51 @@ then run `pnpm og` to crop, typeset, and publish into `public/og/`.
 
 ## `home`
 
-AI Employee for Solo Founders and Small Teams — home
+AI Employee for Solo Founders and Small Teams, home
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -81,14 +81,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 A printed poster: a cut-out CRT monitor and the mascot floating over a bank of clouds on a flat field, with outlined display type across the top, a monospace specification block in the lower left, and the wordmark running up the right edge.
 
 ABSOLUTELY NOT
@@ -103,51 +103,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `about`
 
-About — page
+About, page
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -155,14 +155,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of the nearest of three identical beige desktop towers standing shoulder to shoulder in a row, that one turned to face the camera.
 
 ABSOLUTELY NOT
@@ -177,51 +177,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `careers`
 
-Careers — page
+Careers, page
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -229,14 +229,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a closed steel desk pedestal, a brushed nameplate holder with a blank insert standing on the surface beside it and one office chair back just entering the frame behind.
 
 ABSOLUTELY NOT
@@ -251,51 +251,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `affiliates`
 
-Affiliate Program — page
+Affiliate Program, page
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -303,14 +303,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a heavy metal cash register with its drawer standing open below, a short stack of paper receipts clipped to a spindle beside it.
 
 ABSOLUTELY NOT
@@ -325,51 +325,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `editorial-policy`
 
-Editorial Policy — page
+Editorial Policy, page
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -377,14 +377,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a metal clipboard laid flat over a thick block of printed pages, a rubber date stamp resting on the topmost sheet beside it.
 
 ABSOLUTELY NOT
@@ -399,51 +399,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `support`
 
-Support — page
+Support, page
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -451,14 +451,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a beige desk telephone, the handset lifted out of its cradle and lying beside it with the coiled cord still trailing.
 
 ABSOLUTELY NOT
@@ -473,51 +473,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `privacy`
 
-Privacy Policy — page
+Privacy Policy, page
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -525,14 +525,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a small steel document safe with its door shut and its dial squarely centred, one key lying flat on the surface beside it.
 
 ABSOLUTELY NOT
@@ -547,51 +547,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `sub-processors`
 
-Sub-processors — page
+Sub-processors, page
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -599,14 +599,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a metal card index drawer pulled open, a short stack of typed vendor cards standing in the tray below and one card lifted just clear of the rest.
 
 ABSOLUTELY NOT
@@ -621,51 +621,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `terms`
 
-Terms & Conditions — page
+Terms & Conditions, page
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -673,14 +673,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a thick bound contract lying closed, a heavy bulldog clip along its edge and a plain wax seal set on the cover beside it.
 
 ABSOLUTELY NOT
@@ -695,51 +695,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog`
 
-Construct insights and guides — blog-index
+Construct insights and guides, blog-index
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -747,14 +747,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a wire magazine rack packed with slim technical journals, the nearest one pulled half out of its slot below.
 
 ABSOLUTELY NOT
@@ -769,51 +769,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-running-ai-agents-on-cloudflare-not-vms`
 
-All our Agents get computers, we pay for almost none — blog-post
+All our Agents get computers, we pay for almost none, blog-post
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -821,14 +821,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a rack-mount server unit with its lid off and its bays empty, a single hard disk resting on the open chassis beside it.
 
 ABSOLUTELY NOT
@@ -843,51 +843,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-how-to-choose-an-ai-agent-platform-for-your-team`
 
-How to Choose an AI Agent Platform for Your Team — guide
+How to Choose an AI Agent Platform for Your Team, guide
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -895,14 +895,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of the middle of three shrink-wrapped software boxes standing upright in a row, that box pulled forward and turned to face the camera.
 
 ABSOLUTELY NOT
@@ -917,51 +917,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-build-internal-tools-with-construct`
 
-How Construct Builds Internal Tools in Your Workspace — blog-post
+How Construct Builds Internal Tools in Your Workspace, blog-post
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -969,14 +969,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a half-assembled machine chassis on a workbench, a bare board, two screws and a case panel laid out on the bench below it.
 
 ABSOLUTELY NOT
@@ -991,51 +991,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-ai-agent-vs-zapier`
 
-AI Agent vs Zapier Automation — blog-post
+AI Agent vs Zapier Automation, blog-post
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1043,14 +1043,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a squat beige tape reader, a long strip of punched paper tape running dead straight out of it across the bench, its holes identical the whole way along.
 
 ABSOLUTELY NOT
@@ -1065,51 +1065,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-ai-agent-vs-virtual-assistant`
 
-AI Agent vs Virtual Assistant: Cost and Capabilities — blog-post
+AI Agent vs Virtual Assistant: Cost and Capabilities, blog-post
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1117,14 +1117,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a punch-card time clock, a rack of blank cards standing below it and one card left half inserted in the slot.
 
 ABSOLUTELY NOT
@@ -1139,51 +1139,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-ai-agent-memory`
 
-AI Agent Memory You Can Control — guide
+AI Agent Memory You Can Control, guide
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1191,14 +1191,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a wooden card index drawer pulled fully open, tightly packed index cards inside it, one card lifted clear and one lying face down beside the drawer.
 
 ABSOLUTELY NOT
@@ -1213,51 +1213,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-ai-employee`
 
-AI Employee for Real Business Work — guide
+AI Employee for Real Business Work, guide
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1265,14 +1265,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a stacked wire paper tray filled with printed pages, a brushed steel desk nameplate standing on the surface beside it and a pen laid across the topmost page.
 
 ABSOLUTELY NOT
@@ -1287,51 +1287,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-ai-workflow-automation`
 
-AI Workflow Automation — guide
+AI Workflow Automation, guide
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1339,14 +1339,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a dot-matrix printer mid-run, a continuous fanfold printout feeding out of it and concertinaing into a neat stack below.
 
 ABSOLUTELY NOT
@@ -1361,51 +1361,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-construct-vs-chatgpt`
 
-Construct vs ChatGPT, Claude, and Gemini — comparison
+Construct vs ChatGPT, Claude, and Gemini, comparison
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1413,14 +1413,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a wire tray heaped with finished printed documents, a small answering machine with a single cassette in it standing idle beside it.
 
 ABSOLUTELY NOT
@@ -1435,51 +1435,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-construct-vs-coding-agents`
 
-Construct vs coding-focused agents — comparison
+Construct vs coding-focused agents, comparison
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1487,14 +1487,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a wide flat toolbox lying closed, its trays fanned shut, and a tall narrow stack of punch cards standing on end beside it.
 
 ABSOLUTELY NOT
@@ -1509,51 +1509,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-construct-vs-copilot`
 
-Construct vs Microsoft Copilot and Google Workspace AI — comparison
+Construct vs Microsoft Copilot and Google Workspace AI, comparison
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1561,14 +1561,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a hard-sided briefcase lying flat and locked with combination dials, a second identical case standing on its edge behind it.
 
 ABSOLUTELY NOT
@@ -1583,51 +1583,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-construct-vs-diy`
 
-Construct vs building your own AI agent — comparison
+Construct vs building your own AI agent, comparison
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1635,14 +1635,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of one finished machine standing closed and clean, a parts tray of loose brackets, screws, ribbon cable and an unmounted drive set out below it.
 
 ABSOLUTELY NOT
@@ -1657,51 +1657,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-construct-vs-zapier`
 
-Construct vs Zapier, Make, and n8n — comparison
+Construct vs Zapier, Make, and n8n, comparison
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1709,14 +1709,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a bank of three identical tape drives standing side by side, a strip of punched paper tape running straight out of each in perfect alignment.
 
 ABSOLUTELY NOT
@@ -1731,51 +1731,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-what-is-an-ai-employee`
 
-What is an AI employee? — blog-post
+What is an AI employee? - blog-post
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1783,14 +1783,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a squat beige monitor stand alone at the centre of the frame, larger than on any other card, a blank employee ID badge on a lanyard lying flat below it. Essentially a portrait.
 
 ABSOLUTELY NOT
@@ -1805,51 +1805,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-chat-assistants-vs-ai-employees`
 
-Chat Assistants vs AI Employees — blog-post
+Chat Assistants vs AI Employees, blog-post
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1857,14 +1857,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of one finished bound report lying squarely closed, a spike file crowded with torn message slips standing beside it.
 
 ABSOLUTELY NOT
@@ -1879,51 +1879,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `authors`
 
-Authors — author-index
+Authors, author-index
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -1931,14 +1931,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a manual typewriter with a half-typed page still in its carriage, three fountain pens lined up on the surface below it.
 
 ABSOLUTELY NOT
@@ -1953,51 +1953,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `authors-ankush`
 
-Ankush — author
+Ankush, author
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -2005,14 +2005,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a thick ream of typed paper, a single fountain pen lying uncapped across the top sheet and its cap resting a little apart.
 
 ABSOLUTELY NOT
@@ -2027,51 +2027,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `authors-nischal`
 
-Nischal — author
+Nischal, author
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -2079,14 +2079,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a typewriter carriage lifted out on its own, a page still threaded through the platen and two finished pages stacked below.
 
 ABSOLUTELY NOT
@@ -2101,51 +2101,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `authors-construct-team`
 
-Construct Team — author
+Construct Team, author
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -2153,14 +2153,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of a shallow steel document tray holding three identical brushed nameplates standing in a row, all of them blank.
 
 ABSOLUTELY NOT
@@ -2175,51 +2175,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-tag-ai-agent`
 
-Writing tagged AI agent — tag
+Writing tagged AI agent, tag
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -2227,14 +2227,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled AI AGENT.
 
 ABSOLUTELY NOT
@@ -2249,51 +2249,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-tag-ai-employee`
 
-Writing tagged AI employee — tag
+Writing tagged AI employee, tag
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -2301,14 +2301,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled AI EMPLOYEE.
 
 ABSOLUTELY NOT
@@ -2323,51 +2323,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-tag-chatgpt`
 
-Writing tagged ChatGPT — tag
+Writing tagged ChatGPT, tag
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -2375,14 +2375,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled CHATGPT.
 
 ABSOLUTELY NOT
@@ -2397,51 +2397,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-tag-comparison`
 
-Writing tagged comparison — tag
+Writing tagged comparison, tag
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -2449,14 +2449,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled COMPARISON.
 
 ABSOLUTELY NOT
@@ -2471,51 +2471,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-tag-product`
 
-Writing tagged product — tag
+Writing tagged product, tag
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -2523,14 +2523,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled PRODUCT.
 
 ABSOLUTELY NOT
@@ -2545,51 +2545,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-tag-workflow-automation`
 
-Writing tagged workflow automation — tag
+Writing tagged workflow automation, tag
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -2597,14 +2597,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled WORKFLOW.
 
 ABSOLUTELY NOT
@@ -2619,51 +2619,51 @@ One finished 16:9 photograph obeying every rule above: bright, pale, calm, convi
 
 ## `blog-tag-zapier`
 
-Writing tagged zapier — tag
+Writing tagged zapier, tag
 
 ```text
-CONSTRUCT COMPUTER — SOCIAL CARD SYSTEM
+CONSTRUCT COMPUTER, SOCIAL CARD SYSTEM
 You are shooting one photograph from a set of several dozen. Every card in the set is the same studio, the same lighting rig, the same surface, and the same staging. Only the object being photographed changes. The cards are seen side by side, where any drift is obvious, so follow this exactly.
 
 CANVAS
 16:9 landscape, filling the frame edge to edge. No border, no frame, no rounded corners, no mockup presentation, no drop shadow around the canvas itself.
 The top 4% and the bottom 4% of the frame will be cropped away before publishing. Keep the whole of the hero object inside the middle 92%.
 
-THE STUDIO — identical on every card, never redesign it
-A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner — the objects sit on a seamless surface that fades away behind them.
+THE STUDIO, identical on every card, never redesign it
+A bright, seamless, paper-white studio. The background is near-white #FFFFFF through the upper middle of the frame and cools very gently to a pale blue-white #EFF7F9 toward the outer edges and the lower corners. It is a soft, even, almost shadowless room: one very large diffused source high and slightly front-left, a white bounce on the right, and no other lights. There is no visible floor line, no horizon, and no wall corner, the objects sit on a seamless surface that fades away behind them.
 The falloff is gentle and physical. There is no vignette, no spotlight pool, no rays, no starburst, no lens flare, no bloom, and no dark corners anywhere in the frame. Nothing in this photograph is dark: the darkest thing on the card is the mascot's navy eyes and the shadow directly beneath an object.
 
 THE PHOTOGRAPH
 A real studio product photograph on a medium-format camera with a 100mm macro at a middling aperture: sharp through the subject, softly and evenly lit, honest materials, and soft-edged contact shadows pooling close under everything that touches the surface. High key, airy, and expensive. Calm rather than dramatic.
 Not an illustration, not flat vector, not cel shading, not a painting, not a UI mockup, not a glowing marketing render, and not a dark moody studio.
 
-COLOUR — the landing page's own palette, and nothing else
+COLOUR, the landing page's own palette, and nothing else
 The ground is white and pale blue-white. On it: warm beige and grey moulded plastic, brushed aluminium, pale steel, off-white printed paper and manila card, and the soft milky ice-blue of the mascot. Brand cyan #01B4C8 appears once at most, small, as an indicator light, a printed label, or a cable. Deep navy #1B3A6B appears only in the mascot's eyes.
 No deep or saturated blue ground. No navy, black, or charcoal background. No purple, magenta, orange, red, yellow, green, gold, or iridescent oil-slick. No neon anything.
 
-THE MASCOT — a manufactured object, present and hero on every card
+THE MASCOT, a manufactured object, present and hero on every card
 The mascot is a small moulded product that exists in the real world, like a paperweight or a desk toy that came out of a mould. It is NOT a character, NOT a creature, and NOT a mascot costume. It does not act, pose, perch, lean, climb, hold, or react.
 
 HOW IT IS ALWAYS PLACED. It rests flat on the upward-facing surface of the larger object in the scene, the way a paperweight rests on a stack of paper: its whole underside in contact, square to the camera, sitting still and upright. It never stands on the table on its own, never straddles or sits astride anything, never hangs over an edge, and nothing of it dangles below the surface it rests on. Its contact shadow is a soft patch directly under it.
-HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height — about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
+HOW BIG IT IS. Large. It is the hero of the photograph and it fills roughly a third of the frame's height, about as wide as the surface it is resting on, so it reads as a substantial object in its own right rather than as a small ornament placed on furniture. Photographed straight on at its own level, not looked down upon.
 
-ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image — its outline, its proportions, its thickness, the size and placement of its two eyes — as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
+ITS FORM IS GIVEN ENTIRELY BY REFERENCE 1. Copy the object in that image, its outline, its proportions, its thickness, the size and placement of its two eyes, as if you were photographing that exact object again from a slightly different angle. Do not redesign it, do not stylise it, and do not improve it. Read the shape off the picture, not off this paragraph.
 The only thing worth saying in words is the one proportion that goes wrong: it reads as a SQUARE first, with four soft bulges at its corners. It is as wide as it is tall, and the body between the lobes stays broad and full.
 
-ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass — it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
+ITS MATERIAL. A soft, semi-opaque, milky pale ice-blue, the colour of frosted resin or a pale silicone gel. It is matte to satin, never wet-looking: one broad soft diffuse highlight and nothing else. It is NOT clear glass, it does not refract, throws no caustics, has no mirror-bright speculars, and you cannot see through it.
 
 WHAT IT IS NEVER. No arms, no legs, no hands, no feet, no paws, no ears, no tail, no mouth, no nose, no eyebrows, no limbs of any kind. Its four lobes are corners of its own body and are never drawn as limbs or used to sit, straddle, dangle, grip, or hold anything.
 It is never two objects joined end to end, never pinched or waisted in the middle, never a bone, dumbbell, cross, X, starfish, bowtie, or four balls on a stalk. It is never a cube, a box, a rounded brick, or a cushion with corners. It is never a cloud, a puff, a blob, a dome, an egg, an oval, a flower with petals, or an animal.
 Its two upright deep-navy #1B3A6B capsule eyes are always present, level, the same size, and clearly visible in the middle of its front. A render without them is a failure.
 
-THE OBJECTS — real things, photographed
+THE OBJECTS, real things, photographed
 Everything sharing the frame with the mascot is a tangible object from the world of working computers, roughly 1995 to 2005, in beige and grey moulded plastic, brushed aluminium, steel, and printed paper: desktop towers, hard disk platters, rack units, floppy disks, CD-ROMs, shrink-wrapped software boxes, dot-matrix continuous printout, punched tape, index card drawers, hanging file folders, manila folders, paper trays, desk telephones, clipboards, bound reports, nameplates, ID badges, keyboards, cables. Well used but immaculate. One hero object, two at the very most.
 
-WRITING ON THE OBJECTS — the only writing anywhere in this image
+WRITING ON THE OBJECTS, the only writing anywhere in this image
 The objects may carry the writing real objects carry: a product name silkscreened on a box, a label on a file tab, a line of print on a page, a moulded logo on a bezel. It should feel manufactured, not annotated.
-It must be short — a few words at most — in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
+It must be short, a few words at most, in plain correctly-spelled English, set small in a quiet neutral sans or a monospace, and physically part of the object it sits on. Where a product name is wanted, use CONSTRUCT or CONSTRUCT COMPUTER. Never invent a price, a version number, a year, a rating, or a marketing slogan. Never write a web address. Nothing may be blurred, doubled, half-formed, or nonsense: if a piece of writing cannot be rendered cleanly and legibly, leave the surface blank instead.
 
-WHERE NOTHING GOES — this photograph carries no type, and has to leave room for it
+WHERE NOTHING GOES, this photograph carries no type, and has to leave room for it
 The finished card has words set over it afterwards, in a separate pass you are not doing. Your job is to photograph the objects so there is somewhere clean to put them. Stage the shot so that:
 
 THE ONE FRAMING RULE, and the easiest one to get wrong:
@@ -2671,14 +2671,14 @@ Picture a vertical line drawn 58% of the way across the frame from the left edge
 
   EVERYTHING YOU PHOTOGRAPH SITS ENTIRELY TO THE RIGHT OF THAT LINE.
 
-Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits — do not let it stretch across.
+Nothing crosses it. Not the mascot, not the object it rests on, not a second object, not a corner, not a cable, not a cast shadow, not a highlight, not a blurred edge. If the object is too big to fit to the right of the line, shoot it smaller or from further back until it fits, do not let it stretch across.
 Everything to the LEFT of that line is completely empty: plain, smooth, evenly lit pale background, from the top of the frame to the bottom, with nothing in it at all. It is about 58% of the picture and it must read as deliberate, generous air.
 Also keep the top 17% of the frame clear across the full width. Nothing rises into it.
 
 So the composition is: a wide sweep of empty studio filling the left of the frame, and the mascot on its object sitting compactly in the right-hand portion, well clear of the line.
 Do not draw a headline, a logo, a wordmark, a badge, a caption, a URL, a watermark, or any lettering laid over the photograph. There is no text over this image.
 
-CARD — the only part that differs between cards in this set
+CARD, the only part that differs between cards in this set
 The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled ZAPIER.
 
 ABSOLUTELY NOT

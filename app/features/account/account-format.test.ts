@@ -52,8 +52,8 @@ describe("formatBytes", () => {
   });
 
   it("renders an em dash for absent values rather than 0 B", () => {
-    expect(formatBytes(null)).toBe("—");
-    expect(formatBytes(undefined)).toBe("—");
+    expect(formatBytes(null)).toBe("-");
+    expect(formatBytes(undefined)).toBe("-");
   });
 });
 

@@ -221,7 +221,7 @@
   width: 68px;
 }
 
-/* Absolute only while open — collapsed keeps the sprite in flow so bottom:12px
+/* Absolute only while open, collapsed keeps the sprite in flow so bottom:12px
    pins the whole mascot, not a zero-height shell with the CRT hanging below. */
 .clippy-widget[data-variant="mobile"][data-open="true"] .clippy-sprite {
   position: absolute;

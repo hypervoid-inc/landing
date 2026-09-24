@@ -48,7 +48,7 @@ export const MODE_LABEL: Record<ByokMode, string> = {
 export const MODE_DESCRIPTION: Record<ByokMode, string> = {
   off: "Construct bills you for all inference.",
   auto: "Use your keys when they work, fall back to Construct otherwise.",
-  exclusive: "Never fall back — requests fail if your keys are unavailable.",
+  exclusive: "Never fall back, requests fail if your keys are unavailable.",
 };
 
 /**
@@ -100,7 +100,7 @@ export function groupModelsByVendor(
 }
 
 /**
- * Vision is the one slot with a hard requirement — a model without it cannot
+ * Vision is the one slot with a hard requirement, a model without it cannot
  * fill the slot at all.
  */
 export function modelsForSlot(

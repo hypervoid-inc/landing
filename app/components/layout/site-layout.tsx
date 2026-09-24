@@ -54,7 +54,7 @@ export function SiteHeader() {
 
   // Radix dialogs (Start Now, mobile sheet, confirm) lock body scroll.
   // `overflow: hidden` on body unsticks `position: sticky`, so the nav and
-  // PH bar jump to their in-flow slot — off-screen once you have scrolled.
+  // PH bar jump to their in-flow slot, off-screen once you have scrolled.
   // Translate the paint back to the viewport without `position: fixed`,
   // which would collapse the in-flow slot and jump the page.
   useEffect(() => {

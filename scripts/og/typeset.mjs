@@ -20,7 +20,7 @@ import sharp from "sharp";
  *
  * The consequence is that text style, position, size, and spelling are now
  * identical across the set by construction, and a headline edit no longer needs
- * a regeneration — only a republish.
+ * a regeneration, only a republish.
  *
  * `scripts/og/poster.mjs` imports `RESERVED` from here so the regions the
  * prompt asks the model to keep clear are the same numbers this file sets type
@@ -29,8 +29,8 @@ import sharp from "sharp";
  * The measurement, placement, and bloom helpers are exported because
  * `scripts/generate-social-card.mjs` sets the same type on a 2000x800 banner.
  * Only `typeLayer` below is bound to 1200x630; everything under it takes its
- * sizes and positions as arguments, so a second layout reuses the craft — ink
- * measured off a real render, not estimated from a width table — rather than
+ * sizes and positions as arguments, so a second layout reuses the craft, ink
+ * measured off a real render, not estimated from a width table, rather than
  * reimplementing it and drifting.
  */
 
@@ -46,8 +46,8 @@ export const TYPE_VERSION = 2;
  * Helvetica Neue ships with macOS and its condensed black is the face the set
  * has always been drawn in, so the cards keep the poster weight they had when
  * the model was drawing them. `preflight()` refuses to publish if the condensed
- * cut is not actually resolving, because the fallback — regular Helvetica at
- * weight 900 — is close enough to look deliberate and wrong enough to reset the
+ * cut is not actually resolving, because the fallback, regular Helvetica at
+ * weight 900, is close enough to look deliberate and wrong enough to reset the
  * whole set's typography.
  */
 export const DISPLAY = {
@@ -98,7 +98,7 @@ const HEADLINE = { baseline: 526 };
  * The domain sits under the headline on the left margin, not in the
  * bottom-right corner where it started.
  *
- * The corner is where an object's base and its cable naturally fall — every
+ * The corner is where an object's base and its cable naturally fall, every
  * plate generated for this set put something there, and the domain landed on a
  * power cord in all three. Moving it left costs a little balance and collapses
  * three reserved regions into two, one of which is a single contiguous column
@@ -120,7 +120,7 @@ export const RESERVED = {
    * The type column: this fraction of the width, for the whole height.
    *
    * It covers the full height rather than only the part the headline occupies
-   * because that is a rule a model can actually follow — "everything you
+   * because that is a rule a model can actually follow, "everything you
    * photograph sits right of this line" survives where "keep the lower-left
    * 58% by 55% clear" was rounded away on two cards in three.
    */
@@ -131,8 +131,8 @@ export const RESERVED = {
  * The white bloom that keeps type legible wherever it lands.
  *
  * Lifted from the pricing cards on the landing page (`.pricing-summary` in
- * `app/features/landing/landing.css`), which solve the same problem — words
- * over artwork — and solve it in two layers rather than one:
+ * `app/features/landing/landing.css`), which solve the same problem, words
+ * over artwork, and solve it in two layers rather than one:
  *
  *   PAD    the glyphs dilated and then blurred, which spreads them into a
  *          shaped white backing. A plain `text-shadow` cannot do this: it
@@ -154,7 +154,7 @@ const BLOOM = {
    * The pad is the glyphs fattened and softened, not a rectangle behind them.
    *
    * It started as a blurred rect around the block's ink box, which is what the
-   * landing page does — but the landing page's blocks are a line or two of
+   * landing page does, but the landing page's blocks are a line or two of
    * small text, while a headline here is three ragged-right lines of 70px caps.
    * A rectangle around that covers a great deal of photograph the words never
    * touch, and it showed: a pale slab sitting behind the short lines.
@@ -169,7 +169,7 @@ const BLOOM = {
   /**
    * A third, much wider blur under both, with no dilation.
    *
-   * The pad alone stops fairly abruptly — enough opacity to carry the type, but
+   * The pad alone stops fairly abruptly, enough opacity to carry the type, but
    * it reads as a defined shape sitting on the photograph. This spreads far
    * past it at low density so the whole thing fades out gradually instead of
    * ending. It contributes almost nothing to legibility and everything to the
@@ -307,7 +307,7 @@ export async function place({
 /**
  * Refuses to publish into a font that is not the one the set is set in.
  *
- * A missing condensed cut does not fail — it silently falls back to regular
+ * A missing condensed cut does not fail, it silently falls back to regular
  * Helvetica at weight 900, which is legible, plausible, and a different
  * typeface from the other 33 cards. Comparing the two widths is the only
  * reliable way to notice: condensed is materially narrower, and if it is not,
@@ -384,7 +384,7 @@ async function headlineBlock(lines) {
  * Both layers are the block's own glyphs drawn in white: the pad is dilated and
  * softened so it spreads into a shaped backing, the halo is a tight blur that
  * firms up its core. Each is emitted as several separately-filtered copies
- * rather than one group drawn several times — repeating opaque white inside a
+ * rather than one group drawn several times, repeating opaque white inside a
  * single group composites to exactly the same pixels, so it would build no
  * density at all.
  */

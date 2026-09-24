@@ -34,7 +34,7 @@ export const signupMetaSchema = z
     subscribedVia: z.string().trim().min(1).max(64).optional(),
     authProvider: z.string().trim().min(1).max(32).optional(),
     constructUserId: z.string().trim().min(1).max(64).optional(),
-    /** Construct account username — ingest-only. */
+    /** Construct account username, ingest-only. */
     username: z.string().trim().min(1).max(64).optional(),
     campaignRef: z.string().trim().min(1).max(64).optional(),
     campaignId: z.string().trim().min(1).max(64).optional(),
@@ -52,7 +52,7 @@ export const signupMetaSchema = z
 export const betaSignupSchema = z
   .object({
     email: z.string().trim().toLowerCase().email().max(254),
-    /** Required person name — forwarded to Listmonk, not stored in D1. */
+    /** Required person name, forwarded to Listmonk, not stored in D1. */
     name: z.string().trim().min(2).max(200),
     ctaSource: z.string().min(1),
     /**

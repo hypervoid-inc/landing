@@ -7,8 +7,8 @@
  * too, so the two that fix the mascot come first.
  *
  * The turnaround leads. It replaced `public/icon-512.png`, which was one flat
- * view — not enough to pin a solid, so the model invented its depth afresh
- * every time — and whose own canvas clips the left and right lobes off the
+ * view, not enough to pin a solid, so the model invented its depth afresh
+ * every time, and whose own canvas clips the left and right lobes off the
  * silhouette it was there to establish.
  *
  * The dark social banners (`scripts/generate-social-card.mjs`) and the asset

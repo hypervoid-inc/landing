@@ -1,6 +1,6 @@
 version: 2
 updates:
-  # PostHog npm packages only — lockfiles pin exact versions, so `pnpm install`
+  # PostHog npm packages only - lockfiles pin exact versions, so `pnpm install`
   # never picks up new SDKs. Weekly PRs, human review, no automerge (PostHog
   # Shai-Hulud guidance). GitHub's default 3-day cooldown applies.
   # https://posthog.com/docs/health-checks/keeping-sdks-current

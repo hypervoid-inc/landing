@@ -69,7 +69,7 @@ const dialogSecondary =
 export type AuthSignInFormProps = {
   /** Visual chrome: full login page vs beta dialog. */
   appearance?: "page" | "dialog";
-  /** Extra links under the form (create account / forgot) — login page only. */
+  /** Extra links under the form (create account / forgot), login page only. */
   footer?: ReactNode;
   /** Called after magic/password sign-in succeeds (Google leaves the page). */
   onSuccess?: () => void;
@@ -84,7 +84,7 @@ export type AuthSignInFormProps = {
 };
 
 /**
- * Google + email magic code + password — shared by /login and the on-site
+ * Google + email magic code + password, shared by /login and the on-site
  * auth dialog so those paths cannot drift apart.
  */
 export function AuthSignInForm({

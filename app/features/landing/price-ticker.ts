@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { usePrefersReducedMotion } from "./media";
 
-/** Strong ease-out — same curve family as Clippy / pricing motion. */
+/** Strong ease-out, same curve family as Clippy / pricing motion. */
 export const PRICE_TICK_EASE = (t: number) => 1 - (1 - t) ** 3;
 
 export const PRICE_TICK_MS = 280;
@@ -23,7 +23,7 @@ export function formatPrice(value: number, places: number): string {
 
 /**
  * Direction-aware price ticker: counts down when the target drops, up when it
- * rises. Interruptible — a new target retargets from the in-flight value.
+ * rises. Interruptible, a new target retargets from the in-flight value.
  */
 export function usePriceTicker(targetPrice: string): string {
   const reduced = usePrefersReducedMotion();

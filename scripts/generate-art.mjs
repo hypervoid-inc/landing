@@ -60,7 +60,7 @@ const ledgerPath = path.join(root, "assets/og/generation-log.jsonl");
 try {
   process.loadEnvFile(path.join(root, ".env"));
 } catch {
-  // No .env — the key may come from the environment instead.
+  // No .env, the key may come from the environment instead.
 }
 
 const model = process.env.GEMINI_IMAGE_MODEL ?? defaultModel;
@@ -194,15 +194,15 @@ if (args[0] === "--master") {
 // ─── Repair ──────────────────────────────────────────────────────────────────
 
 /**
- * `pnpm og:fix <name>` — an image-to-image pass over one finished card that
+ * `pnpm og:fix <name>`, an image-to-image pass over one finished card that
  * replaces the mascot and leaves everything else alone.
  *
  * This exists because the mascot's form is the one thing in the system that
  * prose does not hold. Editing the description in `poster.mjs` oscillates: each
  * rewrite fixes the last complaint and introduces a new one, and it costs a
  * regeneration of every card to find that out. An edit pass fixes one card in
- * one call, and leaves its composition — which is usually the expensive part to
- * get right — exactly as it was.
+ * one call, and leaves its composition, which is usually the expensive part to
+ * get right, exactly as it was.
  *
  * `--master` repairs the style plate instead, which is the high-leverage use:
  * the whole set copies whatever mascot the plate carries.
@@ -246,13 +246,13 @@ if (args[0] === "--fix") {
   await writeCard(target, result.data);
   console.log(
     `${path.relative(root, target)} replaced.\n` +
-      `The version before this pass is at ${path.relative(root, backup)} — ` +
+      `The version before this pass is at ${path.relative(root, backup)}, ` +
       `copy it back if the repair came out worse.`,
   );
   process.exit(0);
 }
 
-// `pnpm og:pick <name> <n>` — promote a candidate and drop the rest.
+// `pnpm og:pick <name> <n>`, promote a candidate and drop the rest.
 if (args[0] === "--pick") {
   const card = select(cards, args[1]);
   const chosen = path.join(candidateDirectory, `${card.name}-${args[2]}.webp`);
@@ -311,7 +311,7 @@ if (!missing.length) {
 if (dryRun) {
   for (const card of missing) console.log(`  would generate ${card.name}`);
   console.log(
-    `\nDry run — nothing called. Roughly ${formatUsd(calls * 0.18)} at current Pro rates.`,
+    `\nDry run, nothing called. Roughly ${formatUsd(calls * 0.18)} at current Pro rates.`,
   );
   process.exit(0);
 }
@@ -342,7 +342,7 @@ for (const card of missing) {
       console.log(`        running total ${formatUsd(spent)}`);
     } catch (error) {
       failures.push({ name: card.name, message: error.message });
-      console.log(`FAILED — ${error.message}`);
+      console.log(`FAILED, ${error.message}`);
     }
   }
 }
