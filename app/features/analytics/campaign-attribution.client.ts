@@ -13,9 +13,9 @@ const TOUCH_SESSION_KEY = "construct_campaign_touch";
 
 /**
  * `Domain=.construct.computer` is what carries attribution across the hop to
- * os.construct.computer. Preview builds run on `*.pages.dev` and dev on
+ * app.construct.computer. Preview builds run on `*.pages.dev` and dev on
  * `localhost`, where that attribute would make the browser reject the cookie
- * outright — so it is only added when we're actually on the real domain.
+ * outright, so it is only added when we're actually on the real domain.
  */
 function cookieDomainAttribute(hostname: string): string {
   return hostname === ROOT_DOMAIN || hostname.endsWith(`.${ROOT_DOMAIN}`)
@@ -33,7 +33,7 @@ export function readAttributionCookie(): CampaignAttribution | null {
 
 function writeAttributionCookie(value: CampaignAttribution): void {
   const domain = cookieDomainAttribute(window.location.hostname);
-  // SameSite=Lax so it still rides the top-level navigation to os.* and the
+  // SameSite=Lax so it still rides the top-level navigation to app.* and the
   // Google OAuth round-trip through api.construct.computer.
   document.cookie =
     `${ATTRIBUTION_COOKIE_NAME}=${serializeAttribution(value)}` +
@@ -61,12 +61,12 @@ export function writePromoCode(code: string): void {
  *
  * Called synchronously from the `<Analytics />` mount effect rather than inside
  * the idle callback: a recipient who clicks the hero CTA within a couple of
- * hundred milliseconds must still carry attribution to os.construct.computer.
+ * hundred milliseconds must still carry attribution to app.construct.computer.
  * PostHog initialisation can wait; this cannot.
  *
  * Returns the merged attribution (or null), whether this load was the first
  * touch, and the raw this-navigation parse when it carried `s` (for campaign-
- * touch — do not use first-touch-merged cookie fields for that).
+ * touch, do not use first-touch-merged cookie fields for that).
  */
 export function captureCampaignOnLoad(): {
   attribution: CampaignAttribution | null;
@@ -101,7 +101,7 @@ export function captureCampaignOnLoad(): {
 /**
  * Resolve Listmonk subscriber UUID → email via first-party campaign-touch.
  * One attempt per tab session for a given sid. Pass the **this-click** sid and
- * UTMs from the URL — not first-touch-merged cookie fields (those may omit `s`).
+ * UTMs from the URL, not first-touch-merged cookie fields (those may omit `s`).
  */
 export async function touchCampaignSubscriber(input: {
   sid: string;

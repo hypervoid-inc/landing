@@ -11,7 +11,7 @@ import { canonicalRoutes } from "../app/lib/route-manifest";
 
 const API = "https://api.construct.computer/api";
 
-/** Jump without Lenis coasting — native scrollTo is overwritten mid-lerp. */
+/** Jump without Lenis coasting, native scrollTo is overwritten mid-lerp. */
 async function scrollPageInstant(page: Page, top: number) {
   await page.evaluate((y) => {
     const hook = window.__scrollPageTo;
@@ -273,7 +273,7 @@ test("offers onward reading from a post on every viewport", async ({
     // Canonical trailing-slash internal links, per the project rule.
     expect(href).toMatch(/^\/blog\/[a-z0-9-]+\/$/);
     expect(href).not.toBe(post);
-    // Compact OG thumb beside the title — not a full-column crop.
+    // Compact OG thumb beside the title, not a full-column crop.
     const thumb = link.locator("img");
     await expect(thumb).toBeVisible();
     const box = await thumb.boundingBox();
@@ -548,7 +548,7 @@ test("opens post-login welcome from ?welcome=1 without auth", async ({
     dialog.getByRole("heading", { name: /^Welcome$/i }),
   ).toBeVisible();
   await expect(
-    dialog.getByRole("link", { name: "Open Construct OS" }),
+    dialog.getByRole("link", { name: "Open Construct" }),
   ).toBeVisible();
   await expect(dialog.getByText(/persistent cloud workspace/i)).toBeVisible();
   await dialog.getByRole("button", { name: "Stay on the site" }).click();
@@ -588,7 +588,7 @@ test("shows post-login welcome after dialog magic verify", async ({ page }) => {
     dialog.getByRole("heading", { name: /Welcome,\s*Ada/i }),
   ).toBeVisible();
   await expect(
-    dialog.getByRole("link", { name: "Open Construct OS" }),
+    dialog.getByRole("link", { name: "Open Construct" }),
   ).toBeVisible();
   await expect(dialog.getByText(/persistent cloud workspace/i)).toBeVisible();
 
@@ -600,7 +600,7 @@ test("reopens welcome from seeded post-login flag when authenticated", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    // Seed once per tab — subsequent navigations must not re-arm the flag.
+    // Seed once per tab, subsequent navigations must not re-arm the flag.
     if (
       sessionStorage.getItem("construct.landing.postLoginWelcome.seeded") ===
       "1"
@@ -629,13 +629,13 @@ test("reopens welcome from seeded post-login flag when authenticated", async ({
     dialog.getByRole("heading", { name: /Welcome,\s*Ada/i }),
   ).toBeVisible();
   await expect(
-    dialog.getByRole("link", { name: "Open Construct OS" }),
+    dialog.getByRole("link", { name: "Open Construct" }),
   ).toBeVisible();
 
   await dialog.getByRole("button", { name: "Stay on the site" }).click();
   await expect(dialog).toBeHidden();
 
-  // Flag was consumed — a cold already-authed load must not re-open welcome.
+  // Flag was consumed, a cold already-authed load must not re-open welcome.
   await page.goto("/");
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(
@@ -1211,7 +1211,7 @@ test("scrolls the journal cards as a snap carousel on mobile", async ({
 
   // Lenis still coasts after the +200 assertion, and the pointer is sitting
   // on a card. Either one makes sequential bounding-box reads disagree by
-  // ~8–10px and look like a wrapped row. Freeze scroll, park the pointer,
+  // ~8-10px and look like a wrapped row. Freeze scroll, park the pointer,
   // then sample all three cards in one frame.
   const settledY = await page.evaluate(() => window.scrollY);
   await scrollPageInstant(page, settledY);
@@ -1332,7 +1332,7 @@ test.skip("keeps the landing hero clear and reserves lazy media space", async ({
   context,
   page,
 }) => {
-  await context.route("https://os.construct.computer/", (route) =>
+  await context.route("https://app.construct.computer/", (route) =>
     route.fulfill({ body: "ok" }),
   );
   for (const viewport of [
@@ -1463,7 +1463,7 @@ test.skip("keeps the landing hero clear and reserves lazy media space", async ({
     "background-image",
     /linear-gradient/,
   );
-  // we temporearily commented and dont delete — section titles and body copy are hidden
+  // we temporearily commented and dont delete, section titles and body copy are hidden
   // await expect(page.locator("#what-heading")).toHaveCSS(
   //   "font-size",
   //   await page
@@ -1570,7 +1570,7 @@ test("every landing button responds to a real click", async ({
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
-  await context.route("https://os.construct.computer/", (route) =>
+  await context.route("https://app.construct.computer/", (route) =>
     route.fulfill({ body: "ok" }),
   );
 
@@ -2027,7 +2027,7 @@ test("keeps workflow progress interactive after restoring a reload", async ({
   await page.waitForTimeout(700);
 
   const restoredVideoTitle = await activeTitle();
-  // we temporearily commented and dont delete — section titles are hidden, so
+  // we temporearily commented and dont delete, section titles are hidden, so
   // progress is keyed off the still-visible CTA labels.
   expect(["Collaborate", "Research a Topic"]).toContain(restoredVideoTitle);
   const activeVideo = page.locator(

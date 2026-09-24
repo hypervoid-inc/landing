@@ -50,12 +50,12 @@ type AnalyticsEvent =
   // grid, mid-article read-next, desktop rail) so they can be compared.
   | "related_post_clicked";
 
-/** First-party ingest proxy — never eu.i.posthog.com in the browser. */
+/** First-party ingest proxy, never eu.i.posthog.com in the browser. */
 const POSTHOG_PROXY = "https://x.construct.computer";
-/** EU cloud UI host — dashboard links only; ingest stays on `api_host`. */
+/** EU cloud UI host, dashboard links only; ingest stays on `api_host`. */
 const POSTHOG_UI_HOST = "https://eu.posthog.com";
 /**
- * Shared with apps/web (v2 repo) — both must use the same value or the
+ * Shared with apps/web (v2 repo), both must use the same value or the
  * cross-subdomain identity handoff silently splits into two persons.
  * Bumping this suffix forces a clean slate; only do it in lockstep, and expect
  * a one-time step-change in "new users" on the day it ships.
@@ -78,10 +78,10 @@ export function initializeAnalytics() {
     const key = import.meta.env.VITE_POSTHOG_KEY;
     if (!import.meta.env.PROD || !key) return null;
 
-    // Pre-bundle replay/surveys/exceptions — proxy lazy-load stuck at lazy_loading.
+    // Pre-bundle replay/surveys/exceptions, proxy lazy-load stuck at lazy_loading.
     const { default: posthog } =
       await import("posthog-js/dist/module.full.no-external");
-    // ponytail: intentional max capture for product ops — unmask + network bodies.
+    // ponytail: intentional max capture for product ops, unmask + network bodies.
     // Ceiling: PII in replay/network (incl. beta email); tighten via masks + project scrubbing.
     // Credentials are the hard line: `scrubNetworkCapture` drops password and BYOK
     // key payloads before they reach the recording. See scrub-network-capture.ts.
@@ -104,10 +104,10 @@ export function initializeAnalytics() {
       capture_exceptions: true,
       capture_heatmaps: true,
       capture_dead_clicks: true,
-      // Signup happens on os.construct.computer, so a host-scoped cookie would
+      // Signup happens on app.construct.computer, so a host-scoped cookie would
       // sever anonymous identity (and campaign super properties) at exactly the
       // hop we need to measure. `persistence_name` is bumped alongside this so a
-      // stale host-only `ph_*` cookie can't race the new domain-scoped one —
+      // stale host-only `ph_*` cookie can't race the new domain-scoped one,
       // posthog-js reads the first match, and precedence is not guaranteed.
       // Must stay in lockstep with apps/web in the v2 repo.
       cross_subdomain_cookie: true,
@@ -174,7 +174,7 @@ export function resetAnalyticsUser(): void {
  * `register` puts the values on every subsequent event as super properties.
  * `setPersonProperties(undefined, …)` writes the second argument as `$set_once`,
  * so first-touch values survive the `identify()` that happens at signup and land
- * on the person profile — which is what makes "this account came from campaign
+ * on the person profile, which is what makes "this account came from campaign
  * X" answerable inside PostHog, independent of the D1 column.
  */
 export function registerCampaignAttribution(

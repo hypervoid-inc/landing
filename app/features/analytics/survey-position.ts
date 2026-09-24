@@ -17,7 +17,7 @@ export const POSTHOG_SURVEY_POPUP_POSITION = "left" as const;
 const SURVEY_HOST_PREFIX = "PostHogSurvey-";
 const STYLE_ATTR = "data-construct-survey-position";
 
-/** Positions that already encode a non-default placement — leave them alone. */
+/** Positions that already encode a non-default placement, leave them alone. */
 const PRESERVED_POSITIONS = new Set([
   "left",
   "center",

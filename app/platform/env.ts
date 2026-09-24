@@ -8,9 +8,15 @@ export function getApiBaseUrl(): string {
   return `${getApiOrigin()}/api`;
 }
 
-export function getOsOrigin(): string {
-  const raw = import.meta.env.VITE_OS_ORIGIN?.trim();
-  return (raw || "https://os.construct.computer").replace(/\/$/, "");
+/**
+ * Where "open the app" goes: the Construct dashboard, the shell the product
+ * leads with and the only one that runs on a phone. The desktop shell still
+ * lives at `os.construct.computer` and is reachable from inside the app, so
+ * the site does not need to name it.
+ */
+export function getAppOrigin(): string {
+  const raw = import.meta.env.VITE_APP_ORIGIN?.trim();
+  return (raw || "https://app.construct.computer").replace(/\/$/, "");
 }
 
 export function getTurnstileSiteKey(): string | undefined {

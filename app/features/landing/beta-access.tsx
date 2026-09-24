@@ -24,7 +24,7 @@ if (typeof document !== "undefined") {
 }
 
 import { betaSignupSchema } from "../../../shared/beta-signup-schema";
-import { getOsOrigin } from "../../platform/env";
+import { getAppOrigin } from "../../platform/env";
 import { AuthSignInForm } from "../auth/auth-sign-in-form";
 import { useAuth } from "../auth/auth-provider";
 import {
@@ -57,7 +57,7 @@ export type AccessDialogMode = "auth" | "updates";
 /**
  * `start` reframes the auth dialog for people who have never had an account.
  * Same Google + email-code plumbing; it only stops the copy from implying a
- * prior Construct OS account is required.
+ * prior Construct account is required.
  *
  * This is the default for every `StartLink`, because those are the warm CTAs
  * on marketing surfaces where the reader is by definition not signed in.
@@ -119,7 +119,7 @@ export function StartLink({
   className?: string;
   label?: string;
   source?: string;
-  /** When signed in, render this instead of `children` (e.g. "Open OS"). */
+  /** When signed in, render this instead of `children` (e.g. "Open Construct"). */
   authedChildren?: ReactNode;
   /** Defaults to `start`: these CTAs are aimed at people without an account. */
   intent?: AccessDialogIntent;
@@ -127,7 +127,7 @@ export function StartLink({
 }) {
   const { status } = useAuth();
   const openDialog = useContext(BetaAccessContext);
-  const osOrigin = getOsOrigin();
+  const appOrigin = getAppOrigin();
   const authenticated = status === "authenticated";
 
   const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -146,7 +146,7 @@ export function StartLink({
 
   return (
     <a
-      href={osOrigin}
+      href={appOrigin}
       target={authenticated ? "_blank" : undefined}
       rel={authenticated ? "noreferrer" : undefined}
       aria-label={label}
@@ -176,7 +176,7 @@ export function BetaLink({
   onClick?: () => void;
 }) {
   const openDialog = useContext(BetaAccessContext);
-  const osOrigin = getOsOrigin();
+  const appOrigin = getAppOrigin();
   const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
     onBeforeClick?.();
     if (hasBetaAccess()) {
@@ -190,7 +190,7 @@ export function BetaLink({
 
   return (
     <a
-      href={osOrigin}
+      href={appOrigin}
       target="_blank"
       rel="noreferrer"
       aria-label={label}
@@ -257,7 +257,7 @@ function AccessDialog({
   const [turnstileToken, setTurnstileToken] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const osOrigin = getOsOrigin();
+  const appOrigin = getAppOrigin();
   const welcomeShown = useRef(false);
 
   useEffect(() => {
@@ -482,7 +482,7 @@ function AccessDialog({
         <Dialog.Content
           onEscapeKeyDown={(event) => !canDismiss && event.preventDefault()}
           onPointerDownOutside={(event) => {
-            // Welcome: force an intentional Stay / X — don't treat the dim
+            // Welcome: force an intentional Stay / X, don't treat the dim
             // backdrop as dismiss.
             if (mode === "auth" && phase === "success") {
               event.preventDefault();
@@ -528,7 +528,7 @@ function AccessDialog({
               </Dialog.Title>
               {intent === "start" ? null : (
                 <Dialog.Description className="mt-3 text-center text-[15px] leading-[21px] text-[#627c86]">
-                  Sign in with the same account you use for Construct OS.
+                  Sign in with the same account you use for Construct.
                 </Dialog.Description>
               )}
               <AuthSignInForm
@@ -728,7 +728,7 @@ function AccessDialog({
                 ) : null}
               </Dialog.Title>
               <Dialog.Description className="mt-3 text-[15px] leading-[21px] text-[#627c86]">
-                Construct OS is your persistent cloud workspace — agents, files,
+                Construct is your persistent cloud workspace, agents, files,
                 and work that keeps running.
               </Dialog.Description>
               <ul className="mt-6 space-y-3 text-left text-[14px] leading-5 text-[#4e4646]">
@@ -763,14 +763,14 @@ function AccessDialog({
                 </p>
               ) : null}
               <a
-                href={osOrigin}
+                href={appOrigin}
                 onClick={() => {
                   captureAnalytics("post_login_welcome_os", { source });
                   captureAnalytics("app_opened", { source });
                 }}
                 className="beta-access-cta mt-8 h-[52px] w-full text-lg"
               >
-                Open Construct OS
+                Open Construct
               </a>
               <button
                 type="button"
@@ -794,7 +794,7 @@ function AccessDialog({
                 No need to wait for the next one. Construct is ready now.
               </Dialog.Description>
               <a
-                href={osOrigin}
+                href={appOrigin}
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => {
@@ -843,7 +843,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (status === "anonymous") {
-      // Don't wipe a local URL preview — only clear leave-bridge flags.
+      // Don't wipe a local URL preview, only clear leave-bridge flags.
       if (peekPostLoginWelcome()) clearPostLoginWelcome();
       handledWelcome.current = false;
       return;
@@ -860,7 +860,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // Defer past the effect body — opening the dialog is a reaction to auth
+    // Defer past the effect body, opening the dialog is a reaction to auth
     // settling + sessionStorage, not derived render state.
     queueMicrotask(() => {
       setMode("auth");

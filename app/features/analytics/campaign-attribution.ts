@@ -3,14 +3,14 @@
  *
  * Email campaigns land on `construct.computer` with short query keys
  * (`?s=…&uc=…&uo=…`) or legacy long names (`?ref=…&cid=…&sid=…&utm_*`).
- * Signup happens on `os.construct.computer` and the account row lives behind
+ * Signup happens on `app.construct.computer` and the account row lives behind
  * `api.construct.computer`. This module owns the portable representation that
  * survives both hops: a compact cookie scoped to `.construct.computer`.
  *
  * Two deliberate constraints shape everything here:
  *
  * 1. Keys are one or two characters. The parsed values also ride along as
- *    PostHog super properties, which share a single ~4KB cookie — when it
+ *    PostHog super properties, which share a single ~4KB cookie, when it
  *    overflows, posthog-js drops properties silently. Short keys plus the length
  *    cap below keep the whole payload in the hundreds of bytes.
  * 2. Values are allowlisted and pattern-checked. Anything arriving from a query
@@ -35,11 +35,11 @@ const PROMO_PATTERN = /^[A-Z0-9]{4,16}$/;
 const PATH_PATTERN = /^\/[A-Za-z0-9._~\-/]{0,127}$/;
 
 export type CampaignAttribution = {
-  /** `ref` — coarse channel, e.g. `mailinglist`. */
+  /** `ref`, coarse channel, e.g. `mailinglist`. */
   r?: string;
-  /** `cid` — listmonk campaign UUID. */
+  /** `cid`, listmonk campaign UUID. */
   c?: string;
-  /** `sid` — listmonk subscriber UUID. Pseudonymous, never the email address. */
+  /** `sid`, listmonk subscriber UUID. Pseudonymous, never the email address. */
   s?: string;
   /** `utm_source` */
   us?: string;
@@ -47,7 +47,7 @@ export type CampaignAttribution = {
   um?: string;
   /** `utm_campaign` */
   uc?: string;
-  /** `utm_content` — link placement, e.g. `cta-body-1`. */
+  /** `utm_content`, link placement, e.g. `cta-body-1`. */
   uo?: string;
   /** Promo code (`code` or `promo`), uppercased. */
   p?: string;
@@ -165,7 +165,7 @@ export function serializeAttribution(value: CampaignAttribution): string {
 }
 
 /**
- * Parse the cookie value. Tolerates anything — a malformed or hand-edited
+ * Parse the cookie value. Tolerates anything, a malformed or hand-edited
  * cookie must degrade to "no attribution", never throw during app boot.
  */
 export function parseAttributionCookie(

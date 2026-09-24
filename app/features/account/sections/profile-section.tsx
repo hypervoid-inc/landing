@@ -76,7 +76,7 @@ export function ProfileSection({
         <div className="border-t border-[var(--color-line-soft)] pt-3">
           <Row label="Email" hint="Contact support to change your email.">
             <span className="text-sm text-[var(--color-ink-muted)]">
-              {user.email ?? "—"}
+              {user.email ?? "-"}
             </span>
           </Row>
         </div>
@@ -101,7 +101,7 @@ export function ProfileSection({
           />
           {workspaces.length < 2 ? (
             <p className="mt-1 text-xs text-[var(--color-ink-subtle)]">
-              Create a team workspace in the OS to switch between them.
+              Create a team workspace in Construct to switch between them.
             </p>
           ) : null}
         </div>

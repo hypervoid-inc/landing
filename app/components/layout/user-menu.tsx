@@ -12,7 +12,7 @@ import { Link } from "react-router";
 import { useAuth } from "../../features/auth/auth-provider";
 import { cn } from "../../lib/cn";
 import type { AuthUser } from "../../platform/api/schemas";
-import { getOsOrigin } from "../../platform/env";
+import { getAppOrigin } from "../../platform/env";
 import "./site-nav.css";
 
 /** Keep in step with the desktop nav rail in `site-nav.tsx`. */
@@ -98,8 +98,8 @@ export function AccountPanelBody({
           →
         </span>
       </Link>
-      <a href={getOsOrigin()} className={itemClassName} onClick={onNavigate}>
-        <span className="min-w-0 truncate">Open OS</span>
+      <a href={getAppOrigin()} className={itemClassName} onClick={onNavigate}>
+        <span className="min-w-0 truncate">Open Construct</span>
         <span aria-hidden className="site-nav-item-arrow">
           →
         </span>

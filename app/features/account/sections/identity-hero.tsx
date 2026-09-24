@@ -6,7 +6,7 @@ import {
 } from "../../../components/ui/primitives";
 import { cn } from "../../../lib/cn";
 import type { AuthUser } from "../../../platform/api/schemas";
-import { getOsOrigin } from "../../../platform/env";
+import { getAppOrigin } from "../../../platform/env";
 import type { Resource } from "../use-account-data";
 import type { BillingPlan } from "../../../platform/api/schemas";
 import {
@@ -65,13 +65,13 @@ export function IdentityHero({
             </Button>
           ) : null}
           <a
-            href={getOsOrigin()}
+            href={getAppOrigin()}
             className={cn(
               buttonVariants({ variant: "secondary" }),
               "no-underline",
             )}
           >
-            Open OS ↗
+            Open Construct ↗
           </a>
         </div>
       </div>
