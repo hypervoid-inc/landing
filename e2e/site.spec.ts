@@ -933,7 +933,7 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     await expect(
       cards.nth(0).getByText("Try Construct for yourself"),
     ).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-    await expect(cards.nth(0)).toContainText("5-minute command runtime");
+    await expect(cards.nth(0)).toContainText("5 min command runtime");
     await expect(cards.nth(1)).toContainText("Recommended");
     await expect(cards.nth(1)).toHaveAttribute("data-recommended", "");
     await expect(cards.nth(0)).not.toHaveAttribute("data-recommended");
@@ -946,10 +946,10 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
       "Full desktop power + your own model keys",
     );
     await expect(cards.nth(2)).toContainText(
-      "Deep runs - up to 1,000 steps per task",
+      "Deep runs, up to 1,000 steps per task",
     );
     await expect(cards.nth(2)).toContainText(
-      "Bring your own model keys (BYOK)",
+      "Bring your own keys (BYOK)",
     );
     const starterBox = await cards.nth(1).boundingBox();
     const badge = cards.nth(1).locator(".pricing-badge");
