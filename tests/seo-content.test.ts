@@ -14,6 +14,7 @@ import {
   resourcesByTag,
   siteUrl,
 } from "../app/lib/route-manifest";
+import { blogMetadata } from "../app/content/blog/metadata.generated";
 import { resourceEntries } from "../app/content/resources";
 import { resourceFaqs } from "../app/content/faqs";
 import { authorSameAs, authors, listedAuthors } from "../app/content/authors";
@@ -299,7 +300,8 @@ describe("route metadata", () => {
   });
 
   it("every FAQ key maps to a real resource", () => {
-    const slugs = new Set(resourceEntries.map((entry) => entry.slug));
+    // Drafts count: a held post keeps its FAQs so publishing it is one flip.
+    const slugs = new Set(blogMetadata.map((entry) => entry.slug));
 
     for (const slug of Object.keys(resourceFaqs)) {
       expect(slugs).toContain(slug);

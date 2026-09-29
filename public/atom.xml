@@ -3,7 +3,19 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-09-22T00:00:00Z</updated>
+  <updated>2026-09-29T00:00:00Z</updated>
+  <entry>
+    <title>AI employees for small business: 10 platforms compared</title>
+    <id>https://construct.computer/blog/best-ai-employee-platforms/</id>
+    <link href="https://construct.computer/blog/best-ai-employee-platforms/"/>
+    <author><name>Construct Team</name></author>
+    <published>2026-09-29T00:00:00Z</published>
+    <updated>2026-09-29T00:00:00Z</updated>
+    <category term="comparison"/>
+    <category term="ai-employee"/>
+    <category term="small-business"/>
+    <summary>The best AI employee platforms for small business in 2026, compared on price, capabilities, and limits: Lindy, Sintra, Marblism, Manus, Construct, and more.</summary>
+  </entry>
   <entry>
     <title>Nobody merges an email</title>
     <id>https://construct.computer/blog/agent-verification-gap/</id>
@@ -187,7 +199,7 @@
     <link href="https://construct.computer/blog/construct-vs-diy/"/>
     <author><name>Construct Team</name></author>
     <published>2026-07-20T00:00:00Z</published>
-    <updated>2026-07-27T00:00:00Z</updated>
+    <updated>2026-09-29T00:00:00Z</updated>
     <category term="comparison"/>
     <category term="agent-frameworks"/>
     <category term="diy"/>
@@ -214,7 +226,7 @@
     <link href="https://construct.computer/blog/what-is-an-ai-employee/"/>
     <author><name>Ankush</name></author>
     <published>2026-07-02T00:00:00Z</published>
-    <updated>2026-07-27T00:00:00Z</updated>
+    <updated>2026-09-29T00:00:00Z</updated>
     <category term="ai-agent"/>
     <category term="product"/>
     <category term="ai-employee"/>
