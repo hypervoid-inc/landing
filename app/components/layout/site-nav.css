@@ -208,7 +208,13 @@
     color var(--dur-hover) var(--ease-snap);
 }
 
-.site-nav-item[data-current],
+/* The page you are on is named, not filled: a filled current row beside a
+   filled hover row read as two selections at once. */
+.site-nav-item[data-current] {
+  color: #014e59;
+  font-weight: 600;
+}
+
 .site-nav-item:focus-visible {
   background: var(--color-brand-tint);
   color: #014e59;
@@ -235,7 +241,6 @@
     transform var(--dur-hover) var(--ease-snap);
 }
 
-.site-nav-item[data-current] .site-nav-item-arrow,
 .site-nav-item:focus-visible .site-nav-item-arrow {
   opacity: 1;
   transform: none;
@@ -245,6 +250,32 @@
   .site-nav-item:hover .site-nav-item-arrow {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* The overline above a mega menu's list, same voice as the article rail's
+   "Read next" label. */
+.site-nav-heading {
+  color: #8a9aa2;
+}
+
+/* "All posts" under the list, in brand ink with its arrow always shown, since
+   it is the way out to the rest. */
+.site-nav-footer {
+  color: #017b89;
+}
+
+.site-nav-preview-cta {
+  color: #017b89;
+}
+
+.site-nav-preview-arrow {
+  transition: transform var(--dur-hover) var(--ease-snap);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-nav-preview:hover .site-nav-preview-arrow {
+    transform: translateX(0.125rem);
   }
 }
 
@@ -420,6 +451,7 @@
   .site-nav-item,
   .site-nav-item-arrow,
   .site-nav-preview,
+  .site-nav-preview-arrow,
   .site-nav-sheet-button,
   .site-nav-chevron {
     transition: none;

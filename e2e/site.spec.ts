@@ -403,8 +403,8 @@ test("uses one shared header, footer, and favicon across page types", async ({
     const primary = page.getByRole("navigation", { name: "Primary" });
     await expect(primary.getByRole("link", { name: "Pricing" })).toBeVisible();
     await expect(
-      primary.getByRole("button", { name: "Resources" }),
-    ).toBeVisible();
+      primary.getByRole("link", { name: "Blog", exact: true }),
+    ).toHaveAttribute("href", "/blog/");
     await expect(
       primary.getByRole("button", { name: "Use Cases" }),
     ).toBeVisible();
@@ -948,9 +948,7 @@ test("keeps pricing artwork and plan details in separate readable zones", async 
     await expect(cards.nth(2)).toContainText(
       "Deep runs, up to 1,000 steps per task",
     );
-    await expect(cards.nth(2)).toContainText(
-      "Bring your own keys (BYOK)",
-    );
+    await expect(cards.nth(2)).toContainText("Bring your own keys (BYOK)");
     const starterBox = await cards.nth(1).boundingBox();
     const badge = cards.nth(1).locator(".pricing-badge");
     const badgeBox = await badge.boundingBox();
@@ -2195,20 +2193,58 @@ test("submits the footer newsletter through Turnstile and D1", async ({
   });
 });
 
-test("opens desktop Resources and Use Cases dropdowns to real pages", async ({
+test("opens desktop Blog and Use Cases dropdowns to real pages", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/");
 
   const primary = page.getByRole("navigation", { name: "Primary" });
-  await primary.getByRole("button", { name: "Resources" }).hover();
-  await expect(
-    primary.getByRole("link", { name: "Blog", exact: true }),
-  ).toBeVisible();
-  await primary.getByRole("link", { name: "vs Copilot" }).hover();
-  await expect(page.locator(".site-nav-preview")).toContainText("vs Copilot");
-  await primary.getByRole("link", { name: "Blog", exact: true }).click();
+  const blog = primary.getByRole("link", { name: "Blog", exact: true });
+  await blog.hover();
+  const menu = primary.getByRole("group", { name: "Blog" });
+  // `resourceEntries` is newest first, the order the /blog/ grid uses.
+  const newest = resourceEntries.slice(0, 7);
+  const posts = menu.getByRole("list").getByRole("link");
+  await expect(posts).toHaveCount(newest.length);
+  for (const [index, entry] of newest.entries()) {
+    await expect(posts.nth(index)).toHaveAccessibleName(entry.title);
+    await expect(posts.nth(index)).toHaveAttribute(
+      "href",
+      `/blog/${entry.slug}/`,
+    );
+  }
+  await expect(menu.getByRole("link", { name: "All posts" })).toHaveAttribute(
+    "href",
+    "/blog/",
+  );
+
+  // Starts at the trigger, or as close to it as the right gutter allows.
+  // Polled, because the panel's entry animation transforms its box.
+  const triggerBox = (await blog.boundingBox())!;
+  const panel = page.locator(".site-nav-panel");
+  await expect
+    .poll(async () => {
+      const box = (await panel.boundingBox())!;
+      const right = box.x + box.width;
+      return (
+        box.x <= triggerBox.x &&
+        (Math.abs(right - (1280 - 16)) <= 1 ||
+          Math.abs(box.x - triggerBox.x) < 16)
+      );
+    })
+    .toBe(true);
+
+  await posts.nth(1).hover();
+  await expect(page.locator(".site-nav-preview")).toContainText(
+    newest[1]!.title,
+  );
+  await posts.nth(1).click();
+  await expect(page).toHaveURL(new RegExp(`/blog/${newest[1]!.slug}/$`));
+
+  // The trigger is the section link itself.
+  await page.goto("/");
+  await blog.click();
   await expect(page).toHaveURL(/\/blog\/$/);
 
   await page.goto("/");
@@ -2246,6 +2282,16 @@ test("opens and closes the mobile nav sheet", async ({ page }) => {
   await expect(page).toHaveURL(/\/use-cases\/workflows\/$/);
   await expect(menu).toHaveCount(0);
 
+  // Blog is a split row: the chevron lists the newest posts, the label links.
+  await page.getByRole("button", { name: "Open menu" }).click();
+  await menu.getByRole("button", { name: "Blog menu" }).click();
+  await expect(
+    menu.getByRole("link", { name: resourceEntries[0]!.title, exact: true }),
+  ).toBeVisible();
+  await menu.getByRole("link", { name: "Blog", exact: true }).click();
+  await expect(page).toHaveURL(/\/blog\/$/);
+  await expect(menu).toHaveCount(0);
+
   await page.goto("/");
   await page.getByRole("button", { name: "Open menu" }).click();
   await page
@@ -2268,30 +2314,26 @@ test("keeps /launch to logo and CTA with no menu", async ({ page }) => {
   ).toBeVisible();
 });
 
-test("opens Resources from the keyboard and closes it with Escape", async ({
+test("opens Blog from the keyboard, closes it with Escape, and follows it with Enter", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/");
 
-  const resources = page
-    .getByRole("navigation", { name: "Primary" })
-    .getByRole("button", { name: "Resources" });
-  await resources.focus();
-  await page.keyboard.press("Enter");
-  await expect(
-    page.getByRole("navigation", { name: "Primary" }).getByRole("link", {
-      name: "Blog",
-      exact: true,
-    }),
-  ).toBeVisible();
+  const primary = page.getByRole("navigation", { name: "Primary" });
+  const blog = primary.getByRole("link", { name: "Blog", exact: true });
+  const allPosts = primary.getByRole("link", { name: "All posts" });
+  await blog.focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(blog).toHaveAttribute("aria-expanded", "true");
+  await expect(allPosts).toBeVisible();
   await page.keyboard.press("Escape");
-  await expect(
-    page.getByRole("navigation", { name: "Primary" }).getByRole("link", {
-      name: "Blog",
-      exact: true,
-    }),
-  ).toHaveCount(0);
+  await expect(allPosts).toHaveCount(0);
+
+  // Enter keeps its link meaning rather than toggling the menu.
+  await blog.focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/blog\/$/);
 });
 
 // A post is its own layout: the desktop rail, the related grid, and the FAQ
@@ -2301,6 +2343,9 @@ for (const path of [
   "/blog/",
   "/blog/agent-task-half-life/",
   "/blog/grokbot-alternative/",
+  // Tables, a long FAQ list, and a mid-article link. Zen Mode, which carried
+  // the captioned video, is held in draft.
+  "/blog/best-ai-employee-platforms/",
   // The only post whose figures sit in keyboard-reachable scroll regions.
   "/blog/agent-verification-gap/",
   "/pricing/",

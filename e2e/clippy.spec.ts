@@ -102,10 +102,6 @@ test("stays hidden across client side navigation", async ({ page }) => {
 
   await page
     .getByRole("navigation", { name: "Primary" })
-    .getByRole("button", { name: "Resources" })
-    .click();
-  await page
-    .getByRole("navigation", { name: "Primary" })
     .getByRole("link", { name: "Blog", exact: true })
     .click();
   await expect(page).toHaveURL(/\/blog\/$/);

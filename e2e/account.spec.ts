@@ -549,9 +549,9 @@ test.describe("/account", () => {
     await expect(
       primary.getByRole("button", { name: "Account menu for Ankush Singh" }),
     ).toBeVisible();
-    await primary.getByRole("button", { name: "Resources" }).hover();
+    await primary.getByRole("link", { name: "Blog", exact: true }).hover();
     await expect(
-      primary.getByRole("link", { name: "Blog", exact: true }),
+      primary.getByRole("link", { name: "All posts" }),
     ).toBeVisible();
 
     await primary
@@ -565,9 +565,9 @@ test.describe("/account", () => {
       menu.getByRole("link", { name: "Open Construct" }),
     ).toBeVisible();
     await expect(menu.getByRole("button", { name: "Log out" })).toBeVisible();
-    await expect(
-      primary.getByRole("link", { name: "Blog", exact: true }),
-    ).toHaveCount(0);
+    await expect(primary.getByRole("link", { name: "All posts" })).toHaveCount(
+      0,
+    );
   });
 
   test("keeps sticky chrome visible when the account menu opens after scroll", async ({
