@@ -17,3 +17,22 @@
 # placement the way the Function allowed - /ph?utm_content=stream is forwarded.
 /ph https://www.producthunt.com/products/construct-computer 302
 /ph/ https://www.producthunt.com/products/construct-computer 302
+
+# Guide and comparison URLs from before the editorial rebuild (8ad3d6b), when
+# guides lived at the root and comparisons under /vs/. Search Console still
+# shows impressions on them, so each one points at the post that replaced it
+# rather than falling through to the 404.
+/ai-employee /blog/ai-employee/ 301
+/ai-employee/ /blog/ai-employee/ 301
+/ai-workflow-automation /blog/ai-workflow-automation/ 301
+/ai-workflow-automation/ /blog/ai-workflow-automation/ 301
+/ai-agent-memory /blog/ai-agent-memory/ 301
+/ai-agent-memory/ /blog/ai-agent-memory/ 301
+/vs/chatgpt /blog/construct-vs-chatgpt/ 301
+/vs/chatgpt/ /blog/construct-vs-chatgpt/ 301
+/vs/copilot /blog/construct-vs-copilot/ 301
+/vs/copilot/ /blog/construct-vs-copilot/ 301
+/vs/zapier /blog/construct-vs-zapier/ 301
+/vs/zapier/ /blog/construct-vs-zapier/ 301
+/vs/coding-agents /blog/construct-vs-coding-agents/ 301
+/vs/coding-agents/ /blog/construct-vs-coding-agents/ 301

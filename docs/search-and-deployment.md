@@ -53,7 +53,7 @@ Static requests bypass Functions through `_routes.json`. DDoS absorption, bot sc
 
 The canonical editorial namespace is singular `/blog/` (comparisons live at `/blog/construct-vs-<slug>/`). Canonicals use trailing slashes. Do not invent alternate path schemes in internal links, feeds, or the sitemap. Do not redirect unrelated missing pages to the homepage.
 
-`_redirects` only maps `/security.txt` → `/.well-known/security.txt`.
+`_redirects` maps `/security.txt` → `/.well-known/security.txt`, the `/discord` and `/ph` shortlinks, and the pre-rebuild guide (`/ai-employee`) and comparison (`/vs/<slug>`) URLs to the posts that replaced them.
 
 ## Google Search Console
 
