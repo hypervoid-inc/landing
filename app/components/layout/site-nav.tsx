@@ -36,6 +36,12 @@ const CLOSE_MS = 180;
 /** Keep in step with `--dur-panel`, which drives the morph in CSS. */
 const MORPH_MS = 260;
 const EDGE_GUTTER = 16;
+/**
+ * How far left of its trigger the mega panel starts, so the item text lines up
+ * with the trigger label: the panel's `p-3` plus the item's `px-2.5` (22px),
+ * less the trigger's own `px-3` (12px).
+ */
+const MEGA_TEXT_INSET = 10;
 
 type Motion = "pointer" | "keyboard";
 type MenuId = NavMenu["id"] | "account";
@@ -120,67 +126,132 @@ function MenuPanelContent({
   onNavigate: () => void;
 }) {
   const [preview, setPreview] = useState(0);
+  const headingId = useId();
   const featured = menu.items[preview] ?? menu.items[0]!;
+  const mega = menu.kind === "mega";
+
+  const footerCurrent = menu.footer
+    ? navLinkIsCurrent(pathname, menu.footer.href)
+    : false;
 
   return (
     <div
       className={cn(
-        menu.kind === "mega"
-          ? "flex w-[32rem] gap-2 p-3"
-          : "w-max min-w-[13.5rem] p-2",
+        mega ? "flex w-[34rem] gap-3 p-3" : "w-max min-w-[13.5rem] p-2",
       )}
     >
-      <ul
-        className={cn(
-          "flex flex-col",
-          menu.kind === "mega" && "w-[11.5rem] shrink-0",
-        )}
-      >
-        {menu.items.map((item, index) => {
-          const current = navLinkIsCurrent(pathname, item.href);
-          return (
-            <li key={item.href}>
+      <div className={cn("flex flex-col", mega && "w-[13rem] shrink-0")}>
+        {menu.heading ? (
+          // "All posts" rides in the heading row rather than under the list:
+          // a footer row made the list, and so the panel, taller than the
+          // preview card could fill.
+          <div className="flex items-center justify-between gap-2 pt-0.5 pb-1 pl-2.5">
+            <p
+              id={headingId}
+              className="site-nav-heading text-[11px] font-semibold uppercase tracking-[0.12em]"
+            >
+              {menu.heading}
+            </p>
+            {menu.footer ? (
               <Link
-                to={item.href}
-                aria-current={current ? "page" : undefined}
-                data-current={current ? "" : undefined}
-                className="site-nav-item flex min-h-9 items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-[13px] font-medium"
-                onFocus={() => setPreview(index)}
-                onPointerEnter={() => setPreview(index)}
+                to={menu.footer.href}
+                aria-current={footerCurrent ? "page" : undefined}
+                data-current={footerCurrent ? "" : undefined}
+                className="site-nav-item site-nav-footer inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-[12px] font-medium"
                 onClick={onNavigate}
               >
-                <span className="min-w-0 truncate">{item.label}</span>
-                <span aria-hidden className="site-nav-item-arrow">
-                  →
-                </span>
+                {menu.footer.label}
+                <span aria-hidden>→</span>
               </Link>
-            </li>
-          );
-        })}
-      </ul>
-      {menu.kind === "mega" ? (
+            ) : null}
+          </div>
+        ) : null}
+        <ul
+          aria-labelledby={menu.heading ? headingId : undefined}
+          className={cn("flex flex-col", mega && "gap-0.5")}
+        >
+          {menu.items.map((item, index) => {
+            const current = navLinkIsCurrent(pathname, item.href);
+            return (
+              <li key={item.href}>
+                <Link
+                  to={item.href}
+                  aria-current={current ? "page" : undefined}
+                  data-current={current ? "" : undefined}
+                  className="site-nav-item flex min-h-9 items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-[13px] font-medium"
+                  onFocus={() => setPreview(index)}
+                  onPointerEnter={() => setPreview(index)}
+                  onClick={onNavigate}
+                >
+                  {mega ? (
+                    // Post titles run long: two lines read better than a
+                    // truncated one. No arrow, the preview card already shows
+                    // where the row goes, and the width goes to the image.
+                    <span className="line-clamp-2 min-w-0 leading-[1.35]">
+                      {item.label}
+                    </span>
+                  ) : (
+                    <>
+                      <span className="min-w-0 truncate">{item.label}</span>
+                      <span aria-hidden className="site-nav-item-arrow">
+                        →
+                      </span>
+                    </>
+                  )}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        {menu.footer && !menu.heading ? (
+          <Link
+            to={menu.footer.href}
+            aria-current={footerCurrent ? "page" : undefined}
+            data-current={footerCurrent ? "" : undefined}
+            className="site-nav-item site-nav-footer mt-1 flex min-h-9 items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-[13px] font-medium"
+            onClick={onNavigate}
+          >
+            {menu.footer.label}
+            <span aria-hidden>→</span>
+          </Link>
+        ) : null}
+      </div>
+      {mega ? (
         <Link
           to={featured.href}
           onClick={onNavigate}
-          className="site-nav-preview min-w-0 flex-1 rounded-xl border border-[var(--color-line)] bg-[var(--color-canvas)] p-3"
+          className="site-nav-preview relative min-w-0 flex-1 overflow-hidden rounded-xl border border-[var(--color-line)] bg-[var(--color-canvas)]"
         >
-          {/* Keyed so highlighting another item fades the whole card instead of
-              popping a new image into a fixed frame. */}
-          <span key={featured.href} className="site-nav-preview-body block">
+          {/* Absolutely placed, so the list alone sets the panel's height and
+              the panel never resizes as the pointer moves down the titles.
+              Keyed so highlighting another item fades the whole card instead
+              of popping a new image into a fixed frame. */}
+          <span
+            key={featured.href}
+            className="site-nav-preview-body absolute inset-0 flex flex-col"
+          >
+            {/* Full bleed: the card's own rounding and border frame it, so the
+                image gets every pixel of the column. */}
             <img
               src={featured.image}
               alt=""
               width="640"
               height="336"
-              className="aspect-[1200/630] w-full rounded-lg object-cover"
+              className="block aspect-[1200/630] w-full shrink-0 border-b border-[var(--color-line)] object-cover"
             />
-            <span className="mt-3 block text-[14px] font-semibold leading-5 text-[#4e4646]">
+            <span className="mx-3.5 mt-3 line-clamp-3 text-[14px] font-semibold leading-5 text-[#4e4646]">
               {featured.label}
             </span>
-            {/* Fixed height: descriptions run one to three lines and the panel
-                must not resize under the pointer. */}
-            <span className="mt-1 line-clamp-3 h-12 text-[12px] leading-4 text-[#627c86]">
+            <span className="mx-3.5 mt-1.5 line-clamp-6 text-[13px] leading-[18px] text-[#627c86]">
               {featured.description}
+            </span>
+            {/* Straight after the copy, never pinned to the card's foot: a
+                pinned link left a gap that changed with every description. */}
+            <span
+              aria-hidden
+              className="site-nav-preview-cta mx-3.5 mt-2.5 mb-3 inline-flex items-center gap-1.5 text-[12px] font-medium"
+            >
+              Read the post <span className="site-nav-preview-arrow">→</span>
             </span>
           </span>
         </Link>
@@ -189,7 +260,14 @@ function MenuPanelContent({
   );
 }
 
-/** A trigger. The panel it controls belongs to the rail, not to this. */
+/**
+ * A trigger. The panel it controls belongs to the rail, not to this.
+ *
+ * A menu with its own `href` (Blog) gets a real link as its trigger, so a click
+ * lands on the section page the way a top-level nav item should. Hover still
+ * opens the panel, and ArrowDown opens it from the keyboard, since Enter on a
+ * link has to keep meaning "go there".
+ */
 function DesktopMenu({
   menu,
   pathname,
@@ -203,7 +281,10 @@ function DesktopMenu({
 }) {
   const openTimer = useRef<number>(0);
   const rootRef = useRef<HTMLLIElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+  const setTrigger = useCallback((el: HTMLElement | null) => {
+    triggerRef.current = el;
+  }, []);
   const current = navItemIsCurrent(pathname, menu);
 
   useEffect(() => () => window.clearTimeout(openTimer.current), []);
@@ -219,8 +300,8 @@ function DesktopMenu({
     }, OPEN_MS);
   };
 
-  const onTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
+  const onTriggerKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (!menu.href && (event.key === "Enter" || event.key === " ")) {
       event.preventDefault();
       if (open) rail.close(menu.id);
       else rail.open(menu.id, "keyboard");
@@ -231,6 +312,24 @@ function DesktopMenu({
     }
   };
 
+  const trigger = {
+    "data-nav-trigger": "",
+    "data-current": current ? "" : undefined,
+    "data-open": open ? "" : undefined,
+    className: triggerClass,
+    "aria-expanded": open,
+    "aria-haspopup": "true" as const,
+    "aria-controls": open ? rail.panelId : undefined,
+    onKeyDown: onTriggerKeyDown,
+  };
+  const label = (
+    <>
+      {menu.label}
+      <MenuChevron open={open} />
+      {current ? <CurrentTrack /> : null}
+    </>
+  );
+
   return (
     <li
       ref={rootRef}
@@ -238,29 +337,34 @@ function DesktopMenu({
       onPointerEnter={onPointerEnter}
       onPointerLeave={() => window.clearTimeout(openTimer.current)}
     >
-      <button
-        ref={triggerRef}
-        type="button"
-        data-nav-trigger=""
-        data-current={current ? "" : undefined}
-        data-open={open ? "" : undefined}
-        className={triggerClass}
-        aria-expanded={open}
-        aria-haspopup="true"
-        aria-controls={open ? rail.panelId : undefined}
-        onClick={() => {
-          if (open) {
-            if (!canHover()) rail.close(menu.id);
-            return;
+      {menu.href ? (
+        <Link
+          ref={setTrigger}
+          to={menu.href}
+          aria-current={
+            navLinkIsCurrent(pathname, menu.href) ? "page" : undefined
           }
-          rail.open(menu.id, canHover() ? "pointer" : "keyboard");
-        }}
-        onKeyDown={onTriggerKeyDown}
-      >
-        {menu.label}
-        <MenuChevron open={open} />
-        {current ? <CurrentTrack /> : null}
-      </button>
+          {...trigger}
+          onClick={() => rail.close()}
+        >
+          {label}
+        </Link>
+      ) : (
+        <button
+          ref={setTrigger}
+          type="button"
+          {...trigger}
+          onClick={() => {
+            if (open) {
+              if (!canHover()) rail.close(menu.id);
+              return;
+            }
+            rail.open(menu.id, canHover() ? "pointer" : "keyboard");
+          }}
+        >
+          {label}
+        </button>
+      )}
     </li>
   );
 }
@@ -464,13 +568,26 @@ function DesktopNav({
     const bounds = trigger.getBoundingClientRect();
     const w = body.offsetWidth;
     const h = body.offsetHeight;
-    let x = bounds.left - rail.left;
-    // Hang off the trigger's right edge rather than run past the viewport.
-    if (rail.left + x + w > window.innerWidth - EDGE_GUTTER) {
-      x = bounds.right - rail.left - w;
+    const openMenu = openIdRef.current;
+    const mega =
+      openMenu !== null &&
+      openMenu !== "account" &&
+      menus.get(openMenu)?.kind === "mega";
+    const maxX = window.innerWidth - EDGE_GUTTER - w - rail.left;
+    let x: number;
+    if (mega) {
+      // Start under the trigger label, with the post titles lined up on it,
+      // and where the panel is wider than the room to the trigger's right,
+      // pin it to the viewport's right gutter: as close to the trigger as it
+      // can get without leaving the screen.
+      x = Math.min(bounds.left - rail.left - MEGA_TEXT_INSET, maxX);
+    } else {
+      x = bounds.left - rail.left;
+      // Hang off the trigger's right edge rather than run past the viewport.
+      if (x > maxX) x = bounds.right - rail.left - w;
     }
     setBox({ x: Math.max(x, EDGE_GUTTER - rail.left), w, h });
-  }, []);
+  }, [menus]);
 
   // Before paint, so the panel never shows at the wrong size for a frame.
   useLayoutEffect(() => {
@@ -654,17 +771,22 @@ function DesktopNav({
 
 function MobileAccordionItems({
   items,
+  footer,
   pathname,
   onNavigate,
 }: {
   items: readonly NavLink[];
+  footer?: NavMenu["footer"];
   pathname: string;
   onNavigate: () => void;
 }) {
+  const links = footer
+    ? [...items, { label: footer.label, href: footer.href }]
+    : items;
   return (
     <div className="pb-3">
       <ul className="flex flex-col border-l border-[var(--color-line)] pl-3">
-        {items.map((item) => {
+        {links.map((item) => {
           const current = navLinkIsCurrent(pathname, item.href);
           return (
             <li key={item.href}>
@@ -673,7 +795,7 @@ function MobileAccordionItems({
                 aria-current={current ? "page" : undefined}
                 onClick={onNavigate}
                 className={cn(
-                  "flex min-h-11 items-center text-[15px]",
+                  "flex min-h-11 items-center py-2 text-[15px] leading-snug",
                   current
                     ? "font-medium text-[#014e59]"
                     : "text-[var(--color-ink-muted)]",
@@ -766,25 +888,59 @@ function MobileNav({ pathname }: { pathname: string }) {
                     value={item.id}
                     className="border-b border-[var(--color-line-soft)] last:border-b-0"
                   >
-                    <Accordion.Header>
-                      <Accordion.Trigger
-                        className={cn(
-                          "group flex min-h-14 w-full items-center justify-between text-[17px] font-medium",
-                          navItemIsCurrent(pathname, item)
-                            ? "text-[#014e59]"
-                            : "text-[#4e4646]",
-                        )}
-                      >
-                        {item.label}
-                        <ChevronDown
-                          aria-hidden
-                          className="size-4 opacity-70 transition-transform duration-[var(--dur-hover)] ease-[var(--ease-snap)] group-data-[state=open]:rotate-180"
-                        />
-                      </Accordion.Trigger>
-                    </Accordion.Header>
+                    {item.href ? (
+                      // Split row: the label is the section link, the chevron
+                      // alone expands the list, matching the desktop trigger.
+                      <Accordion.Header className="flex items-center">
+                        <Link
+                          to={item.href}
+                          aria-current={
+                            navLinkIsCurrent(pathname, item.href)
+                              ? "page"
+                              : undefined
+                          }
+                          onClick={() => setOpen(false)}
+                          className={cn(
+                            "flex min-h-14 flex-1 items-center text-[17px] font-medium",
+                            navItemIsCurrent(pathname, item)
+                              ? "text-[#014e59]"
+                              : "text-[#4e4646]",
+                          )}
+                        >
+                          {item.label}
+                        </Link>
+                        <Accordion.Trigger
+                          aria-label={`${item.label} menu`}
+                          className="group -mr-3 inline-flex size-12 shrink-0 items-center justify-center text-[#4e4646]"
+                        >
+                          <ChevronDown
+                            aria-hidden
+                            className="size-4 opacity-70 transition-transform duration-[var(--dur-hover)] ease-[var(--ease-snap)] group-data-[state=open]:rotate-180"
+                          />
+                        </Accordion.Trigger>
+                      </Accordion.Header>
+                    ) : (
+                      <Accordion.Header>
+                        <Accordion.Trigger
+                          className={cn(
+                            "group flex min-h-14 w-full items-center justify-between text-[17px] font-medium",
+                            navItemIsCurrent(pathname, item)
+                              ? "text-[#014e59]"
+                              : "text-[#4e4646]",
+                          )}
+                        >
+                          {item.label}
+                          <ChevronDown
+                            aria-hidden
+                            className="size-4 opacity-70 transition-transform duration-[var(--dur-hover)] ease-[var(--ease-snap)] group-data-[state=open]:rotate-180"
+                          />
+                        </Accordion.Trigger>
+                      </Accordion.Header>
+                    )}
                     <Accordion.Content className="site-nav-accordion">
                       <MobileAccordionItems
                         items={item.items}
+                        footer={item.footer}
                         pathname={pathname}
                         onNavigate={() => setOpen(false)}
                       />

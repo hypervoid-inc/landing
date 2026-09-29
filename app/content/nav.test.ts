@@ -2,13 +2,19 @@ import { describe, expect, it } from "vitest";
 
 import { companyLinks } from "./landing";
 import { canonicalRoutes } from "../lib/route-manifest";
+import { resourceEntries } from "./resources";
 import { useCases } from "./use-cases";
 import {
+  BLOG_MENU_POSTS,
   navItemIsCurrent,
   navLinkIsCurrent,
   primaryNav,
   type NavMenu,
 } from "./nav";
+
+const blogMenu = primaryNav.find(
+  (item): item is NavMenu => item.kind !== "link" && item.id === "blog",
+)!;
 
 const canonicalHrefs = new Set(
   canonicalRoutes.map((route) => (route.path === "/" ? "/" : `${route.path}/`)),
@@ -18,7 +24,7 @@ describe("primary nav", () => {
   it("is Pricing plus three disclosure groups", () => {
     expect(primaryNav.map((item) => item.label)).toEqual([
       "Pricing",
-      "Resources",
+      "Blog",
       "Use Cases",
       "Company",
     ]);
@@ -32,7 +38,11 @@ describe("primary nav", () => {
     const hrefs: string[] = [];
     for (const item of primaryNav) {
       if (item.kind === "link") hrefs.push(item.href);
-      else hrefs.push(...item.items.map((link) => link.href));
+      else {
+        if (item.href) hrefs.push(item.href);
+        if (item.footer) hrefs.push(item.footer.href);
+        hrefs.push(...item.items.map((link) => link.href));
+      }
     }
     expect(hrefs.some((href) => href.includes("#"))).toBe(false);
     for (const href of hrefs) {
@@ -65,17 +75,33 @@ describe("primary nav", () => {
     ]);
   });
 
-  it("marks Resources current on blog routes and Pricing only on /pricing/", () => {
-    const resources = primaryNav.find(
-      (item): item is NavMenu =>
-        item.kind !== "link" && item.id === "resources",
-    )!;
+  it("makes Blog a link to /blog/ whose menu lists the newest posts, newest first", () => {
+    expect(blogMenu).toMatchObject({ label: "Blog", href: "/blog/" });
+    expect(blogMenu.footer).toEqual({ label: "All posts", href: "/blog/" });
+
+    expect(BLOG_MENU_POSTS).toBe(7);
+    const newest = [...resourceEntries]
+      .sort((left, right) => right.published.localeCompare(left.published))
+      .slice(0, BLOG_MENU_POSTS);
+    expect(blogMenu.items.map((item) => item.href)).toEqual(
+      newest.map((entry) => `/blog/${entry.slug}/`),
+    );
+    expect(blogMenu.items.map((item) => item.label)).toEqual(
+      newest.map((entry) => entry.title),
+    );
+  });
+
+  it("marks Blog current on blog routes and Pricing only on /pricing/", () => {
     const pricing = primaryNav[0]!;
-    expect(navItemIsCurrent("/blog/ai-employee/", resources)).toBe(true);
-    expect(navItemIsCurrent("/pricing/", resources)).toBe(false);
+    expect(navItemIsCurrent("/blog/", blogMenu)).toBe(true);
+    expect(navItemIsCurrent("/blog/ai-employee/", blogMenu)).toBe(true);
+    expect(navItemIsCurrent("/blog/tag/product/", blogMenu)).toBe(true);
+    expect(navItemIsCurrent("/pricing/", blogMenu)).toBe(false);
     expect(navItemIsCurrent("/pricing/", pricing)).toBe(true);
     expect(navItemIsCurrent("/about/", pricing)).toBe(false);
+    // Only the index itself is the page "All posts" points at.
     expect(navLinkIsCurrent("/blog/", "/blog/")).toBe(true);
+    expect(navLinkIsCurrent("/blog/ai-employee/", "/blog/")).toBe(false);
     expect(navLinkIsCurrent("/about/", "/blog/")).toBe(false);
 
     const useCases = primaryNav.find(
