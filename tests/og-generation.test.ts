@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { describe, expect, it } from "vitest";
 
+import { blogMetadata } from "../app/content/blog/metadata.generated";
 import { ogPosters, posterEyebrow } from "../app/content/og-poster";
 import { canonicalRoutes, ogName } from "../app/lib/route-manifest";
 import {
@@ -64,6 +65,14 @@ describe("generation cost", () => {
 const names = canonicalRoutes.map((route) => ogName(route.path));
 
 /**
+ * Draft posts are not routes yet, but they keep their card so publishing one
+ * is a frontmatter flip and a `pnpm og`, not a rewrite of the scene.
+ */
+const draftNames = blogMetadata
+  .filter((post) => post.draft)
+  .map((post) => ogName(`/blog/${post.slug}`));
+
+/**
  * True when a finished card sits in `assets/og/` for this route. Those win
  * outright at publish time, are never generated, and carry their own type.
  */
@@ -80,9 +89,11 @@ describe("card content", () => {
   });
 
   it("carries no cards for routes that no longer exist", () => {
-    expect(Object.keys(ogPosters).filter((n) => !names.includes(n))).toEqual(
-      [],
-    );
+    expect(
+      Object.keys(ogPosters).filter(
+        (n) => !names.includes(n) && !draftNames.includes(n),
+      ),
+    ).toEqual([]);
   });
 
   it("keeps every scene unique, so no two cards photograph the same set", () => {

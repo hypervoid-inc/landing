@@ -88,6 +88,18 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: false,
   },
   {
+    slug: "best-ai-employee-platforms",
+    title: "AI employees for small business: 10 platforms compared",
+    description:
+      "The best AI employee platforms for small business in 2026, compared on price, capabilities, and limits: Lindy, Sintra, Marblism, Manus, Construct, and more.",
+    published: "2026-09-29",
+    seoTitle: "Best AI Employees for Small Business (2026): 10 Compared",
+    author: "construct-team",
+    tags: ["comparison", "ai-employee", "small-business"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
     slug: "build-internal-tools-with-construct",
     title: "How Construct Builds Internal Tools in Your Workspace",
     description:
@@ -152,7 +164,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     description:
       "Building your own agent means wiring sandbox, apps, channels, memory, schedules, and user-facing activity summaries yourself. Construct provides those pieces as a hosted product.",
     published: "2026-07-20",
-    updated: "2026-07-27",
+    updated: "2026-09-29",
+    seoTitle: "Turnkey AI System vs Building Your Own AI Agent",
     author: "construct-team",
     tags: ["comparison", "agent-frameworks", "diy", "ai-employee"],
     kind: "comparison",
@@ -212,10 +225,23 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     description:
       "Learn what an AI employee is, how it differs from a chatbot, and how Construct completes work across email, Slack, browser, and connected apps.",
     published: "2026-07-02",
-    updated: "2026-07-27",
+    updated: "2026-09-29",
+    seoTitle: "What Is an AI Employee? Definition and Examples",
     author: "ankush",
     tags: ["ai-agent", "product", "ai-employee"],
     kind: "article",
     draft: false,
+  },
+  {
+    slug: "zen-mode",
+    title: "Zen Mode: some days you just want it done",
+    description:
+      "Zen Mode is a chat-first way into Construct's AI computer. Ask once, it works in the background, asks when it needs you, and runs on your phone.",
+    published: "2026-09-30",
+    seoTitle: "Construct Zen Mode: Chat-First AI Agent With Its Own Computer",
+    author: "nischal",
+    tags: ["product", "ai-agent", "ai-employee", "zen-mode"],
+    kind: "guide",
+    draft: true,
   },
 ];

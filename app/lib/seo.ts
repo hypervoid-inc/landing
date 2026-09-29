@@ -80,7 +80,7 @@ export function organizationJsonLd(): JsonLd {
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
     name: "Construct Computer",
-    alternateName: "Construct",
+    alternateName: ["Construct", "Construct AI"],
     description:
       "Construct Computer builds an AI employee for startups, small businesses, and solo founders: a cloud computer with memory, connected tools, and work that finishes while you are away.",
     url: siteUrl,

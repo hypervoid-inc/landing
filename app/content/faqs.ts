@@ -10,6 +10,76 @@ export type FaqItem = {
  * that the body does not support.
  */
 export const resourceFaqs: Record<string, readonly FaqItem[]> = {
+  "zen-mode": [
+    {
+      question: "What is Zen Mode in Construct?",
+      answer:
+        "Zen Mode is a chat-first way into Construct Computer, the AI agent with its own cloud computer. You ask in one box, your agents work in the background, and a Home screen shows what needs you, what is running, and what is coming up. It uses the same agents, files, mail, memory, and schedules as the Construct desktop.",
+    },
+    {
+      question: "Is Zen Mode a lite version of Construct?",
+      answer:
+        "No. Zen Mode and the desktop are two views of the same computer on the same account, so there is nothing to migrate. Open OS switches to the full desktop mid-task, and the Zen Mode button in the desktop's menu bar switches back. Plan limits are the same in both.",
+    },
+    {
+      question: "Can I still watch my AI agent work in Zen Mode?",
+      answer:
+        "Yes. Every chat has a computer panel with Progress, Browser, Terminal, and Files tabs that follow what the agent is using, and you can take control of the live browser and hand it back. Open OS shows the same task on the full desktop.",
+    },
+    {
+      question: "Does Zen Mode work on a phone?",
+      answer:
+        "Yes. Open app.construct.computer in your phone's browser and sign in with the same account. The sidebar becomes a drawer and the ask box docks to the bottom of Home. It is a mobile web app rather than an App Store app, and the desktop hands phones off to Zen Mode.",
+    },
+    {
+      question: "Does Zen Mode cost extra?",
+      answer:
+        "No. Zen Mode is included in every Construct plan: Lite at $9/month, Starter at $59/month, and Pro at $299/month, billed monthly. Limits such as agents, scheduled tasks, and steps per task are the same whichever view you use.",
+    },
+    {
+      question:
+        "How is Zen Mode different from Claude, ChatGPT Work, Grok Bot, or Manus?",
+      answer:
+        "As of September 29, 2026, all of them let an agent work in the background and check in when needed. Construct pairs a calm chat view with a full desktop of the same persistent computer, keeps files, an agent inbox, correctable memory, and schedules in one workspace, and starts at $9/month against $20/month entry plans for the others. Construct works on its own cloud computer, not yours, so jobs that need files on your own machine suit a product that can operate it.",
+    },
+  ],
+  "best-ai-employee-platforms": [
+    {
+      question: "What is the best AI employee platform for a small business?",
+      answer:
+        "It depends on the first job you hand over. If it matches a named role such as social media or answering the phone, a role-based roster like Sintra or Marblism is quickest to start. If the work crosses apps or changes week to week, a general-purpose AI employee with its own computer, such as Construct, CellCog, Manus, or Grok Bot, fits better. Lindy suits teams that live in Slack, and OpenClaw suits technical owners who want to self-host.",
+    },
+    {
+      question: "How much does an AI employee cost?",
+      answer:
+        "Entry prices checked on September 29, 2026 run from $0 for self-hosted OpenClaw, plus hosting and model costs, and $8 to $9 a month for CellCog and Construct, to $29.99 per user for Lindy and $280 a month for Artisan's sales agent. Most platforms meter work with credits, hours, or plan limits, so the working cost depends on how much you assign. CellCog's own labels put a full-time AI employee at $500 a month.",
+    },
+    {
+      question: "Is AI staff the same as an AI employee?",
+      answer:
+        "Mostly, yes. Vendors use AI employee, AI staff, AI worker, and AI teammate for software agents given a job rather than a single prompt. The differences that matter are whether the agent has a fixed role or takes any task, whether it has its own computer, and how its work is metered.",
+    },
+    {
+      question: "What is the cheapest AI employee?",
+      answer:
+        "OpenClaw is free, open-source software, but you host it yourself and pay for the server and model usage. Among hosted platforms checked on September 29, 2026, CellCog starts at $8 a month in credits, Construct at $9 a month, and Grok Bot is included with Cursor Pro at $20 a month. Entry plans cover light use, so price a busy month before you commit.",
+    },
+    {
+      question: "Can an AI employee answer phone calls?",
+      answer:
+        "Some can. Marblism's Rachel answers calls around the clock, transfers them, and texts you summaries, and Relevance AI offers outbound phone agents on its higher tiers. Artisan says its AI sales rep cannot legally make calls, so its dialer is for human reps. Construct has no built-in phone agent.",
+    },
+    {
+      question: "Which AI employee works in Slack?",
+      answer:
+        "Lindy is built around Slack: each person gets a private assistant in direct messages and the team shares one in channels. Construct and Manus also take requests from Slack, alongside other channels such as email and Telegram.",
+    },
+    {
+      question: "What happens when an AI employee runs out of credits?",
+      answer:
+        "It depends on the vendor. Lindy pauses work until you top up, Sintra's AI employees stop working, Marblism cancels scheduled tasks and pauses its phone receptionist, Manus cannot start new tasks, and Artisan pauses new enrollments. Construct applies plan limits, and on Pro it can switch to your own model keys after the bundled limits.",
+    },
+  ],
   "grokbot-alternative": [
     {
       question: "Is Construct a cheaper Grok Bot alternative?",
@@ -215,7 +285,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "What is an AI employee?",
       answer:
-        "An AI employee is an agent given a persistent workspace and the tools to complete assigned work end to end, researching, operating tools, creating files, and running recurring jobs, rather than only answering questions in a chat window.",
+        "An AI employee is AI software you assign outcomes to, not just questions. It plans a multi-step job, uses tools such as a browser, email, and connected apps to finish it, and keeps the files and context behind the work so the next job starts from there.",
     },
     {
       question: "How is an AI employee different from a chatbot?",

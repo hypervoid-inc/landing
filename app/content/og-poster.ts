@@ -204,6 +204,11 @@ export const ogPosters: Record<string, PosterCard> = {
     scene:
       "The mascot sitting on top of the middle of three shrink-wrapped software boxes standing upright in a row, that box pulled forward and turned to face the camera.",
   },
+  "blog-best-ai-employee-platforms": {
+    headline: ["AI EMPLOYEES", "FOR SMALL", "BUSINESS"],
+    scene:
+      "The mascot sitting on top of a tall steel filing cabinet with its top drawer pulled open, a row of hanging folders inside, and ten printed resumes fanned out across the bench below it.",
+  },
   "blog-agent-verification-gap": {
     headline: ["NOBODY MERGES", "AN EMAIL"],
     scene:
@@ -248,6 +253,17 @@ export const ogPosters: Record<string, PosterCard> = {
     headline: ["AI WORKFLOW", "AUTOMATION"],
     scene:
       "The mascot sitting on top of a dot-matrix printer mid-run, a continuous fanfold printout feeding out of it and concertinaing into a neat stack below.",
+  },
+  /**
+   * Hand-made, like `home`: `assets/og/blog-zen-mode.png` is the title frame of
+   * the Zen Mode launch film (the video repo's `out/thumb-zen-mode.png`, top
+   * 1008px, scaled to 1200x630). It carries its own words, so `headline` and
+   * `scene` are kept only for the record and the freshness signature.
+   */
+  "blog-zen-mode": {
+    headline: ["ZEN MODE"],
+    scene:
+      "A frame from the Zen Mode launch film: the CONSTRUCT overline and the words Zen Mode set over the dimmed Zen Mode Home screen.",
   },
   "blog-grokbot-alternative": {
     headline: ["GROKBOT", "ALTERNATIVE"],

@@ -59,6 +59,282 @@ Finished work lands in the workspace as it is produced, so a run that dies at st
 
 # Resources
 
+## AI employees for small business: 10 platforms compared
+
+URL: https://construct.computer/blog/best-ai-employee-platforms/
+Type: comparison
+Author: Construct Team
+Published: 2026-09-29
+Tags: comparison, ai-employee, small-business
+
+**The best AI employee for a small business depends on the first job you hand over.** For a named role such as social media or answering the phone, Sintra or Marblism is the quickest to start. For work that crosses apps and repeats, a general-purpose AI employee with its own computer, such as Construct, CellCog, Manus, or Grok Bot, fits better. Teams that live in Slack should look at Lindy, and technical owners who want to self-host should look at OpenClaw.
+
+An AI employee platform gives software a job instead of a prompt. We compared ten of them for small businesses on price, how the work actually gets done, and what happens when you hit a limit. We build Construct, one of the ten. We checked every other product against its own pricing pages and documentation on **September 29, 2026**, and we point out where a vendor's own pages disagree with each other.
+
+Try Construct
+
+## The best AI employee by use case
+
+- **Solo founders whose work crosses apps and repeats:** Construct, from $9 a month, keeps the files, schedule, and memory for recurring jobs in one workspace.
+- **Solo owners who mostly need marketing output:** Sintra, whose 12 role-based AI employees cover social media, copywriting, SEO, and email.
+- **An AI receptionist that answers the phone:** Marblism, whose Rachel answers calls around the clock and texts you summaries.
+- **Teams that work in Slack:** Lindy, an AI teammate that lives in your Slack channels and direct messages.
+- **Hiring one AI employee into a role that works shifts:** CellCog, with its own inbox, computer, and shift reports.
+- **One-off research and build tasks:** Manus, which runs each task in its own sandbox computer.
+- **People who already pay for Cursor or SuperGrok:** Grok Bot, included with those plans.
+- **Designing your own agents for sales and support:** Relevance AI.
+- **Outbound sales at volume:** Artisan and its AI sales rep, Ava.
+- **The lowest software cost:** OpenClaw, free and open source if you host it yourself.
+
+## The 10 AI employee platforms at a glance
+
+| Platform     | Shape                                   | Best for                                             | Entry price, billed monthly      |
+| ------------ | --------------------------------------- | ---------------------------------------------------- | -------------------------------- |
+| Construct    | General-purpose, own workspace          | Recurring work across apps, with files and schedules | $9                               |
+| CellCog      | General-purpose, own computer and inbox | One AI employee hired into a role, working in shifts | $8 in credits                    |
+| Manus        | General-purpose, sandbox computer       | Research and build tasks handed over one at a time   | $20 in credits                   |
+| Grok Bot     | General-purpose, shared cloud computer  | People who already pay for Cursor or SuperGrok       | Included with Cursor Pro ($20)   |
+| Lindy        | Teammate in Slack                       | Teams that already run on Slack                      | $29.99 per user                  |
+| Sintra       | Roster of 12 role-based AI staff        | Marketing and admin help for a solo owner            | $97 list, $48.50 on sale         |
+| Marblism     | Roster of 7 role-based AI staff         | A phone receptionist plus inbox and social help      | $44                              |
+| Relevance AI | Build your own AI workforce             | Sales and support teams that want to design agents   | $29 in its docs, or sales-led    |
+| Artisan      | Specialist AI sales rep                 | Outbound sales at volume                             | $280 on its Startups track       |
+| OpenClaw     | Self-hosted, open source                | Technical owners who want full control               | $0, plus hosting and model costs |
+
+## What is an AI employee, and is AI staff the same thing?
+
+An AI employee is AI software you assign outcomes to, not just questions. It plans a multi-step job, uses tools such as a browser, email, and connected apps to finish it, and keeps the context for the next job. AI staff, AI workers, and AI teammates are the same idea under different labels.
+
+Vendors use these terms interchangeably. Sintra and Marblism sell "AI employees" with names and job titles. Relevance AI calls its product an "AI Workforce." Lindy's documentation says "Lindy is an AI employee" while its site calls it an AI teammate. People searching for "AI staff" or "AI workers" usually mean the same thing.
+
+Underneath the labels, three questions separate these products more than any name does:
+
+1. **Fixed role or any task?** A roster gives you a social media manager or a receptionist with a narrow job. A general-purpose AI employee takes whatever you assign and decides which tools to use.
+2. **Does it have its own computer?** An agent with a browser, files, and a terminal can work in tools that have no integration. A chat-first product is limited to what its integrations expose.
+3. **How is the work metered?** Seats, credits, hours of work, and plan limits behave very differently when a busy month runs over.
+
+Our explainer on [what an AI employee is](/blog/what-is-an-ai-employee/) covers the definition in more depth.
+
+## Methodology
+
+We build Construct, so read our placement of it with that in mind. This is an editorial comparison of documented capabilities and published prices, checked on September 29, 2026 against each vendor's own pricing pages, documentation, and announcements. It is not a hands-on benchmark of output quality.
+
+We included products that appear in search results for "AI employees" and "AI staff for business" and that a small business can start without a sales call, with two deliberate additions: Artisan, the best-known AI sales employee, and OpenClaw, because running your own agent is a real alternative to paying for any of these. Prices are in US dollars at monthly billing unless we say otherwise. Where a capability is not documented, we say so rather than treating silence as proof it is missing. Where a vendor's pages disagree, we report both figures.
+
+We left out Motion, whose AI Employees product page now redirects to its homepage and whose AI Employees help articles no longer load, and Soleur, whose hosted product was still marked "Coming Soon." Enterprise-only platforms are outside the scope of this list.
+
+## General-purpose AI employees with their own computer
+
+These take any task rather than a fixed role, and they work inside a computer environment with a browser and files. They are the closest thing to hiring a generalist.
+
+### Construct
+
+**Best for:** small teams that want recurring work, its files, and its schedule in one place.
+
+Construct runs your agents in a persistent cloud workspace with files, a live browser, a sandbox terminal, and a native email inbox. It reaches supported apps such as Gmail, Notion, Linear, and HubSpot through its live integration catalog, and you can add custom MCP tools when a catalog entry does not exist. You can assign work from the web desktop, Slack, Telegram, Discord slash commands, or email. A job that works can be saved as a workflow and scheduled on its Calendar, and stored memory can be inspected, corrected, or forgotten.
+
+**Price:** Lite is $9 a month for 2 agents, 50 steps per task, and 3 scheduled tasks. Starter is $59 with 6× Lite's usage, 5 agents, and 10 scheduled tasks. Pro is $299 with 32× Lite's usage, 15 agents, runs of up to 1,000 steps, 50 scheduled tasks, and your own model keys, and it comes with a seven-day trial. Annual billing lowers each plan.
+
+**Watch for:** workflows are linear, so do not expect visual branching or built-in approval gates. The Activity feed keeps action summaries, not a complete audit log. There is no built-in phone agent or sales dialer, and bring-your-own keys require Pro. [Construct pricing](/pricing/) has the current limits.
+
+### CellCog
+
+**Best for:** hiring one AI employee into a defined role that works in scheduled shifts.
+
+CellCog lets you "hire" a general-purpose AI employee into any role. Each one gets its own email inbox, a task board, persistent memory, and a cloud computer, and with your approval it can also work in your own logged-in Chrome sessions. It works scheduled shifts and files a report after each one, and CellCog says anything risky waits for your yes. It lists more than 1,500 tool integrations.
+
+**Price:** credit plans start at $8 a month for 800 credits and rise to $500 a month for 50,000. CellCog's own plan labels call the $160 tier a part-time employee working "a few shifts a month" and the $500 tier a full-time employee working weekday shifts, so budget from those labels rather than the entry price. New accounts start with 200 free credits.
+
+**Watch for:** CellCog's pricing FAQ says all payments are final and non-refundable, and plan credits expire. Its pages do not name the underlying model providers or offer bring-your-own keys.
+
+### Manus
+
+**Best for:** research, analysis, and build tasks you hand over one at a time.
+
+Manus describes itself as a general AI agent, "a virtual colleague with its own computer." Each task runs in a sandbox virtual machine with a browser, persistent files, and the ability to install software. Manus 2.0, launched September 28, 2026, adds a desktop app, an always-on Cloud Computer, and control of your own machine. Automations run on a schedule or on events from apps such as Gmail, Notion, and GitHub, and you can reach it by email, Slack, or Telegram.
+
+**Price:** Pro starts at $20 a month for 4,000 credits plus 300 refresh credits a day, with 20 scheduled tasks. Team is $20 per seat a month with a shared credit pool. The always-on Cloud Computer is an add-on from $30 a month.
+
+**Watch for:** credit use varies with task complexity, monthly credits do not roll over, and you cannot start a task with zero credits. If the subscription lapses, the Cloud Computer shuts down and its files are deleted. Manus also returned to [independent operation](https://manus.im/blog/manus-resumes-independent-operations) on September 1, 2026 after Meta's acquisition was unwound, which is worth reading about before you move business data there.
+
+### Grok Bot
+
+**Best for:** people who already pay for Cursor or an eligible SuperGrok plan.
+
+Grok Bot gives you named Bots that share one persistent cloud computer with a browser, files, and a terminal. They sign into your tools, run routines on a schedule or on events, and can learn a routine by watching you do it. They ask for approval before actions you have not allowed, and you work with them through desktop and mobile apps.
+
+**Price:** there is no standalone plan. Access is included with Cursor Pro at $20 a month, Pro+, Ultra, and Teams, or with an eligible SuperGrok or X Premium+ subscription linked to a Cursor account. Usage resets weekly and is described in relative tiers rather than published numbers.
+
+**Watch for:** it is labeled beta. Because Bots share one computer, its documentation says not to treat separate Bots as a security boundary. Each Bot can hold up to 50 routines. Our [Grok Bot comparison](/blog/grokbot-alternative/) goes deeper on how it differs from Construct.
+
+## An AI teammate in Slack
+
+### Lindy
+
+**Best for:** teams whose work already happens in Slack.
+
+Lindy's current product, Lindy Teammate, is an AI coworker that lives in Slack. Each person gets a private assistant in direct messages and the team shares one in channels. It connects to a large integration catalog and any MCP server, can drive a browser, runs Routines on a schedule or on events, and keeps memory as versioned files you can open and edit. It can also take meeting notes and reach you over iMessage and SMS. Write actions, such as sending an email, wait for your approval.
+
+**Price:** billed per user. Plus is $29.99 a month with 3,000 credits, Pro is $99.99 with 15,000, and Max is $199.99 with 35,000. Lindy's docs put a credit at about one cent and pool credits across the workspace.
+
+**Watch for:** anyone who uses Lindy takes a paid seat, including someone who only mentions it in Slack. When the credit pool runs out, work pauses until you top up. Lindy's pricing page lists computer use as included everywhere, while its docs show it from Pro upward, so confirm before choosing Plus.
+
+## Role-based AI staff
+
+These give you a roster of named AI employees, each with a narrow job. They are the fastest to start when your need matches one of the roles, and the most limiting when it does not.
+
+### Sintra
+
+**Best for:** a solo owner who wants marketing, social, and admin help without designing anything.
+
+Sintra sells 12 named AI employees, including Soshie for social media, Penn for copywriting, Seomi for SEO, Cassie for customer support, and Vizzy as an executive assistant. They share a knowledge base called Brain AI, run recurring tasks and background automations, and can use a built-in browser to log into apps that have no integration. Sintra's own FAQ says every AI worker runs as a chatbot.
+
+**Price:** one plan, Sintra X, includes all 12. It lists at $97 a month, and when we checked it was on sale at $48.50 for a one-month term, with lower monthly equivalents for 3- and 12-month terms billed upfront. Every term includes 250 credits a month.
+
+**Watch for:** Sintra's help center says the AI employees stop working when credits run out, and credit top-ups are non-refundable. Its own pages also disagree with each other on standard prices and on how many integrations it has.
+
+### Marblism
+
+**Best for:** a local business that wants calls answered along with inbox and social help.
+
+Marblism's roster has seven AI employees: Eva (executive assistant), Sonny (social media), Stan (lead generation), Penny (SEO blog posts), Rachel (phone receptionist), Linda (legal documents), and Walter (websites). Rachel answers calls around the clock, transfers them, and texts you summaries, with numbers available in five countries. Tasks can be one-off, recurring, or triggered by events, and a shared Brain holds your website, files, and guidelines.
+
+**Price:** the base plan is $44 a month, or $24 a month billed yearly, for all seven employees and 50 "hours of work." Each task costs a fixed amount of that time: sorting an email is 20 seconds, a phone call 10 minutes, and a blog post an hour. Larger plans go up to 10,000 hours.
+
+**Watch for:** Marblism documents that Eva drafts emails but does not send them. It has no public API and says one is not on its roadmap. When hours run out, scheduled tasks are cancelled and Rachel's line pauses.
+
+## Build your own AI workforce
+
+### Relevance AI
+
+**Best for:** sales and support teams that want to design their own agents and multi-agent teams.
+
+Relevance AI calls itself "the home of the AI Workforce." You build agents and multi-agent Workforces in a low-code builder, or ask its Invent agent to draft one for you, and connect them to a large catalog of apps. Agents can run on a schedule, call Python tools, make outbound phone calls on higher tiers, and use the model you pick, including through your own keys.
+
+**Price:** this is the least clear pricing on the list. The public pricing page shows only an Enterprise plan with a "Talk to sales" button. Relevance AI's documentation still lists Pro at $29 a month ($19 billed annually) with 2,500 actions and $20 of model and tool credits, and Team at $349 a month. Confirm with the vendor before you plan around either.
+
+**Watch for:** there is no dedicated agent computer, and browser automation runs through a third-party tool, Airtop, on your own account. Failed tool runs still count as actions. SSO and audit logs are Enterprise features.
+
+## A specialist AI sales employee
+
+### Artisan
+
+**Best for:** outbound sales teams that want an AI BDR to prospect and write outreach.
+
+Artisan's Ava finds and enriches leads from a database of more than 250 million contacts, writes and sends email sequences from your own mailboxes, handles replies, and books meetings. It is a sales employee and nothing else.
+
+**Price:** Artisan's default pricing tab is sales-led. A separate Startups track lists an Intern plan from $280 a month ($250 billed annually) for about 500 leads contacted, plus a free plan without campaigns. Mailboxes and phone numbers are billed separately.
+
+**Watch for:** Artisan says Ava cannot legally make calls, so its dialer is for your human reps. Each primary mailbox is capped at 100 sends a day, and new enrollments pause when credits run out. If outbound volume is not your bottleneck, a general-purpose option costs far less to try.
+
+## Self-hosted and open source
+
+### OpenClaw
+
+**Best for:** technical owners who want full control and are comfortable running a server.
+
+OpenClaw is a free, MIT-licensed personal AI agent stewarded by a non-profit foundation. You run its gateway on your own computer or a small server, connect any model with your own keys, and chat with it from WhatsApp, Telegram, Slack, Discord, Signal, iMessage, and many other channels. It can browse, run shell commands, edit files, keep persistent memory, and run cron jobs.
+
+**Price:** the software costs nothing, and there is no paid tier. You pay for hosting, where its docs suggest a small always-on server, and for model usage.
+
+**Watch for:** installing, updating, securing, and keeping it online is your job. Its security documentation assumes one trusted operator per gateway, says third-party skills should be treated as untrusted code, and warns that container setups expose the gateway by default and need authentication. Our comparison of [building your own AI agent](/blog/construct-vs-diy/) covers that tradeoff.
+
+## How much does an AI employee cost?
+
+An AI employee for a small business costs from $0 to $280 a month to start, based on entry prices checked on September 29, 2026. Self-hosted OpenClaw is free software plus your hosting and model bills, most of the others start between $8 and $50 a month, and Artisan's sales agent starts at $280. Every platform meters usage, so the working cost depends on how much you assign.
+
+| Platform     | Entry plan, billed monthly      | How usage is metered                 | At the limit                                   |
+| ------------ | ------------------------------- | ------------------------------------ | ---------------------------------------------- |
+| Construct    | $9 (Lite)                       | Plan usage, agents, steps, schedules | Plan limits apply; Pro can switch to your keys |
+| CellCog      | $8 (800 credits)                | Credits                              | Buy top-ups; plan credits expire               |
+| Manus        | $20 (4,000 credits)             | Credits plus daily refresh credits   | New tasks cannot start                         |
+| Grok Bot     | Included with Cursor Pro ($20)  | Weekly allowance in relative tiers   | Optional on-demand usage                       |
+| Lindy        | $29.99 per user (3,000 credits) | Seats plus pooled credits            | Work pauses until you top up                   |
+| Sintra       | $97 list, $48.50 on sale        | 250 credits a month                  | AI employees stop working                      |
+| Marblism     | $44 (50 hours of work)          | Fixed time per task type             | Scheduled tasks cancel; phone line pauses      |
+| Relevance AI | $29 in its docs, or sales-led   | Actions plus model and tool credits  | Buy action or credit top-ups                   |
+| Artisan      | $280 (Startups Intern)          | Credits, about 20 per lead contacted | New enrollments pause                          |
+| OpenClaw     | $0 for the software             | Your own hosting and model bills     | Set by your providers                          |
+
+Entry prices are not working prices. CellCog's own labels put a full-time AI employee at $500 a month. Marblism's 50 hours cover about 300 ten-minute phone calls if you spend them on nothing else. Lindy's 3,000 credits are worth about $30 at its own rate of a cent each. Model a busy month, not a quiet one, and read the last column before you commit.
+
+Try Construct
+
+## How to choose an AI employee platform
+
+Choose by the first job you will hand over, where requests arrive, and what each platform does in a busy month. In order:
+
+1. **Start from the job, not the category.** Write down the one job you would hand over first. If it matches a roster role, such as posting to social media or answering the phone, Sintra or Marblism will be running soonest. If it crosses apps or changes from week to week, look at the general-purpose group.
+2. **Check where the work arrives.** Slack-heavy teams will find Lindy natural. If requests come by email or Telegram, Construct and Manus both accept them there, and OpenClaw reaches the widest set of chat apps if you host it.
+3. **Price the busy month.** Assume twice the work you expect and check what each vendor does at the limit.
+4. **Test recurring work, not a demo.** Almost anything impresses in one conversation. Run the same job three weeks in a row and check whether later runs start from the earlier files and corrections.
+5. **Know what you can inspect and correct.** Ask where memory lives, whether you can edit it, and what record a run leaves behind. [AI agent memory you can control](/blog/ai-agent-memory/) explains why that matters.
+6. **Decide who operates it.** Self-hosting saves the subscription and spends your time instead.
+
+Our guide to [choosing an AI agent platform for your team](/blog/how-to-choose-an-ai-agent-platform-for-your-team/) turns these questions into a longer checklist.
+
+## When do you not need an AI employee?
+
+Not every problem needs one. If you want an answer or a draft, a chat assistant does that well, and our [comparison with ChatGPT, Claude, and Gemini](/blog/construct-vs-chatgpt/) shows where the line falls. If the process is fixed and never needs judgement, a rules-based automation is cheaper and more predictable; see [AI agent vs Zapier](/blog/ai-agent-vs-zapier/). If the job depends on relationships or judgement you cannot write down, a human assistant may be better value, as our [cost comparison with virtual assistants](/blog/ai-agent-vs-virtual-assistant/) explains.
+
+## Where Construct fits
+
+Choose Construct when the work repeats and should leave something behind: files, a schedule, memory you can correct, and a small internal app when several people need to review the results. Its $9 entry plan makes it cheap to test one real job before paying for more agents or scheduled tasks.
+
+Choose a roster if your first job is one of its named roles, Lindy if Slack is where your team already works, Artisan if outbound sales is the whole job, and OpenClaw if you would rather run the agent yourself. Whichever you pick, judge it on the third run of a recurring job, not the first conversation.
+
+## Sources
+
+Vendor pages checked on September 29, 2026:
+
+- [Lindy pricing](https://www.lindy.ai/pricing), [plan documentation](https://docs.lindy.ai/pricing), and [usage and credits](https://docs.lindy.ai/account-billing/usage)
+- [Sintra pricing](https://sintra.ai/pricing) and [workspace credits](https://help.sintra.ai/en/articles/12606676-workspace-credits)
+- [Marblism pricing](https://www.marblism.com/pricing), [plans and billing](https://help.marblism.com/en/articles/15361461-marblism-pricing-plans-billing-cadence), and [integrations](https://help.marblism.com/en/articles/15278633-what-integrations-are-available)
+- [CellCog pricing](https://cellcog.ai/pricing) and [AI employees](https://cellcog.ai/ai-employees)
+- [Manus pricing](https://manus.im/pricing), [Manus Team](https://manus.im/team), [Introducing Manus 2.0](https://manus.im/blog/introducing-manus-2-0), and [Manus resumes independent operations](https://manus.im/blog/manus-resumes-independent-operations)
+- [Grok Bot overview](https://docs.x.ai/grok-bot/overview), [Grok Bot plan eligibility](https://cursor.com/help/grok-bot/plans), and [Grok Bot access expansion](https://x.ai/news/grok-bot-more-plans)
+- [Relevance AI pricing](https://relevanceai.com/pricing) and [pricing documentation](https://relevanceai.com/docs/get-started/pricing)
+- [Artisan pricing](https://www.artisan.co/pricing) and [Ava, the AI sales agent](https://www.artisan.co/ai-sales-agent)
+- [OpenClaw](https://openclaw.ai/) and [OpenClaw gateway security](https://docs.openclaw.ai/gateway/security)
+- [Soleur pricing](https://soleur.ai/pricing/)
+- [Construct pricing](/pricing/) and [Construct product guide](/blog/ai-employee/)
+
+## Related resources
+
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [Grok Bot alternative: Construct vs Grok Bot](/blog/grokbot-alternative/)
+- [Construct vs building your own AI agent](/blog/construct-vs-diy/)
+- [How to choose an AI agent platform for your team](/blog/how-to-choose-an-ai-agent-platform-for-your-team/)
+
+### Frequently asked questions
+
+**What is the best AI employee platform for a small business?**
+
+It depends on the first job you hand over. If it matches a named role such as social media or answering the phone, a role-based roster like Sintra or Marblism is quickest to start. If the work crosses apps or changes week to week, a general-purpose AI employee with its own computer, such as Construct, CellCog, Manus, or Grok Bot, fits better. Lindy suits teams that live in Slack, and OpenClaw suits technical owners who want to self-host.
+
+**How much does an AI employee cost?**
+
+Entry prices checked on September 29, 2026 run from $0 for self-hosted OpenClaw, plus hosting and model costs, and $8 to $9 a month for CellCog and Construct, to $29.99 per user for Lindy and $280 a month for Artisan's sales agent. Most platforms meter work with credits, hours, or plan limits, so the working cost depends on how much you assign. CellCog's own labels put a full-time AI employee at $500 a month.
+
+**Is AI staff the same as an AI employee?**
+
+Mostly, yes. Vendors use AI employee, AI staff, AI worker, and AI teammate for software agents given a job rather than a single prompt. The differences that matter are whether the agent has a fixed role or takes any task, whether it has its own computer, and how its work is metered.
+
+**What is the cheapest AI employee?**
+
+OpenClaw is free, open-source software, but you host it yourself and pay for the server and model usage. Among hosted platforms checked on September 29, 2026, CellCog starts at $8 a month in credits, Construct at $9 a month, and Grok Bot is included with Cursor Pro at $20 a month. Entry plans cover light use, so price a busy month before you commit.
+
+**Can an AI employee answer phone calls?**
+
+Some can. Marblism's Rachel answers calls around the clock, transfers them, and texts you summaries, and Relevance AI offers outbound phone agents on its higher tiers. Artisan says its AI sales rep cannot legally make calls, so its dialer is for human reps. Construct has no built-in phone agent.
+
+**Which AI employee works in Slack?**
+
+Lindy is built around Slack: each person gets a private assistant in direct messages and the team shares one in channels. Construct and Manus also take requests from Slack, alongside other channels such as email and Telegram.
+
+**What happens when an AI employee runs out of credits?**
+
+It depends on the vendor. Lindy pauses work until you top up, Sintra's AI employees stop working, Marblism cancels scheduled tasks and pauses its phone receptionist, Manus cannot start new tasks, and Artisan pauses new enrollments. Construct applies plan limits, and on Pro it can switch to your own model keys after the bundled limits.
 ## Nobody merges an email
 
 URL: https://construct.computer/blog/agent-verification-gap/
@@ -385,6 +661,7 @@ Pick the report, research task, or small tracker that keeps slipping into your e
 
 ## Related resources
 
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
 - [AI agent memory you can control](/blog/ai-agent-memory/)
 - [AI workflow automation](/blog/ai-workflow-automation/)
 - [How to choose an AI agent platform for your team](/blog/how-to-choose-an-ai-agent-platform-for-your-team/)
@@ -847,6 +1124,7 @@ Start with [what an AI employee is](/blog/what-is-an-ai-employee/) if the underl
 ## Related resources
 
 - [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
 - [AI employee product guide](/blog/ai-employee/)
 - [Chat assistants vs AI employees](/blog/chat-assistants-vs-ai-employees/)
 - [AI agent memory](/blog/ai-agent-memory/)
@@ -1357,6 +1635,7 @@ The fit is strongest when a job crosses several tools, recurs, needs context tha
 ## Related resources
 
 - [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
 - [Construct vs chat assistants](/blog/construct-vs-chatgpt/)
 - [Construct vs Grok Bot](/blog/grokbot-alternative/)
 - [AI workflow automation](/blog/ai-workflow-automation/)
@@ -1815,10 +2094,10 @@ It is designed to carry context across a whole job: a customer message, a worksp
 URL: https://construct.computer/blog/construct-vs-diy/
 Type: comparison
 Author: Construct Team
-Published: 2026-07-20 (updated 2026-07-27)
+Published: 2026-07-20 (updated 2026-09-29)
 Tags: comparison, agent-frameworks, diy, ai-employee
 
-A DIY stack combines your chosen agent framework, models, tools, storage, runtime, and user interface. Construct ships those operating surfaces as one hosted product.
+A DIY stack combines your chosen agent framework, models, tools, storage, runtime, and user interface. Construct ships those operating surfaces as one hosted, turnkey product.
 
 Meet Construct
 
@@ -2039,10 +2318,12 @@ Yes. Deterministic, high-volume paths are well served by a traditional automatio
 URL: https://construct.computer/blog/what-is-an-ai-employee/
 Type: article
 Author: Ankush
-Published: 2026-07-02 (updated 2026-07-27)
+Published: 2026-07-02 (updated 2026-09-29)
 Tags: ai-agent, product, ai-employee
 
-Most AI assistants begin and end in a chat window. You ask a question, get an answer, and carry the result into the rest of your work. An **AI employee** goes further: it can accept an outcome, choose tools, complete a multi-step job, and preserve the files and context behind that work for later.
+An **AI employee** is AI software you assign outcomes to, not just questions. It plans a multi-step job, uses tools such as a browser, email, and connected apps to finish it, and keeps the files and context behind the work so the next job starts from there.
+
+Most AI assistants begin and end in a chat window. You ask a question, get an answer, and carry the result into the rest of your work. An AI employee carries the work itself, and the difference shows up in what is left behind when the job is done.
 
 Construct is the work OS around that employee. It combines persistent files, inspectable memory, schedules, linear workflows, and a native inbox with web research, live browser runs, a sandbox terminal, and connected applications in one web desktop.
 
@@ -2124,6 +2405,8 @@ If you are comparing products in this category, most of the marketing sounds ide
 5. **Can you correct what it believes?** Memory you cannot inspect or fix becomes a liability as facts change.
 6. **What are the stated limits?** A product that names its boundaries is easier to trust than one that implies it has none.
 
+For how ten current products answer those questions, including their prices, see our [comparison of AI employee platforms for small business](/blog/best-ai-employee-platforms/).
+
 ## Common misconceptions
 
 **"It replaces a person."** It completes bounded, tool-driven, repeatable work. Relationship-heavy and judgment-heavy responsibilities do not transfer, which is covered in [AI agent vs virtual assistant](/blog/ai-agent-vs-virtual-assistant/).
@@ -2144,7 +2427,7 @@ Explore the full [AI employee product guide](/blog/ai-employee/), read [Construc
 
 **What is an AI employee?**
 
-An AI employee is an agent given a persistent workspace and the tools to complete assigned work end to end, researching, operating tools, creating files, and running recurring jobs, rather than only answering questions in a chat window.
+An AI employee is AI software you assign outcomes to, not just questions. It plans a multi-step job, uses tools such as a browser, email, and connected apps to finish it, and keeps the files and context behind the work so the next job starts from there.
 
 **How is an AI employee different from a chatbot?**
 
