@@ -8,8 +8,9 @@ import {
 
 /**
  * Inventory from Construct v2 (`apps/api` wrangler bindings, auth, billing,
- * observability, integrations) plus the landing stack (PostHog proxy,
- * PartnerStack, Turnstile). Resend is not used, mail is Cloudflare Email.
+ * observability, integrations, web search providers, Jev decisions) plus the
+ * landing stack (PostHog proxy, PartnerStack, Turnstile). Resend is not used,
+ * mail is Cloudflare Email.
  */
 const processors = [
   {
@@ -29,6 +30,18 @@ const processors = [
     purpose:
       "OAuth connection management and tool execution against apps you connect, web search, and interactive browser tasks when you use those capabilities",
     site: "https://composio.dev/privacy",
+  },
+  {
+    name: "Exa Labs Inc.",
+    purpose:
+      "Web search and page retrieval for the agent’s web tools. Search queries and the URLs your agent reads are sent to Exa, which returns results and page content",
+    site: "https://exa.ai/privacy-policy",
+  },
+  {
+    name: "Context Dev Inc.",
+    purpose:
+      "Web search and page retrieval for the agent’s web tools. Search queries and the URLs your agent reads are sent to Context.dev, which returns results and page content",
+    site: "https://context.dev/privacy",
   },
   {
     name: "Dodo Payments",
@@ -57,6 +70,12 @@ const processors = [
 ] as const;
 
 const modelProcessors = [
+  {
+    name: "TypeSafe AI, Inc.",
+    purpose:
+      "Platform decision-model inference (Jev), routed through Cloudflare AI Gateway. Construct sends short structured questions with only the fields a decision needs, for example a name your agent is about to remember and the similar names already in your memory, so it can tell whether they are the same person, project or company",
+    site: "https://typesafe.ai/legal/privacy-policy",
+  },
   {
     name: "OpenRouter, Inc.",
     purpose:
@@ -92,7 +111,7 @@ export function SubProcessorsPage() {
       title="Sub-processors"
       metadata={
         <>
-          Last updated: <time dateTime="2026-08-09">August 9, 2026</time>
+          Last updated: <time dateTime="2026-09-30">September 30, 2026</time>
         </>
       }
     >
@@ -129,8 +148,10 @@ export function SubProcessorsPage() {
         <p>
           Prompts and conversation context required to run your agent are sent
           to the model provider serving the request. Google Gemini on the
-          platform fleet is listed above. The providers below process data when
-          the corresponding platform or BYOK path is used:
+          platform fleet is listed above. TypeSafe answers platform decision
+          questions and does not receive your conversations. The providers
+          below process data when the corresponding platform or BYOK path is
+          used:
         </p>
         <List>
           {modelProcessors.map((processor) => (

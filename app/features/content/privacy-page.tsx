@@ -13,7 +13,7 @@ export function PrivacyPage() {
       title="Privacy Policy"
       metadata={
         <>
-          Last updated: <time dateTime="2026-08-09">August 9, 2026</time>
+          Last updated: <time dateTime="2026-09-30">September 30, 2026</time>
         </>
       }
     >
@@ -254,6 +254,15 @@ export function PrivacyPage() {
             <InlineLink href="https://openrouter.ai/privacy">
               OpenRouter’s privacy policy
             </InlineLink>
+            . Some platform decisions, such as whether a name your agent is
+            about to remember matches one already in your memory, are answered
+            by TypeSafe’s Jev decision model through Cloudflare AI Gateway. Only
+            the fields a decision needs are sent
+          </li>
+          <li>
+            <Emph>Web search</Emph> - when your agent searches or reads the web,
+            search queries and the URLs it reads are sent to Exa, Context.dev,
+            or Composio, depending on which provider serves the request
           </li>
           <li>
             <Emph>Composio Browser</Emph> - powers interactive browser tasks.
