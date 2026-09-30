@@ -4,6 +4,18 @@
     <link>https://construct.computer/blog/</link>
     <description>AI employee guides, practical articles, and comparisons from Construct Computer.</description>
     <item>
+      <title>We put Jev inside our AI employee</title>
+      <link>https://construct.computer/blog/jev-ai-agents/</link>
+      <guid>https://construct.computer/blog/jev-ai-agents/</guid>
+      <description>We shipped TypeSafe&apos;s Jev into our AI employee&apos;s memory five days after launch: measured latency, how we set a 0.7 threshold, where Jev fails, and what it costs.</description>
+      <dc:creator>Ankush</dc:creator>
+      <category>ai-agent</category>
+      <category>jev</category>
+      <category>reliability</category>
+      <category>decision-models</category>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>AI employees for small business: 10 platforms compared</title>
       <link>https://construct.computer/blog/best-ai-employee-platforms/</link>
       <guid>https://construct.computer/blog/best-ai-employee-platforms/</guid>

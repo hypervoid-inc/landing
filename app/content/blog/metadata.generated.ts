@@ -208,6 +208,18 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: false,
   },
   {
+    slug: "jev-ai-agents",
+    title: "We put Jev inside our AI employee",
+    description:
+      "We shipped TypeSafe's Jev into our AI employee's memory five days after launch: measured latency, how we set a 0.7 threshold, where Jev fails, and what it costs.",
+    published: "2026-09-30",
+    seoTitle: "Jev for AI Agents: What We Learned Running It in Production",
+    author: "ankush",
+    tags: ["ai-agent", "jev", "reliability", "decision-models"],
+    kind: "article",
+    draft: false,
+  },
+  {
     slug: "running-ai-agents-on-cloudflare-not-vms",
     title: "All our Agents get computers, we pay for almost none",
     description:

@@ -3,7 +3,20 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-09-29T00:00:00Z</updated>
+  <updated>2026-09-30T00:00:00Z</updated>
+  <entry>
+    <title>We put Jev inside our AI employee</title>
+    <id>https://construct.computer/blog/jev-ai-agents/</id>
+    <link href="https://construct.computer/blog/jev-ai-agents/"/>
+    <author><name>Ankush</name></author>
+    <published>2026-09-30T00:00:00Z</published>
+    <updated>2026-09-30T00:00:00Z</updated>
+    <category term="ai-agent"/>
+    <category term="jev"/>
+    <category term="reliability"/>
+    <category term="decision-models"/>
+    <summary>We shipped TypeSafe&apos;s Jev into our AI employee&apos;s memory five days after launch: measured latency, how we set a 0.7 threshold, where Jev fails, and what it costs.</summary>
+  </entry>
   <entry>
     <title>AI employees for small business: 10 platforms compared</title>
     <id>https://construct.computer/blog/best-ai-employee-platforms/</id>

@@ -22,6 +22,7 @@
 - [Sub-processors - Construct Computer](https://construct.computer/sub-processors/): Third-party vendors Construct uses to host, authenticate, integrate, bill, email, observe, and run models for the construct.computer platform.
 - [Terms & Conditions - Construct Computer](https://construct.computer/terms/): Terms of service for Construct Computer: subscription plans, acceptable use, agent actions, model BYOK, and proprietary platform licensing.
 - [Construct insights and guides](https://construct.computer/blog/): Practical writing from Construct on AI agents, workflows, memory, and tools that get work done.
+- [We put Jev inside our AI employee](https://construct.computer/blog/jev-ai-agents/): We shipped TypeSafe's Jev into our AI employee's memory five days after launch: measured latency, how we set a 0.7 threshold, where Jev fails, and what it costs.
 - [AI employees for small business: 10 platforms compared](https://construct.computer/blog/best-ai-employee-platforms/): The best AI employee platforms for small business in 2026, compared on price, capabilities, and limits: Lindy, Sintra, Marblism, Manus, Construct, and more.
 - [Nobody merges an email](https://construct.computer/blog/agent-verification-gap/): Agents made work cheap to produce and no cheaper to check. Why software absorbed the flood, why the rest of the business did not, and the five things that make agent work checkable.
 - [Grok Bot Alternative: Construct vs Grok Bot](https://construct.computer/blog/grokbot-alternative/): Compare Construct and Grok Bot on monthly pricing, workflows, integrations, memory, and model choice for small teams.
@@ -45,11 +46,11 @@
 - [Ankush](https://construct.computer/authors/ankush/): Writes about Construct, AI agents, and developer tools. Read every article, guide, and comparison written by Ankush for Construct Computer.
 - [Nischal](https://construct.computer/authors/nischal/): Writes about Construct, AI agents, and building useful software. Read every article, guide, and comparison written by Nischal for Construct Computer.
 - [Construct Team](https://construct.computer/authors/construct-team/): The team building and documenting Construct Computer. Read every article, guide, and comparison written by Construct Team for Construct Computer.
-- [Writing tagged AI agent](https://construct.computer/blog/tag/ai-agent/): 10 Construct articles, guides, and comparisons tagged AI agent, covering AI agents and how they get work done.
+- [Writing tagged AI agent](https://construct.computer/blog/tag/ai-agent/): 11 Construct articles, guides, and comparisons tagged AI agent, covering AI agents and how they get work done.
 - [Writing tagged AI employee](https://construct.computer/blog/tag/ai-employee/): 11 Construct articles, guides, and comparisons tagged AI employee, covering AI agents and how they get work done.
 - [Writing tagged ChatGPT](https://construct.computer/blog/tag/chatgpt/): 2 Construct articles, guides, and comparisons tagged ChatGPT, covering AI agents and how they get work done.
 - [Writing tagged comparison](https://construct.computer/blog/tag/comparison/): 10 Construct articles, guides, and comparisons tagged comparison, covering AI agents and how they get work done.
 - [Writing tagged product](https://construct.computer/blog/tag/product/): 5 Construct articles, guides, and comparisons tagged product, covering AI agents and how they get work done.
-- [Writing tagged reliability](https://construct.computer/blog/tag/reliability/): 2 Construct articles, guides, and comparisons tagged reliability, covering AI agents and how they get work done.
+- [Writing tagged reliability](https://construct.computer/blog/tag/reliability/): 3 Construct articles, guides, and comparisons tagged reliability, covering AI agents and how they get work done.
 - [Writing tagged workflow automation](https://construct.computer/blog/tag/workflow-automation/): 4 Construct articles, guides, and comparisons tagged workflow automation, covering AI agents and how they get work done.
 - [Writing tagged zapier](https://construct.computer/blog/tag/zapier/): 2 Construct articles, guides, and comparisons tagged zapier, covering AI agents and how they get work done.

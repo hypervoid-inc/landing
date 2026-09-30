@@ -10,6 +10,58 @@ export type FaqItem = {
  * that the body does not support.
  */
 export const resourceFaqs: Record<string, readonly FaqItem[]> = {
+  "jev-ai-agents": [
+    {
+      question: "What is Jev?",
+      answer:
+        "Jev is a System One model, or decision model, from TypeSafe AI, released in early access on September 15, 2026. You send it a state and typed questions (Choice, Score, or Noul for yes or no), and it returns a probability for each possible answer instead of generating text, in well under a second, for $0.042 per million input tokens with output free.",
+    },
+    {
+      question: "How is Jev different from an LLM?",
+      answer:
+        "A language model generates text and can plan, write, and call tools. Jev cannot write at all: it answers bounded questions about a state with typed answers and probabilities, so its answer can never fall outside the options you define. It is much faster and cheaper per decision, and in independent tests it lands a few accuracy points behind the strongest language models on classification.",
+    },
+    {
+      question: "How do you use Jev in an AI agent?",
+      answer:
+        "Use it for the small, frequent decisions around the language model, not instead of it: is this person one the agent already knows, is the task done, does this email need the agent, which tool fits. Code builds a small state and enforces thresholds, Jev makes the bounded call, and a person takes irreversible or ambiguous cases. Construct uses Jev in production to resolve people and projects in its agent's memory.",
+    },
+    {
+      question: "Can a System One model and an LLM work together in an agent?",
+      answer:
+        "Yes, and that is the pattern that works. The language model is the slow System 2 that plans, writes, and uses tools, and Jev is the fast System 1 for the bounded judgments around it. If you escalate Jev's low-confidence answers, escalate to something better at the hard cases: OpenRouter sent them to Claude Opus 5 and came within 0.4 points of Opus alone, while a cascade to a weaker model introduced more mistakes than it fixed.",
+    },
+    {
+      question: "Can high confidence let Jev approve risky actions on its own?",
+      answer:
+        "No. Keep Jev off auth boundaries and never make it the only check before an irreversible action such as sending mail or moving money. Text inside the state can steer its answer: in Primeline's test, injected instructions misclassified 22.5% of test pairs. Use deterministic permission checks first and send ambiguous or irreversible cases to a person.",
+    },
+    {
+      question: "Does Jev hallucinate?",
+      answer:
+        "Jev cannot return a value outside the options you define, but it can pick the wrong valid option, which TypeSafe's own FAQ acknowledges. Always offer an explicit none option: in one reported test, Jev placed messages that fit no category into a listed category at 0.99 confidence or more when none was not available.",
+    },
+    {
+      question: "Is Jev's confidence score calibrated?",
+      answer:
+        "Partly. Independent tests found its probabilities rank answers well but can overstate accuracy in the middle of the range, and Primeline measured calibration error of 0.012 for Noul, 0.086 for Choice, and 0.254 for Score. Treat the scores as a ranking, set thresholds from a gap in your own data, and pin the model version once you have tuned them.",
+    },
+    {
+      question: "How fast is Jev in production?",
+      answer:
+        "Construct measured 358 to 611 ms for one question on about 400 tokens, and 377 to 544 ms for seven questions on about 711 tokens, against jev-1.13.0 through Cloudflare AI Gateway, with p95 around 0.6 seconds. Because Jev answers every question in one parallel pass, batching questions about the same state adds little time.",
+    },
+    {
+      question: "How much does Jev cost compared with an LLM?",
+      answer:
+        "At list prices, 1,000 decisions of about 400 input tokens cost about $0.017 on Jev, $0.50 on Claude Haiku 4.5, and $1.00 on Claude Sonnet 5.5, assuming a 20-token answer from the language models. Independent tests put Jev at roughly 8 to 20 times cheaper per call than Haiku 4.5. For a single agent the difference is cents a month, and the bigger saving is the full agent turns a quick decision lets you skip.",
+    },
+    {
+      question: "Does Construct use Jev?",
+      answer:
+        "Yes, in one place. Construct shipped Jev into its memory on September 20, 2026, to decide whether a newly mentioned person or project matches one the agent already knows. It merges only above a 0.7 probability and falls back to a generative judge if Jev does not answer within two seconds. Planning and writing still run on general-purpose language models.",
+    },
+  ],
   "zen-mode": [
     {
       question: "What is Zen Mode in Construct?",
