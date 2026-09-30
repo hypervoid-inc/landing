@@ -219,6 +219,11 @@ export const ogPosters: Record<string, PosterCard> = {
     scene:
       "The mascot sitting on top of a dot-matrix printer, a long run of fanfold paper feeding out of it and folding into a stack on the bench below, the topmost sheet torn straight across halfway down.",
   },
+  "blog-jev-ai-agents": {
+    headline: ["JEV INSIDE", "AN AI EMPLOYEE"],
+    scene:
+      "The mascot sitting on top of a tall mail sorting cabinet with rows of labeled pigeonholes, a few envelopes filed into their slots and a small unsorted pile left on the bench below.",
+  },
   "blog-running-ai-agents-on-cloudflare-not-vms": {
     headline: ["EVERY AGENT", "GETS A COMPUTER"],
     scene:
