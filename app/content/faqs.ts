@@ -44,7 +44,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Is Jev's confidence score calibrated?",
       answer:
-        "Partly. Independent tests found its probabilities rank answers well but can overstate accuracy in the middle of the range, and Primeline measured calibration error of 0.012 for Noul, 0.086 for Choice, and 0.254 for Score. Treat the scores as a ranking, set thresholds from a gap in your own data, and pin the model version once you have tuned them.",
+        "Partly. Independent tests found its probabilities rank answers well but can overstate accuracy in the middle of the range, and Primeline measured calibration error of 0.012 for Noul, 0.086 for Choice, and 0.254 for Score. Treat the scores as a ranking, set thresholds from a gap in your own data, and pin the model version once you have tuned them. Where your route cannot pin one, as with Cloudflare's typesafe/jev, record the version each response names and measure again when it changes.",
     },
     {
       question: "How fast is Jev in production?",
