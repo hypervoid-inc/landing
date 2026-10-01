@@ -3,7 +3,19 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-09-30T00:00:00Z</updated>
+  <updated>2026-10-01T00:00:00Z</updated>
+  <entry>
+    <title>Construct vs ChatGPT Dots</title>
+    <id>https://construct.computer/blog/construct-vs-openai-dots/</id>
+    <link href="https://construct.computer/blog/construct-vs-openai-dots/"/>
+    <author><name>Construct Team</name></author>
+    <published>2026-10-01T00:00:00Z</published>
+    <updated>2026-10-01T00:00:00Z</updated>
+    <category term="comparison"/>
+    <category term="chatgpt"/>
+    <category term="ai-employee"/>
+    <summary>Compare Construct and ChatGPT Dots on price, model choice, approvals, memory, apps, and channels. Dots needs ChatGPT Pro; Construct starts at $9/month.</summary>
+  </entry>
   <entry>
     <title>We put Jev inside our AI employee</title>
     <id>https://construct.computer/blog/jev-ai-agents/</id>

@@ -310,6 +310,41 @@ export const ogPosters: Record<string, PosterCard> = {
     scene:
       "The mascot sitting on top of one finished bound report lying squarely closed, a spike file crowded with torn message slips standing beside it.",
   },
+  "blog-construct-vs-openai-dots": {
+    headline: ["CONSTRUCT VS", "CHATGPT DOTS"],
+    scene:
+      "The mascot sitting on top of a beige tower computer, a small CRT monitor beside it showing a single large black dot in the middle of a blank white screen.",
+  },
+  "blog-chatgpt-dots-alternatives": {
+    headline: ["CHATGPT DOTS", "ALTERNATIVES"],
+    scene:
+      "The mascot sitting on top of a wooden printer's type case with its shallow drawer pulled out, each small compartment holding a different round metal dot, a magnifying loupe resting on the bench below.",
+  },
+  "blog-ai-agent-with-its-own-computer": {
+    headline: ["AN AI AGENT", "WITH ITS OWN", "COMPUTER"],
+    scene:
+      "The mascot sitting on top of a beige desktop computer and its CRT monitor, set up on a small wooden school desk with the matching chair pushed in, a blank name card propped against the keyboard.",
+  },
+  "blog-muse-for-small-business-alternatives": {
+    headline: ["MUSE FOR SMALL", "BUSINESS", "ALTERNATIVES"],
+    scene:
+      "The mascot sitting on top of a heavy mechanical shop cash register with its money drawer open, a paper receipt curling out of the printer and a small brass shop bell on the counter beside it.",
+  },
+  "blog-construct-vs-lindy": {
+    headline: ["CONSTRUCT VS", "LINDY"],
+    scene:
+      "The mascot sitting on top of a small office telephone switchboard, rows of patch cords plugged into its jacks, a coiled desk phone handset resting on the bench below.",
+  },
+  "blog-ai-agent-email-address": {
+    headline: ["YOUR AGENT'S", "OWN EMAIL", "ADDRESS"],
+    scene:
+      "The mascot sitting on top of a wooden mail sorting cabinet with rows of small open pigeonholes, one slot holding a short stack of envelopes tied with string.",
+  },
+  "blog-gemini-spark-alternatives": {
+    headline: ["GEMINI SPARK", "ALTERNATIVES"],
+    scene:
+      "The mascot sitting on top of a closed wooden map chest with shallow drawers, a small desk globe with a few map pins in it standing beside the chest and a travel plug adapter lying on the bench in front.",
+  },
 
   authors: {
     headline: ["THE PEOPLE", "WHO WRITE", "CONSTRUCT"],
@@ -352,6 +387,11 @@ export const ogPosters: Record<string, PosterCard> = {
     scene:
       "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled COMPARISON.",
   },
+  "blog-tag-google-workspace": {
+    headline: ["EVERYTHING ON", "GOOGLE", "WORKSPACE"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled GOOGLE WORKSPACE.",
+  },
   "blog-tag-product": {
     headline: ["EVERYTHING ON", "THE PRODUCT"],
     scene:
@@ -361,6 +401,11 @@ export const ogPosters: Record<string, PosterCard> = {
     headline: ["EVERYTHING ON", "RELIABILITY"],
     scene:
       "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled RELIABILITY.",
+  },
+  "blog-tag-small-business": {
+    headline: ["EVERYTHING ON", "SMALL BUSINESS"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled SMALL BUSINESS.",
   },
   "blog-tag-workflow-automation": {
     headline: ["WORKFLOW", "AUTOMATION"],

@@ -471,6 +471,230 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "When the steps are order-dependent all the way through with no natural loop, there is no seam to cut. When a step has an irreversible external effect such as a payment or a message to a customer, retries are not free and idempotency has to be designed in. And when the work is fully deterministic, a rule-based automation platform will run it more cheaply and predictably than any agent.",
     },
   ],
+  "chatgpt-dots-alternatives": [
+    {
+      question: "Do I need ChatGPT Pro to use ChatGPT Dots?",
+      answer:
+        "Yes. Your first dot is included with ChatGPT Pro or Business Premium, and Free and Plus users do not get one. Reports disagree on whether the $100 Pro tier counts, so budget $200 a month for one person until OpenAI's pricing page settles it.",
+    },
+    {
+      question: "What is the cheapest ChatGPT Dots alternative?",
+      answer:
+        "Meta Muse and Manus both have free plans, and OpenClaw is free software if you host it yourself. If you already pay $20 for Claude, Google AI Pro, or Cursor, Claude Cowork, Gemini Spark, or Grok Bot come with that plan, and Construct starts at $9 a month on its own plan.",
+    },
+    {
+      question: "Which AI agent keeps working while my laptop is closed?",
+      answer:
+        "ChatGPT Dots, Gemini Spark, Grok Bot, Meta Muse, Viktor, and Construct all work from cloud environments the vendor runs, and Claude Cowork's scheduled tasks run even when your computer is asleep. Manus offers an always-on Cloud Computer as an add-on from $30 a month, and OpenClaw needs a machine or a hosted instance that stays on.",
+    },
+    {
+      question: "Can I use ChatGPT Dots in the UK or EU?",
+      answer:
+        "Not on a Pro plan for now. Pro subscribers in the European Economic Area, Switzerland, and the UK are excluded at launch, while Business Premium users get dots in every supported ChatGPT region. Gemini Spark is also excluded in the EEA, the UK, and Switzerland.",
+    },
+    {
+      question: "Which ChatGPT Dots alternative is best for a small team?",
+      answer:
+        "For a small team that wants one agent with shared files and a schedule, look at Construct from $9 a month or Viktor from $50 per workspace. Teams that live in Slack should also look at Lindy, which costs $29.99 per user.",
+    },
+    {
+      question: "Does Construct have approval rules like ChatGPT Dots?",
+      answer:
+        "No. Construct has no equivalent of Custom Rules and no mandatory approval gate before external actions, and its workflows are linear. Supervision comes from asking for drafts and reviewing early runs before you schedule them.",
+    },
+  ],
+  "construct-vs-openai-dots": [
+    {
+      question: "How much does ChatGPT Dots cost?",
+      answer:
+        "There is no standalone Dots price. Your first dot is included with an eligible ChatGPT Pro or Business Premium subscription, and launch reports disagree on whether the $100 Pro 100 tier qualifies or whether you need Pro 200 at $200 a month. OpenAI has not announced prices for extra dots or the usage terms that apply after the first month.",
+    },
+    {
+      question: "Is there a free version of ChatGPT Dots?",
+      answer:
+        "No. Launch coverage says Dots are not available on Free, Go, or Plus plans, and Pro subscribers in the European Economic Area, Switzerland, and the UK are excluded for now.",
+    },
+    {
+      question: "What is a cheaper alternative to ChatGPT Dots?",
+      answer:
+        "Construct starts at $9 a month on Lite, with up to 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. That is a lower entry cost than the $100 or $200 ChatGPT Pro route into Dots, not proof of equal usage or a lower cost per finished task.",
+    },
+    {
+      question: "Can I choose the AI model in ChatGPT Dots or Construct?",
+      answer:
+        "Launch coverage describes Dots as powered by GPT-6 Astra, and we found no documented option to use another provider. Construct Pro supports your own keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, and xAI.",
+    },
+    {
+      question: "Where is ChatGPT Dots better than Construct?",
+      answer:
+        "Dots connects to more than 4,000 apps, checks sensitive actions for approval by default with Custom Rules you can set, works in Microsoft Teams, and is included if you already pay for ChatGPT Pro. Construct's workflows have no approval gates today, so irreversible steps need your supervision.",
+    },
+    {
+      question: "Can I import my dot into Construct?",
+      answer:
+        "No. There is no tool that moves a dot's learned preferences, rules, or connected accounts into Construct. Start with one procedure, move its instructions and files into the workspace, reconnect the needed apps, and test it by hand before scheduling it.",
+    },
+  ],
+  "ai-agent-with-its-own-computer": [
+    {
+      question: "What is an AI agent with its own computer?",
+      answer:
+        "It is an AI agent that gets a persistent machine in the cloud, with a browser, a terminal, files, connected apps, and often its own email address. Because the work runs on that machine instead of your laptop, it keeps going when you close the lid and can run jobs on a schedule.",
+    },
+    {
+      question: "Which AI agents have their own cloud computer?",
+      answer:
+        "As of October 1, 2026, they include OpenAI dots, Meta Muse, Grok Bot, Claude Cowork, Gemini Spark, Perplexity Computer, Manus, Genspark Claw, Simular Sai, Viktor, and Construct. Most of the big-platform versions launched between July and September 2026.",
+    },
+    {
+      question: "How much does an always-on AI agent cost?",
+      answer:
+        "Entry prices checked on October 1, 2026 run from free with limits (Meta Muse) and $9 a month (Construct Lite) to $200 a month for Perplexity Max or Simular's always-on machine. Many are bundled into subscriptions such as Cursor Pro or Claude Pro at $20, or ChatGPT Pro from $100.",
+    },
+    {
+      question: "Can an AI agent keep working while my laptop is closed?",
+      answer:
+        "Yes, if its work runs on a cloud machine rather than your device. Anthropic, for example, says scheduled Claude tasks run in the cloud and do not need your computer to be awake. Test it by scheduling a job, closing everything, and checking the result in the morning.",
+    },
+    {
+      question: "What are the risks of giving an AI agent its own computer?",
+      answer:
+        "The main risks are credential access, prompt injection, and runaway cost. An agent with your logins can act wrongly as you, it reads untrusted content from the web and your inbox, and it can spend while you sleep, so look for approval rules and spending caps.",
+    },
+    {
+      question: "Is Construct's agent computer always on?",
+      answer:
+        "No. Construct keeps each agent's files and workspace permanently, but the Linux sandbox starts when the agent needs it and sleeps after about ten minutes idle, with commands capped at 300 seconds. If you need a continuously running process, an always-on machine such as Manus Cloud Computer or Simular Premium fits better.",
+    },
+  ],
+  "muse-for-small-business-alternatives": [
+    {
+      question: "How much does Meta's Muse for Small Business cost?",
+      answer:
+        "Muse for Small Business uses the same pricing as the Muse app: free with a usage limit, then the Power plan at $20 a month or the Maximum plan at $100 a month. Paid plans are metered in Muse tokens per week.",
+    },
+    {
+      question:
+        "What is the best alternative to Muse for Small Business for running a business?",
+      answer:
+        "It depends on the job. Construct, from $9 a month, fits recurring work across several apps with files, schedules, and memory in one workspace; Lindy or Viktor fit teams in Slack; and Sintra or Marblism fit fixed roles such as social media or answering the phone.",
+    },
+    {
+      question: "Why do some small businesses look for an alternative to Muse?",
+      answer:
+        "The common reasons are reluctance to give Meta access to business data, websites that block AI agents, Muse being tied to Meta's apps and available only in the US and Canada, and token-based plans that are hard to budget. None of these make Muse a poor product, and it remains a strong fit for businesses that sell and advertise on Instagram and Facebook.",
+    },
+    {
+      question:
+        "Will switching away from Muse stop websites from blocking my AI agent?",
+      answer:
+        "No. Amazon blocked Muse from Amazon.com, and any agent that clicks through websites can be refused by a site. Using official integrations and APIs where they exist reduces that risk.",
+    },
+    {
+      question:
+        "Can I use Gemini Spark with a Google Workspace business account?",
+      answer:
+        "Not for now. Google says Gemini Spark is not available if you sign in with a work or school Google Account, and it requires a Google AI Pro or Ultra subscription on a personal account.",
+    },
+    {
+      question: "Does Construct connect to Meta ad accounts like Muse does?",
+      answer:
+        "Not in the same way. Construct does not have Meta's first-party access to its own ad accounts and Instagram analytics, so unless Meta ads are available as a connected app you would supply an export for ad spend. Muse's direct Meta access is its biggest advantage for that kind of job.",
+    },
+  ],
+  "construct-vs-lindy": [
+    {
+      question: "Is Construct cheaper than Lindy?",
+      answer:
+        "At the entry level, yes. Construct Lite is $9 a month, while Lindy Plus is $29.99 a month per user with 3,000 credits. The two products meter work differently, so compare what each costs for your own workload rather than starting prices alone.",
+    },
+    {
+      question: "Can Construct work in Slack like Lindy?",
+      answer:
+        "Partly. You can message Construct directly from Slack, and a workflow can post results to a Slack channel. Lindy is built more deeply around Slack, with a shared teammate in channels and a private assistant in each person's DMs.",
+    },
+    {
+      question: "Which is better for a solo founder, Construct or Lindy?",
+      answer:
+        "It depends on where your work arrives. If it is mostly your own inbox and calendar, a Lindy Plus seat handles that directly. If it is research, reports, and recurring jobs across several apps, Construct Lite at $9 is the cheaper place to start.",
+    },
+    {
+      question: "How does Lindy pricing work?",
+      answer:
+        "Lindy charges per user: Plus is $29.99, Pro is $99.99, and Max is $199.99 a month, with 3,000, 15,000, and 35,000 credits per user. Anyone who uses Lindy takes a seat, credits pool across the workspace, and work pauses when the pool runs out unless you buy top-ups.",
+    },
+    {
+      question: "Can I import my Lindy setup into Construct?",
+      answer:
+        "There is no one-click import. You can copy your instructions, Routine prompts, and memory file contents, reconnect your integrations, and rebuild time-based Routines as Construct workflows, testing each job manually before scheduling it.",
+    },
+  ],
+  "ai-agent-email-address": [
+    {
+      question: "How can I give an AI agent its own email inbox?",
+      answer:
+        "There are three ways: use a product with a native agent inbox, build on a developer email API such as AgentMail, or give the agent delegated access to your own Gmail. For a small team, a product with a native inbox is the least work, and Construct includes an agent email address on every plan from $9 a month.",
+    },
+    {
+      question: "Is it safe to give an AI agent access to my own Gmail?",
+      answer:
+        "It is the riskiest option because the agent acts as you. Google says a delegate can read, send, and delete emails in your account, so every message carries your name and every deletion hits your real archive.",
+    },
+    {
+      question: "Can I hand tasks to an AI agent by email?",
+      answer:
+        "Yes. In Construct, email is one of the channels you can reach the agent from, so you can forward a thread to the agent's address with the job written at the top. A good first test is a low-stakes task that ends with a draft rather than a sent reply.",
+    },
+    {
+      question: "Should the agent send from its own address or from my Gmail?",
+      answer:
+        "Send from the agent's own address when it is fine for the recipient to know an agent wrote it, such as internal updates, vendor questions, and weekly reports. Use your connected Gmail only when the message has to come from you, and name the sending address in the prompt.",
+    },
+    {
+      question:
+        "Does Construct ask for approval before the agent sends an email?",
+      answer:
+        "Construct does not insert a mandatory approval gate before every external action. Ask the agent for drafts, review them, and only then tell it to send, especially for anything going to a customer.",
+    },
+    {
+      question: "What does a developer email API like AgentMail cost?",
+      answer:
+        "On October 1, 2026, AgentMail listed a free plan with 3 inboxes and 3,000 emails a month, a Developer plan at $20 a month with 10 inboxes, and a Startup plan at $200 a month with 150 inboxes. You still need to build the agent, its memory, tools, and supervision yourself.",
+    },
+  ],
+  "gemini-spark-alternatives": [
+    {
+      question: "Can I use Gemini Spark with a Google Workspace work account?",
+      answer:
+        "Not today for most people. Google's help page says you must sign in to the Gemini app with a personal Google Account, and work or school accounts are not currently supported. Google announced in May 2026 that a Workspace preview for business customers is coming soon, but we found no general availability date.",
+    },
+    {
+      question: "Is Gemini Spark available in the UK or EU?",
+      answer:
+        "No. Google lists Spark as available wherever Gemini Apps are supported except the European Economic Area, Nigeria, Switzerland, and the United Kingdom. As of October 1, 2026, those regions were still excluded.",
+    },
+    {
+      question: "How much does Gemini Spark cost?",
+      answer:
+        "Spark has no separate price and comes with a Google AI Pro or Ultra subscription. It launched for US Ultra subscribers, reported at $100 a month, and reached the Pro tier, about $20 a month in the US, in late July 2026.",
+    },
+    {
+      question:
+        "What is the best Gemini Spark alternative for a Google Workspace account in the UK or EU?",
+      answer:
+        "Claude is the closest fit: its Gmail, Calendar, and Drive connectors work with the Google account you connect, Cowork scheduled tasks run remotely, and Anthropic lists the UK and EU countries as supported. Claude Pro starts at $20 a month, and a Workspace admin may need to mark Claude as trusted.",
+    },
+    {
+      question: "Can I get ChatGPT dots in the UK or EU?",
+      answer:
+        "Yes, on a Business Premium seat, which gets dots across supported ChatGPT regions. The personal Pro rollout currently excludes the European Economic Area, Switzerland, and the UK.",
+    },
+    {
+      question: "Where does Construct fit among Gemini Spark alternatives?",
+      answer:
+        "Construct suits founders and small teams whose recurring work crosses Gmail, Google Calendar, and non-Google apps, with files, schedules, and memory kept in one workspace. Plans start at $9 a month for 2 agents and 3 scheduled tasks.",
+    },
+  ],
 };
 
 export function getResourceFaqs(slug: string): readonly FaqItem[] {

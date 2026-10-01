@@ -27,6 +27,18 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: false,
   },
   {
+    slug: "ai-agent-email-address",
+    title: "How to Give an AI Agent Its Own Email Address",
+    description:
+      "Three ways to give an AI agent its own inbox: a product with a native agent address, a developer email API, or delegated Gmail access. Trade-offs and steps.",
+    published: "2026-10-14",
+    seoTitle: "How to Give an AI Agent Its Own Email Address (2026)",
+    author: "nischal",
+    tags: ["ai-agent", "email", "ai-employee"],
+    kind: "guide",
+    draft: false,
+  },
+  {
     slug: "ai-agent-memory",
     title: "AI Agent Memory You Can Control",
     description:
@@ -60,6 +72,19 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     updated: "2026-07-27",
     author: "ankush",
     tags: ["comparison", "zapier", "ai-agent", "automation"],
+    kind: "article",
+    draft: false,
+  },
+  {
+    slug: "ai-agent-with-its-own-computer",
+    title: "What is an AI agent with its own computer?",
+    description:
+      "An AI agent with its own computer keeps working in a cloud workspace after you close your laptop. How it works, the risks, and who offers one, from $9 a month.",
+    published: "2026-10-07",
+    seoTitle:
+      "AI Agent With Its Own Computer: What It Is and Who Offers One (2026)",
+    author: "ankush",
+    tags: ["ai-agent", "always-on-agent", "ai-employee", "product"],
     kind: "article",
     draft: false,
   },
@@ -123,6 +148,19 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: false,
   },
   {
+    slug: "chatgpt-dots-alternatives",
+    title:
+      "ChatGPT Dots alternatives: 9 always-on agents that don't need ChatGPT Pro",
+    description:
+      "ChatGPT Dots needs a Pro or Business Premium plan. Compare 9 always-on agent alternatives from $0 to $50 a month, and which subscription each one needs.",
+    published: "2026-10-04",
+    seoTitle: "ChatGPT Dots Alternatives: 9 Agents Without ChatGPT Pro (2026)",
+    author: "construct-team",
+    tags: ["comparison", "chatgpt", "ai-employee", "ai-agent"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
     slug: "construct-vs-chatgpt",
     title: "Construct vs ChatGPT, Claude, and Gemini",
     description:
@@ -172,6 +210,30 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: false,
   },
   {
+    slug: "construct-vs-lindy",
+    title: "Construct vs Lindy",
+    description:
+      "Construct vs Lindy on pricing, where each works, memory, activity records, and model keys. Lindy starts at $29.99 per user; Construct starts at $9.",
+    published: "2026-10-12",
+    seoTitle: "Lindy Alternative: Construct vs Lindy (2026)",
+    author: "construct-team",
+    tags: ["comparison", "ai-employee", "small-business"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
+    slug: "construct-vs-openai-dots",
+    title: "Construct vs ChatGPT Dots",
+    description:
+      "Compare Construct and ChatGPT Dots on price, model choice, approvals, memory, apps, and channels. Dots needs ChatGPT Pro; Construct starts at $9/month.",
+    published: "2026-10-01",
+    seoTitle: "ChatGPT Dots Alternative: Construct vs Dots",
+    author: "construct-team",
+    tags: ["comparison", "chatgpt", "ai-employee"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
     slug: "construct-vs-zapier",
     title: "Construct vs Zapier, Make, and n8n",
     description:
@@ -180,6 +242,19 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     updated: "2026-07-27",
     author: "construct-team",
     tags: ["comparison", "zapier", "make", "n8n", "workflow-automation"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
+    slug: "gemini-spark-alternatives",
+    title:
+      "Gemini Spark alternatives, including for Workspace accounts and the UK and EU",
+    description:
+      "Gemini Spark needs a personal Google account and skips the UK and EU. Compare 7 always-on agents on price, work accounts, and regional availability.",
+    published: "2026-10-17",
+    seoTitle: "Gemini Spark Alternatives (2026): Options for Work Accounts",
+    author: "construct-team",
+    tags: ["comparison", "gemini-spark", "google-workspace", "ai-employee"],
     kind: "comparison",
     draft: false,
   },
@@ -217,6 +292,18 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     author: "ankush",
     tags: ["ai-agent", "jev", "reliability", "decision-models"],
     kind: "article",
+    draft: false,
+  },
+  {
+    slug: "muse-for-small-business-alternatives",
+    title: "Muse for Small Business alternatives: 9 AI agents for work",
+    description:
+      "Meta's Muse for Small Business is free to start. Here are 9 alternatives for running a business, with prices checked October 1, 2026, and where each fits.",
+    published: "2026-10-09",
+    seoTitle: "Meta Muse for Small Business Alternatives (2026)",
+    author: "construct-team",
+    tags: ["comparison", "ai-employee", "small-business"],
+    kind: "comparison",
     draft: false,
   },
   {
