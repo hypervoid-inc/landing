@@ -20,13 +20,14 @@ export async function loadCards() {
     appType: "custom",
   });
   try {
-    const { canonicalRoutes, ogName, routeDisplayTitle } =
+    const { canonicalRoutes, upcomingRoutes, ogName, routeDisplayTitle } =
       await vite.ssrLoadModule("/app/lib/route-manifest.ts");
     const { ogPosters, posterEyebrow } = await vite.ssrLoadModule(
       "/app/content/og-poster.ts",
     );
 
-    return canonicalRoutes.map((route) => {
+    // Scheduled posts get their card now, so it is ready on the day they go live.
+    return [...canonicalRoutes, ...upcomingRoutes].map((route) => {
       const name = ogName(route.path);
       const card = ogPosters[name];
       if (!card) {

@@ -4,9 +4,10 @@ import { describe, expect, it } from "vitest";
 
 import { ogPosters, posterEyebrow } from "../app/content/og-poster";
 import {
-  canonicalRoutes,
+  canonicalRoutes as liveRoutes,
   ogName,
   ogStem,
+  upcomingRoutes,
   type CanonicalRoute,
 } from "../app/lib/route-manifest";
 import {
@@ -17,6 +18,16 @@ import {
   signature,
   sourceDirectory,
 } from "../scripts/og/manifest.mjs";
+
+/**
+ * Live routes plus the ones scheduled posts will add. A scheduled post's card
+ * is generated and checked when the post merges, not on the morning it goes
+ * live, so the daily publishing build never fails on a missing card.
+ */
+const canonicalRoutes: readonly CanonicalRoute[] = [
+  ...liveRoutes,
+  ...upcomingRoutes,
+];
 
 /** The published filename, always `<stem>.jpg`. */
 function imageFile(route: CanonicalRoute) {
@@ -157,10 +168,9 @@ describe("committed OG images", () => {
       if (manifest[name] !== expected) stale.push(name);
     }
 
-    expect(
-      stale,
-      `stale OG images, run \`pnpm og\` (${manifestPath})`,
-    ).toEqual([]);
+    expect(stale, `stale OG images, run \`pnpm og\` (${manifestPath})`).toEqual(
+      [],
+    );
   });
 
   it("tracks no manifest entries for removed routes", async () => {

@@ -4,6 +4,13 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Scheduled publishing: rebuild and redeploy main every morning so posts
+  # dated today go live on their own (docs/scheduled-publishing.md). 00:05 UTC
+  # is 07:05 in Bangkok and 17:05 the previous day in San Francisco.
+  schedule:
+    - cron: "5 0 * * *"
+  # "Run workflow" in the Actions tab republishes on demand.
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

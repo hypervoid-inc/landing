@@ -5,7 +5,11 @@ import { describe, expect, it } from "vitest";
 
 import { blogMetadata } from "../app/content/blog/metadata.generated";
 import { ogPosters, posterEyebrow } from "../app/content/og-poster";
-import { canonicalRoutes, ogName } from "../app/lib/route-manifest";
+import {
+  canonicalRoutes as liveRoutes,
+  ogName,
+  upcomingRoutes,
+} from "../app/lib/route-manifest";
 import {
   costOf,
   defaultModel,
@@ -61,6 +65,13 @@ describe("generation cost", () => {
     expect(modelPricing[defaultModel]).toBeDefined();
   });
 });
+
+/**
+ * Live routes plus the ones scheduled posts will add. A scheduled post's card
+ * is generated and checked when the post merges, not on the morning it goes
+ * live, so the daily publishing build never fails on a missing card.
+ */
+const canonicalRoutes = [...liveRoutes, ...upcomingRoutes];
 
 const names = canonicalRoutes.map((route) => ogName(route.path));
 
@@ -230,20 +241,16 @@ describe("the type layer", () => {
   });
 
   // typeLayer probes glyph ink through sharp; two renders take several seconds.
-  it(
-    "sets the same wordmark, badge, and domain on every card",
-    async () => {
-      const [one, two] = await Promise.all([
-        typeLayer({ eyebrow: "GUIDE", headline: ["ONE"] }),
-        typeLayer({ eyebrow: "GUIDE", headline: ["ONE"] }),
-      ]);
-      expect(one.equals(two)).toBe(true);
+  it("sets the same wordmark, badge, and domain on every card", async () => {
+    const [one, two] = await Promise.all([
+      typeLayer({ eyebrow: "GUIDE", headline: ["ONE"] }),
+      typeLayer({ eyebrow: "GUIDE", headline: ["ONE"] }),
+    ]);
+    expect(one.equals(two)).toBe(true);
 
-      const { width, height } = await sharp(one).metadata();
-      expect([width, height]).toEqual([1200, 630]);
-    },
-    20_000,
-  );
+    const { width, height } = await sharp(one).metadata();
+    expect([width, height]).toEqual([1200, 630]);
+  }, 20_000);
 
   /**
    * A four-line headline is a content mistake, and silently setting it at a
