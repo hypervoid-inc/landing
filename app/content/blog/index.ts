@@ -6,6 +6,7 @@ import {
   validateContent,
   type BlogFrontmatter,
 } from "../schema";
+import { isLive } from "../resources";
 import { blogMetadata } from "./metadata.generated";
 
 type BlogModule = {
@@ -50,5 +51,5 @@ for (const [index, post] of blogPosts.entries()) {
 export type BlogPost = (typeof blogPosts)[number];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
-  return blogPosts.find((post) => post.slug === slug && !post.draft);
+  return blogPosts.find((post) => post.slug === slug && isLive(post));
 }

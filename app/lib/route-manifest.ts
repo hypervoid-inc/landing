@@ -1,4 +1,8 @@
-import { resourceEntries } from "../content/resources";
+import {
+  resourceEntries,
+  scheduledEntries,
+  type ResourceEntry,
+} from "../content/resources";
 import { listedAuthors, type Author } from "../content/authors";
 import { useCases } from "../content/use-cases";
 
@@ -39,21 +43,28 @@ export type CanonicalRoute = {
 };
 
 /** Tags worth an indexable archive. A one-post tag page is thin by definition. */
-export const hubTags: readonly string[] = [
-  ...new Set(resourceEntries.flatMap((entry) => entry.tags)),
-]
-  .filter(
-    (tag) =>
-      resourceEntries.filter((entry) => entry.tags.includes(tag)).length >= 2,
-  )
-  .sort();
+function tagsWithHubs(entries: readonly ResourceEntry[]): readonly string[] {
+  return [...new Set(entries.flatMap((entry) => entry.tags))]
+    .filter((tag) => byTag(entries, tag).length >= 2)
+    .sort();
+}
+
+function byTag(entries: readonly ResourceEntry[], tag: string) {
+  return entries.filter((entry) => entry.tags.includes(tag));
+}
+
+function byAuthor(entries: readonly ResourceEntry[], id: string) {
+  return entries.filter((entry) => entry.author.id === id);
+}
+
+export const hubTags: readonly string[] = tagsWithHubs(resourceEntries);
 
 export function resourcesByTag(tag: string) {
-  return resourceEntries.filter((entry) => entry.tags.includes(tag));
+  return byTag(resourceEntries, tag);
 }
 
 export function resourcesByAuthor(id: string) {
-  return resourceEntries.filter((entry) => entry.author.id === id);
+  return byAuthor(resourceEntries, id);
 }
 
 function newestDate(
@@ -142,163 +153,191 @@ function route(
   };
 }
 
-export const canonicalRoutes: readonly CanonicalRoute[] = [
-  route({
-    path: "/",
-    title: "AI Employee for Solo Founders and Small Teams | Construct",
-    description:
-      "AI employee for startups, small businesses, and solo founders. Own cloud computer, your tools connected, work that finishes while you are away. From $9/month.",
-    kind: "home",
-    lastModified: siteRevised,
-    imageVersion: "2",
-  }),
-  route({
-    path: "/pricing",
-    title: "Simple Pricing for an AI Employee | Construct",
-    displayTitle: "Simple Pricing",
-    description:
-      "Plans for solo founders and small teams. Lite, Starter, and Pro from $9/month, with a 7-day Pro trial, annual savings, and enterprise options.",
-    kind: "pricing",
-    lastModified: "2026-08-14",
-  }),
-  route({
-    path: "/use-cases",
-    title: "Use Cases for an AI Employee | Construct",
-    displayTitle: "Use Cases",
-    description:
-      "How Construct encodes workflows, builds internal tools, schedules jobs, shares a team workspace, inspects memory, works across channels, and delivers cited research.",
-    kind: "use-case",
-    lastModified: "2026-08-14",
-  }),
-  ...useCases.map((entry) =>
+/**
+ * Every canonical route for a given set of published posts. Called once with
+ * the posts that are live at build time, and once with scheduled posts added,
+ * so a scheduled post's page, tag hubs, and OG card can be prepared ahead.
+ */
+function buildRoutes(
+  entries: readonly ResourceEntry[],
+): readonly CanonicalRoute[] {
+  return [
     route({
-      path: `/use-cases/${entry.slug}`,
-      title: entry.seoTitle,
-      displayTitle: entry.title,
-      description: entry.description,
+      path: "/",
+      title: "AI Employee for Solo Founders and Small Teams | Construct",
+      description:
+        "AI employee for startups, small businesses, and solo founders. Own cloud computer, your tools connected, work that finishes while you are away. From $9/month.",
+      kind: "home",
+      lastModified: siteRevised,
+      imageVersion: "2",
+    }),
+    route({
+      path: "/pricing",
+      title: "Simple Pricing for an AI Employee | Construct",
+      displayTitle: "Simple Pricing",
+      description:
+        "Plans for solo founders and small teams. Lite, Starter, and Pro from $9/month, with a 7-day Pro trial, annual savings, and enterprise options.",
+      kind: "pricing",
+      lastModified: "2026-08-14",
+    }),
+    route({
+      path: "/use-cases",
+      title: "Use Cases for an AI Employee | Construct",
+      displayTitle: "Use Cases",
+      description:
+        "How Construct encodes workflows, builds internal tools, schedules jobs, shares a team workspace, inspects memory, works across channels, and delivers cited research.",
       kind: "use-case",
       lastModified: "2026-08-14",
     }),
-  ),
-  route({
-    path: "/about",
-    title: "About - Construct Computer",
-    description:
-      "Construct builds an AI employee for solo founders and small teams: own cloud computer, memory, schedules, workflows, browser and terminal tools, and connected apps.",
-    kind: "page",
-    lastModified: siteRevised,
-  }),
-  route({
-    path: "/careers",
-    title: "Careers - Construct Computer",
-    description:
-      "Construct isn't actively hiring, but we'd love to hear from people who want to build AI agents, work interfaces, memory systems, and reliable execution tools.",
-    kind: "page",
-    lastModified: siteRevised,
-  }),
-  route({
-    path: "/affiliates",
-    title: "Affiliate Program - Construct Computer",
-    description:
-      "Partner with Construct. First 25 affiliates earn 50% of referred revenue for up to 12 months; then the rate drops to 20%. Apply via PartnerStack.",
-    kind: "page",
-    lastModified: siteRevised,
-  }),
-  route({
-    path: "/editorial-policy",
-    title: "Editorial Policy - Construct Computer",
-    description:
-      "How Construct reviews AI-assisted drafts, verifies sources and comparisons, handles publication dates, and corrects errors in its resource library.",
-    kind: "page",
-    lastModified: "2026-07-26",
-  }),
-  route({
-    path: "/support",
-    title: "Support - Construct Computer",
-    description:
-      "Get help with your Construct Computer account, billing, integrations, and data requests. Report issues, review bounded Activity summaries, or contact the team.",
-    kind: "page",
-    lastModified: siteRevised,
-  }),
-  route({
-    path: "/privacy",
-    title: "Privacy Policy - Construct Computer",
-    description:
-      "How Construct Computer collects, stores, encrypts, and shares data across the agent workspace, memory system, integrations, and billing provider.",
-    kind: "page",
-    lastModified: "2026-08-09",
-  }),
-  route({
-    path: "/sub-processors",
-    title: "Sub-processors - Construct Computer",
-    description:
-      "Third-party vendors Construct uses to host, authenticate, integrate, bill, email, observe, and run models for the construct.computer platform.",
-    kind: "page",
-    lastModified: "2026-08-09",
-  }),
-  route({
-    path: "/terms",
-    title: "Terms & Conditions - Construct Computer",
-    description:
-      "Terms of service for Construct Computer: subscription plans, acceptable use, agent actions, model BYOK, and proprietary platform licensing.",
-    kind: "page",
-    lastModified: "2026-08-09",
-  }),
-  route({
-    path: "/blog",
-    title: "Insights and Guides - Construct Computer",
-    displayTitle: "Construct insights and guides",
-    description:
-      "Practical writing from Construct on AI agents, workflows, memory, and tools that get work done.",
-    kind: "blog-index",
-    lastModified: newestDate(resourceEntries),
-  }),
-  ...resourceEntries.map((entry) =>
+    ...useCases.map((entry) =>
+      route({
+        path: `/use-cases/${entry.slug}`,
+        title: entry.seoTitle,
+        displayTitle: entry.title,
+        description: entry.description,
+        kind: "use-case",
+        lastModified: "2026-08-14",
+      }),
+    ),
     route({
-      path: `/blog/${entry.slug}`,
-      title: entry.seoTitle ?? `${entry.title} - Construct Computer`,
-      displayTitle: entry.title,
-      description: entry.description,
-      kind: entry.kind === "article" ? "blog-post" : entry.kind,
-      published: entry.published,
-      lastModified: entry.updated ?? entry.published,
-      author: entry.author,
-      tags: entry.tags,
-      image: entry.image,
+      path: "/about",
+      title: "About - Construct Computer",
+      description:
+        "Construct builds an AI employee for solo founders and small teams: own cloud computer, memory, schedules, workflows, browser and terminal tools, and connected apps.",
+      kind: "page",
+      lastModified: siteRevised,
     }),
-  ),
-  route({
-    path: "/authors",
-    title: "Authors - Construct Computer",
-    displayTitle: "Authors",
-    description:
-      "The people and team writing Construct's articles, guides, and comparisons on AI agents, workflows, memory, and getting real work done.",
-    kind: "author-index",
-    lastModified: newestDate(resourceEntries),
-  }),
-  ...listedAuthors.map((author) =>
     route({
-      path: `/authors/${author.id}`,
-      title: `${author.name} - Construct Computer`,
-      displayTitle: author.name,
-      description: `${author.bio} Read every article, guide, and comparison written by ${author.name} for Construct Computer.`,
-      kind: "author",
-      author,
-      lastModified: newestDate(resourcesByAuthor(author.id)),
+      path: "/careers",
+      title: "Careers - Construct Computer",
+      description:
+        "Construct isn't actively hiring, but we'd love to hear from people who want to build AI agents, work interfaces, memory systems, and reliable execution tools.",
+      kind: "page",
+      lastModified: siteRevised,
     }),
-  ),
-  ...hubTags.map((tag) =>
     route({
-      path: `/blog/tag/${tag}`,
-      title: `${tagTitle(tag)} - Articles and Guides | Construct`,
-      displayTitle: `Writing tagged ${tagLabel(tag)}`,
-      description: `${resourcesByTag(tag).length} Construct articles, guides, and comparisons tagged ${tagLabel(tag)}, covering AI agents and how they get work done.`,
-      kind: "tag",
-      tags: [tag],
-      lastModified: newestDate(resourcesByTag(tag)),
+      path: "/affiliates",
+      title: "Affiliate Program - Construct Computer",
+      description:
+        "Partner with Construct. First 25 affiliates earn 50% of referred revenue for up to 12 months; then the rate drops to 20%. Apply via PartnerStack.",
+      kind: "page",
+      lastModified: siteRevised,
     }),
-  ),
-];
+    route({
+      path: "/editorial-policy",
+      title: "Editorial Policy - Construct Computer",
+      description:
+        "How Construct reviews AI-assisted drafts, verifies sources and comparisons, handles publication dates, and corrects errors in its resource library.",
+      kind: "page",
+      lastModified: "2026-07-26",
+    }),
+    route({
+      path: "/support",
+      title: "Support - Construct Computer",
+      description:
+        "Get help with your Construct Computer account, billing, integrations, and data requests. Report issues, review bounded Activity summaries, or contact the team.",
+      kind: "page",
+      lastModified: siteRevised,
+    }),
+    route({
+      path: "/privacy",
+      title: "Privacy Policy - Construct Computer",
+      description:
+        "How Construct Computer collects, stores, encrypts, and shares data across the agent workspace, memory system, integrations, and billing provider.",
+      kind: "page",
+      lastModified: "2026-08-09",
+    }),
+    route({
+      path: "/sub-processors",
+      title: "Sub-processors - Construct Computer",
+      description:
+        "Third-party vendors Construct uses to host, authenticate, integrate, bill, email, observe, and run models for the construct.computer platform.",
+      kind: "page",
+      lastModified: "2026-08-09",
+    }),
+    route({
+      path: "/terms",
+      title: "Terms & Conditions - Construct Computer",
+      description:
+        "Terms of service for Construct Computer: subscription plans, acceptable use, agent actions, model BYOK, and proprietary platform licensing.",
+      kind: "page",
+      lastModified: "2026-08-09",
+    }),
+    route({
+      path: "/blog",
+      title: "Insights and Guides - Construct Computer",
+      displayTitle: "Construct insights and guides",
+      description:
+        "Practical writing from Construct on AI agents, workflows, memory, and tools that get work done.",
+      kind: "blog-index",
+      lastModified: newestDate(entries),
+    }),
+    ...entries.map((entry) =>
+      route({
+        path: `/blog/${entry.slug}`,
+        title: entry.seoTitle ?? `${entry.title} - Construct Computer`,
+        displayTitle: entry.title,
+        description: entry.description,
+        kind: entry.kind === "article" ? "blog-post" : entry.kind,
+        published: entry.published,
+        lastModified: entry.updated ?? entry.published,
+        author: entry.author,
+        tags: entry.tags,
+        image: entry.image,
+      }),
+    ),
+    route({
+      path: "/authors",
+      title: "Authors - Construct Computer",
+      displayTitle: "Authors",
+      description:
+        "The people and team writing Construct's articles, guides, and comparisons on AI agents, workflows, memory, and getting real work done.",
+      kind: "author-index",
+      lastModified: newestDate(entries),
+    }),
+    ...listedAuthors.map((author) =>
+      route({
+        path: `/authors/${author.id}`,
+        title: `${author.name} - Construct Computer`,
+        displayTitle: author.name,
+        description: `${author.bio} Read every article, guide, and comparison written by ${author.name} for Construct Computer.`,
+        kind: "author",
+        author,
+        lastModified: newestDate(byAuthor(entries, author.id)),
+      }),
+    ),
+    ...tagsWithHubs(entries).map((tag) =>
+      route({
+        path: `/blog/tag/${tag}`,
+        title: `${tagTitle(tag)} - Articles and Guides | Construct`,
+        displayTitle: `Writing tagged ${tagLabel(tag)}`,
+        description: `${byTag(entries, tag).length} Construct articles, guides, and comparisons tagged ${tagLabel(tag)}, covering AI agents and how they get work done.`,
+        kind: "tag",
+        tags: [tag],
+        lastModified: newestDate(byTag(entries, tag)),
+      }),
+    ),
+  ];
+}
+
+export const canonicalRoutes: readonly CanonicalRoute[] =
+  buildRoutes(resourceEntries);
+
+/**
+ * Routes that will exist once every scheduled post is live: the posts' own
+ * pages plus any tag hub they create. They stay out of the sitemap and the
+ * prerender list until their date, but the OG pipeline and its tests cover
+ * them, so a scheduled post is complete when it merges instead of failing the
+ * build on the morning it goes live.
+ */
+export const upcomingRoutes: readonly CanonicalRoute[] = (() => {
+  const live = new Set(canonicalRoutes.map((entry) => entry.path));
+  return buildRoutes(
+    [...resourceEntries, ...scheduledEntries].sort((left, right) =>
+      right.published.localeCompare(left.published),
+    ),
+  ).filter((entry) => !live.has(entry.path));
+})();
 
 export function getRoute(path: string): CanonicalRoute | undefined {
   return canonicalRoutes.find((entry) => entry.path === path);

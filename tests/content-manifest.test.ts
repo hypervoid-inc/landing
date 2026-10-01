@@ -7,7 +7,7 @@ import { blogMetadata } from "../app/content/blog/metadata.generated";
 import { landingFaq } from "../app/content/landing";
 import { authors } from "../app/content/authors";
 import { clippyCopy } from "../app/features/landing/clippy-state";
-import { canonicalRoutes } from "../app/lib/route-manifest";
+import { canonicalRoutes, upcomingRoutes } from "../app/lib/route-manifest";
 
 const blogDirectory = fileURLToPath(
   new URL("../app/content/blog/", import.meta.url),
@@ -127,6 +127,13 @@ describe("content validation", () => {
     const canonicalPaths = new Set(
       canonicalRoutes.map(({ canonical }) => new URL(canonical).pathname),
     );
+    // A scheduled post's page exists from its own date on, so a post may link
+    // to one dated no later than itself. A live post linking ahead would 404.
+    const liveFrom = new Map(
+      upcomingRoutes
+        .filter((route) => route.published)
+        .map((route) => [new URL(route.canonical).pathname, route.published!]),
+    );
     for (const post of blogMetadata) {
       const source = readFileSync(`${blogDirectory}/${post.slug}.mdx`, "utf8");
       const body = source.replace(/^---\n[\s\S]*?\n---/, "").trim();
@@ -153,7 +160,10 @@ describe("content validation", () => {
       for (const [, href] of body.matchAll(/\]\((\/[^)]+)\)/g)) {
         if (!href) continue;
         expect(href, `${post.slug}: ${href}`).toMatch(/\/$/);
-        expect(canonicalPaths.has(href), `${post.slug}: ${href}`).toBe(true);
+        const reachable =
+          canonicalPaths.has(href) ||
+          (liveFrom.get(href) ?? "9999-12-31") <= post.published;
+        expect(reachable, `${post.slug}: ${href}`).toBe(true);
       }
     }
   });
