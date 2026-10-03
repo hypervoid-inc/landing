@@ -1,0 +1,175 @@
+---
+title: "How to Run an AI Agent on a Schedule With Your Laptop Closed"
+seoTitle: "How to Run an AI Agent on a Schedule (Laptop Closed, 2026)"
+description: "Schedule an AI agent job that runs in the cloud while your laptop is shut. Plans include 3, 10, or 50 scheduled tasks. Steps, exact prompts, and limits."
+published: "2026-11-11"
+author: "nischal"
+tags: ["scheduling", "ai-agent", "workflow-automation"]
+kind: "guide"
+draft: true
+---
+
+Construct runs your agent's scheduled jobs in the cloud, so they fire with your laptop closed: Lite at $9 a month includes 3 scheduled tasks, Starter at $59 includes 10, and Pro at $299 includes 50. Self-hosted agents such as OpenClaw run automations "inside the Gateway process," and "the Gateway must be running for schedules to fire" ([OpenClaw docs](https://docs.openclaw.ai/automation/cron-jobs/how-it-works)), which is why people leave a Mac mini on in a cupboard.
+
+For founders and small teams, Construct is the simpler way to put an agent on a schedule. The agent's files, connected apps, browser, and terminal all live in its cloud workspace, every run keeps a history you can check from your phone, and finished work is saved as it is produced. This guide sets up one real recurring job, a weekday 8am client follow-up list, from the first on-demand run to a schedule you never have to babysit.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why do this in Construct?
+
+- **Scheduled tasks on every plan, from $9.** Lite includes 3, Starter 10, and Pro 50. Only active schedules count, so a paused job frees its slot.
+- **Nothing on your desk has to stay awake.** Calendar schedules run server-side, and the files, apps, browser, and terminal a job needs are part of the agent's cloud workspace, so a run never reaches back to your machine.
+- **You decide what happens when a run is late.** Delivery behavior lets you skip or queue an overlapping run, and run once, skip, or catch up safely on a late one.
+- **A history for every run.** Each Calendar event lists its runs with the outcome and a link to the chat, readable from the web desktop on your phone.
+- **Finished work survives a stopped run.** Files are saved as the agent produces them, so a run that stops at step 30 keeps steps 1 to 29.
+- **It grows into a workflow.** Once a job settles, save it as a workflow with app steps and notifications, and schedule that instead.
+
+<BetaCta source="blog_inline_1">Schedule your first job</BetaCta>
+
+## Why do scheduled agent jobs stop when the laptop closes?
+
+Because the scheduler, or something the job needs, lives on your machine. Even cloud schedulers carry that catch: Claude's scheduled tasks "run remotely," but "if a scheduled task requires local files or apps, it will only run locally" ([Claude Help Center](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork)). A job runs with the lid shut only if everything it needs, including files, logins, and connected apps, lives in the cloud too. In Construct that is the default; our explainer on [AI agents with their own computer](/blog/ai-agent-with-its-own-computer/) covers why it matters.
+
+## What do you need?
+
+- **A Construct plan with a free scheduled task.** Lite includes 3, Starter 10, Pro 50. Only active schedules count; a paused one does not. There is also a 7-day Pro trial. See [pricing](/pricing/).
+- **One job that has already worked on demand.** Schedule a job you have run and checked at least once, not one you are describing for the first time.
+- **Any apps the job touches, connected first.** For this example, Gmail and Google Calendar, connected from Construct's integration catalog. A schedule rechecks the connection every time it fires, so connect before you schedule.
+- **Your time zone set in your profile.** New schedules use it by default.
+
+## Before you start
+
+- **Agent jobs repeat at most every 15 minutes.** Schedules that only send a notification or run an app tool can repeat every minute. For anything that must react the moment it happens, forward it to the agent's own email address: mail from your own address starts a run without waiting for a schedule.
+- **Write jobs that check before they act.** Construct delivers a scheduled run at least once, not exactly once, so the prompt in step 2 stops if today's file already exists.
+- **Keep sends out of the job until it has proved itself.** Scheduled runs do not pause for approval, so ask for drafts or files and send anything external yourself.
+- **Size the job to your plan.** Each run is limited by steps per task: 50 on Lite, 150 on Starter, and up to 1,000 on Pro. Split a long job into two scheduled tasks, or move up a plan.
+- **Construct's Calendar sets the schedule.** Your connected Google Calendar is something the agent can read and update, not where schedules live.
+
+## How do you schedule an agent job in Construct?
+
+### 1. Run the job once while you watch
+
+Ask for the job in chat exactly as you would want it done at 8am:
+
+> Read my Gmail from the last 24 hours and today's Google Calendar. List client emails that still need a reply from me, oldest first, with one line each on what they want. Then list today's meetings with who is attending. Save the result to Files/follow-ups/ as a file named with today's date. Do not send or reply to anything.
+
+Open the file and check it. If the list missed something, say what, and run it again. Fix the prompt now, while you are watching, not after it has run unattended for a week.
+
+### 2. Ask the agent to put it on the Calendar
+
+Once the output is right, schedule it from the same chat:
+
+> That worked. Schedule this exact job every weekday at 8:00am in my time zone. Use the same instructions, including "do not send or reply to anything." Before writing the file, check whether today's file already exists in Files/follow-ups/; if it does, stop.
+
+The agent creates a Calendar item it owns, with the prompt as the action. You can also build it by hand: open Calendar, create an event, give it a title, set **Repeats** to **Every weekday**, choose the **Owning agent**, and pick **Ask agent** under "What should happen?" with your prompt as the input. {/* TODO: confirm the exact button for a new Calendar event and add a screenshot of the editor */}
+
+The last sentence of that prompt is not decoration. Construct delivers a scheduled run at least once, not exactly once, so a job that checks before it writes is safe if it ever fires twice.
+
+### 3. Set what happens when a run is late or still going
+
+In the event editor, open **Delivery behavior**. Two choices matter:
+
+- **If still running:** **Skip overlap** drops the next run if the last one has not finished; **Queue next** waits and runs it after. For a daily list, skip.
+- **If delivery is late:** **Run once** runs a late occurrence once, **Skip** drops it, and **Catch up safely** replays missed runs oldest first, in small batches. For a morning list, run once: you want today's list, not three stale ones.
+
+### 4. Test it with Run now
+
+Open the event and press **Run now**. This fires one standalone run without moving the schedule. Check the file it wrote, then close the laptop and wait for 8am.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/calendar-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct Calendar demo"
+    aria-describedby="calendar-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/calendar.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-agent-scheduled-tasks/calendar-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="calendar-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct's Calendar showing scheduled agent jobs and
+    workflow runs in the workspace, where each scheduled item keeps its run
+    history.
+  </figcaption>
+</figure>
+
+### 5. Check the history from anywhere
+
+Each event keeps a history of its runs, with the outcome of each one and, for agent prompts, a link to the chat session the run used. You can read it from the web desktop on your phone; nothing about checking a run needs the laptop. {/* TODO: confirm the label of the run-history panel in the Calendar editor and add a screenshot */}
+
+### 6. Promote it to a workflow when it settles
+
+After a couple of weeks of good runs, save the job as a workflow and schedule the workflow instead, using **Run workflow** as the Calendar action. A workflow can add a connected-app step after the agent step, such as saving the list as a Notion page, plus an in-app notification, and published versions stay fixed so a later edit does not change a run already in progress. Our [workflow guide](/blog/ai-workflow-automation/) covers that step.
+
+## What result should you get?
+
+After the first scheduled morning you should have four things, none of them on your laptop:
+
+1. A dated file in Files/follow-ups/ with the client list and today's meetings.
+2. A Calendar event set to **Every weekday**, with its next run shown.
+3. A history entry for the run, marked as succeeded or failed.
+4. The chat session the run used, so you can read what the agent did and why.
+
+If a run dies partway, finished work is still there. A run that stops at step 30 keeps steps 1 to 29, and tomorrow's run starts from what exists.
+
+**Illustrative example.** A solo bookkeeper schedules three jobs on Lite: the weekday follow-up list above, a Monday 7am summary of last week's invoices from Files, and a monthly reminder to chase late payers. That uses all three of Lite's scheduled tasks. A fourth job means pausing one or moving to Starter.
+
+## Troubleshooting
+
+**"Active calendar limit reached."** You have used your plan's scheduled tasks. Pause or cancel one, or upgrade. Paused events do not count.
+
+**"Won't fire until scheduling is fixed."** The event saved but did not arm. Press **Retry** on the warning, or wait: Construct heals unarmed schedules on its own within a few minutes.
+
+**The schedule was rejected as too frequent.** It runs an agent more often than every 15 minutes. Use 15 minutes or longer.
+
+**It ran at the wrong hour.** The event uses the time zone it was created with. Changing your profile time zone later does not rewrite existing events, so edit the event's time zone directly.
+
+**A run stopped and asked you to connect an app.** The app was disconnected or its sign-in expired. Disconnecting an app does not pause the schedules that use it; each run checks the connection when it fires. Use the connect card in the run's chat, or reconnect from Settings, Connections, then press **Run now** to confirm.
+
+**Two files appeared for one day.** A run was delivered twice. Add the "check whether today's file already exists" line from step 2.
+
+**A resumed job did not catch up on the paused days.** That is by design: a resumed recurring job runs at the next slot after now. Ask the agent to run the missed days by hand if you need them.
+
+**You need to stop a run in progress.** Use **Stop all** in the menu bar's live activity panel. It stops agent turns and workflow runs already in progress; pause the event to stop future runs.
+
+{/* TODO: run the weekday 8am job for 10 weekdays with the laptop closed and record start delay, success rate, steps used, and failures; add screenshots of the Calendar history */}
+
+## Give Construct its first scheduled job
+
+Choose Construct for scheduled agent work. It includes scheduled tasks from $9, runs them in the cloud with nothing left switched on at home, and keeps every finished file and run history where your team can see it.
+
+Your first job is the one above: run the follow-up list prompt from step 1 today, fix it while you watch, then schedule it for 8am every weekday and close the laptop. Tomorrow morning, open Files/follow-ups/ on your phone.
+
+<BetaCta source="blog_inline_2">Give Construct its first scheduled job</BetaCta>
+
+## Sources
+
+- [OpenClaw docs: how automations work](https://docs.openclaw.ai/automation/cron-jobs/how-it-works)
+- [Claude Help Center: schedule recurring tasks in Cowork](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork)
+- [Construct pricing](/pricing/)
+- [Construct scheduling](/use-cases/scheduling/)
+
+## Related resources
+
+- [Construct scheduling: run the job, not the reminder](/use-cases/scheduling/)
+- [AI workflow automation](/blog/ai-workflow-automation/)
+- [Your agent has a half-life](/blog/agent-task-half-life/)
+- [Inbox triage with an AI agent: drafts, not sends](/blog/ai-inbox-triage/)
+- [What is an AI agent with its own computer?](/blog/ai-agent-with-its-own-computer/)

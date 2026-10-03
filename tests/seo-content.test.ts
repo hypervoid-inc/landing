@@ -91,7 +91,7 @@ describe("generated discovery content", () => {
 
     // A body sentence that exists only in the MDX, never in a description.
     expect(full).toContain(
-      "Zapier, Make, and n8n excel when you know every trigger and action upfront",
+      "For founders and small teams, Construct is the better choice for work that needs judgment",
     );
     expect(full).toContain("### Frequently asked questions");
     expect(full).toContain("Grok Bot's interface illustration");
@@ -103,7 +103,7 @@ describe("generated discovery content", () => {
     }
     // The index stays a link list; only the full variant carries bodies.
     expect(crawlerFiles["llms.txt"]).not.toContain(
-      "Zapier, Make, and n8n excel when you know",
+      "For founders and small teams, Construct is the better choice",
     );
     expect(full.length).toBeGreaterThan(crawlerFiles["llms.txt"].length * 5);
   });
@@ -284,7 +284,7 @@ describe("route metadata", () => {
       resourceFaqs["construct-vs-zapier"]!.length,
     );
     expect(JSON.stringify(faqPage)).toContain(
-      "Is Construct a replacement for Zapier?",
+      "Is Construct a good Zapier alternative?",
     );
 
     // Posts without curated FAQs must not emit an empty FAQPage.
@@ -320,14 +320,14 @@ describe("route metadata", () => {
     };
 
     // No `updated` frontmatter, so dateModified must fall back to published.
-    const unrevised = posting("/blog/build-internal-tools-with-construct");
-    expect(unrevised.route.published).toBe("2026-07-27");
+    const unrevised = posting("/blog/agent-task-half-life");
+    expect(unrevised.route.published).toBe("2026-08-11");
     expect(unrevised.node.dateModified).toBe(unrevised.route.published);
 
     // Revised post: dateModified tracks the update, not the publish date.
     const revised = posting("/blog/ai-agent-memory");
     expect(revised.route.published).toBe("2026-07-20");
-    expect(revised.node.dateModified).toBe("2026-07-27");
+    expect(revised.node.dateModified).toBe("2026-10-01");
 
     expect(revised.node.inLanguage).toBe("en-US");
     expect(revised.node.articleSection).toBe("Guide");
@@ -435,7 +435,7 @@ describe("route metadata", () => {
     });
     expect(meta).toContainEqual({
       property: "article:modified_time",
-      content: "2026-09-22",
+      content: "2026-10-01",
     });
   });
 

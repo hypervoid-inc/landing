@@ -2,22 +2,33 @@
 title: "AI Agent Memory You Can Control"
 description: "Give an AI agent persistent memory with provenance, corrections, temporal context, and controls to inspect, update, forget, or restore what it knows."
 published: "2026-07-20"
-updated: "2026-07-27"
+updated: "2026-10-01"
 author: "nischal"
 tags: ["ai-agent-memory", "persistent-memory", "ai-agent"]
 kind: "guide"
 draft: false
 ---
 
-Construct remembers useful context across tasks without turning memory into an opaque, permanent transcript you cannot inspect or correct.
+Construct gives your AI agent long-term memory you can open, correct, forget, and restore, included on every plan from $9 a month. A long chat history only records what was said: it cannot tell an agent which fact is still true, and you cannot fix one wrong fact without losing the thread around it.
 
-<BetaCta source="blog_top">Meet Construct</BetaCta>
+For founders and small teams running recurring work, Construct's memory is the better foundation. Every remembered fact keeps its source, a correction replaces a stale fact without erasing how it was learned, and nothing it remembers is hidden from you. Your recurring jobs start from context instead of from a fresh explanation.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why do this in Construct?
+
+- **Memory you can read.** The Memories app lets you search everything Construct remembers and see the evidence behind each item.
+- **Corrections, not silent overwrites.** A corrected fact supersedes the old one, and the history of the change stays visible.
+- **Forget and restore.** Remove a fact that should not persist, and bring it back if it was removed by mistake.
+- **Sources stay attached.** Each remembered fact keeps the episode it came from, so you can trace why the agent believes it.
+- **Works with files and schedules.** Memory carries the context a scheduled workflow assumes, and files hold the documents themselves.
+- **Included from $9 a month.** Lite includes 2 agents, 50 steps per task, and 3 scheduled tasks; Pro has a 7-day free trial.
 
 ## Why long-term agent memory matters
 
 A useful work agent needs more than the messages currently visible in chat. It should remember stable preferences, ongoing projects, important people, and prior decisions when they are relevant to a new task. Without that continuity, every recurring workflow begins with the same explanation and the same avoidable mistakes.
 
-Construct recalls relevant context before a turn and ingests useful information after successful work. Source episodes remain separate from the assertions the memory system derives from them, so remembered information can retain its origin rather than becoming an unexplained fact.
+Construct recalls relevant context before a turn and saves useful information after successful work. Source episodes remain separate from the assertions the memory system derives from them, so remembered information keeps its origin rather than becoming an unexplained fact.
 
 That separation is the part most worth understanding. An **episode** is the raw thing that happened: a conversation turn, a web search, a fetched page. An **assertion** is the durable claim derived from it, such as a preferred report format or a customer's current role. Keeping the two apart means a remembered fact can be traced back to the moment it was learned, which is what makes a correction meaningful rather than cosmetic.
 
@@ -25,30 +36,38 @@ That separation is the part most worth understanding. An **episode** is the raw 
 
 "Memory" gets used for three different mechanisms, and the distinction decides what you can actually rely on.
 
+<ArticleTable caption="Context window, retrieval, and long-term memory compared">
+
 | Mechanism            | What it holds                                   | How long it lasts                         |
 | -------------------- | ----------------------------------------------- | ----------------------------------------- |
-| **Context window**   | The current turn and recent messages            | One conversation, then gone               |
-| **Retrieval**        | Documents fetched to answer a specific question | Only for that lookup                      |
 | **Long-term memory** | Durable assertions with provenance and validity | Across tasks until corrected or forgotten |
+| **Retrieval**        | Documents fetched to answer a specific question | Only for that lookup                      |
+| **Context window**   | The current turn and recent messages            | One conversation, then gone               |
 
-A chat product with a long history is not the same as an agent with long-term memory. History preserves what was said; memory preserves what is currently true, and can be changed when it stops being true. Construct's Memories app manages the third row.
+</ArticleTable>
 
-## What Construct learns automatically, and what it does not
+A chat product with a long history is not the same as an agent with long-term memory. History preserves what was said; memory preserves what is currently true, and can be changed when it stops being true. Construct's Memories app manages the first row.
 
-Automatic learning currently uses conversation episodes and successful public web search or fetch evidence. It does not automatically index uploaded files, private app results, terminal output, or live browser runs.
+## What Construct learns automatically, and what you add yourself
 
-This boundary is deliberate, and it is worth planning around rather than working against. Private surfaces frequently contain credentials, customer data, and half-finished work that nobody intended to promote into durable memory. Excluding them by default keeps memory smaller and more trustworthy, at the cost of one explicit step when something genuinely should carry forward.
+Construct learns automatically from conversation episodes and successful public web search or fetch evidence. Facts from private surfaces, such as uploaded files, connected-app results, terminal output, and live browser runs, are added when you or the agent save them explicitly.
 
-| Source                             | Automatically remembered |
-| ---------------------------------- | ------------------------ |
-| Conversation episodes              | Yes                      |
-| Successful public web search/fetch | Yes                      |
-| Uploaded files                     | No - add explicitly      |
-| Private connected-app results      | No - add explicitly      |
-| Terminal output                    | No - add explicitly      |
-| Live browser runs                  | No - add explicitly      |
+That keeps memory smaller and more trustworthy. Private surfaces often contain credentials, customer data, and half-finished work nobody meant to promote into durable memory, so Construct leaves the choice to you.
 
-The practical rule: if a fact arrived through a private surface and a future task depends on it, add it as an explicit memory rather than assuming it was captured.
+<ArticleTable caption="How each source reaches Construct's memory">
+
+| Source                             | How it reaches memory |
+| ---------------------------------- | --------------------- |
+| Conversation episodes              | Automatically         |
+| Successful public web search/fetch | Automatically         |
+| Uploaded files                     | Add explicitly        |
+| Private connected-app results      | Add explicitly        |
+| Terminal output                    | Add explicitly        |
+| Live browser runs                  | Add explicitly        |
+
+</ArticleTable>
+
+The practical rule: if a fact arrived through a private surface and a future task depends on it, ask Construct to remember it, or add it in the Memories app.
 
 ## A worked example: the recurring client report
 
@@ -64,7 +83,7 @@ A concrete case shows how the pieces fit. Suppose a monthly performance report g
 
 The durable output here is not just the reports. It is a small set of inspectable assertions that make each subsequent run cheaper to start, plus a record of how those assertions changed.
 
-<BetaCta source="blog_inline_1">Inspect agent memory</BetaCta>
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
 
 ## Corrections instead of silent overwrites
 
@@ -83,28 +102,71 @@ The Memories app lets you search and inspect what Construct remembers. You can a
 - Forget information that should no longer be recalled
 - Restore previously forgotten information
 
-Reviewing memory occasionally is worth the few minutes it takes, particularly after a project changes shape. Assertions learned during a since-abandoned approach are the most common source of confidently wrong recall.
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/memories-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct memory demo"
+    aria-describedby="memory-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/memories.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-agent-memory/memories-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption id="memory-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct's Memories app showing the preferences and
+    procedures the agent has learned, with the evidence behind each one, so you
+    can review, correct, or forget them.
+  </figcaption>
+</figure>
 
-<BetaCta source="blog_inline_2">Try Construct</BetaCta>
+Reviewing memory occasionally is worth the few minutes it takes, particularly after a project changes shape. Assertions learned during a since-abandoned approach are the most common source of confidently wrong recall.
 
 ## Memory connects work across time
 
-Memory becomes more valuable when it works with the rest of the workspace. During a task, Construct can combine recalled context with files, scheduled jobs, workflows, inbox threads, and connected applications. A weekly report can remember the audience and preferred format; an inbox task can use an explicitly remembered customer preference; a research job can build on earlier remembered findings without starting over.
+Memory becomes more valuable when it works with the rest of the workspace. During a task, Construct combines recalled context with files, scheduled jobs, workflows, inbox threads, and connected applications. A weekly report remembers the audience and preferred format; an inbox task uses an explicitly remembered customer preference; a research job builds on earlier findings without starting over.
 
 This is also why memory and [reusable workflows](/blog/ai-workflow-automation/) complement each other. A workflow encodes the steps of a procedure; memory carries the context those steps assume. A workflow without memory needs its assumptions restated every run, and remembered context without a workflow leaves the sequence to be reconstructed each time.
 
-The result is continuity with a control surface. Construct can become more useful over time while the user retains the ability to inspect and change what carries forward.
+## Before you start: what belongs in memory
 
-## When memory is the wrong tool
-
-Memory is not the right home for everything that needs to persist.
+Memory works best for facts that are stable, reused, and expensive to restate. The workspace has a better home for everything else.
 
 - **Large documents** belong in workspace files, which persist and can be reopened directly. Memory holds the fact that a document matters, not its contents.
-- **Secrets and credentials** should go through connected-app authentication rather than being stated in a conversation that may become an episode.
+- **Secrets and credentials** go through connected-app authentication rather than being stated in a conversation that may become an episode.
 - **Fast-changing values** such as live metrics are better fetched at run time, since a remembered figure is correct only until the next change.
 - **One-off context** that will not recur does not need to be durable, and an uncluttered memory recalls better than a crowded one.
 
-Memory earns its cost when a fact is stable, reused, and expensive to restate. For anything else, the workspace already has a better place to put it.
+## Already using ChatGPT memory or another agent? Move your context in 15 minutes
+
+1. **Start on Lite for $9, or take the 7-day Pro trial.**
+2. **Write down the standing facts** your current assistant relies on: audiences, formats, key contacts, and rules.
+3. **Paste them into a Construct chat** and ask it to remember them, then check each one in the Memories app.
+4. **Run one recurring job** and confirm it starts from that context.
+5. **Put it on the Calendar** so the job runs every week with the same remembered setup.
+
+There is no import of another product's memory: writing the facts out once is the import, and every one of them stays readable and correctable in Construct.
+
+## Which should you choose?
+
+Choose Construct for agent memory you control. It starts at $9 a month, keeps the source of every remembered fact, lets you correct, forget, or restore any item, and works alongside files, workflows, and schedules so recurring jobs start from the right context every time.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+Give Construct the recurring report you explain from scratch every month: describe the audience, sections, and format once, let it produce the first report, then open the Memories app and check what it saved. Next month, assign the job in one line. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
 
 ## Related resources
 

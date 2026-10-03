@@ -204,11 +204,11 @@ We build [an AI employee](/blog/ai-employee/) with a real computer, so this is t
 
 Work lands in a workspace filesystem as files, not as messages in a thread. That is the artifacts rule, and it is also why a run that dies partway through leaves usable output behind rather than a transcript to excavate.
 
-Every action goes into an Activity audit log: what it affected, when it ran, and why. That is the receipt, not the stack trace, and it exists so the answer to "what did it do overnight" is a scroll rather than a project. Alongside it you get the files it produced, the tool records, and a read-only terminal transcript when you want to go deeper.
+Every action goes into Activity: what it affected, when it ran, and why. That is the receipt, not the stack trace, and it exists so the answer to "what did it do overnight" is a scroll rather than a project. Alongside it you get the files it produced, the tool records, and a read-only terminal transcript when you want to go deeper.
 
 Memory is inspectable and correctable, with provenance and temporal context, so a claim can be traced to where it came from and fixed in place instead of argued with. Repeatable work becomes a saved workflow you can read before you schedule it. Current workflows are linear, which is a real limitation and also the reason a workflow is something you can hold in your head.
 
-And the part we have not finished: Construct does not currently insert a mandatory approval gate before every external side effect. Drafts, interruption mid-run, and the audit log give you a lot, but if a step sends a customer email or moves money, that step still needs supervision before you let it run unattended. We would rather say that plainly than let someone discover it on a Sunday.
+And the part we have not finished: Construct does not currently insert a mandatory approval gate before every external side effect. Drafts, interruption mid-run, and Activity give you a lot, but if a step sends a customer email or moves money, that step still needs supervision before you let it run unattended. We would rather say that plainly than let someone discover it on a Sunday.
 
 ## The next 10x is not in the model
 

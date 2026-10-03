@@ -7,6 +7,8 @@ import {
 import { useMDXComponents } from "@mdx-js/react";
 
 import { BetaCta } from "./beta-cta";
+import { CostCalculator } from "./calculators/cost-calculator";
+import { ReliabilityCalculator } from "./calculators/reliability-calculator";
 import { ReadNext } from "./related-links";
 
 type MDXComponents = ReturnType<typeof useMDXComponents>;
@@ -98,7 +100,9 @@ export const mdxComponents: MDXComponents = {
   // Capitalised entries are authorable in MDX with no import, e.g. `<BetaCta />`.
   ArticleTable,
   BetaCta,
+  CostCalculator,
   ReadNext,
+  ReliabilityCalculator,
   h2: ({ children }) => (
     <h2 className="font-geist mt-10 mb-4 text-[22px] italic leading-tight text-[#4e4646] lg:text-[26px]">
       {children}

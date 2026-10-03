@@ -1,0 +1,214 @@
+---
+title: "Agent reliability calculator: how many steps will your agent finish?"
+seoTitle: "Agent Reliability Calculator: Why AI Agents Fail on Long Tasks"
+description: "Enter per-step success and step count to see how often an AI agent finishes in one run, how many retries it needs, and what checkpoints change."
+published: "2026-10-29"
+author: "ankush"
+tags: ["ai-agent", "reliability", "workflow-automation", "engineering"]
+kind: "article"
+draft: true
+---
+
+Construct saves every finished step of an agent's work to workspace files as it is produced, so a run that stops at step 30 keeps steps 1 to 29, and Lite at $9 a month gives each task up to 50 steps. That matters because long agent jobs fail far more often than intuition says: an agent that gets 95% of its steps right finishes a 48-step job in one run 8.5% of the time, and if every failure starts the job over, it needs about 11.7 runs on average to get through once.
+
+Cut the same job into eight independent six-step pieces that save their work, and the first run finishes about 73.5% of it, the whole job takes about 2.5 runs, and it is done within three runs 86.1% of the time. Same agent, same per-step reliability, same total work. Construct is built for the second shape: finished work stays in Files, the next run picks up what is missing, and the Calendar turns retries into a schedule. The calculator below lets you put your own numbers in and see where the difference comes from.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why run long jobs in Construct?
+
+- **Finished steps are kept.** Reports, spreadsheets, and scripts land in workspace files as the agent produces them. A failure at step 30 costs the step that failed, not the 29 before it.
+- **Reruns resume instead of repeating.** One sentence such as "for each client without a report in `reports/2026-10/`, write one" makes the next run fill the gaps, which is the "skip and carry on" row of the table below.
+- **Step limits sized to the job.** Up to 50 steps per task on Lite at $9, 150 on Starter at $59, and up to 1,000 on Pro at $299.
+- **Retries on a schedule.** Calendar schedules run on Construct's servers with your laptop closed, so three nightly runs before a Monday deadline happen without anyone starting them. Lite includes 3 scheduled tasks.
+- **A record of what broke.** Activity lists each action an agent took with a short reason, so you can find the step that failed and fix its cause.
+
+<ReliabilityCalculator />
+
+## Why do AI agents fail on long tasks?
+
+Mostly because small per-step error rates multiply. If each step succeeds independently with probability p, a job of n steps succeeds in one go with probability p to the power n, and that number falls faster than intuition expects. At 95% per step, ten steps finish about 60% of the time and 48 steps finish 8.5% of the time. Nothing about the long job is harder. There is just more exposure.
+
+Toby Ord made the same point with real agent benchmarks. Looking at how agent success falls as tasks get longer, he found it is explained by "a constant rate of failing during each minute a human would take to do the task," which "implies an exponentially declining success rate" ([Ord, arXiv:2505.05115](https://arxiv.org/abs/2505.05115)). We worked through what that means for business jobs in [your agent has a half-life](/blog/agent-task-half-life/). This page turns that argument into a tool.
+
+The models are improving. METR reports that the length of tasks frontier agents can complete with 50% reliability "has been doubling approximately every 7 months for the last 6 years" ([METR](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)). That is real progress, but 50% is a coin flip, and the exponent in the formula below does not care which model you use. A better model nudges p. Restructuring the job changes n for each run, which is usually the bigger lever.
+
+## What the calculator inputs mean
+
+**Per-step success rate.** How often one step goes right. A step here is one action the agent takes: a tool call, a page load, a file write, a decision. If you have never measured it, start at 95% and treat the answer as optimistic for judgment-heavy work and pessimistic for simple, mechanical work.
+
+**Steps in the job.** Count actions, not instructions. "Send the monthly report to each of eight clients" is one instruction and dozens of steps.
+
+**Resumable pieces.** How many parts the job is cut into, where a finished part is saved and never redone. One piece means no checkpoints: any failure sends the whole job back to the start. The calculator splits steps evenly, so 48 steps in eight pieces is six steps each.
+
+**When a piece fails.** Two shapes of job behave differently:
+
+- **Skip it and carry on.** The pieces are independent, like one report per client. A failure on client three does not stop client four, and the next run retries only what is missing.
+- **Stop the run.** Each piece needs the one before it, like extract, then clean, then load. A failure ends the run, and the next run resumes at the failed piece.
+
+**Runs you can afford.** Scheduled jobs come with a natural budget: three nightly runs before a Monday deadline, say. The calculator reports the chance the job is done within that many runs.
+
+## The math behind the calculator
+
+Everything comes from one assumption: each step succeeds independently with the same probability p. For a job of n steps cut into k pieces of s steps each:
+
+```latex
+% One uninterrupted run finishes the whole job
+P(\text{one run}) = p^{n}
+
+% Runs needed when every failure starts over (geometric distribution)
+E[\text{runs}] = \frac{1}{p^{n}}
+
+% Steps executed in total, counting the step that failed each time
+E[\text{steps}] = \frac{1 - p^{n}}{(1 - p)\, p^{n}}
+
+% The agent's half-life in steps: where one-run success hits 50%
+n_{1/2} = \frac{\ln 2}{-\ln p}
+
+% Resumable pieces: each piece of s steps is its own geometric trial
+q = p^{s}, \qquad E[\text{steps}] = k \cdot \frac{1 - q}{(1 - p)\, q}
+
+% "Stop the run": one run, plus one more for every failure
+E[\text{runs}] = 1 + k \left( \frac{1}{q} - 1 \right)
+
+% "Skip and carry on": done within R runs if every piece succeeds once in R tries
+P(\text{done within } R) = \left( 1 - (1 - q)^{R} \right)^{k}
+```
+
+Two results are worth reading slowly.
+
+First, checkpoints do not change the chance that one run finishes everything. That is still p to the power n, 8.5% in the example. What they change is what a failure costs. Without checkpoints a failure at step 40 throws away 39 good steps. With six-step pieces it throws away at most five.
+
+Second, the half-life. At 95% per step, one-run success drops to 50% at about 13.5 steps. At 99% it is about 69 steps, and at 90% it is about 6.6. If a single uninterrupted piece of your job is much longer than your agent's half-life, most runs of that piece will fail, and the fix is a shorter piece rather than a longer prompt.
+
+The "stop the run" mode has no tidy closed form for the chance of being done within R runs, so the calculator adds up the distribution of failures across pieces directly. The "skip" mode's average run count is the expected maximum of k independent geometric trials, which the calculator sums numerically.
+
+## What checkpoints change: the 48-step example
+
+Here is the illustrative job from the half-life post: monthly reporting for eight clients, six steps per client, an agent that gets 95% of steps right, and three runs to get it done.
+
+<ArticleTable caption="A 48-step job at 95% per step, with and without resumable pieces">
+
+| Setup                       | Finishes in one run | Work done after first run | Average runs | Steps executed, redone work included | Done within 3 runs |
+| --------------------------- | ------------------- | ------------------------- | ------------ | ------------------------------------ | ------------------ |
+| One piece, start over       | 8.5%                | 8.5%                      | 11.7         | 215                                  | 23.5%              |
+| 8 pieces, stop on failure   | 8.5%                | 31.7%                     | 3.9          | 57.7                                 | 48.1%              |
+| 8 pieces, skip and carry on | 8.5%                | 73.5%                     | 2.5          | 57.7                                 | 86.1%              |
+
+</ArticleTable>
+
+Three things stand out. The one-run column never moves. The steps executed fall from 215 to under 58 the moment finished work is saved, whichever failure mode you pick, because a retry only redoes the piece that failed. And the shape of the job matters as much as the checkpoints: if a failure on one client does not have to stop the others, the job converges in about two and a half runs instead of four.
+
+Try 99% in the calculator and the picture softens. A 99% agent finishes 61.7% of 48-step runs and averages 1.6 runs even without checkpoints. Try 90% and it collapses: 0.6% in one run and about 157 runs on average to start over until it works, against about 4.1 runs with eight independent pieces.
+
+<BetaCta source="blog_inline_1">Run a resumable job on Construct</BetaCta>
+
+## Why your real numbers will differ
+
+The independence assumption is what makes the math clean, and it is also the part real agents break most. Read the calculator as a planning floor, and adjust for these.
+
+**Steps are not independent.** If a step fails because the login expired or a page layout changed, the retry fails the same way. A deterministic failure is not a 5% chance repeated; it is a 100% chance until someone fixes the cause. In that case expected runs are infinite, and no number of checkpoints helps. Retries pay off for random failures, such as a timeout or a misread page, not systematic ones.
+
+**Steps are not equally hard.** A step that copies a value is far more reliable than a step that decides which clients count as at risk. One weak step dominates the product. If you can find it, put it in its own piece so a bad call costs that piece and not the run.
+
+**Agents recover from some errors.** A tool call that returns an error is often retried or worked around inside the same run. The calculator counts a failure as fatal to the piece, so for agents that self-correct well it overstates the damage. The per-step rate you plug in should be the rate of failures the agent does not recover from.
+
+**Some failures are silent.** The calculator assumes you know a step failed. An agent that confidently writes the wrong number into a report has not failed by this math, and it is the more expensive case. We wrote about why that check is the real bottleneck in [nobody merges an email](/blog/agent-verification-gap/).
+
+**Checkpoints are not free.** Each piece has to read its state back in: the client list, the template, what is already done. That adds steps, and each added step can fail. If your pieces become so small that the reading back is most of the work, you have overdone it.
+
+**Retries can repeat side effects.** Skipping and retrying is safe only if a retried piece can tell it already ran. A report file that exists is easy to check. An email that was sent, a payment, or a public post needs the job to check before acting, or a retry does the thing twice.
+
+## How to estimate your agent's per-step success rate
+
+You do not need a benchmark. You need a few honest runs of the job you actually care about.
+
+1. Run the job on demand five to ten times while you watch, before scheduling it.
+2. For each run, count the steps the agent took and the steps that went wrong and were not recovered.
+3. Divide. If ten runs took 400 steps between them and 16 failed unrecoverably, your per-step rate is about 96%.
+4. Note which steps failed. If the same step fails every time, you have a systematic failure to fix, not a rate to plug in.
+
+The rate you get is specific to that job, that set of tools, and that week's websites. It will drift. Re-measure when a job that used to finish starts needing extra runs.
+
+## How Construct turns this math into finished jobs
+
+The table above has one lesson: save finished work and retry only what is missing. Construct does the saving for you. Every agent works in a persistent cloud workspace, so finished work lands in files as it is produced, and a run that dies at step 30 keeps steps 1 to 29. Your instruction decides how the next run uses them. Write "for each client in `clients.md` without a report in `reports/2026-10/`, write one" and a rerun becomes a retry of the missing clients, not a duplicate of the finished ones. That is the "skip and carry on" row of the table, built from a file listing and one sentence.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/workflow-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct workflow demo"
+    aria-describedby="workflow-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/workflow.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/agent-reliability-calculator/workflow-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption id="workflow-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct building and running a reusable workflow in
+    the product interface, so a process encoded once can be scheduled and run
+    again.
+  </figcaption>
+</figure>
+
+### Pick a plan by the length of your pieces
+
+Each plan caps how far a single task can go: up to 50 steps per task on Lite, up to 150 on Starter, and up to 1,000 on Pro ([pricing](/pricing/)). That cap is a ceiling on one task's length, not a success rate, and the calculator shows why you should not aim for it with one uninterrupted piece. At 95% per step, a task that really uses all 50 of Lite's steps finishes in one go about 7.7% of the time. Cut the same work into shorter tasks that each leave a file behind and a failure costs one piece, not the run. Move to Starter or Pro when a single piece genuinely needs more steps, or when you need more agents and more scheduled tasks.
+
+### Let the Calendar be your retry budget
+
+Recurring jobs can be saved as workflows and scheduled on the Calendar, and the schedule becomes your retry cadence. Set the monthly reports to run nightly for the last three nights of the month, and the calculator's "done within 3 runs" number becomes your real odds of a finished folder on the first. The [workflow guide](/blog/ai-workflow-automation/) shows how steps and schedules fit together, and [AI agent memory](/blog/ai-agent-memory/) explains what context carries from one run to the next and how to correct it.
+
+### Before you start
+
+- **Order-dependent pieces run in sequence.** Construct's workflows are linear, with no branching, delays, or approval gates yet, so pieces are worked through inside a run rather than fanned out in parallel. For extract, clean, then load jobs, that is the "stop the run" row: have each stage write its output to a file so the next run starts at the stage that failed.
+- **Make side effects safe to retry.** For anything that sends, posts, or pays, ask the agent to save a draft and check for it before acting, then send it yourself once you have read it. A retried piece then cannot do the thing twice.
+- **Use Activity to find the broken step.** Activity records each action with a short reason for a limited window, and chat keeps the tool records of each run. Together they show where a run stopped. They are operating records, not a complete audit log, so keep a run log file in Files for jobs you need to account for later.
+
+<ReadNext slug="agent-task-half-life" />
+
+## Using the calculator to design a job
+
+A practical order of operations:
+
+1. **Measure p on the real job**, as above. Do not guess from a benchmark.
+2. **Find the half-life.** If one uninterrupted stretch of the job is longer than the half-life the calculator shows, cut it.
+3. **Cut at the loop first.** "For each client" or "for each invoice" pieces are usually independent, which puts you in the "skip" mode where retries are cheapest.
+4. **Make every piece leave an artifact** a later run can check for, so a retry knows what is done.
+5. **Set the run budget from the deadline.** If the calculator says 86% within three runs, decide whether a 14% chance of chasing it on Monday morning is acceptable, and if not, cut further or raise p.
+
+## What should you do next?
+
+Run the calculator on your real job, then build it in Construct the resumable way. The math does not change with the product; what changes is whether a failure costs one piece or the whole job, and Construct keeps every finished piece by default.
+
+Give Construct your monthly client reports as its first job: put the client list in `clients.md`, ask for one report per client in `reports/2026-10/`, skip any client that already has one, and run it on demand three times while you count the failed steps. Then put it on the Calendar for the last three nights of the month. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+## Sources
+
+- Toby Ord, ["Is there a half-life for the success rates of AI agents?"](https://arxiv.org/abs/2505.05115), arXiv:2505.05115, May 8, 2025.
+- METR, ["Measuring AI ability to complete long tasks"](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/), March 19, 2025.
+- Construct plan limits from the [pricing page](/pricing/), checked on October 1, 2026.
+
+## Related resources
+
+- [Your agent has a half-life](/blog/agent-task-half-life/)
+- [Nobody merges an email](/blog/agent-verification-gap/)
+- [What is an AI agent with its own computer?](/blog/ai-agent-with-its-own-computer/)
+- [AI workflow automation](/blog/ai-workflow-automation/)
+- [AI agent memory](/blog/ai-agent-memory/)

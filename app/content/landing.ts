@@ -108,7 +108,7 @@ export const landingFaq = [
   {
     question: "How is Construct different from ChatGPT or Claude?",
     answer:
-      "Chat assistants are built for answers and drafts inside a thread. Construct is built for work that outlives the thread: it keeps a persistent workspace with files, memory, and schedules, runs jobs on its own, and records every action in an Activity audit log you can read afterwards.",
+      "Chat assistants are built for answers and drafts inside a thread. Construct is built for work that outlives the thread: it keeps a persistent workspace with files, memory, and schedules, runs jobs on its own, and records each action in Activity so you can read afterwards what it did and why.",
   },
   {
     question: "What work can it actually complete?",
@@ -123,7 +123,7 @@ export const landingFaq = [
   {
     question: "Can I see and control what it does?",
     answer:
-      "Yes. The desktop shows files, live browser activity, terminal transcripts, workflows, memories, and tool records. Activity is a full audit log of every action, what it touched, when it ran, and why. You can interrupt a run mid turn, answer its questions, and correct or delete anything it remembers.",
+      "Yes. The desktop shows files, live browser activity, terminal transcripts, workflows, memories, and tool records. Activity records each action, what it touched, when it ran, and why, for the last 30 days. You can interrupt a run mid turn, answer its questions, and correct or delete anything it remembers.",
   },
   {
     question: "Do you train on my data?",

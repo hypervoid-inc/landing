@@ -1,0 +1,226 @@
+---
+title: "Construct vs OpenClaw"
+seoTitle: "OpenClaw vs Construct: Self-Hosted Agent vs Managed AI Employee"
+description: "Construct is a hosted AI employee for a fixed $9 a month, with no per-message billing. OpenClaw is free software, but you run the server and pay for tokens."
+published: "2026-11-16"
+author: "construct-team"
+tags: ["comparison", "openclaw", "ai-employee"]
+kind: "comparison"
+draft: true
+---
+
+Construct gives you an AI employee with a hosted workspace, files, schedules, and its own email address from a fixed $9 a month, with no per-message billing and nothing to install. OpenClaw is free, MIT-licensed software you run yourself, so its real cost is a machine that stays on plus the model tokens it spends, and its own docs say "Sandboxing and exec approvals are off by default."
+
+For most founders and small teams, Construct is the better choice. You can give it a job this afternoon instead of setting up a server, there is no gateway for you to secure or patch, you pay a fixed monthly price with published plan limits instead of a token bill that follows how chatty the agent was, and schedules run with your laptop closed. Already running OpenClaw? Keep it for the channels and experiments you built it for and give Construct the recurring work your team depends on. The two run side by side.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why choose Construct over OpenClaw?
+
+- **Nothing to install, expose, or harden.** Sign up and the workspace is hosted. There is no gateway on the internet and no server to patch.
+- **A fixed monthly price, with no per-message billing.** Construct Lite is $9 a month for 2 agents, 50 steps per task, and 3 scheduled tasks. OpenClaw's heartbeat runs full agent turns every 30 minutes by default, and you pay for every token.
+- **Schedules that run without your laptop.** The Calendar runs prompts, connected-app actions, and saved workflows on Construct's servers and keeps each run's history.
+- **Work that lands in the workspace.** Reports, spreadsheets, and scripts are saved to files as the agent produces them, so a run that stops at step 30 still leaves steps 1 to 29 behind. No backups to schedule.
+- **One agent for a small team, with roles.** Invite teammates as Owner, Admin, or Member. A team workspace has no member limit, and everyone's work draws on the owner's plan.
+- **Its own email address.** Every plan gives the agent an inbox. Forward a thread from your address and it starts work.
+
+## What is OpenClaw?
+
+OpenClaw is "a self-hosted gateway that connects your favorite chat apps" to AI agents, running on Mac, Windows, or Linux ([OpenClaw docs](https://docs.openclaw.ai/)). It keeps persistent memory, runs cron jobs and webhooks, drives a browser, runs shell commands, and installs skills and plugins from its ClawHub registry.
+
+- **License and ownership:** MIT licensed and stewarded by the OpenClaw Foundation, which says there is "no enterprise edition and no paid version" and "No hosted tier" ([OpenClaw](https://openclaw.ai/)).
+- **Where it runs:** your Mac, a Linux box, a VPS, or a third-party host ([OpenClaw FAQ](https://docs.openclaw.ai/help/faq-first-run/providers-and-hosting)).
+- **Models:** any provider, a ChatGPT subscription sign-in, or a local model.
+- **Channels:** WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, Matrix, SMS, and more.
+
+If you want OpenClaw without running it, third parties host it for you. Our guide to [hosted OpenClaw alternatives](/blog/hosted-openclaw-alternatives/) compares them.
+
+## Methodology
+
+We build Construct. This is our editorial comparison of documented capabilities and published prices, checked on October 1, 2026. It is not a hands-on performance benchmark.
+
+We read OpenClaw's homepage, its documentation (install, hosting, security, heartbeat, and FAQ pages), and its GitHub repository. OpenClaw is highly configurable, so for each row we describe the documented default and say where configuration changes it. Where a capability is not documented in the sources we reviewed, we say "not documented" rather than claiming it is absent.
+
+{/* TODO: re-check OpenClaw docs and all prices before publishing on November 16, 2026; all were captured October 1, 2026. */}
+
+## Construct vs OpenClaw: features at a glance
+
+<ArticleTable caption="Construct vs OpenClaw capabilities, checked October 1, 2026">
+
+| Capability                | Construct                                                                                   | OpenClaw                                                                                 |
+| ------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Setup                     | Sign up; the workspace is hosted                                                            | Install on your machine or a VPS; Node 24.16+ or 26; connect each channel                |
+| Cost                      | Fixed-price plan with published limits: $9, $59, or $299 a month                            | $0 software plus server plus tokens                                                      |
+| Security defaults         | No gateway for you to expose; credentials stored encrypted by Construct                     | Gateway on loopback and DM pairing by default; sandboxing and exec approvals off by default |
+| Schedules                 | Calendar runs prompts, actions, or workflows on Construct's servers: 3, 10, or 50 by plan   | Cron, webhooks, Gmail triggers, heartbeat check-ins; laptop gateway pauses when it sleeps |
+| Where finished work lives | Workspace files saved as they are produced                                                  | A workspace on the machine that runs it; docs advise regular backups                     |
+| Team use                  | Team workspaces with Owner, Admin, and Member roles                                         | One trust domain per gateway; untrusting users need separate gateways                    |
+| Email                     | Its own agent inbox on every plan                                                           | IMAP and Gmail triggers; sending through skills                                          |
+| Memory                    | Inspect, correct, or forget any stored fact                                                 | Persistent memory with provenance and a forget command                                   |
+| Models                    | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro | Any provider, ChatGPT subscription sign-in, or a local model                             |
+| Extensions                | Live integration catalog, your own MCP tools, private workspace apps                        | ClawHub skills and plugins, MCP client and server, plugin SDK                            |
+| Ways to reach it          | Web, Slack, Telegram, Discord, and its own email address                                    | WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Teams, Matrix, SMS, and more       |
+
+</ArticleTable>
+
+Sources: OpenClaw's [homepage](https://openclaw.ai/), [docs](https://docs.openclaw.ai/), [Why OpenClaw](https://docs.openclaw.ai/start/why-openclaw), and [security model](https://docs.openclaw.ai/gateway/security). Construct's [pricing](/pricing/) and [channels](/use-cases/channels/) pages.
+
+## How much does each cost?
+
+Construct charges a fixed monthly price with published plan limits and no per-message billing. OpenClaw's software is free; what you pay for is a machine that stays on and the model tokens the agent spends. These are USD prices billed monthly unless noted.
+
+<ArticleTable caption="What Construct and OpenClaw cost each month, checked October 1, 2026">
+
+| Option                        | Monthly price                         | What you get, or what to budget for                                                            |
+| ----------------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Construct Lite                | $9                                    | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address                      |
+| Construct Starter             | $59                                   | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                          |
+| Construct Pro                 | $299                                  | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys |
+| OpenClaw on your own computer | $0                                    | Model tokens; the machine has to stay awake                                                    |
+| OpenClaw on a VPS             | Set by your provider                  | Server plus tokens; minimum 1 vCPU and 1 GB RAM, 2 GB recommended                              |
+| OpenClaw on Hostinger 1-Click | $5.99, paid upfront; renews at $11.99 | AI credits bought separately, or your own key                                                  |
+| OpenClaw on MyClaw Lite       | $29, or $199 a year                   | Model tokens, which are not included                                                           |
+
+</ArticleTable>
+
+Sources: [Construct pricing](/pricing/), [OpenClaw hosting FAQ](https://docs.openclaw.ai/help/faq-first-run/providers-and-hosting), [Hostinger OpenClaw](https://www.hostinger.com/openclaw), and [MyClaw pricing](https://myclaw.ai/pricing).
+
+### Where OpenClaw's token bill comes from
+
+OpenClaw's heartbeat wakes the agent every 30 minutes by default to check whether anything needs attention, and its docs say: "Heartbeats run full agent turns. Shorter intervals burn more tokens." Isolated heartbeat sessions cut a run from "~100K tokens down to ~2-5K" ([OpenClaw heartbeat docs](https://docs.openclaw.ai/gateway/heartbeat)).
+
+As illustrative arithmetic from those figures, not a measured bill: 48 heartbeats a day at about 100,000 tokens each is about 4.8 million input tokens a day before any task you assigned. With isolated sessions, it is about 96,000 to 240,000. Configured carefully, with a ChatGPT subscription sign-in, a local model, or a free-tier host such as Oracle Cloud's "Always Free ARM tier" ([OpenClaw docs: Linux server](https://docs.openclaw.ai/vps)), OpenClaw can cost very little. Left on defaults, it can cost more than a Construct plan.
+
+What this means for your budget:
+
+- **Starting from zero:** Construct Lite is a fixed $9 with no per-message billing. An OpenClaw setup costs a server or an always-on machine plus tokens, plus your time to configure it.
+- **A busy month:** Construct works within your plan's published limits, with no per-message billing, and on Pro you can add your own keys. OpenClaw's bill follows how much the agent ran.
+- **A team of five:** Construct Starter at $59 covers up to 5 agents in one workspace with roles. OpenClaw's docs treat each gateway as one trust domain.
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## Where does Construct give you more control?
+
+OpenClaw gives you control over every layer. Construct gives you control over the work: the files, the schedule, the memory, and who can see them, without asking you to operate the layers.
+
+### Nothing to install, expose, or patch
+
+OpenClaw's security model assumes "One trust boundary per gateway: a single operator, or a team whose members trust each other" ([OpenClaw security](https://docs.openclaw.ai/gateway/security)), and its "Why OpenClaw" page says "Hardening is deliberate configuration." The hardened setup it recommends involves a sandbox backend, Tailscale or an identity-aware proxy, secret references, message auditing, and a scheduled `openclaw security audit --deep`.
+
+With Construct, there is no gateway on the internet and no server for you to harden. Shell commands run in a sandbox as a non-root user unless the agent asks for root on one command, and your workspace files live in storage that outlives the machine. Stored model keys and bot credentials are encrypted. Content the agent reads from web pages, email, and connected apps reaches the model marked as external data whose instructions it should not follow; supervise early runs as you would with any agent.
+
+### Schedules that run without your laptop
+
+OpenClaw's FAQ says a laptop gateway pauses when it sleeps, and that 24/7 reliability means a VPS ([OpenClaw FAQ](https://docs.openclaw.ai/help/faq-first-run/providers-and-hosting)). Construct's Calendar runs an agent prompt, a connected-app action, or a whole saved workflow on Construct's servers, once or on a cadence, and keeps each run's result history. The [scheduled tasks guide](/blog/ai-agent-scheduled-tasks/) walks through it.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/calendar-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct Calendar demo"
+    aria-describedby="calendar-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/calendar.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/construct-vs-openclaw/calendar-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="calendar-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct's Calendar showing scheduled agent jobs and
+    workflow runs, which run on the cloud workspace and keep their result
+    history.
+  </figcaption>
+</figure>
+
+### A workspace the work lands in
+
+OpenClaw keeps a workspace on the machine that runs it, and the docs tell you to "back up the state + workspace regularly" ([OpenClaw docs: Linux server](https://docs.openclaw.ai/vps)). In Construct, the files, memory, schedules, and outputs are the product, and the next run starts from what exists. When several people review the same output, Construct can build a [private workspace app](/blog/build-internal-tools-with-construct/) such as a review queue.
+
+### An email address that belongs to the agent
+
+OpenClaw handles email as automation: an IMAP trigger or Gmail push brings mail into a session, and sending goes through skills. Its own FAQ recommends giving the bot "its own email, GitHub account, or phone number" to limit the blast radius ([OpenClaw security FAQ](https://docs.openclaw.ai/help/faq/security-and-access-control)). Every Construct plan includes that already: a native agent inbox. Forward a thread from your own address and it starts work; mail from anyone else waits in the inbox until you ask the agent to read it. Our guide to [giving an AI agent its own email address](/blog/ai-agent-email-address/) shows the setup.
+
+### One agent for a small team, with roles
+
+A shared OpenClaw gateway is "one trust domain," and mutually untrusting users "need separate gateways" ([What is OpenClaw?](https://docs.openclaw.ai/help/faq/what-is-openclaw)). Construct's [team workspaces](/use-cases/team-workspaces/) bring people, the agent, files, and apps together with invitations and roles, and messaging settings for a team workspace can only be changed by its owner or admins.
+
+## Running the same job on both
+
+We have not run this test yet. When we do, we will publish the setup time, the cost, and what each product left behind.
+
+{/* TODO: HANDS-ON TEST, NOT YET RUN. Do not publish this section until it is filled in.
+Job: Monday competitor price check with a Slack summary.
+Prompt (identical on both): "Every Monday at 9am, visit the pricing pages of [3 named competitors], record each plan name and monthly USD price, compare them with last week's file, save a dated CSV, and post a three-line summary of what changed to #pricing in Slack. Do not message anyone else."
+Setup: OpenClaw stable release self-hosted on a 2 GB VPS with the Slack channel and an Anthropic API key, heartbeat left at default for week 1 and isolated for week 2; Construct Starter with Slack connected.
+Record for each: minutes from zero to first scheduled run, steps that needed a terminal, tokens or plan usage per week (OpenClaw: `openclaw status` usage snapshot), errors and retries, whether week 2 compared correctly against week 1, where the CSV lives and whether a teammate can open it, and total cost for two weeks.
+Capture dated screenshots of both results. */}
+
+Here is how the Construct side runs, as an illustrative walkthrough rather than a measured result. Save the three URLs and the column layout to a file in the workspace. Ask the agent to visit each pricing page, write a dated CSV, and compare it with last week's file. Check the first file, then save the steps as a workflow and put it on the Calendar, where it uses one of Lite's 3 scheduled tasks. Each Monday the CSV lands in Files and Construct notifies you in the web app; teammates can @mention the agent in Slack to ask what changed. No server to run and no heartbeat to tune.
+
+## Already using OpenClaw? Add Construct in 15 minutes
+
+You do not have to tear down your gateway. Start with the one job that keeps breaking when your laptop sleeps, or the one a teammate needs to see.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** to run it on your own model keys.
+2. **Copy the instructions and skill text** you rely on into a Construct chat, and move the files the job needs into the workspace.
+3. **Connect the apps** from the integration catalog, or add them as custom MCP tools.
+4. **Run it once and check the result** in Files.
+5. **Put it on the Calendar** so time-based cron jobs run whether or not anyone is online.
+
+There is no import. Add the facts from your memory files that still matter to the first instruction, and Construct saves them as memory you can read. Event triggers such as webhooks or Gmail push become a scheduled check, or an email you forward to the agent's own inbox. One thing to set up deliberately: Construct's workflows do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself once you have checked them.
+
+## When might OpenClaw still fit?
+
+- You want to own the code, the machine, and every policy, and you are comfortable operating and hardening a server.
+- You run many agents on a subscription sign-in, local models, or free-tier hosts, where the marginal cost of another agent approaches zero.
+- Your agent has to live in WhatsApp, Signal, iMessage, or Matrix, or keep a long-running process alive on your own hardware.
+
+For recurring work that should run from a hosted workspace with schedules, an agent email address, memory you can correct, and a fixed monthly price, Construct is the better fit.
+
+## Which should you choose?
+
+Choose Construct. It starts at a fixed $9 a month, runs schedules with your laptop closed, keeps every finished file in a workspace your team shares, and leaves you nothing to install or harden. If you already run OpenClaw, keep it for the channels and experiments you built it for and let Construct run the work your team depends on. When the question is OpenClaw versus Hermes Agent, our three-way comparison covers it. {/* TODO: link /blog/hermes-vs-openclaw-vs-managed/ once it is live */}
+
+Pick the job you were going to give OpenClaw, such as a morning briefing, a weekly price check, or a client report, give Construct the inputs, and judge the saved file. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+## Sources
+
+Pages fetched on October 1, 2026:
+
+- [OpenClaw](https://openclaw.ai/) and [OpenClaw on GitHub](https://github.com/openclaw/openclaw)
+- [OpenClaw docs overview](https://docs.openclaw.ai/)
+- [Why OpenClaw](https://docs.openclaw.ai/start/why-openclaw)
+- [OpenClaw security model](https://docs.openclaw.ai/gateway/security) and [security FAQ](https://docs.openclaw.ai/help/faq/security-and-access-control)
+- [OpenClaw FAQ: providers, hardware, and hosting](https://docs.openclaw.ai/help/faq-first-run/providers-and-hosting)
+- [What is OpenClaw?](https://docs.openclaw.ai/help/faq/what-is-openclaw)
+- [OpenClaw heartbeat documentation](https://docs.openclaw.ai/gateway/heartbeat)
+- [OpenClaw docs: Linux server hosting](https://docs.openclaw.ai/vps)
+- [Hostinger 1-Click OpenClaw](https://www.hostinger.com/openclaw)
+- [MyClaw pricing](https://myclaw.ai/pricing)
+- [Construct pricing](/pricing/)
+- [Construct channels](/use-cases/channels/), [scheduling](/use-cases/scheduling/), and [team workspaces](/use-cases/team-workspaces/)
+
+## Related resources
+
+- [Hosted OpenClaw alternatives: managed claws vs an AI employee](/blog/hosted-openclaw-alternatives/)
+- [Construct vs building your own AI agent](/blog/construct-vs-diy/)
+- [How to give an AI agent its own email address](/blog/ai-agent-email-address/)
+- [How to run an AI agent on a schedule](/blog/ai-agent-scheduled-tasks/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)

@@ -1,0 +1,198 @@
+---
+title: "AI employee vs virtual assistant cost calculator"
+seoTitle: "Virtual Assistant vs AI Agent Cost Calculator"
+description: "Compare a virtual assistant's monthly cost with an AI agent plan plus review time. Enter VA hours, hourly rate, and the share of tasks an agent can take."
+published: "2026-12-21"
+author: "nischal"
+tags: ["virtual-assistant", "ai-employee", "pricing", "small-business"]
+kind: "guide"
+draft: true
+---
+
+Construct takes the recurring, checkable share of a virtual assistant's work from $9 a month on Lite or $59 on Starter, while your VA keeps the relationship work. A virtual assistant working 20 hours a week at $15 an hour costs about $1,300 a month. If Construct takes on 30% of those tasks, the VA bill drops to about $910, and adding Starter at $59 brings the total to $969 a month plus roughly 3.9 hours of your time spent reviewing the agent's work.
+
+If you are weighing a VA against an agent, start on Construct's smallest plan that fits your longest task and your number of recurring jobs, then move up only when a limit stops you. In the example above, Lite saves $381 a month and Starter $331 before review. The share of work the agent takes and the minutes it takes you to check each result decide the final number, so the calculator below lets you put in your own.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+<CostCalculator />
+
+## Why do this in Construct?
+
+- **A fixed monthly price with published plan limits.** Lite is $9, Starter $59, and Pro $299, with no per-message billing, which is why the calculator can show each plan as one monthly line.
+- **Built for the recurring share.** Calendar schedules run on Construct's cloud computer with your laptop closed: 3 scheduled tasks on Lite, 10 on Starter, and 50 on Pro.
+- **Quick to review.** Finished work lands in workspace files as it is produced, and Activity records each action with a short reason, so checking a result means opening a file rather than rereading a transcript.
+- **Memory you can correct.** Fix a wrong preference once in the Memories app instead of re-explaining it every week.
+- **Its own inbox and channels.** Every plan includes an agent email address, and you can message it from Slack, Telegram, Discord, or the web.
+- **Your VA becomes the reviewer.** A team workspace has no member limit, so your VA can join as a member, check the agent's output, and keep the work that needs a person.
+
+## What does a virtual assistant cost in 2026?
+
+It depends mostly on where the assistant is based and whether you hire through an agency. The calculator's rate presets come from Cherry Assistant's July 2026 breakdown, and two other published ranges are shown alongside it. All three pages were checked on October 1, 2026.
+
+<ArticleTable caption="Published virtual assistant rates used by the calculator">
+
+| Arrangement                               | Hourly rate              | Monthly cost             | Source                                                                                                          |
+| ----------------------------------------- | ------------------------ | ------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| Offshore managed agency                   | $4 to $15                | $640 to $2,400 full-time | [Cherry Assistant](https://www.cherryassistant.com/blog/how-much-does-a-virtual-assistant-cost)                 |
+| Offshore part-time, 20 hours a week       | Not stated               | $350 to $1,300           | [Cherry Assistant](https://www.cherryassistant.com/blog/how-much-does-a-virtual-assistant-cost)                 |
+| Offshore freelancer, direct hire          | $3 to $12                | Not stated               | [Cherry Assistant](https://www.cherryassistant.com/blog/how-much-does-a-virtual-assistant-cost)                 |
+| US or UK freelance VA                     | $18 to $40               | Not stated               | [Cherry Assistant](https://www.cherryassistant.com/blog/how-much-does-a-virtual-assistant-cost)                 |
+| In-house US assistant, all costs          | Not stated               | $4,700 to $8,300         | [Cherry Assistant](https://www.cherryassistant.com/blog/how-much-does-a-virtual-assistant-cost)                 |
+| Part-time VA for daily email and calendar | $5 to $75 across all VAs | $1,000 to $3,000         | [Tendem](https://tendem.ai/blog/virtual-assistant-vs-ai-agent-which-do-you-need)                                |
+| Filipino VA, mid-level, direct hire       | $4.50 to $7.50           | $720 to $1,200 full-time | [Stealth Agents](https://stealthagents.com/research/cost-of-hiring-a-virtual-assistant-in-the-philippines-2026) |
+
+</ArticleTable>
+
+The calculator's default, 20 hours a week at $15, is the top of Cherry Assistant's offshore agency hourly range applied to its 20-hour part-time definition, and it lands on $1,300 a month, the top of that source's part-time offshore range. If you already pay a VA, ignore the presets and type in your own invoice.
+
+## Which Construct plan should you start on?
+
+Construct's paid plans are a fixed monthly price with published plan limits: Lite at $9, Starter at $59, and Pro at $299. Billed annually, they work out to $7.50, $39, and $199 a month. Pro has a 7-day trial. Current prices and limits are on the [pricing page](/pricing/).
+
+The plans are not priced by hours of work. They differ in usage and limits:
+
+- **Lite:** base model usage, up to 2 agents, up to 50 steps per task, 3 scheduled tasks, and an agent email address.
+- **Starter:** 6 times Lite's usage, up to 5 agents, up to 150 steps per task, and 10 scheduled tasks.
+- **Pro:** 32 times Lite's usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, and bring-your-own-key support for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, and xAI.
+
+That is why the calculator shows all three plans side by side. Read your result this way:
+
+- **Start on Lite** if you are moving up to three recurring jobs, such as a daily inbox summary, a weekly report, and a CRM update, and each one fits in 50 steps. It has the largest saving in the worked example below.
+- **Start on Starter** if the VA's suitable share covers more than three recurring jobs, a task needs up to 150 steps, or you want separate agents for separate areas.
+- **Start on Pro** for long research or build runs of up to 1,000 steps, many scheduled jobs, or your own model keys. Take the 7-day trial first to see whether you need it.
+
+If your result shows Lite saving the most but you are unsure your workload fits its usage, start there anyway and move up when you hit the limit.
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## How the calculator works
+
+The model is deliberately simple, so you can check every number it gives you.
+
+1. **Monthly VA cost** is hours per week times hourly rate times 52 weeks divided by 12 months, about 4.33 weeks a month.
+2. **Tasks per month** is the VA's monthly minutes divided by the average minutes per task. This is only used to count review time.
+3. **The agent's share** moves that percentage of tasks, and the same percentage of the VA bill, off the VA. The rest stays with the VA.
+4. **Review time** is the agent's tasks per month times your review minutes per task.
+5. **Monthly total** for each plan is the remaining VA cost, plus the plan price, plus review time priced at your hourly value if you enter one.
+
+If checking a task takes as long as doing it, the calculator says so: at that point the agent saves no human time, whatever the dollar figures show.
+
+## A worked example, and what moves the answer
+
+Take the default inputs, which are illustrative: 20 VA hours a week at $15, 20 minutes per task, 30% of tasks suited to an agent, and 3 minutes to review each agent task. That is 260 tasks a month, 78 of them handed to the agent, and 3.9 hours of review.
+
+<ArticleTable caption="Illustrative monthly cost for a 20-hour VA at $15 an hour with 30% of tasks moved to an agent">
+
+| Setup                   | VA cost | Plan | Monthly total | Review time | Compared with VA alone   |
+| ----------------------- | ------- | ---- | ------------- | ----------- | ------------------------ |
+| VA alone                | $1,300  | $0   | $1,300        | 0 hours     | Baseline                 |
+| Reduced VA plus Lite    | $910    | $9   | $919          | 3.9 hours   | Saves $381 before review |
+| Reduced VA plus Starter | $910    | $59  | $969          | 3.9 hours   | Saves $331 before review |
+| Reduced VA plus Pro     | $910    | $299 | $1,209        | 3.9 hours   | Saves $91 before review  |
+
+</ArticleTable>
+
+Now change one input at a time in the calculator and watch what happens.
+
+**Review time is the input that flips the answer.** Price your own time at an illustrative $50 an hour and the 3.9 review hours cost $195, so Starter's saving falls from $331 to $136 and Pro costs $104 more than the VA alone. Push review to 10 minutes per task and every plan costs more than keeping the VA. At $50 an hour and 78 tasks, each extra minute of review per task costs about $65 a month, so Starter stops saving money at a little over 5 minutes of review per task.
+
+**The VA's rate sets the ceiling.** At the bottom of the offshore agency range, $4 an hour, the whole 20-hour engagement costs about $347 a month and the agent-suited share is worth $104. Lite still saves money on paper; Pro costs $195 more. At the top of the US or UK freelance range, $40 an hour, the agent-suited share is worth $1,040 a month, and even Pro saves $741 before review.
+
+**Small engagements leave little to save.** At 5 hours a week, a 30% share is worth about $97 a month. Lite and Starter come out ahead before review; Pro does not.
+
+The pattern: an agent saves the most when the VA is expensive, the suitable share is large, and the result is quick to check. It saves little or nothing when the VA is cheap, the work is mostly judgment, or every result needs a careful read.
+
+## Which tasks count as suitable for an agent?
+
+This is the input most people overestimate. A task is a good candidate when it is recurring, follows a procedure you could write down, and produces something quick to check: an inbox sorted into labels, a daily summary posted to Slack, a spreadsheet of companies with sources, CRM records updated from a form. A task is a poor candidate when it depends on a relationship, on reading someone's mood, or on judgment calls nobody has written down.
+
+[AI agent vs virtual assistant](/blog/ai-agent-vs-virtual-assistant/) goes through where each one wins, and [the AI delegation checklist](/blog/ai-delegation-checklist/) is a practical way to sort a VA's task list into "agent", "VA", and "not yet". If you are unsure, enter a low share first. A 15% share you can actually move is worth more than a 50% share you cannot.
+
+Construct does this kind of work from its own cloud workspace: it has a native agent email inbox, works in Slack, Telegram, Discord slash commands, and the web, connects tools from the live integration catalog, and runs recurring jobs on a schedule.
+
+## Before you start
+
+- **Keep sign-offs with a person.** Construct's workflows are linear and do not pause for approval yet, so for anything customer-facing, ask for drafts and have you or your VA send them.
+- **Measure review time on real runs.** Run a candidate task on demand a few times before you trust the calculator's review input; the next section shows how.
+- **Size jobs to the plan.** If a task stops short of Lite's 50 steps per task, split it into smaller jobs or move to Starter's 150. Work finished before a stop is kept in the workspace.
+
+## How long does reviewing agent work take?
+
+There is no published benchmark for your tasks, so measure it. Run a candidate task on demand a handful of times, time how long it takes you to check each result, and use the median. Expect review to be longer in the first weeks and shorter once you trust a job's output.
+
+Construct's Activity feed records each action with a short reason, and chat keeps tool records, which makes it quicker to see what the agent did than reading back through a transcript. They are useful operating records, not a complete audit log, and they do not replace actually checking the output. Our article on [the verification gap](/blog/agent-verification-gap/) explains why checking, not writing, is usually the real cost.
+
+Long jobs add one more cost the calculator does not model: retries. An agent that finishes a long task only part of the time needs extra runs, and sometimes extra checking. The [agent reliability calculator](/blog/agent-reliability-calculator/) estimates that from per-step success and step count.
+
+## What the calculator leaves out
+
+Read the result as a first-pass estimate. It does not include:
+
+- **Setup time.** Writing instructions, connecting tools, and supervising the first runs takes hours up front.
+- **Whether you can actually cut the VA's hours.** Agencies often sell fixed packages. If your VA engagement is 20 hours or nothing, moving 30% of tasks frees VA time for other work rather than lowering the bill.
+- **Plan fit.** The calculator does not check whether your workload fits a plan's usage or steps per task.
+- **Quality differences.** A VA who catches an awkward client email before it goes out is doing work no line in this calculator captures.
+- **Hiring costs on either side,** such as recruiting, onboarding, and turnover for a VA.
+
+## Running both together
+
+The answer does not have to be "VA or agent"; it can be both: the agent takes the recurring, checkable work, and the VA keeps the relationship work and becomes the person who reviews what the agent produces. If your VA does the review, enter their hourly rate as the reviewer's value and the calculator prices it correctly.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/features/schedules-poster.webp"
+    width="1440"
+    height="960"
+    aria-label="Construct schedules demo"
+    aria-describedby="schedules-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/features/schedules.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-employee-cost-calculator/schedules-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="schedules-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct scheduling repeating agent jobs and workflow
+    runs with calendar-based automation, the recurring work the calculator
+    moves off a VA's hours.
+  </figcaption>
+</figure>
+
+## Which should you choose?
+
+Choose Construct for the recurring, checkable share of your VA's work, on the smallest plan your result points to. Lite and Starter both cut the default example's monthly bill by more than $300 before review, and your VA keeps the work that needs a person.
+
+Your first job: pick the VA task that recurs most predictably, such as a weekly report or a daily inbox summary. Give Construct the same instructions you gave your VA, run it on demand until the output is right, time your review, then put it on the Calendar. The [scheduling use case](/use-cases/scheduling/) shows how recurring work runs from there.
+
+<BetaCta source="blog_inline_2">Give Construct its first recurring task</BetaCta>
+
+## Sources
+
+- Cherry Assistant, ["How Much Does a Virtual Assistant Cost in 2026? Real Rates by Country, Role, and Model"](https://www.cherryassistant.com/blog/how-much-does-a-virtual-assistant-cost), July 16, 2026, checked October 1, 2026.
+- Tendem, ["Virtual Assistant Services vs AI Agents: Which Do You Need?"](https://tendem.ai/blog/virtual-assistant-vs-ai-agent-which-do-you-need), September 24, 2026, checked October 1, 2026.
+- Stealth Agents, ["Cost of Hiring a Virtual Assistant in the Philippines 2026"](https://stealthagents.com/research/cost-of-hiring-a-virtual-assistant-in-the-philippines-2026), May 23, 2026, checked October 1, 2026.
+- Construct plan prices and limits from the [pricing page](/pricing/), checked October 1, 2026.
+
+## Related resources
+
+- [AI agent vs virtual assistant: cost and capabilities](/blog/ai-agent-vs-virtual-assistant/)
+- [Agent reliability calculator](/blog/agent-reliability-calculator/)
+- [The AI delegation checklist](/blog/ai-delegation-checklist/)
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [AI employee](/blog/ai-employee/)
+- [Pricing](/pricing/)

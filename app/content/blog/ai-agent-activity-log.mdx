@@ -1,0 +1,184 @@
+---
+title: "Activity log vs audit log: what an AI agent should record for a small team"
+seoTitle: "AI Agent Activity Log vs Audit Log: What It Should Record (2026)"
+description: "An activity log tells you what your AI agent did and why. An audit log proves it. What Construct's Activity records, keeps for 30 days, and leaves out."
+published: "2026-11-18"
+author: "nischal"
+tags: ["ai-agent", "governance", "product"]
+kind: "guide"
+draft: true
+---
+
+Construct's Activity feed gives you one searchable row for every action your agent takes, each with a short reason of up to 160 characters and a link back to the chat it came from, on every plan from $9 a month. Without a record like that, the only way to learn what an agent did on Tuesday is to scroll back through chat threads and guess.
+
+For founders and small teams, that is the record you need every day: you can scan a week of agent work in a minute, jump from any action to the conversation behind it, and fix a wrong rule at its source. This guide shows what Activity records, where the rest of the evidence lives, and how to trace a surprising action from one row to the fix.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why do this in Construct?
+
+- **One readable row per action, with a reason.** Before it calls a tool, the agent is asked to write one short sentence about why, so the feed explains itself.
+- **Every row links to its chat.** One click takes you from "it replied to a supplier" to the instruction, the memory it checked, and the answers it got.
+- **Search, filter, and export.** Filter by kind, status, and date, then export the view as CSV or JSON, up to 50,000 rows.
+- **The evidence sits next to the work.** Terminal output, browser steps, workflow run history, Calendar history, sent email, and the files themselves are all kept in the same workspace.
+- **Finished work is saved as it happens.** A run that stops at step 30 keeps steps 1 to 29 in Files, so the record and the result survive a failure.
+- **Wrong beliefs get fixed at the source.** Memory is something you can open, correct, or forget, so one fix changes every later run.
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## What is the difference between an activity log and an audit log?
+
+An activity log is written for the person operating the agent. It answers practical questions quickly: what ran, what it touched, whether it worked, and roughly why it happened. It is short on purpose, because nobody reads a feed of raw tool payloads.
+
+An audit log is written for someone who has to reconstruct events later, often someone who does not trust the system that wrote it. NIST's glossary defines an audit trail as "a chronological record that reconstructs and examines the sequence of activities surrounding or leading to a specific operation, procedure, or event in a security-relevant transaction from inception to result" ([NIST CSRC glossary, citing SP 800-53 Rev. 5](https://csrc.nist.gov/glossary/term/audit_trail)). The words that matter are "reconstructs" and "from inception to result."
+
+<ArticleTable caption="Activity log vs audit log for an AI agent">
+
+| Property | Activity log | Audit log |
+| --- | --- | --- |
+| Main reader | The person who delegated the work | A reviewer, auditor, or investigator |
+| Question it answers | What did the agent do, and roughly why? | Can we reconstruct exactly what happened? |
+| Detail | One readable line per action | Inputs, outputs, identities, timestamps |
+| Completeness | Best effort is acceptable | Gaps are a defect |
+| Retention | Weeks is usually enough | Set by policy or regulation, often years |
+| Tamper resistance | Not required | Usually required (append-only, signed, or exported) |
+
+</ArticleTable>
+
+A small team needs the first column every day. Construct's Activity is built for exactly that, and the rest of the workspace holds the detail behind each row.
+
+## What does Construct's Activity record?
+
+Activity is a desktop app in your Construct workspace. Every time an agent calls a tool, Construct writes a row with:
+
+- **Kind:** action, files, calendar, workflow, delegation, system, or error.
+- **What happened:** a headline built from the agent's name, a verb, and the target, such as the search query, the URL it fetched, or the goal it gave the browser.
+- **Why:** a reason of up to 160 characters. When the agent skips that sentence, the row stores only the what.
+- **Status:** OK, failed, or skipped.
+- **Where:** which agent, and a link back to the chat the action came from.
+
+You can search the feed, filter it by kind, status, and date range (today, last 7 days, last 30 days, or everything still kept), and export the filtered view as a CSV for a spreadsheet or as JSON. Exports are capped at 50,000 rows, which is well above what the retention window holds.
+
+{/* TODO: add a screenshot of the Activity app with the kind filter open and one row expanded to show its reason */}
+
+## Where does the rest of the evidence live?
+
+Activity is the index. The details sit next to the work itself, and most of them last longer than Activity's 30 days.
+
+<ArticleTable caption="Where Construct keeps the details behind an Activity row">
+
+| Question | Where to look | What you find there |
+| --- | --- | --- |
+| What exactly did the agent say and do? | The chat the row links to | The conversation, tool cards with bounded inputs and results, and any questions it asked you |
+| What did a command print? | Terminal | The saved output of each command the agent ran, which you can open or clear |
+| What did it see in the browser? | Browser | The live view while it runs, then a step list with notes, URLs, and screenshots |
+| Which version of a procedure ran? | Workflows run history | The published version, each step's result, and retries |
+| Did Monday's scheduled job fire? | Calendar | Per-item history of each occurrence and its outcome |
+| What did it send by email? | Email, Sent | The message, recipients, and thread |
+| What did it produce? | Files | The reports, spreadsheets, and apps themselves |
+| Why does it believe something? | Memories | The stored fact, the evidence behind it, and its history |
+
+</ArticleTable>
+
+Chats stay until you delete them. Workflow and calendar history stay with the workflow or calendar item. Files stay until you delete them or close your account. So a row that has aged out of Activity often still has its evidence in one of these places.
+
+## Before you start: Activity is an operating record
+
+Activity is built to be read, not to satisfy an auditor, so set it up with that in mind:
+
+- **It keeps a rolling window.** Rows older than 30 days are deleted, and the oldest go first once a feed passes about 10 MB. Export the CSV each week if you want a longer history.
+- **It summarizes rather than copies.** Rows do not store tool inputs or outputs, and writing a row never fails the job it describes, so a row can occasionally be missing. For the full detail, open the linked chat, Terminal, or Files.
+- **Each person sees their own feed.** In a team workspace there is no combined admin feed. For jobs that matter to the team, add a final step: "Append one line to `Files/logs/agent-runs.csv` with the date, what you did, and links to what you produced." That file lives in the workspace as long as you keep it.
+- **Workflows do not pause for approval yet.** For payments or customer email, ask for drafts and send them yourself; the [verification gap post](/blog/agent-verification-gap/) explains why that review is where the real time goes.
+
+If your compliance team needs a tamper-evident, complete record of every agent operation, Activity is not that record. Keep those actions in a system of record that is, such as your CRM's record history or your accounting tool's change log, and use Construct's exports and run-log files alongside it.
+
+## A concrete job: tracing an email nobody remembers approving
+
+This example is illustrative, not a customer case. A four-person design studio runs a scheduled Construct job each weekday at 9am that checks the agent's inbox for supplier quotes, saves them to Files, and sends the owner a summary. On Thursday, a supplier replies to an email the owner does not remember approving.
+
+1. **Start in Activity.** Filter to the last 7 days and search the supplier's name. One row reads, in effect, that the agent replied to the supplier's thread, with the reason "Supplier asked for delivery date; standing rule says confirm dates."
+2. **Open the chat.** The row links to the run. The transcript shows the agent read the quote, checked a memory, and used it to decide that a delivery-date question was safe to answer.
+3. **Check the memory.** In Memories, the rule "confirm delivery dates with suppliers" exists, with the conversation it was learned from. It was meant for one supplier, not all of them. Correct it, or forget it.
+4. **Check the schedule.** Calendar shows the 9am occurrence ran and succeeded, so this was the scheduled job, not someone's ad hoc request.
+5. **Read what went out.** The Sent folder has the reply. It was harmless this time.
+6. **Fix the job, not just the record.** Change the scheduled prompt so supplier replies are drafted, not sent, and export that week's Activity as a CSV if you want a copy in your own records.
+
+Every step uses records Construct already keeps, and the fix in step 3 changes every later run, not just this one. Our guide to [letting an agent use Gmail safely](/blog/ai-agent-gmail-access-safely/) covers the drafting rule in more detail, and [inbox triage with drafts, not sends](/blog/ai-inbox-triage/) applies the same pattern to a busier mailbox.
+
+We have not yet run this trace end to end on a live workspace and timed it.
+
+{/* TODO: run the supplier-reply trace above on a test workspace and record the minutes from first Activity search to corrected memory; add screenshots of each step */}
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/memories-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct memory demo"
+    aria-describedby="memory-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/memories.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-agent-activity-log/memories-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption id="memory-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct's Memories app showing the preferences and
+    procedures the agent has learned, with the evidence behind each one, so you
+    can review, correct, or forget them.
+  </figcaption>
+</figure>
+
+## What should an AI agent record for a small team?
+
+Five records cover almost every question a small team asks after the fact, and Construct keeps all five:
+
+1. **One line per action, with a reason.** Enough to scan a week in a minute. That is Activity.
+2. **The conversation behind it.** The instruction the agent was following and the answers it got. Every Activity row links to its chat.
+3. **The artifacts.** The file, the sent message, the updated record. Construct saves them to Files as they are produced; see [how a persistent workspace keeps finished work](/blog/ai-agent-with-its-own-computer/).
+4. **The schedule history.** Whether a recurring job ran, skipped, or failed. Construct keeps this per calendar item and per workflow run, as our guide to [running an agent on a schedule](/blog/ai-agent-scheduled-tasks/) shows.
+5. **The beliefs.** What the agent remembered and from where, so a wrong rule can be fixed at the source. That is what [inspectable memory](/use-cases/memory/) is for.
+
+<ReadNext slug="agent-verification-gap" />
+
+## How to evaluate any agent product's records
+
+If you are comparing agents, run each of these as a test, not a sales call.
+
+1. **Can you find yesterday's actions in under a minute?** Search and filters beat a long scroll.
+2. **Does each action say why, not just what?** A reason is what turns a log into an explanation.
+3. **Can you jump from an action to the conversation behind it?** Without that link, you are reconstructing context by hand.
+4. **Are inputs and outputs kept, and for how long?** Ask for the number of days, not "we keep logs."
+5. **Can you export it?** CSV or JSON you can store yourself is the minimum for anything you might need later.
+6. **Who can see it?** Per person, per workspace, or an admin-wide view.
+7. **Is it ever pruned or rewritten?** Rolling retention is fine for operations and wrong for audits.
+8. **Does the record survive a failed run?** A job that dies halfway should still show what it did before it stopped.
+
+Construct answers yes to 1, 2, 3, 5, and 8, keeps Activity rows for 30 days with the detail in the linked chat, Terminal, and Files, and shows each person their own feed.
+
+## Give Construct its first recorded job
+
+Pick one recurring job you currently check by hand, such as a morning inbox summary or a weekly supplier quote roundup. Give it to Construct, put it on the Calendar, and let it run for a week. On Friday, open Activity and explain every row to a teammate, following each link to the chat and the files it produced. Every plan includes Activity: start on [Lite for $9](/pricing/), or try Pro free for seven days.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+## Related resources
+
+- [AI employee for real business work](/blog/ai-employee/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)
+- [How to run an AI agent on a schedule with your laptop closed](/blog/ai-agent-scheduled-tasks/)
+- [How to let an AI agent use your Gmail safely](/blog/ai-agent-gmail-access-safely/)
+- [Nobody merges an email](/blog/agent-verification-gap/)
+- [Workflows in Construct](/use-cases/workflows/)

@@ -77,11 +77,21 @@ const names = canonicalRoutes.map((route) => ogName(route.path));
 
 /**
  * Draft posts are not routes yet, but they keep their card so publishing one
- * is a frontmatter flip and a `pnpm og`, not a rewrite of the scene.
+ * is a frontmatter flip and a `pnpm og`, not a rewrite of the scene. The same
+ * goes for a tag hub that only exists once drafts publish: its card is ready
+ * before the second post with that tag goes live.
  */
-const draftNames = blogMetadata
-  .filter((post) => post.draft)
-  .map((post) => ogName(`/blog/${post.slug}`));
+const draftNames = [
+  ...blogMetadata
+    .filter((post) => post.draft)
+    .map((post) => ogName(`/blog/${post.slug}`)),
+  ...[...new Set(blogMetadata.flatMap((post) => post.tags))]
+    .filter(
+      (tag) =>
+        blogMetadata.filter((post) => post.tags.includes(tag)).length >= 2,
+    )
+    .map((tag) => ogName(`/blog/tag/${tag}`)),
+];
 
 /**
  * True when a finished card sits in `assets/og/` for this route. Those win

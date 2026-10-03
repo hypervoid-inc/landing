@@ -2,58 +2,102 @@
 title: "How Construct Builds Internal Tools in Your Workspace"
 description: "Turn a repeated process into a private workspace app that Construct can build, validate, debug, and update while preserving the last successful build."
 published: "2026-07-27"
+updated: "2026-10-01"
 author: "ankush"
 tags: ["internal-tools", "workspace-apps", "ai-agent", "product"]
 kind: "article"
 draft: false
 ---
 
-Internal tools often begin as a spreadsheet, a checklist, or a prompt someone runs every week. The process works, but the interface does not: people copy values between tabs, remember status in their heads, and repeat the same setup each time. Construct can turn that repeated process into a small private app that lives inside the same workspace as the files and agent doing the work.
+Construct builds a private app for your team's repeated process, such as a request tracker, an intake form, a review queue, or a dashboard, inside the same workspace as the agent and files doing the work, from $9 a month. The usual alternatives are a spreadsheet that people copy values between, or a separate hosting project someone has to set up, secure, and maintain.
 
-This is not a one-click path to a public SaaS product. A Construct workspace app is a focused internal interface for one workspace. You describe the job, the agent writes the app, checks that it builds, opens it in the desktop, and keeps the source available for inspection and later changes.
+For founders and small teams, Construct is the faster way to get an internal tool. You describe the job in plain language; the agent writes the app, checks that it builds, and opens it in your desktop. The source stays in your files, permissions are declared up front, and a broken edit never takes the working version offline.
 
-<BetaCta source="blog_top">Meet Construct</BetaCta>
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why build it in Construct?
+
+- **Describe the process, get the app.** Construct writes the React and TypeScript, validates it, and opens it in the web desktop. No separate hosting project.
+- **It lives beside the work.** Source sits in Files under `Apps/<app-id>/`, and the app's data in `AppData/<app-id>/`, next to the reports and files it tracks.
+- **Least privilege by default.** Each app declares the capabilities, connected apps, and network origins it needs, and other calls are denied at runtime.
+- **The last good build keeps running.** A failed edit never replaces the working app while the agent repairs it.
+- **The agent maintains it.** Construct reads the app's own diagnostics, fixes the source, and validates again when something breaks.
+- **Private to your workspace.** Teammates with access can open it from the desktop, Launchpad, or Spotlight.
 
 ## Start with the repeated process
 
 The best request describes the work rather than prescribing a software architecture. For example:
 
-- “Build a research request tracker with an owner, priority, status, and link to the finished report.”
-- “Turn this recurring launch checklist into an app the team can update.”
-- “Create a dashboard for the JSON reports stored in this workspace.”
-- “Build an intake form for customer-review requests and keep the queue in one place.”
+- "Build a research request tracker with an owner, priority, status, and link to the finished report."
+- "Turn this recurring launch checklist into an app the team can update."
+- "Create a dashboard for the JSON reports stored in this workspace."
+- "Build an intake form for customer-review requests and keep the queue in one place."
 
 Construct can start from a list, form, dashboard, or blank interface. The agent creates the app package, writes the React and TypeScript source, declares the capabilities it needs, and validates the result. A successful build opens directly in the Construct web desktop instead of sending you to a separate hosting project.
 
-The request still matters. “Build an operations dashboard” leaves important choices unresolved. “Show open research requests, let an operator assign an owner, and mark the linked report as reviewed” gives the agent a bounded workflow and a clear way to tell whether the app is useful.
+The request still matters. "Build an operations dashboard" leaves important choices unresolved. "Show open research requests, let an operator assign an owner, and mark the linked report as reviewed" gives the agent a bounded workflow and a clear way to tell whether the app is useful.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/apps-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct internal app demo"
+    aria-describedby="apps-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/apps.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/build-internal-tools-with-construct/apps-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption id="apps-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct writing, validating, and publishing a working
+    internal app, then opening it in the product interface.
+  </figcaption>
+</figure>
 
 ## The app lives beside the work
 
 A workspace app is not a hidden artifact. Its source lives under an `Apps/<app-id>/` folder in Files, where it can be inspected and edited. After a successful build, the app appears as a private workspace install that can be reopened from the desktop, Launchpad, or Spotlight.
 
-The app's durable state is kept separately under `AppData/<app-id>/`. That separation is important: changing the interface should not require overwriting the records the app already manages. Rebuilding can update the code while existing app data remains in the workspace and continues to count against the normal workspace storage quota.
+The app's durable state is kept separately under `AppData/<app-id>/`. That separation is important: changing the interface does not overwrite the records the app already manages. Rebuilding updates the code while existing app data remains in the workspace and counts against the normal workspace storage quota.
 
-This model also makes the surrounding agent useful after launch. The same workspace contains the source, relevant files, conversations, and diagnostics. If the interface needs another field or a runtime error appears, the next task can start with the actual app rather than a screenshot and a vague bug report.
+This model also makes the surrounding agent useful after launch. The same workspace contains the source, relevant files, conversations, and diagnostics. If the interface needs another field or a runtime error appears, the next task starts with the actual app rather than a screenshot and a vague bug report.
 
 ## What a workspace app can do
 
-The current runtime is intentionally narrower than a general web-hosting platform. That keeps an internal tool close to its workspace purpose.
+The runtime is purpose-built for internal tools, which keeps each app close to its workspace job.
 
-| Capability | Current workspace-app support |
+<ArticleTable caption="What a Construct workspace app supports">
+
+| Capability | Workspace-app support |
 | --- | --- |
 | React interface | Yes |
 | TypeScript and TSX | Yes |
 | Read or write workspace files | With declared permission |
 | App-scoped JSON state | With declared Files permission |
 | Call an allowed connected app | With an explicit app allowlist |
-| Make direct network requests | Only to declared HTTPS origins |
-| Install arbitrary npm packages | No |
-| Run terminal or agent orchestration from the app UI | No |
-| Publish automatically to the public app registry | No |
+| Make direct network requests | To declared HTTPS origins |
+| Packages | The Construct SDK; arbitrary npm packages are not installed |
+| Terminal and agent orchestration | Run by the agent, not from the app UI |
+| Visibility | Private to your workspace; the public app registry has its own review process |
 
-The app UI receives a small Construct SDK for workspace files, app-scoped storage, notifications, window controls, and explicitly permitted calls. It does not inherit every tool available to the agent that authored it. The agent can use broader execution surfaces while building, but the finished interface runs with its own narrower contract.
+</ArticleTable>
 
-<BetaCta source="blog_inline_1">Build an internal tool</BetaCta>
+The app UI receives a small Construct SDK for workspace files, app-scoped storage, notifications, window controls, and explicitly permitted calls. It does not inherit every tool available to the agent that authored it. The agent uses broader execution surfaces while building, but the finished interface runs with its own narrower contract.
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
 
 ## Permissions are part of the design
 
@@ -61,33 +105,27 @@ An internal tool should not gain broad access simply because it was generated in
 
 The platform also rechecks current workspace membership and permissions when the app makes a gateway call. File operations remain subject to the user's workspace access, and an app cannot use its file access to rewrite another app's package. Direct network access is limited to exact HTTPS origins rather than wildcard domains.
 
-For a request tracker that only reads and writes workspace files, that can mean declaring Files access and nothing else. A tool that posts an approved record to a connected service needs that specific app target as well. The useful default is the smallest permission set that completes the job.
+For a request tracker that only reads and writes workspace files, that can mean declaring Files access and nothing else. A tool that posts an approved record to a connected service needs that specific app target as well. The default is the smallest permission set that completes the job.
 
-## Validation creates a build, not a guarantee
+## Validation, then verification
 
 Before launch, Construct checks the package structure and manifest, follows relative imports, enforces package boundaries, compiles the TypeScript and JSX, and reports design findings. A successful validation creates an immutable artifact with a deterministic build ID and opens the app.
 
-That proves the package can be built under the workspace runtime. It does not prove that every button, data shape, connected service, or edge case behaves correctly. Runtime verification still matters, especially after changing permissions, storage behavior, or an external call.
-
-Construct captures bounded console, network, gateway, and runtime-error diagnostics from workspace apps. The agent can inspect recent errors, repair the source, validate again, and ask you to verify the changed behavior. The loop is closer to maintaining a small internal product than generating a disposable code snippet.
+Validation proves the package builds under the workspace runtime. Click through the main actions once after a change, especially after changing permissions, storage behavior, or an external call, and Construct helps with the rest: it captures console, network, gateway, and runtime-error diagnostics from workspace apps, inspects recent errors, repairs the source, validates again, and asks you to verify the changed behavior. The loop is closer to maintaining a small internal product than generating a disposable code snippet.
 
 ## Draft changes do not replace the last good build
 
-The reliability model is deliberately conservative. A successful build becomes the current runtime artifact. Later source edits mark the app as having draft changes, but opening the app continues to run the last successful build until the new source validates.
+A successful build becomes the current runtime artifact. Later source edits mark the app as having draft changes, but opening the app continues to run the last successful build until the new source validates.
 
-If validation fails, the working artifact is not replaced. Cancelling an edit also leaves both the source and prior build in place. The desktop can show whether an app is ready, has draft changes, or has never built successfully.
-
-This is a last-good-build fallback, not full version history. It protects the working tool while a repair is in progress; it does not promise browsing or restoring every historical build.
+If validation fails, the working artifact is not replaced. Cancelling an edit also leaves both the source and prior build in place. The desktop shows whether an app is ready, has draft changes, or has never built successfully. This is a last-good-build fallback that protects the working tool while a repair is in progress, rather than a browsable history of every build.
 
 ## Internal tool or workflow?
 
 Not every repeated process needs an interface. Use a workspace app when people need to view, enter, filter, or review state. Use a Construct workflow when the main value is running a known sequence of agent steps, connected-app actions, and notifications. Use a scheduled agent job when the process should run in the background without waiting for someone to open a screen.
 
-The two can support the same operation. A workspace app can provide the queue and review surface, while files hold durable records and a scheduled job prepares new work. The important boundary is that the app UI does not secretly become an unrestricted agent: automation still runs through the execution surfaces and permissions designed for it.
+The two support the same operation. A workspace app provides the queue and review surface, files hold durable records, and a scheduled job prepares new work. Automation still runs through the execution surfaces and permissions designed for it, so the app UI stays a focused interface.
 
-<BetaCta source="blog_inline_2">Try Construct</BetaCta>
-
-## Where workspace apps fit
+## Before you start: where workspace apps fit
 
 Good fits are narrow tools with a clear operator and a durable workspace context:
 
@@ -98,13 +136,25 @@ Good fits are narrow tools with a clear operator and a durable workspace context
 - Focused interfaces over an explicitly allowed connected service
 - Small utilities that make an existing workflow easier to run and inspect
 
-Poor fits include public customer-facing sites, products that require an arbitrary npm ecosystem, complex multi-service systems, or workloads that need independently operated infrastructure and security controls. Public registry apps also follow a separate developer and review workflow; a private workspace build is not automatically promoted to the public app registry.
+A workspace app is an internal interface for one workspace, not a public product. For a customer-facing site, a product that needs the wider npm ecosystem, or a system with its own infrastructure and security controls, keep a dedicated hosting stack, and let Construct build the internal tools around it.
 
-## Build the smallest useful interface
+## Already tracking this in a spreadsheet? Move it in 15 minutes
 
-The shortest path is to start with one repeated process and one person who needs to operate it. Name the records the app should manage, the actions the operator should take, the files or services it may access, and what a successful result looks like. Then ask Construct to build the smallest interface that makes that process easier to run and supervise.
+1. **Start on Lite for $9, or take the 7-day Pro trial.**
+2. **Upload the spreadsheet or checklist** you use today to the workspace.
+3. **Describe the app:** the records it manages, the actions an operator takes, and what "done" looks like.
+4. **Open the first build and use it** on real records; ask for the missing field or the clearer status.
+5. **Pair it with a schedule** if new items should be prepared automatically, using one of your Calendar tasks.
 
-Once the first build opens, use it. The missing field, unclear status, or unnecessary screen becomes obvious faster in a working tool than in a long specification. Construct can revise the source while the previous good build remains available, giving the internal tool room to improve without turning every edit into a fresh software project.
+There is no import wizard: Construct reads the file you upload and builds the app around it.
+
+## Which should you choose?
+
+Choose Construct for small internal tools. It starts at $9 a month, builds the app from a plain-language description, keeps it private to your workspace with declared permissions, and protects the working build while it improves the next one.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+Give Construct the process your team tracks in a spreadsheet today, such as research requests or review queues: name the records, the actions an operator takes, and the files it may read, then ask for the smallest interface that makes the process easier to run. Open the first build and use it on real records the same day. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
 
 ## Related resources
 

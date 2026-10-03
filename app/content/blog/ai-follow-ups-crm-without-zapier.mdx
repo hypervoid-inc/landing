@@ -1,0 +1,202 @@
+---
+title: "Customer Follow-Ups and CRM Updates Without Zapier"
+seoTitle: "Automate Follow-Up Emails and CRM Updates Without Zapier"
+description: "Use Construct to find deals that need a follow-up, draft the emails, and update your CRM while you approve each send. From $9 a month, with no Zaps to build."
+published: "2027-02-06"
+author: "nischal"
+tags: ["ai-agent", "zapier", "workflow-automation", "small-business"]
+kind: "guide"
+draft: true
+---
+
+Construct handles customer follow-ups from one prompt for $9 a month: it finds the deals that have gone quiet, reads each one's last email thread, drafts a follow-up that answers what the customer actually said, and logs a note in your CRM, with every email kept as a draft until you approve it. Zapier's paid plans start at $29.99 a month billed monthly, and a Zap runs from a trigger with the filters, Paths, and templates or AI steps you build and configure ([Zapier pricing](https://zapier.com/pricing)).
+
+For founders and small teams, Construct is the better tool for follow-ups, because the hard part is judgment, not field mapping: which deals actually need a nudge, what the customer last said, and what a sensible next message is. Construct reads and decides, costs less than a third of Zapier Professional to start, and keeps a dated record of every draft and CRM change in your workspace.
+
+<BetaCta source="blog_top">Draft this week's follow-ups for $9</BetaCta>
+
+## Why do this in Construct?
+
+- **It decides which deals need a nudge.** The agent reads each deal and thread instead of following rules you have to build, and it skips the customer who wrote "back after the 20th."
+- **Drafts written from the real thread.** Each follow-up refers to the last thing the customer said, in your voice, under the length you set.
+- **Call notes become CRM updates.** Paste notes or forward them to the agent's email address, and it adds the summary, creates your tasks, and flags anything that conflicts with HubSpot.
+- **A record of every change.** Each run leaves a dated follow-up table and a changes file in Files, alongside Activity.
+- **Rules you can read and fix.** "Never change stage or amount" and "never send without my send" live in the Memories app, where you can correct or remove them.
+- **Every weekday at 8am, without you.** The Calendar runs the draft job on Construct's cloud computer with your laptop closed. Lite includes 3 scheduled tasks.
+
+## What do you need?
+
+- **A Construct workspace.** Lite at $9 a month works for a handful of deals; Starter at $59, with 150 steps per task, suits a weekly pass over a larger pipeline. Or try Pro free for 7 days. See [pricing](/pricing/).
+- **Your CRM and email connected** from Construct's live integration catalog. HubSpot, Airtable, and Notion are in the catalog, as is Gmail. The agent asks you to connect an account when it first needs one.
+- **A definition of "needs a follow-up."** For example: open deals with no logged activity in 7 days.
+
+<BetaCta source="blog_inline_1">Connect HubSpot and Gmail to Construct</BetaCta>
+
+## Before you start
+
+Set the job up this way and nothing reaches a customer by surprise:
+
+- **Keep customer email as drafts.** Construct's workflows do not pause for approval yet, so the standing rule in step 2 and a draft-only schedule are your gate. You send, or you reply "send" for a specific draft.
+- **Run it on a rhythm, not on every event.** Construct runs on demand or from the Calendar, as often as every 15 minutes, rather than the instant a deal changes. A weekday morning pass is the natural cadence for follow-ups.
+- **Read the changes file.** A cancelled run stops later steps, but a note already written stays written. The dated changes file shows exactly what to undo.
+- **Send operational email, not campaigns.** The agent's native inbox has a daily sending limit enforced on the server. For customer follow-ups, drafts in your own Gmail are the better route anyway.
+- **Check your CRM's catalog actions first.** Step 1 lists what the agent can do in HubSpot and Gmail. If your CRM is not in the integration catalog, the agent may use a browser instead, which is slower than a structured action.
+
+
+## How do you set it up?
+
+### 1. Connect the apps and check what the agent can do
+
+> Connect HubSpot and Gmail. Then list the actions you can use in each one that matter for follow-ups: reading deals and contacts, adding notes, setting tasks or next-step dates, reading email threads, and creating drafts. Do not change anything yet.
+
+This tells you, in your own account, what is possible before you rely on it. {/* TODO: confirm which HubSpot actions (read deals, add note, create task, update property) and Gmail actions (read thread, create draft, send) are available in the catalog today */}
+
+### 2. Give the agent standing rules
+
+Put the guardrails in memory once, rather than in every prompt. You can inspect, correct, or forget them later in the Memories app ([AI agent memory](/blog/ai-agent-memory/)).
+
+> Remember these rules for customer follow-ups. Never send an email to a customer unless I reply "send" for that specific draft. Never change a deal stage or amount. You may add notes and set next-step dates in HubSpot. Write follow-ups in plain language, under 120 words, referring to the last thing the customer said. If a thread shows the customer said no or asked us to stop, do not draft anything; flag it instead.
+
+### 3. Build the follow-up list, read-only
+
+> In HubSpot, find open deals with no logged activity in the last 7 days. For each, find the most recent email thread with the main contact in Gmail. Save a table to Files as followups/ with today's date as the file name, with columns: deal, contact, last activity date, what the customer last said in one sentence, suggested next step, and a link to the deal. Do not draft or change anything yet.
+
+Read the table. This is where you catch a deal that is stalled for a good reason, such as a customer on holiday, and remove it.
+
+### 4. Draft the follow-ups
+
+> For each deal still in followups/ with today's date, draft a follow-up email as a Gmail draft from my account, following my follow-up rules. Then list the drafts here with one line on why you chose that angle.
+
+Open Gmail, read the drafts, edit them in your voice, and send the ones you like yourself. If you prefer the agent to send, reply "send" with the deal names; the rule in step 2 makes that explicit. For messages where it is fine for the customer to know an agent wrote them, the agent can use its own native address instead ([giving an agent its own email](/blog/ai-agent-email-address/)).
+
+### 5. Update the CRM after you have sent
+
+> For each follow-up I sent today, add a note to the HubSpot deal: "Follow-up sent [date]: [one-line summary]". Set the next-step date to 5 business days from today. Do not change stage or amount. Save a list of what you changed to followups/ with today's date and "-changes" in the name.
+
+The changes file is your record of every CRM write the agent made, alongside Activity.
+
+### 6. Turn call notes into CRM updates
+
+This is the CRM chore most people skip. Paste notes into chat, or forward them to the agent's email address from your own account.
+
+> Here are my notes from today's call with Acme: [paste notes]. Update the Acme deal in HubSpot: add the notes as a summary, create a task for each action item I own with a due date, and list anything in the notes that conflicts with what is already in HubSpot. Do not change stage or amount.
+
+### 7. Put the list-building on a schedule
+
+Once steps 3 and 4 have produced good drafts for a few weeks, save them as a workflow and schedule it. Current workflows are linear, with no branching, delays, or approval steps, so keep the schedule draft-only.
+
+> Save steps 3 and 4 as a workflow called "Weekday follow-up drafts" and schedule it every weekday at 8am. End with an in-app notification listing the drafts. Never send.
+
+You then review and send each morning. Lite includes 3 scheduled tasks, Starter 10, and Pro 50.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/work/demo-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct work demo across email, files, and CRM"
+    aria-describedby="work-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/work/demo.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-follow-ups-crm-without-zapier/work-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="work-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct organizing work across emails, files, and a
+    CRM from one workspace.
+  </figcaption>
+</figure>
+
+## What result should you get?
+
+Each run leaves a dated follow-up table in Files, Gmail drafts waiting for you, and, after step 5, a dated list of CRM changes. Nothing reaches a customer until you send it.
+
+**Illustrative example.** A two-person consultancy has 14 open deals. On Monday the agent flags 5 with no activity in 7 days, and one of them is a client who wrote "back after the 20th", so the owner deletes that row. The agent drafts 4 emails that each refer to the last thing the client said. The owner edits two, sends all four, and asks the agent to log notes and set next-step dates. The owner reviews drafts instead of reading every thread from scratch.
+
+## How do you supervise it?
+
+- **Drafts first, always, for customer email.** Your standing rules and your "send" are the gate, so keep the scheduled job draft-only.
+- **Read the changes file.** Every CRM write is listed there. Spot-check a few deals in HubSpot after the first runs.
+- **Keep stage and amount yours.** Deal stage and value drive forecasts; letting the agent add notes and dates is lower risk.
+- **Use Activity when something looks wrong.** It keeps bounded summaries of what the agent did. It is a useful operating record, not a complete immutable audit log.
+
+We have not run a side-by-side test of this job against an equivalent Zap. {/* TODO: run the follow-up job on a test HubSpot pipeline in Construct and as a Zap with an AI step; record setup time, drafts accepted without edits, wrong CRM writes, and monthly cost at 50 deals; add screenshots */}
+
+## Where does Zapier fit?
+
+Zapier is built for fixed, event-triggered jobs: "when a form is submitted, create a contact in HubSpot and send the welcome template" runs from the trigger the same way every time. It connects to over 10,000 apps ([Zapier apps](https://zapier.com/apps)), offers Paths and filters on paid plans, and has a Human in the Loop step that pauses a Zap for review on Professional, Team, and Enterprise ([Zapier help: Human in the Loop](https://help.zapier.com/hc/en-us/articles/38733184458765-Use-Human-in-the-Loop-to-pause-Zaps-pending-human-review)). If you already run Zaps like that, keep them, and give Construct the follow-ups that need reading. Our [AI agent vs Zapier](/blog/ai-agent-vs-zapier/) article walks one workflow built both ways, and [Construct vs Zapier, Make, and n8n](/blog/construct-vs-zapier/) covers the broader choice.
+
+<ArticleTable caption="Construct vs Zapier for follow-ups and CRM updates, checked October 1, 2026">
+
+| Question                         | Construct                                                       | Zapier                                                     |
+| -------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------- |
+| Entry price                      | Lite $9/month; Starter $59; Pro $299                            | Free (100 tasks, two-step Zaps); Professional $29.99/month |
+| Decides which deals need a nudge | Reads each deal and thread and decides                          | Through rules you build with filters and Paths             |
+| Writes the follow-up             | A draft based on the actual thread                              | A template, or an AI step you configure                    |
+| Review before sending            | Drafts you approve and send                                     | Human in the Loop step on paid plans                       |
+| Starts from                      | A prompt, an email or chat message, or a Calendar schedule      | A trigger such as a new form entry or deal stage change    |
+
+</ArticleTable>
+
+Sources: [Zapier pricing](https://zapier.com/pricing), checked October 1, 2026, monthly billing (Professional is $19.99 a month billed annually for 750 tasks; Team starts at $103.50 a month billed monthly for 2,000 tasks), and [Construct pricing](/pricing/). {/* TODO: re-check Zapier pricing and app count on the publish date */}
+
+## Already using Zapier? Add Construct in 15 minutes
+
+You do not have to turn off a single Zap. Keep the ones that create records on events, and hand Construct the follow-ups.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** if your pipeline is large.
+2. **Connect HubSpot and Gmail** from the integration catalog and run the step 1 prompt.
+3. **Paste the step 2 rules,** adding any field your Zaps own so the agent leaves it alone.
+4. **Run steps 3 and 4 once** and check the table and drafts.
+5. **Put it on the Calendar** for weekday mornings, draft-only.
+
+There is no import: Zaps do not convert into Construct workflows. Describe the job in plain language instead, using the prompts above.
+
+## Troubleshooting
+
+**The agent drafted a follow-up to someone who said no.** Check the rule in step 2 is saved in Memories, and add the specific phrase the customer used.
+
+**Drafts do not appear in Gmail.** Confirm the Gmail connection and that the draft action is available, or ask for drafts in Files instead.
+
+**HubSpot notes landed on the wrong deal.** Ask the agent to match deals by ID, not by company name, and include the deal link in every table.
+
+**A Zap and the agent both updated the same field.** Give each one its own fields: the Zap owns record creation on events, the agent owns notes and next steps.
+
+## Give Construct this week's quiet deals
+
+Choose Construct for customer follow-ups. It starts at $9, decides which deals need a nudge, drafts from the real thread, and logs every CRM change in a file you can check.
+
+Your first job: connect HubSpot and Gmail, save the step 2 rules, and run the step 3 prompt on deals with no activity in 7 days. Delete any row that is quiet for a good reason, run step 4, and send the drafts you like.
+
+<BetaCta source="blog_inline_2">Give Construct its first follow-ups</BetaCta>
+
+## Sources
+
+- [Zapier pricing](https://zapier.com/pricing)
+- [Zapier app directory](https://zapier.com/apps)
+- [Zapier help: Human in the Loop](https://help.zapier.com/hc/en-us/articles/38733184458765-Use-Human-in-the-Loop-to-pause-Zaps-pending-human-review)
+- [Construct pricing](/pricing/)
+- [Construct workflows](/use-cases/workflows/)
+
+## Related resources
+
+- [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/)
+- [Construct vs Zapier, Make, and n8n](/blog/construct-vs-zapier/)
+- [Inbox triage with an AI agent: drafts, not sends](/blog/ai-inbox-triage/)
+- [How to let an AI agent use your Gmail safely](/blog/ai-agent-gmail-access-safely/)
+- [AI workflow automation](/blog/ai-workflow-automation/)

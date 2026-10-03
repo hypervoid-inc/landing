@@ -1,0 +1,198 @@
+---
+title: "A Weekly Investor Update Drafted by Your AI Agent"
+seoTitle: "Weekly Investor Update With AI: Drafted by an Agent, Sent by You"
+description: "Have an AI agent draft your weekly investor update from GitHub, Linear and your CRM, with every claim linked. You check the numbers and send it yourself."
+published: "2027-02-11"
+author: "nischal"
+tags: ["ai-agent", "workflow-automation", "scheduling", "small-business"]
+kind: "guide"
+draft: true
+---
+
+Construct drafts your weekly investor update every Friday for $9 a month: it pulls the week's shipped work from GitHub and Linear, deal movement from your CRM, and numbers from a metrics file you keep, then saves the draft to Files with a link behind every claim. Done by hand, the same update means opening each of those tools every Friday and rebuilding the story from tickets, pull requests, and deal notes.
+
+For founders, Construct is the better way to get the update out on time. It does the gathering, turns ticket titles into outcomes investors read, never fills in a number you did not give it, and keeps every week's draft as a file you can search later. You check the numbers, edit the voice, and send it yourself; the scheduled job uses one of the 3 scheduled tasks included with Lite.
+
+<BetaCta source="blog_top">Draft your investor update for $9</BetaCta>
+
+## Why do this in Construct?
+
+- **It reads the tools you already use.** GitHub, Linear, and HubSpot are in Construct's live integration catalog, and you scope each one to the repository, team, or pipeline that belongs in the update.
+- **A link behind every line.** "Shipped" and "Pipeline" items link to the pull request, issue, or deal they came from, so checking takes minutes.
+- **Gaps you can see, not guesses.** When a number is missing from metrics.csv, the draft says [NEEDS NUMBER] instead of estimating.
+- **Every week saved as a file.** Drafts sit side by side in Files, so you can ask "what did we tell investors about SSO in December?" and get an answer from what you actually wrote.
+- **Fridays at 2pm without you.** The Calendar runs the draft on Construct's cloud computer with your laptop closed and notifies you when it is ready.
+- **Rules you can read and fix.** "Draft only" and "never estimate a number" live in the Memories app, where you can correct or remove them.
+
+## Why draft only, and never send?
+
+Because an investor update is a statement from you about your company. The agent is good at the gathering: what merged, what closed, which deals moved. It should not be the one deciding how a hard week is framed, or putting a revenue number in front of investors that nobody checked.
+
+The habit is worth keeping up. Visible, which sells investor-update software, says "companies that send regular updates are twice as likely to raise additional capital" ([Visible, Investor Updates FAQ, December 17, 2025](https://visible.vc/blog/investor-updates/)). Visible does not cite a study for that figure, so treat it as a vendor's claim. The more useful part of the same guide is its structure: an executive summary, KPIs, highlights and lowlights, specific asks, and a financial snapshot. It also describes a Y Combinator template organized as KPIs, growth, highlights, lowlights, and requests.
+
+That structure maps cleanly onto a division of labor: the agent fills the parts that come from systems, and you write the parts that need judgment.
+
+<ArticleTable caption="Where each section of the weekly investor update comes from">
+
+| Section                 | Drafted from                                         | Who signs off               |
+| ----------------------- | ---------------------------------------------------- | --------------------------- |
+| Summary                 | The rest of the draft                                | You rewrite it              |
+| KPIs and financials     | metrics.csv, a file you maintain                     | You, every week             |
+| Shipped this week       | Merged pull requests in GitHub, closed Linear issues | You skim for accuracy       |
+| Pipeline                | Deal stage changes in your CRM                       | You check names and amounts |
+| Lowlights               | Your notes, plus anything the agent flags            | You write it                |
+| Asks                    | Your notes                                           | You write it                |
+
+</ArticleTable>
+
+## What do you need?
+
+- **A Construct workspace.** Any plan. Lite at $9 a month includes 3 scheduled tasks; Starter at $59 has 10 and Pro 50, and Pro has a 7-day free trial. See [pricing](/pricing/).
+- **Connected sources** from the live integration catalog: GitHub, Linear, and HubSpot are all in it. The agent asks you to connect an account when it first needs one. If your CRM is somewhere else, check the catalog first.
+- **A metrics file you own.** Revenue, burn, runway, and cash come from your accounting or billing system, entered by you or exported by you. {/* TODO: confirm whether a billing or accounting tool (for example Stripe) is available in the integration catalog today, and if so describe reading metrics from it */}
+- **Last few updates you sent,** so the agent can match your format and tone.
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## Before you start
+
+Four choices keep the update accurate and private:
+
+- **Decide who sees the folder.** Metrics and pipeline details live in your Construct files. In a team workspace, decide who should see the investor-updates folder before the first run. {/* TODO: link /blog/ai-employee-team-workspace/ once it is live */}
+- **Keep the job read-only by rule.** Connected apps can allow writes, and Construct's workflows do not pause for approval yet, so the rules in steps 1 and 3 keep this job read-only and draft-only.
+- **Check summaries against their links.** Turning commits into outcomes is interpretation; the link on every line is what lets you check it in seconds.
+- **Scope busy weeks.** A week with many pull requests uses more steps. Lite allows up to 50 per task; if a draft stops short, narrow the repository or team, or move to Starter's 150.
+
+
+## How do you set it up?
+
+### 1. Connect the sources and scope them
+
+> Connect GitHub, Linear, and HubSpot. Then confirm what you can read: merged pull requests in the acme/app repository, completed issues in the Linear team "Product", and deal stage changes in HubSpot. Do not change anything in any of these tools.
+
+Scope matters. Name the repository and team you want included so side projects and internal tooling do not end up in front of investors.
+
+### 2. Create the template and the metrics file
+
+Upload two or three past updates, then:
+
+> Read the investor updates I uploaded and create investor-updates/template.md with the same sections and tone. Also create investor-updates/metrics.csv with columns week_ending, mrr, net_burn, cash, runway_months, customers, and notes. Leave the values empty; I will fill them in.
+
+Fill in metrics.csv yourself each week, or paste the numbers into chat and ask the agent to append them. The agent reads this file; it never estimates what goes in it.
+
+### 3. Set the rules
+
+> Remember these rules for investor updates. Draft only: never email, message, or share an investor update with anyone but me. Never estimate a financial or KPI number; if a number is missing from metrics.csv, write [NEEDS NUMBER] in its place. Every line in "Shipped" and "Pipeline" must link to the pull request, issue, or deal it came from. Do not name customers unless they are already named in a past update. Keep the draft under 400 words.
+
+These rules go into memory, which you can inspect, correct, or forget in the Memories app ([AI agent memory](/blog/ai-agent-memory/)).
+
+### 4. Draft the first update on demand
+
+> Draft this week's investor update using investor-updates/template.md. Use metrics.csv for KPIs and compare with last week's row. Summarize merged pull requests in acme/app and completed Linear issues from the last 7 days as customer-facing outcomes, not ticket titles, and group small fixes into one line. List HubSpot deals that changed stage this week. Leave Lowlights and Asks as headings with my notes from investor-updates/notes.md if it exists. Save the draft as investor-updates/ with today's date as the file name, and list anything you were unsure about.
+
+The "customer-facing outcomes" instruction is what turns "fix race in webhook retry" into "billing webhooks no longer double-charge on retry", which is the level investors read at.
+
+### 5. Review and revise
+
+Open the draft in Files. Check every number against metrics.csv and every link against its source, then write the summary, lowlights, and asks yourself. Ask for revisions in plain language:
+
+> Shorten Shipped to the three changes that matter most for retention. Move the API work to next week; it is not released yet.
+
+### 6. Make it weekly
+
+After two or three good drafts, save the procedure as a workflow and put it on the Calendar. Current workflows are linear: no branching, delays, or approval steps, which suits a draft-only job.
+
+> Save step 4 as a workflow called "Investor update draft" and schedule it every Friday at 2pm. End with an in-app notification that links the draft. Never send it anywhere.
+
+Scheduled runs deliver to the Construct web app with a notification. {/* TODO: confirm whether a workflow step can email the draft to the owner from the agent's native address */}
+
+### 7. Send it yourself
+
+Copy the final text into your own email and send it to your investor list. Keeping the send with you is the point: the agent never needs your investor list, and nothing goes out in your name that you did not read.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/workflow-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct workflow demo"
+    aria-describedby="workflow-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/workflow.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-investor-update/workflow-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="workflow-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct building and running a reusable workflow,
+    the same way a weekly draft job is saved and scheduled.
+  </figcaption>
+</figure>
+
+## What does the saved draft look like?
+
+Each Friday, Files gets a dated draft next to last week's, with the metrics file and template beside them. A section of a draft might read like this (illustrative, invented company):
+
+> **Shipped this week**
+> Billing webhooks no longer double-charge on retry (PR 412, linked). Team invites now work with SSO (LIN-88, linked). Five smaller fixes to onboarding.
+>
+> **KPIs** (week ending February 6)
+> MRR [NEEDS NUMBER]. Customers 41, up from 38. Runway 14 months.
+
+The [NEEDS NUMBER] marker is doing its job there: the agent found no MRR value for the week and left a visible gap instead of guessing. Because every week is a saved file, the agent can also answer "what did we tell investors about SSO in December?" from the drafts themselves.
+
+## How do you supervise it?
+
+- **You own the numbers.** Every KPI comes from a file you filled in. Search the draft for [NEEDS NUMBER] before anything else.
+- **Check links, not just prose.** Open two or three pull request and deal links each week. A summary that does not match its link is the error to catch.
+- **Watch for leaks.** Internal project names, unreleased features, and customer names are the usual problems. Add any you find to the rules.
+- **Read Activity if a run looks odd.** It keeps bounded summaries of what the agent did. It is a useful operating record, not a complete immutable audit log ([activity log vs audit log](/blog/ai-agent-activity-log/)).
+
+We have not yet measured draft quality over several real weeks. {/* TODO: run the weekly draft for four weeks on a real repo, Linear team, and CRM; record edits needed per draft, wrong or unsupported claims, missing numbers caught, and founder review minutes; add a screenshot of a draft in Files */}
+
+## Troubleshooting
+
+**The draft lists internal chores as highlights.** Add "exclude dependency bumps, refactors, and CI changes" to the prompt, or narrow the repository and Linear team.
+
+**A number appeared that is not in metrics.csv.** Restate the rule from step 3, check it is saved in Memories, and ask the agent to cite the cell each number came from.
+
+**Last week's comparison is missing.** Check that metrics.csv has last week's row with a matching week_ending date.
+
+**The Friday draft did not appear.** Open the workflow's run history; a disconnected GitHub or HubSpot account is the most common cause.
+
+## Give Construct this Friday's update
+
+Choose Construct for your investor update. It starts at $9, gathers from GitHub, Linear, and your CRM, links every claim, and leaves the numbers and the send with you.
+
+Your first job: upload your last two updates, run the template prompt from step 2, fill in this week's row of metrics.csv, and run the step 4 draft prompt. Check every [NEEDS NUMBER] and every link, write the summary yourself, and send it.
+
+<BetaCta source="blog_inline_2">Give Construct its first draft</BetaCta>
+
+## Sources
+
+- [Visible: Investor Updates FAQ (December 17, 2025)](https://visible.vc/blog/investor-updates/)
+- [Construct pricing](/pricing/)
+- [Construct workflows](/use-cases/workflows/)
+- [Construct scheduling](/use-cases/scheduling/)
+
+## Related resources
+
+- [Customer follow-ups and CRM updates without Zapier](/blog/ai-follow-ups-crm-without-zapier/)
+- [A weekly competitor pricing report with an AI agent](/blog/ai-competitor-pricing-report/)
+- [Update Linear issues from Slack messages with an AI agent](/blog/ai-agent-linear-from-slack/)
+- [Where your agent's work goes: files, reports and apps](/blog/ai-agent-files-and-artifacts/)
+- [Hire your first AI employee: a 30-day plan](/blog/hire-an-ai-employee/)

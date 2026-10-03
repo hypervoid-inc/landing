@@ -1,0 +1,326 @@
+---
+title: "Where AI agents fail: what real runs show"
+seoTitle: "Why AI Agents Fail: An Analysis of Real Agent Runs"
+description: "Where AI agents fail in real business runs: at which step, on which tool, and how often a resumable run recovers. Our method, definitions and data."
+published: "2027-01-07"
+author: "ankush"
+tags: ["ai-agent", "reliability", "engineering"]
+kind: "article"
+draft: true
+---
+
+{/* EDITOR NOTE: this is a publish-ready framework. Every result slot is marked TODO: data. Do not publish until each one is filled from the aggregate export (tracker task "Pull anonymised run data for the failure report") and the visible [bracketed] placeholders are gone. If a finding contradicts the framing of a section, rewrite the section to match the data; do not bend the data to the section. */}
+
+We analysed [N] anonymised agent runs on Construct between [start date] and [end date] to find out where AI agents actually fail: at which step, on which tool, and how often a run that failed partway was finished by the next attempt. {/* TODO: data. N = total runs in the final dataset after exclusions; dates = the chosen period. */}
+
+The short answer is [headline finding in one sentence, with a number]. {/* TODO: data. One sentence a journalist could quote, e.g. the share of failures that happen in the first five steps, or the tool category with the highest failure rate per thousand steps. Pick whichever finding is largest and most robust, not whichever is most flattering. */}
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Key findings
+
+{/* TODO: data. Four bullets, each with one number and its denominator. These are what will be quoted, so each must survive being read on its own. Suggested slots below; replace any slot whose data is too thin with the next most robust finding. */}
+
+- **Where in the run:** [x]% of failed runs stopped within the first [k] steps. {/* TODO: data */}
+- **Which tool:** [tool category] steps failed [x] times per thousand steps, against [y] for the average step. {/* TODO: data */}
+- **Recovery:** [x]% of failed runs were followed by a run that finished the job within 24 hours, using a median of [y]% of the original run's steps. {/* TODO: data */}
+- **The p^n test:** observed completion [did / did not] track the constant per-step success model, with an estimated per-step success of [p]. {/* TODO: data */}
+
+## Why we looked at real runs instead of benchmarks
+
+Benchmarks tell you how capable a model is on a fixed set of tasks. They do not tell you how a scheduled Monday report fails on the fourth Monday, or which tool a business agent was holding when it stopped. That is the question buyers ask us, and it is one we can answer from our own aggregate records without reading anyone's work.
+
+Published research has mapped part of this already. Toby Ord found that agent success across task lengths fits "a constant rate of failing during each minute a human would take to do the task," which "implies an exponentially declining success rate with the length of the task" ([Ord, arXiv:2505.05115](https://arxiv.org/abs/2505.05115)). A Berkeley-led team built a taxonomy of how multi-agent systems fail, with "14 unique modes, clustered into 3 categories," from over 1,600 annotated traces across seven frameworks ([Cemri et al., arXiv:2503.13657](https://arxiv.org/abs/2503.13657)). Both studies use research tasks and research frameworks. This report asks the same questions of ordinary business runs: research, reports, inbox work, and app updates that small teams hand to an agent.
+
+We build Construct, so weigh this accordingly. The data comes from one product, its users, and its tools. We publish the method in full below so you can judge how far the results travel, and we are publishing them whether or not they flatter the product.
+
+## Methodology
+
+This section defines every term before any number uses it. If you want to reproduce the analysis on another agent product, these definitions are the part to copy.
+
+### The dataset
+
+- **Period:** [start date] to [end date], [n] days. {/* TODO: data. Recommended: October 1 to November 30, 2026. Start no earlier than September 30, 2026, because the record of what started each run (chat, channel, schedule, workflow, delegation) is only complete from that date. If you choose a longer window, report the start-source tables on the shorter window only and say so. */}
+- **Accounts:** paying and trial accounts on Lite, Starter, and Pro. We exclude staff, test, and automated health-check accounts, and the guided first run during onboarding. {/* TODO: data. Report the excluded run count per reason in the CSV. */}
+- **What we kept:** counts, durations, step numbers, outcome labels, tool categories, plan tier, and what started the run. Nothing else.
+- **What we never touched:** prompts, messages, files, email content, app data, URLs, names, or any text a customer or agent wrote. Account and agent identifiers were replaced with one-way hashes before aggregation and dropped from the output.
+- **Small cells:** any table cell built from fewer than 20 runs or fewer than 5 distinct accounts is suppressed and shown as "under threshold". {/* TODO: confirm threshold with Ankush before the export. */}
+
+{/* TODO: confirm that the terms of service and privacy policy cover publishing aggregate usage statistics (tracker task t52, last line). Link the relevant clause from this section once confirmed: /terms/ or /privacy/. If they do not, do not publish until they do. */}
+
+### What counts as a run
+
+A **run** is everything an agent does in response to one request, from the moment the request arrives until the agent stops. A request can be a chat message, a message in Slack, Telegram, or a Discord slash command, an email to the agent's own inbox, a scheduled job firing from the Calendar, a step in a workflow, or a subtask delegated to a temporary agent. Each of those starts its own run.
+
+If a run is automatically carried forward after reaching its step budget, the continuation counts as part of the same run, not as a new one. {/* TODO: confirm with engineering how continued segments are linked in the records, and whether to stitch them before counting. State the final rule here in one sentence. */}
+
+### What counts as a step
+
+A **step** is one cycle in which the model decides what to do next and, usually, calls one or more tools: open a page in the browser, run a terminal command, read a file, call a connected app, send an email. It is the same unit Construct's plans meter as "steps per task": up to 50 on Lite, 150 on Starter, and 1,000 on Pro ([pricing](/pricing/)). A step that calls several tools at once is still one step; we attribute it to the tool category of its first tool call. {/* TODO: confirm the attribution rule against how multi-tool steps are recorded; if the records allow it, report multi-tool steps separately. */}
+
+### Tool categories
+
+Each step is assigned one category from what it called:
+
+<ArticleTable caption="Tool categories used to classify each step">
+
+| Category | What it covers |
+| --- | --- |
+| Browser | Live browser runs: opening, reading, clicking, and filling pages |
+| Terminal | Commands in the sandbox terminal |
+| Files | Reading, writing, and moving workspace files |
+| Web search and fetch | Search queries and page fetches without a live browser |
+| Connected apps | Actions through the live integration catalog and custom MCP tools |
+| Email | Reading and sending through the agent's own inbox |
+| Memory | Storing, recalling, or correcting long-term memory |
+| Delegation | Handing a subtask to a temporary agent |
+| No tool | A step where the model only reasons or writes its answer |
+
+</ArticleTable>
+
+{/* TODO: data. Map every tool name in the records to exactly one category above, export the mapping as a second CSV, and report the share of steps that could not be mapped (target under 1%). */}
+
+### What counts as a failure
+
+Every run ends with one outcome label. We group them like this:
+
+<ArticleTable caption="How each run outcome is counted">
+
+| Outcome | What it means | Counted as |
+| --- | --- | --- |
+| Completed | The agent finished and gave a final answer | Finished |
+| Reached the step budget | The run used every step its plan allows without finishing | Failure |
+| Errored | The run stopped on an error it could not recover from | Failure |
+| Stopped without an answer | The run ended without a final answer and was not continued | Failure |
+| Waiting on a person | The agent stopped to ask a question or needed a permission | Handed back, not a failure |
+| Interrupted | A person stopped the run | Excluded from failure rates |
+| Deferred | The run was postponed to continue later | Excluded until it resolves |
+
+</ArticleTable>
+
+{/* TODO: confirm with engineering that the outcome labels in the records map one to one onto these seven rows, and that "deferred" runs can be followed to their final outcome. */}
+
+Two choices here matter. First, "completed" means the agent said it was done. It does not mean the output was right. Checking correctness would require reading the work, which we will not do, so this report measures where runs stop, not whether finished runs were good. Our piece on [why agent work is cheap to make and expensive to check](/blog/agent-verification-gap/) covers that second problem. Second, a run that stops to ask a question is doing its job. We report those separately because a high rate of them on scheduled runs, where nobody is there to answer, is a finding in itself.
+
+### Where a run failed
+
+For each failed run we record:
+
+- **Failure step:** the step number of the last step that ran.
+- **Failure position:** the failure step as a share of the plan's step budget, so a Lite run failing at step 40 and a Pro run failing at step 800 are both "late".
+- **Failure tool:** the tool category of the last step that called a tool.
+
+The last tool before a failure is evidence, not proof, of the cause. A browser step can be where a run stops because an earlier file step wrote the wrong input. We say "failed on" rather than "failed because of" throughout.
+
+### Recovery after a failure
+
+A failed run is **recovered** if the same agent starts another run on the same job within 24 hours and that run completes. "The same job" means the same conversation, the same scheduled job, or the same workflow. We report the recovery rate and the **retry ratio**: the retry's step count divided by the failed run's step count. A ratio well under 1 suggests the retry started from saved work instead of starting over. It is a proxy, not a direct measure of steps saved, and we label it that way in every chart. {/* TODO: data. Also report recovery at 1 hour and 7 days as a sensitivity check. */}
+
+### Query plan
+
+The analysis runs in five passes, all on aggregate tables:
+
+1. **Select runs.** All runs that started inside the period, minus the exclusions above. Output: one row per run with start source, plan tier, step count, outcome label, and start time rounded to the hour.
+2. **Categorise steps.** Join each run's step records to the tool-category mapping. Output: one row per step with run hash, step number, and tool category.
+3. **Locate failures.** For every failed run, take the last step, its number, its position in the budget, and the last tool category used.
+4. **Link retries.** For every failed run, find the next run on the same job by the same agent within 24 hours, and record its outcome and step count.
+5. **Aggregate and suppress.** Build every table below from those three outputs, then suppress small cells and drop all hashes before export.
+
+{/* TODO: data. Ankush: attach the actual queries to the tracker task, not to this file. Keep internal table and field names out of this post. */}
+
+## The findings
+
+{/* TODO: data. Each subsection below has a table or chart shell with column definitions. Fill it, then write two to four sentences under it saying what the numbers show and how confident we are. Keep "we found" sentences out until the numbers are in. */}
+
+### How long are real agent runs?
+
+<ArticleTable caption="Run length distribution by plan">
+
+| Steps in the run | Runs | Share of runs | Completion rate | Lite share | Starter share | Pro share |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 to 5 | [n] | [%] | [%] | [%] | [%] | [%] |
+| 6 to 10 | [n] | [%] | [%] | [%] | [%] | [%] |
+| 11 to 25 | [n] | [%] | [%] | [%] | [%] | [%] |
+| 26 to 50 | [n] | [%] | [%] | [%] | [%] | [%] |
+| 51 to 150 | [n] | [%] | [%] | n/a | [%] | [%] |
+| 151 to 1,000 | [n] | [%] | [%] | n/a | n/a | [%] |
+
+</ArticleTable>
+
+{/* TODO: data. Columns: bucket of total steps; runs in bucket; share of all runs; share of runs in bucket that completed; distribution of each plan's runs across buckets (each plan column sums to 100%). Also report median and 90th percentile steps per plan in the text. */}
+
+### How do runs end?
+
+<ArticleTable caption="Run outcomes by what started the run">
+
+| Started from | Runs | Completed | Reached step budget | Errored | No answer | Waiting on a person |
+| --- | --- | --- | --- | --- | --- | --- |
+| Chat on the web | [n] | [%] | [%] | [%] | [%] | [%] |
+| Slack, Telegram, or Discord | [n] | [%] | [%] | [%] | [%] | [%] |
+| Email to the agent's inbox | [n] | [%] | [%] | [%] | [%] | [%] |
+| Scheduled job | [n] | [%] | [%] | [%] | [%] | [%] |
+| Workflow step | [n] | [%] | [%] | [%] | [%] | [%] |
+| Delegated subtask | [n] | [%] | [%] | [%] | [%] | [%] |
+
+</ArticleTable>
+
+{/* TODO: data. Rows: start source. Percentages are shares of that row's runs, excluding interrupted and unresolved deferred runs (report those counts in a footnote). Merge any row under the small-cell threshold into "Other". */}
+
+### Which tools do runs fail on?
+
+<ArticleTable caption="Failures per thousand steps by tool category">
+
+| Tool category | Steps run | Share of all steps | Failed runs ending on it | Failures per 1,000 steps | Share of all failures |
+| --- | --- | --- | --- | --- | --- |
+| Browser | [n] | [%] | [n] | [x] | [%] |
+| Terminal | [n] | [%] | [n] | [x] | [%] |
+| Files | [n] | [%] | [n] | [x] | [%] |
+| Web search and fetch | [n] | [%] | [n] | [x] | [%] |
+| Connected apps | [n] | [%] | [n] | [x] | [%] |
+| Email | [n] | [%] | [n] | [x] | [%] |
+| Memory | [n] | [%] | [n] | [x] | [%] |
+| Delegation | [n] | [%] | [n] | [x] | [%] |
+| No tool | [n] | [%] | [n] | [x] | [%] |
+
+</ArticleTable>
+
+{/* TODO: data. "Failures per 1,000 steps" = failed runs whose last tool step was this category, divided by steps of this category, times 1,000. This normalises for how often each tool is used; the raw share of failures alone would just rank tools by popularity. Exclude step-budget failures from this table (they are not caused by a tool) and show them as a separate line. */}
+
+### Where in the run do failures happen?
+
+{/* TODO: data. Chart 1, "Where failed runs stopped". Bar chart. X axis: failure position as a share of the step budget, in tenths (0 to 10%, 10 to 20%, ... 90 to 100%). Y axis: share of failed runs. One series per plan. Export columns: plan, position_bucket, failed_runs, share_of_plan_failures. Second panel or table: failure step in absolute numbers for the first 20 steps (step 1, 2, ... 20, 21+), all plans together. */}
+
+### Does the p^n model hold?
+
+{/* TODO: data. Chart 2, "Observed vs predicted completion". Line chart. X axis: step number (log scale if runs extend past 150). Y axis: share of runs still going (survival). Series 1: observed survival, Kaplan-Meier style, treating runs that hit the step budget as censored at the budget rather than failed. Series 2: p^n with p fitted from the data (p = 1 minus total failures divided by total steps run, excluding budget stops). Export columns: step, runs_at_risk, failures_at_step, observed_survival, predicted_survival. Also export the per-step failure rate (hazard) by step bucket so readers can see whether it is flat, falling, or rising. */}
+
+The test is simple to state. If each step fails at the same rate regardless of how far into the run it is, the share of runs still going after n steps should follow p^n, where p is the per-step success rate. Our observed per-step success was [p], and the observed curve [tracks / falls below / sits above] the prediction. {/* TODO: data */}
+
+### How often does the next run finish the job?
+
+<ArticleTable caption="Recovery after a failed run">
+
+| Failure type | Failed runs | Retried within 24 hours | Retry completed | Median retry ratio |
+| --- | --- | --- | --- | --- |
+| Reached step budget | [n] | [%] | [%] | [x] |
+| Errored | [n] | [%] | [%] | [x] |
+| No answer | [n] | [%] | [%] | [x] |
+| All failures | [n] | [%] | [%] | [x] |
+
+</ArticleTable>
+
+{/* TODO: data. "Retried within 24 hours" = share of failed runs followed by a run on the same job by the same agent within 24 hours. "Retry completed" = share of those retries that completed. "Median retry ratio" = retry steps divided by failed-run steps, median. Split by scheduled vs on-demand in the CSV. */}
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## What each finding would mean if you are buying an agent
+
+We wrote this section before seeing the numbers, so it covers the outcomes we think are plausible. When the data is in, we keep the paragraphs that apply and delete the rest. {/* TODO: data. Keep only the scenarios the data supports; delete the others rather than hedging. */}
+
+**If most failures happen in the first few steps,** the problem is setup, not stamina. Early failures usually mean a missing connection, a permission the agent does not have, or an instruction it could not act on. For a buyer, the test is the first supervised run: watch it, fix what it trips on, and the long-task maths matters less than you feared.
+
+**If the failure rate per step is flat,** length is the enemy, exactly as the p^n model says. A job twice as long fails far more than twice as often. The fix is structural: cut the job at its natural seams, make each piece leave a file behind, and let the next run skip finished work. That is the argument of [your agent has a half-life](/blog/agent-task-half-life/), and a flat curve here would be real-world support for it.
+
+**If the failure rate rises late in long runs,** something accumulates: context grows, earlier mistakes compound, or the agent loses track of the goal. Shorter runs help even more in that case, and so does writing intermediate state to files instead of relying on what is still in the conversation.
+
+**If browser steps fail most per thousand steps,** prefer a structured connection whenever the app has one, and keep the browser for sites with no integration. Pages change, load slowly, and hide content behind clicks; an app action through the integration catalog does not.
+
+**If connected-app steps fail most,** the usual causes are expired connections, missing permissions, and rate limits. Check connection health before scheduling a job, and give the agent the narrowest access that still lets it finish.
+
+**If terminal steps fail most,** look at long-running commands. Sandbox commands share a five-minute runtime cap on every plan ([terms](/terms/)), so a long data job should be split into shorter commands that write results to files as they go.
+
+**If many runs end at the step budget,** the plan limit is binding for real work, not just in theory. Split the job or choose a plan with a bigger budget. We will report this honestly even though it is a commercial finding about our own plans.
+
+**If scheduled runs stop to ask questions far more than chat runs,** the instructions are missing inputs that a person would normally supply in conversation. Put every input the job needs into the instructions or a workspace file before you schedule it.
+
+**If most failed runs are finished by the next run with a low retry ratio,** resumable design works in practice: saved progress turns a failure into a delay. **If retries mostly start over,** saved progress is not being used, and the instruction pattern in the half-life post (describe the work that remains, not the whole job) matters more than any product feature.
+
+## How this connects to the agent half-life
+
+Our earlier piece, [your agent has a half-life](/blog/agent-task-half-life/), worked from arithmetic: a 95% reliable agent finishes a 48-step job about 8.5% of the time, because 0.95 to the 48th power is about 0.085. That post had no data of its own. This one is the check. The model is not a fringe idea: METR, which tracks how long a task frontier agents can finish with 50% reliability, reports that this length "has been doubling approximately every 7 months for the last 6 years" ([METR](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)). Longer horizons raise p; they do not change the shape of p^n.
+
+Three things make the comparison less direct than it sounds, and we account for each.
+
+- **Steps are not minutes.** Ord measures task length in the minutes a human would need. We measure it in agent steps. A constant rate per step and a constant rate per human-minute are only the same model if steps take roughly equal human time, which they do not. We test the per-step version because it is the one a buyer can act on.
+- **The step budget cuts runs off.** A Lite run cannot go past 50 steps. Counting those stops as failures would make long runs look worse than they are, so the survival curve treats them as censored and the outcome tables count them separately.
+- **People choose which jobs to give an agent.** If users only hand long jobs to agents they already trust, long runs will look more reliable than they would be on a random job. We cannot correct for that, so we name it.
+
+If the observed curve tracks p^n, the practical advice from the half-life post stands with real data behind it. If it does not, we will say which direction it misses and update that post to link here. {/* TODO: data. Update /blog/agent-task-half-life/ with a one-line link to this report once published. */} For your own jobs, the [agent reliability calculator](/blog/agent-reliability-calculator/) turns a per-step success rate and a step count into an expected completion rate. {/* TODO: data. Once the observed per-step success is known, consider offering it as a preset in the calculator. */}
+
+## Limitations
+
+- **One product.** Construct's users, plans, tools, and models shape every number. Another agent product with different tools would fail in different places.
+- **No measure of quality.** A completed run may still be wrong. This report cannot see that.
+- **Model mix changes.** Model updates during the period and Pro accounts using their own model keys mean the "agent" here is not one fixed model. {/* TODO: data. Report the share of runs billed to customers' own keys, and rerun the headline numbers without them as a sensitivity check. */}
+- **Last tool is not root cause.** The tool a run stopped on is where to start looking, not a diagnosis.
+- **Retries are inferred.** We link a retry to a failure by job and timing. A person may have changed the instructions in between, which would make a retry look more efficient than resumption alone explains.
+
+## Download the data
+
+The aggregate tables behind every chart are available as a CSV download. {/* TODO: data. Replace this sentence's first clause with a link to the file. */} Each file contains only counts, shares, and rates, with small cells suppressed. You are welcome to reuse them with a link to this page. {/* TODO: data. Put the CSVs at public/blog/where-ai-agents-fail/ (aggregates.csv and tool-categories.csv) and replace the placeholder link with /blog/where-ai-agents-fail/aggregates.csv. MDX link hrefs that start with /blog/ must be canonical, so check the test still passes for a file path. */}
+
+## What this means if you are choosing an agent
+
+Whatever the tables show, four questions decide whether a failed run costs you a few minutes or the whole job. Ask them of any agent you are considering. This is how Construct answers them.
+
+- **Does finished work survive a stopped run?** Construct saves reports, spreadsheets, and scripts to workspace files as it produces them. A run that stops at step 30 still leaves steps 1 to 29 behind, so the next run can start from what is already there instead of starting over.
+- **Is the step budget big enough for your job?** Construct meters steps per task: up to 50 on Lite, 150 on Starter, and 1,000 on Pro ([pricing](/pricing/)). Count your job's steps against that before you schedule it, and split anything longer into pieces that each leave a file.
+- **Does it keep working when nobody is watching?** Calendar schedules run on Construct's servers with your laptop closed: 3 scheduled tasks on Lite, 10 on Starter, and 50 on Pro. A scheduled run reports back in the web app with a notification.
+- **Can you correct what it relied on?** If a run went wrong because the agent used an outdated fact, open its memory, correct or forget the fact, and every later run uses the fix.
+- **Can you find where it stopped?** Activity records each action with a short reason, which is usually enough to see the step a run stopped on. It covers a limited window, so have important jobs append a line to a run log file as well.
+
+One thing to set up deliberately: Construct's workflows run their steps in order and do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself once you have checked them.
+
+Then test it on your own work. Pick the job you most want to hand to an agent and count its steps. Run it on demand a few times, note the step where it stops, and compare that with the tables above. If it fails early, fix the setup. If it fails late, cut it into pieces that save their work. Then put it on the Calendar.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/calendar-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct Calendar demo"
+    aria-describedby="calendar-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/calendar.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/where-ai-agents-fail/calendar-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption id="calendar-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct's Calendar showing scheduled agent jobs and
+    workflow runs, which run once or repeatedly and keep their result history.
+  </figcaption>
+</figure>
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+Start with one recurring job that has a clear output, such as a Monday competitor price check: save the three pricing URLs in a workspace file, ask Construct to record each plan and price in a dated CSV and compare it with last week's file, check the first result, then put it on the Calendar. Start on [Lite at $9](/pricing/), or try Pro free for seven days to test longer runs.
+
+## Sources
+
+- [Toby Ord, "Is there a half-life for the success rates of AI agents?", arXiv:2505.05115](https://arxiv.org/abs/2505.05115)
+- [Cemri et al., "Why Do Multi-Agent LLM Systems Fail?", arXiv:2503.13657](https://arxiv.org/abs/2503.13657)
+- [METR, measuring AI ability to complete long tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)
+- [Construct plans and step limits](/pricing/)
+
+{/* TODO: data. Add the terms or privacy clause covering aggregate statistics to this list once confirmed. */}
+
+## Related resources
+
+- [Your agent has a half-life](/blog/agent-task-half-life/)
+- [Agent reliability calculator](/blog/agent-reliability-calculator/)
+- [Nobody merges an email: the agent verification gap](/blog/agent-verification-gap/)
+- [Activity log vs audit log: what an AI agent should record](/blog/ai-agent-activity-log/)
+- [The AI delegation checklist](/blog/ai-delegation-checklist/)
+- [How to run an AI agent on a schedule with your laptop closed](/blog/ai-agent-scheduled-tasks/)

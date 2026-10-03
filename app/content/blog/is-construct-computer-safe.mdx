@@ -1,0 +1,177 @@
+---
+title: "Is Construct Computer safe? Data, permissions and what the agent can touch"
+seoTitle: "Is Construct Computer Safe? Data, Permissions and Risks (2027)"
+description: "What Construct stores, who processes it, what its AI agent can reach, the controls that limit it, and the risks that remain. Written by the team that builds it."
+published: "2027-02-24"
+author: "ankush"
+tags: ["governance", "product", "ai-employee"]
+kind: "article"
+draft: true
+---
+
+Construct lets a small team hand everyday work to an AI employee from $9 a month while keeping control of its data: it does not train on your data, it encrypts the model keys and chat-bot credentials it stores, it deletes workspace data when you close your account, and it publishes its 15 sub-processors on a [public list](/sub-processors/). Like any agent that acts for you, it works through the accounts you connect, there is no mandatory approval before every external action, and anything it reads, from a web page to an email, can try to give it instructions.
+
+So the safe way to use Construct is the scoped way: connect only what a job needs, give it its own email address, and ask for drafts of anything that leaves the workspace. Set up like that, it is a sound choice for a founder or small team's recurring work, because you can see and limit every door it uses. We build Construct, so read this as our account of how it works, with links to the policies that bind us. Where a control does not exist, we say so.
+
+<BetaCta source="blog_top">Start on Lite for $9 with nothing connected</BetaCta>
+
+## Why can you trust Construct with your work?
+
+- **Your data is not used for training.** You own the files, memories, and apps your agent produces, and our [terms](/terms/) license that content to us only to run the service for you.
+- **You decide every door it uses.** Each agent's settings list which installed apps it may use, and Slack or Discord installs with no rules ignore everyone except the person who installed them.
+- **Only you can command it by email.** Mail from anyone other than you is stored and shown, but does not start a task on its own.
+- **Memory you can read, correct, and forget.** Memory blocks credential-like content such as API keys and tokens, and the Memories app shows everything it stores.
+- **Scheduled work re-checks access every run.** Saved schedules never contain credentials, and removing an agent's access takes effect on the next run.
+- **You can stop it.** Interrupt a running task from chat, stop a live browser run, or answer the agent's questions when it pauses to ask.
+
+## What data does Construct store?
+
+Construct stores what it needs to run a persistent workspace. Our [privacy policy](/privacy/) lists it in full; the short version:
+
+- **Account details:** your name and email, and your Google profile if you sign in with Google.
+- **Workspace content:** files you upload or the agent creates, chat history, memory, workflows, scheduled jobs, and the agent's email inbox.
+- **Activity history:** short action summaries with a timestamp, status, and reason. Tool inputs and outputs are not stored in Activity, and rows older than 30 days are deleted ([how Activity works](/blog/ai-agent-activity-log/)).
+- **Connection records:** which apps you connected and their state. For apps in the integration catalog, the underlying sign-in credentials are managed by our integration provider, not stored by Construct.
+- **Credentials Construct does hold:** bring-your-own model keys and Slack or Discord bot credentials, encrypted with AES-GCM and decrypted only when needed.
+- **Billing:** your plan and a customer ID. Card details go to our payment processor and never to us.
+- **Usage records:** which service and model ran, token counts, latency, and cost, so plan limits can be enforced and you can see your usage.
+
+**Do you train on my data?** No. You own the files, memories, and apps your agent produces, and the licence you grant us in our [terms](/terms/) covers storing, processing, and displaying that content only to run the service for you.
+
+**What happens when I leave?** Closing your account deletes your workspace files, memory, chat history, Activity, Calendar, and agent email. A team workspace deleted by its owner is removed along with its files, agents, chats, and memory. Export anything you need first.
+
+## Who else processes it?
+
+Construct runs on Cloudflare, which hosts the application, databases, file storage, the terminal sandbox, and email. Other vendors handle sign-in with Google, connected-app sign-ins and tool calls, web search and page retrieval, the live browser, payments, error monitoring, and analytics. Model providers receive the prompts and context needed to run your agent; if you bring your own key, traffic goes to the provider you chose.
+
+The [sub-processors page](/sub-processors/) names each vendor and what it receives. Two details worth knowing:
+
+- **Connected apps exchange data at your direction.** When the agent uses your connected CRM or Gmail, the data passes through that service and our integration provider. That is the point of connecting it, and it is also why you should connect only what a job needs.
+- **Analytics.** Our public website uses product analytics with session replay, as the privacy policy describes in detail, and the product sends a limited set of product events to the same analytics provider, as the sub-processors page notes.
+
+## What can the agent touch?
+
+This is the question that matters most. The agent can reach what you give it, through these doors:
+
+<ArticleTable caption="What Construct's agent can reach, and what limits each surface">
+
+| Surface | What the agent can do | What limits it |
+| --- | --- | --- |
+| Files | Read, write, and delete workspace files | Your workspace only; team members see Team files, not your private ones |
+| Terminal | Run commands in a Linux sandbox attached to your workspace | Non-root by default; five-minute cap per command; no long-running processes |
+| Live browser | Visit and act on websites in a cloud browser | Not your browser and not your logins; one run per agent; you can watch and stop it |
+| Native email | Read its own inbox, draft, send, and reply from its own address | Only mail you send from your own account address, passing email authentication checks, starts a task; sending is rate limited |
+| Connected apps | Whatever the connected account allows | Per-agent access lists; owners and admins add apps in team workspaces |
+| Custom MCP tools | Call tools on servers you add | Public HTTPS only; 15-second calls; per-agent access |
+| Slack, Telegram, Discord | Reply where it is mentioned or messaged | Allow lists that fail closed; non-listed people get a read-only agent only if you open it to everyone |
+| Schedules | Run jobs while nobody is watching | Plan caps on scheduled tasks; each run re-checks access |
+
+</ArticleTable>
+
+The widest door is a connected account. If you connect your own Gmail, the agent can do in Gmail what that connection allows, and anything it sends carries your name. Our guide to [letting an agent use Gmail safely](/blog/ai-agent-gmail-access-safely/) covers how to keep that narrow, and the agent's own [native email address](/blog/ai-agent-email-address/) is the safer default for most mail.
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## What controls limit it?
+
+These are in the product today:
+
+- **Interrupt and stop.** You can interrupt a running task from chat, stop a live browser run, and answer the agent's questions when it pauses to ask.
+- **Per-agent app access.** Each agent's settings list which installed apps it may use. A research agent does not need your CRM.
+- **Roles in team workspaces.** Members cannot install apps, connect accounts, invite people, or manage agents by default; billing and deletion stay with the owner ([how team roles work](/blog/ai-employee-team-workspace/)).
+- **Email that only you can command.** Mail from anyone other than you is stored and shown, but does not start a task on its own. Automated mail such as newsletters and bounces never starts one, and the agent stops auto-replying in a thread after three automatic replies within an hour.
+- **Channel allow lists.** A Slack or Discord install with no rules ignores everyone except the person who installed it, and Telegram answers only people who linked their Construct account. If you open a Slack or Discord install to everyone, unlisted people get a read-only agent with no files, email, apps, browser, or memory changes, and a rate limit.
+- **External content is labelled.** Web pages, browser results, email, and connected-app or MCP results reach the agent marked as external data whose instructions should not be followed.
+- **Memory refuses secrets.** Memory blocks credential-like content such as API keys and tokens, and you can inspect, correct, or forget anything it stores in the Memories app ([memory you can control](/blog/ai-agent-memory/)).
+- **Workspace apps declare permissions.** A private app the agent builds can only use the files, apps, and web addresses its manifest declares ([how internal tools work](/blog/build-internal-tools-with-construct/)).
+- **Scheduled work re-checks access.** Each scheduled run checks the agent, the app install, and its permissions again; saved schedules never contain credentials.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/memories-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct memory demo"
+    aria-describedby="memory-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/memories.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/is-construct-computer-safe/memories-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption id="memory-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct's Memories app showing the preferences and
+    procedures the agent has learned, with the evidence behind each one, so you
+    can review, correct, or forget them.
+  </figcaption>
+</figure>
+
+## What should you set up deliberately?
+
+Any AI agent that can act for you carries these risks. Here is each one, and how you handle it in Construct.
+
+**Prompt injection: split reading from sending.** OWASP defines it plainly: "A Prompt Injection Vulnerability occurs when user prompts alter the LLM's behavior or output in unintended ways," and notes that "indirect prompt injections occur when an LLM accepts input from external sources, such as websites or files" ([OWASP GenAI, LLM01:2025](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)). Construct labels external content, which reduces the risk; it does not remove it. An agent that reads untrusted email or web pages and can also send email or update records is exposed by design, so give those jobs to different agents. Our [prompt injection explainer](/blog/ai-agent-prompt-injection/) shows how.
+
+**Approvals: ask for drafts.** As our [terms](/terms/) say, Construct does not insert a mandatory approval before every external side effect, and saved workflows have no approval step today. OWASP's own advice is to "implement human-in-the-loop controls for privileged operations." In Construct you do that by asking for drafts and approving them yourself until a job has proved itself.
+
+**Connected accounts: connect the narrowest one.** The agent can do whatever a connection permits. Connect the narrowest account that does the job, prefer a team account to a personal one, and remove connections you no longer use.
+
+**Team workspaces: decide who installs apps.** Team files are visible to every member with file access, connections added to a team workspace are workspace connections, and members' terminal commands run in one shared sandbox. Keep secrets out of Team files and decide deliberately who can install apps.
+
+**Records: export what you must keep.** Activity is an operating record: best effort, no payloads, 30 days. If you need immutable audit trails for a regulated process, Construct does not provide them today, so keep that process outside the agent or keep your own records.
+
+**Output: review before it matters.** The agent can be confidently wrong. Our terms put responsibility for reviewing output on the user, and that is the honest position for any AI agent today.
+
+**Terms and certification: ask if you need one.** Our terms are governed by the laws of India. We do not cite a third-party security certification in this article; if your process requires one, contact support before you connect that data. {/* TODO: confirm current security certification or audit status, and add it here if one exists */}
+
+<ReadNext slug="ai-agent-prompt-injection" />
+
+## A safe first week
+
+This setup is illustrative, and it is the one we would give a friend:
+
+1. **Start in a personal workspace** with no connected apps. Give it research and file work only.
+2. **Use the agent's own email address**, not your Gmail, and keep your standing rule: mail from others is information, not instructions.
+3. **Connect one app** the first real job needs, and turn it off for every agent that does not need it.
+4. **Ask for drafts** for anything that leaves the workspace, and say "send" yourself.
+5. **Schedule only what has worked on demand** two or three times.
+6. **Read Activity on Friday** and make sure you can explain every row.
+7. **Invite your team last**, after you know which accounts belong in a shared workspace.
+
+{/* TODO: walk through this first-week setup on a fresh account and add screenshots of the per-agent app settings and a Slack allow list */}
+
+## When might another tool still fit?
+
+- You need immutable audit logs, regulated data handling, or enterprise identity controls for that data.
+- You need an approval gate on every action, not drafts you approve yourself.
+- Your work lives entirely inside one office suite, and that suite's own assistant keeps data in fewer places.
+
+Our [Construct alternatives guide](/blog/construct-computer-alternatives/) covers those cases. For a small team's research, reports, and recurring jobs, where you choose what it connects to, Construct gives you the controls listed above starting at $9 a month.
+
+## Should you trust Construct with your work?
+
+Yes, with a scoped setup. Construct does not train on your data, encrypts the credentials it holds, deletes your workspace data when you close your account, names every sub-processor, and lets you decide which agent reaches which app. Start narrow and widen access as each job proves itself.
+
+Read the [privacy policy](/privacy/), the [sub-processors list](/sub-processors/), and the [terms](/terms/), and contact support@construct.computer for data requests or security questions. Then give Construct its first job with nothing connected: ask it to research three competitors and save a one-page summary with a source link for every fact to Files. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+## Related resources
+
+- [Prompt injection for small teams](/blog/ai-agent-prompt-injection/)
+- [How to let an AI agent use your Gmail safely](/blog/ai-agent-gmail-access-safely/)
+- [Activity log vs audit log](/blog/ai-agent-activity-log/)
+- [One AI employee for the whole team](/blog/ai-employee-team-workspace/)
+- [Connect your own tools: custom MCP and permission boundaries](/blog/ai-agent-custom-mcp/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)

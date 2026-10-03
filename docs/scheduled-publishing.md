@@ -18,8 +18,8 @@ A finished post goes live by itself on its `published` date. Write it ahead, mer
 
 1. Finish the post and resolve every TODO. Scheduling is publishing in advance: nobody reviews it again on the day.
 2. Set `published: "YYYY-MM-DD"` to the go-live date and `draft: false`.
-3. Add its FAQs to `app/content/faqs.ts`.
-4. Add its card (headline and scene) to `app/content/og-poster.ts` and run `pnpm og`. Scheduled posts get their card now, and the OG tests fail at merge time if one is missing, so publish day never fails on a card.
+3. Check its FAQs in `app/content/faqs.ts` (drafts already have them) still match the post.
+4. Make its card. Drafts already have a headline and scene in `app/content/og-poster.ts`, and so do the tag hubs they will create. Run `pnpm og:generate` for the artwork (it only draws cards that have none yet, including a tag hub the post brings to two posts), look at each new image in `assets/og/poster/`, then run `pnpm og`. Scheduled posts get their card now, and the OG tests fail at merge time if one is missing, so publish day never fails on a card.
 5. Run `pnpm generate:content && pnpm check`, then `CONTENT_DATE=<its date> pnpm test`. Some tests depend on which posts are live (related posts weigh tags by how rare they are), and the morning build runs them, so a failure that only appears on the post's date would block that day's deploy. Then merge to `main`.
 
 ## Preview a future day
@@ -33,6 +33,8 @@ The site renders as it will on that date, scheduled posts included. `CONTENT_DAT
 ## Links between scheduled posts
 
 A post may link to any live post, or to a scheduled post dated on or before its own date. A live post linking to a scheduled one fails the content test, because the link would 404 until that date.
+
+Drafts are written in schedule order, so a draft may also link to another draft dated on or before its own date. Once you schedule it, the stricter rule applies: every draft it links to must be scheduled or live by then. If one slipped, the test names the link; turn it into plain text until that post is live.
 
 ## When something goes wrong
 

@@ -1,0 +1,205 @@
+---
+title: "Hermes Agent vs OpenClaw vs a managed AI employee"
+seoTitle: "Hermes Agent vs OpenClaw vs a Managed AI Employee (2026)"
+description: "Hermes Agent and OpenClaw are free to self-host; Nous hosts Hermes from $20 a month. Which suits a non-technical founder, and when a managed agent is simpler."
+published: "2026-12-13"
+author: "construct-team"
+tags: ["comparison", "openclaw", "hermes-agent", "ai-employee"]
+kind: "comparison"
+draft: true
+---
+
+Construct gives you a managed AI employee from $9 a month with nothing to install, host, or keep awake: its own workspace, files, schedules, and email address, with model usage included in the plan. Hermes Agent and OpenClaw are free, MIT-licensed software, but you supply the machine and pay the model bill yourself; Nous Research hosts Hermes from $20 a month in credits, and OpenClaw has no official hosted version, so it relies on third-party hosts from $5.99 a month. For non-technical founders and small teams, Construct is the better choice: there is no server to maintain or harden, the plan is a fixed monthly price with published limits rather than a bill that moves with token use, the agent's memory is something you can read and correct, and the whole team works from one shared workspace.
+
+If you are technical and want to own every layer, both open-source agents are covered in detail below, with sources. Prices and documentation were checked on October 1, 2026.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why choose Construct over running Hermes or OpenClaw?
+
+- **Nothing to run.** Sign up in a browser and assign work. There is no installer, server, bot token, update, or approval setting to manage, and Calendar schedules run on Construct's servers with your laptop closed. OpenClaw's own FAQ tells you to use a VPS if you want 24/7 reliability.
+- **A fixed monthly price, models included.** Lite is $9 with base model usage included and published plan limits, with no per-message billing and no separate model provider to pay. On Pro you can still bring keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI.
+- **Memory you can read and fix.** Hermes writes skills for itself. Construct shows you what it has learned, and you can correct or forget a fact before the next run relies on it.
+- **Work that lands in files.** Reports, spreadsheets, and scripts are saved to workspace files as the agent produces them, so a run that stops at step 30 keeps steps 1 to 29.
+- **A team workspace without seats.** On any plan, invite teammates as Owner, Admin, or Member. There is no member limit, and everyone's work draws on the owner's plan.
+- **Its own inbox, plus your chat apps.** Each agent has its own email address, and you can reach it from the web, Slack, Telegram, or Discord.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/memories-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct memory demo"
+    aria-describedby="memories-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/memories.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/hermes-vs-openclaw-vs-managed/memories-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="memories-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct Memories showing stored preferences and
+    procedures with their evidence, which you can review, correct, or forget.
+  </figcaption>
+</figure>
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## Construct vs Hermes Agent vs OpenClaw at a glance
+
+<ArticleTable caption="Construct, Hermes Agent, and OpenClaw compared, checked October 1, 2026">
+
+| | Construct (managed AI employee) | Hermes Agent | OpenClaw |
+| --- | --- | --- | --- |
+| Monthly price | $9, $59, or $299 | Software free; Nous Portal plans $20 to $200 in credits | Software free; third-party hosts from $5.99 |
+| Model bill | Included in the plan; your own keys on Pro | Your provider, or Nous Portal credits | Your provider, a ChatGPT subscription sign-in, or a local model |
+| Hosting | Hosted by default; nothing to run | Nous Portal Agent Cloud Hosting, billed from credits | None official; third-party hosts such as Hostinger and MyClaw |
+| Setup | Sign up in a browser | Desktop app or one-line installer; "under two minutes" | Desktop app, installer script, or npm; about 5 minutes for basic setup |
+| Memory and learning | Memory you can inspect, correct, or forget | Creates and improves skills from experience | Skills from the ClawHub registry; persistent memory |
+| Schedules | Calendar runs prompts, actions, or workflows; 3, 10, or 50 by plan | Built-in cron with delivery to any platform | Cron, webhooks, Gmail triggers, heartbeat check-ins |
+| Team use | Team workspace with roles and no per-seat fee | All authorized users are equally trusted | Configured in your own deployment |
+| Chat apps | Web, Slack, Telegram, Discord, its own email inbox | Telegram, Discord, Slack, WhatsApp, Signal, email, CLI, and more | WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Teams, Matrix, SMS, and many more |
+| Safety defaults | No server to expose; Activity records each action and why | Smart command approval on by default; YOLO mode can turn it off | Sandboxing and exec approvals off by default; DM pairing on |
+| Licence | Commercial service | MIT | MIT |
+| Who makes it | Construct | Nous Research, a venture-backed company | OpenClaw Foundation, a 501(c)(3) non-profit |
+
+</ArticleTable>
+
+Sources are linked in each section and listed under Sources. "Software free" is not a working budget: both open-source agents still need a machine and model usage.
+
+## What does each one really cost per month?
+
+<ArticleTable caption="Monthly cost of Construct, hosted Hermes, and hosted OpenClaw, USD, checked October 1, 2026">
+
+| Option | Monthly price | What is included |
+| --- | --- | --- |
+| Construct Lite | $9 | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address, base model usage |
+| Construct Starter | $59 | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks, team workspace |
+| Construct Pro | $299 | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys |
+| Nous Portal Plus, Super, Ultra (Hermes) | $20, $100, $200 | $22, $110, or $220 of credits shared by models, tools, and hosting |
+| Hostinger 1-Click OpenClaw | From $5.99, paid upfront | Hosting only; you add a model provider |
+| MyClaw (OpenClaw) | $29 | Managed hosting; AI token usage is not included |
+
+</ArticleTable>
+
+Sources: [Construct pricing](/pricing/), [Nous Portal](https://portal.nousresearch.com/), [MyClaw pricing](https://myclaw.ai/pricing), and our guide to [hosted OpenClaw alternatives](/blog/hosted-openclaw-alternatives/). Nous Portal's page does not say how many credits a month of hosting uses, and both open-source agents' model bills move with how much the agent does and how often it wakes up. Construct is a fixed monthly price with published plan limits.
+
+## Hermes Agent: the agent that writes its own skills
+
+Hermes Agent is Nous Research's open-source agent. It creates skills from experience, improves them during use, searches its own past conversations, and builds a model of the user across sessions ([Hermes Agent on GitHub](https://github.com/NousResearch/hermes-agent)). TechCrunch described it as shipping with built-in skills such as web search, coding, and image understanding, and designed to build more skills from people's usage ([TechCrunch](https://techcrunch.com/2026/07/13/hermes-agent-maker-nous-research-in-talks-for-new-funding-at-1-5b-valuation/)). TechCrunch reported about 214,000 GitHub stars in July 2026, when Nous was raising at least $75 million at a $1.5 billion valuation; the repository showed 250,400 when we checked.
+
+**Getting started.** The site offers desktop apps for macOS and Windows and a one-line installer, and the installation guide promises "under two minutes" ([Hermes installation](https://hermes-agent.nousresearch.com/docs/getting-started/installation)). After installing, you run `hermes model` to pick a model, `hermes tools` to enable tools, and `hermes gateway setup` to connect chat apps, or `hermes setup --portal` to use a Nous Portal subscription for all of it. The desktop app needs an Apple Silicon Mac; Intel Macs are not supported.
+
+**Where it runs.** On your computer, in Docker, over SSH, or on serverless backends such as Daytona and Modal ([Hermes docs](https://hermes-agent.nousresearch.com/docs)). Nous Portal adds Agent Cloud Hosting, which runs your agent in the cloud with server costs billed to your credit balance ([Nous Portal](https://portal.nousresearch.com/)). Plans are Free ($0, free models only), Plus ($20 with $22 of credits), Super ($100 with $110), and Ultra ($200 with $220). MyClaw also sells managed Hermes hosting ([MyClaw](https://myclaw.ai/)).
+
+**Safety.** Hermes checks commands before running them. Its default "Smart" mode uses an auxiliary model to assess risk, low-risk commands are auto-approved, and a hardline blocklist refuses things like `rm -rf /` even in YOLO mode, which otherwise bypasses approvals. Unknown people who message the bot get a one-time pairing code you must approve ([Hermes security](https://hermes-agent.nousresearch.com/docs/user-guide/security)). Its security policy states: "The only security boundary against an adversarial LLM is the operating system," and "Within the authorized set, all callers are equally trusted" ([Hermes SECURITY.md](https://github.com/NousResearch/hermes-agent/blob/main/SECURITY.md)).
+
+**What to watch.** If you use Nous Portal, its privacy policy says Nous collects "prompts, instructions, messages, uploads, inputs, outputs" and may use derived data for "artificial intelligence training," unless you turn on Privacy Mode, which applies only from the moment you enable it ([Nous privacy policy](https://portal.nousresearch.com/privacy)). Construct does not train on your data.
+
+{/* TODO: verify Nous Portal Agent Cloud Hosting server cost per month and which chat apps a hosted Hermes agent supports. */}
+
+## OpenClaw: the foundation-run agent for every chat app
+
+OpenClaw has 391,000 GitHub stars, an independent foundation, and Microsoft's Autopilot agent built on top of it ([OpenClaw on GitHub](https://github.com/openclaw/openclaw), [OpenClaw blog](https://openclaw.ai/blog/microsoft-autopilot-openclaw)). It describes itself as a self-hosted gateway that connects chat apps to AI agents ([OpenClaw docs](https://docs.openclaw.ai/)), and it supports WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Teams, Matrix, SMS, and more.
+
+**Getting started.** Desktop apps for macOS, Windows, and Linux, an installer script, or `npm i -g openclaw` ([OpenClaw](https://openclaw.ai/)). The docs estimate about five minutes for a basic setup with an API key. Keeping it running is the harder part: "Want 24/7 reliability? Use a VPS," the FAQ says, because a laptop gateway pauses when it sleeps ([OpenClaw FAQ](https://docs.openclaw.ai/help/faq-first-run/providers-and-hosting)).
+
+**Where it runs.** Your own machine or a server. There is no official hosting: the Foundation says "No subscription. No hosted tier. No token," and its new OpenClaw Enterprise is also "built to run on your own infrastructure" ([OpenClaw Enterprise](https://openclaw.ai/blog/openclaw-enterprise)). Third parties fill the gap, from Hostinger's 1-Click OpenClaw at $5.99 a month paid upfront to MyClaw at $29 a month. Our guide to [hosted OpenClaw alternatives](/blog/hosted-openclaw-alternatives/) compares them.
+
+**Safety.** The gateway listens only on the local machine by default, and strangers who message the bot get a pairing code. But "Sandboxing and exec approvals are off by default," and "Hardening is deliberate configuration" ([Why OpenClaw](https://docs.openclaw.ai/start/why-openclaw)). When you do turn approvals on, they arrive as buttons in Slack, Telegram, Discord, or Teams.
+
+**What to watch.** The heartbeat. By default OpenClaw wakes every 30 minutes, and "Heartbeats run full agent turns. Shorter intervals burn more tokens." Isolating those runs cuts each one from "~100K tokens down to ~2-5K" ([OpenClaw heartbeat docs](https://docs.openclaw.ai/gateway/heartbeat)).
+
+### How do Hermes and OpenClaw differ underneath?
+
+OpenClaw's documentation includes a source-by-source comparison with Hermes, built around the idea that OpenClaw can separate a trusted gateway from untrusted execution, and it points out that Nous is venture-funded while the OpenClaw Foundation "sells nothing" ([OpenClaw and Hermes Agent](https://docs.openclaw.ai/start/why-openclaw/openclaw-and-hermes-agent)). That page is written by one side, and it says so. Hermes, for its part, leans on its learning loop and its hosted Portal.
+
+For a founder, the practical differences are smaller than the debate suggests. Hermes is quicker to get running and has an official hosted option; OpenClaw reaches more chat apps. Both need someone to decide what the agent can touch, keep it updated, and watch the model bill. A managed AI employee takes that work off your plate.
+
+## Which is best for a non-technical founder?
+
+Look at the work, not the agent. Three questions decide it.
+
+**1. Will anyone keep it running?** Both open-source agents install in minutes. The work comes afterwards: updates, a machine that stays awake, channel bot tokens, approval settings, and a token budget. If nobody on the team will do that, Construct runs it for you, and its Calendar schedules keep going with every laptop closed.
+
+**2. How predictable must the bill be?** The open-source agents' model bill moves with how much the agent does and how often it wakes up. Nous Portal draws models, tools, and hosting from one credit balance. Construct is a fixed monthly price, from $9, with published plan limits and no per-message billing.
+
+**3. Where does the work arrive?** If work arrives by email, in Slack, or as a recurring job, Construct handles it and gives the agent its own inbox, so clients and suppliers can write to it directly. If your customers write on WhatsApp or iMessage, see the narrow cases below.
+
+**An illustrative example.** This is illustrative, not a customer case study. A founder of a two-person design studio wants three things: a Monday summary of new client emails, a weekly check of three suppliers' price lists, and replies drafted for her to approve. On Construct Lite at $9, the three jobs fit the 3 scheduled tasks, the supplier price lists land as dated files in the workspace, client emails can go straight to the agent's own address, and the replies wait as drafts until she sends them. On Hermes via Nous Portal Plus, she pays $20 a month in credits, connects a chat app for the summary, and learns what Smart approval mode will and will not ask about. On OpenClaw, she picks a host, adds a model key, and sets the heartbeat to isolated sessions before the first bill.
+
+{/* TODO: hands-on test, not yet run. Have a non-technical tester set up the same three jobs (Monday client-email summary, weekly supplier price check saved to a dated file, reply drafts with nothing sent) on Hermes Agent via Nous Portal Plus, OpenClaw on Hostinger 1-Click, and Construct Lite. Record minutes to first working job, number of terminal commands needed, approval prompts seen, credits or tokens used in week one, failures, and where each output was saved. Add dated screenshots. */}
+
+## Already running Hermes or OpenClaw? Add Construct in 15 minutes
+
+You do not have to shut your agent down. Move the recurring business job that most needs to run reliably, or the one your teammates need to see.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test your own model keys and longer runs.
+2. **Copy the instructions and skill descriptions** that job relies on into a Construct chat, and move its source files into the workspace.
+3. **Connect the apps** the job needs from the integration catalog, or add your own MCP tools.
+4. **Run it once and check the result** in Files.
+5. **Put it on the Calendar** so it runs every week whether or not anyone is online.
+
+There is no import: Hermes skills and OpenClaw memory do not transfer, so write your rules into the first instruction and Construct saves them as memory you can read. Two things to set up deliberately: Construct's workflows do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself; and each terminal command is capped at 300 seconds, so keep any long-running service on the machine that runs it today.
+
+## When might Hermes or OpenClaw still fit?
+
+- Your customers and suppliers write on WhatsApp, Signal, iMessage, or Teams, and the agent must answer there.
+- You want to run local models or keep the whole stack on your own infrastructure.
+- You want to read and change the agent's code.
+
+For recurring business work across a few apps, with a fixed price and nobody on call to maintain an agent, Construct is the better fit. If you are weighing a managed OpenClaw-based product, see [Construct vs Genspark Claw](/blog/construct-vs-genspark-claw/).
+
+## Which should you choose?
+
+Choose Construct. It starts at $9 with base model usage included, has no server or installer for you to maintain, keeps memory you can read and correct, and leaves every finished file in a workspace your team shares. If you already run Hermes or OpenClaw, keep it for the chat apps and experiments it handles, and let Construct run the work your business depends on.
+
+Give Construct your Monday summary first: forward client emails to its address or connect your inbox, ask for a dated file of what needs a reply, check it once, and put it on the Calendar. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+## Methodology
+
+We build Construct. This is our editorial comparison of documented capabilities and published prices, checked on October 1, 2026. It is not a hands-on performance benchmark.
+
+We read each project's homepage, GitHub repository, installation and security documentation, and the pricing and privacy pages for Nous Portal. OpenClaw's comparison of itself with Hermes is written by the OpenClaw project, and we cite it as such. Where a capability is not documented in the sources we reviewed, we say so rather than treating missing documentation as proof that it is missing.
+
+{/* TODO: re-check Hermes, Nous Portal, and OpenClaw facts and prices before publishing on December 13, 2026; all were captured October 1, 2026. */}
+
+## Sources
+
+Pages fetched on October 1, 2026:
+
+- [Hermes Agent](https://hermes-agent.nousresearch.com/) and [Hermes Agent on GitHub](https://github.com/NousResearch/hermes-agent)
+- [Hermes documentation](https://hermes-agent.nousresearch.com/docs), [installation](https://hermes-agent.nousresearch.com/docs/getting-started/installation), and [security](https://hermes-agent.nousresearch.com/docs/user-guide/security)
+- [Hermes Agent security policy](https://github.com/NousResearch/hermes-agent/blob/main/SECURITY.md)
+- [Nous Portal](https://portal.nousresearch.com/) and [Nous privacy policy](https://portal.nousresearch.com/privacy)
+- [TechCrunch: Hermes Agent maker Nous Research in talks for new funding at $1.5B valuation, July 13, 2026](https://techcrunch.com/2026/07/13/hermes-agent-maker-nous-research-in-talks-for-new-funding-at-1-5b-valuation/)
+- [OpenClaw](https://openclaw.ai/) and [OpenClaw on GitHub](https://github.com/openclaw/openclaw)
+- [OpenClaw docs overview](https://docs.openclaw.ai/), [Why OpenClaw](https://docs.openclaw.ai/start/why-openclaw), and [OpenClaw and Hermes Agent](https://docs.openclaw.ai/start/why-openclaw/openclaw-and-hermes-agent)
+- [OpenClaw FAQ: providers, hardware, and hosting](https://docs.openclaw.ai/help/faq-first-run/providers-and-hosting) and [heartbeat documentation](https://docs.openclaw.ai/gateway/heartbeat)
+- [OpenClaw blog: OpenClaw Enterprise](https://openclaw.ai/blog/openclaw-enterprise) and [Microsoft Autopilot is built on OpenClaw](https://openclaw.ai/blog/microsoft-autopilot-openclaw)
+- [MyClaw](https://myclaw.ai/) and [MyClaw pricing](https://myclaw.ai/pricing)
+- [Construct pricing](/pricing/)
+
+## Related resources
+
+- [Construct vs OpenClaw](/blog/construct-vs-openclaw/)
+- [Hosted OpenClaw alternatives: managed claws vs an AI employee](/blog/hosted-openclaw-alternatives/)
+- [Construct vs building your own AI agent](/blog/construct-vs-diy/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)

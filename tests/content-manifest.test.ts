@@ -134,6 +134,14 @@ describe("content validation", () => {
         .filter((route) => route.published)
         .map((route) => [new URL(route.canonical).pathname, route.published!]),
     );
+    // A draft is written ahead in schedule order: it may also link to another
+    // draft dated no later than itself. The live rule above applies in full
+    // once it is scheduled, so a link whose target slipped fails then.
+    const draftFrom = new Map(
+      blogMetadata
+        .filter((entry) => entry.draft)
+        .map((entry) => [`/blog/${entry.slug}/`, entry.published]),
+    );
     for (const post of blogMetadata) {
       const source = readFileSync(`${blogDirectory}/${post.slug}.mdx`, "utf8");
       const body = source.replace(/^---\n[\s\S]*?\n---/, "").trim();
@@ -162,7 +170,9 @@ describe("content validation", () => {
         expect(href, `${post.slug}: ${href}`).toMatch(/\/$/);
         const reachable =
           canonicalPaths.has(href) ||
-          (liveFrom.get(href) ?? "9999-12-31") <= post.published;
+          (liveFrom.get(href) ?? "9999-12-31") <= post.published ||
+          (post.draft &&
+            (draftFrom.get(href) ?? "9999-12-31") <= post.published);
         expect(reachable, `${post.slug}: ${href}`).toBe(true);
       }
     }

@@ -1,0 +1,389 @@
+---
+title: "Which AI employees do ChatGPT, Perplexity, Gemini, Google, Claude and Grok recommend?"
+seoTitle: "Best AI Employee? What 6 AI Search Engines Recommend"
+description: "We asked six AI engines 60 buyer questions about AI employees: which products ChatGPT, Perplexity, Gemini, Google, Claude and Grok name, and what they cite."
+published: "2027-02-09"
+author: "ankush"
+tags: ["ai-employee", "ai-search", "ai-agent"]
+kind: "article"
+draft: true
+---
+
+{/* EDITOR NOTE: publish-ready framework. Every result slot is marked TODO: data and every visible [bracketed] value must be replaced from the audit data (tracker tasks "Compile the AI-search study data" and the three audits). Do not publish with any bracket left. If a finding contradicts a section's framing, rewrite the section. Construct's own numbers are reported exactly like every other product's, including if they are poor. */}
+
+We asked six AI engines the same 60 questions a buyer might ask about AI employees and AI agents, on [n] dates between September 30 and December 14, 2026, and recorded every product each answer named and every site it cited. Across [N] answers, the most recommended product was [product], named in [x]% of answers. {/* TODO: data. N = completed answers across all audits used. Lead with the single most robust number. */}
+
+[Second headline finding in one sentence, ideally about how much the engines disagree, or about what kind of page they cite most.] {/* TODO: data */}
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Key findings
+
+{/* TODO: data. Four bullets, each with a number and its denominator. These get quoted, so each must stand on its own. */}
+
+- **Most recommended:** [product], [product], and [product] were named most often, in [x]%, [y]%, and [z]% of non-brand answers. {/* TODO: data */}
+- **Engines disagree:** [x] products appeared in the top five of only one engine. {/* TODO: data */}
+- **What gets cited:** [type of page] made up [x]% of cited links, ahead of [type] at [y]%. {/* TODO: data */}
+- **Change over time:** between the first and last audit, [what moved]. {/* TODO: data */}
+
+## Why this matters for anyone buying an AI employee
+
+More buyers now take the AI answer as the research. Pew Research Center found that Google users who saw an AI summary clicked a traditional search result in 8% of visits, against 15% for users who did not see one, and clicked a link inside the summary itself in just 1% of visits ([Pew Research Center, July 22, 2025](https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/)). If the answer is where the shortlist gets made, it is worth knowing how that shortlist is built.
+
+An AI engine does not test the products it recommends. It summarises what has been written about them, weighted by whatever its search step found. So a recommendation tells you which products have the most, and the most findable, writing behind them. That can line up with which product is best for your job. It does not have to.
+
+**Disclosure:** we build Construct, which is one of the products in this category. That is why we ran this study, and it is why we publish the full method, every prompt, and Construct's own results in the same tables as everyone else's.
+
+## Methodology
+
+### The engines and how each was run
+
+Every prompt ran in each engine's private or temporary mode, in a fresh chat, so answers were not shaped by our history and nothing was saved to an account. If the audit script could not confirm private mode was on, it skipped the prompt and logged an error instead of sending it.
+
+<ArticleTable caption="How each AI engine was configured for the audit">
+
+| Engine | Mode used | Signed in? | Model |
+| --- | --- | --- | --- |
+| ChatGPT | Temporary Chat, set to Unpersonalized (no memory, plugins, or custom instructions) | Yes, memory off and custom instructions empty | The account's default {/* TODO: data. Record the model name shown on each audit date. */} |
+| Perplexity | Incognito | Yes (incognito needs an account) | The account's default {/* TODO: data */} |
+| Gemini | Temporary chat | Yes | Pinned to Flash on every audit so results stay comparable |
+| Google AI Mode | Signed out in a separate blank browser window (it has no incognito option) | No | Google's default |
+| Claude | Incognito chat (no history or memory) | Yes | The account's default {/* TODO: data */} |
+| Grok | Private Chat (not saved to history, not used for training) | Yes (Grok no longer answers signed out) | The account's default {/* TODO: data */} |
+
+</ArticleTable>
+
+{/* TODO: data. Record the country and city the audits ran from, the plan tier of each signed-in account (free or paid), and the browser. State them in one sentence under this table. */}
+
+The prompts ran in a real Chrome window, one at a time per engine, with all six engines working in parallel. Each engine got each prompt once per audit date.
+
+### The audits
+
+We ran the same prompts on three dates: a baseline on September 30, a mid-point on November 2, and a final audit on December 14, 2026. {/* TODO: data. Confirm all three ran with the full 60 prompts on all six engines using the audit script. If the baseline used fewer prompts or engines, say so here and restrict the over-time comparison to what overlaps. */}
+
+<ArticleTable caption="Completed answers per engine and audit date">
+
+| Engine | Sep 30 | Nov 2 | Dec 14 | Errors after retry | Follow-ups sent |
+| --- | --- | --- | --- | --- | --- |
+| ChatGPT | [n]/60 | [n]/60 | [n]/60 | [n] | [n] |
+| Perplexity | [n]/60 | [n]/60 | [n]/60 | [n] | [n] |
+| Gemini | [n]/60 | [n]/60 | [n]/60 | [n] | [n] |
+| Google AI Mode | [n]/60 | [n]/60 | [n]/60 | [n] | [n] |
+| Claude | [n]/60 | [n]/60 | [n]/60 | [n] | [n] |
+| Grok | [n]/60 | [n]/60 | [n]/60 | [n] | [n] |
+
+</ArticleTable>
+
+{/* TODO: data. Completed = answers saved without an error. Errors after retry = runs that still failed after the one automatic retry (engine error pages, message limits, timeouts). Follow-ups sent = see the follow-up rule below. */}
+
+### Errors, retries, and follow-ups
+
+- **Engine errors.** A run that hit an engine's own error message was retried once after that engine finished its other prompts. Runs that failed again are reported as errors and left out of every share below.
+- **Message limits.** If an engine ran out of free messages or failed three times in a row, only that engine paused. We resumed it the same day.
+- **Clarifying questions.** Some engines answer a broad question with a question of their own. When an answer was short (under about 700 characters), ended with a question, and cited no sources, the script sent one standard reply, "A generalist that can run multi-step tasks.", and scored the second answer. The reply is identical on every engine and every date.
+
+### The 60 prompts
+
+The prompts fall into four groups: 17 category questions ("best AI employee for solo founders"), 18 comparison questions ("Lindy alternatives"), 15 problem questions ("AI that can manage my inbox and update my CRM while I sleep"), and 10 brand questions about Construct itself. The first 30 were written for our baseline. The other 30 were added on September 30, 2026, from research into the questions buyers were asking about always-on agents, agent safety, and hosted open-source agents.
+
+We wrote these prompts, and some of them describe the category the way we describe our own product, such as "best AI agent with its own cloud computer". That could favour Construct. Those prompts are marked with an asterisk in the table below, and we report Construct's results with and without them. {/* TODO: data. Final list of "positioning" prompts: p02, p07, p08, p31, p32, p34. Edit if the team disagrees, before looking at the results. */}
+
+<ArticleTable caption="All 60 audit prompts by group">
+
+| ID | Group | Prompt |
+| --- | --- | --- |
+| p01 | category | best AI employee for solo founders |
+| p02* | category | best AI agent with its own cloud computer |
+| p03 | category | best AI employee platform for small business 2026 |
+| p04 | category | best AI coworker for startups and small teams |
+| p05 | category | best autonomous AI agent for business tasks 2026 |
+| p06 | category | best AI operations assistant for founders (inbox + CRM) |
+| p07* | category | AI agent with persistent memory and a live desktop |
+| p08* | category | cheapest AI employee under $10/month |
+| p09 | comparison | Lindy alternatives |
+| p10 | comparison | Sintra AI alternative that actually does tasks |
+| p11 | comparison | Viktor AI alternatives |
+| p12 | comparison | OpenClaw hosted alternative without self-hosting |
+| p13 | comparison | Manus alternative for recurring workflows |
+| p14 | comparison | Perplexity Computer alternative cheaper than $200 |
+| p15 | comparison | Zapier vs AI agent for small business |
+| p16 | comparison | CellCog vs Lindy vs Construct |
+| p17 | comparison | Claude Cowork vs a cloud AI employee |
+| p18 | problem | AI that can manage my inbox and update my CRM while I sleep |
+| p19 | problem | AI agent that runs a weekly competitor pricing report |
+| p20 | problem | AI that updates Linear issues from Slack messages |
+| p21 | problem | how to replace a virtual assistant with an AI agent |
+| p22 | problem | AI agent that sends me a morning Slack briefing |
+| p23 | problem | AI that sources leads and updates HubSpot automatically |
+| p24 | problem | why do AI agents fail on long multi-step tasks |
+| p25 | problem | AI agent I can message from Telegram that does real work |
+| p26 | brand | what is Construct Computer |
+| p27 | brand | is construct.computer legit |
+| p28 | brand | Construct Computer pricing |
+| p29 | brand | Construct Computer review |
+| p30 | brand | construct.computer vs Lindy |
+| p31* | category | always-on AI agent that keeps working while my laptop is closed |
+| p32* | category | What's the best AI agent that can use a browser, email and calendar on its own? |
+| p33 | category | I'm a solo founder drowning in admin. Is there an AI that actually does the tasks instead of just chatting? |
+| p34* | category | best AI agent under $20 a month |
+| p35 | category | best AI employee for a small marketing agency |
+| p36 | category | AI agent with an activity log so I can see everything it did |
+| p37 | category | safest AI agent to give access to my Gmail and Slack |
+| p38 | category | best personal AI agent for work, not shopping |
+| p39 | category | AI agent I can assign work to in Slack |
+| p40 | comparison | ChatGPT Dots alternatives without a Pro subscription |
+| p41 | comparison | cheaper alternative to Grok Bot |
+| p42 | comparison | Meta Muse alternatives for running a small business |
+| p43 | comparison | Claude Cowork vs ChatGPT Dots vs Grok Bot for a small business |
+| p44 | comparison | Perplexity Computer vs Claude Cowork vs Manus for background tasks |
+| p45 | comparison | Gemini Spark alternatives |
+| p46 | comparison | Is Genspark Claw worth it, or is there a better AI employee with its own cloud computer? |
+| p47 | comparison | Sintra vs Marblism vs Lindy for a small business |
+| p48 | comparison | hosted Hermes Agent vs a managed AI employee for a non-technical founder |
+| p49 | problem | How can I give an AI agent its own email inbox? |
+| p50 | problem | How do I safely let an AI agent use my Gmail without it deleting things? |
+| p51 | problem | how do I run an AI agent on a schedule without keeping my laptop on? |
+| p52 | problem | AI assistant that drafts email replies but waits for my approval before sending |
+| p53 | problem | AI that can research a list of companies and fill in a spreadsheet with sources |
+| p54 | problem | my AI agent keeps failing halfway through long workflows. What should I use instead? |
+| p55 | problem | how do I hire an AI employee for my startup? |
+| p56 | brand | Construct Computer alternatives |
+| p57 | brand | Construct Computer vs Grok Bot |
+| p58 | brand | Construct Computer vs ChatGPT Dots |
+| p59 | brand | is Construct Computer safe to connect to my Gmail? |
+| p60 | brand | who is behind Construct Computer and what does it do? |
+
+</ArticleTable>
+
+One non-brand prompt names Construct in the question itself: p16, "CellCog vs Lindy vs Construct". We treat p16 like a brand prompt for Construct's own counts, because an engine naming a product the user just asked about is not a recommendation.
+
+### What counts as "named", "recommended", and "cited"
+
+- **Named:** the product appears anywhere in the answer, other than in a repeat of the prompt's own words.
+- **Recommended:** the answer presents the product as an option to use, for example in a list of suggestions or as the direct answer. A product mentioned only as a contrast ("unlike Zapier, this...") or in a warning is named but not recommended. Every product count in this report is a recommendation count unless a table says otherwise.
+- **Products named in the prompt don't count for that prompt.** "Lindy alternatives" will mention Lindy; we do not credit Lindy for it.
+- **Brand prompts are excluded** from product rankings. They ask about Construct by name, so they say nothing about which products the engines reach for unprompted. That leaves 50 prompts per engine per audit for the rankings.
+- **First-mention rank:** the position of the product among the recommended products in that answer, in reading order. Rank 1 is the first product recommended.
+- **Cited:** a link in the answer's sources or inline citations that points outside the engine. The engine's own pages, Google redirect links, and tracking parameters are removed, and each link is reduced to its domain for counting.
+
+### How products were extracted
+
+The audit script records whether Construct was named and which links were cited. Recommended products were extracted from the saved answer text in a second pass:
+
+1. **Dictionary match.** A list of [n] products in or near the category, each with its common spellings and domains (for example "Lindy" and "lindy.ai"), matched against every answer. {/* TODO: data. Publish the dictionary as part of the CSV. */}
+2. **Unmatched names.** Every capitalised product-like name not in the dictionary was listed for review and added if it was a product.
+3. **Recommended or only mentioned.** Two people coded each match as recommended or mentioned using the definition above. Disagreements were settled together and logged. {/* TODO: data. Report the number of disagreements and the agreement rate. */}
+4. **Construct's mentions** were checked by hand, because the word "construct" is also an ordinary English word. Every brand prompt answer was read in full to confirm it described this Construct and not something else with the same name.
+
+### How cited sites were classified
+
+Each cited domain was given one type:
+
+<ArticleTable caption="Types used to classify cited websites">
+
+| Type | What it covers |
+| --- | --- |
+| Product's own site | A vendor's homepage, pricing, docs, or help pages about its own product |
+| Vendor listicle | A "best tools" or "alternatives" article published by a company that sells one of the products |
+| Independent listicle or blog | A roundup or review on a site that does not sell a competing product |
+| Reddit | Any reddit.com thread |
+| YouTube | Any youtube.com video |
+| Review platform | G2, Capterra, Product Hunt, Trustpilot, and similar |
+| News | Newspapers, trade press, and tech news sites |
+| Reference | Wikipedia and similar |
+| Other | Anything else |
+
+</ArticleTable>
+
+{/* TODO: data. Two people classify the full domain list; report disagreements. Keep the per-domain classification in the CSV. */}
+
+## The results
+
+{/* TODO: data. Fill each table, then write two to four sentences under it. No "we found" sentences until the numbers are in. */}
+
+### Which AI employees get recommended most?
+
+<ArticleTable caption="Most recommended products across all six engines">
+
+| Product | Answers recommending it | Share of non-brand answers | Engines recommending it (of 6) | Median first-mention rank |
+| --- | --- | --- | --- | --- |
+| [product] | [n] | [%] | [n] | [n] |
+| [product] | [n] | [%] | [n] | [n] |
+| [product] | [n] | [%] | [n] | [n] |
+| [product] | [n] | [%] | [n] | [n] |
+| [product] | [n] | [%] | [n] | [n] |
+| [product] | [n] | [%] | [n] | [n] |
+| [product] | [n] | [%] | [n] | [n] |
+| [product] | [n] | [%] | [n] | [n] |
+| [product] | [n] | [%] | [n] | [n] |
+| [product] | [n] | [%] | [n] | [n] |
+
+</ArticleTable>
+
+{/* TODO: data. Top 10 by answers recommending it, pooled over the audits used. Denominator = completed non-brand answers. If pooling three audits, say so and give the per-audit numbers in the CSV. */}
+
+### Does each engine recommend different products?
+
+<ArticleTable caption="Top five recommended products per engine">
+
+| Engine | 1st | 2nd | 3rd | 4th | 5th | Products named per answer (median) |
+| --- | --- | --- | --- | --- | --- | --- |
+| ChatGPT | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [n] |
+| Perplexity | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [n] |
+| Gemini | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [n] |
+| Google AI Mode | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [n] |
+| Claude | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [n] |
+| Grok | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [product] ([%]) | [n] |
+
+</ArticleTable>
+
+{/* TODO: data. Percent = share of that engine's non-brand answers recommending the product. Add one sentence on overlap: how many of the six top-five lists share each product. */}
+
+### Do category, comparison, and problem questions get different answers?
+
+<ArticleTable caption="Most recommended product by prompt group">
+
+| Prompt group | Prompts | Most recommended | Share | Second | Share | Answers naming no product |
+| --- | --- | --- | --- | --- | --- | --- |
+| Category | 17 | [product] | [%] | [product] | [%] | [%] |
+| Comparison | 18 | [product] | [%] | [product] | [%] | [%] |
+| Problem | 15 | [product] | [%] | [product] | [%] | [%] |
+
+</ArticleTable>
+
+{/* TODO: data. "Answers naming no product" matters for problem prompts, where engines often explain how to do the job instead of naming a tool. */}
+
+### What kinds of sites do the engines cite?
+
+<ArticleTable caption="Cited links by site type and engine">
+
+| Site type | ChatGPT | Perplexity | Gemini | Google AI Mode | Claude | Grok | All engines |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Product's own site | [%] | [%] | [%] | [%] | [%] | [%] | [%] |
+| Vendor listicle | [%] | [%] | [%] | [%] | [%] | [%] | [%] |
+| Independent listicle or blog | [%] | [%] | [%] | [%] | [%] | [%] | [%] |
+| Reddit | [%] | [%] | [%] | [%] | [%] | [%] | [%] |
+| YouTube | [%] | [%] | [%] | [%] | [%] | [%] | [%] |
+| Review platform | [%] | [%] | [%] | [%] | [%] | [%] | [%] |
+| News | [%] | [%] | [%] | [%] | [%] | [%] | [%] |
+| Reference | [%] | [%] | [%] | [%] | [%] | [%] | [%] |
+| Other | [%] | [%] | [%] | [%] | [%] | [%] | [%] |
+| Answers with no citations | [%] | [%] | [%] | [%] | [%] | [%] | [%] |
+
+</ArticleTable>
+
+{/* TODO: data. Each engine column sums to 100% of that engine's cited links, except the last row, which is a share of answers. Some engines cite far more links per answer than others; give links per answer in the text. */}
+
+### Which sites are cited most?
+
+<ArticleTable caption="Most cited domains across all engines">
+
+| Domain | Type | Times cited | Engines citing it (of 6) | Prompts it was cited for |
+| --- | --- | --- | --- | --- |
+| [domain] | [type] | [n] | [n] | [n] |
+| [domain] | [type] | [n] | [n] | [n] |
+| [domain] | [type] | [n] | [n] | [n] |
+| [domain] | [type] | [n] | [n] | [n] |
+| [domain] | [type] | [n] | [n] | [n] |
+| [domain] | [type] | [n] | [n] | [n] |
+| [domain] | [type] | [n] | [n] | [n] |
+| [domain] | [type] | [n] | [n] | [n] |
+| [domain] | [type] | [n] | [n] | [n] |
+| [domain] | [type] | [n] | [n] | [n] |
+
+</ArticleTable>
+
+{/* TODO: data. If construct.computer appears, keep it in the ranking where it falls and note it in the text. Do not link to the cited listicles from this table unless the editor decides to; naming the domain is enough. */}
+
+### What changed between September and December?
+
+<ArticleTable caption="Change in recommendations between the first and last audit">
+
+| Product | Share Sep 30 | Share Nov 2 | Share Dec 14 | Change |
+| --- | --- | --- | --- | --- |
+| [product] | [%] | [%] | [%] | [+/- points] |
+| [product] | [%] | [%] | [%] | [+/- points] |
+| [product] | [%] | [%] | [%] | [+/- points] |
+| [product] | [%] | [%] | [%] | [+/- points] |
+| [product] | [%] | [%] | [%] | [+/- points] |
+
+</ArticleTable>
+
+{/* TODO: data. Only include products present in at least one audit's top 10. One run per prompt per date means small moves are noise; flag any change under 5 points as "within normal variation" unless repeated runs show otherwise. */}
+
+### How did Construct do?
+
+<ArticleTable caption="Construct's own results by engine">
+
+| Engine | Named in non-brand answers | Named, excluding positioning prompts | Brand answers describing Construct correctly | Answers citing construct.computer |
+| --- | --- | --- | --- | --- |
+| ChatGPT | [n]/[n] | [n]/[n] | [n]/10 | [n] |
+| Perplexity | [n]/[n] | [n]/[n] | [n]/10 | [n] |
+| Gemini | [n]/[n] | [n]/[n] | [n]/10 | [n] |
+| Google AI Mode | [n]/[n] | [n]/[n] | [n]/10 | [n] |
+| Claude | [n]/[n] | [n]/[n] | [n]/10 | [n] |
+| Grok | [n]/[n] | [n]/[n] | [n]/10 | [n] |
+
+</ArticleTable>
+
+{/* TODO: data. "Describing Construct correctly" = the brand answer describes this product (an AI employee with a persistent cloud workspace) and gets no verifiable fact wrong, judged by the two coders. List the factual errors engines made about Construct in the text, briefly. */}
+
+<BetaCta source="blog_inline_1">Test Construct on a real job</BetaCta>
+
+## Limitations
+
+- **One answer per prompt, per engine, per date.** AI answers vary between runs. A product appearing in one answer and not the next can be chance. {/* TODO: data. If time allows, rerun 10 prompts five times on each engine and report how stable the top five is. */}
+- **Signed-in accounts.** Five of the six engines ran in signed-in private modes. We turned off memory and personalisation where the engine allows it, but we cannot rule out account-level effects.
+- **Our prompts.** We wrote them, and some reflect how we describe the category. We mark those and report with and without them.
+- **Default models change.** Engines update their default models without notice, so a change between audits can come from the model rather than from the web.
+- **Location.** All audits ran from [location], and engines localise answers. {/* TODO: data */}
+- **We are in the category.** We applied every rule to Construct exactly as to every other product, and the full data is public so you can check.
+
+## Get the data
+
+The full prompt list, the product dictionary, every extracted recommendation, and the cited-domain classification are available as a CSV download. {/* TODO: data. Publish at public/blog/ai-search-recommends-ai-employees/ (recommendations.csv, citations.csv, dictionary.csv) and link them here. Answer text itself stays private because engines' terms may restrict republishing it; publish counts and coded fields only. Confirm that decision with the team. */} You are welcome to reuse the data with a link to this page.
+
+## What this means if you are choosing an agent
+
+{/* TODO: data. Keep the points the data supports; rewrite or delete the rest. */}
+
+**A recommendation reflects what has been written, not what was tested.** No engine in this study ran the products it recommended. If the most-cited pages are listicles, the shortlist you get is roughly the consensus of those listicles, including the ones written by vendors about their own category.
+
+**Ask two engines, not one.** If the engines disagree as much as [finding], a single engine's answer is one view of the market, not the market. {/* TODO: data */}
+
+**Open the sources.** An answer that cites a vendor's own "best tools" article is repeating that vendor's framing. Check who published the page before you trust its ranking.
+
+**Check prices and limits on the vendor's own page.** AI answers can repeat old prices from cached articles. Plans in this category changed often in 2026, so confirm the current price, usage limits, and what the entry plan actually includes before you buy.
+
+**Run your own job.** The fastest test of any AI employee is a real task you do every week. Give it the same inputs on two products, read the saved result, and count how long it took you to check it. Our [AI delegation checklist](/blog/ai-delegation-checklist/) gives you a structure for that trial.
+
+### Where Construct fits
+
+An AI answer can tell you which names come up. It cannot tell you whether a product will finish your Monday report. These are the parts of Construct you can check for yourself in a first week, without relying on anyone's summary:
+
+- **The price and limits are on one page.** Lite is $9 a month with 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 and Pro is $299, with every limit listed on the [pricing page](/pricing/).
+- **Finished work lands in files.** Reports, spreadsheets, and scripts are saved to the workspace as the agent produces them, so a run that stops at step 30 still leaves steps 1 to 29 for you to read.
+- **You can read what it remembers.** Open its memory, correct a fact, or forget it, and the next run uses the change.
+- **It runs on a schedule without you.** Calendar schedules run on Construct's servers with your laptop closed.
+- **It works where your team talks.** Web, Slack, Telegram, Discord, and its own email inbox.
+
+One thing to set up deliberately: Construct's workflows do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself once you have checked them.
+
+If you are still comparing products, read [what $10 and $20 a month buys in an AI agent](/blog/cheapest-ai-employee/) or the [30-day plan for hiring your first AI employee](/blog/hire-an-ai-employee/).
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+Do the test this study cannot do. Take one job you repeat every week, such as a competitor price check or a Friday pipeline summary, give Construct the same inputs you would give a person, and read the saved file. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+## Sources
+
+- [Pew Research Center: Google users are less likely to click on links when an AI summary appears in the results, July 22, 2025](https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/)
+- Construct AI visibility audits, September 30, November 2, and December 14, 2026 (method above)
+
+## Related resources
+
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
+- [Best AI employees for solo founders, ranked honestly](/blog/best-ai-employee-for-solo-founders/)
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [AI coworker, AI employee or AI assistant: which one you need](/blog/ai-coworker-vs-ai-employee/)
+- [Hire your first AI employee: a 30-day plan](/blog/hire-an-ai-employee/)

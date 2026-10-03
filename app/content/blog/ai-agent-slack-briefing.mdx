@@ -1,0 +1,182 @@
+---
+title: "A Morning Slack Briefing From Your AI Agent"
+seoTitle: "AI Agent Morning Slack Briefing: Setup Guide (2026)"
+description: "Have an AI agent prepare a weekday briefing at 7:45am and get it into Slack, from $9 a month. Exact prompts, setup steps, limits, and fixes."
+published: "2026-11-28"
+author: "nischal"
+tags: ["ai-agent", "scheduling", "email"]
+kind: "guide"
+draft: true
+---
+
+Construct prepares your morning briefing every weekday at 7:45am and gets it into Slack, on Lite at $9 a month with 3 scheduled tasks and an agent email address included. The alternative is opening your calendar, inbox, and shared folders before every first call, or wiring a scheduler, a mail account, and a Slack bot together yourself and keeping them running.
+
+For founders and small teams, Construct is the simpler way to get a daily briefing. One agent reads your Google Calendar, Gmail, and workspace files; the schedule runs in the cloud with your laptop closed; every briefing is saved as a file you can ask about later; and the same agent answers when you mention it in Slack. The scheduled briefing reaches your channel through the channel's email address, and you can ask for it in Slack any time.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why do this in Construct?
+
+- **$9 a month, schedule and email included.** Lite includes 3 scheduled tasks and the agent's own email address, which is all one daily briefing needs.
+- **It reads what you would open.** Google Calendar, Gmail, and Files/clients/ in one run, connected from Construct's integration catalog.
+- **It runs with your laptop closed.** Calendar schedules run server-side, so the 7:45am briefing does not wait for you to log in.
+- **Every briefing is a file.** Each one is saved to Files/briefings/ by date, so "what did Monday's briefing say about the Acme renewal?" has an answer.
+- **The same agent wherever your team talks.** Mention it in Slack, message it on Telegram or Discord, email it, or open the web app.
+- **Access you control.** By default only people you allow can use it in Slack, and anyone else you let in gets a read-only guest agent with no connected apps.
+
+<BetaCta source="blog_inline_1">Set up your briefing</BetaCta>
+
+## What goes in a useful morning briefing?
+
+A briefing is worth reading only if it saves you opening four tabs. For most founders and small teams that means:
+
+- **Today's meetings**, with who is attending and anything you were asked to prepare.
+- **Email that needs a reply from you**, oldest first, one line each.
+- **What changed overnight** in the files or records the team watches.
+- **One thing to decide today**, if anything is waiting on you.
+
+Keep it short enough to read on a phone before the first call. The agent can save a longer version to Files for anyone who wants the detail.
+
+## What do you need?
+
+- **A Construct plan.** Lite ($9 a month) is enough for one briefing: it includes 3 scheduled tasks and an agent email address. Starter ($59) has 10 scheduled tasks if you want a briefing per team. See [pricing](/pricing/).
+- **Construct added to your Slack workspace.** In a team workspace, the Construct workspace owner or an admin does this. Your Slack workspace's own rules on who may install apps also apply.
+- **Gmail and Google Calendar connected** from Construct's integration catalog, if the briefing should cover them.
+- **A paid Slack plan, for automatic posting.** Slack's channel email addresses are available on paid plans only ([Slack Help Center](https://slack.com/help/articles/206819278-Send-emails-to-Slack)). On Slack's free plan, use the on-demand route in step 6.
+
+## Before you start
+
+- **Scheduled runs report in Construct, so the channel gets an email.** A scheduled run cannot post into a Slack channel on its own yet; its output lands in the run's chat with a notification. Emailing the channel's address, as in step 5, puts the briefing in Slack every morning. {/* TODO: confirm scheduled delivery to Slack once it ships, and update this guide */}
+- **The post arrives as an email.** It appears in Slack as a forwarded email rather than a bot message. Slack lets you set a custom name and image for those posts.
+- **Point it at sources it can read.** In Slack the agent sees messages that mention it, the threads those mentions start, and direct messages, not channel history. Build the briefing from calendar, email, and files, as the prompts here do.
+- **Slack requests run as the installer.** Every Slack turn uses the installer's Construct account and counts against that plan's usage, so give **Full access** only to people you would trust with your connected apps.
+- **Email the channel once a day, not every 15 minutes.** The agent's inbox has a daily sending limit enforced on the server, and a run can occasionally be delivered twice, which is why the prompt checks for today's file before sending.
+
+## How do you set up the briefing?
+
+### 1. Add Construct to Slack
+
+In the Construct desktop, open **Settings**, then **Messaging**, and choose **Add to Slack**. Approve the install in Slack. You are now the installer, which always has full access.
+
+Under access, the default is **Only people I allow**: everyone else is ignored. Add teammates who should be able to ask for the briefing to the **Full access** list. If you choose **Everyone in the server** instead, people not on the list get a read-only guest agent that can search the web but cannot use your connected apps. {/* TODO: add a screenshot of Settings > Messaging with the Slack install and access options */}
+
+### 2. Get the channel's email address in Slack
+
+Pick the channel the briefing should land in, such as #daily. Slack's steps: open the channel, click the channel name in the header, open the **Automations** tab, select **Send emails to this channel**, and click **Get Email Address** ([Slack Help Center](https://slack.com/help/articles/206819278-Send-emails-to-Slack)). Copy the address.
+
+Slack notes that "by default, any member of a channel can get an email address for a channel or DM," and that owners and admins can turn this off. If the option is missing, ask your Slack admin.
+
+### 3. Run the briefing once in chat
+
+In Construct, ask for today's briefing while you watch:
+
+> Prepare my morning briefing. Include: today's Google Calendar meetings with attendees and anything I was asked to prepare; Gmail threads from the last 24 hours that need a reply from me, oldest first, one line each; and any file in Files/clients/ that changed since yesterday. End with the one decision I most need to make today, or "none". Keep it under 200 words. Save it to Files/briefings/ named with today's date. Do not send or reply to any email.
+
+Read the file. If it is too long, missed a meeting, or called a newsletter urgent, tell the agent what to change and run it again.
+
+### 4. Make the format stick
+
+When you like the result, ask the agent to remember the rules so tomorrow's run does not depend on today's chat:
+
+> Remember this briefing format: meetings first, then replies needed, then file changes, then one decision. Under 200 words. Treat newsletters and automated mail as not needing a reply. Never reply to or send email while preparing the briefing.
+
+You can check and correct what it stored in the Memories app later. Our [memory guide](/blog/ai-agent-memory/) explains how.
+
+### 5. Schedule it and send it to the channel
+
+Now put it on the Calendar from the same chat, with the channel address from step 2:
+
+> Every weekday at 7:45am in my time zone, prepare my morning briefing using the format you remembered and save it to Files/briefings/. Then email the briefing from your own address to daily-abc123@yourteam.slack.com with the subject "Briefing" and today's date. Send nothing else. If today's briefing file already exists, do not send it again.
+
+The address in that prompt is a placeholder; use the one Slack gave you. The agent creates a Calendar event set to every weekday, owned by that agent. Open it once and press **Run now** to check that the email arrives in the channel. Our [scheduling guide](/blog/ai-agent-scheduled-tasks/) covers the event's delivery settings in detail.
+
+### 6. Ask for it in Slack when you want it
+
+The agent also answers in Slack directly. Mention it in a channel, or send it a direct message:
+
+> @Construct brief me. Read today's file in Files/briefings/ and post the summary here. If it is missing, prepare it now.
+
+In a channel, the agent only sees messages that mention it, and it replies in the thread that mention starts. To stop a reply partway, type /stop in the thread, or react to a message in the thread with ❌. Type /new to start the thread over with a fresh session. {/* TODO: confirm that a plain /stop typed in a Slack thread reaches the agent rather than being caught by Slack as an unknown slash command */}
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/channels-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct channels demo"
+    aria-describedby="channels-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/channels.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-agent-slack-briefing/channels-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="channels-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct is available through Slack, Telegram,
+    Discord slash commands, native email, and the web, with the same agent and
+    workspace behind each channel.
+  </figcaption>
+</figure>
+
+## What result should you get?
+
+After the first scheduled morning:
+
+1. A dated briefing in Files/briefings/, so last Tuesday's is one click away.
+2. The briefing posted in #daily as an email from the agent's address.
+3. A sent copy in the agent's Email app.
+4. A history entry on the Calendar event, with the chat session the run used.
+
+Because each day's briefing is saved as a file, the agent can answer "what did Monday's briefing say about the Acme renewal?" in Slack later in the week.
+
+**Illustrative example.** A three-person agency runs one briefing for the whole team. At 7:45 it lands in #daily with today's client calls and the replies waiting on each person. The founder, who is on Slack's free plan for a side project, uses the second route there: she sends "@Construct brief me" from her phone and gets the same summary in a thread.
+
+## Troubleshooting
+
+**The agent does not answer in Slack.** Check that you mentioned it (in a channel, plain messages are ignored), that you are on the allow list, and, for a private channel, that the bot was invited. If it is silent for everyone, disconnect it and add it again from Settings, Messaging.
+
+**The briefing email never appeared in the channel.** Confirm the address in the prompt matches the one Slack gave you, that your Slack plan is paid, and that your admin has not turned off channel email addresses. Then press **Run now** on the event.
+
+**The briefing posted twice.** Keep the "if today's briefing file already exists, do not send it again" line in the scheduled prompt.
+
+**It arrived at the wrong time.** The event keeps the time zone it was created with. Edit the event's time zone, not just your profile.
+
+**A guest got a thin answer.** People outside the allow list get a read-only agent with no connected apps. Add them to **Full access** if they should see the full briefing.
+
+{/* TODO: run the 7:45am briefing for 10 weekdays and record send time, Slack arrival delay, word count, and any missed or duplicate posts; add screenshots of the Slack post and the Calendar history */}
+
+## Give Construct tomorrow's briefing
+
+Choose Construct for your morning briefing. For $9 a month it reads your calendar, inbox, and files before you wake up, saves every briefing where you can search it, and answers in Slack when you ask.
+
+Today, connect Google Calendar and Gmail and run the prompt from step 3 while you watch. Tighten the format once, ask the agent to remember it, then schedule it for 7:45am with your channel's email address. Tomorrow, read it in Slack before your first call.
+
+<BetaCta source="blog_inline_2">Give Construct its first briefing</BetaCta>
+
+## Sources
+
+- [Slack Help Center: send emails to Slack](https://slack.com/help/articles/206819278-Send-emails-to-Slack)
+- [Construct pricing](/pricing/)
+- [Construct across Slack, email, and chat](/use-cases/channels/)
+
+## Related resources
+
+- [How to run an AI agent on a schedule with your laptop closed](/blog/ai-agent-scheduled-tasks/)
+- [How to give an AI agent its own email address](/blog/ai-agent-email-address/)
+- [Inbox triage with an AI agent: drafts, not sends](/blog/ai-inbox-triage/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)
+- [Construct across channels](/use-cases/channels/)

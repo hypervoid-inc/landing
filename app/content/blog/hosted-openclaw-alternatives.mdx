@@ -1,0 +1,266 @@
+---
+title: "Hosted OpenClaw alternatives: managed claws vs an AI employee"
+seoTitle: "Hosted OpenClaw Alternatives: Run It Without Self-Hosting (2026)"
+description: "OpenClaw has no hosted tier. Compare managed OpenClaw hosts from $5.99 a month, Genspark Claw, hosted Hermes, and AI employees that need no server."
+published: "2026-11-08"
+author: "construct-team"
+tags: ["comparison", "openclaw", "ai-employee", "ai-agent"]
+kind: "comparison"
+draft: true
+---
+
+**Construct gives you an always-on AI employee from $9 a month, at a fixed monthly price with model usage inside published plan limits and no server, gateway, or framework for you to run.** OpenClaw itself has no hosted version, so "hosted OpenClaw" always means a third party runs it for you, from $5.99 a month paid upfront at Hostinger to $29 a month at MyClaw, plus your model usage, and the agent's security settings are still yours to configure.
+
+For founders and small teams who want the work done rather than an agent to operate, Construct is the better choice. You get a fixed monthly price with published plan limits instead of a hosting fee plus a separate token bill, recurring jobs that run on a schedule you set rather than a heartbeat that spends tokens every 30 minutes, and finished files in a workspace your whole team can open. If you specifically need OpenClaw's channels or skills, a managed host is the way to run it, and this guide covers the main ones.
+
+The OpenClaw Foundation is explicit that it sells no hosting. Its homepage says "No subscription. No hosted tier. No token," and its September 29 announcement of OpenClaw Enterprise describes software "built to run on your own infrastructure" ([OpenClaw](https://openclaw.ai/), [OpenClaw Enterprise](https://openclaw.ai/blog/openclaw-enterprise)). We checked every product on October 1, 2026.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why choose Construct over a hosted OpenClaw?
+
+- **A fixed monthly price that covers the model.** Construct Lite is $9 a month for 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. Plans include model usage within published limits, with no per-message billing.
+- **Nothing to host, patch, or harden.** There is no gateway on the internet, no SSH, and no sandbox or exec-approval settings to get right. Shell commands run in a sandbox, and stored model keys and bot credentials are encrypted.
+- **Background work only when you schedule it.** Jobs on the Calendar run server-side at the times you set, with your laptop closed: 3 on Lite, 10 on Starter, 50 on Pro.
+- **Files your team can open.** Reports, spreadsheets, and scripts are saved to the workspace as they are produced, so a run that stops at step 30 keeps steps 1 to 29. Team workspaces have Owner, Admin, and Member roles and no member limit.
+- **Memory you can read and fix.** Inspect what the agent has learned, correct a fact, or tell it to forget one.
+- **Your own keys when you want them.** Pro supports keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, and xAI.
+
+## Why look for OpenClaw without self-hosting?
+
+OpenClaw is an MIT-licensed agent that answers on WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, and other channels, keeps persistent memory, runs cron jobs, drives a browser, and runs shell commands ([OpenClaw docs](https://docs.openclaw.ai/)). The reasons people look for a hosted version are about operating it.
+
+**It has to stay on.** OpenClaw's FAQ says: "Want 24/7 reliability? Use a VPS." On a laptop, "sleep/network drops disconnect it, OS updates/reboots interrupt it, must stay awake." A VPS is "often headless," gives "remote file access only," and needs "SSH needed for updates" ([OpenClaw FAQ: providers, hardware, and hosting](https://docs.openclaw.ai/help/faq-first-run/providers-and-hosting)).
+
+**Security is your configuration.** The "Why OpenClaw" page states that "Sandboxing and exec approvals are off by default" and "Hardening is deliberate configuration" ([Why OpenClaw](https://docs.openclaw.ai/start/why-openclaw)). Its security FAQ has an entry titled "I saw reports about exposed OpenClaw instances. What should I check?" ([OpenClaw security FAQ](https://docs.openclaw.ai/help/faq/security-and-access-control)).
+
+**Mistakes happen on real accounts.** In February 2026, Meta AI security researcher Summer Yue described an OpenClaw agent that started deleting her real inbox and ignored her stop commands, and blamed context compaction for the agent losing her final instruction ([TechCrunch](https://techcrunch.com/2026/02/23/a-meta-ai-security-researcher-said-an-openclaw-agent-ran-amok-on-her-inbox/)). A host does not change that; "always on" also means "always able to act."
+
+**Token bills are separate and can surprise you.** OpenClaw's heartbeat runs a check-in every 30 minutes by default, and the docs warn that "Heartbeats run full agent turns. Shorter intervals burn more tokens." Isolating heartbeat sessions cuts a run from "~100K tokens down to ~2-5K" ([OpenClaw heartbeat docs](https://docs.openclaw.ai/gateway/heartbeat)).
+
+As illustrative arithmetic from the docs, not a measured bill: 48 heartbeats a day at about 100,000 tokens each is roughly 4.8 million input tokens a day before the agent does any work you asked for. With isolated sessions at 2,000 to 5,000 tokens, the same schedule is about 96,000 to 240,000. Whoever hosts your OpenClaw, check this setting first.
+
+## Methodology
+
+We build Construct, so it leads this list. Here is why it fits small teams: it removes the server and the framework, replaces a separate model bill with a fixed plan price and published limits, and keeps recurring work and its files in one shared workspace. This is our editorial comparison of documented capabilities and published prices, checked on October 1, 2026. It is not a hands-on performance benchmark.
+
+We included services whose own pages offer to run OpenClaw or a close equivalent for you, plus managed agents that solve the same problem without a framework to maintain. Prices are in US dollars. Every competitor fact comes from the vendor's own pages or from reporting we fetched on October 1, 2026. Where pages disagree or were blocked, we say so.
+
+Three names we looked for did not make the table. KiloClaw: `kiloclaw.ai` redirects to Kilo's site, and the page we reached describes Kilo Code, Kilo's coding agent, with no KiloClaw product on it ([Kilo](https://kilo.ai/)), so we could not verify a current offer. Microsoft Autopilot is built on OpenClaw, but the OpenClaw Foundation describes it as a private preview that started at the end of September 2026 ([OpenClaw blog](https://openclaw.ai/blog/microsoft-autopilot-openclaw)), with no public price. OpenClaw Enterprise is free and self-hosted, so it is not a hosted option either.
+
+{/* TODO: re-check every price and plan in this post before publishing on November 8, 2026; all were captured October 1, 2026. */}
+
+## Hosted OpenClaw alternatives at a glance
+
+<ArticleTable caption="Construct, managed OpenClaw hosts, and other alternatives, checked October 1, 2026">
+
+| Tool                        | Starting price                                              | Billing unit                                       | Own computer?                                    | Where it works                                                                          | Best for                                                   |
+| --------------------------- | ----------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------ | --------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Construct                   | $9 a month (Lite), model usage included                     | Plan usage, agents, steps, schedules               | Persistent cloud workspace                       | Web, Slack, Telegram, Discord slash commands, its own email inbox                       | Small teams with recurring work and no server to run       |
+| Hostinger 1-Click OpenClaw  | $5.99 a month, paid upfront; renews at $11.99               | Hosting plan plus AI credits, or your own key      | Isolated managed instance                        | Telegram, WhatsApp; Slack and Discord per its FAQ                                       | The cheapest managed OpenClaw                              |
+| MyClaw                      | $29 monthly, or $199 a year ($16.60 a month)                | Hosting plan; AI tokens not included               | Private instance, 2 vCPU and 4 GB RAM            | Email, Telegram, WhatsApp, browser                                                      | OpenClaw or Hermes without a server                        |
+| Genspark Claw               | $39.99 for the Standard cloud computer (third-party report) | Cloud computer plus Genspark credits               | Dedicated cloud computer with remote desktop     | WhatsApp, Slack, Teams, Telegram, LINE, Discord, Signal, Google Chat, Feishu, email     | A messaging assistant with templates                       |
+| Hermes Agent on Nous Portal | $0 for free models; $20 Plus with $22 of credits            | Credits cover models, tools, and server time       | Portal hosts the agent around the clock          | Hermes gateway: Telegram, Discord, Slack, WhatsApp, Signal, email                       | Hermes users who want it always on                         |
+| One-click deploy templates  | Set by the provider                                         | Your cloud bill plus model bill                    | Your container on Railway, Northflank, or Render | Any OpenClaw channel                                                                    | Technical owners who want less setup                       |
+| Self-hosted OpenClaw        | $0 for the software                                         | Your server plus model bill                        | Your Mac, Linux box, or VPS                      | Every OpenClaw channel                                                                  | Owners who want to run everything themselves               |
+
+</ArticleTable>
+
+Sources are linked in each section below and listed under Sources. "Starting price" is the cheapest documented entry point, not a working budget for a busy month.
+
+The column that decides most of these is the billing unit. Every OpenClaw host charges for the server and then, one way or another, for the model. Construct includes model usage in a fixed-price plan with published limits, and Nous Portal draws models, tools, and hosting from one credit balance, which makes the monthly number easier to predict.
+
+## What does a hosted claw really cost per month?
+
+This is an illustrative comparison using list prices, not a measured test. A solo founder wants an agent that sends a morning briefing, checks three competitor pricing pages every Monday, and drafts replies to inbound email.
+
+- **Construct Lite:** $9 a month, with 3 scheduled tasks, which fits these three jobs, and the briefing can arrive by email from the agent's own address. Starter at $59 if the list grows. No per-message billing.
+- **Hostinger:** $5.99 a month at the introductory, paid-upfront rate, then $11.99, plus AI credits bought from the dashboard.
+- **Hermes on Nous Portal Plus:** $20 a month, with $22 of credits shared between the model, tools, and the hosted server.
+- **MyClaw Lite:** $29 monthly or $16.60 a month on the annual plan, plus a model bill, since tokens are not included.
+- **Genspark Claw Standard:** $39.99 a month as reported by Sliq, plus Genspark credits for every message, scheduled run, and heartbeat.
+
+The fixed fee is only half of it. The other half is how often the agent wakes up. A daily briefing and a weekly check are cheap; a 30-minute heartbeat that reloads a long conversation is not. In Construct, recurring work runs when you put a job on the Calendar, so you choose how often the agent wakes up.
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## A managed AI employee instead of a managed claw
+
+### 1. Construct
+
+**Best for:** founders and small teams whose recurring work crosses several apps and should leave files behind, without an agent framework to maintain.
+
+Construct is a hosted AI employee, not an OpenClaw host. Each agent works from a persistent cloud workspace with files, a live browser, a sandbox terminal, a native agent email address, and a Calendar of scheduled jobs. It reaches apps such as Gmail, Notion, Linear, GitHub, HubSpot, and Airtable through a live integration catalog, and you can add custom MCP tools for anything the catalog does not cover. You assign work from the web, Slack, Telegram, Discord slash commands, or by emailing the agent's own inbox; only mail from your own address starts a run.
+
+Nothing runs on your laptop and there is no gateway to secure. Content the agent reads from web pages, email, and connected apps reaches the model marked as external data whose instructions it should not follow. That reduces prompt-injection risk rather than removing it, so check early runs and keep irreversible steps manual.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/channels-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct channels demo"
+    aria-describedby="channels-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/channels.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/hosted-openclaw-alternatives/channels-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="channels-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct is reached from the web, Slack, Telegram,
+    Discord slash commands, and its native email inbox, with routing and access
+    policies that vary by channel.
+  </figcaption>
+</figure>
+
+What an OpenClaw user gets with it:
+
+- **Schedules instead of heartbeats.** Save a successful run as a workflow and put it on the Calendar. It runs server-side at that time, with nobody online, and reports in the web app with a notification.
+- **Files that survive the run.** Finished work is written to the workspace as it is produced, so a run that stops at step 30 keeps steps 1 to 29, and next week's run starts from last week's file.
+- **Memory you can audit by hand.** Open the Memories app, see what the agent learned, and correct or forget any fact.
+- **A team, not a single operator.** Invite teammates as Owner, Admin, or Member. A team workspace has no member limit, and everyone's work draws on the owner's plan.
+- **Internal tools.** Ask for a review queue or tracker and Construct builds it as a private app in the workspace.
+- **A record of what happened.** Activity lists each action with a short reason for a limited window, so you can see what the agent did on a run.
+
+An illustrative setup for the three jobs above: ask the agent to email you a morning briefing from its own address, to check three competitor pricing pages every Monday and save a dated CSV, and to draft replies to inbound email without sending. Check each first result, then schedule all three, which uses Lite's 3 scheduled tasks. Construct's workflows run straight through and do not pause for approval yet, so keep anything customer-facing as drafts that you send.
+
+**Price, checked October 1, 2026:** Lite is $9 a month for up to 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 with 6x Lite usage, up to 5 agents, 150 steps per task, and 10 scheduled tasks. Pro is $299 with 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, and bring-your-own keys, which you can use as a fallback after bundled limits or for every run. Pro has a 7-day trial ([Construct pricing](/pricing/)). Construct vs OpenClaw covers the head-to-head. {/* TODO: link /blog/construct-vs-openclaw/ once it is live */}
+
+## Managed OpenClaw hosts
+
+These run the real OpenClaw for you. You still configure the agent, its channels, and what it can touch; the host handles the machine, updates, and uptime.
+
+### 2. Hostinger 1-Click OpenClaw
+
+**Best for:** the lowest entry price for a managed OpenClaw.
+
+Hostinger's managed OpenClaw plan lists Telegram pairing, pre-configured AI credits, the option to use your ChatGPT, web search, and agentic email ([Hostinger OpenClaw](https://www.hostinger.com/openclaw)). OpenClaw's Hostinger guide adds that you can buy AI credits at checkout or bring a key from Anthropic, OpenAI, Google Gemini, or xAI, and that a self-managed VPS option is also sold ([OpenClaw docs: Hostinger](https://docs.openclaw.ai/install/hostinger)).
+
+**Price:** $5.99 a month, discounted from $21.99, with "Renews at $11.99/mo for 2 years" and "All plans are paid upfront," so the first payment is larger than $5.99. AI credits are topped up separately. There is a 30-day money-back guarantee. The heartbeat and sandbox settings above are still yours to set.
+
+### 3. MyClaw
+
+**Best for:** OpenClaw or Hermes Agent on a private instance with backups.
+
+MyClaw hosts OpenClaw and Hermes Agent, reachable from email, Telegram, WhatsApp, or a browser ([MyClaw](https://myclaw.ai/)). Every plan includes uptime, auto-updates, encryption, and daily backups ([MyClaw pricing](https://myclaw.ai/pricing)). It is run by Cubo World Inc., according to its site footer, and is not part of the OpenClaw project.
+
+**Price:** Lite is $29 a month, or $199 a year (about $16.60 a month), for 2 vCPU, 4 GB of RAM, and 40 GB of storage. Pro is $59 monthly or $399 a year with $100 of AI credits; Max is $119 monthly or $799 a year with $150. The footnote says "AI token usage isn't included in the subscription," so plan for a model bill on Lite.
+
+### 4. Genspark Claw
+
+**Best for:** a messaging-first assistant with schedule templates.
+
+Genspark Claw runs on a cloud computer or locally through a desktop app, answers in WhatsApp, Slack, Teams, Telegram, LINE, Discord, Signal, Google Chat, Feishu, and more, has its own email address, and has a Schedules tab with templates ([Genspark Claw help center](https://www.genspark.ai/helpcenter/genspark-claw)). You connect services by logging in through a remote desktop. Sliq says Claw launched on March 12, 2026 and wraps the OpenClaw framework in a managed service ([Sliq](https://getsliq.com/blog/genspark-claw-explained)); Genspark's help center does not mention OpenClaw.
+
+**Price:** the cloud computer comes in Lite, Standard, and Powerful tiers (2 vCPU and 4 GB of RAM up to 4 vCPU and 16 GB), with prices on a Claw page that returned HTTP 403 to us ([Genspark membership plans](https://www.genspark.ai/helpcenter/membership-plans)). Sliq lists Standard at $39.99 a month and Powerful at $79.99. AI work also uses Genspark credits, and Genspark says scheduled tasks and Heartbeat "consume credits in the background, even when you're not actively using Claw." Cancelling erases the cloud computer and everything on it. Our head-to-head, Construct vs Genspark Claw, goes deeper. {/* TODO: link /blog/construct-vs-genspark-claw/ once it is live */}
+
+{/* TODO: verify Genspark Claw Lite, Standard, and Powerful prices on genspark.ai/claw (403 on October 1, 2026). */}
+
+## Hosted Hermes, the other open-source claw
+
+### 5. Hermes Agent on Nous Portal
+
+**Best for:** people who already use Hermes Agent and want it running around the clock.
+
+Hermes Agent is Nous Research's MIT-licensed agent, with skills it builds from experience, persistent memory, a cron scheduler, and one gateway for Telegram, Discord, Slack, WhatsApp, Signal, and CLI ([Hermes Agent on GitHub](https://github.com/NousResearch/hermes-agent)), plus email ([Hermes Agent](https://hermes-agent.nousresearch.com/)). Nous Portal now offers Agent Cloud Hosting, where "Server costs bill straight to your credit balance" ([Nous Portal](https://portal.nousresearch.com/)).
+
+**Price:** Free is $0 for free models only. Plus is $20 a month with $22 of monthly credits, Super is $100 with $110, and Ultra is $200 with $220. Credits cover models, hosted tools, and server time. How much server time a month of hosting uses is not documented in the pages we read, and the integration guide describes local setup rather than cloud deployment. Our comparison, Hermes Agent vs OpenClaw vs a managed AI employee, covers the frameworks. {/* TODO: link /blog/hermes-vs-openclaw-vs-managed/ once it is live */}
+
+{/* TODO: verify Nous Portal Agent Cloud Hosting server cost per month and which Hermes channels a hosted agent supports. */}
+
+## Running it yourself, with less setup
+
+### 6. One-click deploy templates
+
+**Best for:** technical owners who want their own instance without a hand-built server.
+
+OpenClaw's Linux server guide lists hosting walkthroughs for Azure, Daytona, DigitalOcean, exe.dev, Fly.io, GCP, Hetzner, Hostinger, Northflank, Oracle Cloud, Railway, Render, Raspberry Pi, and Upstash Box, with Railway and Northflank marked "One-click, browser setup" ([OpenClaw docs: Linux server](https://docs.openclaw.ai/vps)). You pay the provider plus your model bill. A template gets you a running gateway, not a managed one: the docs still tell you to back up state, keep the gateway behind an SSH tunnel or Tailscale, and harden admin access.
+
+### 7. Self-hosted OpenClaw
+
+**Best for:** owners who want to run the agent, its models, and its data entirely themselves.
+
+The software is free. The minimum server is "1 vCPU, 1 GB RAM, ~500 MB disk," with 2 GB or more recommended for browser automation and several channels ([OpenClaw FAQ](https://docs.openclaw.ai/help/faq-first-run/providers-and-hosting)). Install is `curl -fsSL https://openclaw.ai/install.sh | bash` or `npm i -g openclaw` ([OpenClaw](https://openclaw.ai/)), with any model provider or a local model. You run the box, the updates, the security audit, and the token budget. Our guide to [building your own AI agent](/blog/construct-vs-diy/) covers that trade.
+
+## Running the same jobs on each
+
+We have not run a side-by-side test yet.
+
+{/* TODO: hands-on test, not yet run. Run the same three jobs (morning briefing delivered to a phone, Monday competitor price check saved to a dated file, inbound email reply drafts with nothing sent) on Hostinger 1-Click OpenClaw, MyClaw Lite, Genspark Claw Standard, and Construct Lite for one week. Record setup minutes, minutes to first usable result, token or credit spend per day with heartbeat on and off, failures and retries, and where each result was saved. Add dated screenshots. */}
+
+Here is how the Construct side runs, as an illustrative walkthrough rather than a measured result. Save the three competitor URLs in a workspace file. Ask the agent to visit each pricing page, write a dated CSV, and compare it with last week's file. Check the first result, then save the steps as a workflow and put it on the Calendar. There is no server to provision and no heartbeat to tune before the first run.
+
+## Already running OpenClaw? Add Construct in 15 minutes
+
+You do not have to shut your claw down. Move the recurring job that costs you the most tokens or the most babysitting, and keep OpenClaw for the channels only it covers.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test longer runs and your own model keys.
+2. **Copy the instructions** your agent follows for that job into a Construct chat, and move its reference files into the workspace.
+3. **Connect the apps** the job needs from the integration catalog, or add a custom MCP tool.
+4. **Run it once and check the result** in Files.
+5. **Put it on the Calendar** so it runs on schedule whether or not anyone is online.
+
+There is no import. OpenClaw skills, memory files, and channel pairings do not transfer, so describe what a skill did in your instruction and Construct saves the rules as memory you can read.
+
+## When might a hosted claw still fit?
+
+- You need the agent on WhatsApp, Signal, iMessage, or Microsoft Teams.
+- You want to run a local model or modify the agent's source.
+- You need a process that runs continuously; each Construct sandbox command has a five-minute runtime cap on every plan.
+
+For recurring business work with shared files, correctable memory, and a fixed monthly price, Construct is the better fit.
+
+## Which should you choose?
+
+Choose Construct. It costs $9 a month with the model included, needs no server or hardening, runs scheduled work with your laptop closed, and keeps every finished file in a workspace your team shares.
+
+- **If you are tired of maintaining a server or tuning heartbeats,** choose Construct.
+- **If you want a fixed monthly price instead of a separate token bill,** choose Construct, with published plan limits and no per-message billing.
+- **If a team needs to see and reuse the output,** choose Construct.
+- **If you must keep stock OpenClaw for its channels,** Hostinger is the cheapest managed host; read the renewal price and term before you pay.
+
+Pick the job you meant to hand to OpenClaw: the morning briefing, the competitor check, the inbox drafts. Give Construct the inputs, ask it to save the result as a file, check the first run, and put it on the Calendar. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+## Sources
+
+Pages fetched on October 1, 2026:
+
+- [OpenClaw](https://openclaw.ai/) and [OpenClaw on GitHub](https://github.com/openclaw/openclaw)
+- [OpenClaw blog: OpenClaw Enterprise, September 29, 2026](https://openclaw.ai/blog/openclaw-enterprise)
+- [OpenClaw blog: Microsoft Autopilot is built on OpenClaw](https://openclaw.ai/blog/microsoft-autopilot-openclaw)
+- [OpenClaw docs overview](https://docs.openclaw.ai/), [Why OpenClaw](https://docs.openclaw.ai/start/why-openclaw), and [Linux server hosting guide](https://docs.openclaw.ai/vps)
+- [OpenClaw FAQ: providers, hardware, and hosting](https://docs.openclaw.ai/help/faq-first-run/providers-and-hosting) and [security and access control](https://docs.openclaw.ai/help/faq/security-and-access-control)
+- [OpenClaw heartbeat documentation](https://docs.openclaw.ai/gateway/heartbeat)
+- [OpenClaw docs: Hostinger](https://docs.openclaw.ai/install/hostinger) and [Hostinger 1-Click OpenClaw](https://www.hostinger.com/openclaw)
+- [MyClaw](https://myclaw.ai/) and [MyClaw pricing](https://myclaw.ai/pricing)
+- [Genspark Claw help center](https://www.genspark.ai/helpcenter/genspark-claw), [Genspark membership plans](https://www.genspark.ai/helpcenter/membership-plans), and [Sliq: Genspark Claw explained](https://getsliq.com/blog/genspark-claw-explained)
+- [Hermes Agent](https://hermes-agent.nousresearch.com/), [Hermes Agent on GitHub](https://github.com/NousResearch/hermes-agent), and [Nous Portal](https://portal.nousresearch.com/)
+- [Kilo](https://kilo.ai/)
+- [TechCrunch: a Meta AI security researcher said an OpenClaw agent ran amok on her inbox](https://techcrunch.com/2026/02/23/a-meta-ai-security-researcher-said-an-openclaw-agent-ran-amok-on-her-inbox/)
+- [Construct pricing](/pricing/)
+
+## Related resources
+
+- [ChatGPT Dots alternatives: always-on agents that don't need ChatGPT Pro](/blog/chatgpt-dots-alternatives/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
+- [What is an AI agent with its own computer?](/blog/ai-agent-with-its-own-computer/)
+- [Construct vs building your own AI agent](/blog/construct-vs-diy/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)
+- [All our agents get computers, we pay for almost none](/blog/running-ai-agents-on-cloudflare-not-vms/)

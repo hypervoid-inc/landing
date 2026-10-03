@@ -57,18 +57,24 @@ function parseFrontmatter(source, filename) {
   return frontmatterSchema.parse(values);
 }
 
-const files = (await readdir(blogDirectory))
-  .filter((name) => name.endsWith(".mdx"))
-  .sort();
-const posts = await Promise.all(
-  files.map(async (filename) => ({
-    slug: filename.slice(0, -4),
-    ...parseFrontmatter(
-      await readFile(path.join(blogDirectory, filename), "utf8"),
-      filename,
-    ),
-  })),
+const files = (await readdir(blogDirectory)).filter((name) =>
+  name.endsWith(".mdx"),
 );
+// Sorted by slug exactly as app/content/blog/index.ts sorts the imported MDX,
+// which it checks against this file entry by entry. Sorting filenames instead
+// put `ai-employee-x.mdx` before `ai-employee.mdx` ("-" < "."), the reverse of
+// the slug order, and failed the build for any slug that extends another.
+const posts = (
+  await Promise.all(
+    files.map(async (filename) => ({
+      slug: filename.slice(0, -4),
+      ...parseFrontmatter(
+        await readFile(path.join(blogDirectory, filename), "utf8"),
+        filename,
+      ),
+    })),
+  )
+).sort((left, right) => left.slug.localeCompare(right.slug));
 
 const metadataSource = await format(
   `// Generated from the MDX frontmatter by scripts/generate-content.mjs.\nimport type { BlogFrontmatter } from "../schema";\n\nexport const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = ${JSON.stringify(posts, null, 2)};\n`,
