@@ -22,6 +22,7 @@
 - [Sub-processors - Construct Computer](https://construct.computer/sub-processors/): Third-party vendors Construct uses to host, authenticate, integrate, bill, email, observe, and run models for the construct.computer platform.
 - [Terms & Conditions - Construct Computer](https://construct.computer/terms/): Terms of service for Construct Computer: subscription plans, acceptable use, agent actions, model BYOK, and proprietary platform licensing.
 - [Construct insights and guides](https://construct.computer/blog/): Practical writing from Construct on AI agents, workflows, memory, and tools that get work done.
+- [ChatGPT Dots alternatives: 9 always-on agents that don't need ChatGPT Pro](https://construct.computer/blog/chatgpt-dots-alternatives/): ChatGPT Dots needs a Pro or Business Premium plan. Compare 9 always-on agent alternatives from $0 to $50 a month, and which subscription each one needs.
 - [Construct vs ChatGPT Dots](https://construct.computer/blog/construct-vs-openai-dots/): Construct gives you an always-on AI employee from $9 a month on the model you choose. ChatGPT Dots needs a $100 to $200 ChatGPT Pro plan. How they compare.
 - [We put Jev inside our AI employee](https://construct.computer/blog/jev-ai-agents/): We shipped TypeSafe's Jev into our AI employee's memory five days after launch: measured latency, how we set a 0.7 threshold, where Jev fails, and what it costs.
 - [AI employees for small business: 10 platforms compared](https://construct.computer/blog/best-ai-employee-platforms/): The best AI employee platforms for small business in 2026, ranked on price, capabilities, and limits: Construct, CellCog, Manus, Lindy, Sintra, and more.
@@ -47,10 +48,10 @@
 - [Ankush](https://construct.computer/authors/ankush/): Writes about Construct, AI agents, and developer tools. Read every article, guide, and comparison written by Ankush for Construct Computer.
 - [Nischal](https://construct.computer/authors/nischal/): Writes about Construct, AI agents, and building useful software. Read every article, guide, and comparison written by Nischal for Construct Computer.
 - [Construct Team](https://construct.computer/authors/construct-team/): The team building and documenting Construct Computer. Read every article, guide, and comparison written by Construct Team for Construct Computer.
-- [Writing tagged AI agent](https://construct.computer/blog/tag/ai-agent/): 11 Construct articles, guides, and comparisons tagged AI agent, covering AI agents and how they get work done.
-- [Writing tagged AI employee](https://construct.computer/blog/tag/ai-employee/): 12 Construct articles, guides, and comparisons tagged AI employee, covering AI agents and how they get work done.
-- [Writing tagged ChatGPT](https://construct.computer/blog/tag/chatgpt/): 3 Construct articles, guides, and comparisons tagged ChatGPT, covering AI agents and how they get work done.
-- [Writing tagged comparison](https://construct.computer/blog/tag/comparison/): 11 Construct articles, guides, and comparisons tagged comparison, covering AI agents and how they get work done.
+- [Writing tagged AI agent](https://construct.computer/blog/tag/ai-agent/): 12 Construct articles, guides, and comparisons tagged AI agent, covering AI agents and how they get work done.
+- [Writing tagged AI employee](https://construct.computer/blog/tag/ai-employee/): 13 Construct articles, guides, and comparisons tagged AI employee, covering AI agents and how they get work done.
+- [Writing tagged ChatGPT](https://construct.computer/blog/tag/chatgpt/): 4 Construct articles, guides, and comparisons tagged ChatGPT, covering AI agents and how they get work done.
+- [Writing tagged comparison](https://construct.computer/blog/tag/comparison/): 12 Construct articles, guides, and comparisons tagged comparison, covering AI agents and how they get work done.
 - [Writing tagged product](https://construct.computer/blog/tag/product/): 5 Construct articles, guides, and comparisons tagged product, covering AI agents and how they get work done.
 - [Writing tagged reliability](https://construct.computer/blog/tag/reliability/): 3 Construct articles, guides, and comparisons tagged reliability, covering AI agents and how they get work done.
 - [Writing tagged workflow automation](https://construct.computer/blog/tag/workflow-automation/): 4 Construct articles, guides, and comparisons tagged workflow automation, covering AI agents and how they get work done.
