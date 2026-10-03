@@ -332,7 +332,7 @@ test("shows the complete author profile on editorial resources", async ({
     // Keeps the "never revised" byline branch covered: this post has no
     // `updated` frontmatter, so it must not render an Updated date.
     {
-      path: "/blog/build-internal-tools-with-construct/",
+      path: "/blog/agent-task-half-life/",
       name: "Ankush",
       image: "/authors/ankush.webp",
       twitter: "https://x.com/ankushKun_",
