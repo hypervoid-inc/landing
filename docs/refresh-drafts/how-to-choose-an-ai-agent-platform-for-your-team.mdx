@@ -1,0 +1,224 @@
+---
+title: "How to Choose an AI Agent Platform for Your Team"
+seoTitle: "How to Choose an AI Agent Platform: 7 Questions and a Scorecard"
+description: "A buying guide for small teams: 7 questions to ask any AI agent vendor, a 14-point scorecard, and a two-week pilot plan that tests one real job."
+published: "2026-07-28"
+updated: "2026-11-18"
+author: "nischal"
+tags: ["ai-agent", "ai-employee", "governance", "product"]
+kind: "guide"
+draft: false
+---
+
+Construct gives a small team a live browser, a sandbox terminal, workspace files, connected apps, its own email address, and memory you can correct in one workspace from $9 a month, so it is the quickest platform to put through the seven questions below. Many products sold as agents cannot answer them: Gartner estimates only about 130 of the thousands of vendors marketing agentic AI are genuinely agentic ([Digital Applied](https://www.digitalapplied.com/blog/agent-washing-definition-buyers-scorecard-2026)).
+
+To choose a platform, ask every vendor the same 7 questions, score each answer from 0 to 2, and only pilot the platforms that reach 10 of 14 points with no zero on access, irreversible actions, or failure. Then run one real job for two weeks. For founders and small teams, we recommend running that pilot on Construct first: it acts on every surface a real job needs, saves finished work as it goes, and costs $9 to try. We build Construct, so hold it to the same scorecard as everyone else.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why run this checklist on Construct first?
+
+- **Every surface in one task.** Browser, terminal, workspace files, connected apps, and the agent's own inbox, without stitching tools together.
+- **Failed runs keep their work.** Finished work is saved as it is produced, so a run that stops at step 30 keeps steps 1 to 29.
+- **Memory you can inspect and correct.** Fix one stale fact or forget it without wiping the rest.
+- **Its own identity.** Each agent can have its own email address, so it does not need your personal inbox to send and receive.
+- **A team workspace without seats.** Owner, Admin, and Member roles, no member limit, and usage that draws on the owner's plan.
+- **Published limits at a fixed monthly price.** Lite is $9, Starter $59, Pro $299 with a 7-day trial, and there is no per-message billing.
+
+## What does a small team need from an AI agent platform?
+
+A small team buys differently from an enterprise. There is no platform team to wire up integrations, no security department to review permissions, and nobody whose full-time job is watching the agent. The person who buys it is usually the person who will supervise it, on top of everything else.
+
+That changes what matters. A long feature list matters less than three plain things: the agent can finish a real job across the tools you already use, you can see and limit what it touches, and a failed run does not leave you cleaning up. Price matters too, but the monthly sticker price is the least informative number on the pricing page.
+
+The stakes are real. Gartner predicts that over 40% of agentic AI projects will be canceled by the end of 2027, citing "escalating costs, unclear business value or inadequate risk controls" ([Gartner, via Digital Applied](https://www.digitalapplied.com/blog/agent-washing-definition-buyers-scorecard-2026)). The seven questions below are aimed at exactly those three causes.
+
+## Before you call a vendor: pick one real job
+
+Every question below is easier to answer against a specific job than in general. Pick one that repeats, touches two or more tools, and costs someone real time each week. Good first jobs for a small team:
+
+- A weekly competitor or pricing check, saved as a report
+- Sorting an inbox and drafting replies for a person to send
+- Researching a list of companies into a spreadsheet, with sources
+- A Monday summary of last week's numbers, saved where the team can open it
+
+Write down what a finished result looks like and how long it takes a person today. That is your benchmark for the pilot. If you cannot describe the finished result in two sentences, the job is not ready to delegate yet. Our guide to [delegating inbox triage](/blog/ai-inbox-triage/) is a worked example of scoping one job carefully.
+
+## The 7 questions to ask any AI agent platform vendor
+
+Ask these in writing, before a demo. A demo shows the job going right. These questions are about what happens the rest of the time.
+
+### 1. What can the agent act on, and where does the work live afterwards?
+
+**Why it matters:** an agent limited to chat and a few plugins can describe a job but not finish it. Real jobs mix surfaces: a website with no integration needs a browser, a CRM update needs a structured app action, and a data clean-up needs a terminal and somewhere to save the file. Then the result has to survive the session, or next week's run starts from nothing.
+
+**A good answer** names the surfaces (browser, terminal, files, connected apps, email) and says what persists between runs. **A red flag** is "it integrates with thousands of apps" with no word on where the output goes.
+
+**Construct's answer:** a live browser, a sandbox terminal, workspace files, and connected apps from a live integration catalog, all in one task, plus a native email inbox for the agent. Workspace files and memory persist between runs, so save anything a later run needs to files. [AI workflow automation](/blog/ai-workflow-automation/) shows how those pieces combine into a repeatable job.
+
+### 2. What can it touch, and how do we limit that?
+
+**Why it matters:** an agent that can send email as you can send the wrong email as you. For a small team without a security reviewer, the question is whether you can give the agent less than everything.
+
+**A good answer** explains how credentials are connected, whether access can be scoped per app, whether the agent can act under its own identity instead of yours, and who on the team can change those settings. **A red flag** is an agent that needs your full Google account to do anything at all.
+
+**Construct's answer:** each agent can have its own email address, so it can send and receive without your personal inbox. Connected apps are added one at a time from the integration catalog, and internal systems can be reached through a custom MCP tool you control. Workspace apps that Construct builds declare which capabilities, apps, and network origins they may use, and other calls are denied ([how Construct builds internal tools](/blog/build-internal-tools-with-construct/)). Team workspaces add invitations, roles, and access controls ([team workspaces](/use-cases/team-workspaces/)). For Gmail specifically, read [how to let an AI agent use your Gmail safely](/blog/ai-agent-gmail-access-safely/). {/* TODO: confirm whether catalog connections can be scoped to read-only or to specific actions per app; if yes, say so here in one sentence. */}
+
+### 3. What happens before it does something we cannot undo?
+
+**Why it matters:** sending a customer email, posting publicly, deleting records, and spending money are the actions that turn a mistake into an incident. You need to know what stands between the agent and those actions.
+
+**A good answer** names the mechanism: a required approval step, a draft-only mode, an interrupt button, or the agent stopping to ask. It also says plainly what is not covered. **A red flag** is "it is supervised" without naming how.
+
+**Construct's answer:** you can watch a running task, interrupt it mid-turn, and answer when the agent stops to ask for a decision. Construct's workflows do not pause for approval yet, so for anything customer-facing, have the agent save drafts for a person to send until the job has earned trust, and keep irreversible steps out of scheduled runs at first.
+
+### 4. When a run fails halfway, what is left, and what does the retry redo?
+
+**Why it matters:** long jobs fail more often than short ones, because small per-step error rates compound. An agent that gets 95% of steps right finishes a 48-step job about 8.5% of the time ([your agent has a half-life](/blog/agent-task-half-life/)). What matters is what a failure costs you.
+
+**A good answer** says finished work is saved as it is produced, the next run can pick up from it, and you can see which step failed. **A red flag** is a failure that leaves no trace except a vague error, or a retry that repeats steps with side effects, like sending the same email twice.
+
+**Construct's answer:** finished work lands in the workspace as it is produced, so a run that dies at step 30 keeps steps 1 to 29, and the next run can start from what exists instead of starting over. Activity helps you trace the failure to a step. You can estimate how often your own job will finish with the [agent reliability calculator](/blog/agent-reliability-calculator/).
+
+### 5. How do we see what it did?
+
+**Why it matters:** "audit trail" means different things to different vendors. A forensic audit log is a complete, immutable record of every operation, fit for a compliance investigation. An activity summary is a readable record of what the agent did and why, fit for a person reviewing the week. Both are useful. They are not the same claim.
+
+**A good answer** says which one it is. **A red flag** is "full audit trail" with no detail on what is recorded, for how long, and whether it can be changed.
+
+**Construct's answer:** files, live browser activity, terminal transcripts, workflows, memories, and chat tool records are all visible in the workspace, and Activity records each action with a short reason for a limited window. Those are the records you need to review a week of agent work; if you also need a complete, immutable audit log for compliance, keep your own records alongside. [Activity log vs audit log](/blog/ai-agent-activity-log/) explains the difference in more depth.
+
+### 6. Can we correct what it remembers, and what happens to our data?
+
+**Why it matters:** an agent that remembers last quarter's pricing or a contact who left will act on it confidently. A long chat history is not the same as memory you can fix. And before your work lives somewhere, you should know who can use it and what happens if you leave.
+
+**A good answer** shows you the stored facts, lets you correct or delete one without wiping the rest, says whether your data trains models, and says what happens to it when you cancel. **A red flag** is memory you cannot see.
+
+**Construct's answer:** memories can be inspected, corrected, forgotten, or restored, and a correction supersedes the old fact while keeping its history ([AI agent memory](/blog/ai-agent-memory/)). Construct does not train on your data. You own the files, memories, and apps your agent produces, and closing your account deletes the workspace data. {/* TODO: confirm how a customer exports workspace files before cancelling, and add one sentence. */}
+
+### 7. What will it cost at our volume, and what is metered?
+
+**Why it matters:** two platforms at the same monthly price can support very different workloads. What predicts fit is what gets metered: steps per task, concurrent jobs, scheduled tasks, command runtime, storage, credits, and seats.
+
+**A good answer** gives you the limits in numbers, explains what happens when you hit one (pause, overage, or upgrade), and lets you cap spending. **A red flag** is a price with no usage detail, or credits with no way to estimate how many your job will use.
+
+**Construct's answer:** fixed monthly plans with published limits and no per-message billing. Lite is $9 a month (2 agents, 50 steps per task, 3 scheduled tasks, 2 parallel background jobs, 100 MB storage, and an agent email address). Starter is $59 (6 times Lite's usage, 5 agents, 150 steps per task, 10 scheduled tasks, 4 parallel jobs, 1 GB). Pro is $299 (32 times Lite's usage, 15 agents, up to 1,000 steps per task, 50 scheduled tasks, 8 parallel jobs, 3 GB, and bring-your-own-key for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, and xAI), with a seven-day trial. Each sandbox command can run for up to five minutes on every plan. On Pro, your own model keys can be used as a fallback after the bundled usage, and those provider charges are yours. Team workspaces have no member limit, and everyone's work draws on the owner's plan, so there is no per-seat fee. See [current plans](/pricing/). {/* TODO: confirm what happens on Lite and Starter when bundled usage runs out (pause until reset, or upgrade prompt) and add one sentence. */}
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## The scorecard
+
+Score each vendor's written answer, not the demo. Give 0 if the answer is missing or marketing language, 1 if it is partial or the vendor names a gap you can work around, and 2 if it is specific and covers your job.
+
+<ArticleTable caption="AI agent platform scorecard: what each score means">
+
+| # | Question | 0 points | 1 point | 2 points |
+| - | -------- | -------- | ------- | -------- |
+| 1 | Surfaces and persistence | Chat plus a fixed plugin list; output stays in chat | Some surfaces, or output saved only in some cases | Browser, terminal, files, and apps in one task; output persists |
+| 2 | Access and limits | Needs your full account; no scoping | Per-app connections, but no separate identity or roles | Scoped access, its own identity, and team roles |
+| 3 | Irreversible actions | "It's supervised," nothing named | Interrupt and ask-for-input, no mandatory approval | Named approval or draft-only mode for external actions |
+| 4 | Failure and retry | No trace; retry starts over | Failure visible; retry partly repeats work | Finished work saved; retry resumes; failed step identifiable |
+| 5 | Visibility | Vague "audit trail" | Readable activity summaries, stated as such | The record you need for your job, with retention stated |
+| 6 | Memory and data | Memory hidden; data use unclear | Memory visible but not editable, or data terms vague | Inspect, correct, forget; no training; clear exit |
+| 7 | Cost and limits | Price only | Limits stated, but overage or caps unclear | All limits in numbers, behavior at the limit, a spending cap |
+
+</ArticleTable>
+
+**How to read the total:** 12 to 14 is ready to pilot on a job that touches customers. 10 or 11 is ready to pilot on internal work. Below 10, or a zero on question 2, 3, or 4, means the platform is not ready for your job yet, however good the demo looked.
+
+Use this blank version to compare Construct with up to two other vendors side by side:
+
+<ArticleTable caption="Blank scorecard for comparing three vendors">
+
+| # | Question | Construct | Vendor B | Vendor C |
+| - | -------- | --------- | -------- | -------- |
+| 1 | Surfaces and persistence | | | |
+| 2 | Access and limits | | | |
+| 3 | Irreversible actions | | | |
+| 4 | Failure and retry | | | |
+| 5 | Visibility | | | |
+| 6 | Memory and data | | | |
+| 7 | Cost and limits | | | |
+| | **Total (of 14)** | | | |
+
+</ArticleTable>
+
+### How Construct answers each row
+
+Score these answers yourself against your own job. A scorecard is only useful if it can be applied to the vendor who wrote it.
+
+<ArticleTable caption="Construct's answers to the scorecard">
+
+| # | Question | Construct's answer |
+| - | -------- | ------------------ |
+| 1 | Surfaces and persistence | Browser, terminal, files, apps, and email in one task; files and memory persist |
+| 4 | Failure and retry | Finished work saved as it is produced; Activity traces the failed step |
+| 6 | Memory and data | Inspect, correct, forget, or restore; no training on your data; account closure deletes it |
+| 2 | Access and limits | Its own email address, per-app connections, team roles, declared permissions for workspace apps |
+| 7 | Cost and limits | Fixed monthly plans with steps, agents, schedules, parallel jobs, and storage published per plan |
+| 3 | Irreversible actions | Interrupt and ask-for-input on every run; drafts for a person to send on customer-facing jobs |
+| 5 | Visibility | Activity records each action with a short reason, alongside files, transcripts, and tool records |
+
+</ArticleTable>
+
+{/* TODO: if question 7's at-limit behavior is confirmed and stated publicly, add it to row 7 above. If question 2's per-app scoping is confirmed, add it to row 2. */}
+
+## Run a two-week pilot on one real job
+
+A scorecard tells you which platforms deserve a pilot. The pilot tells you which one to buy.
+
+1. **Days 1 to 2: set up.** Connect only the apps the job needs. Save the inputs (lists, templates, last week's output) where the agent can read them. Write the instruction as a description of the finished result.
+2. **Days 3 to 7: run it on demand, every day, and read every result.** Keep a note of each run: did it finish, was the output right, how long did checking it take, and what did you have to correct.
+3. **Days 8 to 14: put it on a schedule** with any customer-facing step switched to drafts. Check the results the morning after. [How to run an AI agent on a schedule with your laptop closed](/blog/ai-agent-scheduled-tasks/) covers the setup.
+4. **Day 14: decide.** Compare four numbers with your benchmark: runs that finished, runs that were right, minutes spent checking per run, and the plan cost for that volume.
+
+A platform that finishes most runs but takes you longer to check than to do the job yourself has not saved you anything yet. Review time is the number most pilots forget to measure.
+
+## Already using another agent? Add Construct in 15 minutes
+
+You do not need to cancel anything to pilot side by side. Take the job your current tool handles least reliably.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** if you want longer runs or your own model keys.
+2. **Copy the instructions** you gave your current agent into a Construct chat, and upload the source files to the workspace.
+3. **Connect the apps** the job needs from the integration catalog, or your own MCP server.
+4. **Run it once and score the result** against the seven questions.
+5. **Put it on the Calendar** so you judge two weeks of scheduled runs, not a single demo.
+
+There is no import from other agent platforms: write your rules into the first instruction and Construct saves them as memory you can read.
+
+## What do the rules require of a small team?
+
+For most small teams, agent work is not regulated as such, but two outside pressures are worth knowing about.
+
+The first is the EU AI Act. Its Article 14 requires high-risk AI systems to be designed so people can oversee them, including the ability to "intervene in the operation of the high-risk AI system or interrupt the system through a 'stop' button or a similar procedure" ([EU AI Act, Article 14](https://artificialintelligenceact.eu/article/14/)). Sources disagree on when this applies. Legal Nodes, in guidance last updated April 10, 2026, gives August 2, 2026 as the date the remaining high-risk obligations apply ([Legal Nodes](https://www.legalnodes.com/article/eu-ai-act-2026-updates-compliance-requirements-and-business-risks)). The AI Act Explorer's Article 14 page, checked on October 1, 2026, lists December 2, 2027 for high-risk systems in Annex III and August 2, 2028 for those in Annex I. Check the current position before relying on either date. Most small-team uses, such as research, reports, and inbox drafts, are not in the high-risk categories, but an agent involved in hiring decisions or credit checks may be. {/* TODO: re-check both pages on the refresh's publish day; update the "checked on" date if it moves. */}
+
+The second is a credibility problem in the market. Gartner estimates that only about 130 of the thousands of vendors marketing agentic AI are genuinely agentic; the rest relabel chatbots, RPA, or assistants, which Gartner calls agent washing ([Digital Applied](https://www.digitalapplied.com/blog/agent-washing-definition-buyers-scorecard-2026)). The seven questions are a quick defence: a relabeled chatbot cannot give a specific answer to questions 1, 4, or 6.
+
+## Which platforms should you score first?
+
+Start with Construct, because it answers every question concretely and costs $9 to test on your real job. Then add the products your team already pays for, since trying an included agent costs nothing extra. For a market overview, see our [comparison of AI employee platforms for small business](/blog/best-ai-employee-platforms/), the [solo founder ranking](/blog/best-ai-employee-for-solo-founders/), and [Dots vs Muse vs Grok Bot vs Claude Cowork for a small business](/blog/always-on-ai-agents-compared/). Score each with the same seven questions.
+
+## Try the checklist on Construct first
+
+Construct gives your team every surface a real job needs, saves finished work as it goes, lets you correct what it remembers, and publishes its limits at a fixed monthly price from $9. That makes it the platform to pilot first. Ask us the seven questions and hold us to the scorecard.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+Take the job you picked at the start, such as the weekly competitor check or the inbox drafts, give Construct the inputs and your two-sentence description of the finished result, and run it on demand for a week before you schedule it. Start with [Construct Lite at $9 a month](/pricing/), or use the seven-day Pro trial to test longer runs and your own model keys.
+
+## Sources
+
+- [Digital Applied: agent-washing definition and buyer's scorecard, citing Gartner (June 25, 2025)](https://www.digitalapplied.com/blog/agent-washing-definition-buyers-scorecard-2026)
+- [EU AI Act, Article 14: human oversight](https://artificialintelligenceact.eu/article/14/)
+- [Legal Nodes: EU AI Act 2026 compliance timeline](https://www.legalnodes.com/article/eu-ai-act-2026-updates-compliance-requirements-and-business-risks)
+- [Construct pricing](/pricing/)
+- [Your agent has a half-life](/blog/agent-task-half-life/)
+
+## Related resources
+
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
+- [How to let an AI agent use your Gmail safely](/blog/ai-agent-gmail-access-safely/)
+- [Activity log vs audit log](/blog/ai-agent-activity-log/)
+- [Agent reliability calculator](/blog/agent-reliability-calculator/)
+- [Construct vs building your own AI agent](/blog/construct-vs-diy/)

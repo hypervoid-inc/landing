@@ -1,0 +1,181 @@
+---
+title: "One AI employee for the whole team: shared workspaces and roles"
+seoTitle: "An AI Coworker for a Small Team: Shared Workspaces and Roles (2027)"
+description: "How a small team shares one Construct workspace: invites, owner, admin and member roles, shared files and group chats, with no per-seat charge."
+published: "2027-02-21"
+author: "nischal"
+tags: ["ai-employee", "small-business", "governance", "product"]
+kind: "guide"
+draft: true
+---
+
+A Construct team workspace gives your whole team one AI employee on one plan, with shared files, group chats, and owner, admin, and member roles, and no per-seat charge or member limit on any plan; Starter at $59 a month is sized for team volume. When each person runs their own AI assistant instead, every seat is billed separately and the research, reports, and context each one produces stay locked in that person's account.
+
+For founders and small teams, a shared Construct workspace is the better setup. Everyone's work lands in one Team files area, the agent answers in group chats where everyone can see its reasoning, and a recurring job keeps running when its author is on holiday. This guide covers how sharing works, what stays private, and a four-person team's setup end to end.
+
+<BetaCta source="blog_top">Start a team workspace on Starter</BetaCta>
+
+## Why do this in Construct?
+
+- **No seats to count.** A team workspace has no member limit, and everyone's agent work draws on the owner's plan. Members do not need their own subscription.
+- **One place for the team's output.** Reports, spreadsheets, and scripts land in Team files as the agent produces them, so a teammate can pick up Friday's work on Monday without a briefing call.
+- **Group chats where the agent works in the open.** @mention an agent in a group and everyone sees the answer. Private drafting still happens in each person's own chats.
+- **Roles you can adjust per person.** Owner, admin, and member defaults, with individual permissions an owner or admin can turn on or off.
+- **Control over which agent uses which account.** Each agent's settings list the apps it may use, so a research agent never touches the CRM.
+- **It reaches the team where they talk.** People can @mention it in Slack, or use Telegram, Discord, or its own email inbox.
+
+## Why does a team need a shared workspace, not more accounts?
+
+Because the work an AI employee does is only useful to a team if the team can see it. When each person runs their own assistant, the competitor research lives in one person's chat, the client report in another's, and the context the agent learned last month is locked in a third account. That is how most teams already use AI: in Microsoft's 2024 Work Trend Index of 31,000 knowledge workers, "78% of AI users are bringing their own AI tools to work (BYOAI)," rising to 80% at small and medium-sized companies ([Microsoft Work Trend Index, May 8, 2024](https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part)).
+
+Personal tools are fine for personal work. The trouble starts when the work is the company's: a weekly report somebody else has to send, a process that has to run when its author is on holiday, a client folder three people touch. Sharing a login is unsafe, and separate accounts cannot see each other's files. A shared workspace is the third option.
+
+## How do team workspaces work in Construct?
+
+Every Construct account has a **personal workspace**, private by default. A **team workspace** is a separate space you create on a paid plan, and its owner's subscription pays for it.
+
+**Billing and limits follow the owner.** Plan limits, model usage, bring-your-own-key settings, and storage all come from the workspace owner's plan. Members do not need their own subscription to work in the team workspace, and there is no seat count. The owner's plan sets the limits the team works within, such as up to 5 agents on Starter and 15 on Pro, and its usage allowance is shared by everyone's agent work. See [pricing](/pricing/). {/* TODO: confirm whether scheduled-task caps (10 on Starter, 50 on Pro) count per member or per team workspace */}
+
+**People join by invitation.** Owners and admins can send an email invitation, which works once and only for that address, or create a shareable invite link. Links expire after 1 to 30 days (7 by default), can be capped at 1 to 100 uses, and can be revoked at any time. Only the owner can invite someone directly as an admin.
+
+**Roles set the defaults, and permissions can be adjusted.**
+
+<ArticleTable caption="Default permissions for each role in a Construct team workspace">
+
+| Permission | Owner | Admin | Member |
+| --- | --- | --- | --- |
+| Read and write team files | Yes | Yes | Yes |
+| Use installed apps | Yes | Yes | Yes |
+| Chat with the workspace's agents | Yes | Yes | Yes |
+| Install apps and connect accounts | Yes | Yes | No |
+| Create and manage agents | Yes | Yes | No |
+| Create and manage group chats | Yes | Yes | No |
+| Invite and manage members | Yes | Yes | No |
+| Workspace settings | Yes | Yes | No |
+| Billing, delete, transfer ownership | Yes | No | No |
+
+</ArticleTable>
+
+An owner or admin can turn individual permissions on or off for a member, for example letting one member install apps, or making another read-only on files. Billing, deleting the workspace, and transferring ownership always stay with the owner.
+
+## What is shared, and what stays private?
+
+This is the part to understand before you invite anyone.
+
+- **Files.** The Team area is shared with everyone who has file access. Each member also has a private area nobody else can browse. Anyone can share a single private file with the whole team or with specific people, who can then open it.
+- **Chats.** Each person's own chats with an agent are theirs. Teammates cannot read them.
+- **Group chats.** A group has one lead agent, optional specialist agents, and either a member list or visibility to the whole workspace. You address an agent with an @mention; a message with no mention goes to the lead. New members can read the group's full history. An admin can see that a members-only group exists, but must join it to read it, and joining posts a visible notice.
+- **Memory.** There is personal memory and workspace memory. Workspace memory is shared, but agent-specific and chat-specific memories stay visible only to the member who created them.
+- **Group chats only use shared resources.** In a group, the agent works with workspace memory, team files, files posted to the group, and workspace-approved apps. It never pulls in one member's personal memory, private files, or personal connections.
+- **Activity.** Each person sees the Activity for work they started; there is no combined admin feed ([what Activity records](/blog/ai-agent-activity-log/)).
+
+**Connected apps belong to the workspace.** Owners and admins add them by default, and the account behind a connection stays with whoever connected it. Treat a connection in a team workspace as shared: connect a team account, such as a shared support inbox or the company CRM, rather than your personal email, unless you want teammates' requests to act through it. {/* TODO: confirm exactly which members' agent turns can use a connection added by another member in a team workspace */}
+
+{/* TODO: add screenshots of the People settings with the member permissions dialog, and of a group chat with a lead agent */}
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/workspace-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct team workspace demo"
+    aria-describedby="team-workspace-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/workspace.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-employee-team-workspace/team-workspace-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="team-workspace-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct workspace settings for inviting teammates and
+    controlling their access.
+  </figcaption>
+</figure>
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## Before you start
+
+A few things to set up deliberately before you invite anyone:
+
+- **Run shared work in group chats.** Activity is per person, and there is no combined admin feed today ([what Activity records](/blog/ai-agent-activity-log/)). Work the whole team should be able to review belongs in a group chat.
+- **Watch the shared allowance.** Usage is pooled on the owner's plan, so heavy users draw on it for everyone. Check usage in Settings and move to Pro if the team regularly hits limits.
+- **Ask about identity requirements early.** This guide does not cover single sign-on, automated user provisioning, or per-department billing; if you need them, ask before you commit. {/* TODO: confirm SSO and SCIM status before publishing */}
+- **Add Slack users one by one.** Slack allow lists take individual user IDs; Slack user groups are not supported.
+- **Keep secrets out of Team files.** Members' terminal commands run in one workspace sandbox, and your private files are only mounted for your own chats.
+- **Export before you delete.** Deleting a team workspace is permanent. The owner types the workspace name to confirm, and the files, agents, chats, and memory go with it.
+
+## A concrete setup: a four-person agency
+
+This example is illustrative, not a customer case. An agency has a founder, an operations lead, and two account managers. It runs on Starter.
+
+1. **The founder creates the team workspace** and invites the operations lead as an admin by email, then creates an invite link for member access, set to expire in 7 days with 2 uses, and posts it in the team chat.
+2. **The operations lead connects shared accounts:** the company CRM and a shared client-support inbox through the integration catalog, plus the Slack workspace from Settings, where she adds the four people's Slack user IDs to the allow list.
+3. **She creates two agents:** a reporting agent and a research agent. In the reporting agent's settings she leaves the CRM on; in the research agent's settings she turns the CRM off, because research never needs it.
+4. **She sets up the Team folders:** `Team/clients/<client>/reports` and `Team/clients/<client>/data`, and a group chat called "Client reports" visible to the whole workspace, with the reporting agent as lead.
+5. **The weekly job goes on the Calendar:** every Monday the reporting agent writes each client's report to Team files and posts a summary in the group. Our guide to [where agent work goes](/blog/ai-agent-files-and-artifacts/) shows that job in detail.
+6. **Account managers work in the group.** One writes "@Reporting, the Acme numbers look low, check last week's file" and the agent answers in the group, where everyone can see the reasoning. Private drafting still happens in each person's own chats.
+
+When an account manager leaves, the founder removes them. Their access to groups ends immediately; their private files stay in the workspace, unseen, and come back if they are invited again. If the founder ever hands the business over, ownership can be transferred to a member who has their own paid access, and the founder becomes an admin.
+
+We have not yet run this setup with four real people over a month.
+
+{/* TODO: run the four-person setup on a test team workspace for four weeks; record setup time, invite friction, and how many cross-person handoffs happened in the group chat */}
+
+## How does the team reach the agent outside Construct?
+
+In Slack, people @mention the agent in a channel or message it directly, and it answers in the thread. Who gets a full agent is set by an allow list of Slack user IDs; the person who installed it is always the owner. If you open it to everyone, people who are not on the list get a read-only agent with web search and memory lookup, and no files, email, apps, or browser. Discord, Telegram, and the agent's email inbox have their own rules. In a team workspace only owners and admins can change these settings. Our guide to [messaging your agent from Telegram, Slack, Discord or email](/blog/ai-agent-telegram-slack-discord/) covers each channel.
+
+<ReadNext slug="ai-agent-telegram-slack-discord" />
+
+## When might a different setup still fit?
+
+- You work alone: Construct's personal workspace is enough, no team workspace needed ([an AI employee for a one-person consulting business](/blog/ai-employee-for-consultants/)).
+- You are a large company with strict identity and audit requirements: evaluate tools built for that.
+- Your team only needs answers, not shared output: a chat assistant per person may be enough; see [AI coworker, AI employee or AI assistant](/blog/ai-coworker-vs-ai-employee/).
+
+For a small team whose recurring work several people touch, one shared Construct workspace is the better fit.
+
+## What to check in any AI agent product for teams
+
+If you are comparing products, ask each one these questions. Construct's answers are in bold.
+
+1. Is pricing per seat or per workspace? Work out the cost at 3 people and at 10. **Per workspace, with no seat charge.**
+2. Can a teammate continue Friday's work on Monday without a briefing call? **Yes, through Team files and group chats.**
+3. What stays private by default? **Chats and private files; workspace memory is shared.**
+4. Can you restrict which agent uses which connected account? **Yes, per agent.**
+5. Who can connect accounts, invite people, and change billing? **Owners and admins by default; billing stays with the owner.**
+6. What happens to a leaver's work? **Their private files stay in the workspace, unseen, and return on re-invite.**
+7. Is there a shared conversation space where the agent answers in front of everyone? **Yes, group chats.**
+8. Can an admin see everyone's activity? **Activity is per person; run shared work in group chats.**
+
+## Which should you choose?
+
+Choose a Construct team workspace. One plan covers the whole team with no per-seat charge, the agent's output lives in Team files everyone can open, group chats keep the agent's reasoning in front of the people who rely on it, and per-agent app access keeps each connected account where it belongs.
+
+Your first job: pick the recurring task more than one person touches, such as the weekly client report or Monday briefing. Create a team workspace, move that job's files to Team, run it once in a group chat, then put it on the Calendar. Start on [Starter at $59](/pricing/), or try Pro free for seven days.
+
+<BetaCta source="blog_inline_2">Give Construct its first team job</BetaCta>
+
+## Related resources
+
+- [One workspace for the whole team](/use-cases/team-workspaces/)
+- [Where your agent's work goes](/blog/ai-agent-files-and-artifacts/)
+- [Connect your own tools: custom MCP and permission boundaries](/blog/ai-agent-custom-mcp/)
+- [Hire your first AI employee: a 30-day plan](/blog/hire-an-ai-employee/)
+- [Activity log vs audit log](/blog/ai-agent-activity-log/)
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)

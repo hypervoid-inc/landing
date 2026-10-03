@@ -346,6 +346,267 @@ export const ogPosters: Record<string, PosterCard> = {
       "The mascot sitting on top of a closed wooden map chest with shallow drawers, a small desk globe with a few map pins in it standing beside the chest and a travel plug adapter lying on the bench in front.",
   },
 
+  "blog-lindy-alternatives": {
+    headline: ["LINDY", "ALTERNATIVES"],
+    scene:
+      "The mascot sitting on top of a tall revolving wire brochure rack stocked with folded product leaflets, one leaflet pulled out and lying open on the bench below beside a ballpoint pen.",
+  },
+  "blog-ai-agent-gmail-access-safely": {
+    headline: ["LET AN AGENT", "USE GMAIL SAFELY"],
+    scene:
+      "The mascot sitting on top of a steel lockable post box with a small padlock hanging from its latch, a single sealed envelope and a spare key lying on the bench beside it.",
+  },
+  "blog-construct-vs-muse": {
+    headline: ["CONSTRUCT", "VS MUSE"],
+    scene:
+      "The mascot sitting on top of a wooden shop counter with a glass display case built into its front, a small chrome service bell and a spiral-bound order book resting on the bench beside it.",
+  },
+  "blog-always-on-ai-agents-compared": {
+    headline: ["DOTS VS MUSE", "VS GROK", "VS COWORK"],
+    scene:
+      "The mascot sitting on top of a revolving office bookcase with four open sides, a different ring binder standing on each side, and a desk magnifier and a short price list lying on the bench beside it.",
+  },
+  "blog-agent-reliability-calculator": {
+    headline: ["HOW MANY STEPS", "WILL IT FINISH?"],
+    scene:
+      "The mascot sitting on top of a tall rolling office step ladder with three wide treads, a pair of dice and a short stack of numbered index cards resting on the bench beside it.",
+  },
+  "blog-construct-vs-claude-cowork": {
+    headline: ["CONSTRUCT", "VS COWORK"],
+    scene:
+      "The mascot sitting on top of a two-person office desk with a fabric partition panel running down its middle, a shared wire desk organiser and a coiled phone handset resting on the bench below.",
+  },
+  "blog-best-ai-employee-for-solo-founders": {
+    headline: ["BEST AI", "EMPLOYEES FOR", "SOLO FOUNDERS"],
+    scene:
+      "The mascot sitting on top of a small roll-top desk with its slatted lid pulled down, a single key on a ring and a coffee mug resting on the bench beside it.",
+  },
+  "blog-ai-inbox-triage": {
+    headline: ["INBOX TRIAGE", "DRAFTS NOT SENDS"],
+    scene:
+      "The mascot sitting on top of a metal office mail cart with three canvas bins, envelopes sorted into each bin and a rubber band ball resting on the bench beside it.",
+  },
+  "blog-hosted-openclaw-alternatives": {
+    headline: ["HOSTED OPENCLAW", "ALTERNATIVES"],
+    scene:
+      "The mascot sitting on top of a floor-standing uninterruptible power supply unit with its status panel facing the camera, a coiled power cable and a small padlock lying on the bench beside it.",
+  },
+  "blog-ai-agent-scheduled-tasks": {
+    headline: ["SCHEDULED AGENT", "LAPTOP CLOSED"],
+    scene:
+      "The mascot sitting on top of a large flip-number clock radio with its number cards caught mid-turn, a shut laptop lying closed on the bench beside it.",
+  },
+  "blog-construct-vs-genspark-claw": {
+    headline: ["CONSTRUCT VS", "GENSPARK CLAW"],
+    scene:
+      "The mascot sitting on top of the glass cabinet of a coin-operated claw crane machine, a few plush prizes heaped inside below it and a single game token lying on the bench beside it.",
+  },
+  "blog-construct-vs-openclaw": {
+    headline: ["CONSTRUCT", "VS OPENCLAW"],
+    scene:
+      "The mascot sitting on top of a tall rolling mechanic's tool chest with its drawers shut, an adjustable wrench and a pair of locking pliers laid on the bench beside it.",
+  },
+  "blog-ai-agent-activity-log": {
+    headline: ["ACTIVITY LOG", "VS AUDIT LOG"],
+    scene:
+      "The mascot sitting on top of a desktop fax machine with a printed transmission journal curling out of its output tray, a highlighter and a rubber band lying on the bench beside it.",
+  },
+  "blog-ai-company-research-spreadsheet": {
+    headline: ["COMPANY RESEARCH", "WITH SOURCES"],
+    scene:
+      "The mascot sitting on top of a boxy overhead projector with a ruled transparency sheet laid flat on its glass, a stack of printed company brochures and a felt marker pen resting on the bench beside it.",
+  },
+  "blog-ai-delegation-checklist": {
+    headline: ["AI DELEGATION", "CHECKLIST"],
+    scene:
+      "The mascot sitting on top of an overhead projector with its arm folded down, a single printed checklist transparency lying on the glass and a box of grease pencils on the bench beside it.",
+  },
+  "blog-construct-vs-gemini-spark": {
+    headline: ["CONSTRUCT", "VS SPARK"],
+    scene:
+      "The mascot sitting on top of a tall metal key cabinet with its door swung open on rows of labelled hooks, one hook empty, and a single key on a plastic fob lying on the bench below.",
+  },
+  "blog-ai-agent-slack-briefing": {
+    headline: ["MORNING", "BRIEFING", "IN SLACK"],
+    scene:
+      "The mascot sitting on top of a large office drip coffee maker with a full glass carafe on its warming plate, a folded one-page printout and a mug on the bench beside it.",
+  },
+  "blog-viktor-alternatives": {
+    headline: ["VIKTOR", "ALTERNATIVES"],
+    scene:
+      "The mascot sitting on top of an office water cooler with a full bottle seated upside down behind it, a short stack of paper cone cups and a folded memo on the bench beside it.",
+  },
+  "blog-construct-vs-viktor": {
+    headline: ["CONSTRUCT", "VS VIKTOR"],
+    scene:
+      "The mascot sitting on top of a wooden-framed cork noticeboard standing on a small easel, a few memo slips pinned to its face and an open box of push pins on the bench below.",
+  },
+  "blog-ai-agent-browser-and-terminal": {
+    headline: ["BROWSER AND", "TERMINAL,", "ONE TASK"],
+    scene:
+      "The mascot sitting on top of a beige rolling computer cart with its keyboard tray pulled out, a coiled serial cable and a single floppy disk lying on the tray below.",
+  },
+  "blog-claude-cowork-alternatives": {
+    headline: ["COWORK", "ALTERNATIVES"],
+    scene:
+      "The mascot sitting on top of a row of three different office chairs pushed together side by side, a swivel chair, a stacking chair and a drafting stool, with a clipboard and a rolled tape measure lying on the bench in front.",
+  },
+  "blog-ai-lead-sourcing-hubspot": {
+    headline: ["NEW LEADS", "INTO HUBSPOT", "EVERY MORNING"],
+    scene:
+      "The mascot sitting on top of a large rotary business card file with its cards fanned open, a few fresh blank cards and a pen lying on the bench beside it.",
+  },
+  "blog-hermes-vs-openclaw-vs-managed": {
+    headline: ["HERMES, OPENCLAW", "OR MANAGED?"],
+    scene:
+      "The mascot sitting on top of a tall coin-operated drinks vending machine with three large selection buttons along its front, a single coin and an empty paper cup on the bench beside it.",
+  },
+  "blog-ai-employee-for-agencies": {
+    headline: ["AI EMPLOYEE", "FOR AGENCIES"],
+    scene:
+      "The mascot sitting on top of a tilted wooden drafting table with a hand-drawn storyboard pinned flat across it, a jar of marker pens and a folding proof loupe standing on the bench below.",
+  },
+  "blog-ai-agent-linear-from-slack": {
+    headline: ["LINEAR UPDATES", "FROM SLACK"],
+    scene:
+      "The mascot sitting on top of the frame of a rolling office whiteboard, magnetic task cards arranged in three columns on its surface and a marker resting in the tray below.",
+  },
+  "blog-ai-employee-cost-calculator": {
+    headline: ["VA OR AGENT?", "RUN THE NUMBERS"],
+    scene:
+      "The mascot sitting on top of a heavy floor-standing shipping platform scale with a flat steel deck, a small stack of coins and a folded paper invoice resting on the bench beside it.",
+  },
+  "blog-perplexity-computer-alternatives": {
+    headline: ["PERPLEXITY", "COMPUTER", "ALTERNATIVES"],
+    scene:
+      "The mascot sitting on top of a large mechanical postal scale with a wide steel platform, a small sealed parcel and a roll of postage stamps on the bench beside it.",
+  },
+  "blog-customer-story-1": {
+    headline: ["CUSTOMER STORY", "BEFORE & AFTER"],
+    scene:
+      "The mascot sitting on top of a shoulder-mount VHS camcorder lying on its side, a handheld microphone with a coiled cable and a blank cassette tape on the bench beside it.",
+  },
+  "blog-perplexity-computer-vs-cowork-vs-manus": {
+    headline: ["COMPUTER", "VS COWORK", "VS MANUS"],
+    scene:
+      "The mascot sitting on top of a large office photocopier with a multi-bin sorter attached to its side, a finished stack of collated copies and a wind-up kitchen timer resting on the bench below.",
+  },
+  "blog-ai-agent-files-and-artifacts": {
+    headline: ["WORK THAT", "OUTLASTS", "THE CHAT"],
+    scene:
+      "The mascot sitting on top of a beige microfiche reader with its viewing hood tilted up, a plastic sleeve of microfiche sheets and a hand magnifier lying on the bench beside it.",
+  },
+  "blog-ai-agent-telegram-slack-discord": {
+    headline: ["MESSAGE YOUR", "AGENT ANYWHERE"],
+    scene:
+      "The mascot sitting on top of a desktop fax machine with a curled sheet half out of its output tray, a flip phone and a two-way radio lying on the bench beside it.",
+  },
+  "blog-manus-alternatives": {
+    headline: ["MANUS", "ALTERNATIVES", "FOR RECURRING"],
+    scene:
+      "The mascot sitting on top of a carousel slide projector, its round slide tray mounted behind it and a single loose slide lying on the bench below.",
+  },
+  "blog-where-ai-agents-fail": {
+    headline: ["WHERE AI", "AGENTS FAIL"],
+    scene:
+      "The mascot sitting on top of a large desktop pen plotter with a long printed chart curling out of its rollers, a magnifying glass and a capped marker resting on the bench beside it.",
+  },
+  "blog-ai-competitor-pricing-report": {
+    headline: ["WEEKLY PRICING", "REPORT"],
+    scene:
+      "The mascot sitting on top of a heavy desktop printing calculator, a long paper tape curling off its roller onto the bench, with two folded product brochures lying open beside it.",
+  },
+  "blog-ai-agent-prompt-injection": {
+    headline: ["PROMPT", "INJECTION"],
+    scene:
+      "The mascot sitting on top of a heavy office paper shredder bin, a single typed letter half fed into its slot and a magnifying glass lying on the bench beside it.",
+  },
+  "blog-sintra-alternatives": {
+    headline: ["SINTRA", "ALTERNATIVES"],
+    scene:
+      "The mascot sitting on top of a large office photocopier with its lid closed, a short stack of freshly copied flyers in the output tray and a stapler on the bench below.",
+  },
+  "blog-sintra-vs-marblism-vs-lindy": {
+    headline: ["SINTRA VS", "MARBLISM", "VS LINDY"],
+    scene:
+      "The mascot sitting on top of a large mechanical postal scale with its weighing platform empty, three sealed envelopes of different sizes lined up on the bench beside it.",
+  },
+  "blog-ai-agent-custom-mcp": {
+    headline: ["CONNECT YOUR", "OWN TOOLS"],
+    scene:
+      "The mascot sitting on top of a rack-width network patch panel laid flat on the bench, a short coil of patch cable and a punch-down tool lying beside it.",
+  },
+  "blog-hire-an-ai-employee": {
+    headline: ["HIRE YOUR FIRST", "AI EMPLOYEE"],
+    scene:
+      "The mascot sitting on top of a high-backed office swivel chair pulled up to a bare desk, a new staff ID badge on a lanyard and a one-month desk planner lying on the desk beside it.",
+  },
+  "blog-construct-vs-manus": {
+    headline: ["CONSTRUCT", "VS MANUS"],
+    scene:
+      "The mascot sitting on top of a heavy cast-iron bench vise clamped to the edge of the bench, a pair of canvas work gloves and a small adjustable wrench lying beside it.",
+  },
+  "blog-construct-vs-perplexity-computer": {
+    headline: ["CONSTRUCT VS", "PERPLEXITY", "COMPUTER"],
+    scene:
+      "The mascot sitting on top of a steel library book cart loaded with thick reference volumes, a magnifying glass and a single index card lying on the bench beside it.",
+  },
+  "blog-ai-coworker-vs-ai-employee": {
+    headline: ["COWORKER,", "EMPLOYEE OR", "ASSISTANT?"],
+    scene:
+      "The mascot sitting on top of a wooden office reception counter, a brass service bell and an open visitor sign-in book resting on the bench in front of it.",
+  },
+  "blog-cheapest-ai-employee": {
+    headline: ["CHEAPEST AI", "EMPLOYEE"],
+    scene:
+      "The mascot sitting on top of a heavy electric adding machine, a long paper tally roll curling off the back of it and a short stack of coins on the bench beside it.",
+  },
+  "blog-construct-vs-cellcog": {
+    headline: ["CONSTRUCT", "VS CELLCOG"],
+    scene:
+      "The mascot sitting on top of a freestanding shift roster board on wheels with rows of blank name magnets, a marker and an eraser resting on the bench below.",
+  },
+  "blog-ai-follow-ups-crm-without-zapier": {
+    headline: ["FOLLOW-UPS", "WITHOUT ZAPIER"],
+    scene:
+      "The mascot sitting on top of a heavy office postage meter with a short stack of stamped envelopes waiting in its feed tray, a rubber band ball and a rotary card file on the bench beside it.",
+  },
+  "blog-ai-search-recommends-ai-employees": {
+    headline: ["WHAT AI SEARCH", "RECOMMENDS"],
+    scene:
+      "The mascot sitting on top of a street newspaper vending box with its front window shut, a folded broadsheet and a pair of reading glasses lying on the bench beside it.",
+  },
+  "blog-ai-investor-update": {
+    headline: ["INVESTOR UPDATE", "DRAFTED WEEKLY"],
+    scene:
+      "The mascot sitting on top of a desktop comb binding machine, a freshly bound weekly report lying on the bench beside it with a pen clipped to its cover.",
+  },
+  "blog-construct-computer-alternatives": {
+    headline: ["CONSTRUCT", "ALTERNATIVES"],
+    scene:
+      "The mascot sitting on top of a countertop key-cutting machine, a pegboard of blank keys hanging beside it and one freshly cut key lying on the bench in front.",
+  },
+  "blog-construct-vs-simular-sai": {
+    headline: ["CONSTRUCT VS", "SIMULAR SAI"],
+    scene:
+      "The mascot sitting on top of a steel secretary's desk with its typing return folded out to one side, a shorthand notepad and a wired mouse lying on the bench beside it.",
+  },
+  "blog-ai-employee-for-consultants": {
+    headline: ["AI EMPLOYEE FOR", "CONSULTANTS"],
+    scene:
+      "The mascot sitting on top of a hard-sided consultant's portfolio case standing upright on its edge, a spiral-bound proposal and a fountain pen lying on the bench in front of it.",
+  },
+  "blog-ai-employee-team-workspace": {
+    headline: ["ONE AI EMPLOYEE", "FOR THE TEAM"],
+    scene:
+      "The mascot sitting on top of a beige overhead projector with its arm folded down, a few clear transparency sheets and a dry-erase marker lying on the bench beside it.",
+  },
+  "blog-is-construct-computer-safe": {
+    headline: ["IS CONSTRUCT", "SAFE?"],
+    scene:
+      "The mascot sitting on top of a wall-mount key cabinet laid flat with its door shut, a numbered key tag and a small brass padlock lying on the bench beside it.",
+  },
+
   authors: {
     headline: ["THE PEOPLE", "WHO WRITE", "CONSTRUCT"],
     scene:
@@ -416,6 +677,71 @@ export const ogPosters: Record<string, PosterCard> = {
     headline: ["EVERYTHING ON", "ZAPIER"],
     scene:
       "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled ZAPIER.",
+  },
+  "blog-tag-governance": {
+    headline: ["EVERYTHING ON", "GOVERNANCE"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled GOVERNANCE.",
+  },
+  "blog-tag-email": {
+    headline: ["EVERYTHING ON", "EMAIL"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled EMAIL.",
+  },
+  "blog-tag-engineering": {
+    headline: ["ENGINEERING"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled ENGINEERING.",
+  },
+  "blog-tag-scheduling": {
+    headline: ["EVERYTHING ON", "SCHEDULING"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled SCHEDULING.",
+  },
+  "blog-tag-openclaw": {
+    headline: ["EVERYTHING ON", "OPENCLAW"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled OPENCLAW.",
+  },
+  "blog-tag-gemini-spark": {
+    headline: ["EVERYTHING ON", "GEMINI SPARK"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled GEMINI SPARK.",
+  },
+  "blog-tag-viktor": {
+    headline: ["EVERYTHING ON", "VIKTOR"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled VIKTOR.",
+  },
+  "blog-tag-claude-cowork": {
+    headline: ["EVERYTHING ON", "CLAUDE COWORK"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled CLAUDE COWORK.",
+  },
+  "blog-tag-internal-tools": {
+    headline: ["INTERNAL TOOLS"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled INTERNAL TOOLS.",
+  },
+  "blog-tag-virtual-assistant": {
+    headline: ["VIRTUAL", "ASSISTANTS"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled VIRTUAL ASSISTANT.",
+  },
+  "blog-tag-pricing": {
+    headline: ["EVERYTHING ON", "PRICING"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled PRICING.",
+  },
+  "blog-tag-manus": {
+    headline: ["EVERYTHING ON", "MANUS"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled MANUS.",
+  },
+  "blog-tag-perplexity": {
+    headline: ["EVERYTHING ON", "PERPLEXITY"],
+    scene:
+      "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled PERPLEXITY.",
   },
 };
 

@@ -3,91 +3,146 @@ title: "Construct vs building your own AI agent"
 seoTitle: "Turnkey AI System vs Building Your Own AI Agent"
 description: "Building your own agent means wiring sandbox, apps, channels, memory, schedules, and user-facing activity summaries yourself. Construct provides those pieces as a hosted product."
 published: "2026-07-20"
-updated: "2026-09-29"
+updated: "2026-10-01"
 author: "construct-team"
 tags: ["comparison", "agent-frameworks", "diy", "ai-employee"]
 kind: "comparison"
 draft: false
 ---
 
-A DIY stack combines your chosen agent framework, models, tools, storage, runtime, and user interface. Construct ships those operating surfaces as one hosted, turnkey product.
+Construct gives you a working AI employee today for $9 a month, with the sandbox, app connections, channels, memory, schedules, and activity records already built and hosted. Building your own on a framework such as the OpenAI Agents SDK or LangGraph means designing and operating each of those layers yourself, then keeping up with every model, connector, and browser change that follows.
 
-<BetaCta source="blog_top">Meet Construct</BetaCta>
+For founders and small teams, Construct is the better choice. You assign work this week instead of building infrastructure for a quarter, you keep the extensibility that matters through custom MCP tools and your own model keys, and your engineers stay on the product your customers pay for.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why choose Construct over building your own?
+
+- **Working on day one, from $9 a month.** Lite includes 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 and Pro is $299.
+- **The hard layers are already built.** A sandbox terminal, live browser runs, workspace files, credentialed app connections, schedules, and a desktop your team can supervise.
+- **Memory with a correction model.** Inspect what the agent stored, correct a fact, or forget it, with the evidence behind each item.
+- **Channels you do not have to build.** Web, Slack, Telegram, Discord, and the agent's own email inbox.
+- **Extensible where it counts.** Add custom MCP tools for internal systems, and on Pro bring your own keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI.
+- **A team workspace without seats.** Owner, Admin, and Member roles with no member limit, and usage draws on the owner's plan.
 
 ## Methodology
 
-This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
+We build Construct. This is our editorial capability comparison using the linked public framework documentation, first published on July 20, 2026, with Construct's plan details updated on October 1, 2026. It compares documented product models, not hands-on performance or every plan-specific feature.
 
 ## Side by side
 
-| Feature       | Construct                                           | DIY agent stack                         |
-| ------------- | --------------------------------------------------- | --------------------------------------- |
-| Time to start | Hosted product                                      | Build and integrate components          |
-| Execution     | Browser, sandbox, files, apps                       | Your chosen runtimes                    |
-| Memory        | Built-in, inspectable, correctable                  | Design and operate it yourself          |
-| Channels      | Web, Slack, Telegram, Discord slash commands, email | Build each ingress                      |
-| Operations    | Managed scheduling and bounded Activity summaries   | Own queues, retries, logs, and upgrades |
-| Control       | Custom MCP, workspace apps, and model BYOK on Pro   | Complete architectural control          |
+<ArticleTable caption="Construct vs a DIY agent stack">
 
-## Hosted and integrated
+| Feature       | Construct                                                       | DIY agent stack                         |
+| ------------- | --------------------------------------------------------------- | --------------------------------------- |
+| Time to start | Sign up and assign a job                                        | Build and integrate components          |
+| Price         | $9, $59, or $299 a month                                        | Engineering time, hosting, and model bills |
+| Memory        | Built in: inspect, correct, or forget                           | Design and operate it yourself          |
+| Files         | Workspace files saved as each run goes                          | Design storage and its lifecycle        |
+| Schedules     | Calendar schedules that run with your laptop closed             | Build and run your own scheduler        |
+| Team use      | Team workspaces with roles and no member limit                  | Build accounts and permissions          |
+| Channels      | Web, Slack, Telegram, Discord, and email                        | Build each ingress                      |
+| Execution     | Browser, sandbox terminal, files, and connected apps            | Your chosen runtimes                    |
+| Extensibility | Custom MCP, workspace apps, and your own model keys on Pro      | Complete architectural control          |
 
-A production DIY stack may need compute isolation, credential storage, channel integrations, and a UI humans can trust, depending on the components and deployment you choose. Construct bundles these operating surfaces so you assign tasks instead of assembling them.
+</ArticleTable>
+
+Framework sources: [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/), [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview), and [Model Context Protocol](https://modelcontextprotocol.io/docs/getting-started/intro). Construct's [product guide](/blog/ai-employee/) explains how its workspace runs.
 
 ## The parts people underestimate
 
-Getting an agent to complete a task in a notebook is a weekend. The gap between that and something colleagues rely on is where DIY projects usually stall, and it is rarely the model layer.
+Getting an agent to complete a task in a notebook takes a weekend. The gap between that and something colleagues rely on is where DIY projects stall, and it is rarely the model layer. Here is what you would build, and what Construct already ships:
 
-- **Sandboxed execution.** Running agent-authored code needs isolation, resource limits, and timeouts. Deciding what a shell can reach is a security design problem, not a library choice.
-- **Credential custody.** Every connected app means storing and rotating tokens, handling OAuth refresh, and scoping access per user.
-- **Durable state.** Files, conversation state, and long-term memory need storage with a lifecycle, not just a vector index.
-- **Memory correction.** Storing context is easy; superseding a stale assertion, keeping provenance, and letting a user forget something is a data model.
-- **Scheduling.** A scheduler that reconciles missed and delayed runs is meaningfully harder than a cron entry.
-- **A human-facing surface.** People need to see what happened, interrupt a run, and answer a question mid-task. This is often the largest single piece of work.
-- **Ongoing maintenance.** Model deprecations, connector API changes, and browser breakage arrive continuously.
+- **Sandboxed execution.** Agent-written code needs isolation, resource limits, and timeouts. Construct runs commands in a sandbox terminal with a runtime cap already set.
+- **Credential custody.** Every connected app means storing tokens, handling OAuth refresh, and scoping access. Construct connects apps from its live integration catalog.
+- **Durable state.** Files, conversation state, and memory need storage with a lifecycle. Construct saves work to workspace files as it is produced, so a run that stops at step 30 keeps steps 1 to 29.
+- **Memory correction.** Storing context is easy; replacing a stale fact, keeping its evidence, and letting a user forget it is a data model. Construct's Memories app does all three.
+- **Scheduling.** A scheduler is more than a cron entry. Construct's Calendar runs jobs on its servers with your laptop closed.
+- **A human-facing surface.** People need to see what happened and interrupt a run. Construct's web desktop shows files, live browser work, a terminal transcript, and Activity summaries, and lets anyone stop a running turn.
 
-None of these are unsolvable. The question is whether solving them is the work your team should be doing.
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/memories-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct memory demo"
+    aria-describedby="memory-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/memories.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/construct-vs-diy/memories-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption id="memory-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct's Memories app showing the preferences and
+    procedures the agent has learned, with the evidence behind each one, so you
+    can review, correct, or forget them.
+  </figcaption>
+</figure>
 
-## Still flexible
+## What does it really cost?
 
-Bring your own model key on Pro, connect supported applications, or add a custom MCP server. The agent can use browser and sandbox tools when a structured integration is not enough. It can also build a constrained workspace application and add it to the desktop for a recurring internal process.
+The comparison that matters is not a subscription against zero. It is a subscription against engineering time, plus the infrastructure the stack runs on, plus the maintenance nobody schedules: model deprecations, connector API changes, and browser breakage arrive continuously. Construct's plans are $9, $59, and $299 a month at a fixed monthly price with published plan limits. Against a share of an engineer's time indefinitely, the arithmetic favors Construct unless control is itself the requirement.
 
-MCP matters most here. Because Construct can consume custom MCP servers, an internal system with no public integration can still be reached without waiting for first-party support, you implement the tool interface and the hosted agent uses it. That path preserves much of DIY's extensibility while leaving the operating layers managed.
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
 
-<BetaCta source="blog_inline_1">Try Construct in the beta</BetaCta>
+## How much control do you keep?
 
-## What you would otherwise operate
+### Custom MCP tools for internal systems
 
-A production agent needs more than a prompt and model API. Depending on the stack, your team may need to operate compute, browser tasks, app connections, schedules, memory, interruptions, and activity records. Frameworks provide many useful primitives; Construct packages the operating layers into one product while retaining browser, terminal, supported model-key, and extension options.
+Construct consumes custom MCP servers, so an internal system with no public integration is still reachable: you implement the tool interface once and the hosted agent uses it. That keeps the extensibility of DIY while Construct runs the operating layers.
 
-## The maintenance tradeoff
+### Your own model keys
 
-A DIY stack can match a precise security model, deployment environment, or internal platform. It also makes your team responsible for every model change, connector failure, browser timeout, queue, migration, and support surface. Construct is the shorter path when the goal is to operate an AI employee rather than build the infrastructure around one.
+Construct Pro runs on your keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI, as a fallback after bundled limits or for every run. Switch providers without rebuilding anything.
 
-The cost comparison that matters is not licence fees against zero. It is licence fees against engineering time plus the infrastructure the stack runs on plus the ongoing maintenance nobody schedules. Construct's plans run $9, $59, and $299 per month as of this post's publish date. Against a fraction of an engineer's time indefinitely, the arithmetic is usually straightforward unless control is itself the requirement.
+### Private workspace apps
 
-## A reasonable hybrid
+For a recurring internal process, Construct builds a private workspace app, such as a review queue or tracker, and adds it to the desktop. The [internal-tools guide](/blog/build-internal-tools-with-construct/) shows how.
 
-The choice is not always all-or-nothing. Teams with real platform capability often use a hosted agent for general operating work while building bespoke agents only where differentiation justifies it. Custom MCP servers make that split practical: shared internal tools are implemented once and consumed by whichever agent needs them.
+## Already building your own agent? Add Construct in 15 minutes
 
-The signal that DIY is genuinely warranted is usually a hard constraint rather than a preference: an air-gapped deployment, a specific certification, or an agent whose behaviour is itself the product.
+You do not have to throw the prototype away. Expose the internal tools you built as an MCP server, and let Construct run the general operating work while you keep building only where it differentiates your product.
 
-## When to choose Construct
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test your own model keys and longer runs.
+2. **Copy your agent's system prompt and procedures** into a Construct chat, and move the reference files into the workspace.
+3. **Connect the apps** from the integration catalog, and add your own tools as a custom MCP server.
+4. **Run the job once and check the result** in Files.
+5. **Put it on the Calendar** so it runs on schedule with your laptop closed.
 
-- Want production-ready agent infrastructure now
-- Need integrations and channels without building them
-- Prefer metered SaaS over ops burden
-- Want a supervision UI you do not have to design
+There is no import from frameworks; write your rules into the first instruction and Construct saves them as memory you can read. Two things to set up deliberately: each sandbox command runs for up to five minutes, so split long scripts into steps; and workflows do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself.
 
-## When to choose a DIY stack
+## When might building your own still fit?
 
-- Full control over every layer is mandatory
-- Air-gapped or on-prem only
-- You have a platform team to run it
-- The agent's behaviour is your product
+- Your deployment must be air-gapped or on-premises.
+- The agent's behavior is itself the product you sell.
+- Full control over every layer is mandatory and you have a platform team to run it.
+
+For the operating work a small team needs done every week, Construct is the better fit.
+
+## Which should you choose?
+
+Choose Construct. It is working today from $9 a month, ships the sandbox, apps, channels, memory, schedules, and supervision you would otherwise build, and stays extensible through custom MCP tools and your own model keys. If you already have a prototype, keep it where it differentiates you and let Construct run the rest.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+Give Construct the job your prototype was built for, such as a weekly research report or inbox summary. Paste in the instructions, connect the apps, check the saved file, and put it on the Calendar. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
 
 ## Sources
 
-- [Construct: AI employee product guide](https://construct.computer/blog/ai-employee/)
+- [Construct: AI employee product guide](/blog/ai-employee/)
+- [Construct pricing](/pricing/)
 - [OpenAI: Agents SDK](https://openai.github.io/openai-agents-python/)
 - [LangChain: LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview)
 - [Model Context Protocol: Introduction](https://modelcontextprotocol.io/docs/getting-started/intro)

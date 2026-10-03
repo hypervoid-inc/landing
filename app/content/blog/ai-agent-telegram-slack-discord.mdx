@@ -1,0 +1,205 @@
+---
+title: "How to Message Your AI Agent From Telegram, Slack, Discord or Email"
+seoTitle: "Message Your AI Agent From Telegram, Slack, Discord or Email"
+description: "Connect one AI agent to Slack, Telegram, Discord and email, then set who can use it in each place. Setup steps, exact prompts, and access rules."
+published: "2027-01-02"
+author: "nischal"
+tags: ["ai-agent", "ai-employee", "email"]
+kind: "guide"
+draft: true
+---
+
+Construct gives you one AI agent you can message from Slack, Telegram, Discord, its own email address, and the web, from $9 a month, with every job landing in the same workspace and memory. ChatGPT Dots, by comparison, is reached through ChatGPT's apps, Slack, and Microsoft Teams ([The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)) and needs a ChatGPT Pro plan at $100 or $200 a month ([Construct vs ChatGPT Dots](/blog/construct-vs-openai-dots/)).
+
+For founders and small teams, Construct is the simplest way to hand an agent work from wherever the conversation already is. You connect Slack, Discord, and Telegram from one screen, Settings > Messaging, the email address is included on every plan, and each connection starts locked to "Only people I allow," so the agent answers only you until you add other people.
+
+<BetaCta source="blog_top">Connect your channels for $9</BetaCta>
+
+## Why do this in Construct?
+
+Work is assigned where the conversation already is. If the only way to hand an agent a job is to open a web app, most of those jobs never get assigned. As our [channels page](/use-cases/channels/) puts it, the computer is one, the entry points are many.
+
+- **One agent behind every door.** A job started from Telegram on your phone writes to the same workspace and memory you open on your laptop.
+- **Email included on every plan.** Lite, Starter, and Pro all come with the agent's own address, so you can forward a supplier quote or an invoice and get the work back as a file.
+- **Locked until you open it.** Every Slack workspace and Discord server starts on "Only people I allow," with Full access and Blocked lists you control per install.
+- **Different agents for different channels.** Route #support to the agent that knows your help docs and keep a research agent elsewhere: up to 2 agents on Lite, 5 on Starter, and 15 on Pro.
+- **No seat for every teammate.** People you add in Slack or Discord reach the agent from the chat app they already use, and requests run under the installer's plan.
+- **Results that outlive the chat.** Every job leaves files in the workspace, an Activity entry, and a session you can reopen on the web.
+
+## Which channel should you use for what?
+
+<ArticleTable caption="Construct channels compared by setup, access, and best use">
+
+| Channel  | How you connect                        | How you start a job                                   | Who can use it by default | Good for                                   |
+| -------- | -------------------------------------- | ----------------------------------------------------- | ------------------------- | ------------------------------------------ |
+| Web      | Sign in                                | Chat in the desktop                                   | You and your workspace    | Long jobs, reviewing files                 |
+| Slack    | Add to Slack                           | @mention in a channel, reply in that thread, or DM    | Only the installer        | Team requests, shared threads              |
+| Telegram | Open Telegram to link                  | Message the bot, or /ask in a group                   | Only your linked account  | Quick jobs from your phone                 |
+| Discord  | Add to Discord                         | Slash commands and mentions in a server               | Only the installer        | Communities and server-based teams         |
+| Email    | Included, nothing to install           | Send or forward from your own account address         | Only you                  | Forwarding threads, vendor mail, invoices  |
+
+</ArticleTable>
+
+Sources: [Construct channels](/use-cases/channels/) and [pricing](/pricing/). Lite, Starter, and Pro all include the agent email address.
+
+<BetaCta source="blog_inline_1">Connect Construct to Slack and Telegram</BetaCta>
+
+## What do you need?
+
+- **A Construct workspace** on any plan. Lite at $9 a month covers every channel; see [pricing](/pricing/), or start with the 7-day Pro trial.
+- **Admin rights where you install.** In a team workspace, only the owner or an admin can change messaging settings; members see them read-only. Your Slack or Discord admin may also need to approve the app.
+- **One real job to test with**, ideally something read-only like a summary.
+
+## Before you start
+
+Set these expectations once and each channel works the way you want from the first message:
+
+- **Put the context in the message.** In Slack the agent sees @mentions, the threads they start, and DMs; it cannot read channel history. Paste what it needs, or point it at a file in the workspace.
+- **Ask for a file when you want a table.** Slack, Telegram, and Discord replies support paragraphs, bold, italics, code, links, and simple lists. Tables and images are stripped and long answers are split, so ask the agent to save a file and reply with the link.
+- **Read scheduled results in the web app.** A job you put on the Calendar delivers its result to the Construct web app with a notification, not into Slack or Telegram. Use channels to start work and get replies to what you asked.
+- **Connect new apps on the web.** If a job needs a new app account, finish that connection in the web desktop. {/* TODO: confirm current behavior when a Slack or Telegram job needs a new app connection (Discord shows a connect card) */}
+- **Send email jobs from your own address.** Only mail from the address you use for Construct starts a job. Other people's mail is stored and shown, and you can ask the agent to deal with it.
+- **Supervise through phrasing and access.** Construct's workflows do not pause for approval before each action yet, so write "draft, do not send" for anything customer-facing and give Full access only to people you trust. Treat anything a guest or stranger writes as information, not instructions. {/* TODO: link /blog/ai-agent-prompt-injection/ once it is live */}
+
+When the agent needs a decision, it posts the choices as buttons in the chat, and only you or someone with Full access can answer. Activity keeps a short record of what the agent did, with a reason for each action, for a limited window; it helps when a teammate asks "who asked for this?", but it is not a complete audit log.
+
+## How do you connect each channel?
+
+### 1. Slack
+
+Open Settings > Messaging and choose **Add to Slack**. The person who completes the install is the owner of that connection and always has full access.
+
+Then talk to it in any of three ways: @mention it in a channel, keep replying in the thread that mention started, or send it a direct message. That is all it sees. The bot cannot read channel history or threads it was not brought into, so put what it needs in the message itself. Public channels work without inviting the bot first; private channels need an invite.
+
+> @Construct here is what Acme asked for on today's call: [paste notes]. Draft a two-paragraph summary of their request and what we promised, save it to Files under customers/acme, and reply here with the link. Do not message the customer.
+
+Slack has no registered slash commands for Construct. Instead, type the command as plain text in the thread, preferably after a mention: "@Construct /stop" stops a running job and "@Construct /new" starts a fresh session. Reacting with ❌ to a message in the thread also stops the run.
+
+### 2. Telegram
+
+Choose **Open Telegram to link** in Settings > Messaging. That opens Construct's Telegram bot with a one-time link code, which ties your Telegram account to your Construct account. You can also use **Get code** and send the code from Telegram yourself.
+
+After linking, message the bot directly. In a group, the bot acts only on messages meant for it: a mention, a reply to one of its messages, or a command such as /ask. That matches how Telegram's own privacy mode works; Telegram's documentation says a bot in privacy mode receives "commands explicitly meant for them" and "replies to any messages implicitly or explicitly meant for this bot" ([Telegram Bot API, privacy mode](https://core.telegram.org/bots/features#privacy-mode)). Keep privacy mode on.
+
+> Check my calendar for tomorrow and send me a list of meetings that have no agenda yet, with the attendees for each.
+
+/status shows which agent is answering and your access level, and /help lists the commands. To stop a job you started from Telegram, stop it from the web app. {/* TODO: confirm when /stop and /new are handled on Telegram */}
+
+### 3. Discord
+
+Choose **Add to Discord** and pick a server. A Discord server maps to one Construct workspace, and every request in that server runs as the person who installed it, with each sender's access decided by the rules in step 5. Discord registers four slash commands, /status, /help, /stop, and /new, as the control surface. You can also mention the bot to open a thread for a job and keep talking in that thread. {/* TODO: confirm mention-to-thread in Discord is live for all customers; landing copy still describes Discord as slash commands */}
+
+Discord DMs are a separate switch: connect your Discord account under **Discord DMs** so direct messages to the bot reach your own agent. It does not change who can use the bot in your servers.
+
+### 4. Email
+
+There is nothing to install. Your agent's native address is in the Email app, and the [email address guide](/blog/ai-agent-email-address/) covers the inbox in detail.
+
+Today, a job starts by email only when the message comes from the address you use for your Construct account and passes sender authentication. Mail from anyone else is stored in the agent's inbox and notified, but it does not start work on its own; you can still open it and ask the agent to deal with it. Automated mail such as newsletters, bounces, and auto-replies never starts a job.
+
+> (Forwarded from your own account, with this at the top) Pull the new prices out of this supplier quote, compare them with last quarter's quote in Files, and save a one-page summary. Draft a reply asking about delivery dates but do not send it.
+
+{/* TODO: confirm whether other senders can be allowed to assign work by email; Settings access rules currently apply to chat platforms only */}
+
+## How do you control who can use the agent in each channel?
+
+### 5. Set the access mode and lists
+
+Each Slack workspace and Discord server you install has its own access settings under **Who can talk**. There are two modes:
+
+- **Only people I allow** (the default): everyone else is ignored. Nobody gets a reply until you add them.
+- **Everyone in the server**: people you have not listed get a read-only guest agent.
+
+Then two lists. **Full access** gives a person the real agent, with the same tools you have. **Blocked** silences a person completely, no reply and no reaction. The installer always has full access, and Blocked wins over Full access, so you can mute an account without uninstalling. In Discord you can add members or roles; in Slack, add members by their Slack member ID.
+
+The guest tier is deliberately small. A guest can get answers from web search and web fetch, and can search what the agent remembers, but cannot touch files, email, connected apps, the browser, or the terminal, and cannot add or delete memories. Guests run under the installer's account, which is why the limit is that tight.
+
+### 6. Route channels to the right agent
+
+Under **Default agent**, pick which agent answers on each platform. Plans include up to 2 agents on Lite, 5 on Starter, and 15 on Pro, so you might keep a research agent and an operations agent apart. Use **Route specific channels** to send one Slack or Discord channel to a different agent, for example #support to the agent that knows your help docs.
+
+### 7. Test each channel with the same job
+
+Send the same small job from each channel and check that every result lands in the same workspace.
+
+> What is in Files under reports/ from the last 7 days? Reply with file names and one line each.
+
+If every channel returns the same list, routing works.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/channels-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct channels demo"
+    aria-describedby="channels-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/channels.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-agent-telegram-slack-discord/channels-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="channels-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct is available through Slack, Telegram,
+    Discord slash commands, native email, and the web, with the work landing
+    in the same workspace.
+  </figcaption>
+</figure>
+
+## What result should you get?
+
+A job started from any channel leaves the same things behind: files in the workspace, an Activity entry, and a chat session you can reopen on the web. The chat app gets a short status while the agent works and the answer when it finishes.
+
+**Illustrative example.** A three-person studio installs Construct in Slack with "Only people I allow" and adds both partners to Full access. A contractor in the shared channel is not on the list, so the bot ignores them. The owner links Telegram for jobs from her phone and forwards supplier email from her own address. Every result ends up in the same Files folder, whichever door the job came through.
+
+We have not yet run a timed test across all four channels. {/* TODO: run the same summary job from web, Slack, Telegram, Discord and email; record time to first reply, whether files landed in the same folder, and any formatting loss; add screenshots of Settings > Messaging and the access card */}
+
+## Troubleshooting
+
+**The Slack bot does not reply to anyone.** Check the access mode. "Only people I allow" with an empty list answers only the installer. If you installed before a recent update, reconnect Slack from Settings > Messaging so you are recorded as the owner.
+
+**The bot replies in a public channel but not a private one.** Invite it to the private channel.
+
+**A teammate gets short, limited answers.** They are a guest. Add them to Full access if they should have the real agent.
+
+**A forwarded email did nothing.** Forward it from the address you use for Construct. Mail from other addresses, and automated mail, is stored without starting a job.
+
+**Discord shows the bot online but it misses messages.** Check the app's server permissions; the bot posts which ones it needs when a call fails.
+
+## Give Construct its first job from your phone
+
+Choose Construct when you want one agent that answers in Slack, Telegram, Discord, email, and the web, with every result in one workspace. It starts at $9, includes the email address, and stays locked to you until you open each channel.
+
+Your first job: connect Telegram from Settings > Messaging, then send the test prompt from step 7 from your phone. Forward one supplier email from your own address with "draft a reply, do not send," and check that both results sit in the same Files folder.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+## Sources
+
+- [Telegram Bot API: bot features and privacy mode](https://core.telegram.org/bots/features#privacy-mode)
+- [The Next Web: OpenAI launches dots, always-on AI agents with their own cloud computers](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)
+- [Construct across Slack, email, and chat](/use-cases/channels/)
+- [Construct pricing](/pricing/)
+- [How to give an AI agent its own email address](/blog/ai-agent-email-address/)
+
+## Related resources
+
+- [Construct channels](/use-cases/channels/)
+- [How to give an AI agent its own email address](/blog/ai-agent-email-address/)
+- [How to run an AI agent on a schedule](/blog/ai-agent-scheduled-tasks/)
+- [Update Linear issues from Slack messages with an AI agent](/blog/ai-agent-linear-from-slack/)
+- [Activity log vs audit log](/blog/ai-agent-activity-log/)

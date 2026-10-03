@@ -89,6 +89,7 @@ const tagDisplayNames: Record<string, string> = {
   "ai-employee": "AI employee",
   chatgpt: "ChatGPT",
   n8n: "n8n",
+  openclaw: "OpenClaw",
 };
 
 export function tagLabel(tag: string): string {

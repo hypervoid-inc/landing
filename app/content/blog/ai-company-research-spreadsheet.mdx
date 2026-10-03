@@ -1,0 +1,206 @@
+---
+title: "How to Research a List of Companies Into a Spreadsheet, With Sources"
+seoTitle: "AI Company Research Into a Spreadsheet, With Sources (Step by Step)"
+description: "Give an AI agent a list of companies and get back a spreadsheet with one row each and a source link for every fact. Exact prompts, checks, and limits."
+published: "2026-11-21"
+author: "nischal"
+tags: ["ai-agent", "small-business", "workflow-automation"]
+kind: "guide"
+draft: true
+---
+
+Construct turns a list of companies into a spreadsheet with a source link beside every fact, on any plan from $9 a month: it searches and fetches each company's public pages, fills one row per company, and saves a CSV in Files. Chat answers are weakest at exactly that part; when the Tow Center tested eight AI search tools on finding and citing sources, "collectively, they provided incorrect answers to more than 60 percent of queries" ([Columbia Journalism Review, March 6, 2025](https://www.cjr.org/tow_center/we-compared-eight-ai-search-engines-theyre-all-bad-at-citing-news.php)).
+
+For founders and small teams, Construct is the better tool for prospect and market research. It ties every fact to a page it actually fetched, saves each batch to Files as it finishes, and remembers your column format for the next list. Lite allows up to 50 steps per task, so a 30-company list is best split into batches, while Starter's 150 steps and four parallel background jobs handle it in fewer runs.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why do this in Construct?
+
+- **A source for every fact.** The agent records the URL it actually read next to each cell, and writes "not found" or "conflicting" instead of guessing.
+- **Saved as it goes.** Each batch is appended to a CSV in Files as it finishes, so a run that stops partway keeps every row it already saved.
+- **Real files, not chat text.** The CSV renders as a table you can scroll and download, and Construct builds an Excel copy with clickable source links in its sandbox.
+- **Helpers for long lists.** On Starter and Pro, Construct splits a list across temporary helper agents and merges their rows.
+- **Your format, remembered.** Save the column spec and evidence rules to memory, then read, correct, or forget them in the Memories app.
+- **Rows straight into your CRM.** Once you have checked the sheet, the agent can push rows into a connected app such as Airtable or HubSpot.
+
+<BetaCta source="blog_inline_1">Research a list of companies</BetaCta>
+
+## Why not just paste the list into a chatbot?
+
+Because the citations are the hard part. The Tow Center study was about news articles, not company facts, but the failure is the same one you hit with a prospect list: a confident sentence with a link that does not say what the sentence says. The fix is procedural: make the agent fetch the page, record the URL it read, and leave a cell blank when it cannot find a fact. Construct's [research use case](/use-cases/research/) is built on that rule, and the rest of this guide turns it into prompts.
+
+## What do you need?
+
+- **A Construct workspace.** Any plan works. Lite at $9 a month runs small batches; Starter at $59 is easier for lists over a couple of dozen companies. See [pricing](/pricing/).
+- **The list.** A CSV, a spreadsheet export, or names pasted into chat. Company name plus website is ideal, because names alone are ambiguous.
+- **A column spec.** Decide what you want per company before the run, not during it. Five to eight columns is plenty for a first pass.
+- **Optional: a destination app.** If the rows should end up in Airtable or HubSpot, connect it from Construct's live integration catalog when the agent asks. {/* TODO: confirm whether Google Sheets is available in the integration catalog today, and if so add it here */}
+
+## Before you start
+
+- **Public pages are the default.** Web search and fetch cover public pages. A live browser run can handle a page that needs clicks, and a login you complete during that run, but browser state does not persist afterward, so the prompts save everything to Files.
+- **Batch to your plan.** Lite allows up to 50 steps per task, Starter 150, and Pro up to 1,000. Batches of 10, as in step 4, fit any plan.
+- **Prices change.** A price is true on the date it was checked, which is why the sheet records the date. Schedule a refresh, as in step 7, to keep it current.
+- **Respect site terms.** Some sites prohibit automated access or hide pricing behind a sales call. "Not found" is the right answer there.
+- **Bring vendor data if you have it.** Construct reads what companies publish. If you need verified headcounts, funding rounds, or contact emails at scale, upload your data provider's export and let the agent fill the rest.
+
+## How do you research a list of companies into a spreadsheet?
+
+### 1. Give the agent the list
+
+Upload the file in chat or save it to Files, then tell the agent where it is. Construct opens CSV and Excel files in its sandbox, so you do not need to clean the export first.
+
+> I uploaded prospects.csv. It has company names in column A and websites in column B. Read it, tell me how many rows it has, and flag any row with a missing or obviously wrong website. Do not research anything yet.
+
+Checking the input first catches the duplicate rows and blank websites that would otherwise cost steps later.
+
+### 2. Define the columns and the evidence rule
+
+This is the prompt that matters most. Name every column, say what counts as a valid answer, and require a source per fact.
+
+> For each company, fill these columns: company, website, one-line description of what they sell, headquarters country, pricing model (free, freemium, per seat, usage based, contact sales, or not published), lowest published monthly price in USD, whether they mention a free trial, and a recent news item from the last 12 months if one exists.
+>
+> Rules: use only pages you actually fetched. Put the URL you read in a matching source column next to each fact. If you cannot find something, write "not found" rather than guessing. If two sources disagree, write "conflicting" and put both URLs in the notes column. Record the date you checked each company.
+
+The "not found" and "conflicting" rules are what make the sheet trustworthy. A blank you can see is cheaper than a plausible guess you cannot.
+
+### 3. Run a pilot on three companies
+
+Never start with the whole list. A pilot shows whether your columns are well defined.
+
+> Do the first three companies only. Save the result to Files as research/prospects-pilot.csv and summarize anything you were unsure about.
+
+Open the CSV in Files; it renders as a table you can scroll and download. Click three or four source links and confirm the page says what the cell says. If "pricing model" came back as five different phrasings, tighten the allowed values in step 2 and rerun the pilot.
+
+### 4. Run the full list in batches
+
+Once the pilot looks right, run the rest. Each fetch, search, and file write is a step, so a long list can outrun a plan's step limit in a single task. Ask for batches and let the agent save after each one.
+
+> The pilot is good. Research the remaining companies using the same columns and rules. Work in batches of 10, append each batch to research/prospects.csv as you finish it, and tell me when each batch is saved.
+
+On Starter and Pro, you can also ask Construct to split the list across temporary helper agents and merge their rows. Plans allow 2, 4, or 8 of these background jobs to run at once; extra jobs queue.
+
+> Split the remaining companies into four groups and research each group with a helper agent using the same rules. Merge the results into research/prospects.csv, sorted by company name, and list any company a helper could not finish.
+
+Because finished batches are written to Files as they are produced, a run that stops partway keeps the rows it already saved. The next run can pick up from the last saved company instead of starting over.
+
+### 5. Ask for a gap report
+
+Before you use the sheet, have the agent audit its own output.
+
+> Read research/prospects.csv. Count the "not found" and "conflicting" cells per column, list every row where a fact has no source URL, and save that as research/prospects-gaps.md.
+
+Any fact without a URL is a bug in the run, not a judgment call. Send those rows back for another pass.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/research-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct research demo"
+    aria-describedby="research-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/research.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-company-research-spreadsheet/research-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="research-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct researches a topic in the product interface,
+    gathering sources and turning them into cited research you can review or
+    share.
+  </figcaption>
+</figure>
+
+### 6. Send the rows where they need to go
+
+The CSV in Files is the source of truth. From there you have three options:
+
+- **Download it** and import it into whatever spreadsheet you use.
+- **Ask for an Excel file** with the sources as clickable links and the header row frozen. Construct builds Excel files in its sandbox.
+- **Push rows into a connected app** such as Airtable or HubSpot. The agent finds the available actions in the integration catalog and asks you to connect an account if needed.
+
+> Create research/prospects.xlsx from prospects.csv with frozen headers, source columns as clickable links, and "not found" cells shaded. Then, for each company with a published price, create a HubSpot company record with the website and description. Do not create contacts.
+
+{/* TODO: confirm which HubSpot and Airtable actions (create record, update record, add note) are available in the catalog today */}
+
+### 7. Save the procedure for next time
+
+If you will refresh this list every quarter, ask Construct to remember the column spec and rules. Memory can be inspected, corrected, or forgotten later in the Memories app ([AI agent memory](/blog/ai-agent-memory/)).
+
+> Remember the column spec and evidence rules from this job as my "company research" format. Next time I give you a list, use that format unless I say otherwise.
+
+When the job has worked a few times, it can become a scheduled refresh. See [how to run an AI agent on a schedule](/blog/ai-agent-scheduled-tasks/) for the Calendar side. Lite includes 3 scheduled tasks, Starter 10, and Pro 50.
+
+## What should the finished spreadsheet look like?
+
+You should end up with three files: the CSV, an optional Excel copy, and a gap report. Each row carries its own evidence.
+
+<ArticleTable caption="Illustrative rows from a finished company research sheet">
+
+| Company     | Pricing model | Lowest monthly price | Price source            | Free trial | Checked    | Notes                         |
+| ----------- | ------------- | -------------------- | ----------------------- | ---------- | ---------- | ----------------------------- |
+| Example Co  | Per seat      | $12                  | examplecompany.test/pricing | Yes    | 2026-11-21 |                               |
+| Sample Inc  | Contact sales | not found            | sampleinc.test/pricing  | not found  | 2026-11-21 | Pricing page asks for a demo  |
+| Demo Labs   | Usage based   | conflicting          | demolabs.test/pricing   | Yes        | 2026-11-21 | Docs and pricing page differ  |
+
+</ArticleTable>
+
+These rows are illustrative, with placeholder domains, to show the format rather than real companies. The useful property is that every number can be traced to a URL and a date, and every gap is visible.
+
+## How do you supervise a research run?
+
+- **Spot-check sources, not prose.** Open a handful of source links per batch. If a link does not support its cell, tighten the rules and rerun that batch.
+- **Watch the pilot closely, then sample.** Read every cell in the three-company pilot. After that, sampling a few rows per batch is a reasonable check.
+- **Read Activity when something looks off.** Activity keeps short summaries of what the agent did, and the chat keeps its tool records, so you can trace a bad cell back to the run that wrote it ([what an activity log shows](/blog/ai-agent-activity-log/)).
+- **Keep writes to other systems for last.** Research is read-only until step 6. Push rows into a CRM only after you have checked the sheet.
+
+{/* TODO: run a 30-company list (same list on Lite and Starter), record steps used, runs needed, minutes of review, and share of cells with a valid source; add screenshots of the CSV preview and gap report */}
+
+## Troubleshooting
+
+**The agent researched the wrong company.** Add websites to the input file. Names like "Atlas" or "Nova" match dozens of companies.
+
+**Cells have answers but no sources.** Restate the rule in step 2, then run the gap report and send the unsourced rows back for another pass.
+
+**The run stopped partway.** Check Files for the last batch that was saved, then ask the agent to continue from the next company.
+
+**Prices look wrong.** Pricing pages often default to annual billing. Add "record the monthly price when billed monthly, and note if only annual pricing is shown" to your rules.
+
+## Give Construct its first list
+
+Choose Construct for company research. It starts at $9, puts a source beside every fact, saves each batch as it goes, and hands you a spreadsheet you can check rather than a paragraph you have to trust.
+
+Your first job: take the next ten prospects you were going to research by hand, upload them as a CSV, paste the column spec from step 2, and run the three-company pilot. Click a few source links, then let it finish the list.
+
+<BetaCta source="blog_inline_2">Give Construct its first list</BetaCta>
+
+## Sources
+
+- [Columbia Journalism Review, Tow Center: AI search has a citation problem (March 6, 2025)](https://www.cjr.org/tow_center/we-compared-eight-ai-search-engines-theyre-all-bad-at-citing-news.php)
+- [Construct pricing](/pricing/)
+- [Construct research use case](/use-cases/research/)
+- [Construct product guide](/blog/ai-employee/)
+
+## Related resources
+
+- [AI research with sources you can review](/use-cases/research/)
+- [How to run an AI agent on a schedule](/blog/ai-agent-scheduled-tasks/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)
+- [AI workflow automation](/blog/ai-workflow-automation/)
+- [What is an AI agent with its own computer?](/blog/ai-agent-with-its-own-computer/)

@@ -1,0 +1,182 @@
+---
+title: "An AI employee for a small marketing agency"
+seoTitle: "AI Employee for a Marketing Agency: Client Reports, Briefs, and Approvals"
+description: "How a small marketing agency can hand client reports, briefs, and an approval queue to an AI employee, from $9 a month, with clients kept behind a review step."
+published: "2026-12-16"
+author: "nischal"
+tags: ["ai-employee", "small-business", "internal-tools", "workflow-automation"]
+kind: "guide"
+draft: true
+---
+
+Construct gives a small marketing agency an AI employee from $9 a month that drafts a Friday report for every client, turns each kickoff into a creative brief, and keeps a review queue where an account lead approves work before anything reaches a client. Reporting tools already cover the numbers, since "about 92% of marketers use automation for data analysis and reporting" ([HubSpot](https://www.hubspot.com/marketing-statistics)), but a dashboard does not write the paragraph explaining why cost per lead rose.
+
+For small agencies, Construct is the better choice. The whole team works in one workspace with no per-seat fee, each client gets a folder and rules the agent remembers, reports run on a schedule, and approvals live in a private review queue the agent builds for you. Lite covers three recurring jobs; Starter at $59 covers ten. The agent prepares; a person approves and sends.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why do this in Construct?
+
+- **$9 to start, no seats to buy.** A team workspace has no member limit, and everyone's work draws on the owner's plan. Invite colleagues as Admins or Members.
+- **A folder and a rulebook per client.** Each client's reports, brand notes, and rules live in Files, and the rules the agent remembers can be inspected, corrected, or forgotten ([AI agent memory](/blog/ai-agent-memory/)).
+- **Reports on a schedule.** Calendar runs the Friday report job server-side: 3 scheduled tasks on Lite, 10 on Starter.
+- **An approval queue built for you.** Construct builds a private workspace app for reviews, limited to the workspace files it needs, and if a later edit fails, the last working version keeps running.
+- **Briefs from wherever the notes arrive.** Forward kickoff notes from your own address to the agent's email, mention it in Slack, or drop the notes in a client folder.
+- **Each agent sees only what it needs.** Turn off connected apps per agent, so the reporting agent never sees the shared inbox.
+
+<BetaCta source="blog_inline_1">Set up your agency workspace</BetaCta>
+
+## What does an AI employee do in a marketing agency?
+
+It takes the work that sits between the creative and the client: pulling numbers into a report, turning a messy kickoff into a brief, chasing what is waiting for review. HubSpot's 2026 State of Marketing report shows the numbers side is already automated in most shops ([HubSpot](https://www.hubspot.com/marketing-statistics)). The gap is the writing and the follow-through: explaining why a figure moved, or noticing that last month's report promised a test nobody ran.
+
+An AI employee is different from a reporting dashboard or a chat assistant. It has a workspace where last week's report, the client's brand notes, and this week's draft all live, and it can run a job on a schedule. Construct gives each agent a persistent cloud workspace with files, a browser, a sandbox terminal, its own email address, a Calendar of scheduled jobs, and connected apps through a live integration catalog.
+
+For a five-person agency, a useful split looks like this:
+
+<ArticleTable caption="Agency work an AI employee can prepare, and who owns the last step">
+
+| Job                         | The agent prepares                                            | A person owns                        |
+| --------------------------- | ------------------------------------------------------------- | ------------------------------------ |
+| Weekly client report        | A draft per client, figures linked to sources                 | Checking numbers, sending to client  |
+| Creative brief              | A brief in your template from kickoff notes                   | Strategy, scope, and sign-off        |
+| Approval queue              | Adding drafts to the queue, summarizing what changed          | Approving or returning work          |
+| Competitor and trend scan   | A dated summary of what changed on named pages                | Deciding what to pitch               |
+| Internal status             | A Monday summary of what is overdue or stuck                  | Reassigning work                     |
+
+</ArticleTable>
+
+## What do you need?
+
+- **A Construct plan.** Lite ($9) covers 2 agents and 3 scheduled tasks, enough for two report runs and a Monday status summary. Starter ($59) allows 5 agents and 10 scheduled tasks. See [pricing](/pricing/).
+- **A team workspace.** Invite colleagues as Members, who work with files, installed apps, and agents, or as Admins, who also manage settings, people, agents, and apps. Billing and deletion stay with the owner. Members do not need a plan of their own: a team workspace has no member limit, and everyone's work draws on the owner's plan.
+- **Your sources connected.** Construct reaches apps such as HubSpot, Google Drive, Gmail, Notion, and Airtable through its integration catalog. For ad platforms and analytics, check the catalog for the actions you need, or upload a weekly CSV export. {/* TODO: confirm whether Google Analytics, Google Ads, and Meta Ads are in the live integration catalog today and name them here if so */}
+- **One past report per client** and your brief template, saved to Files. These are the agent's examples of a good result.
+
+## Before you start
+
+- **Clients see nothing unreviewed.** Construct's workflows do not pause for approval yet, so keep "do not send" in every report and brief prompt, and send approved work yourself, or from your connected Gmail once a person has approved the draft. The review queue in step 4 is your approval step.
+- **Client content is information, not instructions.** A client's email or a page the agent reads can contain text that looks like an instruction, so tell the agent to treat it as information. {/* TODO: link /blog/ai-agent-prompt-injection/ once it is live */}
+- **Keep Slack access to the people you choose.** Messaging settings default to "Only people I allow." If you share channels with clients, keep it that way; opening access to everyone gives unlisted people a read-only guest agent that cannot touch files, email, apps, the browser, or the terminal.
+- **Split long client lists.** Lite allows up to 50 steps per task and Starter 150, so more than a handful of clients goes into two scheduled jobs.
+- **It prepares the words, numbers, and admin.** Construct does not answer calls or produce finished designs; your designers keep their tools, and the agent handles the work around them.
+- **The queue is your lasting record.** Activity shows what each agent did over a recent window and can be filtered and exported; the review queue records who approved what.
+
+## Step 1: Give each client a folder and a rules file
+
+Create one folder per client in Files, for example `Files/clients/acme/`, holding the last report, the brand notes, and a short `rules.md`. Then ask the agent to learn the rules:
+
+> For each folder in Files/clients, read rules.md and remember the client's reporting rules: which metrics they care about, the tone, who receives the report, and anything we must never say. Show me what you stored for each client.
+
+Memory in Construct can be inspected, corrected, or forgotten, so when a client changes its main contact, you correct one remembered fact instead of rewriting prompts ([AI agent memory](/blog/ai-agent-memory/)).
+
+## Step 2: Draft the Friday client reports
+
+Run the report once by hand for one client:
+
+> Draft this week's report for Acme. Use the CSV I uploaded to Files/clients/acme/exports and the deals in HubSpot tagged Acme. Match the structure of last-report.md in the same folder. Compare every figure with last week's report and explain any change bigger than 10% in one sentence. Link each figure to its source file or record. If a number is missing, write "not available" instead of estimating. Save it as Files/clients/acme/reports/[today's date].md. Do not send it to anyone.
+
+Read it against the client's real dashboards. When it is right for one client, ask for all of them in one run, then save that run as a workflow. Construct can offer to save a successful run as a workflow draft; it never publishes or schedules one on its own. Once three Fridays come out clean, schedule it for Friday morning.
+
+Current workflows are linear: no branching, delays, or approval steps. A workflow that loops over clients does so inside an agent step, which means a big client list can hit the step budget. Lite allows up to 50 steps per task, Starter 150. If you have more than a handful of clients, split them into two scheduled jobs.
+
+## Step 3: Turn kickoff notes into briefs
+
+Forward the kickoff call notes or the client's email to the agent's own address, or drop them in the client folder, with the job at the top:
+
+> Read the kickoff notes below and draft a creative brief using Files/templates/brief.md. Fill in objective, audience, key message, mandatories, deliverables, and timeline. Where the notes do not answer a section, write the question we need to ask the client instead of guessing. Save it to Files/clients/acme/briefs/ and reply with a one-line summary and the file path.
+
+You can also mention the agent in a Slack channel such as #briefs with the notes pasted in; the reply comes back in that thread, and the brief still lands in Files. The open questions are the most useful part. A brief with three honest gaps beats one that invents a target audience.
+
+Construct accepts work from the web, Slack, Telegram, Discord slash commands, and its own email inbox. One email detail matters here: only mail you send from your own account address, which passes standard sender checks, starts work. Email from clients or anyone else is stored in the agent's inbox but does not trigger a task by itself; you ask the agent to act on it.
+
+## Step 4: Build a review queue for approvals
+
+Approvals are where agencies lose time: a draft sits in someone's DMs, the client chases, and nobody knows who has the ball. Construct can build a small private app for this inside the workspace.
+
+> Build a review queue app. Each item has a client, a deliverable name, a link to the file in Files, an owner, a reviewer, a status (draft, in review, changes requested, approved, sent), and reviewer notes. Store the items in Files/review-queue/queue.json so you can read and update them too. Show a board grouped by status and a filter by client. It only needs access to workspace files.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/apps-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct internal-app demo"
+    aria-describedby="agency-app-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/apps.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-employee-for-agencies/internal-app-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="agency-app-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct building and opening an internal app in the
+    workspace. A review queue for client work is the same kind of small,
+    private app.
+  </figcaption>
+</figure>
+
+Workspace apps declare what they can touch. This one needs only workspace files, so that is all it gets. The source stays in Files, and if a later edit fails to build, the last working version keeps running ([how Construct builds internal tools](/blog/build-internal-tools-with-construct/)).
+
+Then add one line to the Friday report job: "Add each new report to the review queue as draft, with the account lead as reviewer." On Monday, the agent can read the queue and post what is still waiting:
+
+> Read Files/review-queue/queue.json. Email the account leads, from your own address, a list of every item that has been in review for more than two working days, with the reviewer's name.
+
+Scheduled runs report back in the Construct web app with a notification; they do not post into Slack or Telegram. That is why this step asks for an email instead of a Slack message.
+
+The queue is the approval step, so nothing in it should be sent by the agent automatically.
+
+## What does the saved result look like?
+
+After a month you should have, per client, a folder of dated report drafts with sources, a briefs folder with open questions marked, and a queue showing who approved what and when. The next report starts from the last one rather than a blank page, and a teammate covering a holiday can open the folder instead of asking for a handover call.
+
+**Illustrative example, not a customer case study.** A four-person agency with nine retainer clients schedules two report jobs, five clients each, for Friday at 7am. The account leads review drafts in the queue by 11am, mark them approved, and send them from their own email. The agent's Monday job emails the leads what is stuck. Nothing reaches a client without a person reading it.
+
+{/* TODO: run this setup with three test clients for four weeks and record setup time, steps per report run, review minutes per report, and corrections; add screenshots of the client folder and the review queue. */}
+
+## Troubleshooting
+
+**The report's numbers do not match the dashboard.** Check the export date range first. Then add "state the date range of every source at the top of the report" to the prompt.
+
+**The agent used last client's tone.** Each report run should name the client folder explicitly. Check the remembered rules for that client in Memories.
+
+**A run stopped partway through the client list.** It probably hit the step limit. Finished reports are already saved, so split the list into two jobs rather than rerunning everything.
+
+**The queue app shows nothing.** Ask the agent to open the app and check its recent errors; it can repair the source and rebuild while the last good version stays in place.
+
+## Give Construct its first client
+
+Choose Construct to run your agency's recurring work. It starts at $9 with no seats to buy, keeps every client's reports, rules, and briefs in one workspace, and puts every draft in front of an account lead before a client sees it.
+
+Your first job: create a folder for your biggest retainer client with last week's report and a short rules.md, upload this week's export, and run the report prompt from step 2. Check it against the dashboard on Friday morning, and if it holds up, add the next client.
+
+<BetaCta source="blog_inline_2">Give Construct its first client report</BetaCta>
+
+## Sources
+
+- [HubSpot: marketing statistics, citing the 2026 State of Marketing report](https://www.hubspot.com/marketing-statistics)
+- [Construct pricing](/pricing/)
+- [Construct internal tools](/use-cases/internal-tools/)
+- [Construct team workspaces](/use-cases/team-workspaces/)
+
+## Related resources
+
+- [The AI delegation checklist](/blog/ai-delegation-checklist/)
+- [How Construct builds internal tools in your workspace](/blog/build-internal-tools-with-construct/)
+- [AI workflow automation](/blog/ai-workflow-automation/)
+- [How to give an AI agent its own email address](/blog/ai-agent-email-address/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)

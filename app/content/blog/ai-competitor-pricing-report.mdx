@@ -1,0 +1,203 @@
+---
+title: "How to Build a Weekly Competitor Pricing Report With an AI Agent"
+seoTitle: "Weekly Competitor Pricing Report With AI: Step-by-Step Setup"
+description: "Have an AI agent check competitor pricing pages every week, save a dated snapshot, compare it with last week's, and post what changed. Prompts and limits."
+published: "2027-01-10"
+author: "nischal"
+tags: ["ai-agent", "workflow-automation", "scheduling", "pricing"]
+kind: "guide"
+draft: true
+---
+
+Construct builds you a weekly competitor pricing report for $9 a month: the agent reads each pricing page, saves a dated snapshot to Files, compares it with last week's, writes a short report of what changed, and notifies you every Monday, with your laptop closed. A page monitor such as Visualping charges by the number of pages it watches, $14 a month for 10 pages on its Personal plan, and tells you that a page changed ([Visualping pricing](https://visualping.io/pricing)).
+
+For founders and small teams, Construct is the better way to track competitor pricing. You get a plan-by-plan table across every competitor instead of page alerts, a dated history you can query months later, the exact price text as evidence for every number, and the whole job on Lite, which includes 3 scheduled tasks.
+
+<BetaCta source="blog_top">Start your pricing report for $9</BetaCta>
+
+## Why do this in Construct?
+
+"What changed" is only answerable if last week was written down. A chat answer about competitor pricing disappears when you close the tab; Construct writes each week to a file the next run can open.
+
+- **It runs on its own.** The Calendar runs the job on Construct's cloud computer every Monday, whether or not your laptop is open, and reconciles a missed or delayed run instead of skipping it silently.
+- **A history you can query.** One dated snapshot per week means you can later ask "how has Example Co's Team price moved since January?" and get an answer from saved files, not from memory.
+- **Evidence for every number.** Each row keeps the exact price text and source URL, so "$49" versus "$49 per seat, billed annually" shows up in review.
+- **Rules you can correct.** Tell it once that a competitor's page defaults to annual billing; the rule lives in the Memories app, where you can edit or delete it.
+- **Work kept as it goes.** Snapshot rows are saved as the agent produces them, so a run that stops partway keeps what it finished.
+- **The whole job on Lite.** One weekly report uses one of Lite's 3 scheduled tasks; Starter has 10 and Pro 50.
+
+Our [workflow guide](/blog/ai-workflow-automation/) uses this same Monday digest as its worked example; this post is the full setup, with the exact prompts and the file layout that makes week-over-week comparison work.
+
+## What do you need?
+
+- **A Construct workspace.** Any plan. One weekly report uses one of Lite's 3 scheduled tasks; Starter has 10 and Pro 50. See [pricing](/pricing/).
+- **Three to eight competitors** and the URL of each pricing page.
+- **A decision about what counts as a change.** Usually: a price, a plan name, a plan added or removed, a usage limit, or a free trial. Cosmetic copy edits are noise.
+- **Somewhere to read it.** Scheduled runs deliver to the Construct web app with a notification, so plan to read the report in Files and share the file with your team from there.
+
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
+
+## Before you start
+
+Four setup choices keep the numbers trustworthy:
+
+- **Pick the price your customers see.** Some pages show prices by region, currency, or only after a login. The agent records what its fetch or browser run saw, so note in competitors.csv which region or currency you care about, and check the baseline by hand.
+- **Keep interactive pages in budget.** Toggles, sliders, and calculators need a live browser run, which takes more steps. Lite allows 50 steps per task; start with three to five competitors, or move to Starter's 150 steps for a longer list.
+- **Handle quiet weeks inside the prompt.** Construct's workflows are linear, with no branching, so have the agent write "No pricing changes this week" at the top and a quiet week becomes a one-line notification.
+- **Respect each site's terms.** Some sites restrict automated access. Drop a competitor from the list if its terms require it.
+
+
+## How do you set up the weekly report?
+
+### 1. Write the competitor list to a file
+
+Keeping the list in a file means you can edit it without touching the job.
+
+> Create pricing/competitors.csv with columns name, pricing_url, and notes. Add these competitors: [paste names and pricing URLs]. Then fetch each URL once and tell me if any page fails to load or redirects somewhere else.
+
+Fix any broken URL now. A redirected pricing page is the most common reason a weekly report silently goes wrong later.
+
+### 2. Run a baseline snapshot
+
+The first run records the starting point. Be strict about the structure, because every later comparison depends on it.
+
+> For each competitor in pricing/competitors.csv, read the pricing page and record every plan in a table with these columns: competitor, plan, monthly price when billed monthly, annual price per month if shown, currency, billing unit (per seat, per user, flat, usage), main limits (seats, credits, tasks, storage), free trial (yes, no, not stated), source URL, and the exact price text as it appears on the page.
+>
+> Rules: use only what is on the page you fetched. If the page shows annual pricing by default, look for the monthly toggle and say which one you recorded. If a plan says "contact sales", record that instead of a number. Save the table as pricing/snapshots/2027-01-10.csv.
+
+The "exact price text" column is your evidence. If the agent writes $49 and the page says "$49 per seat, billed annually", the difference shows up in review.
+
+### 3. Review the baseline by hand
+
+Open the CSV in Files, where it displays as a table. Compare at least one competitor against its live page yourself, especially the monthly versus annual toggle and per-seat wording. Correct anything wrong and ask the agent to remember the correction.
+
+> Remember for pricing reports: Example Co's pricing page defaults to annual billing. Always record their monthly price from the monthly toggle.
+
+Memory can be inspected and corrected later in the Memories app, so a stale rule is easy to remove when a competitor redesigns their page ([AI agent memory](/blog/ai-agent-memory/)).
+
+### 4. Write the comparison prompt
+
+This is the prompt the scheduled job will run every week.
+
+> Take a new pricing snapshot for every competitor in pricing/competitors.csv using the same columns and rules as before, and save it as pricing/snapshots/ with today's date as the file name. Then find the most recent earlier snapshot in that folder and compare the two.
+>
+> Write pricing/reports/ with today's date as a markdown file, with these sections: Changes (price changes, plans added or removed, limit changes, trial changes, each with old value, new value, and source URL), Could not check (any page that failed or looked different enough that you are unsure), and No change (one line listing competitors with no change). If nothing changed, say "No pricing changes this week" at the top. Do not speculate about why a competitor changed pricing.
+
+Run it once by hand the following week, or right away to confirm it reports "no changes" against the baseline. A comparison that invents changes against an identical page is a prompt problem worth fixing before it goes on a schedule.
+
+### 5. Save it as a workflow
+
+Once the comparison prompt works, ask Construct to turn it into a workflow. A workflow can combine agent steps, connected-app actions, and in-app notifications. Current workflows are linear: no branching, delays, or approval steps.
+
+> Save this as a workflow called "Weekly pricing report": step 1 runs the comparison prompt, step 2 sends me an in-app notification titled "Pricing report ready" with the Changes section and the file path.
+
+The notification and the file are the delivery; scheduled runs report in the web app rather than posting into Slack or Telegram. If your team wants the report in a channel, share the file there after you have read it. {/* TODO: confirm whether a workflow step can email the report from the agent's native address, and add it as an optional step if so */}
+
+Published workflow versions are kept, so editing the prompt later does not change a run that already started. Each run keeps step results and links back to the agent's chat session.
+
+### 6. Put it on the Calendar
+
+> Schedule the "Weekly pricing report" workflow every Monday at 8am in my time zone.
+
+The Calendar runs it on Construct's cloud computer, not on your laptop, and reconciles a missed or delayed run instead of skipping it silently. See [how to run an AI agent on a schedule](/blog/ai-agent-scheduled-tasks/) for the details of recurrence and pausing.
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/calendar-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct Calendar demo"
+    aria-describedby="calendar-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/calendar.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-competitor-pricing-report/calendar-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="calendar-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct Calendar showing scheduled agent jobs and
+    workflow runs, the same place a weekly pricing report is scheduled.
+  </figcaption>
+</figure>
+
+## What does the saved result look like?
+
+After a few weeks, Files holds a small, readable history:
+
+- `pricing/competitors.csv`: the list you edit.
+- `pricing/snapshots/`: one CSV per week, named by date.
+- `pricing/reports/`: one markdown report per week, named by date.
+
+A typical report is short. This one is illustrative, with invented competitors:
+
+<ArticleTable caption="Illustrative weekly pricing report: changes section">
+
+| Competitor | Plan     | Change          | Last week       | This week       | Source                    |
+| ---------- | -------- | --------------- | --------------- | --------------- | ------------------------- |
+| Example Co | Team     | Price increase  | $20 per seat    | $25 per seat    | example.test/pricing      |
+| Sample Inc | Starter  | Plan removed    | $15 per month   | not listed      | sample.test/pricing       |
+| Demo Labs  | Pro      | Limit changed   | 5,000 credits   | 3,000 credits   | demolabs.test/pricing     |
+
+</ArticleTable>
+
+Because snapshots are dated files, you can also ask longer questions later, such as "how has Example Co's Team price moved since January?", and the agent answers from the saved history rather than from memory.
+
+## How do you supervise it?
+
+- **Read the first four reports in full.** Check every reported change against the live page until you trust the pattern.
+- **Treat "Could not check" as work for you.** A page that failed to load or changed layout needs a human look and possibly a new URL in competitors.csv.
+- **Keep the report factual.** Ask for changes, not commentary. Interpretation belongs in your own discussion when you share it.
+- **Use run history when a week looks wrong.** Each workflow run links to the agent's session, so you can see what the page returned that week. Activity keeps bounded summaries, not a complete immutable audit log.
+
+We have not yet measured this report over a run of real weeks. {/* TODO: run the weekly report on five real competitors for four weeks; record steps per run, false changes reported, missed changes found by manual check, and review minutes; add screenshots of the snapshots folder and a report */}
+
+## What about a page-monitoring tool?
+
+If you need an alert within minutes of any change to one or two pages, a change monitor can sit beside the report: Visualping lists a free plan with 5 pages and 150 checks a month at an hourly frequency, and a Personal plan at $14 a month for 10 pages checked as often as every 15 minutes ([Visualping pricing](https://visualping.io/pricing), checked October 1, 2026 {/* TODO: re-check Visualping pricing on the publish date */}). For the weekly picture, plan-by-plan prices, limits, and trials in one table with the evidence saved, Construct is the tool to use.
+
+## Troubleshooting
+
+**Every week reports changes that did not happen.** The snapshot columns are drifting. Restate the exact column list and allowed values, and ask the agent to compare only those columns.
+
+**A competitor shows "contact sales" when the page has prices.** The prices may load after interaction. Add "use a live browser run for this page and switch to monthly billing" to that competitor's notes in competitors.csv.
+
+**No notification arrived.** Open the workflow's run history to see which step failed, then open the linked agent session for that run.
+
+**A run stopped partway.** The snapshot rows already saved are kept. Run the workflow again; the comparison uses the newest complete snapshot.
+
+## Give Construct your competitor list this week
+
+Choose Construct for competitor pricing. It starts at $9, runs every Monday without you, and leaves a dated table with evidence for every number.
+
+Your first job: paste three competitors and their pricing URLs into the step 1 prompt, run the baseline from step 2, and check one row against the live page. Next Monday, let the Calendar run the comparison and read what changed.
+
+<BetaCta source="blog_inline_2">Give Construct its first pricing check</BetaCta>
+
+## Sources
+
+- [Visualping pricing](https://visualping.io/pricing)
+- [Construct pricing](/pricing/)
+- [Construct workflows](/use-cases/workflows/)
+- [Construct scheduling](/use-cases/scheduling/)
+
+## Related resources
+
+- [Research a list of companies into a spreadsheet, with sources](/blog/ai-company-research-spreadsheet/)
+- [How to run an AI agent on a schedule](/blog/ai-agent-scheduled-tasks/)
+- [AI research with sources you can review](/use-cases/research/)
+- [Where your agent's work goes: files, reports and apps](/blog/ai-agent-files-and-artifacts/)
+- [AI workflow automation](/blog/ai-workflow-automation/)

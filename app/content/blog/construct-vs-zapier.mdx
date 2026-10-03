@@ -2,87 +2,141 @@
 title: "Construct vs Zapier, Make, and n8n"
 description: "Compare Construct with Zapier, Make, and n8n for deterministic workflows, agentic steps, scheduling, and ambiguous multi-step work."
 published: "2026-07-20"
-updated: "2026-07-27"
+updated: "2026-10-01"
 author: "construct-team"
 tags: ["comparison", "zapier", "make", "n8n", "workflow-automation"]
 kind: "comparison"
 draft: false
 ---
 
-Zapier, Make, and n8n excel when you know every trigger and action upfront. Construct plans and executes when the goal is clear but the steps are not.
+Construct gives you an AI employee from $9 a month that takes an outcome, such as "every Monday, summarize competitor pricing and email it to the team," and works out the browser, app, and file steps itself. Zapier, Make, and n8n run the triggers and actions someone configured in advance, so every unusual input needs a filter or router that was built for it ahead of time.
 
-<BetaCta source="blog_top">Meet Construct</BetaCta>
+For founders and small teams, Construct is the better choice for work that needs judgment. It handles inputs that vary week to week, does the research and writing a fixed flow cannot, and leaves files and an Activity record behind. Already running Zaps? Keep the high-volume plumbing there and give Construct the jobs that keep landing back on your desk.
+
+<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+
+## Why choose Construct over Zapier, Make, or n8n?
+
+- **Describe the outcome, not every step.** Construct plans the browser, app, and file steps at run time, so you are not wiring a branch for every edge case.
+- **$9 a month to start.** Lite includes 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address, at a fixed monthly price with published plan limits.
+- **A browser and a terminal, not only connectors.** Construct drives websites with no integration in live browser runs and runs scripts in a sandbox terminal.
+- **Work saved as files.** Reports and spreadsheets land in workspace files as they are produced, so next week's run compares against this week's.
+- **Memory you can read and fix.** Correct a fact once, such as a client's new reporting format, and every later run uses it.
+- **Schedules that run without you.** Calendar jobs run on Construct's servers with your laptop closed: 3 on Lite, 10 on Starter, 50 on Pro.
 
 ## Methodology
 
-This is an editorial capability comparison using the linked public vendor documentation and Construct's current first-party product scope as of the publication date. It compares documented product models, not hands-on performance or every plan-specific feature.
+We build Construct. This is our editorial capability comparison using the linked public vendor documentation, first published on July 20, 2026, with Construct's plan details updated on October 1, 2026. It compares documented product models, not hands-on performance or every plan-specific feature.
 
 ## Side by side
 
-| Feature        | Construct                                                 | Zapier, Make, and n8n                         |
-| -------------- | --------------------------------------------------------- | --------------------------------------------- |
-| Starting point | An outcome or reusable procedure                          | A configured trigger, schedule, or manual run |
-| Ambiguity      | Agent can interpret changing inputs                       | Best with deterministic mappings              |
-| Execution      | Apps, live browser, terminal, files, in-app notifications | Configured connectors and code steps          |
-| Scheduling     | Native Calendar for agent jobs and workflows              | Triggers and platform schedules               |
-| Workflow shape | Linear, versioned runs                                    | Visual workflows; branching varies by product |
-| Best use       | Knowledge work with judgment                              | Reliable high-volume automation               |
+<ArticleTable caption="Construct vs Zapier, Make, and n8n">
+
+| Feature             | Construct                                                       | Zapier, Make, and n8n                         |
+| ------------------- | --------------------------------------------------------------- | --------------------------------------------- |
+| Starting point      | An outcome or reusable procedure                                | A configured trigger, schedule, or manual run |
+| Starting price      | $9 a month (Lite), with a 7-day Pro trial                       | See each vendor's pricing page                |
+| Changing inputs     | Agent interprets them at run time                               | Best with deterministic mappings              |
+| Files and workspace | Workspace files saved as each run goes                          | Data passed between configured steps          |
+| Memory              | Inspect, correct, or forget stored facts                        | Varies by product                             |
+| Scheduling          | Native Calendar for agent jobs and workflows                    | Triggers and platform schedules               |
+| Ways to reach it    | Web, Slack, Telegram, Discord, and its own email inbox          | Triggers from connected apps and webhooks     |
+| Execution           | Apps, live browser, sandbox terminal, files, notifications      | Configured connectors and code steps          |
+| Workflow shape      | Linear, versioned workflows with agent steps                    | Visual workflows; branching varies by product |
+
+</ArticleTable>
+
+Automation platform sources: [Zapier pricing](https://zapier.com/pricing), [Zap limits](https://help.zapier.com/hc/en-us/articles/8496181445261-Zap-limits), and [Zapier Agents](https://zapier.com/agents). Construct's [product guide](/blog/ai-employee/) explains how its workspace runs.
 
 ## Flows vs goals
 
-Automation platforms center on configured triggers, actions, and visual workflows, with agentic features varying by product. Construct can instead start from an outcome, "every Monday, summarize competitor pricing and post to Slack", and work out the browser, app, and file steps at runtime.
+On an automation platform, the thinking happens at build time: the person wiring the flow decides every path, and the runtime executes that plan. With Construct, the thinking moves to run time. When inbox review needs judgment or research spans several sites, Construct reads the situation, then continues through connected-app actions, live browser work, files, or in-app notifications.
 
-The distinction shows up in where the thinking happens. On an automation platform, the thinking is done at build time by the person wiring the flow, and the runtime is deterministic execution of that plan. With an agent, some of the thinking moves to run time. That is an advantage when inputs vary and a disadvantage when they do not, which is why the choice depends far more on the shape of the work than on the capability of either tool.
+The practical test is an unusual input. A trigger-action flow handles the cases its builder anticipated. Construct attempts to interpret the unusual case, so an item that would otherwise sit unnoticed gets handled or flagged in the run's output.
 
-## Handles ambiguity
+<BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
 
-When inbox review needs judgment or research spans multiple sites, a fixed mapping can become brittle. Construct can use an agent step to interpret the situation, then continue through connected-app actions, live browser work, files, or in-app notifications. That flexibility is useful when inputs vary but the desired outcome stays consistent.
+## Reusable workflows with judgment inside them
 
-The practical test is what happens on an unusual input. A trigger-action flow handles cases its builder anticipated and drops or mishandles the rest, which is correct behaviour for a system meant to be predictable. An agent step attempts to interpret the unusual case, which is useful when a dropped item would otherwise sit unnoticed, and less useful when a silently-handled edge case would have been better escalated.
+Construct saves a job that works as a versioned workflow that combines agent reasoning, connected-app tools, and in-app notifications, then runs it on demand or from the Calendar. Workflows run in a straight line, and conditional logic goes inside an agent step rather than into branches you draw, so a dozen edge cases become one instruction.
 
-<BetaCta source="blog_inline_1">Build a workflow</BetaCta>
-
-## Reusable workflows without pretending everything is fixed
-
-Construct also supports durable workflows. A workflow can combine agent reasoning, connected-app tools, and in-app notifications, then run on demand or from the native Calendar. Current workflows are intentionally linear; branching, delays, approval steps, fan-out, and subworkflows are not yet supported.
-
-That linearity is a real constraint worth weighing directly. Automation platforms offer branching, routers, delays, and error paths as first-class building blocks. If a procedure genuinely depends on those primitives today, they are available there and not in Construct. The Construct pattern is to put conditional logic inside an agent step rather than to express it as workflow structure.
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/workflows/workflow-poster.jpg"
+    width="1440"
+    height="960"
+    aria-label="Construct workflow demo"
+    aria-describedby="workflow-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/workflows/workflow.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/construct-vs-zapier/workflow-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption id="workflow-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct builds and runs a reusable workflow with
+    agent steps, connected apps, and notifications, which can be versioned,
+    scheduled, and run again by anyone on the team.
+  </figcaption>
+</figure>
 
 ## A concrete scenario: onboarding a new customer
 
-Consider a post-sale process: a deal closes, and the customer needs a welcome email, a project workspace, a kickoff meeting, and an internal handoff note.
+A deal closes, and the customer needs a welcome email, a project workspace, a kickoff meeting, and an internal handoff note.
 
-**Built on an automation platform.** A trigger fires on the CRM stage change. Action steps create the workspace, send a templated welcome, create the calendar event, and post the handoff. It runs in seconds, costs very little per execution, and does the same thing every time. When a deal closes with missing contact details or an unusual plan configuration, a filter or router has to have been built for it.
+**On an automation platform,** a trigger fires on the CRM stage change and action steps create the workspace, send a templated welcome, create the calendar event, and post the handoff. When a deal closes with missing contact details or an unusual plan, a filter or router has to have been built for it.
 
-**Run by Construct.** A scheduled job or an assigned outcome checks for newly closed deals. The agent reads the deal record, notices the missing contact detail, checks prior email history to fill it, writes a welcome that reflects what the customer actually bought, and drafts a handoff note in its own words. It leaves the files, sent messages, and Activity summary in the workspace.
+**With Construct,** a scheduled job checks for newly closed deals. The agent reads the deal record, notices the missing contact detail, checks prior email history to fill it, drafts a welcome that reflects what the customer actually bought, and writes a handoff note in its own words. The files, drafts, and Activity summary stay in the workspace. The variance that would otherwise land on a person's desk is handled before it gets there.
 
-Neither is strictly better. The first is faster, cheaper, and more predictable for the common case. The second absorbs the variance that would otherwise land on a person's desk. Teams running both usually put the deterministic spine on the automation platform and hand the judgment-heavy edges to an agent.
+## How do the costs compare?
 
-## Cost models differ more than prices
+The two categories meter different things. Automation platforms price on task or operation volume, as [Zapier's pricing](https://zapier.com/pricing) shows. Construct meters depth and capacity: Lite at $9 with up to 50 steps per task, Starter at $59 with up to 150, and Pro at $299 with deep runs of up to 1,000 steps per task.
 
-Comparing monthly figures directly tends to mislead, because the two categories meter different things. Automation platforms typically price on task or operation volume: predictable per-run cost, scaling with throughput. Construct's plans meter task depth and capacity: Lite at $9 with up to 50 steps per task, Starter at $59 with up to 150, and Pro at $299 with deep runs up to 1,000 steps per task, with storage and command runtime rising alongside. Pricing is current as of this post's publish date and can change; check both vendors' current pricing before deciding.
+The useful comparison is cost per completed outcome. A job that takes a person an hour of cross-app judgment every week is where Construct comes out ahead, starting at $9 a month.
 
-The useful comparison is cost per completed outcome on your actual work. A high-volume, low-complexity flow is almost always cheaper on an automation platform. A low-volume job that would otherwise take a person an hour of cross-app judgment is where per-step metering can come out ahead.
+## Already using Zapier, Make, or n8n? Add Construct in 15 minutes
 
-<BetaCta source="blog_inline_2">Try Construct</BetaCta>
+You do not have to retire your automation platform. Keep the deterministic plumbing there and move the flow that has grown the most branches, or the one that still ends with a person cleaning up.
 
-## Using both together
+1. **Start on Lite for $9, or take the 7-day Pro trial** for deeper runs and your own model keys.
+2. **Describe the outcome** your flow is trying to reach, with its edge cases, in a Construct chat, and move any reference files into the workspace.
+3. **Connect the apps** the job needs from the integration catalog.
+4. **Run it once and check the result** in Files.
+5. **Save it as a workflow and put it on the Calendar** so it runs every week with your laptop closed.
 
-Most teams that adopt an agent do not retire their automation platform, and there is no reason they should. A reasonable division:
+There is no import of Zaps or scenarios; the outcome description replaces the wiring. One thing to set up deliberately: Construct's workflows do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself once you have checked them.
 
-- **Keep on the automation platform:** high-volume record syncing, notifications with fixed templates, webhook plumbing, anything needing sub-minute reaction time.
-- **Move to Construct:** research, inbox triage requiring judgment, recurring reports assembled from several systems, cross-app work whose steps vary week to week.
-- **Watch for:** procedures where a fixed flow has grown a dozen branches to cover edge cases. That growth is usually the signal a judgment step belongs in the middle.
+## When might Zapier, Make, or n8n still fit?
 
-## When each wins
+- High-volume record syncing or notifications with fixed templates.
+- Webhook plumbing that needs sub-minute reaction time.
+- A procedure that depends on drawn branches, delays, or approval steps today.
 
-Choose an automation platform when the trigger, the transformation, and the action are all known in advance and the volume is high. Choose Construct when the outcome is clear, the steps are not, and the job needs to leave an inspectable record.
+For research, inbox triage, recurring reports from several systems, and cross-app work whose steps change week to week, Construct is the better fit.
 
-For a deeper walkthrough of the same workflow built both ways, read [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/). For how Construct's own workflows and scheduling work, see [AI workflow automation](/blog/ai-workflow-automation/).
+## Which should you choose?
+
+Choose Construct for the work that needs judgment. It starts at $9, takes an outcome instead of a wiring diagram, handles the inputs a fixed flow drops, and leaves files and a record behind. Keep your automation platform for high-volume plumbing and add Construct for everything that still lands on your desk.
+
+<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+
+Give Construct the weekly competitor pricing summary: list the competitors, describe what the email should contain, check the first saved file, and put it on the Calendar. For the same workflow built both ways, read [AI agent vs Zapier automation](/blog/ai-agent-vs-zapier/), and for how Construct's workflows and scheduling work, see [AI workflow automation](/blog/ai-workflow-automation/). Start on [Lite at $9](/pricing/), or try Pro free for seven days.
 
 ## Sources
 
-- [Construct: AI employee product guide](https://construct.computer/blog/ai-employee/)
+- [Construct: AI employee product guide](/blog/ai-employee/)
+- [Construct pricing](/pricing/)
 - [Zapier: Zap limits](https://help.zapier.com/hc/en-us/articles/8496181445261-Zap-limits)
 - [Zapier: pricing](https://zapier.com/pricing)
 - [Zapier: Agents](https://zapier.com/agents)

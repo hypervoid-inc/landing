@@ -1,0 +1,166 @@
+---
+title: "Update Linear Issues From Slack Messages With an AI Agent"
+seoTitle: "Update Linear Issues From Slack With an AI Agent (2026 Guide)"
+description: "Mention an AI agent in Slack to create, update, and comment on Linear issues, including several at once. Setup, exact prompts, limits, and fixes, from $9."
+published: "2026-12-18"
+author: "nischal"
+tags: ["ai-agent", "workflow-automation", "small-business"]
+kind: "guide"
+draft: true
+---
+
+Construct lets you run Linear from Slack for $9 a month: mention your Construct agent in a message and it finds the right issues, changes their status, assignee, or priority, adds comments, and replies in the thread with a link for each. Linear's own Slack integration files issues from a message, the `/linear` command, or an `@Linear` mention, and "only Linear users in your Slack workspace can create issues with this integration" ([Linear docs](https://linear.app/docs/slack)).
+
+For small product teams, Construct is the better way to keep Linear current from Slack. One message can move several issues across teams, the agent finds "the login bug" without an issue key, teammates without Linear seats can file bugs through it, and the same request can update a file in your workspace. It works on every plan once Linear is connected and Construct is added to your Slack workspace.
+
+<BetaCta source="blog_top">Run Linear from Slack for $9</BetaCta>
+
+## Why do this in Construct?
+
+- **One message, many issues.** Paste the standup notes and the agent moves five issues across two teams, then replies in the thread with a link for each.
+- **No issue key needed.** A conventions file in your workspace lets "the onboarding bug" resolve to ENG-214, and the agent asks you when more than one issue matches.
+- **Teammates without Linear seats can ask.** Anyone on the Full access list can file or update issues through the agent's Linear connection.
+- **Rules you can read and fix.** "Shipped means Done" and "never delete or archive" live in the Memories app, where you can correct or remove them.
+- **More than Linear in the same request.** The agent can edit the release notes file in the workspace or save a summary for Friday's report while it changes the issues.
+- **A record of each change.** Activity shows each Linear action with a short reason and a link to the chat.
+
+Linear's integration still covers filing a single issue from a single message, and it can keep a Slack thread and the issue's comments in sync ([Linear docs](https://linear.app/docs/slack)). Add Construct for everything that needs judgment: a message that touches several issues, a description without a key, a request from someone without a seat, or a change that also belongs in a file.
+
+## What do you need?
+
+- **A Construct plan.** Lite at $9 a month covers occasional updates, with 50 steps per task. If you send long standup notes every day, Starter at $59 gives 150 steps per task and 6x Lite usage. You can also try Pro free for 7 days. See [pricing](/pricing/).
+- **Linear connected** from the App Store in Construct. In a team workspace, the agent writes through the Linear account that connected it, so issues and comments it creates show that user as the author.
+- **Construct added to Slack** from **Settings**, **Messaging**, **Add to Slack**, by the Construct workspace owner or an admin.
+- **Teammates on the allow list.** Anyone who should be able to change Linear through the agent needs **Full access**. People outside the list get a read-only guest agent that cannot use Linear.
+
+<BetaCta source="blog_inline_1">Connect Linear and Slack to Construct</BetaCta>
+
+## Before you start
+
+A few habits make the agent accurate from the first message:
+
+- **Put the update in your message.** The agent sees messages that mention it, replies in threads those mentions start, and direct messages. It cannot read channel history or the message you replied to, so paste the content in.
+- **Ask for a plan before bulk changes.** Construct's workflows do not pause for approval yet, and for a single clear update the agent acts straight away. For standup notes, ask it to list the changes and wait for your "go," then check the issues it reports.
+- **Set guardrails once.** The Linear connection gives the agent all of Linear's actions. Keep "never delete or archive" in memory, and block Linear under **App access** for agents that do not need it.
+- **Credit the requester.** Changes appear under the Linear account that connected Linear, not the Slack user who asked, so ask the agent to name the requester in its comments.
+- **Size the plan for the whole team.** Every Slack request uses the installer's Construct agent and counts against that plan's usage.
+- **Read digests in the web app.** Scheduled runs report in the web app with a notification rather than posting into a Slack channel; our [Slack briefing guide](/blog/ai-agent-slack-briefing/) covers the channel email workaround. {/* TODO: confirm scheduled delivery to Slack once it ships, and update this guide */}
+
+## How do you set it up?
+
+### 1. Connect Linear first
+
+Open **App Store** in the Construct desktop, find Linear, and press **Connect**. Do this before your first Slack request: the agent may not offer to connect Linear on its own just because a message mentions it.
+
+### 2. Teach the agent your Linear conventions
+
+In Construct chat, have the agent learn your setup and write it down:
+
+> Look up my Linear teams, their issue keys, workflow states, and labels. Save a one-page cheat sheet to Files/linear/conventions.md. Then remember these rules: "fixed" or "shipped" means move to Done; "blocked" means move to Blocked and add a comment saying why; "urgent" means priority Urgent. Never delete or archive an issue. When a message names an issue without its key, search by title and ask me if more than one matches.
+
+The cheat sheet means a Slack request can say "the onboarding bug" and the agent can still find ENG-214. You can review the rules later in the Memories app ([AI agent memory](/blog/ai-agent-memory/)).
+
+### 3. Create an issue from a Slack message
+
+Because the agent cannot read the message you are replying to, include the content. Start a new message in the channel, so the thread belongs to the agent:
+
+> @Construct create a Linear bug in the Web team from this report by Priya: "Checkout page shows a blank screen on Safari 18 after applying a discount code. Started this morning, about 1 in 5 attempts." Priority High, label Bug, assign to me. Reply with the issue link.
+
+It replies in the thread with the new issue key. The agent sees each message with the sender's name, so you can ask it to credit the person who reported it.
+
+### 4. Update existing issues
+
+> @Construct ENG-142 shipped in today's release. Move it to Done and comment "Released in v4.12, confirmed in production by Sam."
+
+For several issues at once, ask for the plan before the changes:
+
+> @Construct here are today's standup notes. List the Linear changes you would make, one line each, and wait for me to reply "go" before changing anything.
+> Sam: finished the CSV export (the one for Acme), starting on rate limits.
+> Priya: Safari checkout bug is blocked on the payments vendor.
+> Jo: onboarding emails ready for review.
+
+Reply "go" in the same thread. Replies in a thread that a mention started reach the agent without mentioning it again. {/* TODO: confirm that a reply without a mention reaches the agent when the thread was started by a mention, and whether the same holds when the first mention is itself a reply inside someone else's thread */}
+
+<figure className="my-8">
+  <video
+    controls
+    muted
+    playsInline
+    preload="none"
+    poster="/assets/landing/features/integrations-poster.webp"
+    width="1440"
+    height="960"
+    aria-label="Construct integrations demo"
+    aria-describedby="integrations-demo-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source src="/assets/landing/features/integrations.mp4" type="video/mp4" />
+    <track
+      kind="captions"
+      src="/blog/ai-agent-linear-from-slack/integrations-demo.vtt"
+      srcLang="en"
+      label="English"
+      default
+    />
+    Your browser does not support this video. The description below explains the
+    demo.
+  </video>
+  <figcaption
+    id="integrations-demo-description"
+    className="mt-3 text-sm leading-6"
+  >
+    Silent product demo: Construct's live connected-app catalog, with tools
+    such as Drive, Gmail, GitHub, and messaging channels available to connect.
+  </figcaption>
+</figure>
+
+### 5. Stop it if it goes wrong
+
+To stop a reply partway, type /stop in the thread or react to a message in the thread with ❌. Type /new to start the thread over with a fresh session. Changes already made in Linear stay made, so check the issues it listed.
+
+## What result should you get?
+
+After the standup example:
+
+1. A thread in Slack with the agent's proposed changes, your "go," and a final reply listing each issue it changed with links.
+2. The issues in Linear moved to their new states, with comments explaining why.
+3. Activity rows in Construct for each Linear action, with a short reason and a link to the chat.
+4. Files/linear/conventions.md, which keeps future requests consistent.
+
+**Illustrative example.** A five-person product team posts standup notes in #eng each morning. The lead mentions the agent under the notes with the "list first, wait for go" prompt, reads the plan, corrects one line, and replies "go." The agent moves four issues and comments on two. The designers, who have no Linear seats, ask the agent in Slack to file bugs they find in review.
+
+## Troubleshooting
+
+**The agent did not answer.** Make sure you mentioned it, that you are on the **Full access** list, and, in a private channel, that the bot was invited.
+
+**It said it cannot use Linear.** Linear is not connected, the connection expired, or Linear is blocked for that agent under **App access**. Reconnect from **Settings**, **Connections**.
+
+**It updated the wrong issue.** Use issue keys when you have them, and keep the "ask if more than one matches" rule. Check Files/linear/conventions.md for outdated team names.
+
+**It made the change before you said go.** Repeat "wait for me to reply go" in the request, and check the rule is stored in the Memories app.
+
+**A guest got "I can't do that."** Guests get a read-only agent without connected apps. Add them to **Full access** if they should be able to change Linear.
+
+We have not yet measured how often the agent picks the right issue from a description without a key. {/* TODO: run 30 real standup updates through the agent and record correct issue matches, wrong matches, questions asked, steps used, and time to reply; add screenshots of the Slack thread and the Linear issue */}
+
+## Give Construct tomorrow's standup
+
+Choose Construct to keep Linear current from Slack. It starts at $9, handles several issues in one message, finds issues without their keys, and lets teammates without Linear seats ask for changes.
+
+Your first job: connect Linear, run the conventions prompt from step 2, then paste tomorrow's standup notes under an @Construct mention with "list the changes and wait for go." Check the plan, reply "go," and open the issues it links.
+
+<BetaCta source="blog_inline_2">Give Construct its first Linear job</BetaCta>
+
+## Sources
+
+- [Linear docs: Slack integration](https://linear.app/docs/slack)
+- [Construct pricing](/pricing/)
+- [Construct across Slack, email, and chat](/use-cases/channels/)
+
+## Related resources
+
+- [A morning Slack briefing from your AI agent](/blog/ai-agent-slack-briefing/)
+- [New leads into HubSpot with a Slack summary every morning](/blog/ai-lead-sourcing-hubspot/)
+- [The AI delegation checklist](/blog/ai-delegation-checklist/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)
+- [Construct across channels](/use-cases/channels/)
