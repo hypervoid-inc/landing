@@ -16,7 +16,7 @@ import {
 } from "../../components/content/content-shell";
 import { BetaCta } from "../../components/content/beta-cta";
 import { mdxComponents } from "../../components/content/mdx-components";
-import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
+import { NotFoundPage } from "../not-found/not-found-page";
 import { ProductHuntProof } from "../product-hunt/product-hunt-proof";
 import { getBlogPost } from "../../content/blog";
 import {
@@ -588,44 +588,6 @@ function AuthorByline({
           </a>
         </p>
       </div>
-    </div>
-  );
-}
-
-export function NotFoundPage() {
-  return (
-    <div className="flex min-h-dvh flex-col">
-      <SiteHeader />
-      <main
-        id="main"
-        className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-5 py-16"
-      >
-        <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#01b4c8]">
-          404
-        </p>
-        <h1 className="font-geist mt-4 text-[40px] italic leading-tight text-[#4e4646] sm:text-[52px]">
-          Page not found
-        </h1>
-        <p className="mt-5 max-w-xl leading-7 text-[#627c86]">
-          We couldn’t find the page you’re looking for. It may have moved, or
-          the link could be out of date.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <Link
-            to="/"
-            className="rounded-full bg-[#01b4c8] px-6 py-3 text-sm font-medium text-white"
-          >
-            Back to home
-          </Link>
-          <Link
-            to="/support/"
-            className="text-sm text-[#01b4c8] hover:underline"
-          >
-            Contact support
-          </Link>
-        </div>
-      </main>
-      <SiteFooter />
     </div>
   );
 }

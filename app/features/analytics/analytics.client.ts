@@ -20,6 +20,14 @@ type AnalyticsEvent =
   | "clippy_reopened"
   | "clippy_hidden"
   | "clippy_dragged"
+  // The 404 page. `not_found_viewed` carries the canonical path we guessed, or
+  // null, and never the URL that was asked for. The game events carry `round`
+  // so a replay is distinguishable from a first play.
+  | "not_found_viewed"
+  | "not_found_suggestion_clicked"
+  | "not_found_game_started"
+  | "not_found_game_over"
+  | "not_found_game_cta_clicked"
   | "post_login_welcome_shown"
   | "post_login_welcome_os"
   | "post_login_welcome_dismissed"

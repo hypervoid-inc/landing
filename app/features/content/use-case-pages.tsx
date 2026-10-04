@@ -10,7 +10,7 @@ import {
   useCases,
   type UseCase,
 } from "../../content/use-cases";
-import { NotFoundPage } from "./resource-pages";
+import { NotFoundPage } from "../not-found/not-found-page";
 
 const homeCrumb = { label: "Home", to: "/" };
 const useCasesCrumb = { label: "Use Cases", to: "/use-cases/" };

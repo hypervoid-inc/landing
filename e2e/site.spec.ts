@@ -2176,6 +2176,74 @@ test("returns a real 404 for unknown URLs", async ({ request }) => {
   expect(await response.text()).toContain("Page not found");
 });
 
+test("guesses the page a mistyped URL meant", async ({ page }) => {
+  await page.goto("/blog/zenmode");
+  const guess = page.locator("main p", { hasText: "Did you mean" });
+  await expect(guess.getByRole("link")).toHaveAttribute(
+    "href",
+    "/blog/zen-mode/",
+  );
+  // A miss on a parameterised route used to hydrate into two copies of the page.
+  await expect(page.locator("header")).toHaveCount(1);
+  await expect(page.locator(".nf-stage")).toHaveCount(1);
+
+  await page.goto("/definitely-not-a-page");
+  await expect(page.getByRole("button", { name: "Play" })).toBeEnabled();
+  await expect(page.getByText("Did you mean")).toHaveCount(0);
+});
+
+test("plays the 404 game from the keyboard and quits with Escape", async ({
+  page,
+}) => {
+  test.setTimeout(90_000);
+  await page.goto("/definitely-not-a-page");
+  const stage = page.getByRole("group", {
+    name: "Catch the busywork, a mini game",
+  });
+  await expect(stage).toHaveAttribute("data-phase", "idle");
+  await expect(stage).toContainText("It looks like you’re lost.");
+
+  await stage.getByRole("button", { name: "Play" }).click();
+  await expect(stage).toHaveAttribute("data-phase", "playing");
+  await expect(stage).toBeFocused();
+
+  // Parked in a corner the work piles up, so the round ends on its own.
+  await page.keyboard.down("ArrowLeft");
+  const again = stage.getByRole("button", { name: "Play again" });
+  await expect(again).toBeFocused({ timeout: 60_000 });
+  await page.keyboard.up("ArrowLeft");
+  await expect(stage).toContainText("That’s a job for a computer");
+  await expect(
+    stage.getByRole("link", { name: "Give Construct the real ones" }),
+  ).toBeVisible();
+
+  await page.keyboard.press("Enter");
+  await expect(stage).toHaveAttribute("data-phase", "playing");
+  await page.keyboard.press("Escape");
+  await expect(stage).toHaveAttribute("data-phase", "idle");
+});
+
+test("keeps the 404 game still until Play under reduced motion", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/definitely-not-a-page");
+  const stage = page.getByRole("group", {
+    name: "Catch the busywork, a mini game",
+  });
+  const play = stage.getByRole("button", { name: "Play" });
+  await expect(play).toBeEnabled();
+  await expect(stage).toContainText("Fancy a quick game?");
+
+  // Neither the keys nor a pass of the pointer starts anything.
+  await page.keyboard.press("ArrowRight");
+  await stage.hover();
+  await expect(stage).toHaveAttribute("data-phase", "idle");
+
+  await play.click();
+  await expect(stage).toHaveAttribute("data-phase", "playing");
+});
+
 test("submits the footer newsletter through Turnstile and D1", async ({
   page,
 }) => {
@@ -2351,6 +2419,8 @@ for (const path of [
   "/blog/agent-verification-gap/",
   "/pricing/",
   "/use-cases/memory/",
+  // The 404 page: a focusable game stage with its own controls.
+  "/definitely-not-a-page",
 ]) {
   test(`${path} has no automated accessibility violations`, async ({
     page,

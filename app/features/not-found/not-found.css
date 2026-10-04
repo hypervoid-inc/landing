@@ -1,0 +1,363 @@
+/*
+ * The 404 game's stage. Everything the runtime needs to measure is laid out
+ * here in CSS, so the prerendered scene and the playable one are the same box:
+ * the mascot stands on the ground line whether or not the script has arrived.
+ */
+
+.nf-game {
+  margin-top: 2.5rem;
+}
+
+.nf-stage {
+  --nf-ground: 44px;
+  --nf-outline: #16161a;
+  position: relative;
+  height: clamp(320px, 48vh, 440px);
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 24px;
+  background: linear-gradient(180deg, #cfeef4 0%, #e8f8fb 55%, #f7fdfe 100%);
+  /* Sideways drags steer; vertical ones still scroll the page on a phone. */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nf-stage:focus-visible {
+  outline: 2px solid var(--color-brand-strong);
+  outline-offset: 3px;
+}
+
+.nf-clouds {
+  position: absolute;
+  top: -6%;
+  left: 0;
+  width: 100%;
+  height: auto;
+  opacity: 0.85;
+  pointer-events: none;
+  /* The art is shaded for a deeper sky than this one. */
+  filter: brightness(1.22);
+}
+
+.nf-ground {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--nf-ground);
+  border-top: 3px solid var(--nf-outline);
+  background-color: #9fe3ec;
+  /* Two staggered rows of pixels, so the ground reads as drawn, not filled. */
+  background-image:
+    linear-gradient(90deg, #01b4c8 50%, transparent 0),
+    linear-gradient(90deg, transparent 50%, #01b4c8 0);
+  background-repeat: repeat-x;
+  background-position:
+    0 9px,
+    0 21px;
+  background-size:
+    24px 4px,
+    24px 4px;
+}
+
+.nf-catcher {
+  position: absolute;
+  bottom: calc(var(--nf-ground) - 2px);
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  will-change: transform;
+}
+
+.nf-mascot {
+  position: relative;
+  width: clamp(72px, 13vw, 104px);
+  transform-origin: 50% 100%;
+}
+
+.nf-mascot-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-user-drag: none;
+}
+
+/* Same crop of the CRT glass as the Clippy sprite: it is the same artwork. */
+.nf-screen {
+  position: absolute;
+  top: 14%;
+  left: 15.5%;
+  width: 49%;
+  height: 38.4%;
+  overflow: hidden;
+}
+
+.nf-screen::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: 0;
+  transition: opacity 120ms linear;
+}
+
+.nf-mascot[data-mood="hurt"] .nf-screen::after {
+  background: #e5484d;
+  opacity: 0.6;
+}
+
+.nf-mascot[data-mood="bright"] .nf-screen::after {
+  background: #f7b500;
+  opacity: 0.5;
+}
+
+.nf-screen-logo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 140ms linear;
+}
+
+.nf-bubble {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  width: max-content;
+  max-width: min(230px, 62vw);
+  padding: 8px 12px;
+  transform: translateX(calc(-50% + var(--nf-bubble-shift, 0px)));
+  border: 2px solid var(--nf-outline);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 3px 3px 0 var(--nf-outline);
+  color: var(--color-ink);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Stays on the mascot while the bubble leans back in from an edge. */
+.nf-bubble-tail {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-50%) rotate(45deg);
+  border-right: 2px solid var(--nf-outline);
+  border-bottom: 2px solid var(--nf-outline);
+  background: #fff;
+  pointer-events: none;
+}
+
+.nf-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.nf-hud {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  left: 14px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 36px;
+  color: var(--color-ink);
+  font-family: var(--font-geist);
+}
+
+.nf-hud-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.nf-hud-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nf-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.nf-stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.nf-stat-value {
+  min-width: 2ch;
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.nf-lives,
+.nf-glyphs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nf-lives i {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--nf-outline);
+  background: #fff;
+}
+
+.nf-lives i[data-on] {
+  background: #e5484d;
+}
+
+.nf-glyphs i {
+  color: rgb(78 70 70 / 30%);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.nf-glyphs i[data-on] {
+  color: #b97a00;
+  text-shadow: 0 0 10px rgb(247 181 0 / 70%);
+}
+
+.nf-bonus {
+  padding: 2px 7px;
+  border: 2px solid var(--nf-outline);
+  border-radius: 6px;
+  background: #f7b500;
+  color: var(--nf-outline);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.nf-play,
+.nf-again {
+  min-height: 36px;
+  padding: 0 16px;
+  border: 2px solid var(--nf-outline);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 3px 3px 0 var(--nf-outline);
+  color: var(--nf-outline);
+  font-family: var(--font-geist);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform var(--dur-press) var(--ease-snap),
+    box-shadow var(--dur-press) var(--ease-snap);
+}
+
+.nf-play:hover,
+.nf-again:hover {
+  background: var(--color-brand-tint);
+}
+
+.nf-play:active,
+.nf-again:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--nf-outline);
+}
+
+.nf-play:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.nf-play:focus-visible,
+.nf-again:focus-visible {
+  outline: 2px solid var(--color-brand-strong);
+  outline-offset: 3px;
+}
+
+.nf-again {
+  min-height: 40px;
+}
+
+.nf-over {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: 56px 16px 16px;
+  background: rgb(255 255 255 / 80%);
+  animation: nf-over-in 200ms var(--ease-snap) both;
+}
+
+.nf-over-card {
+  max-width: 420px;
+  text-align: center;
+}
+
+.nf-over-title {
+  color: var(--color-ink);
+  font-family: var(--font-geist);
+  font-size: clamp(24px, 5vw, 32px);
+  font-style: italic;
+  line-height: 1.15;
+}
+
+.nf-over-copy {
+  margin-top: 10px;
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+.nf-over-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.nf-hint {
+  margin-top: 12px;
+  color: var(--color-ink);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@keyframes nf-over-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-over {
+    animation: none;
+  }
+
+  .nf-screen-logo,
+  .nf-screen::after,
+  .nf-play,
+  .nf-again {
+    transition: none;
+  }
+}
