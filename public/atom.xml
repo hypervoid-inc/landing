@@ -3,7 +3,20 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-10-03T00:00:00Z</updated>
+  <updated>2026-10-04T00:00:00Z</updated>
+  <entry>
+    <title>Zen Mode: some days you just want it done</title>
+    <id>https://construct.computer/blog/zen-mode/</id>
+    <link href="https://construct.computer/blog/zen-mode/"/>
+    <author><name>Nischal</name></author>
+    <published>2026-10-04T00:00:00Z</published>
+    <updated>2026-10-04T00:00:00Z</updated>
+    <category term="product"/>
+    <category term="ai-agent"/>
+    <category term="ai-employee"/>
+    <category term="zen-mode"/>
+    <summary>Zen Mode is a chat-first way into Construct&apos;s AI computer. Ask once, it works in the background, asks when it needs you, and runs on your phone.</summary>
+  </entry>
   <entry>
     <title>ChatGPT Dots alternatives: 9 always-on agents that don&apos;t need ChatGPT Pro</title>
     <id>https://construct.computer/blog/chatgpt-dots-alternatives/</id>
