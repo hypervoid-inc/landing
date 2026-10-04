@@ -991,11 +991,11 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Zen Mode: some days you just want it done",
     description:
       "Zen Mode is a chat-first way into Construct's AI computer. Ask once, it works in the background, asks when it needs you, and runs on your phone.",
-    published: "2026-09-30",
+    published: "2026-10-04",
     seoTitle: "Construct Zen Mode: Chat-First AI Agent With Its Own Computer",
     author: "nischal",
     tags: ["product", "ai-agent", "ai-employee", "zen-mode"],
     kind: "guide",
-    draft: true,
+    draft: false,
   },
 ];

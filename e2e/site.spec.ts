@@ -2343,9 +2343,10 @@ for (const path of [
   "/blog/",
   "/blog/agent-task-half-life/",
   "/blog/grokbot-alternative/",
-  // Tables, a long FAQ list, and a mid-article link. Zen Mode, which carried
-  // the captioned video, is held in draft.
+  // Tables, a long FAQ list, and a mid-article link.
   "/blog/best-ai-employee-platforms/",
+  // The only post with a captioned video.
+  "/blog/zen-mode/",
   // The only post whose figures sit in keyboard-reachable scroll regions.
   "/blog/agent-verification-gap/",
   "/pricing/",
