@@ -77,6 +77,41 @@ function CodeBlock({ children, ...props }: ComponentPropsWithoutRef<"pre">) {
   );
 }
 
+/**
+ * A chart or screenshot with its caption. `width` and `height` are the file's
+ * pixel size, so the browser reserves the space before the image loads.
+ */
+function ArticleFigure({
+  src,
+  alt,
+  caption,
+  width,
+  height,
+}: {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+}) {
+  return (
+    <figure className="my-8">
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+        className="h-auto w-full rounded-lg border border-[#e5e7eb]"
+      />
+      <figcaption className="mt-2 text-[13px] leading-relaxed text-[#526b75]">
+        {caption}
+      </figcaption>
+    </figure>
+  );
+}
+
 function ExternalAwareLink({
   href = "",
   children,
@@ -98,6 +133,7 @@ function ExternalAwareLink({
 
 export const mdxComponents: MDXComponents = {
   // Capitalised entries are authorable in MDX with no import, e.g. `<BetaCta />`.
+  ArticleFigure,
   ArticleTable,
   BetaCta,
   CostCalculator,

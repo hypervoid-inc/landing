@@ -523,6 +523,20 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: true,
   },
   {
+    slug: "clef-vs-jev-benchmark",
+    title: "Clef beat Jev on Jev's home turf",
+    description:
+      "We ran Cloudflare's Clef and Clef-flash against Jev on five production AI agent decisions: 1,053 calls, accuracy, determinism, drift, cost, and what we are switching.",
+    published: "2026-10-05",
+    seoTitle:
+      "Clef vs Jev Benchmark: Cloudflare's Decision Model on Real Agent Prompts",
+    author: "ankush",
+    tags: ["ai-agent", "clef", "decision-models", "reliability", "benchmark"],
+    kind: "article",
+    draft: false,
+    image: "clef-vs-jev-benchmark.png",
+  },
+  {
     slug: "construct-computer-alternatives",
     title: "Construct Computer alternatives: what you would give up",
     description:
