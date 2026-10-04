@@ -10,6 +10,48 @@ export type FaqItem = {
  * that the body does not support.
  */
 export const resourceFaqs: Record<string, readonly FaqItem[]> = {
+  "clef-vs-jev-benchmark": [
+    {
+      question: "What is Clef?",
+      answer:
+        "Clef is an open-weight decision model from Cloudflare, released on October 1, 2026 with a smaller sibling, Clef-flash. You send a state and typed questions, and it returns a probability for each allowed answer instead of generating text. Clef has 27 billion parameters, Clef-flash has 9 billion, both are Apache 2.0, both run on Workers AI, and both accept the same request format as TypeSafe's Jev.",
+    },
+    {
+      question: "Is Clef better than Jev?",
+      answer:
+        "On Construct's benchmark of 117 labelled cases across five production AI agent decisions, Clef reached the right outcome on 92.3% of calls using thresholds set for Jev, against 88.6% for Jev and 82.1% for Clef-flash. With each model's own thresholds, chosen on held-out cases, the scores were 93.2%, 90.9% and 90.6%. Clef's lead over Jev is 3.7 points on a small synthetic set and is not statistically significant, so it is not a general verdict. Jev won email triage and made no wrong merges.",
+    },
+    {
+      question: "Is Clef compatible with the Jev API?",
+      answer:
+        "Yes, in Construct's test. The same requests written for Jev, with Choice, Score and Noul questions and JSON state, ran on Clef and Clef-flash after changing only the model ID to @cf/cloudflare/clef or @cf/cloudflare/clef-flash. All 702 Clef calls returned valid answers. One difference: Clef's confidence field is not the winning label's probability, so read the probabilities map.",
+    },
+    {
+      question: "Is Clef deterministic?",
+      answer:
+        "In Construct's test, yes. Each of 117 cases was sent three times, and Clef and Clef-flash returned the identical probability on every repeat. The probability Jev's decisions act on moved by up to 0.10 between identical calls, and two cases changed verdict. Cloudflare attributes this to a non-autoregressive decision step that samples no text.",
+    },
+    {
+      question: "How much does Clef cost compared with Jev?",
+      answer:
+        "List prices per million input tokens are $0.24 for Clef, $0.09 for Clef-flash and $0.042 for Jev, with output free on all three. Clef counted 28% fewer tokens than Jev for the same requests in Construct's test, so a million decisions cost about $93 on Clef, $35 on Clef-flash and $23 on Jev.",
+    },
+    {
+      question: "Do Jev thresholds work on Clef?",
+      answer:
+        "Not reliably. In Construct's test the most accurate threshold for a tool-call risk decision was 0.49 on Jev, 0.22 on Clef and 0.31 on Clef-flash, against 0.80 in production. Clef-flash scored 82.1% on Jev's thresholds and 90.6% with thresholds chosen for it on held-out cases. Swap the model in shadow, log probabilities, and set each threshold again.",
+    },
+    {
+      question: "How fast is Clef?",
+      answer:
+        "Cloudflare reports a median of 209 ms for Clef and 38.8 ms for Clef-flash, against 524 ms for Jev. Construct's benchmark could not confirm or dispute that, because it called the models through Cloudflare's REST API from a laptop, a path with a floor of about 340 ms for every model. On that path the medians were 654 ms for Clef, 449 ms for Clef-flash and 454 ms for Jev.",
+    },
+    {
+      question: "When should you use Clef-flash instead of Clef?",
+      answer:
+        "Use Clef-flash for high-volume gates that only skip or lower something, with thresholds measured for it. In Construct's test it reached 90.6% with its own thresholds, level with Jev, at about a third of Clef's price. Use Clef, at a high threshold, for anything that merges, deletes or sends, because Clef-flash was too eager on lookalike names.",
+    },
+  ],
   "jev-ai-agents": [
     {
       question: "What is Jev?",

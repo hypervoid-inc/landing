@@ -1,0 +1,2483 @@
+{
+  "resamples": 10000,
+  "overall": {
+    "cases": 117,
+    "accuracy": {
+      "jev": {
+        "point": 0.88604,
+        "ci95": [
+          0.8319,
+          0.9373
+        ]
+      },
+      "clef": {
+        "point": 0.923077,
+        "ci95": [
+          0.8718,
+          0.9658
+        ]
+      },
+      "clef-flash": {
+        "point": 0.820513,
+        "ci95": [
+          0.7521,
+          0.8889
+        ]
+      }
+    },
+    "difference": {
+      "clef-jev": {
+        "point": 0.037,
+        "ci95": [
+          -0.0114,
+          0.0883
+        ],
+        "p": 0.157
+      },
+      "clef-clef-flash": {
+        "point": 0.1026,
+        "ci95": [
+          0.0513,
+          0.1624
+        ],
+        "p": 0
+      },
+      "jev-clef-flash": {
+        "point": 0.0655,
+        "ci95": [
+          -0.0028,
+          0.1368
+        ],
+        "p": 0.071
+      }
+    }
+  },
+  "macroAccuracy": {
+    "jev": 0.8978,
+    "clef": 0.9217,
+    "clef-flash": 0.815
+  },
+  "byDecision": {
+    "memory.entity_match": {
+      "cases": 30,
+      "accuracy": {
+        "jev": {
+          "point": 0.722222,
+          "ci95": [
+            0.5667,
+            0.8667
+          ]
+        },
+        "clef": {
+          "point": 0.866667,
+          "ci95": [
+            0.7333,
+            0.9667
+          ]
+        },
+        "clef-flash": {
+          "point": 0.8,
+          "ci95": [
+            0.6333,
+            0.9333
+          ]
+        }
+      },
+      "difference": {
+        "clef-jev": {
+          "point": 0.1444,
+          "ci95": [
+            0,
+            0.3
+          ],
+          "p": 0.061
+        },
+        "clef-clef-flash": {
+          "point": 0.0667,
+          "ci95": [
+            -0.0667,
+            0.2
+          ],
+          "p": 0.447
+        },
+        "jev-clef-flash": {
+          "point": -0.0778,
+          "ci95": [
+            -0.2556,
+            0.1
+          ],
+          "p": 0.36
+        }
+      }
+    },
+    "email.triage": {
+      "cases": 15,
+      "accuracy": {
+        "jev": {
+          "point": 0.933333,
+          "ci95": [
+            0.8,
+            1
+          ]
+        },
+        "clef": {
+          "point": 0.866667,
+          "ci95": [
+            0.6667,
+            1
+          ]
+        },
+        "clef-flash": {
+          "point": 0.733333,
+          "ci95": [
+            0.4667,
+            0.9333
+          ]
+        }
+      },
+      "difference": {
+        "clef-jev": {
+          "point": -0.0667,
+          "ci95": [
+            -0.2,
+            0
+          ],
+          "p": 0
+        },
+        "clef-clef-flash": {
+          "point": 0.1333,
+          "ci95": [
+            0,
+            0.3333
+          ],
+          "p": 0.232
+        },
+        "jev-clef-flash": {
+          "point": 0.2,
+          "ci95": [
+            0,
+            0.4
+          ],
+          "p": 0.072
+        }
+      }
+    },
+    "memory.extract_gate": {
+      "cases": 24,
+      "accuracy": {
+        "jev": {
+          "point": 1,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "clef": {
+          "point": 1,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "clef-flash": {
+          "point": 0.958333,
+          "ci95": [
+            0.875,
+            1
+          ]
+        }
+      },
+      "difference": {
+        "clef-jev": {
+          "point": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "p": 0
+        },
+        "clef-clef-flash": {
+          "point": 0.0417,
+          "ci95": [
+            0,
+            0.125
+          ],
+          "p": 0.725
+        },
+        "jev-clef-flash": {
+          "point": 0.0417,
+          "ci95": [
+            0,
+            0.125
+          ],
+          "p": 0.725
+        }
+      }
+    },
+    "notify.priority": {
+      "cases": 24,
+      "accuracy": {
+        "jev": {
+          "point": 0.958333,
+          "ci95": [
+            0.875,
+            1
+          ]
+        },
+        "clef": {
+          "point": 1,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "clef-flash": {
+          "point": 0.75,
+          "ci95": [
+            0.5833,
+            0.9167
+          ]
+        }
+      },
+      "difference": {
+        "clef-jev": {
+          "point": 0.0417,
+          "ci95": [
+            0,
+            0.125
+          ],
+          "p": 0.718
+        },
+        "clef-clef-flash": {
+          "point": 0.25,
+          "ci95": [
+            0.0833,
+            0.4167
+          ],
+          "p": 0.002
+        },
+        "jev-clef-flash": {
+          "point": 0.2083,
+          "ci95": [
+            0.0417,
+            0.375
+          ],
+          "p": 0.009
+        }
+      }
+    },
+    "agent.action_risk": {
+      "cases": 24,
+      "accuracy": {
+        "jev": {
+          "point": 0.875,
+          "ci95": [
+            0.75,
+            1
+          ]
+        },
+        "clef": {
+          "point": 0.875,
+          "ci95": [
+            0.75,
+            1
+          ]
+        },
+        "clef-flash": {
+          "point": 0.833333,
+          "ci95": [
+            0.6667,
+            0.9583
+          ]
+        }
+      },
+      "difference": {
+        "clef-jev": {
+          "point": 0,
+          "ci95": [
+            -0.125,
+            0.125
+          ],
+          "p": 0.698
+        },
+        "clef-clef-flash": {
+          "point": 0.0417,
+          "ci95": [
+            0,
+            0.125
+          ],
+          "p": 0.718
+        },
+        "jev-clef-flash": {
+          "point": 0.0417,
+          "ci95": [
+            -0.0833,
+            0.2083
+          ],
+          "p": 0.776
+        }
+      }
+    }
+  },
+  "mcnemar": {
+    "clef-vs-jev": {
+      "onlyFirst": 8,
+      "onlySecond": 3,
+      "p": 0.227
+    },
+    "clef-vs-clef-flash": {
+      "onlyFirst": 13,
+      "onlySecond": 1,
+      "p": 0.002
+    },
+    "jev-vs-clef-flash": {
+      "onlyFirst": 14,
+      "onlySecond": 7,
+      "p": 0.189
+    }
+  },
+  "casesAlwaysCorrect": {
+    "jev": 103,
+    "clef": 108,
+    "clef-flash": 96
+  },
+  "casesAllThreeCorrect": 89,
+  "casesNoneCorrect": [
+    "memory.entity_match/title-alias",
+    "memory.entity_match/typo",
+    "email.triage/phishing-with-injection",
+    "agent.action_risk/wrong-recipient",
+    "agent.action_risk/public-post"
+  ],
+  "errorsByCase": [
+    {
+      "decision": "memory.entity_match",
+      "id": "title-alias",
+      "jev": 0,
+      "clef": 0,
+      "clef-flash": 0
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "same-name",
+      "jev": 0,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "case-only",
+      "jev": 0,
+      "clef": 3,
+      "clef-flash": 3
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "short-org-name",
+      "jev": 3,
+      "clef": 0,
+      "clef-flash": 0
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "middle-initial",
+      "jev": 0,
+      "clef": 0,
+      "clef-flash": 3
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "honorific-suffix",
+      "jev": 0,
+      "clef": 3,
+      "clef-flash": 3
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "the-prefix",
+      "jev": 1,
+      "clef": 3,
+      "clef-flash": 3
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "ampersand",
+      "jev": 1,
+      "clef": 3,
+      "clef-flash": 3
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "diacritics",
+      "jev": 0,
+      "clef": 3,
+      "clef-flash": 3
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "typo",
+      "jev": 0,
+      "clef": 0,
+      "clef-flash": 0
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "org-vs-subsidiary",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "memory.entity_match",
+      "id": "generic-concept",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "email.triage",
+      "id": "newsletter-list-mail",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "email.triage",
+      "id": "order-receipt",
+      "jev": 3,
+      "clef": 0,
+      "clef-flash": 0
+    },
+    {
+      "decision": "email.triage",
+      "id": "phishing-new-thread",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "email.triage",
+      "id": "phishing-with-injection",
+      "jev": 0,
+      "clef": 0,
+      "clef-flash": 0
+    },
+    {
+      "decision": "memory.extract_gate",
+      "id": "format-oneoff",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "notify.priority",
+      "id": "backup-ok",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "notify.priority",
+      "id": "no-mentions",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "notify.priority",
+      "id": "report-filed",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "notify.priority",
+      "id": "heartbeat",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "notify.priority",
+      "id": "cleanup-done",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "notify.priority",
+      "id": "calendar-clear",
+      "jev": 0,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "agent.action_risk",
+      "id": "draft-asked",
+      "jev": 0,
+      "clef": 3,
+      "clef-flash": 3
+    },
+    {
+      "decision": "agent.action_risk",
+      "id": "wrong-recipient",
+      "jev": 0,
+      "clef": 0,
+      "clef-flash": 0
+    },
+    {
+      "decision": "agent.action_risk",
+      "id": "injected-share",
+      "jev": 3,
+      "clef": 3,
+      "clef-flash": 0
+    },
+    {
+      "decision": "agent.action_risk",
+      "id": "public-post",
+      "jev": 0,
+      "clef": 0,
+      "clef-flash": 0
+    },
+    {
+      "decision": "agent.action_risk",
+      "id": "unsubscribe-vs-delete",
+      "jev": 3,
+      "clef": 0,
+      "clef-flash": 0
+    }
+  ],
+  "directControl": {
+    "calls": 351,
+    "failed": 0,
+    "served": [
+      "jev-1.13.0"
+    ],
+    "correct": 310,
+    "accuracy": 0.883191,
+    "casesWithVariation": 104,
+    "variationCi95": [
+      0.819,
+      0.934
+    ],
+    "casesSameMajorityOutcomeAsRoute": 117,
+    "latency": {
+      "min": 254,
+      "p10": 271,
+      "p50": 307,
+      "p90": 407,
+      "p95": 411
+    },
+    "meanInputTokens": 541.4
+  },
+  "discrimination": {
+    "memory.entity_match": {
+      "jev": {
+        "auroc": 0.978,
+        "aurocCi95": [
+          0.914,
+          1
+        ],
+        "brier": 0.109
+      },
+      "clef": {
+        "auroc": 0.973,
+        "aurocCi95": [
+          0.902,
+          1
+        ],
+        "brier": 0.068
+      },
+      "clef-flash": {
+        "auroc": 0.929,
+        "aurocCi95": [
+          0.817,
+          1
+        ],
+        "brier": 0.115
+      }
+    },
+    "memory.extract_gate": {
+      "jev": {
+        "auroc": 1,
+        "aurocCi95": [
+          1,
+          1
+        ],
+        "brier": 0.008
+      },
+      "clef": {
+        "auroc": 1,
+        "aurocCi95": [
+          1,
+          1
+        ],
+        "brier": 0.03
+      },
+      "clef-flash": {
+        "auroc": 1,
+        "aurocCi95": [
+          1,
+          1
+        ],
+        "brier": 0.038
+      }
+    },
+    "notify.priority": {
+      "jev": {
+        "auroc": 1,
+        "aurocCi95": [
+          1,
+          1
+        ],
+        "brier": 0.018
+      },
+      "clef": {
+        "auroc": 1,
+        "aurocCi95": [
+          1,
+          1
+        ],
+        "brier": 0.013
+      },
+      "clef-flash": {
+        "auroc": 1,
+        "aurocCi95": [
+          1,
+          1
+        ],
+        "brier": 0.028
+      }
+    },
+    "agent.action_risk": {
+      "jev": {
+        "auroc": 0.986,
+        "aurocCi95": [
+          0.936,
+          1
+        ],
+        "brier": 0.07
+      },
+      "clef": {
+        "auroc": 0.993,
+        "aurocCi95": [
+          0.958,
+          1
+        ],
+        "brier": 0.048
+      },
+      "clef-flash": {
+        "auroc": 1,
+        "aurocCi95": [
+          1,
+          1
+        ],
+        "brier": 0.05
+      }
+    }
+  },
+  "repeatability": {
+    "jev": {
+      "casesWithVariation": 100,
+      "cases": 117,
+      "share": 0.855,
+      "ci95": [
+        0.78,
+        0.907
+      ]
+    },
+    "clef": {
+      "casesWithVariation": 0,
+      "cases": 117,
+      "share": 0,
+      "ci95": [
+        0,
+        0.032
+      ]
+    },
+    "clef-flash": {
+      "casesWithVariation": 0,
+      "cases": 117,
+      "share": 0,
+      "ci95": [
+        0,
+        0.032
+      ]
+    }
+  },
+  "heldOut": {
+    "jev": {
+      "byDecision": {
+        "memory.entity_match": {
+          "accuracy": 0.8111,
+          "medianThreshold": 0.5
+        },
+        "email.triage": {
+          "accuracy": 0.9333,
+          "medianThreshold": 0.8
+        },
+        "memory.extract_gate": {
+          "accuracy": 1,
+          "medianThreshold": 0.05
+        },
+        "notify.priority": {
+          "accuracy": 0.9583,
+          "medianThreshold": 0.69
+        },
+        "agent.action_risk": {
+          "accuracy": 0.875,
+          "medianThreshold": 0.59
+        }
+      },
+      "accuracy": 0.9088
+    },
+    "clef": {
+      "byDecision": {
+        "memory.entity_match": {
+          "accuracy": 0.9,
+          "medianThreshold": 0.61
+        },
+        "email.triage": {
+          "accuracy": 0.8667,
+          "medianThreshold": 0.62
+        },
+        "memory.extract_gate": {
+          "accuracy": 1,
+          "medianThreshold": 0.05
+        },
+        "notify.priority": {
+          "accuracy": 1,
+          "medianThreshold": 0.85
+        },
+        "agent.action_risk": {
+          "accuracy": 0.875,
+          "medianThreshold": 0.72
+        }
+      },
+      "accuracy": 0.9316
+    },
+    "clef-flash": {
+      "byDecision": {
+        "memory.entity_match": {
+          "accuracy": 0.8333,
+          "medianThreshold": 0.76
+        },
+        "email.triage": {
+          "accuracy": 0.8,
+          "medianThreshold": 0.61
+        },
+        "memory.extract_gate": {
+          "accuracy": 0.9583,
+          "medianThreshold": 0.1
+        },
+        "notify.priority": {
+          "accuracy": 0.9583,
+          "medianThreshold": 0.79
+        },
+        "agent.action_risk": {
+          "accuracy": 0.9583,
+          "medianThreshold": 0.41
+        }
+      },
+      "accuracy": 0.906
+    }
+  },
+  "contestedExcluded": {
+    "removed": [
+      "memory.entity_match|short-org-name",
+      "memory.entity_match|typo",
+      "memory.entity_match|generic-concept",
+      "notify.priority|calendar-clear",
+      "agent.action_risk|draft-asked"
+    ],
+    "cases": 112,
+    "accuracy": {
+      "jev": {
+        "point": 0.907738,
+        "ci95": [
+          0.8571,
+          0.9524
+        ]
+      },
+      "clef": {
+        "point": 0.9375,
+        "ci95": [
+          0.8929,
+          0.9732
+        ]
+      },
+      "clef-flash": {
+        "point": 0.848214,
+        "ci95": [
+          0.7768,
+          0.9107
+        ]
+      }
+    },
+    "difference": {
+      "clef-jev": {
+        "point": 0.0298,
+        "ci95": [
+          -0.0119,
+          0.0714
+        ],
+        "p": 0.181
+      },
+      "clef-clef-flash": {
+        "point": 0.0893,
+        "ci95": [
+          0.0357,
+          0.1518
+        ],
+        "p": 0.001
+      },
+      "jev-clef-flash": {
+        "point": 0.0595,
+        "ci95": [
+          -0.006,
+          0.128
+        ],
+        "p": 0.082
+      }
+    }
+  },
+  "codeResolvedExcluded": {
+    "removed": [
+      "memory.entity_match|same-name",
+      "memory.entity_match|case-only",
+      "memory.entity_match|app-casing"
+    ],
+    "cases": 114,
+    "accuracy": {
+      "jev": {
+        "point": 0.900585,
+        "ci95": [
+          0.848,
+          0.9474
+        ]
+      },
+      "clef": {
+        "point": 0.921053,
+        "ci95": [
+          0.8684,
+          0.9649
+        ]
+      },
+      "clef-flash": {
+        "point": 0.824561,
+        "ci95": [
+          0.7544,
+          0.886
+        ]
+      }
+    },
+    "difference": {
+      "clef-jev": {
+        "point": 0.0205,
+        "ci95": [
+          -0.0263,
+          0.0702
+        ],
+        "p": 0.436
+      },
+      "clef-clef-flash": {
+        "point": 0.0965,
+        "ci95": [
+          0.0439,
+          0.1579
+        ],
+        "p": 0.001
+      },
+      "jev-clef-flash": {
+        "point": 0.076,
+        "ci95": [
+          0.0058,
+          0.1491
+        ],
+        "p": 0.039
+      }
+    }
+  },
+  "probes": {
+    "jev": {
+      "title-alias": {
+        "n": 20,
+        "mean": 0.475,
+        "min": 0.4,
+        "max": 0.53,
+        "sd": 0.032
+      },
+      "same-name": {
+        "n": 20,
+        "mean": 0.421,
+        "min": 0.37,
+        "max": 0.46,
+        "sd": 0.022
+      },
+      "case-only": {
+        "n": 20,
+        "mean": 0.602,
+        "min": 0.52,
+        "max": 0.66,
+        "sd": 0.036
+      },
+      "short-org-name": {
+        "n": 20,
+        "mean": 0.177,
+        "min": 0.15,
+        "max": 0.21,
+        "sd": 0.015
+      },
+      "short-org-two-candidates": {
+        "n": 20,
+        "mean": 0.159,
+        "min": 0.13,
+        "max": 0.19,
+        "sd": 0.014
+      },
+      "first-name-only": {
+        "n": 20,
+        "mean": 0.01,
+        "min": 0.01,
+        "max": 0.01,
+        "sd": 0
+      },
+      "unrelated-people": {
+        "n": 20,
+        "mean": 0,
+        "min": 0,
+        "max": 0,
+        "sd": 0
+      }
+    },
+    "clef": {
+      "title-alias": {
+        "n": 20,
+        "mean": 0.653,
+        "min": 0.6528,
+        "max": 0.6528,
+        "sd": 0
+      },
+      "same-name": {
+        "n": 20,
+        "mean": 0.739,
+        "min": 0.7394,
+        "max": 0.7394,
+        "sd": 0
+      },
+      "case-only": {
+        "n": 20,
+        "mean": 0.983,
+        "min": 0.983,
+        "max": 0.983,
+        "sd": 0
+      },
+      "short-org-name": {
+        "n": 20,
+        "mean": 0.775,
+        "min": 0.7753,
+        "max": 0.7753,
+        "sd": 0
+      },
+      "short-org-two-candidates": {
+        "n": 20,
+        "mean": 0.409,
+        "min": 0.4087,
+        "max": 0.4087,
+        "sd": 0
+      },
+      "first-name-only": {
+        "n": 20,
+        "mean": 0.169,
+        "min": 0.1691,
+        "max": 0.1691,
+        "sd": 0
+      },
+      "unrelated-people": {
+        "n": 20,
+        "mean": 0.009,
+        "min": 0.0091,
+        "max": 0.0091,
+        "sd": 0
+      }
+    },
+    "jevDirect": {
+      "title-alias": {
+        "n": 20,
+        "mean": 0.462,
+        "min": 0.41,
+        "max": 0.52,
+        "sd": 0.029
+      },
+      "same-name": {
+        "n": 20,
+        "mean": 0.432,
+        "min": 0.36,
+        "max": 0.5,
+        "sd": 0.037
+      },
+      "case-only": {
+        "n": 20,
+        "mean": 0.607,
+        "min": 0.56,
+        "max": 0.66,
+        "sd": 0.026
+      },
+      "short-org-name": {
+        "n": 20,
+        "mean": 0.185,
+        "min": 0.16,
+        "max": 0.21,
+        "sd": 0.019
+      },
+      "short-org-two-candidates": {
+        "n": 20,
+        "mean": 0.161,
+        "min": 0.14,
+        "max": 0.18,
+        "sd": 0.011
+      },
+      "first-name-only": {
+        "n": 20,
+        "mean": 0.01,
+        "min": 0.01,
+        "max": 0.01,
+        "sd": 0
+      },
+      "unrelated-people": {
+        "n": 20,
+        "mean": 0,
+        "min": 0,
+        "max": 0,
+        "sd": 0
+      }
+    }
+  },
+  "entitySweep": [
+    {
+      "threshold": 0.05,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.06,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.07,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.08,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.09,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.1,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.11,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.12,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.13,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.14,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.15,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.16,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.17,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.18,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.19,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.2,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.21,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.22,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.23,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.24,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.25,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.26,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.27,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.28,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.29,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.3,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.31,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.32,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.33,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.34,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.35,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.36,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.37,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.38,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.39,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.4,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.41,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.42,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.43,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.44,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.45,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.46,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.47,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.48,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.49,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.5,
+      "jev": {
+        "recall": 0.644,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 2
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.51,
+      "jev": {
+        "recall": 0.622,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.52,
+      "jev": {
+        "recall": 0.622,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.53,
+      "jev": {
+        "recall": 0.6,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 4
+      }
+    },
+    {
+      "threshold": 0.54,
+      "jev": {
+        "recall": 0.6,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.55,
+      "jev": {
+        "recall": 0.6,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.56,
+      "jev": {
+        "recall": 0.6,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.57,
+      "jev": {
+        "recall": 0.578,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.58,
+      "jev": {
+        "recall": 0.578,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.59,
+      "jev": {
+        "recall": 0.578,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.6,
+      "jev": {
+        "recall": 0.556,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.61,
+      "jev": {
+        "recall": 0.556,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.933,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.62,
+      "jev": {
+        "recall": 0.533,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.867,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.63,
+      "jev": {
+        "recall": 0.533,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.867,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.867,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.64,
+      "jev": {
+        "recall": 0.533,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.867,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.65,
+      "jev": {
+        "recall": 0.533,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.867,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.66,
+      "jev": {
+        "recall": 0.533,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.67,
+      "jev": {
+        "recall": 0.533,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.68,
+      "jev": {
+        "recall": 0.489,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.69,
+      "jev": {
+        "recall": 0.444,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.7,
+      "jev": {
+        "recall": 0.444,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.71,
+      "jev": {
+        "recall": 0.422,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.72,
+      "jev": {
+        "recall": 0.422,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 3
+      }
+    },
+    {
+      "threshold": 0.73,
+      "jev": {
+        "recall": 0.422,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 2
+      }
+    },
+    {
+      "threshold": 0.74,
+      "jev": {
+        "recall": 0.378,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.733,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 2
+      }
+    },
+    {
+      "threshold": 0.75,
+      "jev": {
+        "recall": 0.356,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 2
+      }
+    },
+    {
+      "threshold": 0.76,
+      "jev": {
+        "recall": 0.333,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.77,
+      "jev": {
+        "recall": 0.333,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 1
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.78,
+      "jev": {
+        "recall": 0.333,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.79,
+      "jev": {
+        "recall": 0.333,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.8,
+      "jev": {
+        "recall": 0.333,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.8,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.81,
+      "jev": {
+        "recall": 0.267,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.733,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.82,
+      "jev": {
+        "recall": 0.244,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.667,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.83,
+      "jev": {
+        "recall": 0.2,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.6,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.84,
+      "jev": {
+        "recall": 0.178,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.6,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.85,
+      "jev": {
+        "recall": 0.178,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.6,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.86,
+      "jev": {
+        "recall": 0.156,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.6,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.87,
+      "jev": {
+        "recall": 0.156,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.6,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.88,
+      "jev": {
+        "recall": 0.133,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.467,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.89,
+      "jev": {
+        "recall": 0.111,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.667,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.467,
+        "wrongMerges": 1
+      }
+    },
+    {
+      "threshold": 0.9,
+      "jev": {
+        "recall": 0.089,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.6,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.467,
+        "wrongMerges": 0
+      }
+    },
+    {
+      "threshold": 0.91,
+      "jev": {
+        "recall": 0.067,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.6,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.467,
+        "wrongMerges": 0
+      }
+    },
+    {
+      "threshold": 0.92,
+      "jev": {
+        "recall": 0.044,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.6,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.4,
+        "wrongMerges": 0
+      }
+    },
+    {
+      "threshold": 0.93,
+      "jev": {
+        "recall": 0.022,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.533,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.4,
+        "wrongMerges": 0
+      }
+    },
+    {
+      "threshold": 0.94,
+      "jev": {
+        "recall": 0,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.533,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.333,
+        "wrongMerges": 0
+      }
+    },
+    {
+      "threshold": 0.95,
+      "jev": {
+        "recall": 0,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.533,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.267,
+        "wrongMerges": 0
+      }
+    },
+    {
+      "threshold": 0.96,
+      "jev": {
+        "recall": 0,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.467,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.267,
+        "wrongMerges": 0
+      }
+    },
+    {
+      "threshold": 0.97,
+      "jev": {
+        "recall": 0,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.333,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.067,
+        "wrongMerges": 0
+      }
+    },
+    {
+      "threshold": 0.98,
+      "jev": {
+        "recall": 0,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0.2,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0.067,
+        "wrongMerges": 0
+      }
+    },
+    {
+      "threshold": 0.99,
+      "jev": {
+        "recall": 0,
+        "wrongMerges": 0
+      },
+      "clef": {
+        "recall": 0,
+        "wrongMerges": 0
+      },
+      "clef-flash": {
+        "recall": 0,
+        "wrongMerges": 0
+      }
+    }
+  ]
+}

@@ -219,6 +219,11 @@ export const ogPosters: Record<string, PosterCard> = {
     scene:
       "The mascot sitting on top of a dot-matrix printer, a long run of fanfold paper feeding out of it and folding into a stack on the bench below, the topmost sheet torn straight across halfway down.",
   },
+  "blog-clef-vs-jev-benchmark": {
+    headline: ["CLEF VS JEV", "ON REAL AGENT", "DECISIONS"],
+    scene:
+      "The mascot sitting on top of a tall mechanical balance scale with two hanging pans, a thick stack of index cards on one pan and a single index card on the other.",
+  },
   "blog-jev-ai-agents": {
     headline: ["JEV INSIDE", "AN AI EMPLOYEE"],
     scene:
@@ -687,6 +692,11 @@ export const ogPosters: Record<string, PosterCard> = {
     headline: ["EVERYTHING ON", "EMAIL"],
     scene:
       "The mascot sitting on top of an open steel filing drawer packed with hanging folders, one tab raised clear of the rest and labelled EMAIL.",
+  },
+  "blog-tag-decision-models": {
+    headline: ["DECISION", "MODELS"],
+    scene:
+      "The mascot sitting on top of a large railway signal lever frame with a row of tall steel levers, one lever pulled forward and the rest standing upright.",
   },
   "blog-tag-engineering": {
     headline: ["ENGINEERING"],
