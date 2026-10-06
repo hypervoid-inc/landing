@@ -17,7 +17,7 @@ A finished post goes live by itself on its `published` date. Write it ahead, mer
 ## Scheduling a post
 
 1. Finish the post and resolve every TODO. Scheduling is publishing in advance: nobody reviews it again on the day.
-2. Set `published: "YYYY-MM-DD"` to the go-live date and `draft: false`. Keep the cadence: one post every two days, never more than two days after the previous post (the calendar is in the blog plan and the Presence Tracker).
+2. Set `published: "YYYY-MM-DD"` to the go-live date and `draft: false`. Keep the cadence: one post every day, with no gap after the previous post (the calendar is in the blog plan and the Presence Tracker).
 3. Check its FAQs in `app/content/faqs.ts` (drafts already have them) still match the post.
 4. Make its card. Drafts already have a headline and scene in `app/content/og-poster.ts`, and so do the tag hubs they will create. Run `pnpm og:generate` for the artwork (it only draws cards that have none yet, including a tag hub the post brings to two posts), look at each new image in `assets/og/poster/`, then run `pnpm og`. Scheduled posts get their card now, and the OG tests fail at merge time if one is missing, so publish day never fails on a card.
 5. Run `pnpm generate:content && pnpm check`, then `CONTENT_DATE=<its date> pnpm test`. Some tests depend on which posts are live (related posts weigh tags by how rare they are), and the morning build runs them, so a failure that only appears on the post's date would block that day's deploy. Then merge to `main`.

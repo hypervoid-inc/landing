@@ -4,6 +4,42 @@
     <link>https://construct.computer/blog/</link>
     <description>AI employee guides, practical articles, and comparisons from Construct Computer.</description>
     <item>
+      <title>Muse for Small Business alternatives: 9 AI agents for work</title>
+      <link>https://construct.computer/blog/muse-for-small-business-alternatives/</link>
+      <guid>https://construct.computer/blog/muse-for-small-business-alternatives/</guid>
+      <description>Compare 9 Muse for Small Business alternatives, led by Construct at $9 a month, with prices checked October 1, 2026, and where each one fits.</description>
+      <dc:creator>Construct Team</dc:creator>
+      <category>comparison</category>
+      <category>ai-employee</category>
+      <category>small-business</category>
+      <pubDate>Tue, 06 Oct 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>What is an AI agent with its own computer?</title>
+      <link>https://construct.computer/blog/ai-agent-with-its-own-computer/</link>
+      <guid>https://construct.computer/blog/ai-agent-with-its-own-computer/</guid>
+      <description>An AI agent with its own computer keeps working in a cloud workspace after you close your laptop. How it works, the risks, and who offers one, from $9 a month.</description>
+      <dc:creator>Ankush</dc:creator>
+      <category>ai-agent</category>
+      <category>always-on-agent</category>
+      <category>ai-employee</category>
+      <category>product</category>
+      <pubDate>Mon, 05 Oct 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Clef beat Jev on Jev&apos;s home turf</title>
+      <link>https://construct.computer/blog/clef-vs-jev-benchmark/</link>
+      <guid>https://construct.computer/blog/clef-vs-jev-benchmark/</guid>
+      <description>We ran Cloudflare&apos;s Clef and Clef-flash against Jev on five production AI agent decisions: 1,053 calls, accuracy, determinism, drift, cost, and what we are switching.</description>
+      <dc:creator>Ankush</dc:creator>
+      <category>ai-agent</category>
+      <category>clef</category>
+      <category>decision-models</category>
+      <category>reliability</category>
+      <category>benchmark</category>
+      <pubDate>Mon, 05 Oct 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Zen Mode: some days you just want it done</title>
       <link>https://construct.computer/blog/zen-mode/</link>
       <guid>https://construct.computer/blog/zen-mode/</guid>

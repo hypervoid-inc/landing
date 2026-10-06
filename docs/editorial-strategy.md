@@ -13,15 +13,15 @@ Show what Construct can do, where each capability fits, and what its current bou
 
 For each new comparison, publish several first-party pieces that explain a Construct capability or a real operating pattern.
 
-### Exception: October 2026 to January 2027
+### Exception: October to November 2026
 
-The launch calendar (59 posts, one every two days from Oct 1, 2026 to Jan 25, 2027) runs 28 comparisons, 47%. OpenAI's Dots, Meta's Muse for Small Business, Google's Gemini Spark, xAI's Grok Bot and Claude Cowork's cloud version all launched in the weeks before it, and buyers are searching for alternatives and head-to-heads that do not exist yet. The rules that keep it inside this strategy:
+The launch calendar (59 posts, one every two days from Oct 1, 2026, then one a day from Oct 6 to Nov 30, 2026) runs 28 comparisons, 47%. OpenAI's Dots, Meta's Muse for Small Business, Google's Gemini Spark, xAI's Grok Bot and Claude Cowork's cloud version all launched in the weeks before it, and buyers are searching for alternatives and head-to-heads that do not exist yet. The rules that keep it inside this strategy:
 
 - Never three comparisons in a row on the calendar.
 - Every comparison has a dated Methodology with the "We build Construct" disclosure, and every competitor fact is sourced.
-- Review at the Nov 2, 2026 audit: if the comparison and list posts are not being cited, swap December and January comparisons for workflow guides and research before scheduling them.
+- Review at the Nov 2, 2026 audit: if the comparison and list posts are not being cited, swap the remaining November comparisons for workflow guides and research before scheduling them.
 
-From February 2027 the mix above applies again.
+From December 2026 the mix above applies again.
 
 ## Content Pillars
 
