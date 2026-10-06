@@ -59,6 +59,839 @@ Finished work lands in the workspace as it is produced, so a run that dies at st
 
 # Resources
 
+## Muse for Small Business alternatives: 9 AI agents for work
+
+URL: https://construct.computer/blog/muse-for-small-business-alternatives/
+Type: comparison
+Author: Construct Team
+Published: 2026-10-06
+Tags: comparison, ai-employee, small-business
+
+**Construct gives a small business an AI employee with its own workspace, files, Calendar, and email address for $9 a month, working across the apps you already use.** Meta's Muse for Small Business is free to start, with paid Muse plans at $20 and $100 a month metered in weekly tokens, but it lives in your Meta account and Meta's apps and is available only in the US and Canada.
+
+For founders and small teams whose work crosses an inbox, a CRM, a store, and shared files, Construct is the better choice. You get a fixed monthly price with published plan limits, finished work saved in files your team can open, memory you can read and correct, and scheduled jobs that run with your laptop closed. Below, we rank it against eight other alternatives, with prices checked October 1, 2026. This page is about Meta's Muse agent, not other products that share the Muse name.
+
+Start with Construct for $9
+
+## Why choose Construct over Muse for Small Business?
+
+- **A fixed monthly price with published plan limits.** Lite is $9 a month for 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address, with no per-message billing. Muse's paid plans are metered in tokens per week.
+- **Work that lives in your workspace.** Reports, trackers, and spreadsheets land in workspace files as the agent produces them, so a run that stops at step 30 still leaves steps 1 to 29 behind.
+- **Your whole stack, not one platform.** Construct reaches Gmail, Notion, Linear, GitHub, HubSpot, Airtable, and more through a live integration catalog, and you can add custom MCP tools when a connector does not exist.
+- **Memory you can inspect.** See what the agent has learned about your business, correct a stale fact, or tell it to forget something.
+- **One workspace for the team, no seats.** Invite teammates as Owner, Admin, or Member. A team workspace has no member limit, and usage draws on the owner's plan.
+- **It answers where your team works.** Web, Slack, Telegram, Discord, and its own email inbox.
+
+## What is Meta's Muse for Small Business?
+
+Muse is Meta's personal AI agent, [announced September 8, 2026](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/). It runs on a dedicated virtual machine Meta calls Muse Secure VM, a separate agent called Sentinel checks what leaves that machine, and Muse asks for approval before it sends email or makes a purchase. It works in the iOS and Android apps, on the web, and inside WhatsApp.
+
+On September 29, Meta launched [Muse for Small Business](https://about.fb.com/news/2026/09/introducing-muse-small-business/), which connects the same agent to Asana, Box, Canva, Dropbox, Figma, Granola, HighLevel, Intuit QuickBooks, Klaviyo, Lovable, Notion, Shopify, Slack, Stripe, and Zoom, plus Facebook and Instagram business accounts and custom connectors. [Fox Business](https://www.foxbusiness.com/technology/meta-puts-popular-new-tool-hands-small-businesses) adds Meta ad accounts and describes jobs such as drafting ad campaigns and writing a week of posts. [CNBC Africa](https://www.cnbcafrica.com/2026/meta-launches-muse-for-small-business-as-zuckerberg-pushes-beyond-consumer-ai-market) cites 200 million small businesses on Facebook as the audience.
+
+**Price:** Meta says Muse is free for most uses, with subscription plans for more. The business version uses the same pricing as the consumer app: free with a usage limit, then Power at $20 a month or Maximum at $100, metered in tokens per week. [DataCamp](https://www.datacamp.com/blog/muse-agent) reports that Muse asks for a payment card even on the free tier.
+
+## Why do small businesses look for a Muse alternative?
+
+- **Trusting Meta with business data.** Meta says Muse does not share conversations or VM data with its ad systems, that users can opt out of model training, and that a Confidential VM encrypted with a key only you hold is coming. Ebrahim Bagheri of the University of Toronto told [Global News](https://globalnews.ca/news/12077192/metas-ai-agent-muse-privacy/) that "the more you want accomplish with agents, the more you have to give away your access to your data." That applies to every agent, ours included; the question is which company holds the access.
+- **Staying inside Meta's apps.** [TechCrunch's analysis of app data](https://techcrunch.com/2026/09/21/metas-muse-is-outpacing-chatgpts-early-mobile-launch/) found that "over 95% of Muse's users are also Facebook users." That is convenient if your business runs on Meta and limiting if your team works in Slack, a CRM, or email.
+- **Availability.** Muse for Small Business is US and Canada only, and [Meta's subscription help page](https://www.meta.com/help/subscriptions/1021145227643680/) says Muse subscriptions "are in limited testing and aren't available in all locations yet."
+- **Budgeting a busy month.** Weekly token metering is hard to translate into jobs done.
+- **Websites that block agents.** On September 21, Amazon blocked Muse from buying on Amazon.com, [TechCrunch reported](https://techcrunch.com/2026/09/21/metas-ai-agent-has-been-blocked-from-using-amazon-com/). Any agent that clicks through websites can be refused by a site, Construct included, so use a connected app or API where one exists; Construct's integration catalog and custom MCP tools give you that route.
+
+## Methodology
+
+We build Construct, so it leads this list. Here is why it fits small teams: it sells plans at a fixed monthly price from $9 with published limits, works across the apps a business already uses rather than one platform, and keeps finished work in a workspace the whole team can open. This is our editorial comparison of documented capabilities and published prices, checked on October 1, 2026. It is not a hands-on performance benchmark.
+
+We picked agents a small business can start without a sales call, that do work across apps rather than only chat, and that people compare with Muse. Prices are in US dollars at monthly billing unless we say otherwise. Where a vendor page would not load for us, we used reputable coverage and say so. Where sources disagree, we report both figures. Where a capability is not documented in the sources we checked, we say that rather than assume it is missing.
+
+{/* TODO: hands-on test. Run the same small business job (for example, the weekly sales and ads summary below) on Muse for Small Business, Construct, and two or three alternatives. Record time to set up, time to finish, cost, and how much editing the output needed. */}
+
+## Muse for Small Business alternatives at a glance
+
+| Tool                    | Starting price, monthly                          | Billing unit                     | Its own computer?                           | Where it works                                    | Best for                                            |
+| ----------------------- | ------------------------------------------------ | -------------------------------- | ------------------------------------------- | ------------------------------------------------- | --------------------------------------------------- |
+| Construct               | $9 (Lite)                                        | One plan per workspace, no seats | Yes, a persistent cloud workspace           | Web, Slack, Telegram, Discord, its own email      | Recurring cross-app jobs with files and schedules   |
+| OpenAI Dots             | Included with ChatGPT Pro from $100              | Per user or Business seat        | Yes, its own cloud computer                 | ChatGPT, Slack, Teams                             | People already on ChatGPT Pro                       |
+| Claude Cowork           | Included with Claude Pro at $20                  | Per user or Team seat            | Runs in the cloud (beta) or on your desktop | Desktop, web, mobile, Chrome                      | One person's research, documents, and files         |
+| Gemini Spark            | Included with Google AI Pro, about $20 in the US | Personal Google Account          | Remote browser or your own Chrome           | Gemini web, mobile, and Mac apps                  | Solo owners who run on personal Gmail and Drive     |
+| Viktor                  | Free trial credits, then $50                     | Per workspace                    | Yes, a cloud computer for code              | Slack, Microsoft Teams                            | Slack or Teams workspaces that want built tools     |
+| Lindy                   | $29.99                                           | Per user                         | Computer use included                       | Slack                                             | Teams that work in Slack                            |
+| Grok Bot                | Included with Cursor Individual at $20           | Per user                         | Yes, one shared cloud computer              | Grok Bot apps                                     | People who already pay for Cursor                   |
+| Sintra                  | $48.50 on sale ($97 list)                        | Per account                      | Not documented in pages we checked          | Web, iOS, Android                                 | Marketing and admin help for a solo owner           |
+| Marblism                | $44                                              | Per account, hours of work       | Not documented in pages we checked          | Web, plus a phone line                            | A receptionist that answers calls                   |
+| Muse for Small Business | Free with limits; Power $20, Maximum $100        | Meta account, weekly tokens      | Yes, a dedicated cloud VM                   | iOS, Android, web, WhatsApp                       | Businesses that sell and advertise on Meta's apps   |
+
+Sources for each row are linked in the sections below and listed at the end. Plan prices and inclusions change often, so check the vendor page before you buy.
+
+## The 9 best Muse for Small Business alternatives, ranked
+
+### 1. Construct
+
+**Best for:** founders and small teams whose work crosses several apps and repeats every week.
+
+Construct is an AI employee that works from a persistent cloud workspace. Each agent has files, live browser runs, a sandbox terminal, its own email address, and a Calendar of scheduled jobs. Calendar schedules run on Construct's servers, so the Monday report runs whether or not your laptop is open. It connects to Gmail, Notion, Linear, GitHub, HubSpot, Airtable, and more through a live integration catalog, and you can add a custom MCP tool when a connector does not exist. You can hand it work from the web, Slack (@mentions and DMs), Telegram, Discord, or by emailing its own address.
+
+Where it differs from Muse is where the work lives and who can use it:
+
+- **Files, not chat history.** Finished work lands in the workspace as it is produced. A run that fails at step 30 keeps steps 1 to 29, and the next run starts from what exists.
+- **Memory you can correct.** If a client changes its reporting format, you fix the stored fact once and every later job uses it. The [memory guide](/blog/ai-agent-memory/) shows how.
+- **Processes the whole team can rerun.** A job that works becomes a workflow with agent steps, connected apps, and notifications. Version it, schedule it, and anyone on the team can run it again.
+- **Your own internal tools.** For a repeated process, Construct can build a private workspace app such as an order review queue, as our [internal tools guide](/blog/build-internal-tools-with-construct/) explains.
+- **Your choice of model.** Pro lets you bring keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI.
+
+    Your browser does not support this video. The description below explains the
+    demo.
+
+    Silent product demo: Construct building and running a reusable workflow
+    with agent steps, connected apps, and notifications that anyone on the team
+    can run again.
+
+**Price, checked October 1, 2026:** Lite is $9 a month for 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 with 6x Lite's usage, up to 5 agents, 150 steps per task, and 10 scheduled tasks. Pro is $299 with 32x Lite's usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, and your own model keys. Pro has a 7-day free trial. See [Construct pricing](/pricing/).
+
+**Setup note for Meta-heavy businesses:** Construct does not have Meta's first-party access to ad accounts and Instagram analytics, so for ad spend, export the numbers from Ads Manager and drop the file in the workspace. {/* TODO: confirm whether Shopify, QuickBooks, Stripe, and Meta business accounts are in Construct's live integration catalog, and name them here if so */}
+
+Try Construct Pro free for 7 days
+
+### 2. OpenAI Dots
+
+**Best for:** people who already pay for ChatGPT Pro.
+
+OpenAI unveiled Dots on September 29, 2026. [CBS News](https://www.cbsnews.com/news/sam-altman-openai-dots-chatgpt-agents-safety/) reports they run on GPT-6 Astra, work inside ChatGPT with Slack and Teams channels, and handle jobs like scheduling meetings, budgeting, and travel. [BenchLM](https://benchlm.ai/blog/posts/openai-dots-guide), summarizing OpenAI's documentation, says each Dot has its own cloud computer and browser.
+
+**Price, checked October 1, 2026:** your first Dot is included with ChatGPT Pro, which starts at $100 a month, or a Business Premium seat. Sources disagree on that seat: CBS lists $20 a month, while BenchLM lists $125 per seat monthly or $100 billed annually. OpenAI's own pages did not load for us. {/* TODO: verify Business Premium seat price and Dots eligibility on openai.com or help.openai.com */}
+
+**Watch for:** the highest entry price on this list. BenchLM reports that Pro users in the EEA, Switzerland, and the UK were excluded at launch and that the price of additional Dots is unpublished. Our [Construct vs ChatGPT Dots comparison](/blog/construct-vs-openai-dots/) covers the head-to-head.
+
+### 3. Claude Cowork
+
+**Best for:** one person's research, writing, and file work.
+
+Cowork lets you hand Claude an outcome and come back to finished work. Its [getting started guide](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork) says tasks can run remotely in the cloud (in beta), scheduled tasks do not need your computer awake, and each connector can be set to always allow, needs approval, or blocked.
+
+**Price, checked October 1, 2026:** included with Claude Pro at $20 a month, or $17 a month billed annually ([Claude pricing](https://claude.com/pricing)). Max starts at $100. Team seats are $25 a month, or $125 for a Premium seat. The pricing page now says "Claude Cowork is now just Claude."
+
+**Watch for:** it is not on the free plan, heavy multi-step jobs use plan limits faster, and a team needs Team seats.
+
+### 4. Gemini Spark
+
+**Best for:** a solo owner who runs the business from a personal Gmail, Calendar, and Drive.
+
+[Google's help page](https://support.google.com/gemini/answer/17094507?hl=en) describes Spark as an agent that runs scheduled tasks, browses in your own Chrome or a remote browser, works across Gmail, Calendar, Docs, Drive, Sheets, and other Google apps, and asks before sending messages, changing data, making purchases, or signing into websites.
+
+**Price, checked October 1, 2026:** included with Google AI Pro or Ultra. [Chrome Unboxed](https://chromeunboxed.com/googles-agentic-ai-gemini-spark-is-now-available-on-the-20-pro-tier-in-the-us/) reported in July that Spark came to the $20 Pro tier in the US after starting on Ultra. Google's plan pages showed us regional prices only. {/* TODO: verify exact US Google AI Pro price on a Google page */}
+
+**Watch for:** Google says Spark "isn't available if you sign in with a work or school Google Account," which rules out businesses on Google Workspace for now. It is also unavailable in the EEA, Nigeria, Switzerland, and the UK.
+
+### 5. Viktor
+
+**Best for:** a Slack or Teams workspace that wants the agent to build small tools.
+
+Viktor lives in Slack and Microsoft Teams and writes and runs code on its own cloud computer. Its [homepage](https://viktor.com/) lists more than 3,200 integrations, including Stripe and HubSpot, says it asks for confirmation before high-stakes actions such as sending emails, and says it is SOC 2 Type 1 compliant.
+
+**Price, checked October 1, 2026:** $100 in free credits with no card, then the first Team plan is $50 a month for 20,000 credits, priced per workspace rather than per seat ([Viktor pricing](https://viktor.com/pricing)). Unused plan credits roll over for one month.
+
+**Watch for:** credit use varies with the job, and it only works inside Slack or Teams.
+
+### 6. Lindy
+
+**Best for:** teams whose work already happens in Slack.
+
+Lindy is a Slack-based teammate. Its [pricing page](https://www.lindy.ai/pricing) lists scheduled routines, meeting notes, inbox management, computer use, and integrations on every plan, with a credit pool shared across the team.
+
+**Price, checked October 1, 2026:** Plus is $29.99 per user a month with 3,000 credits, Pro is $99.99 with 15,000, and Max is $199.99 with 35,000. Enterprise adds HIPAA compliance and audit logs. There is a 7-day trial.
+
+**Watch for:** per-user billing, so cost grows with headcount, and unused credits do not roll over. Our [roundup of AI employee platforms](/blog/best-ai-employee-platforms/) covers Lindy's seat rules.
+
+### 7. Grok Bot
+
+**Best for:** people who already pay for Cursor.
+
+Grok Bot's Bots share one persistent cloud computer. Its [computer and apps documentation](https://docs.x.ai/grok-bot/computer-and-apps) says all Bots on an account share the same browser, files, and signed-in accounts, with a separate screen for each Bot, and that it prefers Marketplace connectors over clicking through websites.
+
+**Price, checked October 1, 2026:** included with [Cursor Individual at $20 a month](https://cursor.com/pricing) and Cursor Teams at $40 per user. The Grok Bot product page did not load for us. {/* TODO: verify SuperGrok access and price, and the apps Grok Bot runs in, on x.ai/bot */}
+
+**Watch for:** Bots share one computer and one set of sign-ins, so they are not separate security boundaries. Our [Grok Bot comparison](/blog/grokbot-alternative/) goes deeper.
+
+### 8. Sintra
+
+**Best for:** a solo owner who wants role-based help with social media, copy, email, and support.
+
+Sintra sells 12 role-based AI helpers, such as Soshie for social media and Cassie for customer support, sharing one memory it calls Brain AI. Its [homepage](https://sintra.ai/) lists connections with Facebook, Instagram, Gmail, Google Calendar, Outlook, Google Drive, Notion, and more, on the web and in iOS and Android apps.
+
+**Price, checked October 1, 2026:** the Sintra X bundle lists at $97 a month and was on sale at $48.50 for a one-month term when we checked, with 250 credits a month and a 14-day money-back guarantee. Single helpers are $39 a month each ([Sintra pricing](https://sintra.ai/pricing)).
+
+**Watch for:** sale prices change, and work that crosses roles or needs a custom process is a weaker fit.
+
+### 9. Marblism
+
+**Best for:** a local business that needs calls answered.
+
+Marblism's seven AI employees include Rachel, a receptionist who answers calls around the clock and books appointments, Sonny for social posts, and Eva for email and calendar. It is the only option on this list that answers your phone.
+
+**Price, checked October 1, 2026:** $44 a month, or $24 a month billed yearly, for all seven employees, 50 hours of work a month, and unlimited team members ([Marblism pricing](https://www.marblism.com/pricing)).
+
+**Watch for:** work is metered in hours, and each task type uses a set amount. Work outside the seven roles fits a general agent better.
+
+## A worked example: the Monday sales and ads summary in Construct
+
+This is an illustrative workflow, not a customer case study or a measured test.
+
+A two-person online store wants a Monday summary: last week's orders and refunds, which products sold, what the Instagram ads spent, and three things to do this week.
+
+1. **Save the format.** Put the report template and last week's report in the workspace.
+2. **Connect the inputs.** Connect the apps the job needs from the integration catalog, or upload an order export if a connector is not available. Drop in the Ads Manager export for ad spend.
+3. **Ask for the report.** "Compare this week's orders, refunds, and ad spend with last week's report. List the top five products, flag anything that moved more than 20 percent, suggest three actions, and save a dated file with the source of every figure."
+4. **Check it and schedule it.** After a few good runs, save the steps as a workflow and put it on the Calendar. Lite's 3 scheduled tasks cover it, and Starter adds more when you add jobs.
+
+The report history stays in Files, so each week starts from the last one, and your teammate can open the same file. On Muse, the same job runs inside your Meta account, with direct access to Meta ad data.
+
+Judge the result by whether the numbers match your store, whether each figure is traceable, and how many minutes of editing it takes.
+
+## Already using Muse? Add Construct in 15 minutes
+
+You can keep Muse for Instagram and Facebook work and give Construct the jobs that cross the rest of your stack.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test longer runs.
+2. **Copy the instructions** you give Muse into a Construct chat, and move the source files into the workspace.
+3. **Connect the apps** the job needs from the integration catalog.
+4. **Run it once and check the result** in Files.
+5. **Put it on the Calendar** so it runs every week whether or not anyone is online.
+
+There is no import from Muse, so write your rules into the first instruction and Construct saves them as memory you can read. One thing to set up deliberately: Construct's workflows do not pause for approval yet, so for customer emails, posts, or payments, ask for drafts and send them yourself once you have checked them.
+
+## When might Muse still fit?
+
+- Most of your selling and advertising happens on Instagram and Facebook, and you want the agent reading Meta ad accounts directly.
+- You are in the US or Canada and want to start for nothing.
+- You want the agent inside WhatsApp and Meta's apps.
+
+For recurring work across your inbox, CRM, store, and shared files, on one plan your team shares, Construct is the better fit.
+
+## Which Muse alternative should you choose?
+
+Choose Construct. It starts at $9 a month, works across the apps your business already uses, keeps every finished file in a workspace your team can open, and runs scheduled jobs with your laptop closed.
+
+- **If you want recurring jobs across several apps, with files, schedules, and memory in one place,** choose Construct, starting at $9.
+- **If more than one person needs the agent,** choose Construct. A team workspace has no member limit and no per-seat fee.
+- **If you want a fixed monthly price with published plan limits,** choose Construct: each plan lists its agents, steps per task, and scheduled tasks.
+- **If your team works in Slack,** Construct answers @mentions and DMs there; compare it with Lindy (per user) and Viktor (per workspace) on what five people would cost.
+- **If you already pay for ChatGPT Pro, Claude, or Cursor,** keep that plan for personal tasks and add Construct for the business's recurring work.
+- **If you need the phone answered,** Marblism is the only option here that does it.
+- **If you are outside the US and Canada,** Muse for Small Business is not available yet, and Gemini Spark and Dots on Pro exclude several European markets. Check availability at sign-up.
+
+Pick the report, follow-up, or tracker that keeps sliding into your evening. Give Construct the inputs, describe what a finished result looks like, and check what it saves to the workspace. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+Give Construct its first job
+
+## Sources
+
+- [Meta: Introducing Muse, September 8, 2026](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
+- [Meta: Muse for Small Business, September 29, 2026](https://about.fb.com/news/2026/09/introducing-muse-small-business/)
+- [Meta Help Center: About Muse subscriptions](https://www.meta.com/help/subscriptions/1021145227643680/)
+- [TechCrunch: Meta's Muse is outpacing ChatGPT's early mobile launch](https://techcrunch.com/2026/09/21/metas-muse-is-outpacing-chatgpts-early-mobile-launch/)
+- [TechCrunch: Meta's AI agent has been blocked from using Amazon.com](https://techcrunch.com/2026/09/21/metas-ai-agent-has-been-blocked-from-using-amazon-com/)
+- [CNBC Africa: Meta launches Muse for Small Business](https://www.cnbcafrica.com/2026/meta-launches-muse-for-small-business-as-zuckerberg-pushes-beyond-consumer-ai-market)
+- [Fox Business: Meta puts Muse in the hands of small businesses](https://www.foxbusiness.com/technology/meta-puts-popular-new-tool-hands-small-businesses)
+- [Global News: Muse privacy concerns](https://globalnews.ca/news/12077192/metas-ai-agent-muse-privacy/)
+- [DataCamp: Meta Muse features, access, and pricing](https://www.datacamp.com/blog/muse-agent)
+- [CBS News: OpenAI unveils Dots](https://www.cbsnews.com/news/sam-altman-openai-dots-chatgpt-agents-safety/)
+- [BenchLM: OpenAI Dots pricing and access](https://benchlm.ai/blog/posts/openai-dots-guide)
+- [Claude pricing](https://claude.com/pricing)
+- [Get started with Claude Cowork](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)
+- [Google: Use Gemini Spark](https://support.google.com/gemini/answer/17094507?hl=en)
+- [Chrome Unboxed: Gemini Spark comes to Google AI Pro](https://chromeunboxed.com/googles-agentic-ai-gemini-spark-is-now-available-on-the-20-pro-tier-in-the-us/)
+- [Cursor pricing](https://cursor.com/pricing)
+- [Grok Bot computer and apps documentation](https://docs.x.ai/grok-bot/computer-and-apps)
+- [Lindy pricing](https://www.lindy.ai/pricing)
+- [Viktor](https://viktor.com/) and [Viktor pricing](https://viktor.com/pricing)
+- [Sintra](https://sintra.ai/) and [Sintra pricing](https://sintra.ai/pricing)
+- [Marblism pricing](https://www.marblism.com/pricing)
+- [Construct pricing](/pricing/)
+
+## Related resources
+
+- [ChatGPT Dots alternatives: 9 always-on agents that don't need ChatGPT Pro](/blog/chatgpt-dots-alternatives/)
+- [Construct vs ChatGPT Dots](/blog/construct-vs-openai-dots/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
+- [Grok Bot alternative: Construct vs Grok Bot](/blog/grokbot-alternative/)
+- [AI employee for real business work](/blog/ai-employee/)
+- [Construct vs Microsoft Copilot and Google Workspace AI](/blog/construct-vs-copilot/)
+
+### Frequently asked questions
+
+**Is Construct a good Muse for Small Business alternative?**
+
+Yes, for founders and small teams whose work crosses several apps. Construct starts at $9 a month, connects to tools such as Gmail, Notion, HubSpot, and Airtable through its integration catalog, saves finished work to workspace files your team can open, lets you inspect and correct its memory, and runs scheduled jobs with your laptop closed.
+
+**How much does Meta's Muse for Small Business cost?**
+
+Muse for Small Business uses the same pricing as the Muse app: free with a usage limit, then the Power plan at $20 a month or the Maximum plan at $100 a month. Paid plans are metered in Muse tokens per week, and DataCamp reports that Muse asks for a payment card even on the free tier.
+
+**Can I use Construct alongside Muse?**
+
+Yes. Keep Muse for Instagram and Facebook work and give Construct the jobs that cross the rest of your stack. Start on Lite for $9 or the 7-day Pro trial, copy your instructions into Construct, move the files, connect the apps, run the job once, and put it on the Calendar. There is no import from Muse.
+
+**Does Construct connect to Meta ad accounts like Muse does?**
+
+Construct does not have Meta's first-party access to ad accounts and Instagram analytics. For ad spend, export the numbers from Ads Manager and drop the file in the workspace, and Construct includes them in the report alongside your other connected apps.
+
+**Will switching away from Muse stop websites from blocking my AI agent?**
+
+No. Amazon blocked Muse from Amazon.com, and any agent that clicks through websites can be refused by a site, Construct included. Using a connected app or API where one exists reduces that risk, and Construct's integration catalog and custom MCP tools give you that route.
+
+**When does Muse for Small Business still make sense?**
+
+When most of your selling and advertising happens on Instagram and Facebook and you want the agent reading Meta ad accounts directly, when you are in the US or Canada and want to start for nothing, or when you want the agent inside WhatsApp and Meta's apps. For recurring work across your inbox, CRM, store, and shared files, Construct is the better fit.
+## What is an AI agent with its own computer?
+
+URL: https://construct.computer/blog/ai-agent-with-its-own-computer/
+Type: article
+Author: Ankush
+Published: 2026-10-05
+Tags: ai-agent, always-on-agent, ai-employee, product
+
+Construct gives every AI agent its own computer in the cloud, with files, a browser, a terminal, schedules, memory you can correct, and its own email address, from $9 a month. Most of the big platforms that shipped one this year bundle it into a $20 to $200 subscription tied to their own ecosystem, and Simular's plan with an always-on machine costs $500.
+
+For founders and small teams with recurring work, Construct is the one to start with. It costs the least to get going, keeps every finished file in a workspace your team shares, runs schedules with every device switched off, and does not tie your work to one AI lab.
+
+**An AI agent with its own computer is an agent that gets a persistent machine in the cloud: a browser, a terminal, a file system, connected apps, and often its own email address.** Because the work runs on that machine instead of your laptop, it keeps going when you close the lid, and a job can run on a schedule at 3am without anyone watching.
+
+Start with Construct for $9
+
+## Why do this in Construct?
+
+- **$9 a month, no other subscription first.** Construct Lite includes 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. There is also a 7-day Pro trial.
+- **A whole workspace, not only a machine.** Each agent works with files, live browser runs, a sandbox terminal, its own email inbox, and apps from a live integration catalog plus your own MCP tools.
+- **Work saved as it goes.** Finished work lands in workspace files as it is produced, so a run that stops at step 30 still leaves steps 1 to 29 for the next attempt.
+- **Schedules that run with every device off.** Calendar schedules run on Construct's servers, so the weekly report arrives whether or not your laptop is open.
+- **Memory you can read and fix.** Open what the agent has learned, correct a fact, or delete it.
+- **One workspace for the team, on the model you choose.** Team workspaces have Owner, Admin, and Member roles and no member limit. Pro adds your own keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI.
+
+## What is an AI agent with its own computer, exactly?
+
+A chat assistant answers inside a conversation. An agent with its own computer is given somewhere to work: it can open a website, log in, download a file, run a script against it, save the result, and pick the job up tomorrow from what it left behind.
+
+Satya Nadella put the idea in one line on April 22, 2026: "Every agent will need its own computer." He was announcing Microsoft's hosted agents in Foundry, where, in his words, "every agent gets its own dedicated enterprise-grade sandbox, with durable state, built-in identity and governance" ([Nadella on X](https://x.com/satyanadella/status/2047033636923568440); [Microsoft Foundry announcement](https://devblogs.microsoft.com/foundry/introducing-the-new-hosted-agents-in-foundry-agent-service-secure-scalable-compute-built-for-agents/)).
+
+You will see the same thing sold under several names: always-on agent, cloud agent, background agent, AI employee, AI coworker, computer-use agent. The label matters less than four properties:
+
+1. **A machine it controls.** A real browser and usually a terminal, not just API calls.
+2. **State that persists.** Files, logins, and memory survive between tasks.
+3. **Work that runs without you.** Schedules, triggers, or long jobs that do not need an open tab.
+4. **An identity to act with.** Your connected accounts, its own inbox, or both.
+
+A product with only the first is a computer-use feature inside a chat. Construct has all four. Our guide to [what an AI employee is](/blog/what-is-an-ai-employee/) covers the wider category these products sit in.
+
+## Why did every platform ship one in 2026?
+
+Because the model stopped being the bottleneck. Agents could already click and type in 2025. What they lacked was somewhere to stay. A browser that closes when your laptop sleeps cannot run a weekly report, and an agent that loses its files between tasks starts every job from zero.
+
+The launches came in a tight cluster. Every date below is from the vendor or from press coverage we checked on October 1, 2026:
+
+- **February 2026:** Perplexity launched Computer, a cloud agent that "runs entirely in the cloud," for Perplexity Max subscribers ([TechCrunch](https://techcrunch.com/2026/02/27/perplexitys-new-computer-is-another-bet-that-users-need-many-ai-models)).
+- **March 12, 2026:** Genspark launched Claw, which runs 24/7 on a dedicated cloud computer ([Genspark help center](https://www.genspark.ai/helpcenter/genspark-claw); launch date from [Sliq](https://getsliq.com/blog/genspark-claw-explained)).
+- **May 19, 2026:** Google announced Gemini Spark, a personal agent that keeps working "even when you close your laptop or lock your phone," starting with US Google AI Ultra subscribers ([Google](https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app/)). It is still rolling out: Google AI Pro subscribers in India and more than 160 other countries were added from late July ([Google India](https://blog.google/intl/en-in/company-news/technology/introducing-gemini-spark-your-247-personal-ai-agent-in-country/); [eWeek](https://www.eweek.com/news/google-gemini-spark-india-expansion/)).
+- **July 7, 2026:** Claude Cowork moved sessions to the cloud and onto web and mobile, so tasks keep running with the laptop closed ([Automaton Agency](https://automatonagency.com/insights/claude-cowork-mobile-and-web); [Anthropic's Cowork guide](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)). On September 16, Anthropic merged Cowork into the main Claude interface ([TechCrunch](https://techcrunch.com/2026/09/16/anthropic-merges-claude-chat-and-cowork-in-one-interface/)).
+- **August 11, 2026:** xAI introduced Grok Bot, AI teammates that work from a cloud computer while you are away ([xAI](https://x.ai/news/introducing-grok-bot)).
+- **September 8, 2026:** Meta launched Muse, which runs on "Muse Secure VM," a "dedicated, secure computer with its own browser" ([TechCrunch](https://techcrunch.com/2026/09/08/meta-debuts-its-muse-ai-agent-will-consumers-trust-it/)).
+- **September 23, 2026:** Simular made Sai generally available, running on cloud machines it provisions or on your own device ([release coverage](https://ohsem.me/2026/09/simular-releases-sai-ushers-in-new-era-of-autonomous-computer-fleets/)).
+- **September 28, 2026:** Manus 2.0 added an always-on Cloud Computer ([Manus](https://manus.im/blog/introducing-manus-2-0)).
+- **September 29, 2026:** OpenAI launched dots, where "each dot has its own cloud computer and browser" ([The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)). The same day, Meta launched Muse for Small Business ([TestingCatalog](https://www.testingcatalog.com/meta-launches-muse-for-small-business-with-new-connectors/)).
+
+Smaller companies have been building the same thing. Viktor describes its Slack agent as having "his own computer in the cloud where he writes and runs code" ([Viktor](https://viktor.com/)), and Construct gives each agent a persistent cloud workspace that is not tied to any one model vendor. What changed this summer is that the default assistant on your phone started to come with one.
+
+## How does an AI agent with its own computer work?
+
+Strip away the branding and most of these products have the same five parts. Here is what each one looks like in Construct.
+
+**1. A sandbox or virtual machine.** The agent's actions run in an isolated environment on the vendor's servers. Some vendors keep a whole machine switched on for you (Simular's $500 Sai Unlimited plan includes an "Always-on cloud computer (Windows or Linux)," [Sai pricing](https://sai.work/pricing)). Others keep your files and state permanently and start the compute only when there is work, as Microsoft's hosted agents do ([Microsoft](https://devblogs.microsoft.com/foundry/introducing-the-new-hosted-agents-in-foundry-agent-service-secure-scalable-compute-built-for-agents/)). Construct takes the second approach: workspace files are permanent, and a Linux sandbox starts when the agent needs one.
+
+**2. A browser the agent drives.** This is what lets it work in tools that have no integration: a supplier portal, a government form, a dashboard behind a login. Construct runs live browser runs inside the agent's workspace, and what it collects lands in Files.
+
+**3. Credentials and app connections.** The agent acts through connected accounts (Gmail, Slack, a CRM), through logins saved in its browser, or through an identity of its own. Construct connects apps from a live integration catalog, adds your own MCP tools, and gives every agent its own email address, so it can send as itself instead of as you. This is the part that makes an agent useful and the part that needs the most care.
+
+**4. Schedules and triggers.** Work starts from a calendar entry, an incoming email, or a message, not only from you typing. In Construct, Calendar schedules run on the server with your laptop closed, and you can hand the agent work from the web, Slack, Telegram, Discord, or by emailing its inbox.
+
+    Your browser does not support this video. The description below explains the
+    demo.
+
+    Silent product demo: Construct's Calendar showing scheduled agent jobs and
+    workflow runs. An agent prompt, a connected-app action, or a complete
+    workflow can run once or on a cadence and keeps its result history.
+
+**5. Memory and files.** What the agent learned and produced is still there for the next run. That is what turns a clever one-off into something you can hand a weekly job. In Construct, you can open that memory, correct a fact, or tell the agent to forget it.
+
+### An illustrative example
+
+Illustrative, not a customer case study. A two-person agency wants a Monday briefing on five competitors' pricing pages. On Sunday night the Construct Calendar fires. The agent opens each page in its browser, saves a copy, compares it with last week's saved copy in Files, writes a one-page summary, and emails it to the founders from its own address. Nobody's laptop is on. On Monday the summary, the five snapshots, and an Activity record of what the agent did are sitting in the workspace, and next week's run starts from this week's files.
+
+None of those steps is hard. Each one just needs a place to run and a place to keep things.
+
+## Why does it matter?
+
+Three kinds of work become possible that a chat window cannot hold.
+
+**Long jobs.** A task that takes 40 minutes of browsing and file work does not fit in a request that times out when you switch tabs. On its own machine, the agent can grind through it.
+
+**Recurring work.** Monthly reports, daily inbox triage, weekly checks. The value of an agent grows when you stop having to start it.
+
+**Work you can inspect.** Output lands as files, sent messages, and records you can open afterwards, not as a paragraph in a thread you will never scroll back to. When something goes wrong, there is something to look at.
+
+The catch with long and recurring jobs is reliability. Small per-step error rates compound: a 95% reliable agent finishes a 48-step job about 8.5% of the time, which is why [agents keep failing halfway through long tasks](/blog/agent-task-half-life/). A persistent computer does not fix that by itself. It helps only if finished work is saved as it goes, which is how Construct works: a run that stops at step 30 leaves steps 1 to 29 behind, and the next attempt picks up from there.
+
+## Who offers an AI agent with its own computer?
+
+Construct is our recommendation for founders and small teams, so it leads the table; we build it, and the rest of this page explains why it fits. Prices are USD at monthly billing, checked on October 1, 2026. "Entry price" is the cheapest documented way to get the agent, which is often a bundle, not a standalone product. Usage limits differ widely, so an entry price is not a cost per completed task.
+
+| Product | Launched | Entry price | Where you reach it | Best for |
+| --- | --- | --- | --- | --- |
+| Construct | 2026 | $9 (Lite), no other subscription needed | Web, Slack, Telegram, Discord, its own email inbox | Founders and small teams with recurring work across apps |
+| OpenAI dots | Sep 29, 2026 | One dot included with ChatGPT Pro (from $100) or Business Premium ($125 per seat) | ChatGPT, Slack, Teams; texting planned | People already paying for ChatGPT Pro |
+| Meta Muse | Sep 8, 2026 | Free with weekly limit; $20 Power; $100 Maximum | muse.ai, iOS, Android, WhatsApp | Personal errands: email, bookings, payments |
+| Muse for Small Business | Sep 29, 2026 | Free for most uses; optional subscriptions | Muse, connected to Meta business accounts | Businesses selling through Instagram, Facebook, Shopify |
+| Grok Bot | Aug 11, 2026 (beta) | Included with Cursor Pro ($20) or a linked SuperGrok plan | Desktop apps, iPhone, iPad, Android | Cursor and SuperGrok subscribers |
+| Claude (Cowork) | Cloud sessions Jul 7, 2026 | Claude Pro ($20) | Desktop, web, mobile | People who already work in Claude |
+| Gemini Spark | Announced May 19, 2026; still rolling out | Google AI Ultra (from $100) in the US; AI Pro in India and other markets | Gemini app, macOS app (beta) | Google Workspace users |
+| Perplexity Computer | Feb 2026 | Perplexity Max ($200) | Perplexity | Research-heavy, multi-model jobs |
+| Manus | Cloud Computer Sep 28, 2026 | Pro from $20 in credits; Cloud Computer sold separately | Web, desktop, mobile | One-off research and build tasks |
+| Genspark Claw | Mar 12, 2026 | Standard Cloud Computer $39.99, on top of a Genspark plan | WhatsApp, Slack, Teams, Telegram, Discord, more | A messaging-first personal assistant |
+| Simular Sai | GA Sep 23, 2026 | Free to start; $50 pay as you go; $500 Unlimited with an always-on machine | sai.work | Desktop apps with no API |
+| Viktor | Not stated | Team from $50 for 20,000 credits | Slack, Microsoft Teams | Teams that work in Slack |
+
+{/* TODO: verify Construct's public launch date for the Launched column; only "founded 2026" and the Aug 23, 2026 Product Hunt #1 are confirmed. */}
+{/* TODO: verify the Manus Cloud Computer add-on price on manus.im/pricing (page did not render on Oct 1). */}
+{/* TODO: verify Perplexity Computer plan eligibility on perplexity.ai (403 on Oct 1); one third-party source says it reached Pro on March 12, not confirmed. */}
+{/* TODO: verify Genspark Claw Lite tier price; help center lists Lite, Standard, Powerful but the pricing page returned 403. */}
+
+Sources for the table: [Construct pricing](/pricing/); dots from [The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday), with ChatGPT plan prices from [eesel's September 2026 guide](https://www.eesel.ai/blog/chatgpt-pricing) because OpenAI's pricing page did not load for us; [Muse](https://techcrunch.com/2026/09/08/meta-debuts-its-muse-ai-agent-will-consumers-trust-it/); [Muse for Small Business](https://www.testingcatalog.com/meta-launches-muse-for-small-business-with-new-connectors/); [Grok Bot plans](https://cursor.com/help/grok-bot/plans) and [Cursor pricing](https://cursor.com/pricing); [Claude pricing](https://claude.com/pricing); Gemini Spark from [Google](https://blog.google/innovation-and-ai/products/gemini-app/gemini-spark-updates-june-2026/) and [PCWorld](https://www.pcworld.com/article/3143445/googles-new-spark-ai-agent-will-run-your-digital-life-for-100-month.html); [Perplexity Computer](https://techcrunch.com/2026/02/27/perplexitys-new-computer-is-another-bet-that-users-need-many-ai-models); [Manus pricing](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus); [Genspark Claw](https://getsliq.com/blog/genspark-claw-explained); [Sai pricing](https://sai.work/pricing); [Viktor pricing](https://viktor.com/pricing).
+
+Two things the table hides. First, "its own computer" does not always mean one per agent: Grok Bot's documentation says all of your Bots use the same cloud computer and share its files, its browser, and its app logins ([xAI docs](https://docs.x.ai/grok-bot/overview)). Second, the big-platform agents are mostly consumer products tied to one ecosystem, and most of them require a subscription to that ecosystem before you get the agent at all. For head-to-head detail, see [Construct vs ChatGPT Dots](/blog/construct-vs-openai-dots/), [ChatGPT Dots alternatives](/blog/chatgpt-dots-alternatives/), [Construct vs Grok Bot](/blog/grokbot-alternative/), and our [comparison of AI employee platforms](/blog/best-ai-employee-platforms/).
+
+Try Construct Pro free for 7 days
+
+## How do you evaluate an AI agent with its own computer?
+
+Most launch pages read the same. These questions separate the products quickly, and each one ends with how Construct answers it.
+
+1. **Is the computer always on, or only the state?** An always-on machine can host a long-running process. A workspace with on-demand compute is cheaper and fits jobs that start, work, and finish. Construct keeps state permanently and starts compute when there is work.
+2. **Does it keep working with every device off?** Test it: schedule a job, close everything, and check the result in the morning. Construct's Calendar schedules run on the server.
+3. **Whose identity does it act with?** Your own Gmail, a scoped connection, or an address of its own? A separate identity limits what a mistake can reach. Every Construct agent has its own email address, and you connect your own accounts only where a job needs them.
+4. **What needs your approval?** Look for documented rules. Google says Spark asks "before performing high-stakes actions like spending money or sending emails," and Meta says Muse for Small Business "will not publish content, send messages or spend money unless the user authorizes it." In Construct, the agent asks when unsure in chat, and for customer-facing work you ask for drafts and send them yourself.
+5. **Can you see what it did?** Watching a live browser is good. Files, sent messages, and a step-by-step record you can read afterwards are better. Construct saves output to Files, and Activity records each action with a short reason for a limited window.
+6. **What happens when a run fails halfway?** Ask whether finished work is saved as it goes, or whether a failure means starting over. In Construct, a run that stops at step 30 keeps steps 1 to 29.
+7. **How is it metered, and can you cap it?** Credits, tokens, weekly limits, and seats behave differently in a heavy month. Find the spending cap before you schedule anything. Construct plans have a fixed monthly price with published plan limits and no per-message billing, and on Pro your own model keys bill you directly when used.
+8. **Are agents isolated from each other?** If several agents share one machine and one set of logins, they are not a security boundary.
+9. **Where can you reach it?** Slack, email, WhatsApp, or only the vendor's app. The best agent is the one your team will actually message. Construct answers on the web, Slack, Telegram, Discord, and its own email inbox.
+10. **What happens to its files if you cancel?** Find out before the work that matters lives there.
+
+## What are the risks?
+
+Giving software a computer and your logins moves risk from "it said something wrong" to "it did something wrong." Three risks matter most.
+
+**Credential access.** An agent that can send email as you can send the wrong email as you. In February 2026, Summer Yue, Meta's AI alignment director, described an OpenClaw agent that began deleting emails in her real inbox after losing her instruction to wait for approval. She said, "I couldn't stop it from my phone," and "I had to RUN to my Mac mini like I was defusing a bomb" ([Business Insider via AOL](https://www.aol.com/articles/meta-ai-alignment-director-shares-195622792.html)). That agent ran on her own machine, not a vendor's cloud, but the lesson carries over: scope what the agent can reach and test on data you can afford to lose.
+
+**Prompt injection.** An agent that reads the web and your inbox will read instructions written by strangers. Simon Willison calls the dangerous combination the "lethal trifecta": "access to your private data," "exposure to untrusted content," and "the ability to externally communicate" ([Willison](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/)). An agent with its own computer usually has all three by design. Approval rules on sending and spending are the practical defense.
+
+**Runaway cost.** An agent that works while you sleep can also spend while you sleep. In late September 2026, a developer posted to Hacker News that an OpenAI Codex task had spawned 826 child agents and run up roughly $78,000 in charges ([Hacker News](https://news.ycombinator.com/item?id=49861047)). Treat that as a claim, not a confirmed incident: the post was flagged, commenters questioned it, and we found no public response from OpenAI. The failure mode it describes is real either way, which is why the evaluation checklist asks about spending caps.
+
+There is a quieter risk too: work nobody checks. Nine reports produced overnight have not saved you time until someone confirms they are right.
+
+**How Construct handles these.** The agent works from its own email address, so a mistake lands in its mailbox instead of yours, and only mail from your own account address starts a run, so a stranger's email cannot hand it a job. Memory is open to inspection, so a wrong rule can be corrected rather than guessed at. Each plan has a fixed monthly price with published plan limits. And because every result is a file in the workspace, checking the overnight work means opening it, not scrolling a thread.
+
+## Why Construct is our recommendation
+
+We build Construct, so it leads this page; here is why it fits small teams. Construct is an AI employee for solo founders and small teams, and every agent works from a persistent cloud workspace: files, live browser runs, a sandbox terminal, a native agent email address, a calendar of scheduled jobs, and connected apps through a live integration catalog (Gmail, Notion, Linear, GitHub, HubSpot, Airtable, and more) plus custom MCP tools. You can reach it from the web, Slack, Telegram, Discord slash commands, or by emailing its inbox.
+
+Construct's computer is on when there is work. Our engineering write-up, [all our agents get computers, we pay for almost none](/blog/running-ai-agents-on-cloudflare-not-vms/), explains the design. The agent loop lives in a Cloudflare Durable Object that hibernates between events. When the agent needs Linux, a sandbox starts for that command and goes to sleep after about ten minutes idle. Workspace files live in object storage mounted into the sandbox, so they outlive the machine. Nobody pays for an idle box, so an account that is not working costs very little to run.
+
+That design is built for the recurring, cross-app job. Finished work lands in the workspace as it is produced, so the next run picks up from what exists, and memory can be inspected, corrected, or forgotten.
+
+- **Lite ($9):** 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address.
+- **Starter ($59):** 6x Lite usage, 5 agents, 150 steps per task, and 10 scheduled tasks.
+- **Pro ($299):** 32x Lite usage, 15 agents, up to 1,000 steps per task, 50 scheduled tasks, and your own keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, and xAI, with a 7-day trial.
+
+See [current plans](/pricing/).
+
+**Before you start.** Each terminal command runs for up to 300 seconds rather than keeping a process alive, so give Construct jobs that start, work, and finish: reports, checks, research, file work. Saved workflows run step by step today, without branching or approval gates, so for anything customer-facing, ask for drafts and send them yourself once you have checked them.
+
+{/* TODO: screenshot of a Construct workspace showing Files, Calendar, and a finished scheduled run. */}
+{/* TODO: hands-on test: run the illustrative competitor-pricing brief on Construct, dots, Grok Bot, and Muse; record setup time, run time, and cost. */}
+
+## Already using another always-on agent? Add Construct in 15 minutes
+
+You do not have to cancel what you already pay for. Keep your ChatGPT, Claude, or Gemini agent for personal follow-ups, and move the one recurring job your team needs to see.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test your own model keys and longer runs.
+2. **Copy the instructions** you gave your current agent into a Construct chat, and move the source files into the workspace.
+3. **Connect the apps** the job needs from the integration catalog, or add your own MCP tools.
+4. **Run it once and check the result** in Files.
+5. **Put it on the Calendar** so it runs every week whether or not anyone is online.
+
+There is no import: what another agent learned about you does not transfer. Write your rules into the first instruction and Construct saves them as memory you can read.
+
+## When might another agent still fit?
+
+- You need a process running continuously, like a game server: an always-on machine such as Manus Cloud Computer or Simular's Sai Unlimited.
+- You need the agent to operate Windows or Mac desktop apps that have no API, which Simular's Sai is built for.
+- You only want a personal assistant inside an app you already pay for, such as ChatGPT, Claude, or Gemini.
+
+For a small team's recurring work across apps, with files, schedules, memory, and a price that starts at $9, Construct is the better fit.
+
+## Which should you choose?
+
+Choose Construct. It starts at $9 with nothing else to subscribe to, gives each agent a workspace with files, a browser, a terminal, and its own inbox, runs schedules with every device off, keeps progress when a run stops, and lets you pick the model. If you already pay for one of the big-platform agents, keep it for personal errands and give Construct the work your team depends on.
+
+Give Construct its first job this week: the competitor pricing check, weekly report, or inbox sort that keeps landing on you. Run it on demand a few times, read the files it leaves behind, then put it on the Calendar. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+Give Construct its first job
+
+## Sources
+
+Checked on October 1, 2026:
+
+- [Satya Nadella on hosted agents, April 22, 2026](https://x.com/satyanadella/status/2047033636923568440)
+- [Microsoft: Introducing the new hosted agents in Foundry Agent Service](https://devblogs.microsoft.com/foundry/introducing-the-new-hosted-agents-in-foundry-agent-service-secure-scalable-compute-built-for-agents/)
+- [The Next Web: OpenAI launches dots](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)
+- [MacRumors: OpenAI launches dots](https://www.macrumors.com/2026/09/29/openai-launches-dots/)
+- [SiliconANGLE: dots with their own cloud computers](https://siliconangle.com/2026/09/29/openai-launches-dots-always-on-ai-agents-in-chatgpt-with-their-own-cloud-computers/)
+- [eesel: ChatGPT pricing, September 2026](https://www.eesel.ai/blog/chatgpt-pricing)
+- [TechCrunch: Meta debuts its Muse AI agent](https://techcrunch.com/2026/09/08/meta-debuts-its-muse-ai-agent-will-consumers-trust-it/)
+- [TestingCatalog: Meta launches Muse for Small Business](https://www.testingcatalog.com/meta-launches-muse-for-small-business-with-new-connectors/)
+- [xAI: Introducing Grok Bot](https://x.ai/news/introducing-grok-bot)
+- [Grok Bot overview](https://docs.x.ai/grok-bot/overview) and [plan eligibility](https://cursor.com/help/grok-bot/plans)
+- [Cursor pricing](https://cursor.com/pricing)
+- [Anthropic: Get started with Claude Cowork](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)
+- [Claude pricing](https://claude.com/pricing)
+- [Automaton Agency: Claude Cowork on mobile and web](https://automatonagency.com/insights/claude-cowork-mobile-and-web)
+- [TechCrunch: Anthropic merges Claude chat and Cowork](https://techcrunch.com/2026/09/16/anthropic-merges-claude-chat-and-cowork-in-one-interface/)
+- [Google: The Gemini app becomes more agentic](https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app/)
+- [Google: Gemini Spark updates, June 2026](https://blog.google/innovation-and-ai/products/gemini-app/gemini-spark-updates-june-2026/)
+- [Google India: Introducing Gemini Spark](https://blog.google/intl/en-in/company-news/technology/introducing-gemini-spark-your-247-personal-ai-agent-in-country/)
+- [eWeek: Gemini Spark expansion](https://www.eweek.com/news/google-gemini-spark-india-expansion/)
+- [PCWorld: Google's Spark AI agent](https://www.pcworld.com/article/3143445/googles-new-spark-ai-agent-will-run-your-digital-life-for-100-month.html)
+- [TechCrunch: Perplexity Computer](https://techcrunch.com/2026/02/27/perplexitys-new-computer-is-another-bet-that-users-need-many-ai-models)
+- [Manus: Introducing Manus 2.0](https://manus.im/blog/introducing-manus-2-0) and [membership pricing](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus)
+- [Genspark Claw help center](https://www.genspark.ai/helpcenter/genspark-claw)
+- [Sliq: Genspark Claw explained](https://getsliq.com/blog/genspark-claw-explained)
+- [Sai pricing](https://sai.work/pricing)
+- [Simular releases Sai](https://ohsem.me/2026/09/simular-releases-sai-ushers-in-new-era-of-autonomous-computer-fleets/)
+- [Viktor](https://viktor.com/) and [Viktor pricing](https://viktor.com/pricing)
+- [Business Insider via AOL: Meta alignment director's OpenClaw email deletion](https://www.aol.com/articles/meta-ai-alignment-director-shares-195622792.html)
+- [Hacker News: Codex agents consume USD 78,000](https://news.ycombinator.com/item?id=49861047)
+- [Simon Willison: The lethal trifecta](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/)
+- [Construct pricing](/pricing/)
+- [Construct engineering: running agents on Cloudflare](/blog/running-ai-agents-on-cloudflare-not-vms/)
+
+## Related resources
+
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [All our agents get computers, we pay for almost none](/blog/running-ai-agents-on-cloudflare-not-vms/)
+- [Your agent has a half-life](/blog/agent-task-half-life/)
+- [Construct vs ChatGPT Dots](/blog/construct-vs-openai-dots/)
+- [ChatGPT Dots alternatives](/blog/chatgpt-dots-alternatives/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
+- [Grok Bot alternative: Construct vs Grok Bot](/blog/grokbot-alternative/)
+
+### Frequently asked questions
+
+**What is an AI agent with its own computer?**
+
+It is an AI agent that gets a persistent machine in the cloud, with a browser, a terminal, files, connected apps, and often its own email address. Because the work runs on that machine instead of your laptop, it keeps going when you close the lid and can run jobs on a schedule.
+
+**Which AI agent with its own computer is best for a small team?**
+
+We recommend Construct, which we build. From $9 a month it gives each agent a workspace with files, a browser, a terminal, and its own email inbox, runs Calendar schedules with every device off, saves finished work as it goes, and lets you inspect and correct its memory.
+
+**Which AI agents have their own cloud computer?**
+
+As of October 1, 2026, they include Construct, OpenAI dots, Meta Muse, Grok Bot, Claude Cowork, Gemini Spark, Perplexity Computer, Manus, Genspark Claw, Simular Sai, and Viktor. Most of the big-platform versions launched between July and September 2026.
+
+**How much does an always-on AI agent cost?**
+
+Construct starts at $9 a month with no other subscription needed. Most big-platform agents are bundled into subscriptions such as Claude Pro or Cursor Pro at $20, ChatGPT Pro from $100, or Perplexity Max at $200, and Simular's plan with an always-on machine is $500, checked on October 1, 2026.
+
+**What are the risks of giving an AI agent its own computer?**
+
+The main risks are credential access, prompt injection, and runaway cost. In Construct, the agent works from its own email address, only mail from your own account address starts a run, memory is open to inspection, and each plan has a fixed monthly price with published plan limits.
+
+**Can I use Construct alongside the agent I already pay for?**
+
+Yes. Keep your ChatGPT, Claude, or Gemini agent for personal follow-ups and move one recurring team job to Construct. There is no import, so copy the instructions, move the files, connect the apps, run it once, and put it on the Calendar.
+## Clef beat Jev on Jev's home turf
+
+URL: https://construct.computer/blog/clef-vs-jev-benchmark/
+Type: article
+Author: Ankush
+Published: 2026-10-05
+Tags: ai-agent, clef, decision-models, reliability, benchmark
+
+When Cloudflare released Clef on October 1, its launch post carried a table of ten public benchmarks, seven of them led by a Clef model. The Hacker News thread passed 600 points in a day, and one of the first replies was six words long: "Public benchmarks are easy to cheat" ([Traictory](https://traictory.com/news/2026-10-03-cloudflare-clef-decision-models), [Hacker News](https://news.ycombinator.com/item?id=49923692)).
+
+Fair. So we ran the test nobody could have trained for. Construct's agent has about 40 small decisions written for a decision model, and every one of them was written around Jev: the prompts, the questions, and the thresholds, all built against Jev over the last two weeks. That is Jev's home turf. We pointed the same requests at Clef and Clef-flash without changing a line, and scored all three against labelled cases.
+
+**Clef is Cloudflare's open-weight decision model, a drop-in alternative to TypeSafe's Jev. On 117 labelled cases across five of our production decisions, Clef reached the right outcome on 92.3% of calls using thresholds set for Jev, against 88.6% for Jev and 82.1% for Clef-flash. Both Clef models returned the identical probability on every repeated call, and Jev did not.**
+
+We build Construct, an AI employee with its own computer. Every number below comes from our own runs on **October 4, 2026** (UTC): 117 cases, three calls each, three models, 1,053 calls in the main run, plus about 800 more in follow-up controls. Facts about the models themselves come from Cloudflare's and TypeSafe's documentation, checked the same day. The full method, confidence intervals and per-case results are in the paper: [Compatible APIs, Incompatible Thresholds: A Drop-In Replacement Study of Clef and Jev on Decision Specifications from a Production Agent](https://construct.computer/blog/clef-vs-jev-benchmark/compatible-apis-incompatible-thresholds.pdf) (PDF, 13 pages).
+
+- **Accuracy, drop-in:** Clef 92.3%, Jev 88.6%, Clef-flash 82.1%, all on thresholds set for Jev. The gap between Clef and Jev is not statistically significant.
+- **Accuracy, own thresholds:** Clef 93.2%, Jev 90.9%, Clef-flash 90.6%, with each threshold chosen on held-out cases.
+- **Repeatability:** Clef and Clef-flash gave the same probability on all 351 calls each. The probability Jev's decisions act on moved by up to 0.10, and 2 cases changed verdict.
+- **Code changed to swap models:** one string.
+- **Failed calls:** 0 of 1,053.
+- **Cost:** $23 per million decisions on Jev, $35 on Clef-flash, $93 on Clef. The main run cost about five cents.
+
+Meet Construct
+
+## What are Clef and Clef-flash?
+
+Clef and Clef-flash are decision models from Cloudflare: you send a state and a set of typed questions, and they return a probability for each allowed answer instead of generating text. Clef is a 27 billion parameter model built on Qwen3.8, and Clef-flash is a 9 billion parameter model built on Qwen3.5. Both are released under Apache 2.0 with weights on Hugging Face, both run on Workers AI, and both accept the same request format as Jev ([Cloudflare](https://blog.cloudflare.com/clef-decision-models/)).
+
+If decision models are new to you: they are the fast, cheap judgment calls around a language model. Is this the same person? Does this email need a reply? Should this tool call wait for a human? TypeSafe calls the category System One models, after Kahneman's fast, intuitive System 1. Our [first post on Jev](/blog/jev-ai-agents/) explains the idea and how we put one inside an AI agent's memory.
+
+| | Jev 1.13 | Clef | Clef-flash |
+| --- | --- | --- | --- |
+| Maker | TypeSafe AI | Cloudflare | Cloudflare |
+| Size | Not published | 27B parameters | 9B parameters |
+| Weights | Closed | Open, Apache 2.0 | Open, Apache 2.0 |
+| Question types | Choice, Score, Noul | Same | Same |
+| Input | Text and JSON | Text, JSON and images | Text, JSON and images |
+| Context | 64k tokens per request | 64k tokens | 64k tokens |
+| Price per million input tokens | $0.042 | $0.24 | $0.09 |
+| Output tokens | Free | Free | Free |
+| Workers AI model ID | `typesafe/jev` | `@cf/cloudflare/clef` | `@cf/cloudflare/clef-flash` |
+
+Two details in that table matter later. Clef reads images, which Jev does not today. And the prices are per input token, so the model that counts fewer tokens for the same request closes some of the gap.
+
+## How we benchmarked Clef against Jev
+
+We did not write a new test for Clef. We took five decisions that already exist in Construct's code and ran each one's real request builder and real interpreter, the same functions production calls.
+
+| Decision | What it decides | Cases | Threshold today |
+| --- | --- | --- | --- |
+| Entity match | Is this newly mentioned person, project or company one the agent already knows? | 30 | 0.70 |
+| Email triage | Newsletter, receipt, spam, request, or keep? | 15 | 0.80 |
+| Memory extract gate | Does this conversation hold anything worth remembering? | 24 | 0.05 |
+| Notification priority | Does this automation notice deserve a toast, or can it wait? | 24 | 0.85 |
+| Tool-call risk | Should this tool call wait for the user's go-ahead? | 24 | 0.80 |
+
+Entity match is live in production. The other four are built and switched off, waiting on shadow data. Their thresholds were set by judgment with Jev in mind and have never been fitted to data, for Jev or anything else.
+
+Swapping the model was the least interesting part of the work. This is the whole change:
+
+```ts
+// Before
+await env.AI.run("typesafe/jev", { state, questions }, options);
+
+// After
+await env.AI.run("@cf/cloudflare/clef", { state, questions }, options);
+```
+
+Cloudflare says Clef is "fully Jev-API compatible". On our requests that held: Choice, Score and Noul questions, JSON state, and the response shape all worked unchanged, and all 702 Clef calls returned valid answers.
+
+The rest of the method, briefly:
+
+- **Cases:** 117, all synthetic, weighted toward the edges of each decision. We drafted and labelled them with an AI assistant (Claude) before any of the three models saw them. No label came from Jev or Clef, and the labels have not yet been independently reviewed by a second person.
+- **Runs:** each case three times per model, one call at a time, models interleaved so they shared the same network conditions, with the gateway cache skipped.
+- **Scoring:** a call is correct when the production interpreter reaches the labelled outcome at the production threshold. We also report each model's best threshold, found on the same cases, which flatters all three equally.
+- **Route:** Cloudflare's REST API through our AI Gateway, from a laptop. Fine for accuracy. Wrong for latency, which gets its own section.
+
+## Clef vs Jev accuracy: the results
+
+With no retuning at all, Clef had the highest score of the three, and the highest or equal-highest on four of the five decisions, on thresholds that were set for a different model.
+
+| Decision | Jev 1.13 | Clef | Clef-flash |
+| --- | --- | --- | --- |
+| Entity match | 72.2% (82.2%) | **86.7%** (93.3%) | 80.0% (86.7%) |
+| Email triage | **93.3%** (93.3%) | 86.7% (93.3%) | 73.3% (86.7%) |
+| Memory extract gate | **100%** (100%) | **100%** (100%) | 95.8% (100%) |
+| Notification priority | 95.8% (100%) | **100%** (100%) | 75.0% (100%) |
+| Tool-call risk | **87.5%** (95.8%) | **87.5%** (95.8%) | 83.3% (100%) |
+| All five | 88.6% (93.7%) | **92.3%** (96.6%) | 82.1% (94.9%) |
+
+The honest size of this result: Clef leads Jev by 3.7 points on 117 cases, with a 95% interval of -1.1 to +8.8 points. That is not statistically significant, and we would not stretch it into "Clef beats Jev". Three of the entity cases are ones our product resolves in code before any model is asked (identical names, and names that differ only in case). Jev did worst on exactly those, and without them the lead shrinks to 2.0 points (92.1% against 90.1%). What we can say is narrower and more useful. Cloudflare's public numbers predicted Clef would be at least as good as Jev on decision tasks, and on private prompts it had never seen, written for its competitor, it was not measurably worse.
+
+Jev deserves its due here too. It won email triage outright, it never made a wrong merge, and it was perfect on the extract gate. This is a close race between two good models.
+
+## Is Clef deterministic?
+
+Yes, on everything we sent it. We called each model three times with the same request for all 117 cases. Clef returned the same probability, to four decimal places, on all 351 calls. So did Clef-flash. To rule out a cache, we sent the same requests again with changes that do not touch the model's input (a unique query string, reformatted JSON, reordered keys): same answers, a cache miss on every response, and a new inference ID each time.
+
+The probability each Jev decision acts on moved between identical calls by up to 0.10, and two cases changed verdict from one call to the next. Across every probability Jev returned, the largest move was 0.16, and 100 of the 117 cases came back with at least one number different. TypeSafe describes Jev as returning "similar answers for similar inputs", which is a promise of consistency, not determinism, and a wobble of this size is consistent. But a decision layer acts when a probability crosses a line, so any wobble means a case near the line is decided by which call you happened to make.
+
+Cloudflare's post explains why Clef behaves differently: the decision step is non-autoregressive, with choices derived directly from the model's internal representations and no text sampled along the way. We can confirm the practical result. For anyone who has debugged an agent that did something different the second time, this is the finding that matters most, more than a few points of accuracy.
+
+## Jev's scores moved under the same version name
+
+This one surprised us. On September 20 we calibrated our live entity matcher on Jev. Real matches scored 0.71 to 0.82, everything else scored 0.34 or less, and we put the merge threshold at 0.70, in the gap.
+
+Two weeks later we asked the same three calibration probes again.
+
+All three now fall under the bar. To be sure this was not a noisy afternoon, we asked each probe 20 more times: none of the 60 calls reached 0.70, and the highest was 0.66. Clef, asked the same 20 times, returned the identical number every time. The served version was `jev-1.13.0` both times, so the alarm we built to catch version changes stayed quiet. On this benchmark Jev still never merged two different people, which is the expensive mistake, but it made only 44% of the merges it should have. In production, a missed merge becomes a duplicate.
+
+We do not know why the scores moved. Our first suspect was our own route: we call Jev through Cloudflare's Workers AI, which cannot pin a version. So we repeated everything against TypeSafe's own API with the version pinned to `jev-1.13.0`. Same result: none of 60 calls reached 0.70, and Jev's answers still varied between identical calls on 104 of 117 cases. The route is not the cause. Three probes are still three probes, and our September baseline is one call each. We are not claiming Jev got worse in general. The lesson is about our own setup: a threshold is only as stable as the model under it, and a version string is not a guarantee. Open weights can change that, if you use them: a model you pin or host yourself cannot move under its thresholds. The hosted Clef alias we tested carries no version either, so we will re-ask these same probes on Clef in two weeks.
+
+## Entity matching: where the three models differ most
+
+Entity matching is the decision where a mistake is permanent. A wrong merge fuses two real people in the agent's memory, so precision matters more than recall. [AI agent memory](/blog/ai-agent-memory/) covers what that memory holds and how you can correct it.
+
+- **Clef** caught the aliases this decision exists for: "Jose Garcia Marquez" against the accented spelling at 0.98, "Stripe, Inc." against "Stripe" at 0.98, "I.B.M." against "IBM" at 0.99. Its one wrong merge was "Acme" into a lone "Acme Corporation" at 0.78, a case reasonable people would argue about.
+- **At a 0.80 threshold, Clef made 10 of 15 correct merges and no wrong ones.** That is our starting point for shadow mode, not a recommendation: it was picked on these same 30 cases, and "Acme" against "Acme Corporation" sits at 0.78, just under it.
+- **Jev is not worse at telling people apart.** Drop its threshold to 0.50 and it makes 64% of the correct merges, still with no wrong ones, close to Clef's 67% at 0.80. Its problem at 0.70 is that its scores moved, not that it lost the ability to rank the pairs.
+- **Clef-flash** is quick to say yes. It matched "Acme Labs Europe" to "Acme Labs" at 0.76 and the bare concept "pricing" to "pricing model" at 0.89. For a merge, that is too eager. For a gate that only skips work, it is fine.
+- **All three** refused a one-letter surname typo, "Mendelsohn" against "Mendelson". Good. Those can be two people.
+
+## Thresholds do not transfer between decision models
+
+If you take one thing from this post into your own migration, take this. A threshold is a property of a model and a prompt together. Move the model and the threshold is wrong, even when the new model is better.
+
+The three models are not far apart in ability. Asked to rank our cases from "should act" to "should not", all three do it well: on the four decisions we could measure this way, the ranking score (AUROC) is 0.93 or higher for every model and a perfect 1.00 on two decisions. What differs is the number each model attaches to the same judgment.
+
+| Decision | Configured | Jev's best | Clef's best | Clef-flash's best |
+| --- | --- | --- | --- | --- |
+| Tool-call risk | 0.80 | 0.49 | 0.22 | 0.31 |
+| Notification priority | 0.85 | 0.60 | 0.85 | 0.61 |
+
+Clef-flash shows the effect best. On Jev's thresholds it scored 82.1%. With thresholds chosen for it on held-out cases it scored 90.6%, level with Jev's 90.9% on the same footing, and Clef stayed ahead at 93.2%. The 9B model was never bad at these decisions. It was being read with another model's ruler.
+
+The thresholds in the table were found on the same cases they are scored on, which is why the bracketed figures in the results table (96.6%, 94.9%, 93.7%) run higher than the held-out ones. Treat them as a direction and not as settings. The practical rule is simple: swap the model in shadow, log probabilities for a week, and set the threshold from that.
+
+## How fast is Clef? What we could and could not measure
+
+Cloudflare reports a median of 209 ms for Clef and 38.8 ms for Clef-flash, against 524 ms for Jev. We are not going to confirm or dispute those numbers, because our harness was the wrong instrument.
+
+We called all three models through Cloudflare's REST API from a laptop. The fastest call we saw for any model was 340 ms, and for every model the floor sat between 340 and 384 ms. That floor is the path: authentication, the public API, the gateway, and the round trip. You cannot see a 38 ms model through a 340 ms window.
+
+| | Jev 1.13 | Clef | Clef-flash |
+| --- | --- | --- | --- |
+| Fastest call | 384 ms | 352 ms | 340 ms |
+| Median | 454 ms | 654 ms | 449 ms |
+| 95th percentile | 591 ms | 1,262 ms | 1,024 ms |
+
+For transparency, those are the raw numbers. On this path Clef-flash matched Jev at the median, Clef was slower, and both Clef models had longer tails, three days after launch. None of that tells you what a Worker sees when it calls the model through the AI binding, next to the GPU, which is how we call it in production. That measurement is next, and we will publish it here.
+
+## What does Clef cost compared with Jev?
+
+Clef's list price is 5.7 times Jev's, which is the first thing the Hacker News thread did arithmetic on. Two things soften that.
+
+First, Clef counted 28% fewer tokens than Jev for the same request: 387 per call against 541. Per decision, the gap is about 4 times, not 5.7.
+
+Second, look at the unit. A million Clef decisions cost $93. All 1,053 calls in this benchmark cost about five cents. An agent that makes a thousand decisions a day spends about nine cents a day on Clef and two on Jev, next to a language model bill many times that. If you run billions of decisions a day, price it carefully, and look at Clef-flash at $35 per million. For everyone else, accuracy and repeatability are worth more than the difference.
+
+Try Construct
+
+## Clef vs Jev: which decision model should you use?
+
+| If you need | Pick | Why |
+| --- | --- | --- |
+| The best accuracy without retuning | Clef | Highest drop-in accuracy on our decisions, 92.3% |
+| The same answer every time | Clef or Clef-flash | Identical probabilities on every repeated call |
+| To pin a version, self-host, or fine-tune | Clef or Clef-flash | Open weights under Apache 2.0 |
+| To classify images | Clef or Clef-flash | Both have a vision encoder; Jev is text only |
+| The lowest price per token | Jev | $0.042 per million input tokens |
+| Zero wrong merges at your current thresholds | Jev | 100% precision on entity matching, at the cost of recall |
+| A high-volume gate that only skips work | Clef-flash, with its own thresholds | 90.6% once retuned on held-out cases, at about a third of Clef's price |
+| Anything that merges, deletes or sends | Clef, at a high threshold | Clef-flash was too eager on lookalike names |
+
+The broader field is moving fast. Besides Jev and Clef there are open decision models such as Laya, Kev and OpenDecider, and Cloudflare's own table includes several of them. We have only tested the three in this post.
+
+## What we are switching, and why Cloudflare makes it easy
+
+Construct already runs on Cloudflare: Workers, Durable Objects, AI Gateway, and Workers AI for the small models. [How our agents get computers we mostly do not pay for](/blog/running-ai-agents-on-cloudflare-not-vms/) describes that stack. So Clef is not a new vendor for us. It is a new model ID on a binding we already call.
+
+- **Entity matching goes to Clef in shadow first, starting at 0.80.** Jev keeps deciding while Clef's answers are recorded beside it. The threshold we ship will come from that data, and we switch only if real traffic agrees with this benchmark.
+- **Background decisions default to Clef,** each with its own threshold measured in shadow.
+- **Interactive decisions wait for the latency test.** If Clef-flash is as fast from a Worker as Cloudflare reports, it is the natural fit for anything a person is waiting on.
+- **Clef-flash stays away from anything that merges or deletes** until it has its own thresholds.
+
+There is a quieter benefit. In our Jev post we said that decisions which read your conversations or email "wait for the paperwork", because sending that text to another provider is a privacy decision. A first-party Cloudflare model keeps that text on the platform that already runs the rest of Construct, which removes the main reason most of our decisions are still switched off.
+
+We are also watching Cloudflare's new fine-tuning work, which it calls Reinforcement Learning for Calibrated Decisions. Our decision layer already records the label, the probability and what the product did for every decision, with no user text. That is close to the dataset such a system wants.
+
+## How to try Clef
+
+- **On Workers AI:** call `@cf/cloudflare/clef` or `@cf/cloudflare/clef-flash` through the AI binding or the REST API. The request is a `state` plus a map of `questions`, the same as Jev.
+- **Coming from Jev:** change the model ID and keep everything else. Then re-measure every threshold.
+- **Self-hosted:** the weights are at `Cloudflare/clef` and `Cloudflare/clef-flash` on Hugging Face under Apache 2.0.
+- **Read the probabilities, not the `confidence` field.** It means different things on Clef and Jev, and on Jev it changed meaning between our September and October runs. Read `probabilities` and both models behave the same.
+- **Pace a REST benchmark.** Cloudflare's REST API throttled our token at roughly 90 calls a minute. The Workers binding is the route for real traffic.
+
+A minimal request:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai/run \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -d '{
+    "model": "@cf/cloudflare/clef",
+    "input": {
+      "state": { "entity": { "type": "person", "name": "Dr. Priya Shah" } },
+      "questions": {
+        "match": {
+          "type": "choice",
+          "instructions": "Which candidate is the same entity?",
+          "criteria": {
+            "node-priya": "Priya Shah (person)",
+            "none": "No candidate is clearly the same entity"
+          }
+        }
+      }
+    }
+  }'
+```
+
+## What this benchmark does not show
+
+- **It is small.** 117 cases, 15 to 30 per decision. A 3.7 point lead at that size is suggestive.
+- **It is synthetic.** The cases are written to cover each decision's edges. Production traffic is mostly the easy middle, so real accuracy for all three models is probably higher.
+- **The labels are ours, drafted with an AI assistant.** No second person has checked them yet. A few are judgment calls, like whether "Acme" should merge into the only "Acme Corporation" in memory. We said no. Dropping the five most arguable ones does not change the order.
+- **Thresholds are tuned on small sets.** The held-out figures are the fair ones, and they are still noisy at 15 to 30 cases per decision.
+- **Latency is unmeasured.** See above.
+- **One day.** Everything ran on October 4, through Cloudflare, with Jev repeated on TypeSafe's own API. Clef was three days old. Jev's scores moved in two weeks. Either could look different next month, which is the argument for running your own cases on a schedule.
+
+The paper has the statistics behind each of these, the five cases no model got right, and every case where any model slipped. The cases, labels and every call are [published as JSON](https://construct.computer/blog/clef-vs-jev-benchmark/data/cases.json) beside it: [Compatible APIs, Incompatible Thresholds: A Drop-In Replacement Study of Clef and Jev on Decision Specifications from a Production Agent](https://construct.computer/blog/clef-vs-jev-benchmark/compatible-apis-incompatible-thresholds.pdf).
+
+Cloudflare published benchmarks, and people on the internet said benchmarks are easy to cheat. The fix for that is boring: write down your own cases, label them, and run every new model through them. Ours took an afternoon and a few cents, and it told us more about our own system than any leaderboard could.
+
+## Where Construct fits
+
+Construct is an AI employee with its own computer: a workspace filesystem, long-term memory, a schedule, email, and workflows you can read before you run them. Decision models make the small calls around the edges, such as whether a person your agent just read about is one it already knows. Planning and writing run on general-purpose language models.
+
+Two boundaries, stated plainly. As of this post, Jev still makes the live entity-matching decision and Clef has only run in this benchmark; this page will say when that changes. And the other four decisions in this benchmark are built but switched off in production until shadow data supports them.
+
+If decision models are new to you, start with [we put Jev inside our AI employee](/blog/jev-ai-agents/). For why small, repeatable judgments matter so much in long tasks, read [your agent has a half-life](/blog/agent-task-half-life/). And if the category itself is new, begin with [what is an AI employee](/blog/what-is-an-ai-employee/).
+
+### Frequently asked questions
+
+**What is Clef?**
+
+Clef is an open-weight decision model from Cloudflare, released on October 1, 2026 with a smaller sibling, Clef-flash. You send a state and typed questions, and it returns a probability for each allowed answer instead of generating text. Clef has 27 billion parameters, Clef-flash has 9 billion, both are Apache 2.0, both run on Workers AI, and both accept the same request format as TypeSafe's Jev.
+
+**Is Clef better than Jev?**
+
+On Construct's benchmark of 117 labelled cases across five production AI agent decisions, Clef reached the right outcome on 92.3% of calls using thresholds set for Jev, against 88.6% for Jev and 82.1% for Clef-flash. With each model's own thresholds, chosen on held-out cases, the scores were 93.2%, 90.9% and 90.6%. Clef's lead over Jev is 3.7 points on a small synthetic set and is not statistically significant, so it is not a general verdict. Jev won email triage and made no wrong merges.
+
+**Is Clef compatible with the Jev API?**
+
+Yes, in Construct's test. The same requests written for Jev, with Choice, Score and Noul questions and JSON state, ran on Clef and Clef-flash after changing only the model ID to @cf/cloudflare/clef or @cf/cloudflare/clef-flash. All 702 Clef calls returned valid answers. One difference: Clef's confidence field is not the winning label's probability, so read the probabilities map.
+
+**Is Clef deterministic?**
+
+In Construct's test, yes. Each of 117 cases was sent three times, and Clef and Clef-flash returned the identical probability on every repeat. The probability Jev's decisions act on moved by up to 0.10 between identical calls, and two cases changed verdict. Cloudflare attributes this to a non-autoregressive decision step that samples no text.
+
+**How much does Clef cost compared with Jev?**
+
+List prices per million input tokens are $0.24 for Clef, $0.09 for Clef-flash and $0.042 for Jev, with output free on all three. Clef counted 28% fewer tokens than Jev for the same requests in Construct's test, so a million decisions cost about $93 on Clef, $35 on Clef-flash and $23 on Jev.
+
+**Do Jev thresholds work on Clef?**
+
+Not reliably. In Construct's test the most accurate threshold for a tool-call risk decision was 0.49 on Jev, 0.22 on Clef and 0.31 on Clef-flash, against 0.80 in production. Clef-flash scored 82.1% on Jev's thresholds and 90.6% with thresholds chosen for it on held-out cases. Swap the model in shadow, log probabilities, and set each threshold again.
+
+**How fast is Clef?**
+
+Cloudflare reports a median of 209 ms for Clef and 38.8 ms for Clef-flash, against 524 ms for Jev. Construct's benchmark could not confirm or dispute that, because it called the models through Cloudflare's REST API from a laptop, a path with a floor of about 340 ms for every model. On that path the medians were 654 ms for Clef, 449 ms for Clef-flash and 454 ms for Jev.
+
+**When should you use Clef-flash instead of Clef?**
+
+Use Clef-flash for high-volume gates that only skip or lower something, with thresholds measured for it. In Construct's test it reached 90.6% with its own thresholds, level with Jev, at about a third of Clef's price. Use Clef, at a high threshold, for anything that merges, deletes or sends, because Clef-flash was too eager on lookalike names.
 ## Zen Mode: some days you just want it done
 
 URL: https://construct.computer/blog/zen-mode/
