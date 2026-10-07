@@ -123,7 +123,7 @@ export function AccountPage() {
     return <AccountSkeleton />;
   }
   if (status === "anonymous" || !user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login/" replace />;
   }
 
   async function act(

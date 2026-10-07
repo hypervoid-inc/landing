@@ -92,7 +92,7 @@ export function AccountPanelBody({
 
       <div className="my-1 h-px bg-[#eff3f5]" />
 
-      <Link to="/account" className={itemClassName} onClick={onNavigate}>
+      <Link to="/account/" className={itemClassName} onClick={onNavigate}>
         <span className="min-w-0 truncate">Account</span>
         <span aria-hidden className="site-nav-item-arrow">
           →

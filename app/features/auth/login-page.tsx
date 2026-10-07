@@ -73,7 +73,7 @@ export function LoginPage() {
         window.location.href = getAppOrigin();
         return;
       }
-      navigate(planIntent ? `/account?plan=${planIntent}` : "/account", {
+      navigate(planIntent ? `/account/?plan=${planIntent}` : "/account/", {
         replace: true,
       });
     }

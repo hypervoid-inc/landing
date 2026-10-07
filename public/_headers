@@ -46,8 +46,8 @@
 /openapi.json
   Access-Control-Allow-Origin: *
 
-https://construct-landing.pages.dev/*
+https://landing-new-9q7.pages.dev/*
   X-Robots-Tag: noindex, nofollow
 
-https://:version.construct-landing.pages.dev/*
+https://:version.landing-new-9q7.pages.dev/*
   X-Robots-Tag: noindex, nofollow

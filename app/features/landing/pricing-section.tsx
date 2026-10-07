@@ -109,7 +109,7 @@ function PricingCta({
               interval,
               source: `pricing-${planId}`,
             });
-            window.location.href = `/account?plan=${planId}`;
+            window.location.href = `/account/?plan=${planId}`;
           }
         })();
       }}
