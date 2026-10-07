@@ -356,7 +356,7 @@ function AccessDialog({
     clearPostLoginWelcome();
     if (plan) {
       onOpenChange(false);
-      navigate(`/account?plan=${plan}`, { replace: true });
+      navigate(`/account/?plan=${plan}`, { replace: true });
       return;
     }
     setPhase("success");
@@ -541,7 +541,7 @@ function AccessDialog({
                   <>
                     Already have an account? The same buttons sign you in.{" "}
                     <a
-                      href={plan ? `/login?plan=${plan}` : "/login"}
+                      href={plan ? `/login/?plan=${plan}` : "/login/"}
                       className="whitespace-nowrap text-[#01b4c8] underline underline-offset-2"
                     >
                       Full sign-in page
@@ -551,7 +551,7 @@ function AccessDialog({
                   <>
                     Need a password reset or to create an account?{" "}
                     <a
-                      href={plan ? `/login?plan=${plan}` : "/login"}
+                      href={plan ? `/login/?plan=${plan}` : "/login/"}
                       className="whitespace-nowrap text-[#01b4c8] underline underline-offset-2"
                     >
                       Full sign-in page
@@ -856,7 +856,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
     if (!payload) return;
 
     if (payload.plan) {
-      navigate(`/account?plan=${payload.plan}`, { replace: true });
+      navigate(`/account/?plan=${payload.plan}`, { replace: true });
       return;
     }
 
