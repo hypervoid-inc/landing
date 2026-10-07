@@ -3,7 +3,19 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-10-06T00:00:00Z</updated>
+  <updated>2026-10-07T00:00:00Z</updated>
+  <entry>
+    <title>Construct vs Lindy</title>
+    <id>https://construct.computer/blog/construct-vs-lindy/</id>
+    <link href="https://construct.computer/blog/construct-vs-lindy/"/>
+    <author><name>Construct Team</name></author>
+    <published>2026-10-07T00:00:00Z</published>
+    <updated>2026-10-07T00:00:00Z</updated>
+    <category term="comparison"/>
+    <category term="ai-employee"/>
+    <category term="small-business"/>
+    <summary>Construct vs Lindy on pricing, where each works, memory, activity records, and model keys. Lindy starts at $29.99 per user; Construct starts at $9.</summary>
+  </entry>
   <entry>
     <title>Muse for Small Business alternatives: 9 AI agents for work</title>
     <id>https://construct.computer/blog/muse-for-small-business-alternatives/</id>

@@ -59,6 +59,234 @@ Finished work lands in the workspace as it is produced, so a run that dies at st
 
 # Resources
 
+## Construct vs Lindy
+
+URL: https://construct.computer/blog/construct-vs-lindy/
+Type: comparison
+Author: Construct Team
+Published: 2026-10-07
+Tags: comparison, ai-employee, small-business
+
+Construct gives you an AI employee with its own workspace, files, schedules, and email address from $9 a month, and one plan covers your whole team. Lindy charges per user: Plus is $29.99 a month for each person, with 3,000 credits, and anyone who @mentions Lindy in Slack takes a seat ([Lindy plan documentation](https://docs.lindy.ai/pricing)).
+
+For most founders and small teams, Construct is the better buy. It starts at less than a third of Lindy's per-seat price, adds teammates without adding seats, keeps finished work in files you can reopen next week, and saves progress when a run stops partway. Already using Lindy in Slack? Keep it for inbox and meeting help and give Construct the recurring reports and research. The two run side by side.
+
+Start with Construct for $9
+
+## Why choose Construct over Lindy?
+
+- **$9 a month for the workspace, not $29.99 per person.** Construct Lite includes 2 agents, 3 scheduled tasks, and an agent email address. Starter at $59 covers up to 5 agents for everyone in the workspace.
+- **Teammates without seats.** Invite people as Owner, Admin, or Member. A team workspace has no member limit, and everyone's work draws on the owner's plan. On Lindy, every person who uses it is billed a seat.
+- **Work that lives in files.** Reports, spreadsheets, and scripts land in workspace files as the agent produces them, so a run that stops at step 30 still leaves steps 1 to 29 behind. Lindy's documentation that we reviewed does not describe what happens to a task that fails partway.
+- **Your own model keys.** Construct Pro runs on your keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI. Supplying your own API keys is not documented in the Lindy pages we reviewed.
+- **Schedules that run with your laptop closed.** Calendar schedules run on Construct's servers: 3 on Lite, 10 on Starter, 50 on Pro. Saved workflows can be rerun by anyone on the team.
+- **It answers beyond Slack.** Web, Slack, Telegram, Discord, and its own email inbox, with the same agent, files, and memory behind each one.
+
+## What is Lindy?
+
+Lindy is an AI teammate built around Slack. Its [quickstart](https://docs.lindy.ai/start-here/quickstart) describes two modes: a shared Lindy that the team summons with an @mention in channels, and a private Lindy in each person's direct messages for inbox, meetings, and scheduling.
+
+- **Other channels:** [iMessage and SMS](https://docs.lindy.ai/features/imessage-sms), a Chrome extension, and a web [Home](https://docs.lindy.ai/teammate/home) page with a chat box.
+- **Features listed on every plan:** scheduled Routines, meeting notes, computer use, approvals, and access to every model ([Lindy pricing](https://www.lindy.ai/pricing)).
+- **Output:** Slack threads, drafts in your connected mailbox, and [Artifact](https://docs.lindy.ai/teammate/artifacts) pages on a `lindy.link` address.
+- **History:** Lindy's [changelog](https://www.lindy.ai/changelog) records Lindy 3.0 in August 2025, with an agent builder and an "Autopilot" cloud computer. The current documentation centers on Lindy Teammate in Slack, which is the product we compare here.
+
+## Methodology
+
+We build Construct. This is our editorial comparison of documented capabilities and published prices, checked on **October 1, 2026**. It is not a hands-on performance benchmark. We read Lindy's pricing page, its documentation, and its changelog. Where Lindy's own pages disagree with each other, we report both. Where a capability is not documented in the pages we reviewed, we say "not documented" rather than claiming it is absent.
+
+## Construct vs Lindy: features at a glance
+
+| Capability                | Construct                                                                                    | Lindy                                                                          |
+| ------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Entry price               | $9 a month (Lite)                                                                            | $29.99 a month per user (Plus)                                                 |
+| Pricing model             | One monthly plan for the workspace, sized by usage, agents, and steps per task               | Per user, with credits pooled across the workspace                             |
+| Team use                  | Team workspaces with Owner, Admin, and Member roles; no member limit and no per-seat fee      | Anyone who uses Lindy, including by @mention in Slack, takes a seat            |
+| Model                     | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro  | Every model on every plan; own API keys not documented                         |
+| Memory                    | Inspect, correct, or forget any stored fact                                                  | Memory files you can edit, with version history                                |
+| Where finished work lives | Workspace files your team can open; a stopped run keeps its finished steps                   | Slack threads, mailbox drafts, and Artifact pages; partial runs not documented |
+| Recurring work            | Calendar schedules and saved workflows: 3 on Lite, 10 on Starter, 50 on Pro                  | Scheduled Routines                                                             |
+| Internal apps             | Builds private workspace apps such as review queues and trackers                             | Artifact pages on a `lindy.link` address                                       |
+| Ways to reach it          | Web, Slack, Telegram, Discord, and its own email inbox                                       | Slack, iMessage and SMS, Chrome extension, web chat                            |
+| Apps                      | Live integration catalog plus your own MCP tools, a live browser, and a sandbox terminal     | Over a thousand tools, MCP servers, and browser use                            |
+| Approvals                 | Agent asks when unsure in chat; ask for drafts on customer-facing jobs                       | Write actions can require approval in Slack, set per action                    |
+| Activity records          | Activity records each action with a short reason for a limited window, plus workflow run history | Home activity stats; audit logs listed on Enterprise                           |
+
+Sources: Lindy's [pricing page](https://www.lindy.ai/pricing), [plan documentation](https://docs.lindy.ai/pricing), [memory](https://docs.lindy.ai/teammate/memory), [integrations](https://docs.lindy.ai/integrations/overview), and [Home](https://docs.lindy.ai/teammate/home) docs. Construct's [product guide](/blog/ai-employee/) and [pricing](/pricing/).
+
+## How much does each cost?
+
+Construct is priced per plan, not per person. Lindy is priced per user, with a credit allowance that pools across the workspace. These are USD prices billed monthly, without annual discounts.
+
+| Plan              | Monthly price    | What you get                                                                                    |
+| ----------------- | ---------------- | ----------------------------------------------------------------------------------------------- |
+| Construct Lite    | $9               | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address                       |
+| Construct Starter | $59              | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                           |
+| Construct Pro     | $299             | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys  |
+| Lindy Plus        | $29.99 per user  | 3,000 credits per user                                                                          |
+| Lindy Pro         | $99.99 per user  | 15,000 credits per user                                                                         |
+| Lindy Max         | $199.99 per user | 35,000 credits per user                                                                         |
+| Lindy Enterprise  | Contact sales    | Adds HIPAA with a signed BAA, audit logs, dedicated support                                      |
+
+Sources: [Construct pricing](/pricing/), [Lindy pricing](https://www.lindy.ai/pricing), and [Lindy plan documentation](https://docs.lindy.ai/pricing). Lindy's docs round its plans to $30, $100, and $200.
+
+How Lindy's billing works, from its own documentation:
+
+- **Seats.** "Anyone who uses Lindy takes a seat, whether they sign up directly, join your workspace, or @mention Lindy in Slack." New Slack joiners get a 7-day free trial before the seat is billed.
+- **Credits.** A credit is about one cent. Everyday tasks cost 2 to 250 credits, deep work 250 to 1,000, and major projects 1,000 to 2,500. Credits pool across the workspace and do not roll over.
+- **Running out.** When the pool is empty, Lindy pauses until the next cycle. Admins can buy top-ups at $10 per 1,000 credits, and if overages are enabled, the [usage docs](https://docs.lindy.ai/account-billing/usage) say they are charged at twice the regular credit cost.
+- **Free start.** Lindy's [homepage](https://www.lindy.ai/) offers $50 of free credits. Construct offers a 7-day Pro trial.
+
+Lindy's own pages disagree on two Plus limits. The pricing page lists computer use on every plan, while the plan documentation shows it on Pro, Max, and Enterprise only. The plan documentation caps connected inboxes at 2 on Plus, 3 on Pro, and 5 on Max, while the [email drafting guide](https://docs.lindy.ai/features/inbox-management/email-drafting) says "You can connect as many inboxes as you like." Confirm both with Lindy before choosing Plus.
+
+What this means for your budget:
+
+- **A solo founder:** Construct Lite costs $20.99 a month less than one Lindy Plus seat. At Lindy's published ranges, a Plus seat's 3,000 credits cover about 12 deep-work tasks at 250 credits each, or 3 at 1,000.
+- **A team of three:** Lindy Plus for three people is $89.97 a month before top-ups. Construct Starter at $59 covers up to 5 agents for the whole workspace, and adding a fourth or fifth teammate costs nothing extra.
+- **Growing the team:** on Construct, the plan grows with the work, not the headcount. On Pro, your own model keys bill you directly when they are used.
+
+These are illustrative figures from published prices and limits, not measured usage.
+
+Try Construct Pro free for 7 days
+
+## Where does Construct give you more control?
+
+Both products are sold as AI employees. Lindy lives where your team talks. Construct gives the agent a place to work, and gives you a say in where the work ends up, who can use it, and what model it runs on.
+
+### Give the agent a place to work
+
+Construct runs each agent in a persistent cloud workspace with files, a live browser, a sandbox terminal, and its own email address. A report, a spreadsheet, or a script it writes is saved as a file you can open, edit, and hand back next week. A weekly brief that starts from last week's file, with last week's corrections, gets better over time. The [product guide](/blog/ai-employee/) shows what a run leaves behind.
+
+### Keep progress when a run stops
+
+Finished work lands in the workspace as it is produced. A run that stops at step 30 keeps steps 1 to 29, and the next run picks up from what already exists instead of starting over. Workflow run history keeps step results and retry information, and agent steps link back to their chat sessions.
+
+### Add teammates without adding seats
+
+A Construct team workspace has Owner, Admin, and Member roles and no member limit. Everyone shares the same agent, files, and conversations, and their work draws on the owner's plan. Bring in a contractor for a month without buying a seat.
+
+    Your browser does not support this video. The description below explains the
+    demo.
+
+    Silent product demo: Construct's workspace settings for inviting teammates
+    and controlling access, so people, the agent, files, apps, and shared
+    conversations sit in one workspace.
+
+### Bring your own model keys
+
+Construct Pro accepts your own keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, and xAI, either as a fallback after bundled limits or for every run, as the [Construct terms](/terms/) explain. Teams with existing provider accounts or credits can put them to work, and switch providers later without moving a single file.
+
+### Read and correct what it remembers
+
+Construct lets you open stored memory, correct a fact, or forget it, so a changed client preference does not keep resurfacing. That memory sits alongside the workspace files and workflows the agent uses, so one correction reaches every later job. The [memory guide](/blog/ai-agent-memory/) shows how.
+
+### Reach it from more places than Slack
+
+Construct takes work from the web app, Slack, Telegram, Discord, and its own email inbox. If clients send requests by email or your team coordinates in a Telegram group, the agent takes the work there, and the result lands in the same workspace.
+
+## Can Construct work in Slack like Lindy?
+
+Yes, for the requests your team sends it. Add Construct to your Slack workspace and it answers when you @mention it in a channel, keeps working in the thread that mention started, and takes direct messages. It does not read the rest of a channel, and scheduled runs report in the Construct web app with a notification rather than posting into Slack.
+
+Lindy is built around Slack, with a shared teammate in channels and a private one in each person's DMs ([Lindy quickstart](https://docs.lindy.ai/start-here/quickstart)). Construct treats Slack as one of five channels, so the same agent, files, and memory are there when work arrives by email, Telegram, or Discord.
+
+## Running the same job on both
+
+{/* TODO: Hands-on test, not yet run. Do not publish this section until it is filled in with real results.
+Test: inbox triage into drafts.
+Setup: one Gmail inbox seeded with the same 30 emails (10 needing a reply, 10 newsletters or notifications, 5 client requests needing a file or link, 5 scheduling requests).
+Lindy: Plus seat, connect Gmail, create three labels ("Reply needed", "FYI", "Archive") with instructions, enable Email Drafting. Record credits used from the usage page.
+Construct: Lite, connect Gmail through the integration catalog, prompt: "Read the last 30 emails in my Gmail inbox. Label each one Reply needed, FYI, or Archive. For every Reply needed email, write a draft reply in my voice and save it as a Gmail draft. Do not send anything. Save a summary file listing each email, its label, and whether a draft was created." Verify first that Construct's Gmail integration can create Gmail drafts.
+Record for each: setup time, run time, labels correct out of 30, drafts usable without edits out of 10, anything sent by mistake, cost (credits x $0.01 for Lindy; share of plan usage for Construct).
+Add screenshots of both drafts folders. */}
+
+We have not run this test yet. When we do, we will publish the setup time, run time, accuracy, and cost of the same inbox triage job on both products.
+
+Here is how the Construct side runs, as an illustrative walkthrough rather than a measured result. Forward the week's client requests to the agent's own email address from your account address. Ask it to sort them into Reply needed, FYI, and Archive, save a summary file, and write a draft reply for each Reply needed email without sending anything. Check the first file, then save the steps as a workflow and put a weekday inbox check on the Calendar, where it uses one of Lite's 3 scheduled tasks. The [workflow guide](/blog/ai-workflow-automation/) walks through each step.
+
+## Already using Lindy? Add Construct in 15 minutes
+
+You do not have to give up Lindy. Start with the one recurring job that costs you the most credits, or the one your teammates need to see as a file.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test your own model keys and longer runs.
+2. **Copy the instructions and Routine prompt** into a Construct chat, along with any Lindy memory you want to keep, and move the source files into the workspace.
+3. **Connect the apps** the job needs from the integration catalog, or add them as custom MCP tools.
+4. **Run it once and check the result** in Files.
+5. **Put it on the Calendar** so it runs on schedule whether or not anyone is online. A time-based Routine maps onto a saved workflow plus a Calendar schedule.
+
+There is no import: Lindy's credits, built-in inbox features, meeting recordings, iMessage threads, and Artifact pages stay in Lindy. Event triggers such as "an email received" become a scheduled check on Construct. One thing to set up deliberately: Construct's workflows do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself once you have checked them.
+
+## When might Lindy still fit?
+
+- Your whole team works inside Slack and each person wants a private assistant in their DMs for inbox and meetings.
+- You need per-action approval before every write, or HIPAA with a signed BAA on Enterprise.
+- You want to text your agent over iMessage or SMS.
+
+For recurring team work that needs files, schedules, a choice of model, and a price that does not grow with every new teammate, Construct is the better fit.
+
+## Which should you choose?
+
+Choose Construct. It starts at $9 instead of $29.99 per person, covers the whole team without seats, keeps every finished file in a workspace the agent returns to, saves progress when a run stops, and runs on your own model keys on Pro. If your team already uses Lindy in Slack, keep it for inbox and meeting help and let Construct run the reports and research your team depends on.
+
+Pick the weekly report or research brief that keeps landing in your evening, give Construct the inputs, and judge the saved file. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+Give Construct its first job
+
+## Sources
+
+- [Lindy pricing](https://www.lindy.ai/pricing)
+- [Lindy plan documentation](https://docs.lindy.ai/pricing)
+- [Lindy usage and credits](https://docs.lindy.ai/account-billing/usage)
+- [Lindy homepage](https://www.lindy.ai/)
+- [What is Lindy?](https://docs.lindy.ai/)
+- [Lindy quickstart](https://docs.lindy.ai/start-here/quickstart)
+- [Lindy Home](https://docs.lindy.ai/teammate/home)
+- [Lindy memory](https://docs.lindy.ai/teammate/memory)
+- [Lindy Routines](https://docs.lindy.ai/teammate/routines)
+- [Lindy Artifacts](https://docs.lindy.ai/teammate/artifacts)
+- [Lindy integrations and approvals](https://docs.lindy.ai/integrations/overview)
+- [Lindy email drafting](https://docs.lindy.ai/features/inbox-management/email-drafting)
+- [Lindy email labeling](https://docs.lindy.ai/features/inbox-management/email-triage)
+- [Lindy iMessage and SMS](https://docs.lindy.ai/features/imessage-sms)
+- [Lindy changelog](https://www.lindy.ai/changelog)
+- [Construct pricing](/pricing/)
+- [Construct terms, including BYOK](/terms/)
+- [Construct product guide](/blog/ai-employee/)
+
+## Related resources
+
+- [What is an AI agent with its own computer?](/blog/ai-agent-with-its-own-computer/)
+- [Construct vs ChatGPT Dots](/blog/construct-vs-openai-dots/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)
+- [AI workflow automation](/blog/ai-workflow-automation/)
+- [Grok Bot alternative: Construct vs Grok Bot](/blog/grokbot-alternative/)
+
+### Frequently asked questions
+
+**Is Construct a good Lindy alternative?**
+
+Yes, for founders and small teams with recurring work. Construct starts at $9 a month instead of $29.99 per user, covers the whole team without seats, keeps finished work in workspace files, saves progress when a run stops partway, and runs on your own model keys on Pro.
+
+**Is Construct cheaper than Lindy?**
+
+Yes at the entry level. Construct Lite is $9 a month, while Lindy Plus is $29.99 a month per user with 3,000 credits. For a team of three, Lindy Plus is $89.97 a month before top-ups, while Construct Starter at $59 covers up to 5 agents for the whole workspace with no member limit.
+
+**Can I use Construct alongside Lindy?**
+
+Yes. Keep Lindy for inbox and meeting help in Slack and give Construct the recurring reports and research. There is no import, so copy the instructions and Routine prompt into Construct, connect the apps, run the job once, and then put it on the Calendar.
+
+**Can Construct work in Slack like Lindy?**
+
+Yes, for the requests your team sends it. Construct answers @mentions in Slack channels, keeps working in that thread, and takes direct messages. It does not read the rest of a channel, and scheduled runs report in the Construct web app with a notification. It also answers on the web, Telegram, Discord, and its own email inbox.
+
+**How does Lindy pricing work?**
+
+Lindy charges per user: Plus is $29.99, Pro is $99.99, and Max is $199.99 a month, with 3,000, 15,000, and 35,000 credits per user. Anyone who uses Lindy takes a seat, credits pool across the workspace, and work pauses when the pool runs out unless you buy top-ups.
+
+**When does Lindy still make sense?**
+
+When your whole team works inside Slack and each person wants a private assistant in their DMs, when you need per-action approval before every write or HIPAA with a signed BAA on Enterprise, or when you want to text your agent over iMessage or SMS.
 ## Muse for Small Business alternatives: 9 AI agents for work
 
 URL: https://construct.computer/blog/muse-for-small-business-alternatives/
