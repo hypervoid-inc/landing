@@ -8,6 +8,9 @@ minimumReleaseAgeExclude:
   - "@posthog/browser-common@0.5.0"
   - "@posthog/core@1.48.1"
   - "@posthog/types@1.404.1"
+  # Dependabot's PostHog group bump (d6268d5); the official SDK, a few days
+  # short of a stricter local maturity window. Safe to drop after 2026-10-05.
+  - posthog-js@1.434.14
   # Security fix for GHSA-qwww-vcr4-c8h2; reviewed before the normal maturity window.
   - react-router@8.3.0
   - "@react-router/dev@8.3.0"
