@@ -206,7 +206,11 @@ function FooterColumn({
   );
 }
 
+const LAUNCH_LLAMA_LISTING =
+  "https://tools.launchllama.co/products/construct-computer?utm_source=badge&utm_medium=referral";
+
 export function SiteFooter() {
+  const { pathname } = useLocation();
   return (
     <footer className="relative isolate overflow-hidden border-t border-[#e5e7eb] bg-[#fafafa]">
       <div className="page-rail mx-auto w-full px-5 sm:px-6 lg:px-16">
@@ -285,9 +289,32 @@ export function SiteFooter() {
                 <span className="footer-affiliate-badge-rate">50%</span>
               </span>
             </Link>
+            {/* Launch Llama keeps a free listing only while the homepage links
+                back. Their checker reads the homepage, so the badge sits here
+                once and the other pages stay clean. Self-hosted so visitors
+                make no request to their host. */}
+            {pathname === "/" ? (
+              <a
+                href={LAUNCH_LLAMA_LISTING}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-directory-listing="launch-llama"
+                className="inline-flex shrink-0"
+              >
+                <img
+                  src="/assets/landing/badges/launch-llama.webp"
+                  alt="Featured on Launch Llama Tools"
+                  width={204}
+                  height={54}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-10 w-auto sm:h-[54px]"
+                />
+              </a>
+            ) : null}
           </div>
           <p className="text-xs leading-[18px] text-[#8a9aa2]">
-            © {new Date().getFullYear()} Construct
+            © {new Date().getFullYear()} Construct Computer
           </p>
         </div>
       </div>
