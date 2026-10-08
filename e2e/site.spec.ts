@@ -643,6 +643,34 @@ test("reopens welcome from seeded post-login flag when authenticated", async ({
   ).toHaveCount(0);
 });
 
+test("shows the Launch Llama badge in the homepage footer only", async ({
+  page,
+}) => {
+  // The free listing is delisted if this link disappears from the homepage.
+  await page.goto("/");
+  const listing = page.locator('footer a[href*="tools.launchllama.co"]');
+  await expect(listing).toHaveCount(1);
+  await expect(listing).toHaveAttribute(
+    "href",
+    "https://tools.launchllama.co/products/construct-computer?utm_source=badge&utm_medium=referral",
+  );
+  await listing.scrollIntoViewIfNeeded();
+  const badge = listing.getByRole("img", {
+    name: "Featured on Launch Llama Tools",
+  });
+  await expect(badge).toBeVisible();
+  await expect
+    .poll(() =>
+      badge.evaluate((node: HTMLImageElement) => node.naturalWidth > 0),
+    )
+    .toBe(true);
+
+  for (const path of ["/pricing/", "/blog/"]) {
+    await page.goto(path);
+    await expect(page.locator('a[href*="launchllama"]')).toHaveCount(0);
+  }
+});
+
 test("keeps the mobile footer compact and aligned", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
@@ -657,8 +685,9 @@ test("keeps the mobile footer compact and aligned", async ({ page }) => {
 
   // Inline newsletter (name + email + Turnstile) is taller than the old CTA link.
   // Two Product Hunt badges sit in a row so they do not stack the footer.
+  // The homepage adds one Launch Llama badge row under the affiliate unit.
   // CI Linux fonts sit a few px taller than macOS.
-  expect(footer?.height).toBeLessThan(1100);
+  expect(footer?.height).toBeLessThan(1140);
   const footerBadges = page.locator(
     'footer [data-product-hunt-proof="footer"] .ph-proof-badge',
   );
