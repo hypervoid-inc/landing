@@ -4,6 +4,17 @@
     <link>https://construct.computer/blog/</link>
     <description>AI employee guides, practical articles, and comparisons from Construct Computer.</description>
     <item>
+      <title>How to Give an AI Agent Its Own Email Address</title>
+      <link>https://construct.computer/blog/ai-agent-email-address/</link>
+      <guid>https://construct.computer/blog/ai-agent-email-address/</guid>
+      <description>Three ways to give an AI agent its own inbox: a product with a native agent address, a developer email API, or delegated Gmail access. Trade-offs and steps.</description>
+      <dc:creator>Nischal</dc:creator>
+      <category>ai-agent</category>
+      <category>email</category>
+      <category>ai-employee</category>
+      <pubDate>Thu, 08 Oct 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Construct vs Lindy</title>
       <link>https://construct.computer/blog/construct-vs-lindy/</link>
       <guid>https://construct.computer/blog/construct-vs-lindy/</guid>
