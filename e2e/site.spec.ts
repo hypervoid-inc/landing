@@ -1724,14 +1724,20 @@ test("every landing button responds to a real click", async ({
       await links.nth(index).evaluate((element) => {
         element.scrollIntoView({ block: "center", inline: "nearest" });
       });
+      const dialog = page.getByRole("dialog");
+      // Held as a handle: on a slow runner the click can land and still
+      // report a timeout, and the open dialog then hides every link behind it
+      // from role queries, so looking the link up again would wait forever.
+      const link = await links.nth(index).elementHandle();
       try {
         await links.nth(index).click({ timeout: 2_000 });
       } catch {
-        await links.nth(index).evaluate((element) => {
-          (element as HTMLAnchorElement).click();
-        });
+        if ((await dialog.count()) === 0) {
+          await link?.evaluate((element) => {
+            (element as HTMLAnchorElement).click();
+          });
+        }
       }
-      const dialog = page.getByRole("dialog");
       await expect(
         dialog.getByRole("heading", { name: /Create your Construct account/i }),
         `${name} #${index + 1}`,
