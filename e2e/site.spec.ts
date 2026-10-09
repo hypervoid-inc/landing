@@ -1,6 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page, type Route } from "@playwright/test";
 
+import { directoryListings } from "../app/content/directory-listings";
 import { resourceEntries } from "../app/content/resources";
 import {
   landingFaq,
@@ -643,31 +644,109 @@ test("reopens welcome from seeded post-login flag when authenticated", async ({
   ).toHaveCount(0);
 });
 
-test("shows the Launch Llama badge in the homepage footer only", async ({
+test("drifts the directory badges through the homepage footer only", async ({
   page,
 }) => {
-  // The free listing is delisted if this link disappears from the homepage.
+  // A free listing is delisted if its link disappears from the homepage.
   await page.goto("/");
-  const listing = page.locator('footer a[href*="tools.launchllama.co"]');
-  await expect(listing).toHaveCount(1);
-  await expect(listing).toHaveAttribute(
-    "href",
-    "https://tools.launchllama.co/products/construct-computer?utm_source=badge&utm_medium=referral",
+  const strip = page.locator("footer [data-directory-strip]");
+  await strip.scrollIntoViewIfNeeded();
+  await expect(strip.locator("[data-directory-listing]")).toHaveCount(
+    directoryListings.length,
   );
-  await listing.scrollIntoViewIfNeeded();
-  const badge = listing.getByRole("img", {
-    name: "Featured on Launch Llama Tools",
-  });
-  await expect(badge).toBeVisible();
-  await expect
-    .poll(() =>
-      badge.evaluate((node: HTMLImageElement) => node.naturalWidth > 0),
-    )
-    .toBe(true);
+  for (const listing of directoryListings) {
+    const link = strip.locator(`[data-directory-listing="${listing.id}"]`);
+    await expect(link).toHaveAttribute("href", listing.href);
+    await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    const badge = link.getByRole("img", { name: listing.alt });
+    await expect(badge).toBeVisible();
+    await expect
+      .poll(() =>
+        badge.evaluate((node: HTMLImageElement) => node.naturalWidth > 0),
+      )
+      .toBe(true);
+  }
+
+  // Small and out of the way: under the 54px Product Hunt badges, and on
+  // desktop inline to their left.
+  const box = await strip.boundingBox();
+  expect(box?.height).toBeLessThanOrEqual(46);
+  expect(box?.width).toBeLessThanOrEqual(450);
+  // Row height comes from the affiliate badge: the Product Hunt pair is still
+  // sliding up into place when the footer first scrolls into view.
+  const proof = await page
+    .locator('footer [data-product-hunt-proof="footer"]')
+    .boundingBox();
+  const affiliate = await page
+    .locator("footer .footer-affiliate-badge")
+    .boundingBox();
+  expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(proof?.x ?? 0);
+  expect(box?.y).toBeGreaterThanOrEqual(affiliate?.y ?? 0);
+  expect((box?.y ?? 0) + (box?.height ?? 0)).toBeLessThanOrEqual(
+    (affiliate?.y ?? 0) + (affiliate?.height ?? 0),
+  );
+
+  // The loop copy is for sighted mouse users only.
+  const clone = strip.locator("[aria-hidden] a");
+  await expect(clone).toHaveCount(directoryListings.length);
+  for (const link of await clone.all()) {
+    await expect(link).toHaveAttribute("tabindex", "-1");
+  }
+  const group = strip.locator("ul");
+  await expect(group).toHaveCSS("animation-name", "directory-strip-slide");
+
+  // Keyboard focus stops the loop and brings each badge inside the strip.
+  // The strip sits just before the Product Hunt badges in the tab order.
+  await page
+    .locator('footer [data-product-hunt-proof="footer"] a')
+    .first()
+    .focus();
+  for (const listing of [...directoryListings].reverse()) {
+    await page.keyboard.press("Shift+Tab");
+    const link = strip.locator(`[data-directory-listing="${listing.id}"]`);
+    await expect(link).toBeFocused();
+    await expect(group).toHaveCSS("animation-name", "none");
+    const linkBox = await link.boundingBox();
+    const stripBox = await strip.boundingBox();
+    expect(linkBox?.x).toBeGreaterThanOrEqual((stripBox?.x ?? 0) - 1);
+    expect((linkBox?.x ?? 0) + (linkBox?.width ?? 0)).toBeLessThanOrEqual(
+      (stripBox?.x ?? 0) + (stripBox?.width ?? 0) + 1,
+    );
+  }
+
+  // Motion off: one static copy, nothing sliding.
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(group).toHaveCSS("animation-name", "none");
+  await expect(strip.locator("[aria-hidden]")).toBeHidden();
+
+  // Too narrow for one line: the strip gets a centred line of its own under
+  // the badges, never a ragged spot beside one of them.
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  for (const width of [700, 860, 1120]) {
+    await page.setViewportSize({ width, height: 900 });
+    const stacked = await strip.boundingBox();
+    const badge = await page
+      .locator("footer .footer-affiliate-badge")
+      .boundingBox();
+    const copyright = await page
+      .locator("footer")
+      .getByText(/^©/)
+      .boundingBox();
+    const centre = (rect: typeof stacked) =>
+      (rect?.x ?? 0) + (rect?.width ?? 0) / 2;
+    expect(Math.abs(centre(stacked) - width / 2)).toBeLessThan(2);
+    expect(Math.abs(centre(copyright) - width / 2)).toBeLessThan(2);
+    expect(stacked?.y).toBeGreaterThan((badge?.y ?? 0) + (badge?.height ?? 0));
+    expect(copyright?.y).toBeGreaterThan(
+      (stacked?.y ?? 0) + (stacked?.height ?? 0),
+    );
+  }
 
   for (const path of ["/pricing/", "/blog/"]) {
     await page.goto(path);
+    await expect(page.locator("[data-directory-strip]")).toHaveCount(0);
     await expect(page.locator('a[href*="launchllama"]')).toHaveCount(0);
+    await expect(page.locator('a[href*="huzzler"]')).toHaveCount(0);
   }
 });
 
@@ -684,16 +763,34 @@ test("keeps the mobile footer compact and aligned", async ({ page }) => {
   const comparisons = await comparisonsNav.boundingBox();
 
   // Inline newsletter (name + email + Turnstile) is taller than the old CTA link.
-  // Two Product Hunt badges sit in a row so they do not stack the footer.
-  // The homepage adds one Launch Llama badge row under the affiliate unit.
+  // The Product Hunt badges stack at the affiliate badge's size, a phone
+  // cannot fit two side by side without shrinking them.
+  // The homepage adds one slim directory strip under the affiliate badge.
   // CI Linux fonts sit a few px taller than macOS.
-  expect(footer?.height).toBeLessThan(1140);
+  expect(footer?.height).toBeLessThan(1200);
   const footerBadges = page.locator(
     'footer [data-product-hunt-proof="footer"] .ph-proof-badge',
   );
-  const daily = await footerBadges.nth(0).boundingBox();
-  const weekly = await footerBadges.nth(1).boundingBox();
-  expect(Math.abs((daily?.y ?? 0) - (weekly?.y ?? 0))).toBeLessThan(2);
+  const affiliateBadge = page.locator("footer .footer-affiliate-badge");
+  await affiliateBadge.scrollIntoViewIfNeeded();
+  // Polled: the Product Hunt pair slides up into place as the footer arrives.
+  await expect
+    .poll(async () => {
+      const daily = await footerBadges.nth(0).boundingBox();
+      const weekly = await footerBadges.nth(1).boundingBox();
+      const affiliate = await affiliateBadge.boundingBox();
+      if (!daily || !weekly || !affiliate) return "missing";
+      if (weekly.y <= daily.y + daily.height) return "daily over weekly";
+      if (affiliate.y <= weekly.y + weekly.height)
+        return "weekly over affiliate";
+      for (const badge of [daily, weekly]) {
+        if (Math.abs(badge.x - affiliate.x) >= 2) return "misaligned";
+        if (Math.abs(badge.width - affiliate.width) >= 2) return "width";
+        if (Math.abs(badge.height - affiliate.height) >= 2) return "height";
+      }
+      return "stacked";
+    })
+    .toBe("stacked");
   expect(Math.abs((company?.y ?? 0) - (comparisons?.y ?? 0))).toBeLessThan(2);
   expect(comparisons?.x).toBeGreaterThan((company?.x ?? 0) + 100);
   await expect(companyNav).toHaveCSS("align-items", "center");
@@ -1571,12 +1668,14 @@ test.skip("keeps the landing hero clear and reserves lazy media space", async ({
   expect(boxesOverlap(chat, startNow)).toBe(false);
   expect(boxesOverlap(chip, startNow)).toBe(false);
   // Cards are coded scenes, so their size comes from CSS aspect ratios.
-  await expect(
-    page.locator(".feature-grid .feature-card").first(),
-  ).toHaveCSS("aspect-ratio", "1 / 1");
-  await expect(
-    page.locator(".feature-grid .feature-card-wide"),
-  ).toHaveCSS("aspect-ratio", "712 / 346");
+  await expect(page.locator(".feature-grid .feature-card").first()).toHaveCSS(
+    "aspect-ratio",
+    "1 / 1",
+  );
+  await expect(page.locator(".feature-grid .feature-card-wide")).toHaveCSS(
+    "aspect-ratio",
+    "712 / 346",
+  );
   const grid = await page.locator(".feature-grid").boundingBox();
   const wideCard = await page
     .locator(".feature-grid .feature-card-wide")

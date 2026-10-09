@@ -66,7 +66,7 @@
 }
 
 .ph-proof--footer {
-  /* Two 250px badges + the row gap, shrinking to the rail on small screens. */
+  /* Two 250px badges + the row gap. */
   width: min(calc(500px + 0.3rem), 100%);
 }
 
@@ -78,6 +78,28 @@
 
 .ph-proof--footer .ph-proof-link {
   width: min(250px, calc((100% - 0.3rem) / 2));
+}
+
+/*
+ * Under 545px the rail cannot hold both badges at full size. Squeezing them
+ * into one row left them smaller than the affiliate badge below, so they
+ * stack instead, each the same 250px as that badge, on the footer's own
+ * stack gap.
+ */
+@media (max-width: 544.98px) {
+  .ph-proof--footer {
+    width: min(250px, 100%);
+  }
+
+  .ph-proof--footer .ph-proof-badges {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .ph-proof--footer .ph-proof-link {
+    width: 100%;
+  }
 }
 
 .ph-proof--footer .ph-proof-badge,
