@@ -1,0 +1,372 @@
+/*
+ * Social manager feature card. Authored on a 540-unit card
+ * (1u = card width / 540), traced from the source video.
+ *
+ * Two independent clocks:
+ *   chip rows   7.934s  each row drifts one chip period, alternating sides
+ *   posts       3.3s    a post pops out of the button, rises and tilts,
+ *                       floats, then leaves through the top; the second
+ *                       post runs 1.6s behind, so they alternate forever
+ */
+
+.social {
+  --u: calc(100cqw / 540);
+  /* Post cards are drawn 8.3% larger than the scene grid. */
+  --pu: calc(100cqw / 498.6);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: inline-size;
+  background: radial-gradient(
+    circle farthest-corner at 180% -100%,
+    #fff 53.7%,
+    #fdfefe 59.5%,
+    #d3f1f5 65.3%,
+    #a7e4eb 71.1%,
+    #7ed8e2 76.9%,
+    #50cad8 82.7%,
+    #27becf 88.4%,
+    #20bbcd 100%
+  );
+  font-family: "Inter Variable", var(--font-sans);
+  text-align: left;
+  color: #fff;
+}
+
+/* Chip grid */
+.social-rows {
+  position: absolute;
+  inset: 0;
+}
+
+.social-row {
+  position: absolute;
+  left: 0;
+  top: calc((15.5 + var(--row) * 59.2) * var(--u));
+  width: 100%;
+  height: calc(45 * var(--u));
+  will-change: transform;
+  animation: social-row-left 7.934s linear infinite;
+}
+
+.social-row:nth-child(even) {
+  animation-name: social-row-right;
+}
+
+/* Lower rows sink into a progressive blur. */
+.social-row:nth-child(7) {
+  filter: blur(calc(2.5 * var(--u)));
+}
+.social-row:nth-child(8) {
+  filter: blur(calc(4.5 * var(--u)));
+}
+.social-row:nth-child(9) {
+  filter: blur(calc(6 * var(--u)));
+}
+
+.social-chip {
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: calc(14.6 * var(--u));
+  width: calc(var(--w) * var(--u));
+  height: 100%;
+  padding-left: calc(19.5 * var(--u));
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.2);
+  font-size: calc(19.6 * var(--u));
+  font-weight: 500;
+  line-height: 1;
+  color: rgb(66 92 99 / 0.42);
+  white-space: nowrap;
+}
+
+.social-chip svg {
+  width: calc(20.6 * var(--u));
+  height: calc(20.6 * var(--u));
+  flex: none;
+  fill: currentColor;
+}
+
+/* White wash across the top right, over the chips. */
+.social-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 100% 16%,
+    rgb(255 255 255 / 0.95) 0%,
+    rgb(255 255 255 / 0.8) 20%,
+    rgb(255 255 255 / 0.35) 40%,
+    rgb(255 255 255 / 0) 60%
+  );
+}
+
+/* Posts */
+.social-posts {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social-post {
+  position: absolute;
+  left: calc(-120 * var(--pu));
+  top: calc(-58 * var(--pu));
+  width: calc(240 * var(--pu));
+  height: calc(116 * var(--pu));
+  border-radius: calc(23 * var(--pu));
+  background: #fff;
+  box-shadow: 0 calc(10 * var(--pu)) calc(24 * var(--pu)) rgb(0 70 90 / 0.18);
+  color: #333;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.social-avatar {
+  position: absolute;
+  left: calc(23.2 * var(--pu));
+  top: calc(20.9 * var(--pu));
+  width: calc(32.7 * var(--pu));
+  height: calc(32.7 * var(--pu));
+  border-radius: calc(7.3 * var(--pu));
+  object-fit: cover;
+}
+
+.social-name {
+  position: absolute;
+  left: calc(63.6 * var(--pu));
+  top: calc(22 * var(--pu));
+  font-size: calc(11.8 * var(--pu));
+  line-height: 1.2;
+  color: #6b6b6b;
+  white-space: nowrap;
+}
+
+.social-handle {
+  position: absolute;
+  left: calc(63.6 * var(--pu));
+  top: calc(39.5 * var(--pu));
+  font-size: calc(8.2 * var(--pu));
+  line-height: 1.2;
+  color: #b9b9b9;
+}
+
+.social-mark {
+  position: absolute;
+  right: calc(20.5 * var(--pu));
+  top: calc(20.5 * var(--pu));
+  width: calc(21.8 * var(--pu));
+  height: calc(21.8 * var(--pu));
+}
+
+.social-mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: #0aa1c8;
+}
+
+.social-post-left .social-mark svg {
+  fill: #1877f2;
+}
+
+.social-text {
+  position: absolute;
+  left: calc(20 * var(--pu));
+  right: calc(18 * var(--pu));
+  top: calc(64 * var(--pu));
+  margin: 0;
+  font-size: calc(10 * var(--pu));
+  line-height: 1.32;
+}
+
+.social-text mark {
+  padding: calc(1.6 * var(--pu)) calc(2.7 * var(--pu));
+  border-radius: calc(2.7 * var(--pu));
+  background: #15b9cc;
+  color: #fff;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Plain cyan mound the button rests on, feathered and faded at its feet. */
+.social-hump {
+  position: absolute;
+  left: calc(31.5 * var(--u));
+  top: calc(230.5 * var(--u));
+  width: calc(480 * var(--u));
+  height: calc(200 * var(--u));
+  overflow: visible;
+  filter: blur(calc(3 * var(--u)));
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(0 0 0 / 0.18) 6%,
+    rgb(0 0 0 / 0.35) 12%,
+    rgb(0 0 0 / 0.54) 18%,
+    rgb(0 0 0 / 0.68) 24%,
+    rgb(0 0 0 / 0.7) 30%,
+    rgb(0 0 0 / 0.83) 37%,
+    #000 44%,
+    #000 56%,
+    rgb(0 0 0 / 0.83) 63%,
+    rgb(0 0 0 / 0.7) 70%,
+    rgb(0 0 0 / 0.68) 76%,
+    rgb(0 0 0 / 0.54) 82%,
+    rgb(0 0 0 / 0.35) 88%,
+    rgb(0 0 0 / 0.18) 94%,
+    transparent 100%
+  );
+  mask: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(0 0 0 / 0.18) 6%,
+    rgb(0 0 0 / 0.35) 12%,
+    rgb(0 0 0 / 0.54) 18%,
+    rgb(0 0 0 / 0.68) 24%,
+    rgb(0 0 0 / 0.7) 30%,
+    rgb(0 0 0 / 0.83) 37%,
+    #000 44%,
+    #000 56%,
+    rgb(0 0 0 / 0.83) 63%,
+    rgb(0 0 0 / 0.7) 70%,
+    rgb(0 0 0 / 0.68) 76%,
+    rgb(0 0 0 / 0.54) 82%,
+    rgb(0 0 0 / 0.35) 88%,
+    rgb(0 0 0 / 0.18) 94%,
+    transparent 100%
+  );
+}
+
+.social-hump-edge {
+  position: absolute;
+  left: calc(31.5 * var(--u));
+  top: calc(230.5 * var(--u));
+  width: calc(480 * var(--u));
+  height: calc(200 * var(--u));
+  overflow: visible;
+  fill: none;
+  stroke: #fff;
+  stroke-opacity: 0.8;
+  stroke-width: calc(1.3 * var(--u));
+  vector-effect: non-scaling-stroke;
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent 4%,
+    rgb(0 0 0 / 0.55) 22%,
+    #000 36%,
+    #000 64%,
+    rgb(0 0 0 / 0.55) 78%,
+    transparent 96%
+  );
+  mask: linear-gradient(
+    90deg,
+    transparent 4%,
+    rgb(0 0 0 / 0.55) 22%,
+    #000 36%,
+    #000 64%,
+    rgb(0 0 0 / 0.55) 78%,
+    transparent 96%
+  );
+}
+
+.social-sparkles {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  fill: #fff;
+}
+
+.social-spark {
+  animation: social-twinkle 2.4s ease-in-out infinite alternate;
+}
+.social-spark-1 {
+  animation-delay: -0.8s;
+}
+.social-spark-2 {
+  animation-delay: -1.6s;
+}
+
+.social-button {
+  position: absolute;
+  left: calc(212.5 * var(--u));
+  top: calc(274 * var(--u));
+  width: calc(118 * var(--u));
+  height: calc(118 * var(--u));
+  border-radius: 50%;
+  background: linear-gradient(180deg, #2fd0dc 0%, #10b5c6 55%, #0a9fb2 100%);
+  box-shadow:
+    0 calc(8 * var(--u)) calc(16 * var(--u)) rgb(0 90 105 / 0.32),
+    inset 0 calc(2 * var(--u)) calc(2 * var(--u)) rgb(255 255 255 / 0.35);
+}
+
+/* Lighter inner face */
+.social-button::before {
+  content: "";
+  position: absolute;
+  inset: calc(11.5 * var(--u));
+  border-radius: 50%;
+  background: linear-gradient(180deg, #8fe8ee 0%, #3ccbd8 38%, #15bacb 100%);
+  box-shadow: inset 0 calc(-3 * var(--u)) calc(6 * var(--u))
+    rgb(0 120 140 / 0.2);
+}
+
+.social-button-mascot {
+  position: absolute;
+  left: calc(32.5 * var(--u));
+  top: calc(33 * var(--u));
+  width: calc(53 * var(--u));
+  height: calc(52 * var(--u));
+}
+
+.social-title {
+  position: absolute;
+  left: calc(52.5 * var(--u));
+  top: calc(431 * var(--u));
+  margin: 0;
+  font-size: calc(31.7 * var(--u));
+  font-weight: 400;
+  line-height: calc(38 * var(--u));
+  color: #fff;
+}
+
+.social[data-paused] :is(.social-row, .social-spark) {
+  animation-play-state: paused;
+}
+
+@keyframes social-row-left {
+  to {
+    transform: translateX(calc(-468.5 * var(--u)));
+  }
+}
+
+@keyframes social-row-right {
+  from {
+    transform: translateX(calc(-468.5 * var(--u)));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes social-twinkle {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reduced motion: a settled scene with one post on show. */
+@media (prefers-reduced-motion: reduce) {
+  .social :is(.social-row, .social-spark) {
+    animation: none;
+  }
+}

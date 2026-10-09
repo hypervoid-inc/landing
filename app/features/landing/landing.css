@@ -756,7 +756,9 @@
   }
 }
 
-@media (min-width: 640px) and (max-width: 1023px) {
+/* 1023.98px, not 1023px: zoomed browsers can land on fractional widths
+   between this and the lg (1024px) grid, which left one huge column. */
+@media (min-width: 640px) and (max-width: 1023.98px) {
   .feature-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-auto-flow: dense;

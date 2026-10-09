@@ -1,0 +1,545 @@
+/*
+ * Schedules feature card. Layout is authored on a 540-unit-wide card
+ * (1u = card width / 540) so the whole scene scales with the bento cell.
+ * Positions, colors, and timings were measured from the 2160px source video.
+ *
+ * One 6.534s loop:
+ *   0.01s  table glides in from the right            -> 1.04s
+ *   0.45s  week labels focus in                      -> 0.90s
+ *   0.78s  date wipes in left to right, unblurring   -> 1.08s
+ *   0.80s  week range chip focuses in                -> 1.05s
+ *   1.02s  pills rise in, staged right and small     (60ms stagger)
+ *   1.36s  pills slide home and grow to full size    (130ms stagger, ~1.2s)
+ *   1.70s  sparkle dots grow out from the table edges -> 2.55s
+ *   2.90s  pills bob about 1.5u, out of phase        -> 5.40s
+ *   5.43s  table drops out of the card               -> 5.95s
+ * Keyframe percentages are those times divided by the loop length.
+ */
+
+.sched {
+  --loop: 6.534s;
+  --u: calc(100cqw / 540);
+  --float: cubic-bezier(0.45, 0, 0.55, 1);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: inline-size;
+  background: radial-gradient(
+    circle farthest-corner at 290% 300%,
+    #fff 73%,
+    #e2f6f8 76.5%,
+    #c3edf1 79.9%,
+    #a4e3eb 83.2%,
+    #83dae3 86.6%,
+    #61cfdc 89.9%,
+    #3fc5d4 93.3%,
+    #1fbccd 96.6%,
+    #00b3c7 100%
+  );
+  /* The fontsource package registers "Inter Variable"; name it so the card
+     matches the reference instead of falling back to the system face. */
+  font-family: "Inter Variable", var(--font-sans);
+  text-align: left;
+  color: #fff;
+}
+
+.sched-title {
+  position: absolute;
+  left: calc(52.9 * var(--u));
+  top: calc(40.15 * var(--u));
+  margin: 0;
+  width: calc(340 * var(--u));
+  font-size: calc(31.1 * var(--u));
+  font-weight: 400;
+  line-height: calc(37.3 * var(--u));
+  letter-spacing: 0;
+  color: #fff;
+}
+
+/* Table group: plate, header, pills, and dots travel together. */
+.sched-table {
+  position: absolute;
+  left: calc(137.5 * var(--u));
+  top: calc(132.25 * var(--u));
+  width: calc(420 * var(--u));
+  height: calc(620 * var(--u));
+  will-change: transform;
+  animation: sched-table var(--loop) linear infinite both;
+}
+
+.sched-plate {
+  --line: rgb(255 255 255 / 0.16);
+  --hair: max(1px, calc(1 * var(--u)));
+  position: absolute;
+  inset: 0;
+  border: calc(6 * var(--u)) solid #01b4c8;
+  border-top-left-radius: calc(30 * var(--u));
+  background:
+    linear-gradient(var(--line), var(--line)) 0 calc(37.75 * var(--u)) / 100%
+      var(--hair) no-repeat,
+    repeating-linear-gradient(
+        to bottom,
+        transparent 0 calc(91 * var(--u)),
+        var(--line) calc(91 * var(--u)) calc(92 * var(--u))
+      )
+      0 calc(9.75 * var(--u)) / 100% 100% no-repeat,
+    linear-gradient(var(--line), var(--line)) calc(42.5 * var(--u)) 0 /
+      var(--hair) 100% no-repeat,
+    #01b4c8;
+  box-shadow:
+    inset 0 0 0 calc(2 * var(--u)) rgb(255 255 255 / 0.3),
+    inset calc(22 * var(--u)) 0 calc(26 * var(--u)) calc(-6 * var(--u))
+      rgb(255 255 255 / 0.55),
+    inset 0 calc(20 * var(--u)) calc(24 * var(--u)) calc(-6 * var(--u))
+      rgb(255 255 255 / 0.55),
+    inset calc(-60 * var(--u)) 0 calc(60 * var(--u)) calc(-18 * var(--u))
+      rgb(255 255 255 / 0.32);
+}
+
+.sched-week {
+  position: absolute;
+  right: calc(17.5 * var(--u));
+  top: calc((112.25 + var(--row) * 92) * var(--u));
+  font-size: calc(11.2 * var(--u));
+  line-height: 1;
+  color: rgb(255 255 255 / 0.32);
+  animation: sched-focus var(--loop) linear infinite both;
+}
+
+.sched-date {
+  position: absolute;
+  left: calc(69.9 * var(--u));
+  top: calc(63.9 * var(--u));
+  margin: 0;
+  font-size: calc(31 * var(--u));
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  -webkit-mask: linear-gradient(90deg, #000 33%, transparent 66%) 0 0 / 300%
+    100% no-repeat;
+  mask: linear-gradient(90deg, #000 33%, transparent 66%) 0 0 / 300% 100%
+    no-repeat;
+  animation: sched-date var(--loop) linear infinite both;
+}
+
+.sched-date sup {
+  position: relative;
+  top: -0.61em;
+  margin-left: 0.13em;
+  font-size: 0.65em;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+.sched-range {
+  position: absolute;
+  left: calc(319.5 * var(--u));
+  top: calc(66.75 * var(--u));
+  display: grid;
+  place-items: center;
+  width: calc(68 * var(--u));
+  height: calc(23 * var(--u));
+  border-radius: 999px;
+  background: linear-gradient(180deg, #acd9de, #98cfd6 55%, #a0d3d9);
+  box-shadow:
+    inset 0 calc(1 * var(--u)) calc(1 * var(--u)) rgb(255 255 255 / 0.55),
+    inset 0 calc(-1 * var(--u)) calc(1 * var(--u)) rgb(255 255 255 / 0.3);
+  font-size: calc(13.5 * var(--u));
+  line-height: 1;
+  animation: sched-range var(--loop) linear infinite both;
+}
+
+/* Task pills */
+.sched-tasks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sched-pill {
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  width: calc(371 * var(--u));
+  height: calc(70 * var(--u));
+  border-radius: 999px;
+  background: linear-gradient(180deg, #cdfbff 0%, #b9eef6 45%, #86ccec 100%);
+  box-shadow:
+    0 calc(14 * var(--u)) calc(24 * var(--u)) calc(-8 * var(--u))
+      rgb(0 92 124 / 0.28),
+    inset 0 calc(1 * var(--u)) 0 rgb(255 255 255 / 0.85);
+  transform-origin: left center;
+  will-change: transform, opacity;
+}
+
+.sched-pill:nth-child(1) {
+  --shine-delay: 0s;
+  --x: -2.5;
+  --y: 119.75;
+  animation: sched-pill-1 var(--loop) linear infinite both;
+}
+
+.sched-pill:nth-child(2) {
+  --shine-delay: 0.2s;
+  --x: -41.5;
+  --y: 213.75;
+  animation: sched-pill-2 var(--loop) linear infinite both;
+}
+
+.sched-pill:nth-child(3) {
+  --shine-delay: 0.4s;
+  --x: -101.5;
+  --y: 311.75;
+  animation: sched-pill-3 var(--loop) linear infinite both;
+}
+
+/* Glass body: light inner glow at every edge over a deeper teal middle. */
+.sched-pill-body {
+  position: absolute;
+  inset: calc(4 * var(--u)) calc(4 * var(--u)) calc(7 * var(--u))
+    calc(5 * var(--u));
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      rgb(255 255 255 / 0.28) 0%,
+      rgb(255 255 255 / 0) 30%,
+      rgb(255 255 255 / 0) 78%,
+      rgb(255 255 255 / 0.32) 100%
+    ),
+    linear-gradient(180deg, #8adde6 0%, #74d5e0 30%, #48c8d7 62%, #5dcfdc 100%);
+  box-shadow:
+    inset 0 calc(5 * var(--u)) calc(8 * var(--u)) rgb(255 255 255 / 0.45),
+    inset 0 calc(-3 * var(--u)) calc(6 * var(--u)) rgb(255 255 255 / 0.25),
+    0 calc(1 * var(--u)) calc(2 * var(--u)) rgb(0 120 150 / 0.18);
+}
+
+.sched-chip {
+  position: absolute;
+  left: calc(12 * var(--u));
+  top: calc(12 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(6.5 * var(--u));
+  height: calc(36 * var(--u));
+  padding: 0 calc(15 * var(--u)) 0 calc(10 * var(--u));
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f0fbfa, #e8f7fa);
+  box-shadow: 0 calc(1 * var(--u)) calc(2 * var(--u)) rgb(0 110 140 / 0.12);
+  font-size: calc(17.3 * var(--u));
+  line-height: 1;
+  color: #08a8bf;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.sched-mascot {
+  width: calc(20 * var(--u));
+  height: calc(20 * var(--u));
+  flex: none;
+  filter: drop-shadow(
+    calc(1 * var(--u)) calc(1.5 * var(--u)) calc(1 * var(--u))
+      rgb(40 80 130 / 0.25)
+  );
+}
+
+.sched-label {
+  --shine: 60%;
+  position: absolute;
+  left: calc(154.5 * var(--u));
+  top: calc(50% + 1.6 * var(--u));
+  transform: translateY(-50%);
+  font-size: calc(22.9 * var(--u));
+  line-height: 1.2;
+  white-space: nowrap;
+  /* A soft lighter band sweeps across the label continuously. The tile is
+     twice the label width, so shifting it by 200% loops seamlessly. */
+  background: linear-gradient(
+      90deg,
+      #fff 19%,
+      rgb(255 255 255 / 0.5) 23.5%,
+      rgb(255 255 255 / 0.5) 26.5%,
+      #fff 31%
+    )
+    var(--shine) 0 / 200% 100% repeat-x;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Continuous "thinking" shimmer on its own clock, not the scene loop. */
+  animation: sched-shine 2.2s linear infinite both;
+  animation-delay: var(--shine-delay);
+}
+
+/* Sparkle dots: each band grows out from behind its table edge. */
+.sched-dots {
+  position: absolute;
+  left: calc(-40 * var(--u));
+  top: calc(-30 * var(--u));
+  width: calc(360 * var(--u));
+  height: calc(380 * var(--u));
+  overflow: visible;
+  fill: #fff;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.sched-dots-top {
+  transform-origin: 0 calc(30 * var(--u));
+  animation: sched-dots-top var(--loop) linear infinite both;
+}
+
+.sched-dots-left {
+  transform-origin: calc(40 * var(--u)) 0;
+  animation: sched-dots-left var(--loop) linear infinite both;
+}
+
+.sched[data-paused]
+  :is(
+    .sched-table,
+    .sched-week,
+    .sched-date,
+    .sched-range,
+    .sched-pill,
+    .sched-dots,
+    .sched-label
+  ) {
+  animation-play-state: paused;
+}
+
+@keyframes sched-table {
+  0%,
+  0.21% {
+    transform: translate(calc(403.5 * var(--u)), 0);
+    animation-timing-function: cubic-bezier(0.6, -0.1, 0.05, 0.96);
+  }
+  15.87%,
+  83.13% {
+    transform: translate(0, 0);
+    animation-timing-function: cubic-bezier(0.65, 0, 0.2, 0.78);
+  }
+  91.03%,
+  100% {
+    transform: translate(0, calc(440 * var(--u)));
+  }
+}
+
+@keyframes sched-focus {
+  0%,
+  6.89% {
+    opacity: 0;
+    filter: blur(calc(5 * var(--u)));
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  13.77%,
+  100% {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+@keyframes sched-range {
+  0%,
+  12.24% {
+    opacity: 0;
+    filter: blur(calc(5 * var(--u)));
+    animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  16.07%,
+  100% {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+@keyframes sched-date {
+  0%,
+  11.94% {
+    opacity: 0;
+    filter: blur(calc(8 * var(--u)));
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+    animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  16.53%,
+  100% {
+    opacity: 1;
+    filter: none;
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+
+/*
+ * Pills: rise in (blurred, small, staged right), slide home on the fitted
+ * curve, then bob. The bob offsets are the measured chip drift in card units.
+ */
+@keyframes sched-pill-1 {
+  0%,
+  15.61% {
+    opacity: 0;
+    filter: blur(calc(6 * var(--u)));
+    transform: translate(calc(172.4 * var(--u)), calc(21.5 * var(--u)))
+      scale(0.87);
+    animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  20.8% {
+    opacity: 1;
+    filter: none;
+    transform: translate(calc(172.4 * var(--u)), calc(3.5 * var(--u)))
+      scale(0.87);
+    animation-timing-function: cubic-bezier(0.5, 0.05, 0.016, 0.946);
+  }
+  38.78%,
+  45.15% {
+    opacity: 1;
+    filter: none;
+    transform: translate(0, 0) scale(1);
+    animation-timing-function: var(--float);
+  }
+  50.5%,
+  59.69% {
+    transform: translate(0, calc(-1.5 * var(--u))) scale(1);
+    animation-timing-function: var(--float);
+  }
+  65.04%,
+  70.4% {
+    transform: translate(0, 0) scale(1);
+    animation-timing-function: var(--float);
+  }
+  78.05%,
+  100% {
+    opacity: 1;
+    filter: none;
+    transform: translate(0, calc(-1.4 * var(--u))) scale(1);
+  }
+}
+
+@keyframes sched-pill-2 {
+  0%,
+  16.53% {
+    opacity: 0;
+    filter: blur(calc(6 * var(--u)));
+    transform: translate(calc(259.4 * var(--u)), calc(25 * var(--u)))
+      scale(0.87);
+    animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  22.19%,
+  22.82% {
+    opacity: 1;
+    filter: none;
+    transform: translate(calc(259.4 * var(--u)), calc(7 * var(--u))) scale(0.87);
+    animation-timing-function: cubic-bezier(0.463, 0.064, 0, 0.971);
+  }
+  41.57%,
+  44.38% {
+    opacity: 1;
+    filter: none;
+    transform: translate(0, 0) scale(1);
+    animation-timing-function: var(--float);
+  }
+  48.97%,
+  52.04% {
+    transform: translate(0, calc(1.7 * var(--u))) scale(1);
+    animation-timing-function: var(--float);
+  }
+  64.28%,
+  72.7% {
+    transform: translate(0, 0) scale(1);
+    animation-timing-function: var(--float);
+  }
+  81.88%,
+  100% {
+    opacity: 1;
+    filter: none;
+    transform: translate(0, calc(1.4 * var(--u))) scale(1);
+  }
+}
+
+@keyframes sched-pill-3 {
+  0%,
+  17.45% {
+    opacity: 0;
+    filter: blur(calc(6 * var(--u)));
+    transform: translate(calc(292.4 * var(--u)), calc(25 * var(--u)))
+      scale(0.87);
+    animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  23.72%,
+  24.73% {
+    opacity: 1;
+    filter: none;
+    transform: translate(calc(292.4 * var(--u)), calc(7 * var(--u))) scale(0.87);
+    animation-timing-function: cubic-bezier(0.5, 0.032, 0.011, 0.945);
+  }
+  43.23%,
+  48.97% {
+    opacity: 1;
+    filter: none;
+    transform: translate(0, 0) scale(1);
+    animation-timing-function: var(--float);
+  }
+  55.86%,
+  59.69% {
+    transform: translate(0, calc(1.5 * var(--u))) scale(1);
+    animation-timing-function: var(--float);
+  }
+  68.87%,
+  100% {
+    opacity: 1;
+    filter: none;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes sched-shine {
+  from {
+    background-position-x: var(--shine);
+  }
+  to {
+    background-position-x: calc(var(--shine) - 200%);
+  }
+}
+
+@keyframes sched-dots-top {
+  0%,
+  26.02% {
+    opacity: 0;
+    transform: scaleY(0.15);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  37.5%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sched-dots-left {
+  0%,
+  27.55% {
+    opacity: 0;
+    transform: scaleX(0.15);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  39.03%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Reduced motion: hold the settled frame. */
+@media (prefers-reduced-motion: reduce) {
+  .sched
+    :is(
+      .sched-table,
+      .sched-week,
+      .sched-date,
+      .sched-range,
+      .sched-pill,
+      .sched-dots,
+      .sched-label
+    ) {
+    animation: none;
+  }
+}
