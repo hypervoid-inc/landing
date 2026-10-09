@@ -1,0 +1,188 @@
+/*
+ * Automations feature card, laid out in art pixels on a 1384-wide card
+ * (--u = one art pixel). Deck cards set 1em to one pixel of the card
+ * design asset, so their insides are written in em. The deck and the
+ * circuit traces are animated from JS with the Web Animations API.
+ */
+
+.auto {
+  --u: calc(100cqw / 1384);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: inline-size;
+  background: linear-gradient(180deg, #fefefe 0%, #00b3c5 100%);
+  font-family: "Inter Variable", var(--font-sans);
+  text-align: left;
+  color: #fff;
+}
+
+/*
+ * Rounded-tile backdrop, progressively blurred toward the bottom to match
+ * the backdrop blur over the deck.
+ */
+.auto-pattern {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  fill: none;
+  stroke: rgb(234 251 255 / 0.47);
+  stroke-width: 2;
+  -webkit-mask: linear-gradient(180deg, #000 48%, transparent 72%);
+  mask: linear-gradient(180deg, #000 48%, transparent 72%);
+}
+
+.auto-pattern-soft {
+  filter: blur(calc(7 * var(--u)));
+  -webkit-mask: linear-gradient(180deg, transparent 48%, #000 72%);
+  mask: linear-gradient(180deg, transparent 48%, #000 72%);
+}
+
+/* Circuit traces: white once drawn, led by a cyan head. */
+.auto-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.auto-trace,
+.auto-head {
+  fill: none;
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.auto-trace {
+  stroke: #fff;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+}
+
+.auto-head {
+  stroke: #00bccc;
+  opacity: 0;
+}
+
+.auto-trace-low {
+  opacity: 0.45;
+  filter: blur(calc(6 * var(--u)));
+}
+
+/* Deck */
+.auto-deck {
+  position: absolute;
+  inset: 0;
+}
+
+.auto-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1223em;
+  height: 972em;
+  font-size: var(--u);
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* Card face from the design art: rim, glow, task grid and haze. */
+.auto-face {
+  position: absolute;
+  left: 42em;
+  top: 138em;
+  width: 1140em;
+  height: 745em;
+  max-width: none;
+}
+
+.auto-mascot {
+  position: absolute;
+  left: 487em;
+  top: 286em;
+  width: 241em;
+  height: 236em;
+  max-width: none;
+}
+
+/*
+ * Progressive blur over the lower half, beneath the focused card: three
+ * backdrop layers, each blurring harder over a lower band. They stay inside the card's interior
+ * (the edges only hold the pre-blurred tiles) so the blur never samples
+ * past the card and darkens its rim.
+ */
+.auto-blur {
+  position: absolute;
+  z-index: 7;
+  left: calc(110 * var(--u));
+  right: calc(110 * var(--u));
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(
+      90deg,
+      transparent,
+      #000 calc(70 * var(--u)),
+      #000 calc(100% - 70 * var(--u)),
+      transparent
+    ),
+    linear-gradient(
+      180deg,
+      transparent,
+      #000 calc(140 * var(--u)),
+      #000 calc(100% - 140 * var(--u)),
+      transparent
+    );
+  -webkit-mask-composite: source-in;
+  mask:
+    linear-gradient(
+      90deg,
+      transparent,
+      #000 calc(70 * var(--u)),
+      #000 calc(100% - 70 * var(--u)),
+      transparent
+    ),
+    linear-gradient(
+      180deg,
+      transparent,
+      #000 calc(140 * var(--u)),
+      #000 calc(100% - 140 * var(--u)),
+      transparent
+    );
+  mask-composite: intersect;
+}
+
+.auto-blur-1 {
+  top: calc(460 * var(--u));
+  height: calc(680 * var(--u));
+  -webkit-backdrop-filter: blur(calc(6 * var(--u)));
+  backdrop-filter: blur(calc(6 * var(--u)));
+}
+
+.auto-blur-2 {
+  top: calc(620 * var(--u));
+  height: calc(630 * var(--u));
+  -webkit-backdrop-filter: blur(calc(14 * var(--u)));
+  backdrop-filter: blur(calc(14 * var(--u)));
+}
+
+.auto-blur-3 {
+  top: calc(760 * var(--u));
+  height: calc(560 * var(--u));
+  -webkit-backdrop-filter: blur(calc(26 * var(--u)));
+  backdrop-filter: blur(calc(26 * var(--u)));
+}
+
+.auto-title {
+  position: absolute;
+  z-index: 20;
+  left: calc(142 * var(--u));
+  top: calc(1073.5 * var(--u));
+  margin: 0;
+  font-size: calc(79.8 * var(--u));
+  font-weight: 400;
+  line-height: calc(93 * var(--u));
+  color: #fff;
+}

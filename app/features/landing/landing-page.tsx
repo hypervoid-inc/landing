@@ -10,6 +10,12 @@ import { StartLink } from "./beta-access";
 import { WALKTHROUGH_URL } from "./cta-links";
 import { ProductHuntProof } from "../product-hunt/product-hunt-proof";
 import { AutoVideo, useRevealOnView } from "./media";
+import { BentoCompare } from "./bento/bento-compare";
+import { AutomationsCard } from "./bento/automations-card";
+import { CloudCard } from "./bento/cloud-card";
+import { IntegrationsCard } from "./bento/integrations-card";
+import { SchedulesCard } from "./bento/schedules-card";
+import { SocialCard } from "./bento/social-card";
 import { mergePricingPlans, pricingFloorLabel } from "./merge-pricing-catalog";
 // Temporarily disabled, do not delete. Hero collage pointer parallax.
 // import { usePointerParallax } from "./use-pointer-parallax";
@@ -361,6 +367,21 @@ function AdaptsSection() {
   );
 }
 
+// Each capability card is a coded scene; the videos stay in the content
+// data as the reference the scenes were traced from.
+const featureScenes = {
+  schedules: SchedulesCard,
+  integrations: IntegrationsCard,
+  social: SocialCard,
+  cloud: CloudCard,
+  automations: AutomationsCard,
+} as const;
+
+function FeatureScene({ scene }: { scene: keyof typeof featureScenes }) {
+  const Scene = featureScenes[scene];
+  return <Scene />;
+}
+
 function FeatureGrid() {
   return (
     <section
@@ -371,6 +392,7 @@ function FeatureGrid() {
       <h2 id="capabilities-heading" className="sr-only">
         Construct capabilities
       </h2>
+      {import.meta.env.DEV ? <BentoCompare /> : null}
       <div className="feature-grid mx-auto grid w-full max-w-[1574px] grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-5">
         {featureCards.map((card, index) => (
           <div
@@ -378,16 +400,7 @@ function FeatureGrid() {
             className={`feature-card reveal-item relative block w-full overflow-hidden rounded-[18px] bg-white shadow-[0_8px_32px_rgba(71,156,223,.12)] ${card.wide ? "feature-card-wide lg:col-span-2" : ""}`}
             data-reveal-delay={String(Math.min(index, 3) + 1)}
           >
-            <AutoVideo
-              src={card.video}
-              webm={card.webm}
-              poster={card.poster}
-              label={card.alt}
-              width={card.wide ? 712 : 346}
-              height={346}
-              preload="auto"
-              className="absolute inset-0 size-full object-cover"
-            />
+            <FeatureScene scene={card.scene} />
           </div>
         ))}
       </div>

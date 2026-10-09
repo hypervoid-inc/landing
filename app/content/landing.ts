@@ -256,6 +256,7 @@ export type WorkflowDemo = (typeof workflowDemos)[number];
 
 export const featureCards = [
   {
+    scene: "schedules",
     video: "/assets/landing/features/schedules.mp4",
     webm: "/assets/landing/features/schedules.webm",
     poster: "/assets/landing/features/schedules-poster.webp",
@@ -263,6 +264,7 @@ export const featureCards = [
     wide: false,
   },
   {
+    scene: "integrations",
     video: "/assets/landing/features/integrations.mp4",
     webm: "/assets/landing/features/integrations.webm",
     poster: "/assets/landing/features/integrations-poster.webp",
@@ -270,6 +272,7 @@ export const featureCards = [
     wide: true,
   },
   {
+    scene: "social",
     video: "/assets/landing/features/social-manager.mp4",
     webm: "/assets/landing/features/social-manager.webm",
     poster: "/assets/landing/features/social-manager-poster.webp",
@@ -277,6 +280,7 @@ export const featureCards = [
     wide: false,
   },
   {
+    scene: "cloud",
     video: "/assets/landing/features/cloud-control.mp4",
     webm: "/assets/landing/features/cloud-control.webm",
     poster: "/assets/landing/features/cloud-control-poster.webp",
@@ -284,6 +288,7 @@ export const featureCards = [
     wide: false,
   },
   {
+    scene: "automations",
     video: "/assets/landing/features/automations.mp4",
     webm: "/assets/landing/features/automations.webm",
     poster: "/assets/landing/features/automations-poster.webp",

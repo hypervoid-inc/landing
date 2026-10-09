@@ -1,0 +1,692 @@
+/*
+ * Integrations feature card. Authored on a 1107-unit-wide card
+ * (1u = card width / 1107); geometry, colors, and speeds were traced from
+ * the source video. Only the icons move: each one flies its lane at a
+ * constant speed and grows as it nears the viewer, on a 10.068s cycle that
+ * two copies share half a cycle apart (one launch per lane every 5.034s).
+ */
+
+.integ {
+  --u: calc(100cqw / 1107);
+  --cycle: 10.068s;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: inline-size;
+  background: radial-gradient(
+    circle farthest-corner at 180% 615%,
+    #fdfefe 75.5%,
+    #dcf4f7 78.6%,
+    #bceaf0 81.7%,
+    #9ce1e9 84.7%,
+    #7dd8e2 87.8%,
+    #5ccedb 90.8%,
+    #3cc4d4 93.9%,
+    #1dbbcd 96.9%,
+    #01b3c7 100%
+  );
+  font-family: "Inter Variable", var(--font-sans);
+  text-align: left;
+  color: #fff;
+}
+
+.integ-scene {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.integ-beam-edge {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.4);
+  stroke-width: 1.4;
+}
+
+.integ-lane {
+  fill: none;
+  stroke: url(#integ-lane);
+  stroke-width: 1.6;
+  stroke-dasharray: 13 11;
+  stroke-linecap: round;
+}
+
+.integ-title {
+  position: absolute;
+  left: calc(59.8 * var(--u));
+  top: calc(47.8 * var(--u));
+  margin: 0;
+  font-size: calc(31.2 * var(--u));
+  font-weight: 400;
+  line-height: calc(37 * var(--u));
+  color: #fff;
+}
+
+/* Icon stream */
+.integ-icons {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Built at the largest size an icon reaches and scaled down, so the
+   compositor never upscales a small raster. */
+.integ-icon {
+  position: absolute;
+  left: calc(-80 * var(--u));
+  top: calc(-80 * var(--u));
+  width: calc(160 * var(--u));
+  height: calc(160 * var(--u));
+  border-radius: 50%;
+  will-change: transform;
+  animation: var(--flight) var(--cycle) linear infinite both;
+  animation-delay: var(--delay);
+}
+
+/* Glass ring around the disc, with a faint outer halo and a brighter rim
+   on the side facing the box. */
+.integ-icon::before,
+.integ-icon::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.integ-icon::before {
+  inset: calc(-43 * var(--u));
+  background: rgb(255 255 255 / 0.1);
+  box-shadow: inset 0 0 0 calc(1.5 * var(--u)) rgb(255 255 255 / 0.18);
+}
+
+.integ-icon::after {
+  inset: calc(-32 * var(--u));
+  background: radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.2) 70%,
+    rgb(255 255 255 / 0.32) 100%
+  );
+  box-shadow:
+    inset calc(-7 * var(--u)) calc(-2 * var(--u)) calc(5 * var(--u))
+      rgb(255 255 255 / 0.8),
+    inset calc(3 * var(--u)) calc(3 * var(--u)) calc(8 * var(--u))
+      rgb(0 150 175 / 0.12);
+}
+
+.integ-disc {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 calc(3 * var(--u)) calc(8 * var(--u)) rgb(0 110 135 / 0.16);
+}
+
+.integ-disc svg {
+  display: block;
+  width: var(--logo, 60%);
+  height: auto;
+}
+
+.integ-github {
+  --flight: integ-github;
+}
+.integ-github .integ-disc {
+  --logo: 100%;
+}
+.integ-meet {
+  --flight: integ-meet;
+  --logo: 59%;
+}
+.integ-telegram {
+  --flight: integ-telegram;
+  /* Wider box than the plane: its weight sits up-right, so it is nudged
+     left and down to look centered, as in the official mark. */
+  --logo: 62%;
+}
+.integ-slack {
+  --flight: integ-slack;
+  --logo: 63%;
+}
+.integ-gmail {
+  --flight: integ-gmail;
+  --logo: 60%;
+}
+.integ-discord {
+  --flight: integ-discord;
+  --logo: 72%;
+}
+.integ-drive {
+  --flight: integ-drive;
+  --logo: 54%;
+}
+
+/* Drive's ring carries a cyan glow in the reference. */
+.integ-drive::after {
+  background: radial-gradient(
+    circle,
+    rgb(150 248 255 / 0.85) 62%,
+    rgb(170 245 252 / 0.5) 78%,
+    rgb(255 255 255 / 0.25) 100%
+  );
+}
+
+/*
+ * Construct box, shaded from the design asset: each square has a thin
+ * bright edge whose light falls off inward, tighter along the top and
+ * left than along the bottom and right; a cyan halo rings the outer
+ * square and the inner one casts a soft shadow onto it.
+ */
+.integ-box {
+  position: absolute;
+  left: calc(862 * var(--u));
+  top: calc(30 * var(--u));
+  width: calc(490 * var(--u));
+  height: calc(478 * var(--u));
+  border-radius: calc(68 * var(--u));
+  background: #0bafc2;
+  box-shadow:
+    inset 0 0 0 calc(1.2 * var(--u)) rgb(255 255 255 / 0.8),
+    inset 0 0 calc(9 * var(--u)) calc(2 * var(--u)) rgb(255 255 255 / 0.42),
+    inset calc(5 * var(--u)) calc(5 * var(--u)) calc(36 * var(--u))
+      rgb(255 255 255 / 0.62),
+    inset calc(-8 * var(--u)) calc(-8 * var(--u)) calc(52 * var(--u))
+      rgb(255 255 255 / 0.62),
+    0 0 calc(40 * var(--u)) calc(4 * var(--u)) rgb(72 180 192 / 0.7),
+    0 calc(24 * var(--u)) calc(110 * var(--u)) rgb(40 40 40 / 0.1);
+}
+
+.integ-box-inner {
+  position: absolute;
+  left: calc(60 * var(--u));
+  top: calc(52 * var(--u));
+  width: calc(370 * var(--u));
+  height: calc(373 * var(--u));
+  border-radius: calc(52 * var(--u));
+  background: #00b3c7;
+  box-shadow:
+    inset 0 0 0 calc(1.2 * var(--u)) rgb(255 255 255 / 0.85),
+    inset 0 0 calc(8 * var(--u)) calc(1.5 * var(--u)) rgb(255 255 255 / 0.4),
+    inset calc(-6 * var(--u)) calc(-7 * var(--u)) calc(16 * var(--u))
+      calc(-2 * var(--u)) rgb(255 255 255 / 0.5),
+    inset calc(5 * var(--u)) calc(5 * var(--u)) calc(50 * var(--u))
+      rgb(255 255 255 / 0.6),
+    inset calc(-8 * var(--u)) calc(-8 * var(--u)) calc(66 * var(--u))
+      rgb(255 255 255 / 0.5),
+    0 calc(6 * var(--u)) calc(16 * var(--u)) rgb(0 90 105 / 0.35);
+}
+
+.integ-mascot {
+  position: absolute;
+  left: calc(93.8 * var(--u));
+  top: calc(96.4 * var(--u));
+  width: calc(183 * var(--u));
+  height: calc(179.5 * var(--u));
+  fill: #00b3c7;
+}
+
+.integ[data-paused] .integ-icon {
+  animation-play-state: paused;
+}
+
+/* Reduced motion: hold one moment of the stream. */
+@media (prefers-reduced-motion: reduce) {
+  .integ-icon {
+    animation-play-state: paused;
+  }
+}
+
+/* Generated from the traced lanes: fitted lane up to the last clean
+   sighting in the video, then its exit heading until off-card. */
+@keyframes integ-github {
+  0% {
+    transform: translate(calc(980 * var(--u)), calc(264.2 * var(--u)))
+      scale(0.4006);
+  }
+  5.333% {
+    transform: translate(calc(900.8 * var(--u)), calc(267.3 * var(--u)))
+      scale(0.4407);
+  }
+  10.666% {
+    transform: translate(calc(821.5 * var(--u)), calc(270.1 * var(--u)))
+      scale(0.4808);
+  }
+  15.999% {
+    transform: translate(calc(742.2 * var(--u)), calc(272.7 * var(--u)))
+      scale(0.5208);
+  }
+  21.332% {
+    transform: translate(calc(663 * var(--u)), calc(275 * var(--u)))
+      scale(0.5609);
+  }
+  26.665% {
+    transform: translate(calc(583.8 * var(--u)), calc(277.2 * var(--u)))
+      scale(0.6009);
+  }
+  31.998% {
+    transform: translate(calc(504.5 * var(--u)), calc(279 * var(--u)))
+      scale(0.641);
+  }
+  37.331% {
+    transform: translate(calc(425.3 * var(--u)), calc(280.7 * var(--u)))
+      scale(0.681);
+  }
+  42.664% {
+    transform: translate(calc(346 * var(--u)), calc(282 * var(--u)))
+      scale(0.7211);
+  }
+  47.997% {
+    transform: translate(calc(266.8 * var(--u)), calc(283.2 * var(--u)))
+      scale(0.7612);
+  }
+  53.330% {
+    transform: translate(calc(187.5 * var(--u)), calc(284.1 * var(--u)))
+      scale(0.8012);
+  }
+  58.663% {
+    transform: translate(calc(108.3 * var(--u)), calc(284.8 * var(--u)))
+      scale(0.8413);
+  }
+  63.996% {
+    transform: translate(calc(29 * var(--u)), calc(284.9 * var(--u)))
+      scale(0.8856);
+  }
+  69.329% {
+    transform: translate(calc(-50.2 * var(--u)), calc(284.7 * var(--u)))
+      scale(0.9328);
+  }
+  74.662%,
+  100% {
+    transform: translate(calc(-129.5 * var(--u)), calc(284.5 * var(--u)))
+      scale(0.9801);
+  }
+}
+
+@keyframes integ-meet {
+  0% {
+    transform: translate(calc(980 * var(--u)), calc(257.5 * var(--u)))
+      scale(0.3614);
+  }
+  4.764% {
+    transform: translate(calc(902.7 * var(--u)), calc(258.4 * var(--u)))
+      scale(0.3909);
+  }
+  9.528% {
+    transform: translate(calc(825.4 * var(--u)), calc(259.3 * var(--u)))
+      scale(0.4204);
+  }
+  14.293% {
+    transform: translate(calc(748.1 * var(--u)), calc(260 * var(--u)))
+      scale(0.4498);
+  }
+  19.057% {
+    transform: translate(calc(670.9 * var(--u)), calc(260.6 * var(--u)))
+      scale(0.4793);
+  }
+  23.821% {
+    transform: translate(calc(593.6 * var(--u)), calc(261.2 * var(--u)))
+      scale(0.5087);
+  }
+  28.585% {
+    transform: translate(calc(516.3 * var(--u)), calc(261.6 * var(--u)))
+      scale(0.5382);
+  }
+  33.350% {
+    transform: translate(calc(439 * var(--u)), calc(261.9 * var(--u)))
+      scale(0.5677);
+  }
+  38.114% {
+    transform: translate(calc(361.7 * var(--u)), calc(262.1 * var(--u)))
+      scale(0.5971);
+  }
+  42.878% {
+    transform: translate(calc(284.4 * var(--u)), calc(262.2 * var(--u)))
+      scale(0.6266);
+  }
+  47.642% {
+    transform: translate(calc(207.1 * var(--u)), calc(262.1 * var(--u)))
+      scale(0.656);
+  }
+  52.407% {
+    transform: translate(calc(129.9 * var(--u)), calc(262 * var(--u)))
+      scale(0.6855);
+  }
+  57.171% {
+    transform: translate(calc(52.6 * var(--u)), calc(261.8 * var(--u)))
+      scale(0.7145);
+  }
+  61.935% {
+    transform: translate(calc(-24.7 * var(--u)), calc(261.7 * var(--u)))
+      scale(0.74);
+  }
+  66.699%,
+  100% {
+    transform: translate(calc(-102 * var(--u)), calc(261.5 * var(--u)))
+      scale(0.7655);
+  }
+}
+
+@keyframes integ-telegram {
+  0% {
+    transform: translate(calc(980 * var(--u)), calc(191.6 * var(--u)))
+      scale(0.2949);
+  }
+  5.755% {
+    transform: translate(calc(900.5 * var(--u)), calc(178.3 * var(--u)))
+      scale(0.329);
+  }
+  11.509% {
+    transform: translate(calc(821.1 * var(--u)), calc(164.9 * var(--u)))
+      scale(0.3632);
+  }
+  17.264% {
+    transform: translate(calc(741.6 * var(--u)), calc(151.6 * var(--u)))
+      scale(0.3973);
+  }
+  23.018% {
+    transform: translate(calc(662.1 * var(--u)), calc(138.2 * var(--u)))
+      scale(0.4315);
+  }
+  28.773% {
+    transform: translate(calc(582.7 * var(--u)), calc(124.7 * var(--u)))
+      scale(0.4656);
+  }
+  34.527% {
+    transform: translate(calc(503.2 * var(--u)), calc(111.2 * var(--u)))
+      scale(0.4998);
+  }
+  40.282% {
+    transform: translate(calc(423.8 * var(--u)), calc(97.7 * var(--u)))
+      scale(0.5339);
+  }
+  46.036% {
+    transform: translate(calc(344.3 * var(--u)), calc(84.2 * var(--u)))
+      scale(0.5681);
+  }
+  51.791% {
+    transform: translate(calc(264.8 * var(--u)), calc(70.6 * var(--u)))
+      scale(0.6022);
+  }
+  57.545% {
+    transform: translate(calc(185.4 * var(--u)), calc(57 * var(--u)))
+      scale(0.6364);
+  }
+  63.300% {
+    transform: translate(calc(105.9 * var(--u)), calc(44.1 * var(--u)))
+      scale(0.7229);
+  }
+  69.054% {
+    transform: translate(calc(26.4 * var(--u)), calc(31.3 * var(--u)))
+      scale(0.8171);
+  }
+  74.809% {
+    transform: translate(calc(-53 * var(--u)), calc(18.5 * var(--u)))
+      scale(0.9112);
+  }
+  80.564%,
+  100% {
+    transform: translate(calc(-132.5 * var(--u)), calc(5.7 * var(--u)))
+      scale(1.0054);
+  }
+}
+
+@keyframes integ-slack {
+  0% {
+    transform: translate(calc(980 * var(--u)), calc(354.7 * var(--u)))
+      scale(0.282);
+  }
+  5.969% {
+    transform: translate(calc(900.4 * var(--u)), calc(357.2 * var(--u)))
+      scale(0.3152);
+  }
+  11.938% {
+    transform: translate(calc(820.8 * var(--u)), calc(362.7 * var(--u)))
+      scale(0.3485);
+  }
+  17.907% {
+    transform: translate(calc(741.2 * var(--u)), calc(371.3 * var(--u)))
+      scale(0.3818);
+  }
+  23.876% {
+    transform: translate(calc(661.6 * var(--u)), calc(382.9 * var(--u)))
+      scale(0.4151);
+  }
+  29.846% {
+    transform: translate(calc(582 * var(--u)), calc(397.6 * var(--u)))
+      scale(0.4483);
+  }
+  35.815% {
+    transform: translate(calc(502.4 * var(--u)), calc(415.2 * var(--u)))
+      scale(0.4816);
+  }
+  41.784% {
+    transform: translate(calc(422.8 * var(--u)), calc(435.9 * var(--u)))
+      scale(0.5149);
+  }
+  47.753% {
+    transform: translate(calc(343.1 * var(--u)), calc(459.6 * var(--u)))
+      scale(0.5482);
+  }
+  53.722% {
+    transform: translate(calc(263.5 * var(--u)), calc(486.7 * var(--u)))
+      scale(0.5852);
+  }
+  59.691% {
+    transform: translate(calc(183.9 * var(--u)), calc(519.4 * var(--u)))
+      scale(0.6728);
+  }
+  65.660% {
+    transform: translate(calc(104.3 * var(--u)), calc(552.2 * var(--u)))
+      scale(0.7603);
+  }
+  71.629% {
+    transform: translate(calc(24.7 * var(--u)), calc(584.9 * var(--u)))
+      scale(0.8478);
+  }
+  77.599% {
+    transform: translate(calc(-54.9 * var(--u)), calc(617.7 * var(--u)))
+      scale(0.9353);
+  }
+  83.568%,
+  100% {
+    transform: translate(calc(-134.5 * var(--u)), calc(650.4 * var(--u)))
+      scale(1.0228);
+  }
+}
+
+@keyframes integ-gmail {
+  0% {
+    transform: translate(calc(980 * var(--u)), calc(173.3 * var(--u)))
+      scale(0.1531);
+  }
+  6.063% {
+    transform: translate(calc(914.1 * var(--u)), calc(170.1 * var(--u)))
+      scale(0.1907);
+  }
+  12.125% {
+    transform: translate(calc(848.1 * var(--u)), calc(164.9 * var(--u)))
+      scale(0.2282);
+  }
+  18.188% {
+    transform: translate(calc(782.2 * var(--u)), calc(157.8 * var(--u)))
+      scale(0.2658);
+  }
+  24.251% {
+    transform: translate(calc(716.3 * var(--u)), calc(148.8 * var(--u)))
+      scale(0.3033);
+  }
+  30.314% {
+    transform: translate(calc(650.4 * var(--u)), calc(137.8 * var(--u)))
+      scale(0.3409);
+  }
+  36.376% {
+    transform: translate(calc(584.4 * var(--u)), calc(124.9 * var(--u)))
+      scale(0.3784);
+  }
+  42.439% {
+    transform: translate(calc(518.5 * var(--u)), calc(110.1 * var(--u)))
+      scale(0.416);
+  }
+  48.502% {
+    transform: translate(calc(452.6 * var(--u)), calc(93.3 * var(--u)))
+      scale(0.4536);
+  }
+  54.564% {
+    transform: translate(calc(386.6 * var(--u)), calc(74.6 * var(--u)))
+      scale(0.4911);
+  }
+  60.627% {
+    transform: translate(calc(320.7 * var(--u)), calc(50.8 * var(--u)))
+      scale(0.5322);
+  }
+  66.690% {
+    transform: translate(calc(254.8 * var(--u)), calc(13.5 * var(--u)))
+      scale(0.5877);
+  }
+  72.752% {
+    transform: translate(calc(188.9 * var(--u)), calc(-23.8 * var(--u)))
+      scale(0.6431);
+  }
+  78.815% {
+    transform: translate(calc(122.9 * var(--u)), calc(-61.2 * var(--u)))
+      scale(0.6986);
+  }
+  84.878%,
+  100% {
+    transform: translate(calc(57 * var(--u)), calc(-98.5 * var(--u)))
+      scale(0.754);
+  }
+}
+
+@keyframes integ-discord {
+  0% {
+    transform: translate(calc(980 * var(--u)), calc(331.8 * var(--u)))
+      scale(0.1842);
+  }
+  5.537% {
+    transform: translate(calc(921.7 * var(--u)), calc(326.8 * var(--u)))
+      scale(0.2285);
+  }
+  11.074% {
+    transform: translate(calc(863.4 * var(--u)), calc(326.8 * var(--u)))
+      scale(0.2728);
+  }
+  16.611% {
+    transform: translate(calc(805 * var(--u)), calc(331.6 * var(--u)))
+      scale(0.3171);
+  }
+  22.148% {
+    transform: translate(calc(746.7 * var(--u)), calc(341.5 * var(--u)))
+      scale(0.3613);
+  }
+  27.684% {
+    transform: translate(calc(688.4 * var(--u)), calc(356.2 * var(--u)))
+      scale(0.4056);
+  }
+  33.221% {
+    transform: translate(calc(630.1 * var(--u)), calc(375.9 * var(--u)))
+      scale(0.4499);
+  }
+  38.758% {
+    transform: translate(calc(571.8 * var(--u)), calc(400.6 * var(--u)))
+      scale(0.4942);
+  }
+  44.295% {
+    transform: translate(calc(513.4 * var(--u)), calc(430.1 * var(--u)))
+      scale(0.5385);
+  }
+  49.832% {
+    transform: translate(calc(455.1 * var(--u)), calc(464.6 * var(--u)))
+      scale(0.5827);
+  }
+  55.369% {
+    transform: translate(calc(396.8 * var(--u)), calc(502.9 * var(--u)))
+      scale(0.6342);
+  }
+  60.906% {
+    transform: translate(calc(338.5 * var(--u)), calc(541 * var(--u)))
+      scale(0.6966);
+  }
+  66.443% {
+    transform: translate(calc(280.1 * var(--u)), calc(579.1 * var(--u)))
+      scale(0.7589);
+  }
+  71.979% {
+    transform: translate(calc(221.8 * var(--u)), calc(617.1 * var(--u)))
+      scale(0.8213);
+  }
+  77.516%,
+  100% {
+    transform: translate(calc(163.5 * var(--u)), calc(655.2 * var(--u)))
+      scale(0.8836);
+  }
+}
+
+@keyframes integ-drive {
+  0% {
+    transform: translate(calc(980 * var(--u)), calc(264.9 * var(--u)))
+      scale(0.206);
+  }
+  4.147% {
+    transform: translate(calc(901.9 * var(--u)), calc(263.9 * var(--u)))
+      scale(0.2508);
+  }
+  8.295% {
+    transform: translate(calc(823.9 * var(--u)), calc(262.9 * var(--u)))
+      scale(0.2956);
+  }
+  12.442% {
+    transform: translate(calc(745.8 * var(--u)), calc(262 * var(--u)))
+      scale(0.3403);
+  }
+  16.589% {
+    transform: translate(calc(667.7 * var(--u)), calc(261.1 * var(--u)))
+      scale(0.3851);
+  }
+  20.736% {
+    transform: translate(calc(589.6 * var(--u)), calc(260.2 * var(--u)))
+      scale(0.4299);
+  }
+  24.884% {
+    transform: translate(calc(511.6 * var(--u)), calc(259.3 * var(--u)))
+      scale(0.4747);
+  }
+  29.031% {
+    transform: translate(calc(433.5 * var(--u)), calc(258.5 * var(--u)))
+      scale(0.5194);
+  }
+  33.178% {
+    transform: translate(calc(355.4 * var(--u)), calc(257.7 * var(--u)))
+      scale(0.5642);
+  }
+  37.326% {
+    transform: translate(calc(277.4 * var(--u)), calc(256.9 * var(--u)))
+      scale(0.609);
+  }
+  41.473% {
+    transform: translate(calc(199.3 * var(--u)), calc(256.2 * var(--u)))
+      scale(0.6538);
+  }
+  45.620% {
+    transform: translate(calc(121.2 * var(--u)), calc(255.5 * var(--u)))
+      scale(0.6985);
+  }
+  49.767% {
+    transform: translate(calc(43.1 * var(--u)), calc(254.8 * var(--u)))
+      scale(0.7454);
+  }
+  53.915% {
+    transform: translate(calc(-34.9 * var(--u)), calc(254.3 * var(--u)))
+      scale(0.7981);
+  }
+  58.062%,
+  100% {
+    transform: translate(calc(-113 * var(--u)), calc(253.7 * var(--u)))
+      scale(0.8508);
+  }
+}

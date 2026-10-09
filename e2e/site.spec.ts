@@ -1570,12 +1570,13 @@ test.skip("keeps the landing hero clear and reserves lazy media space", async ({
     a.y + a.height > b.y;
   expect(boxesOverlap(chat, startNow)).toBe(false);
   expect(boxesOverlap(chip, startNow)).toBe(false);
+  // Cards are coded scenes, so their size comes from CSS aspect ratios.
   await expect(
     page.locator(".feature-grid .feature-card").first(),
-  ).toHaveAttribute("width", "346");
+  ).toHaveCSS("aspect-ratio", "1 / 1");
   await expect(
     page.locator(".feature-grid .feature-card-wide"),
-  ).toHaveAttribute("width", "712");
+  ).toHaveCSS("aspect-ratio", "712 / 346");
   const grid = await page.locator(".feature-grid").boundingBox();
   const wideCard = await page
     .locator(".feature-grid .feature-card-wide")
