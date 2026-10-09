@@ -5,6 +5,7 @@ import { companyLinks, comparisonLinks } from "../../content/landing";
 import { useAuth } from "../../features/auth/auth-provider";
 import { NewsletterForm } from "../../features/landing/newsletter-form";
 import { ProductHuntProof } from "../../features/product-hunt/product-hunt-proof";
+import { DirectoryListings } from "./directory-listings";
 import { setSiteChromeHeightPx } from "./site-chrome";
 import { StartCta } from "./start-cta";
 import { UserMenu } from "./user-menu";
@@ -206,9 +207,6 @@ function FooterColumn({
   );
 }
 
-const LAUNCH_LLAMA_LISTING =
-  "https://tools.launchllama.co/products/construct-computer?utm_source=badge&utm_medium=referral";
-
 export function SiteFooter() {
   const { pathname } = useLocation();
   return (
@@ -267,8 +265,14 @@ export function SiteFooter() {
             links={comparisonLinks}
           />
         </div>
-        <div className="flex flex-col items-center gap-2 border-t border-[#e5e7eb] py-3 text-center sm:gap-3 sm:py-6 lg:flex-row-reverse lg:justify-between lg:gap-4 lg:text-left">
-          <div className="flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-3">
+        <div className="site-footer-bar border-t border-[#e5e7eb] py-3 sm:py-6">
+          <div className="site-footer-badges">
+            {/* Directories keep a free listing only while the homepage links
+                back, and their checkers read the homepage, so the strip sits
+                here once and the other pages stay clean. CSS orders it left of
+                the Product Hunt badges once the row fits, and gives it a
+                centred line of its own under them before that. */}
+            {pathname === "/" ? <DirectoryListings /> : null}
             <ProductHuntProof surface="footer" variant="footer" />
             <Link
               to="/affiliates/"
@@ -289,31 +293,8 @@ export function SiteFooter() {
                 <span className="footer-affiliate-badge-rate">50%</span>
               </span>
             </Link>
-            {/* Launch Llama keeps a free listing only while the homepage links
-                back. Their checker reads the homepage, so the badge sits here
-                once and the other pages stay clean. Self-hosted so visitors
-                make no request to their host. */}
-            {pathname === "/" ? (
-              <a
-                href={LAUNCH_LLAMA_LISTING}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-directory-listing="launch-llama"
-                className="inline-flex shrink-0"
-              >
-                <img
-                  src="/assets/landing/badges/launch-llama.webp"
-                  alt="Featured on Launch Llama Tools"
-                  width={204}
-                  height={54}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-10 w-auto sm:h-[54px]"
-                />
-              </a>
-            ) : null}
           </div>
-          <p className="text-xs leading-[18px] text-[#8a9aa2]">
+          <p className="shrink-0 text-xs leading-[18px] text-[#8a9aa2]">
             © {new Date().getFullYear()} Construct Computer
           </p>
         </div>
