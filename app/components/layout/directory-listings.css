@@ -1,184 +1,96 @@
-/* ── Directory badge strip ─────────────────────────────────────────────────
- * A narrow window onto a slow loop of small badges. Narrow on purpose: it
- * shows two or three at a time however long the list grows, so adding a
- * directory never makes the footer taller or louder.
+/* ── Directory badge list ──────────────────────────────────────────────────
+ * The homepage footer's "Featured on" badges: all of them, wrapped, never
+ * moving. A new directory adds to the last row or starts another.
+ *
+ * The max-width is the measure that breaks six badges into two tidy rows, on
+ * phones here and again, for the larger badges, in the column further down.
  */
-.directory-strip {
+.directory-listings {
   display: flex;
-  /* Stacked footer: last in the badge column, under the affiliate badge. */
-  order: 1;
-  width: min(21rem, 100%);
-  /* The loop inside is two full copies wide. Without this the badge column
-     would size itself to that and push its other badges off a phone screen. */
-  contain: inline-size;
-  overflow: hidden;
-  /* `clip` is not a scroll container, so focusing a badge cannot scroll the
-     strip sideways and leave the loop offset. */
-  overflow: clip;
-  /* Feather both edges so badges enter and leave instead of popping. */
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 14%,
-    #000 86%,
-    transparent
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 14%,
-    #000 86%,
-    transparent
-  );
-}
-
-/*
- * Each copy is at least as wide as the strip, so two copies always cover it:
- * a single badge loops as cleanly as twenty. Spacing lives in the items'
- * padding rather than a gap, which keeps the seam between copies identical to
- * the spacing inside one.
- */
-.directory-strip-group {
-  display: flex;
-  flex: 0 0 auto;
-  min-width: 100%;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 0.5rem 0.625rem;
+  width: 100%;
+  max-width: 17.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: directory-strip-slide var(--directory-strip-loop, 24s) linear
-    infinite;
 }
 
-@keyframes directory-strip-slide {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-.directory-strip:hover .directory-strip-group {
-  animation-play-state: paused;
-}
-
-.directory-strip-item {
+.directory-listings-item {
   display: flex;
-  flex-shrink: 0;
-  padding-inline: 0.625rem;
 }
 
-.directory-strip-link {
+.directory-listings-link {
   display: block;
   border-radius: 6px;
   line-height: 0;
 }
 
-.directory-strip-badge {
+/*
+ * Muted until pointed at or focused, so a row of unrelated brand colours
+ * reads as one quiet set beside the footer's text links.
+ */
+.directory-listings-badge {
   display: block;
   height: 2.25rem;
   width: auto;
   max-width: none;
+  filter: grayscale(1);
+  opacity: 0.7;
+  transition:
+    filter var(--dur-hover) var(--ease-snap),
+    opacity var(--dur-hover) var(--ease-snap);
 }
 
-/*
- * Badges in a row, strip not yet beside them: the strip takes a centred line
- * of its own underneath. The auto-less margins pad it out to the full line,
- * which is what stops the affiliate badge wrapping in next to it.
- */
+.directory-listings-badge[data-shield] {
+  height: 2.875rem;
+}
+
+.directory-listings-link:focus-visible .directory-listings-badge {
+  filter: none;
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .directory-listings-link:hover .directory-listings-badge {
+    filter: none;
+    opacity: 1;
+  }
+}
+
+/* Larger badges, so a wider two-row measure. */
 @media (min-width: 640px) {
-  .directory-strip {
-    --directory-strip-width: min(26rem, 100%);
-    width: var(--directory-strip-width);
-    margin-inline: calc((100% - var(--directory-strip-width)) / 2);
+  .directory-listings {
+    gap: 0.625rem 0.75rem;
+    max-width: 20.5rem;
   }
 
-  .directory-strip-item {
-    padding-inline: 0.875rem;
-  }
-
-  /* Bigger, still a step under the 54px badges above. */
-  .directory-strip-badge {
+  .directory-listings-badge {
     height: 2.75rem;
   }
+
+  .directory-listings-badge[data-shield] {
+    height: 3.375rem;
+  }
 }
 
-/*
- * Desktop: lead the row, to the left of the Product Hunt badges, taking
- * whatever width the row has spare. 1200px is the narrowest the strip, both
- * Product Hunt badges and the affiliate badge fit on one line. From 1400px
- * the copyright fits on that line too (see `.site-footer-bar` in app.css).
- */
-@media (min-width: 1200px) {
-  .directory-strip {
-    order: -1;
-    flex: 1 1 11rem;
-    width: auto;
-    min-width: 11rem;
-    max-width: 28rem;
-    margin-inline: 0;
+/* Tablet and small desktop: room for the whole list on one centred line. */
+@media (min-width: 768px) {
+  .directory-listings {
+    max-width: none;
   }
 }
 
 /*
- * Keyboard focus inside the strip: stop the loop where it starts and let the
- * strip scroll like any clipped row, so `revealFocusedBadge` can bring the
- * focused badge into view. The strip keeps its box, nothing around it reflows.
- * Keyed on :focus-visible so a mouse press does not move the badge under the
- * click.
+ * A left-aligned column of its own, back to the two-row measure. 20.5rem is the
+ * width of the footer grid's fourth track, see `SiteFooter`.
  */
-.directory-strip:has(:focus-visible) {
-  overflow: hidden;
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
-.directory-strip:has(:focus-visible) .directory-strip-group {
-  animation: none;
-}
-
-.directory-strip:has(:focus-visible) .directory-strip-group[aria-hidden] {
-  display: none;
-}
-
-/*
- * Motion off: hold still and show every badge, wrapped, on a line of its own
- * so the Product Hunt and affiliate badges stay together whatever the count.
- */
-@media (prefers-reduced-motion: reduce) {
-  .directory-strip {
-    contain: none;
-    order: 1;
-    flex: 0 0 100%;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    margin-inline: 0;
-    justify-content: center;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .directory-strip-group {
-    min-width: 0;
-    flex: 0 1 auto;
-    flex-wrap: wrap;
-    justify-content: center;
-    row-gap: 0.5rem;
-    animation: none;
-  }
-
-  /* The second copy exists only to make the loop seamless. */
-  .directory-strip-group[aria-hidden] {
-    display: none;
-  }
-}
-
-/* On the single line the badges hug the right edge, so the strip does too. */
-@media (prefers-reduced-motion: reduce) and (min-width: 1400px) {
-  .directory-strip {
-    justify-content: flex-end;
+@media (min-width: 1280px) {
+  .directory-listings {
+    justify-content: flex-start;
+    column-gap: 0.625rem;
+    max-width: 20.5rem;
   }
 }

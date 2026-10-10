@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "react-router";
 
 import { companyLinks, comparisonLinks } from "../../content/landing";
 import { useAuth } from "../../features/auth/auth-provider";
 import { NewsletterForm } from "../../features/landing/newsletter-form";
 import { ProductHuntProof } from "../../features/product-hunt/product-hunt-proof";
+import { directoryListings } from "../../content/directory-listings";
 import { DirectoryListings } from "./directory-listings";
 import { setSiteChromeHeightPx } from "./site-chrome";
 import { StartCta } from "./start-cta";
@@ -175,6 +176,23 @@ function SocialLink({
   );
 }
 
+function FooterColumnTitle({
+  id,
+  children,
+}: {
+  id?: string;
+  children: string;
+}) {
+  return (
+    <p
+      id={id}
+      className="text-[11px] font-semibold uppercase tracking-[.12em] text-[#4e4646]"
+    >
+      {children}
+    </p>
+  );
+}
+
 function FooterColumn({
   title,
   label,
@@ -186,9 +204,7 @@ function FooterColumn({
 }) {
   return (
     <div className="flex min-w-0 flex-col items-center gap-3 text-center sm:gap-4 lg:items-start lg:text-left">
-      <p className="text-[11px] font-semibold uppercase tracking-[.12em] text-[#4e4646]">
-        {title}
-      </p>
+      <FooterColumnTitle>{title}</FooterColumnTitle>
       <nav
         aria-label={label}
         className="flex flex-col items-center gap-1 sm:gap-2.5 lg:items-start"
@@ -209,10 +225,24 @@ function FooterColumn({
 
 export function SiteFooter() {
   const { pathname } = useLocation();
+  const listingsTitleId = useId();
+  // Directories keep a free listing only while the homepage links back, and
+  // their checkers read the homepage, so the badges show there and the other
+  // pages stay clean.
+  const showListings = pathname === "/" && directoryListings.length > 0;
   return (
     <footer className="relative isolate overflow-hidden border-t border-[#e5e7eb] bg-[#fafafa]">
       <div className="page-rail mx-auto w-full px-5 sm:px-6 lg:px-16">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-9 py-10 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_1fr_1fr] lg:gap-16 lg:py-16">
+        <div
+          className={[
+            "grid grid-cols-2 gap-x-6 gap-y-9 py-10 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_1fr_1fr] lg:gap-16 lg:py-16",
+            // The fourth track is the badge list's two-row measure, see
+            // `directory-listings.css`.
+            showListings
+              ? "lg:gap-y-10 xl:grid-cols-[1.4fr_1fr_1fr_20.5rem] xl:gap-x-12"
+              : "",
+          ].join(" ")}
+        >
           <div className="col-span-2 flex flex-col items-center gap-4 text-center sm:gap-6 lg:col-span-1 lg:items-start lg:text-left">
             <Link
               to="/"
@@ -264,15 +294,19 @@ export function SiteFooter() {
             label="Comparisons"
             links={comparisonLinks}
           />
+          {/* A fourth column once there is room for one, and before that a
+              centred full-width row under the link columns. */}
+          {showListings ? (
+            <div className="col-span-2 flex min-w-0 flex-col items-center gap-3 sm:gap-4 lg:col-span-3 xl:col-span-1 xl:items-start">
+              <FooterColumnTitle id={listingsTitleId}>
+                Featured on
+              </FooterColumnTitle>
+              <DirectoryListings labelledBy={listingsTitleId} />
+            </div>
+          ) : null}
         </div>
         <div className="site-footer-bar border-t border-[#e5e7eb] py-3 sm:py-6">
           <div className="site-footer-badges">
-            {/* Directories keep a free listing only while the homepage links
-                back, and their checkers read the homepage, so the strip sits
-                here once and the other pages stay clean. CSS orders it left of
-                the Product Hunt badges once the row fits, and gives it a
-                centred line of its own under them before that. */}
-            {pathname === "/" ? <DirectoryListings /> : null}
             <ProductHuntProof surface="footer" variant="footer" />
             <Link
               to="/affiliates/"

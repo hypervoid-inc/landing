@@ -149,8 +149,6 @@ button:focus-visible,
  * Footer bottom bar. Two states only, so nothing ever hangs off one edge:
  * a centred stack (badges, then copyright), or, once every badge fits beside
  * the copyright, one line with the copyright left and the badges right.
- * The homepage adds the directory strip to that line, so it needs more room
- * and switches later; see `directory-listings.css` for the strip itself.
  */
 .site-footer-bar {
   display: flex;
@@ -182,22 +180,6 @@ button:focus-visible,
 }
 
 @media (min-width: 1200px) {
-  .site-footer-bar:not(:has(.directory-strip)) {
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    gap: 1rem;
-    text-align: left;
-  }
-
-  .site-footer-bar:not(:has(.directory-strip)) .site-footer-badges {
-    width: auto;
-    min-width: 0;
-    flex: 1;
-    justify-content: flex-end;
-  }
-}
-
-@media (min-width: 1400px) {
   .site-footer-bar {
     flex-direction: row-reverse;
     justify-content: space-between;

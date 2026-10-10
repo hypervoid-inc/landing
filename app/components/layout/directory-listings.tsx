@@ -1,5 +1,3 @@
-import type { CSSProperties, FocusEvent } from "react";
-
 import {
   directoryListings,
   type DirectoryListing,
@@ -7,89 +5,51 @@ import {
 
 import "./directory-listings.css";
 
-/** Seconds each badge adds to one loop, so the drift stays slow at any count. */
-const SECONDS_PER_BADGE = 9;
-const MIN_LOOP_SECONDS = 24;
-
 /**
- * On keyboard focus the stylesheet stops the loop and makes the strip
- * scrollable, but only after the browser has already tried, and failed, to
- * scroll the still-sliding badge into view. Ask again now that it holds still.
+ * Badges under this width-to-height ratio are shields rather than wordmarks.
+ * Drawn at wordmark height their text is a few pixels tall, so they get a
+ * taller line of their own size and end up with a similar footprint.
  */
-function revealFocusedBadge(event: FocusEvent<HTMLAnchorElement>) {
-  const link = event.currentTarget;
-  if (!link.matches(":focus-visible")) return;
-  link.scrollIntoView({ block: "nearest", inline: "nearest" });
-}
+const SHIELD_MAX_ASPECT = 1.5;
 
-function ListingBadge({
-  listing,
-  clone = false,
-}: {
-  listing: DirectoryListing;
-  clone?: boolean;
-}) {
-  return (
-    <a
-      href={listing.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="directory-strip-link"
-      data-directory-listing={clone ? undefined : listing.id}
-      tabIndex={clone ? -1 : undefined}
-      onFocus={clone ? undefined : revealFocusedBadge}
-    >
-      <img
-        src={listing.image}
-        alt={clone ? "" : listing.alt}
-        width={listing.width}
-        height={listing.height}
-        // Not lazy: a badge clipped by the strip never counts as near the
-        // viewport, so it would only start loading as it drifts into view.
-        fetchPriority="low"
-        decoding="async"
-        className="directory-strip-badge"
-      />
-    </a>
-  );
+function isShield(listing: DirectoryListing) {
+  return listing.width / listing.height < SHIELD_MAX_ASPECT;
 }
 
 /**
- * Slow-drifting strip of directory badges for the homepage footer. Kept
- * smaller and narrower than the Product Hunt and affiliate badges it sits
- * beside, so those stay the focus.
- *
- * The list is rendered twice and each copy slides by its own width, so the
- * wrap lands on an identical frame. The second copy only exists for the loop:
- * it is hidden from assistive tech and from the tab order, and the directory
- * hooks sit on the first copy alone.
+ * Every directory badge at once, small and muted, for the homepage footer's
+ * "Featured on" column. Static on purpose: the Product Hunt and affiliate
+ * badges in the bar below are the ones meant to draw the eye.
  */
-export function DirectoryListings() {
-  if (directoryListings.length === 0) return null;
-  const loopSeconds = Math.max(
-    MIN_LOOP_SECONDS,
-    directoryListings.length * SECONDS_PER_BADGE,
-  );
+export function DirectoryListings({ labelledBy }: { labelledBy: string }) {
   return (
-    <div
-      className="directory-strip"
-      data-directory-strip
-      style={{ "--directory-strip-loop": `${loopSeconds}s` } as CSSProperties}
+    <ul
+      className="directory-listings"
+      aria-labelledby={labelledBy}
+      data-directory-listings
     >
-      <ul className="directory-strip-group" aria-label="Featured on">
-        {directoryListings.map((listing) => (
-          <li key={listing.id} className="directory-strip-item">
-            <ListingBadge listing={listing} />
-          </li>
-        ))}
-      </ul>
-      <div className="directory-strip-group" aria-hidden>
-        {directoryListings.map((listing) => (
-          <span key={listing.id} className="directory-strip-item">
-            <ListingBadge listing={listing} clone />
-          </span>
-        ))}
-      </div>
-    </div>
+      {directoryListings.map((listing) => (
+        <li key={listing.id} className="directory-listings-item">
+          <a
+            href={listing.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="directory-listings-link"
+            data-directory-listing={listing.id}
+          >
+            <img
+              src={listing.image}
+              alt={listing.alt}
+              width={listing.width}
+              height={listing.height}
+              loading="lazy"
+              decoding="async"
+              className="directory-listings-badge"
+              data-shield={isShield(listing) ? "" : undefined}
+            />
+          </a>
+        </li>
+      ))}
+    </ul>
   );
 }
