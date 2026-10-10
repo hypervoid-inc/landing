@@ -8,10 +8,10 @@ import { landingFaq } from "../content/landing";
 import type { CanonicalRoute } from "./route-manifest";
 import { canonicalRoutes, siteUrl } from "./route-manifest";
 import {
-  buildCopy,
-  eligibility,
+  inFeed,
+  parsePost,
   toHtml,
-  type Platform,
+  toMarkdown,
 } from "../../scripts/syndicate/transform.mjs";
 
 /**
@@ -69,29 +69,29 @@ function rssXml(): string {
 }
 
 /**
- * A full-text feed for a platform that imports posts from RSS, which
+ * A full-text feed for platforms that import posts from RSS, which
  * `rss.xml` cannot be: it carries descriptions only, and it lists comparison
  * pages that should rank on this domain alone. This one holds the same copy
- * `pnpm syndicate` writes, and a post joins it only once it has been live long
+ * `pnpm blog:text` writes, and a post joins it only once it has been live long
  * enough to be indexed here first. `<link>` stays the bare canonical URL
- * because the importer records it as the post's canonical.
+ * because importers record it as the post's canonical. Links are tagged
+ * `utm_source=feed` since any platform may be the one reading it.
  */
-function syndicationFeedXml(platform: Platform): string {
+function fullTextFeedXml(): string {
   const titles = Object.fromEntries(
     resourceEntries.map(({ slug, title }) => [slug, title]),
   );
   const items = resourceEntries
-    .filter((entry) => eligibility({ ...entry, draft: false }, contentDate).ok)
+    .filter((entry) => inFeed({ ...entry, draft: false }, contentDate))
     .map((entry) => {
       const url = `${siteUrl}/blog/${entry.slug}/`;
       const source = readFileSync(
         new URL(`../content/blog/${entry.slug}.mdx`, import.meta.url),
         "utf8",
       );
-      const { markdown } = buildCopy({
+      const markdown = toMarkdown(parsePost(source).body, {
         slug: entry.slug,
-        source,
-        platform,
+        utmSource: "feed",
         titles,
       });
       const content = toHtml(markdown).replaceAll("]]>", "]]]]><![CDATA[>");
@@ -257,7 +257,7 @@ export const crawlerFiles = {
   "sitemap.xml": sitemapXml(canonicalRoutes),
   "rss.xml": rssXml(),
   "atom.xml": atomXml(),
-  "feeds/devto.xml": syndicationFeedXml("devto"),
+  "feeds/full-text.xml": fullTextFeedXml(),
   "robots.txt": [
     ...contentSignalsPolicy,
     "",

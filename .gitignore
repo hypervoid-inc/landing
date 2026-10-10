@@ -20,3 +20,6 @@ test-results/
 /assets/og/style/master-*.webp
 *.before.webp
 /assets/og/generation-log.jsonl
+
+# Plain-Markdown copies of posts written by `pnpm blog:text`, rebuilt on demand.
+/syndication/
