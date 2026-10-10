@@ -63,6 +63,7 @@
     "@types/react-dom": "^19.2.3",
     "eslint": "^10.7.0",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "marked": "^18.0.14",
     "prettier": "^3.9.5",
     "remark-frontmatter": "^5.0.0",
     "remark-mdx-frontmatter": "^5.2.0",

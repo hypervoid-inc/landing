@@ -16,6 +16,11 @@
 /og/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
+# Full copies of posts for other platforms to import. The posts themselves are
+# what should be indexed, not a second copy of their text in a feed.
+/feeds/*
+  X-Robots-Tag: noindex
+
 /sitemap.xml
   Cache-Control: public, max-age=300, must-revalidate
 
