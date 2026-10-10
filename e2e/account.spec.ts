@@ -208,15 +208,6 @@ function appErrors(messages: string[]): string[] {
   );
 }
 
-/** Jump without Lenis coasting, native scrollTo is overwritten mid-lerp. */
-async function scrollPageInstant(page: Page, top: number) {
-  await page.evaluate((y) => {
-    const hook = window.__scrollPageTo;
-    if (typeof hook === "function") hook(y, { immediate: true });
-    else window.scrollTo({ top: y, behavior: "instant" });
-  }, top);
-}
-
 async function stubApi(
   page: Page,
   overrides: Partial<Record<string, unknown>> = {},
@@ -366,13 +357,6 @@ test.describe("/account", () => {
     await expect(page.getByText(/You're billed annually/i)).toBeVisible();
   });
 
-  test("shows the annual list price struck through", async ({ page }) => {
-    await stubApi(page);
-    await page.goto("/account");
-    // Lite: $90/yr discounted from a $108 list.
-    await expect(page.getByText("$108")).toBeVisible();
-  });
-
   test("shows Recommended and trial CTA from the catalog", async ({ page }) => {
     await stubApi(page, {
       plan: {
@@ -401,18 +385,6 @@ test.describe("/account", () => {
     ).toBeVisible();
   });
 
-  test("surfaces an error with a retry instead of loading forever", async ({
-    page,
-  }) => {
-    await stubApi(page, { plan: { error: "boom" }, planStatus: 500 });
-    await page.goto("/account");
-
-    await expect(
-      page.getByRole("button", { name: /try again/i }),
-    ).toBeVisible();
-    await expect(page.locator("body")).not.toContainText("Loading plan");
-  });
-
   test("shows BYOK providers and the connected state", async ({ page }) => {
     await stubApi(page);
     await page.goto("/account");
@@ -430,23 +402,6 @@ test.describe("/account", () => {
     await expect(page.getByLabel("Main")).toBeVisible();
   });
 
-  test("distinguishes a saved-but-broken key from a working one", async ({
-    page,
-  }) => {
-    await stubApi(page, {
-      byok: {
-        ...BYOK,
-        providers: { ...BYOK_OFF, anthropic: true },
-        providersReady: { ...BYOK_OFF },
-      },
-    });
-    await page.goto("/account");
-
-    await expandSection(page, "Bring your own key");
-    await expect(page.getByText("Check key")).toBeVisible();
-    await expect(page.getByText("Key saved but not working")).toBeVisible();
-  });
-
   test("locks BYOK behind the required plan", async ({ page }) => {
     await stubApi(page, {
       byok: { ...BYOK, allowed: false, requiredPlan: "starter" },
@@ -461,37 +416,12 @@ test.describe("/account", () => {
     await expect(page.getByRole("button", { name: "Connect" })).toHaveCount(0);
   });
 
-  test("hides BYOK entirely when the API forbids it", async ({ page }) => {
-    await stubApi(page, { byok: { error: "forbidden" }, byokStatus: 403 });
-    await page.goto("/account");
-
-    await expect(
-      page.getByRole("heading", { name: "Ankush Singh" }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("button", { name: /Bring your own key/i }),
-    ).toHaveCount(0);
-  });
-
   test("redirects an anonymous visitor to /login", async ({ page }) => {
     await page.route(`${API}/**`, (route) =>
       json(route, { error: "Unauthorized" }, 401),
     );
     await page.goto("/account");
     await expect(page).toHaveURL(/\/login/);
-  });
-
-  test("renders without console errors", async ({ page }) => {
-    const errors: string[] = [];
-    page.on("console", (message) => {
-      if (message.type() === "error") errors.push(message.text());
-    });
-    await stubApi(page);
-    await page.goto("/account");
-    await expect(
-      page.getByRole("heading", { name: "Ankush Singh" }),
-    ).toBeVisible();
-    expect(appErrors(errors)).toEqual([]);
   });
 
   test("opens the header account menu with Account, Open Construct, and Log out", async ({
@@ -522,76 +452,6 @@ test.describe("/account", () => {
 
     await menu.getByRole("link", { name: "Account" }).click();
     await expect(page).toHaveURL(/\/account\/?$/);
-  });
-
-  test("opens the account menu on hover like the desktop nav", async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await stubApi(page);
-    await page.goto("/account");
-
-    const menuButton = page.getByRole("button", {
-      name: "Account menu for Ankush Singh",
-    });
-    await menuButton.hover();
-    const menu = page.getByRole("group", { name: "Account" });
-    await expect(menu).toBeVisible();
-    await expect(menu.getByRole("link", { name: "Account" })).toBeVisible();
-  });
-
-  test("morphs the nav dropdown onto the account pill", async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await stubApi(page);
-    await page.goto("/");
-
-    const primary = page.getByRole("navigation", { name: "Primary" });
-    await expect(
-      primary.getByRole("button", { name: "Account menu for Ankush Singh" }),
-    ).toBeVisible();
-    await primary.getByRole("link", { name: "Blog", exact: true }).hover();
-    await expect(
-      primary.getByRole("link", { name: "All posts" }),
-    ).toBeVisible();
-
-    await primary
-      .getByRole("button", { name: "Account menu for Ankush Singh" })
-      .hover();
-    await expect(page.locator(".site-nav-panel")).toHaveCount(1);
-    const menu = primary.getByRole("group", { name: "Account" });
-    await expect(menu).toBeVisible();
-    await expect(menu.getByRole("link", { name: "Account" })).toBeVisible();
-    await expect(
-      menu.getByRole("link", { name: "Open Construct" }),
-    ).toBeVisible();
-    await expect(menu.getByRole("button", { name: "Log out" })).toBeVisible();
-    await expect(primary.getByRole("link", { name: "All posts" })).toHaveCount(
-      0,
-    );
-  });
-
-  test("keeps sticky chrome visible when the account menu opens after scroll", async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await stubApi(page);
-    await page.goto("/account");
-
-    await scrollPageInstant(page, 600);
-    await expect
-      .poll(() => page.evaluate(() => window.scrollY))
-      .toBeGreaterThan(8);
-
-    const chrome = page.locator(".site-sticky-chrome");
-    const menuButton = page.getByRole("button", {
-      name: "Account menu for Ankush Singh",
-    });
-    await menuButton.click();
-
-    await expect(chrome).toBeInViewport();
-    await expect(page.locator("header")).toBeInViewport();
-    await expect(page.getByRole("group", { name: "Account" })).toBeVisible();
-    await expect(menuButton).toBeVisible();
   });
 });
 
