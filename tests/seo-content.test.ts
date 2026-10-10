@@ -56,16 +56,14 @@ describe("generated discovery content", () => {
     }
   });
 
-  it("gives importers full text for articles and guides, and no comparisons", () => {
+  it("gives importers the full text of every live post", () => {
     const feed = crawlerFiles["feeds/full-text.xml"];
     expect(feed).toContain("<content:encoded><![CDATA[<p>");
     expect(feed).toContain(
       "<link>https://construct.computer/blog/agent-task-half-life/</link>",
     );
     expect(feed).toContain("utm_source=feed&amp;utm_medium=syndication");
-    expect(feed).not.toContain(
-      "<link>https://construct.computer/blog/construct-vs-lindy/</link>",
-    );
+    expect(feed.match(/<item>/g)).toHaveLength(resourceEntries.length);
     expect(feed).not.toMatch(/<BetaCta|className=/);
   });
 

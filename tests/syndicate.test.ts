@@ -2,11 +2,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-import {
-  inFeed,
-  parsePost,
-  toMarkdown,
-} from "../scripts/syndicate/transform.mjs";
+import { parsePost, toMarkdown } from "../scripts/syndicate/transform.mjs";
 
 const tags = "utm_source=medium&utm_medium=syndication&utm_campaign=my-post";
 const footer = `\n\n*Originally published at [construct.computer](https://construct.computer/blog/my-post/?${tags}).*`;
@@ -74,14 +70,6 @@ describe("syndication copy", () => {
   it("refuses markup it cannot convert", () => {
     expect(() => convert("<PricingGrid />")).toThrow(/PricingGrid/);
     expect(() => convert("Total: {plans.length}")).toThrow(/plans\.length/);
-  });
-
-  it("keeps drafts, comparisons, and fresh posts out of the feed", () => {
-    const post = { draft: false, published: "2026-10-01", kind: "article" };
-    expect(inFeed(post, "2026-10-04")).toBe(true);
-    expect(inFeed(post, "2026-10-03")).toBe(false);
-    expect(inFeed({ ...post, draft: true }, "2026-10-04")).toBe(false);
-    expect(inFeed({ ...post, kind: "comparison" }, "2026-10-04")).toBe(false);
   });
 
   // A new component in a post has to be taught to the converter before that

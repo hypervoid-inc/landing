@@ -2,13 +2,11 @@ import { readFileSync } from "node:fs";
 
 import { apiCatalog, apiDocsHtml, openApiDocument } from "./api-catalog";
 import { resourceEntries } from "../content/resources";
-import { contentDate } from "../content/content-date";
 import { getResourceFaqs } from "../content/faqs";
 import { landingFaq } from "../content/landing";
 import type { CanonicalRoute } from "./route-manifest";
 import { canonicalRoutes, siteUrl } from "./route-manifest";
 import {
-  inFeed,
   parsePost,
   toHtml,
   toMarkdown,
@@ -70,19 +68,16 @@ function rssXml(): string {
 
 /**
  * A full-text feed for platforms that import posts from RSS, which
- * `rss.xml` cannot be: it carries descriptions only, and it lists comparison
- * pages that should rank on this domain alone. This one holds the same copy
- * `pnpm blog:text` writes, and a post joins it only once it has been live long
- * enough to be indexed here first. `<link>` stays the bare canonical URL
- * because importers record it as the post's canonical. Links are tagged
- * `utm_source=feed` since any platform may be the one reading it.
+ * `rss.xml` cannot be: it carries descriptions only. This one holds every
+ * live post as the same copy `pnpm blog:text` writes. `<link>` stays the bare
+ * canonical URL because importers record it as the post's canonical. Links
+ * are tagged `utm_source=feed` since any platform may be the one reading it.
  */
 function fullTextFeedXml(): string {
   const titles = Object.fromEntries(
     resourceEntries.map(({ slug, title }) => [slug, title]),
   );
   const items = resourceEntries
-    .filter((entry) => inFeed({ ...entry, draft: false }, contentDate))
     .map((entry) => {
       const url = `${siteUrl}/blog/${entry.slug}/`;
       const source = readFileSync(
@@ -101,7 +96,7 @@ function fullTextFeedXml(): string {
       return `    <item>\n      <title>${xml(entry.title)}</title>\n      <link>${url}</link>\n      <guid>${url}</guid>\n      <description>${xml(entry.description)}</description>\n      <content:encoded><![CDATA[${content}]]></content:encoded>\n      <dc:creator>${xml(entry.author.name)}</dc:creator>${categories}\n      <pubDate>${new Date(`${entry.published}T00:00:00Z`).toUTCString()}</pubDate>\n    </item>`;
     })
     .join("\n");
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>\n    <title>Construct Computer Blog</title>\n    <link>${siteUrl}/blog/</link>\n    <description>Full-text articles and guides from Construct Computer, for syndication.</description>\n${items}\n  </channel></rss>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>\n    <title>Construct Computer Blog</title>\n    <link>${siteUrl}/blog/</link>\n    <description>Full-text posts from Construct Computer, for syndication.</description>\n${items}\n  </channel></rss>\n`;
 }
 
 function atomXml(): string {
