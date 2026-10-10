@@ -56,13 +56,13 @@ describe("generated discovery content", () => {
     }
   });
 
-  it("gives dev.to full text for articles and guides, and no comparisons", () => {
-    const feed = crawlerFiles["feeds/devto.xml"];
+  it("gives importers full text for articles and guides, and no comparisons", () => {
+    const feed = crawlerFiles["feeds/full-text.xml"];
     expect(feed).toContain("<content:encoded><![CDATA[<p>");
     expect(feed).toContain(
       "<link>https://construct.computer/blog/agent-task-half-life/</link>",
     );
-    expect(feed).toContain("utm_source=devto&amp;utm_medium=syndication");
+    expect(feed).toContain("utm_source=feed&amp;utm_medium=syndication");
     expect(feed).not.toContain(
       "<link>https://construct.computer/blog/construct-vs-lindy/</link>",
     );
@@ -74,7 +74,7 @@ describe("generated discovery content", () => {
       "sitemap.xml",
       "rss.xml",
       "atom.xml",
-      "feeds/devto.xml",
+      "feeds/full-text.xml",
       "robots.txt",
       "llms.txt",
       "llms-full.txt",
