@@ -44,7 +44,9 @@ function ListingBadge({
         alt={clone ? "" : listing.alt}
         width={listing.width}
         height={listing.height}
-        loading="lazy"
+        // Not lazy: a badge clipped by the strip never counts as near the
+        // viewport, so it would only start loading as it drifts into view.
+        fetchPriority="low"
         decoding="async"
         className="directory-strip-badge"
       />

@@ -44,4 +44,31 @@ export const directoryListings: readonly DirectoryListing[] = [
     width: 171,
     height: 54,
   },
+  // The next three are one SourceForge listing syndicated to its sister
+  // sites. Their snippets load a script that injects the badge, so the href
+  // here is the one that script builds, campaign parameters included.
+  {
+    id: "sourceforge",
+    href: "https://sourceforge.net/software/product/Construct-Computer/?pk_campaign=badge&pk_source=vendor",
+    image: "/assets/landing/badges/sourceforge.webp",
+    alt: "Construct Computer Reviews on SourceForge",
+    width: 50,
+    height: 54,
+  },
+  {
+    id: "slashdot",
+    href: "https://slashdot.org/software/p/Construct-Computer/?pk_campaign=badge&pk_source=vendor",
+    image: "/assets/landing/badges/slashdot.webp",
+    alt: "Construct Computer Reviews on Slashdot",
+    width: 48,
+    height: 54,
+  },
+  {
+    id: "top-business-software",
+    href: "https://topbusinesssoftware.com/products/Construct-Computer/reviews/?pk_campaign=badge&pk_source=vendor",
+    image: "/assets/landing/badges/top-business-software.webp",
+    alt: "Construct Computer Reviews on Top Business Software",
+    width: 54,
+    height: 54,
+  },
 ];
