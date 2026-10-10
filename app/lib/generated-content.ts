@@ -2,10 +2,17 @@ import { readFileSync } from "node:fs";
 
 import { apiCatalog, apiDocsHtml, openApiDocument } from "./api-catalog";
 import { resourceEntries } from "../content/resources";
+import { contentDate } from "../content/content-date";
 import { getResourceFaqs } from "../content/faqs";
 import { landingFaq } from "../content/landing";
 import type { CanonicalRoute } from "./route-manifest";
 import { canonicalRoutes, siteUrl } from "./route-manifest";
+import {
+  buildCopy,
+  eligibility,
+  toHtml,
+  type Platform,
+} from "../../scripts/syndicate/transform.mjs";
 
 /**
  * Reads raw MDX to inline real article text into `llms-full.txt`. Uses `fs`
@@ -59,6 +66,42 @@ function rssXml(): string {
     })
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>\n    <title>Construct Computer Blog</title>\n    <link>${siteUrl}/blog/</link>\n    <description>AI employee guides, practical articles, and comparisons from Construct Computer.</description>\n${items}\n  </channel></rss>\n`;
+}
+
+/**
+ * A full-text feed for a platform that imports posts from RSS, which
+ * `rss.xml` cannot be: it carries descriptions only, and it lists comparison
+ * pages that should rank on this domain alone. This one holds the same copy
+ * `pnpm syndicate` writes, and a post joins it only once it has been live long
+ * enough to be indexed here first. `<link>` stays the bare canonical URL
+ * because the importer records it as the post's canonical.
+ */
+function syndicationFeedXml(platform: Platform): string {
+  const titles = Object.fromEntries(
+    resourceEntries.map(({ slug, title }) => [slug, title]),
+  );
+  const items = resourceEntries
+    .filter((entry) => eligibility({ ...entry, draft: false }, contentDate).ok)
+    .map((entry) => {
+      const url = `${siteUrl}/blog/${entry.slug}/`;
+      const source = readFileSync(
+        new URL(`../content/blog/${entry.slug}.mdx`, import.meta.url),
+        "utf8",
+      );
+      const { markdown } = buildCopy({
+        slug: entry.slug,
+        source,
+        platform,
+        titles,
+      });
+      const content = toHtml(markdown).replaceAll("]]>", "]]]]><![CDATA[>");
+      const categories = entry.tags
+        .map((tag) => `\n      <category>${xml(tag)}</category>`)
+        .join("");
+      return `    <item>\n      <title>${xml(entry.title)}</title>\n      <link>${url}</link>\n      <guid>${url}</guid>\n      <description>${xml(entry.description)}</description>\n      <content:encoded><![CDATA[${content}]]></content:encoded>\n      <dc:creator>${xml(entry.author.name)}</dc:creator>${categories}\n      <pubDate>${new Date(`${entry.published}T00:00:00Z`).toUTCString()}</pubDate>\n    </item>`;
+    })
+    .join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>\n    <title>Construct Computer Blog</title>\n    <link>${siteUrl}/blog/</link>\n    <description>Full-text articles and guides from Construct Computer, for syndication.</description>\n${items}\n  </channel></rss>\n`;
 }
 
 function atomXml(): string {
@@ -214,6 +257,7 @@ export const crawlerFiles = {
   "sitemap.xml": sitemapXml(canonicalRoutes),
   "rss.xml": rssXml(),
   "atom.xml": atomXml(),
+  "feeds/devto.xml": syndicationFeedXml("devto"),
   "robots.txt": [
     ...contentSignalsPolicy,
     "",

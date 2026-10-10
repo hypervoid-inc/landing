@@ -22,6 +22,7 @@
 - [Sub-processors - Construct Computer](https://construct.computer/sub-processors/): Third-party vendors Construct uses to host, authenticate, integrate, bill, email, observe, and run models for the construct.computer platform.
 - [Terms & Conditions - Construct Computer](https://construct.computer/terms/): Terms of service for Construct Computer: subscription plans, acceptable use, agent actions, model BYOK, and proprietary platform licensing.
 - [Construct insights and guides](https://construct.computer/blog/): Practical writing from Construct on AI agents, workflows, memory, and tools that get work done.
+- [Gemini Spark alternatives, including for Workspace accounts and the UK and EU](https://construct.computer/blog/gemini-spark-alternatives/): Gemini Spark needs a personal Google account and skips the UK and EU. Compare 7 always-on agents on price, work accounts, and regional availability.
 - [How to Give an AI Agent Its Own Email Address](https://construct.computer/blog/ai-agent-email-address/): Three ways to give an AI agent its own inbox: a product with a native agent address, a developer email API, or delegated Gmail access. Trade-offs and steps.
 - [Construct vs Lindy](https://construct.computer/blog/construct-vs-lindy/): Construct vs Lindy on pricing, where each works, memory, activity records, and model keys. Lindy starts at $29.99 per user; Construct starts at $9.
 - [Muse for Small Business alternatives: 9 AI agents for work](https://construct.computer/blog/muse-for-small-business-alternatives/): Compare 9 Muse for Small Business alternatives, led by Construct at $9 a month, with prices checked October 1, 2026, and where each one fits.
@@ -55,10 +56,11 @@
 - [Nischal](https://construct.computer/authors/nischal/): Writes about Construct, AI agents, and building useful software. Read every article, guide, and comparison written by Nischal for Construct Computer.
 - [Construct Team](https://construct.computer/authors/construct-team/): The team building and documenting Construct Computer. Read every article, guide, and comparison written by Construct Team for Construct Computer.
 - [Writing tagged AI agent](https://construct.computer/blog/tag/ai-agent/): 16 Construct articles, guides, and comparisons tagged AI agent, covering AI agents and how they get work done.
-- [Writing tagged AI employee](https://construct.computer/blog/tag/ai-employee/): 18 Construct articles, guides, and comparisons tagged AI employee, covering AI agents and how they get work done.
+- [Writing tagged AI employee](https://construct.computer/blog/tag/ai-employee/): 19 Construct articles, guides, and comparisons tagged AI employee, covering AI agents and how they get work done.
 - [Writing tagged ChatGPT](https://construct.computer/blog/tag/chatgpt/): 4 Construct articles, guides, and comparisons tagged ChatGPT, covering AI agents and how they get work done.
-- [Writing tagged comparison](https://construct.computer/blog/tag/comparison/): 14 Construct articles, guides, and comparisons tagged comparison, covering AI agents and how they get work done.
+- [Writing tagged comparison](https://construct.computer/blog/tag/comparison/): 15 Construct articles, guides, and comparisons tagged comparison, covering AI agents and how they get work done.
 - [Writing tagged decision models](https://construct.computer/blog/tag/decision-models/): 2 Construct articles, guides, and comparisons tagged decision models, covering AI agents and how they get work done.
+- [Writing tagged google workspace](https://construct.computer/blog/tag/google-workspace/): 2 Construct articles, guides, and comparisons tagged google workspace, covering AI agents and how they get work done.
 - [Writing tagged product](https://construct.computer/blog/tag/product/): 7 Construct articles, guides, and comparisons tagged product, covering AI agents and how they get work done.
 - [Writing tagged reliability](https://construct.computer/blog/tag/reliability/): 4 Construct articles, guides, and comparisons tagged reliability, covering AI agents and how they get work done.
 - [Writing tagged small business](https://construct.computer/blog/tag/small-business/): 3 Construct articles, guides, and comparisons tagged small business, covering AI agents and how they get work done.

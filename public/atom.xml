@@ -3,7 +3,20 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-10-08T00:00:00Z</updated>
+  <updated>2026-10-09T00:00:00Z</updated>
+  <entry>
+    <title>Gemini Spark alternatives, including for Workspace accounts and the UK and EU</title>
+    <id>https://construct.computer/blog/gemini-spark-alternatives/</id>
+    <link href="https://construct.computer/blog/gemini-spark-alternatives/"/>
+    <author><name>Construct Team</name></author>
+    <published>2026-10-09T00:00:00Z</published>
+    <updated>2026-10-09T00:00:00Z</updated>
+    <category term="comparison"/>
+    <category term="gemini-spark"/>
+    <category term="google-workspace"/>
+    <category term="ai-employee"/>
+    <summary>Gemini Spark needs a personal Google account and skips the UK and EU. Compare 7 always-on agents on price, work accounts, and regional availability.</summary>
+  </entry>
   <entry>
     <title>How to Give an AI Agent Its Own Email Address</title>
     <id>https://construct.computer/blog/ai-agent-email-address/</id>

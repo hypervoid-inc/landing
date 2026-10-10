@@ -56,11 +56,25 @@ describe("generated discovery content", () => {
     }
   });
 
+  it("gives dev.to full text for articles and guides, and no comparisons", () => {
+    const feed = crawlerFiles["feeds/devto.xml"];
+    expect(feed).toContain("<content:encoded><![CDATA[<p>");
+    expect(feed).toContain(
+      "<link>https://construct.computer/blog/agent-task-half-life/</link>",
+    );
+    expect(feed).toContain("utm_source=devto&amp;utm_medium=syndication");
+    expect(feed).not.toContain(
+      "<link>https://construct.computer/blog/construct-vs-lindy/</link>",
+    );
+    expect(feed).not.toMatch(/<BetaCta|className=/);
+  });
+
   it("emits the complete crawler file set", () => {
     expect(Object.keys(crawlerFiles)).toEqual([
       "sitemap.xml",
       "rss.xml",
       "atom.xml",
+      "feeds/devto.xml",
       "robots.txt",
       "llms.txt",
       "llms-full.txt",
