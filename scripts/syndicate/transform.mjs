@@ -9,9 +9,6 @@ import { marked } from "marked";
 
 export const siteUrl = "https://construct.computer";
 
-/** Days a post must be live here before the full-text feed carries it. */
-export const minimumAgeDays = 3;
-
 export function canonicalUrl(slug) {
   return `${siteUrl}/blog/${slug}/`;
 }
@@ -27,21 +24,6 @@ export function parsePost(source) {
     );
   }
   return { frontmatter, body: source.slice(match[0].length) };
-}
-
-/**
- * Whether the full-text feed should carry a post on `today` (YYYY-MM-DD, UTC).
- * Comparison pages should rank on our own domain only, and a new post waits
- * so the original is indexed before any copy of it exists.
- */
-export function inFeed(post, today) {
-  if (post.draft || post.published > today || post.kind === "comparison")
-    return false;
-  const age =
-    (Date.parse(`${today}T00:00:00Z`) -
-      Date.parse(`${post.published}T00:00:00Z`)) /
-    86_400_000;
-  return age >= minimumAgeDays;
 }
 
 const fence = /(^```[^\n]*\n[\s\S]*?^```[ \t]*$)/m;
