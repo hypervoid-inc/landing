@@ -747,6 +747,7 @@ test("drifts the directory badges through the homepage footer only", async ({
     await expect(page.locator("[data-directory-strip]")).toHaveCount(0);
     await expect(page.locator('a[href*="launchllama"]')).toHaveCount(0);
     await expect(page.locator('a[href*="huzzler"]')).toHaveCount(0);
+    await expect(page.locator('a[href*="startupfa.me"]')).toHaveCount(0);
   }
 });
 

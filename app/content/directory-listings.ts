@@ -36,4 +36,12 @@ export const directoryListings: readonly DirectoryListing[] = [
     width: 159,
     height: 55,
   },
+  {
+    id: "startup-fame",
+    href: "https://startupfa.me/s/construct?utm_source=construct.computer",
+    image: "/assets/landing/badges/startup-fame.webp",
+    alt: "Construct Computer - Featured on Startup Fame",
+    width: 171,
+    height: 54,
+  },
 ];
