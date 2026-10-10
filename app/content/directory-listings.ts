@@ -13,40 +13,19 @@ export type DirectoryListing = {
 
 /**
  * Directories that list Construct and ask for a badge linking back. Most keep
- * a free listing only while the homepage carries the link, so the footer strip
+ * a free listing only while the homepage carries the link, so the footer
  * renders these on `/` and nowhere else.
  *
+ * Best known first. The order is also what packs the footer's two rows: the
+ * three shields and one wordmark, then two wordmarks.
+ *
  * To add one: save the badge as a 2x webp in `public/assets/landing/badges/`
- * and append an entry. The strip sizes and paces itself from this list.
+ * and add an entry where it ranks. The list wraps to as many rows as it needs.
  */
 export const directoryListings: readonly DirectoryListing[] = [
-  {
-    id: "launch-llama",
-    href: "https://tools.launchllama.co/products/construct-computer?utm_source=badge&utm_medium=referral",
-    image: "/assets/landing/badges/launch-llama.webp",
-    alt: "Featured on Launch Llama Tools",
-    width: 204,
-    height: 54,
-  },
-  {
-    id: "huzzler",
-    href: "https://huzzler.so/products/c0e4BxXfp3/construct-computer?utm_source=huzzler_product_website&utm_medium=badge&utm_campaign=free_listing",
-    image: "/assets/landing/badges/huzzler.webp",
-    alt: "Featured on Huzzler",
-    width: 159,
-    height: 55,
-  },
-  {
-    id: "startup-fame",
-    href: "https://startupfa.me/s/construct?utm_source=construct.computer",
-    image: "/assets/landing/badges/startup-fame.webp",
-    alt: "Construct Computer - Featured on Startup Fame",
-    width: 171,
-    height: 54,
-  },
-  // The next three are one SourceForge listing syndicated to its sister
-  // sites. Their snippets load a script that injects the badge, so the href
-  // here is the one that script builds, campaign parameters included.
+  // These three are one SourceForge listing syndicated to its sister sites.
+  // Their snippets load a script that injects the badge, so the href here is
+  // the one that script builds, campaign parameters included.
   {
     id: "sourceforge",
     href: "https://sourceforge.net/software/product/Construct-Computer/?pk_campaign=badge&pk_source=vendor",
@@ -70,5 +49,29 @@ export const directoryListings: readonly DirectoryListing[] = [
     alt: "Construct Computer Reviews on Top Business Software",
     width: 54,
     height: 54,
+  },
+  {
+    id: "startup-fame",
+    href: "https://startupfa.me/s/construct?utm_source=construct.computer",
+    image: "/assets/landing/badges/startup-fame.webp",
+    alt: "Construct Computer - Featured on Startup Fame",
+    width: 171,
+    height: 54,
+  },
+  {
+    id: "launch-llama",
+    href: "https://tools.launchllama.co/products/construct-computer?utm_source=badge&utm_medium=referral",
+    image: "/assets/landing/badges/launch-llama.webp",
+    alt: "Featured on Launch Llama Tools",
+    width: 204,
+    height: 54,
+  },
+  {
+    id: "huzzler",
+    href: "https://huzzler.so/products/c0e4BxXfp3/construct-computer?utm_source=huzzler_product_website&utm_medium=badge&utm_campaign=free_listing",
+    image: "/assets/landing/badges/huzzler.webp",
+    alt: "Featured on Huzzler",
+    width: 159,
+    height: 55,
   },
 ];
