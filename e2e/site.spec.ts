@@ -748,6 +748,11 @@ test("drifts the directory badges through the homepage footer only", async ({
     await expect(page.locator('a[href*="launchllama"]')).toHaveCount(0);
     await expect(page.locator('a[href*="huzzler"]')).toHaveCount(0);
     await expect(page.locator('a[href*="startupfa.me"]')).toHaveCount(0);
+    await expect(page.locator('a[href*="sourceforge.net"]')).toHaveCount(0);
+    await expect(page.locator('a[href*="slashdot.org"]')).toHaveCount(0);
+    await expect(
+      page.locator('a[href*="topbusinesssoftware.com"]'),
+    ).toHaveCount(0);
   }
 });
 
