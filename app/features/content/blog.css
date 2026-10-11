@@ -1,0 +1,219 @@
+/*
+ * Motion for the blog: card hover, the grid re-filling after a topic change,
+ * the peeking mascot, and the post page's prompt blocks and link previews.
+ * Everything that moves on its own stops under reduced motion; everything
+ * that answers the pointer stops on touch, where there is no hover to answer.
+ */
+
+/* ---------- Cards ---------- */
+
+.resource-card {
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.2s;
+}
+.resource-card-media {
+  overflow: hidden;
+}
+.resource-card-media img {
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .resource-card:hover {
+    transform: translateY(-4px);
+    border-color: #8adcdf;
+    box-shadow: 0 24px 48px -28px rgba(1, 95, 110, 0.45);
+  }
+  .resource-card:hover .resource-card-media img {
+    transform: scale(1.05)
+      translate(calc(var(--px, 0) * -12px), calc(var(--py, 0) * -8px));
+  }
+}
+
+/* A grid refilled by a topic change deals its cards back in. */
+.resource-card-enter {
+  animation: resource-card-enter 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(min(var(--i, 0), 8) * 40ms);
+}
+@keyframes resource-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+/* ---------- Topic chips ---------- */
+
+.topic-chips {
+  scrollbar-width: none;
+  mask-image: linear-gradient(90deg, #000 calc(100% - 2rem), transparent);
+}
+.topic-chips::-webkit-scrollbar {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .topic-chips {
+    mask-image: none;
+  }
+}
+
+/* ---------- The peeking mascot ---------- */
+
+.blog-mascot {
+  position: absolute;
+  display: block;
+  width: 7.5rem;
+  aspect-ratio: 1;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.blog-mascot-body,
+.blog-mascot-face,
+.blog-mascot-open,
+.blog-mascot-smile,
+.blog-mascot-blink {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.blog-mascot-layer {
+  position: absolute;
+  display: block;
+  max-width: none;
+}
+.blog-mascot-face {
+  transform: translate(
+    calc(var(--gaze-x, 0) * 1%),
+    calc(var(--gaze-y, 0) * 1%)
+  );
+  transition: transform 0.18s ease-out;
+}
+.blog-mascot-blink {
+  transform-origin: 50% 58%;
+}
+.blog-mascot-smile {
+  opacity: 0;
+}
+.blog-mascot[data-happy="true"] .blog-mascot-open {
+  opacity: 0;
+}
+.blog-mascot[data-happy="true"] .blog-mascot-smile {
+  opacity: 1;
+}
+
+.blog-mascot[data-motion="on"] {
+  animation: blog-mascot-rise 0.9s 0.5s cubic-bezier(0.2, 0.9, 0.25, 1.2) both;
+}
+.blog-mascot[data-motion="on"] .blog-mascot-body {
+  animation: blog-mascot-breathe 4.2s 1.4s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+.blog-mascot[data-motion="on"] .blog-mascot-body[data-hop="true"] {
+  animation:
+    blog-mascot-hop 0.55s cubic-bezier(0.3, 0.7, 0.3, 1) both,
+    blog-mascot-breathe 4.2s 0.55s ease-in-out infinite;
+}
+.blog-mascot[data-motion="on"] .blog-mascot-blink {
+  animation: blog-mascot-blink 5.2s 2.4s infinite;
+}
+
+@keyframes blog-mascot-rise {
+  from {
+    transform: translateY(55%);
+  }
+}
+@keyframes blog-mascot-breathe {
+  50% {
+    transform: scale(1.025, 0.985);
+  }
+}
+@keyframes blog-mascot-hop {
+  35% {
+    transform: translateY(-28%) scale(0.96, 1.05);
+  }
+  70% {
+    transform: translateY(0) scale(1.06, 0.94);
+  }
+}
+@keyframes blog-mascot-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+/* ---------- Post pages ---------- */
+
+.prompt-block {
+  background:
+    radial-gradient(
+      120% 140% at 100% 0%,
+      rgba(1, 180, 200, 0.09),
+      transparent 55%
+    ),
+    #fff;
+}
+
+.link-preview {
+  animation: link-preview-in 0.16s ease-out both;
+}
+@keyframes link-preview-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resource-card,
+  .resource-card-media img,
+  .blog-mascot-face {
+    transition: none;
+  }
+  .resource-card-enter,
+  .link-preview {
+    animation: none;
+  }
+}
+
+/* ---------- Videos in posts ---------- */
+
+/* The controls show while paused, on hover, and on focus; always on touch. */
+.article-video-chrome {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.article-video:hover .article-video-chrome,
+.article-video:focus-within .article-video-chrome,
+.article-video[data-playing="false"] .article-video-chrome {
+  opacity: 1;
+}
+@media (hover: none) {
+  .article-video-chrome {
+    opacity: 1;
+  }
+}
+.article-video-track {
+  transition: height 0.15s ease;
+}
+.article-video:hover .article-video-track {
+  height: 6px;
+}
+.article-video:fullscreen {
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+  border: 0;
+  background: #000;
+}
+.article-video:fullscreen video {
+  height: 100%;
+  object-fit: contain;
+}

@@ -1,4 +1,4 @@
-import { BlogIndexPage } from "../features/content/resource-pages";
+import { BlogIndexPage } from "../features/content/blog-index";
 import { getRoute } from "../lib/route-manifest";
 import { routeMeta } from "../lib/seo";
 

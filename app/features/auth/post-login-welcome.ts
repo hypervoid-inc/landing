@@ -4,6 +4,8 @@ const TTL_MS = 30 * 60 * 1000;
 export type PostLoginWelcome = {
   source: string;
   plan?: string;
+  /** A prompt to open the app on, from a blog post's "Try it" button. */
+  prompt?: string;
   ts: number;
 };
 
@@ -18,6 +20,7 @@ function readRaw(): PostLoginWelcome | null {
     return {
       source: parsed.source,
       plan: typeof parsed.plan === "string" ? parsed.plan : undefined,
+      prompt: typeof parsed.prompt === "string" ? parsed.prompt : undefined,
       ts: parsed.ts,
     };
   } catch {
@@ -33,11 +36,13 @@ function isFresh(payload: PostLoginWelcome): boolean {
 export function markPostLoginWelcome(input: {
   source: string;
   plan?: string;
+  prompt?: string;
 }): void {
   try {
     const payload: PostLoginWelcome = {
       source: input.source,
       ...(input.plan ? { plan: input.plan } : {}),
+      ...(input.prompt ? { prompt: input.prompt } : {}),
       ts: Date.now(),
     };
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));

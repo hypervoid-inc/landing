@@ -14,7 +14,12 @@ type BlogModule = {
     components?: ReturnType<typeof useMDXComponents>;
   }>;
   frontmatter: BlogFrontmatter;
+  /** Exported by `scripts/remark-headings.mjs`. */
+  headings: readonly PostHeading[];
+  readingMinutes: number;
 };
+
+export type PostHeading = { readonly id: string; readonly text: string };
 
 const modules = import.meta.glob<BlogModule>("./*.mdx", { eager: true });
 
@@ -23,6 +28,8 @@ export const blogPosts = Object.entries(modules)
     slug: path.slice(2, -4),
     ...blogFrontmatterSchema.parse(module.frontmatter),
     Content: module.default,
+    headings: module.headings,
+    readingMinutes: module.readingMinutes,
   }))
   .sort((left, right) => left.slug.localeCompare(right.slug));
 

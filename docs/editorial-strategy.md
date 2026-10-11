@@ -57,6 +57,8 @@ Every feature article should include:
 
 Avoid generic AI trend posts, unsupported superlatives, and feature lists without an operating example.
 
+Wrap every prompt a reader can paste into Construct in `<Prompt>...</Prompt>` (Markdown inside, `label="..."` for a note such as where to send it). It renders with Copy and "Try it in Construct" buttons, and feeds and `llms-full.txt` turn it back into a Markdown quote. Quotes that are not prompts, such as an example email or a customer's words, stay ordinary `>` quotes.
+
 ## Feature Backlog
 
 1. Building internal tools with workspace apps (published: `build-internal-tools-with-construct`)

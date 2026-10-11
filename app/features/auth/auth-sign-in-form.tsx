@@ -79,7 +79,7 @@ export type AuthSignInFormProps = {
    * When set (landing auth dialog), persist a welcome flag before Google or
    * magic-email leave so the OS handoff can reopen after return.
    */
-  postLoginWelcome?: { source: string; plan?: string };
+  postLoginWelcome?: { source: string; plan?: string; prompt?: string };
   className?: string;
 };
 

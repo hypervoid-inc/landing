@@ -1,13 +1,27 @@
 import {
+  cloneElement,
   createContext,
   useContext,
+  useState,
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from "react";
 import { useMDXComponents } from "@mdx-js/react";
 
+import { ArticleVideo } from "./article-video";
 import { BetaCta } from "./beta-cta";
 import { CostCalculator } from "./calculators/cost-calculator";
+import { PreviewLink } from "./link-preview";
+import { Prompt } from "./prompt";
+import {
+  SortIcon,
+  nextSort,
+  readTable,
+  sortRows,
+  withSortControls,
+  type SortDirection,
+  type TableSort,
+} from "./sortable-table";
 import { ReliabilityCalculator } from "./calculators/reliability-calculator";
 import { ReadNext } from "./related-links";
 
@@ -43,16 +57,67 @@ function ArticleTable({
  */
 function Table({ children, ...props }: ComponentPropsWithoutRef<"table">) {
   const caption = useContext(TableCaptionContext);
+  const [sort, setSort] = useState<TableSort>(null);
+  const table = readTable(children);
+  const sortable = table.sortable && table.head && table.body;
   return (
     <div className="my-6 overflow-x-auto" tabIndex={0}>
       <table
         {...props}
         className="w-full min-w-[520px] border-collapse text-sm"
       >
-        <caption className="sr-only">{caption ?? "Article table"}</caption>
-        {children}
+        <caption className="sr-only">
+          {caption ?? "Article table"}
+          {sortable ? ", sortable by column" : ""}
+        </caption>
+        {sortable ? (
+          <>
+            {withSortControls(table.head!, sort, (column) =>
+              setSort((current) => nextSort(current, column)),
+            )}
+            {cloneElement(table.body!, {}, sortRows(table, sort))}
+          </>
+        ) : (
+          children
+        )}
       </table>
     </div>
+  );
+}
+
+/**
+ * A header cell. In a sortable table it holds a button that cycles the
+ * column through ascending, descending and the author's order, and says
+ * which in `aria-sort`.
+ */
+function HeaderCell({
+  children,
+  onSort,
+  sortDirection,
+  ...props
+}: ComponentPropsWithoutRef<"th"> & {
+  onSort?: () => void;
+  sortDirection?: SortDirection;
+}) {
+  return (
+    <th
+      {...props}
+      aria-sort={onSort ? (sortDirection ?? "none") : undefined}
+      className="border border-[#e5e7eb] bg-[#fafafa] px-3 py-2 text-left font-medium text-[#4e4646]"
+    >
+      {onSort ? (
+        <button
+          type="button"
+          onClick={onSort}
+          className="inline-flex items-center gap-1.5 text-left font-medium transition-colors hover:text-[#017b89]"
+        >
+          {children}
+          <SortIcon direction={sortDirection} />
+        </button>
+      ) : (
+        children
+      )}
+    </th>
   );
 }
 
@@ -118,6 +183,17 @@ function ExternalAwareLink({
   ...props
 }: ComponentPropsWithoutRef<"a">) {
   const external = /^https?:\/\//.test(href);
+  if (href.startsWith("/")) {
+    return (
+      <PreviewLink
+        {...props}
+        href={href}
+        className="text-[#01b4c8] underline underline-offset-2"
+      >
+        {children}
+      </PreviewLink>
+    );
+  }
   return (
     <a
       {...props}
@@ -135,12 +211,20 @@ export const mdxComponents: MDXComponents = {
   // Capitalised entries are authorable in MDX with no import, e.g. `<BetaCta />`.
   ArticleFigure,
   ArticleTable,
+  ArticleVideo,
   BetaCta,
   CostCalculator,
+  Prompt,
   ReadNext,
   ReliabilityCalculator,
-  h2: ({ children }) => (
-    <h2 className="font-geist mt-10 mb-4 text-[22px] italic leading-tight text-[#4e4646] lg:text-[26px]">
+  // `id` comes from `scripts/remark-headings.mjs`, which also lists it in the
+  // post's table of contents. The scroll margin keeps a jumped-to heading
+  // clear of the sticky header.
+  h2: ({ children, id }) => (
+    <h2
+      id={id}
+      className="font-geist mt-10 mb-4 scroll-mt-[calc(var(--site-chrome-height)+1.5rem)] text-[22px] italic leading-tight text-[#4e4646] lg:text-[26px]"
+    >
       {children}
     </h2>
   ),
@@ -170,14 +254,7 @@ export const mdxComponents: MDXComponents = {
   pre: CodeBlock,
   a: ExternalAwareLink,
   table: Table,
-  th: ({ children, ...props }) => (
-    <th
-      {...props}
-      className="border border-[#e5e7eb] bg-[#fafafa] px-3 py-2 text-left font-medium text-[#4e4646]"
-    >
-      {children}
-    </th>
-  ),
+  th: HeaderCell,
   td: ({ children, ...props }) => (
     <td {...props} className="border border-[#e5e7eb] px-3 py-2 align-top">
       {children}

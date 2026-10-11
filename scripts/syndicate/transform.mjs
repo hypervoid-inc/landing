@@ -51,7 +51,7 @@ function figureToMarkdown(figure, slug) {
     .replaceAll(/\s+/g, " ")
     .trim();
   const image = figure.match(/<img\b[\s\S]*?\/>/)?.[0];
-  const video = figure.match(/<video\b[\s\S]*?>/)?.[0];
+  const video = figure.match(/<(?:video|ArticleVideo)\b[\s\S]*?>/)?.[0];
   let media = "";
   if (image) {
     media = `![${attribute(image, "alt") ?? ""}](${attribute(image, "src")})`;
@@ -63,8 +63,27 @@ function figureToMarkdown(figure, slug) {
   return [media, caption && `*${caption}*`].filter(Boolean).join("\n\n");
 }
 
+/**
+ * `<Prompt>` blocks back to the Markdown quotes they are on the page, with a
+ * label, when one is set, as an italic line above. Shared with the
+ * `llms-full.txt` body, which otherwise strips the tags and loses the quoting.
+ */
+export function promptsToQuotes(text) {
+  return text.replaceAll(
+    /<Prompt\b([^>]*)>\s*([\s\S]*?)\s*<\/Prompt>/g,
+    (_, attributes, body) => {
+      const label = attribute(attributes, "label");
+      const quoted = body
+        .split("\n")
+        .map((line) => (line ? `> ${line}` : ">"))
+        .join("\n");
+      return label ? `*${label}:*\n\n${quoted}` : quoted;
+    },
+  );
+}
+
 function convert(text, { slug, utmSource, titles }) {
-  return text
+  return promptsToQuotes(text)
     .replaceAll(/\{\/\*[\s\S]*?\*\/\}/g, "")
     .replaceAll(/\{(["']) \1\}/g, " ")
     .replaceAll(/<BetaCta\b[^>]*>[\s\S]*?<\/BetaCta>\n?/g, "")

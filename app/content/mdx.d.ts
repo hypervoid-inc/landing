@@ -4,6 +4,9 @@ declare module "*.mdx" {
   import type { BlogFrontmatter } from "./schema";
 
   export const frontmatter: BlogFrontmatter;
+  /** From `scripts/remark-headings.mjs`. */
+  export const headings: readonly { id: string; text: string }[];
+  export const readingMinutes: number;
   const Content: ComponentType<{
     components?: ReturnType<typeof useMDXComponents>;
   }>;

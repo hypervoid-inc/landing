@@ -1,15 +1,9 @@
-import type { ReactNode } from "react";
-import { Link } from "react-router";
+import { useRef, type ReactNode } from "react";
+import { Link, useLocation } from "react-router";
 import { SiteFooter, SiteHeader } from "../layout/site-layout";
+import { useScrollingRail } from "./use-scrolling-rail";
 
 export type Breadcrumb = { readonly label: string; readonly to: string };
-
-/**
- * Vertical gap between the measured sticky header and a stuck rail. Driven by
- * `--site-chrome-height` so the rail never relies on a duplicated header size.
- */
-const RAIL_TOP = "top-[calc(var(--site-chrome-height)+0.75rem)]";
-const RAIL_MAX_H = "max-h-[calc(100dvh-var(--site-chrome-height)-1.5rem)]";
 
 export function ContentShell({
   title,
@@ -18,6 +12,8 @@ export function ContentShell({
   breadcrumbTitle,
   article = false,
   aside,
+  cover,
+  wide = false,
   children,
 }: {
   title: string;
@@ -35,6 +31,10 @@ export function ContentShell({
    * space at the margin rather than a resize of the content.
    */
   aside?: ReactNode;
+  /** Shown between the byline and the body: a post's social card. */
+  cover?: ReactNode;
+  /** A page that is a grid of cards rather than prose: wider, up to four across. */
+  wide?: boolean;
   children: ReactNode;
 }) {
   const Content = article ? "article" : "div";
@@ -46,7 +46,9 @@ export function ContentShell({
         className={`mx-auto w-full flex-1 px-5 pb-20 pt-10 sm:px-6 lg:pt-16 ${
           aside
             ? "max-w-3xl xl:grid xl:max-w-[73.75rem] xl:grid-cols-[minmax(0,48rem)_18.75rem] xl:gap-12"
-            : "max-w-3xl"
+            : wide
+              ? "max-w-[90rem] lg:px-16"
+              : "max-w-3xl"
         }`}
       >
         {/* `min-w-0` stops a wide table or code block inside the article from
@@ -80,6 +82,7 @@ export function ContentShell({
                 {metadata}
               </div>
             )}
+            {cover && <div className="mt-8">{cover}</div>}
             <div className="resource-content mt-12 space-y-10 text-[15px] leading-[1.7] text-[#627c86] lg:text-[16px]">
               {children}
             </div>
@@ -89,19 +92,7 @@ export function ContentShell({
           // Last in the DOM so keyboard and screen-reader users reach the whole
           // post before its sidebar, then put back alongside it by explicit
           // grid placement rather than source order.
-          <div className="col-start-2 row-start-1 hidden min-w-0 overflow-visible xl:block">
-            {/*
-              Padding + matching negative margin: overflow-y-auto otherwise clips
-              PH card shadows and the translateY(-1px) hover lift at the edges.
-              Extra bottom padding, coral blur is ~24-28px and was hard-clipping.
-            */}
-            <div
-              data-lenis-prevent
-              className={`resource-rail-scroll sticky ${RAIL_TOP} ${RAIL_MAX_H} overflow-x-clip overflow-y-auto px-4 pb-8 pt-4 -mx-4 -mb-8 -mt-4`}
-            >
-              {aside}
-            </div>
-          </div>
+          <Rail>{aside}</Rail>
         )}
       </main>
       <SiteFooter />
@@ -182,4 +173,25 @@ export function formatShortDate(iso: string): string {
     dateStyle: "medium",
     timeZone: "UTC",
   }).format(new Date(`${iso}T00:00:00Z`));
+}
+
+/**
+ * The desktop sidebar. It scrolls with the page rather than in a box of its
+ * own, holding once its top or bottom is in view, see `useScrollingRail`.
+ */
+function Rail({ children }: { children: ReactNode }) {
+  const spacer = useRef<HTMLDivElement>(null);
+  const rail = useRef<HTMLDivElement>(null);
+  useScrollingRail(spacer, rail, useLocation().pathname);
+  return (
+    <div className="col-start-2 row-start-1 hidden min-w-0 xl:block">
+      <div ref={spacer} aria-hidden />
+      <div
+        ref={rail}
+        className="sticky top-[calc(var(--site-chrome-height)+0.75rem)] pb-6"
+      >
+        {children}
+      </div>
+    </div>
+  );
 }

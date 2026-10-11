@@ -393,3 +393,42 @@ test("submits the footer newsletter through Turnstile and D1", async ({
 
 // A post is its own layout: the desktop rail, the related grid, and the FAQ
 // list only exist here, so the index page's pass says nothing about them.
+test("scrolls the post rail with the page instead of in a box of its own", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 860 });
+  await page.goto("/blog/construct-vs-lindy/");
+  const rail = page.locator("main .sticky").first();
+  const box = async () => (await rail.boundingBox())!;
+  const header = await page.evaluate(() =>
+    parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--site-chrome-height",
+      ),
+    ),
+  );
+
+  expect(await rail.evaluate((node) => getComputedStyle(node).overflowY)).toBe(
+    "visible",
+  );
+  await page.mouse.move(700, 500);
+  for (let step = 0; step < 10; step += 1) {
+    await page.mouse.wheel(0, 300);
+    await page.waitForTimeout(120);
+  }
+  await page.waitForTimeout(800);
+  const down = await box();
+  // Taller than the screen: its bottom has come into view and holds there.
+  if (down.height > 860 - header) {
+    expect(down.y + down.height).toBeLessThanOrEqual(861);
+    expect(down.y + down.height).toBeGreaterThan(800);
+  }
+
+  for (let step = 0; step < 10; step += 1) {
+    await page.mouse.wheel(0, -300);
+    await page.waitForTimeout(120);
+  }
+  await page.waitForTimeout(800);
+  // Scrolling back, its top comes back into view under the header.
+  expect((await box()).y).toBeGreaterThanOrEqual(header);
+});

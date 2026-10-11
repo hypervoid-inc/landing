@@ -31,8 +31,19 @@ export function isLiveOn(
   return !post.draft && post.published <= day;
 }
 
+declare const __SHOW_ALL_POSTS__: boolean | undefined;
+
+/**
+ * The local dev server (`pnpm dev`, which sets `SHOW_ALL_POSTS=1`) shows
+ * every post, drafts and scheduled ones included, so a post can be read in
+ * place before its day. Builds, the scripts that read content through Vite,
+ * and tests never set it, so they keep the schedule.
+ */
+const showEverything =
+  typeof __SHOW_ALL_POSTS__ === "boolean" && __SHOW_ALL_POSTS__;
+
 export function isLive(post: { draft: boolean; published: string }): boolean {
-  return isLiveOn(post, contentDate);
+  return showEverything || isLiveOn(post, contentDate);
 }
 
 function toEntry(post: (typeof blogMetadata)[number]): ResourceEntry {

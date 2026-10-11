@@ -9,6 +9,7 @@ import type { CanonicalRoute } from "./route-manifest";
 import { canonicalRoutes, siteUrl } from "./route-manifest";
 import {
   parsePost,
+  promptsToQuotes,
   toHtml,
   toMarkdown,
 } from "../../scripts/syndicate/transform.mjs";
@@ -21,9 +22,11 @@ import {
  */
 function bodyForSlug(slug: string): string {
   return (
-    readFileSync(
-      new URL(`../content/blog/${slug}.mdx`, import.meta.url),
-      "utf8",
+    promptsToQuotes(
+      readFileSync(
+        new URL(`../content/blog/${slug}.mdx`, import.meta.url),
+        "utf8",
+      ),
     )
       .replace(/^---\n[\s\S]*?\n---\n/, "")
       .replaceAll(/\{(["']) \1\}/g, " ")

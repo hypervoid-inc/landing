@@ -17,3 +17,6 @@ export function toMarkdown(
 ): string;
 
 export function toHtml(markdown: string): string;
+
+/** `<Prompt>` blocks as the Markdown quotes they are on the page. */
+export function promptsToQuotes(text: string): string;

@@ -17,6 +17,13 @@ import {
 import { BetaCta } from "../../components/content/beta-cta";
 import { mdxComponents } from "../../components/content/mdx-components";
 import { NotFoundPage } from "../not-found/not-found-page";
+import {
+  InlineContents,
+  RailContents,
+  ReadingProgress,
+} from "./post-navigation";
+import { CardImage } from "./card-image";
+import { ResourceCard, TagList } from "./resource-card";
 import { ProductHuntProof } from "../product-hunt/product-hunt-proof";
 import { getBlogPost } from "../../content/blog";
 import {
@@ -29,11 +36,7 @@ import {
 import { getResourceFaqs } from "../../content/faqs";
 import { getRelatedResources } from "../../content/related";
 import { trackRelatedClick } from "../../components/content/related-links";
-import {
-  getResource,
-  resourceEntries,
-  type ResourceEntry,
-} from "../../content/resources";
+import { getResource } from "../../content/resources";
 import {
   getRoute,
   hubTags,
@@ -47,110 +50,46 @@ const blogBreadcrumbs = [
   { label: "Blog", to: "/blog/" },
 ];
 
-export function BlogIndexPage() {
-  return (
-    <ContentShell
-      title="Construct insights and guides"
-      breadcrumbTitle="Blog"
-      metadata="Practical writing from Construct on AI agents, workflows, memory, and tools that get work done."
-    >
-      <section aria-labelledby="all-resources-heading">
-        <h2
-          id="all-resources-heading"
-          className="font-geist mb-6 text-[28px] italic text-[#4e4646]"
-        >
-          Latest
-        </h2>
-        <ol className="grid list-none gap-6 p-0 sm:grid-cols-2">
-          {resourceEntries.map((entry) => (
-            <li key={entry.slug}>
-              <ResourceCard entry={entry} />
-            </li>
-          ))}
-        </ol>
-      </section>
-      <nav aria-label="Browse" className="flex flex-wrap gap-x-6 gap-y-2">
-        <Link to="/authors/" className="text-[#017b89] hover:underline">
-          Meet the authors
-        </Link>
-        {hubTags.map((tag) => (
-          <Link
-            key={tag}
-            to={`/blog/tag/${tag}/`}
-            className="text-[#017b89] hover:underline"
-          >
-            {tagLabel(tag)}
-          </Link>
-        ))}
-      </nav>
-    </ContentShell>
-  );
-}
-
-function ResourceCard({
-  entry,
-  onSelect,
-}: {
-  entry: ResourceEntry;
-  /** Fired when the card's own link is taken, for onward-reading analytics. */
-  onSelect?: () => void;
-}) {
-  const path = `/blog/${entry.slug}/`;
-  const image = getRoute(path.slice(0, -1))?.image;
-  return (
-    <article className="group relative h-full overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white transition-colors hover:border-[#8adcdf]">
-      {/*
-        One stretched hit target for the post. Tags sit above it with their own
-        pointer-events so hub-tag links still work.
-      */}
-      <Link
-        to={path}
-        onClick={onSelect}
-        className="absolute inset-0 z-[1]"
-        aria-label={entry.title}
-      />
-      {image && (
-        <img
-          src={new URL(image).pathname}
-          alt=""
-          width="1200"
-          height="630"
-          loading="lazy"
-          className="aspect-[1200/630] w-full object-cover"
-        />
-      )}
-      <div className="pointer-events-none relative z-0 p-6">
-        <h3 className="font-geist text-[24px] italic leading-tight tracking-[-0.015em] text-[#4e4646] transition-colors group-hover:text-[#01b4c8]">
-          {entry.title}
-        </h3>
-        <p className="resource-card-meta mt-2 overflow-hidden text-ellipsis whitespace-nowrap text-[12px] capitalize text-[#526b75]">
-          {entry.kind} · {formatShortDate(entry.published)} ·{" "}
-          {entry.author.name}
-        </p>
-        <p className="mt-3 line-clamp-3 text-[15px] leading-6">
-          {entry.description}
-        </p>
-        <TagList
-          tags={entry.tags}
-          label={`Tags for ${entry.title}`}
-          className="pointer-events-auto relative z-[2] mt-4"
-        />
-      </div>
-    </article>
-  );
-}
-
 export function ResourcePage({ slug }: { slug: string }) {
   const entry = getResource(slug);
   if (!entry) return <NotFoundPage />;
   const post = getBlogPost(entry.slug);
   if (!post) return <NotFoundPage />;
+  const image = getRoute(`/blog/${entry.slug}`)?.image;
   return (
     <ContentShell
       title={post.title}
       article
       breadcrumbs={blogBreadcrumbs}
-      aside={<ResourceRail slug={entry.slug} />}
+      aside={
+        <ResourceRail
+          slug={entry.slug}
+          contents={
+            <RailContents
+              headings={post.headings}
+              minutes={post.readingMinutes}
+            />
+          }
+        />
+      }
+      cover={
+        <>
+          {image && (
+            // The post's own social card, the same image the blog index and a
+            // shared link show, so the page opens on what the reader clicked.
+            <CardImage
+              src={new URL(image).pathname}
+              priority
+              className="aspect-[1200/630] w-full rounded-2xl border border-[#dcecef] object-cover shadow-[0_24px_60px_-34px_rgba(1,95,110,0.35)]"
+            />
+          )}
+          <InlineContents
+            headings={post.headings}
+            minutes={post.readingMinutes}
+          />
+          <ReadingProgress />
+        </>
+      }
       metadata={
         <>
           <AuthorByline author={entry.author}>
@@ -187,10 +126,18 @@ export function ResourcePage({ slug }: { slug: string }) {
  * Product Hunt proof sits at the bottom of the rail so it lands nearer
  * mid-viewport while reading without interrupting the article itself.
  */
-function ResourceRail({ slug }: { slug: string }) {
+function ResourceRail({
+  slug,
+  contents,
+}: {
+  slug: string;
+  /** The post's own table of contents, above where to read next. */
+  contents: ReactNode;
+}) {
   const related = getRelatedResources(slug, 3);
   return (
     <div className="space-y-6">
+      {contents}
       {related.length > 0 && (
         <nav aria-labelledby="rail-heading">
           <h2
@@ -211,12 +158,8 @@ function ResourceRail({ slug }: { slug: string }) {
                     className="group flex gap-3"
                   >
                     {image && (
-                      <img
+                      <CardImage
                         src={new URL(image).pathname}
-                        alt=""
-                        width="1200"
-                        height="630"
-                        loading="lazy"
                         className="mt-0.5 aspect-[1200/630] w-[6.25rem] shrink-0 rounded-md object-cover"
                       />
                     )}
@@ -409,6 +352,7 @@ export function AuthorPage({ id }: { id: string }) {
   const entries = resourcesByAuthor(author.id);
   return (
     <ContentShell
+      wide
       title={author.name}
       breadcrumbs={[
         { label: "Home", to: "/" },
@@ -436,7 +380,7 @@ export function AuthorPage({ id }: { id: string }) {
           {entries.length} {entries.length === 1 ? "resource" : "resources"} by{" "}
           {author.name}
         </h2>
-        <ol className="mt-6 grid list-none gap-6 p-0 sm:grid-cols-2">
+        <ol className="mt-6 grid list-none gap-6 p-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {entries.map((entry) => (
             <li key={entry.slug}>
               <ResourceCard entry={entry} />
@@ -454,6 +398,7 @@ export function TagPage({ tag }: { tag: string }) {
   const label = tagLabel(tag);
   return (
     <ContentShell
+      wide
       title={`Writing tagged ${label}`}
       breadcrumbTitle={label}
       breadcrumbs={blogBreadcrumbs}
@@ -463,7 +408,7 @@ export function TagPage({ tag }: { tag: string }) {
         <h2 id="tag-resources-heading" className="sr-only">
           Resources tagged {label}
         </h2>
-        <ol className="grid list-none gap-6 p-0 sm:grid-cols-2">
+        <ol className="grid list-none gap-6 p-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {entries.map((entry) => (
             <li key={entry.slug}>
               <ResourceCard entry={entry} />
@@ -488,46 +433,6 @@ export function TagPage({ tag }: { tag: string }) {
         </ul>
       </nav>
     </ContentShell>
-  );
-}
-
-function TagList({
-  tags,
-  className,
-  label = "Resource tags",
-}: {
-  tags?: readonly string[];
-  className?: string;
-  /**
-   * Distinguishes one card's tags from another's. A post page now carries the
-   * article's own list plus one per related card, and several lists sharing a
-   * name leaves a screen reader with no way to tell which belongs to what.
-   */
-  label?: string;
-}) {
-  if (!tags?.length) return null;
-  return (
-    <ul
-      aria-label={label}
-      className={`flex flex-wrap gap-2 ${className ?? ""}`}
-    >
-      {tags.map((tag) => (
-        <li key={tag}>
-          {hubTags.includes(tag) ? (
-            <Link
-              to={`/blog/tag/${tag}/`}
-              className="inline-block rounded-full bg-[#effbfc] px-2.5 py-1 text-[11px] leading-4 text-[#016d79] transition-colors hover:bg-[#d9f6f5]"
-            >
-              {tag}
-            </Link>
-          ) : (
-            <span className="inline-block rounded-full bg-[#effbfc] px-2.5 py-1 text-[11px] leading-4 text-[#016d79]">
-              {tag}
-            </span>
-          )}
-        </li>
-      ))}
-    </ul>
   );
 }
 

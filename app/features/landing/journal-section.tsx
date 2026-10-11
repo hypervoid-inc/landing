@@ -5,6 +5,7 @@ import { trackRelatedClick } from "../../components/content/related-links";
 import { resourceEntries, type ResourceEntry } from "~/content/resources";
 import { getRoute } from "~/lib/route-manifest";
 
+import { CardImage } from "../content/card-image";
 import "./journal-section.css";
 
 /** Three fills one desktop row exactly, so the grid never leaves an orphan. */
@@ -169,17 +170,11 @@ function JournalCard({ entry }: { entry: ResourceEntry }) {
         onClick={() => trackRelatedClick("landing_journal", entry.slug)}
       />
       {image && (
-        <div className="journal-card-visual">
-          <img
-            src={image}
-            alt=""
-            width="1200"
-            height="630"
-            loading="lazy"
-            decoding="async"
-            className="journal-card-image"
-          />
-        </div>
+        <CardImage
+          src={image}
+          wrapperClassName="journal-card-visual"
+          className="journal-card-image"
+        />
       )}
       <div className="journal-card-body">
         <p className="journal-card-meta">

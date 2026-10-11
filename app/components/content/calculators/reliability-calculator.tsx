@@ -15,6 +15,7 @@ import {
   formatCount,
   type FailureMode,
 } from "./reliability-math";
+import { ReliabilityCurve } from "./reliability-curve";
 
 const LIMITS = {
   success: { min: 50, max: 100, step: 0.1 },
@@ -233,6 +234,13 @@ function ReliabilityResults({
           }
         />
       </dl>
+
+      <ReliabilityCurve
+        stepSuccess={input.stepSuccess}
+        steps={input.steps}
+        pieceSize={checkpointed ? result.pieceSizes[0] : undefined}
+        halfLife={result.halfLifeSteps}
+      />
 
       <div className="mt-4 overflow-x-auto" tabIndex={0}>
         <table className="w-full min-w-[440px] border-collapse bg-white text-[14px]">

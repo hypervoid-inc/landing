@@ -57,6 +57,11 @@ type AnalyticsEvent =
   // Onward reading from a post. `source` separates the surfaces (end-of-post
   // grid, mid-article read-next, desktop rail) so they can be compared.
   | "related_post_clicked"
+  // The blog index's topic chips, by `topic` (a kind or a tag, never free text).
+  | "blog_topic_filtered"
+  // A prompt block in a post, by `slug` and `action` ("copy" or "try"), so a
+  // reader taking a prompt into Construct is told apart from one copying it.
+  | "blog_prompt_used"
   // Free tools at /tools/. `tool` is the slug and `action` is what was taken
   // away (copy, download). Never the content: the tools sit inside
   // `ph-no-capture` so what people type stays out of analytics and replay.

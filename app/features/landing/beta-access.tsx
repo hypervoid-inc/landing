@@ -24,7 +24,7 @@ if (typeof document !== "undefined") {
 }
 
 import { betaSignupSchema } from "../../../shared/beta-signup-schema";
-import { getAppOrigin } from "../../platform/env";
+import { getAppOrigin, getAppUrl } from "../../platform/env";
 import { AuthSignInForm } from "../auth/auth-sign-in-form";
 import { useAuth } from "../auth/auth-provider";
 import {
@@ -71,6 +71,8 @@ export type OpenAccessDialogOptions = {
   source: string;
   plan?: string;
   intent?: AccessDialogIntent;
+  /** Opens the app on this prompt once the reader is signed in. */
+  prompt?: string;
 };
 
 type OpenAccessDialog = (options: OpenAccessDialogOptions) => void;
@@ -113,6 +115,7 @@ export function StartLink({
   source = "unknown",
   authedChildren,
   intent = "start",
+  prompt,
   onClick: onBeforeClick,
 }: {
   children: ReactNode;
@@ -123,11 +126,16 @@ export function StartLink({
   authedChildren?: ReactNode;
   /** Defaults to `start`: these CTAs are aimed at people without an account. */
   intent?: AccessDialogIntent;
+  /**
+   * Open the app on this prompt, which it shows and asks before running. A
+   * new reader signs up first and the prompt goes with them.
+   */
+  prompt?: string;
   onClick?: () => void;
 }) {
   const { status } = useAuth();
   const openDialog = useContext(BetaAccessContext);
-  const appOrigin = getAppOrigin();
+  const appOrigin = getAppUrl(prompt);
   const authenticated = status === "authenticated";
 
   const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -141,7 +149,7 @@ export function StartLink({
       source,
       ...(intent ? { intent } : {}),
     });
-    openDialog({ mode: "auth", source, intent });
+    openDialog({ mode: "auth", source, intent, prompt });
   };
 
   return (
@@ -230,6 +238,7 @@ function AccessDialog({
   plan,
   intent = "signin",
   initialPhase = "form",
+  prompt,
   onOpenChange,
 }: {
   open: boolean;
@@ -237,6 +246,7 @@ function AccessDialog({
   source: string;
   plan?: string;
   intent?: AccessDialogIntent;
+  prompt?: string;
   initialPhase?: "form" | "success";
   onOpenChange: (open: boolean) => void;
 }) {
@@ -457,13 +467,9 @@ function AccessDialog({
   const canDismiss =
     phase === "form" || (mode === "auth" && phase === "success");
   const firstName =
-    user?.displayName?.trim().split(/\s+/)[0] ||
-    user?.username ||
-    null;
+    user?.displayName?.trim().split(/\s+/)[0] || user?.username || null;
   const successName =
-    mode === "updates"
-      ? email.trim().toLowerCase()
-      : firstName;
+    mode === "updates" ? email.trim().toLowerCase() : firstName;
 
   return (
     <Dialog.Root
@@ -534,7 +540,7 @@ function AccessDialog({
               <AuthSignInForm
                 appearance="dialog"
                 onSuccess={handleAuthSuccess}
-                postLoginWelcome={{ source, plan }}
+                postLoginWelcome={{ source, plan, prompt }}
               />
               <p className="mt-4 text-center text-[12px] leading-[17px] text-[#627c86]">
                 {intent === "start" ? (
@@ -728,8 +734,8 @@ function AccessDialog({
                 ) : null}
               </Dialog.Title>
               <Dialog.Description className="mt-3 text-[15px] leading-[21px] text-[#627c86]">
-                Construct is your persistent cloud workspace, agents, files,
-                and work that keeps running.
+                Construct is your persistent cloud workspace, agents, files, and
+                work that keeps running.
               </Dialog.Description>
               <ul className="mt-6 space-y-3 text-left text-[14px] leading-5 text-[#4e4646]">
                 <li className="flex gap-3">
@@ -738,7 +744,9 @@ function AccessDialog({
                     className="mt-0.5 size-[18px] shrink-0 text-[#01b4c8]"
                     strokeWidth={1.75}
                   />
-                  <span>Always-on agents that keep working while you&apos;re away</span>
+                  <span>
+                    Always-on agents that keep working while you&apos;re away
+                  </span>
                 </li>
                 <li className="flex gap-3">
                   <FolderOpen
@@ -762,8 +770,13 @@ function AccessDialog({
                   You&apos;ll finish setup there.
                 </p>
               ) : null}
+              {prompt ? (
+                <p className="mt-4 text-[13px] leading-[18px] text-[#627c86]">
+                  Your prompt from the post will be waiting, ready to run.
+                </p>
+              ) : null}
               <a
-                href={appOrigin}
+                href={getAppUrl(prompt)}
                 onClick={() => {
                   captureAnalytics("post_login_welcome_os", { source });
                   captureAnalytics("app_opened", { source });
@@ -820,6 +833,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
   const [source, setSource] = useState("unknown");
   const [mode, setMode] = useState<AccessDialogMode>("auth");
   const [plan, setPlan] = useState<string | undefined>();
+  const [prompt, setPrompt] = useState<string | undefined>();
   const [intent, setIntent] = useState<AccessDialogIntent>("signin");
   const [initialPhase, setInitialPhase] = useState<"form" | "success">("form");
   const handledWelcome = useRef(false);
@@ -866,6 +880,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
       setMode("auth");
       setSource(payload.source || "oauth-return");
       setPlan(undefined);
+      setPrompt(payload.prompt);
       setIntent("signin");
       setInitialPhase("success");
       setOpen(true);
@@ -878,6 +893,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
         setMode(options.mode);
         setSource(options.source);
         setPlan(options.plan);
+        setPrompt(options.prompt);
         // Signup-first unless a caller explicitly asks otherwise. Callers that
         // reach this directly (pricing cards) are marketing CTAs too, and the
         // returning-user paths below set `signin` for themselves.
@@ -897,6 +913,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
             plan={plan}
             intent={intent}
             initialPhase={initialPhase}
+            prompt={prompt}
             onOpenChange={setOpen}
           />
         )}
