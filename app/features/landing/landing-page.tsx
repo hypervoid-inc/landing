@@ -1,15 +1,28 @@
-import { useMemo, useRef } from "react";
+import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
 import { captureAnalytics } from "../analytics/analytics.client";
 
 import { featureCards } from "~/content/landing";
 
+import { PeekingMascot } from "../content/blog-mascot";
+import { MascotParty } from "./mascot-party";
 import { StartLink } from "./beta-access";
+import { usePartOfDay } from "./part-of-day";
+import { trackToy } from "./track-toy";
 // we temporearily commented and dont delete
 // import { FounderNote } from "./founder-note";
 import { WALKTHROUGH_URL } from "./cta-links";
 import { ProductHuntProof } from "../product-hunt/product-hunt-proof";
 import { AutoVideo, useRevealOnView } from "./media";
+import {
+  HeroTaskCard,
+  chipState,
+  type ChipStep,
+  useHeroTask,
+  type HeroStage,
+} from "./hero-task";
 import { BentoCompare } from "./bento/bento-compare";
 import { AutomationsCard } from "./bento/automations-card";
 import { CloudCard } from "./bento/cloud-card";
@@ -130,29 +143,75 @@ function HeroHeadline() {
 }
 
 function WorkflowChip({
-  image,
-  label,
-  className,
+  step,
+  swapKey,
+  stage,
+  index,
 }: {
-  image: string;
-  label: string;
-  className: string;
+  step: ChipStep;
+  /** Changes when the chips switch to another task, to replay the swap. */
+  swapKey: string;
+  /** The hero task preview, which the chips act out. */
+  stage: HeroStage;
+  index: 0 | 1 | 2;
 }) {
+  const state = chipState(stage, index);
+  // Idle chips read as finished work, as in the original art; once a task is
+  // sent, the steps still to come say what they will do.
+  const shown =
+    state === "idle" || state === "done" ? step.done : step.running;
   return (
     <StartLink
       source="hero-workflow"
-      label={`Try Construct - ${label}`}
-      className={`hero-interactive flex h-[38px] w-[216px] items-center gap-[14px] rounded-lg border border-[#f0f0f0] bg-white px-2 text-xs text-[#0b0b0b] shadow-[0_4px_14px_-6px_rgba(15,23,42,.18),inset_0_4px_4px_rgba(255,255,255,.25)] ${className}`}
+      label={`Try Construct - ${shown}`}
+      className={`hero-interactive hero-chip hero-chip-${state} flex h-[38px] w-[216px] items-center gap-[14px] rounded-lg border border-[#f0f0f0] bg-white px-2 text-xs text-[#0b0b0b] shadow-[0_4px_14px_-6px_rgba(15,23,42,.18),inset_0_4px_4px_rgba(255,255,255,.25)]`}
     >
-      <img
-        src={image}
-        alt=""
-        width="256"
-        height="256"
-        className="h-7 w-7 rounded-[20px] object-contain"
-      />
-      <span>{label}</span>
+      <span
+        key={swapKey}
+        className="hero-chip-swap flex items-center gap-[14px]"
+      >
+        <span
+          className={`hero-chip-icon${step.tile ? " hero-chip-icon-tile" : ""}`}
+        >
+          <img src={step.icon} alt="" width="256" height="256" />
+        </span>
+        <span>{shown}</span>
+      </span>
+      {state === "running" || state === "done" ? (
+        <span className="hero-chip-status" aria-hidden>
+          {state === "running" ? (
+            <span className="hero-task-spinner" />
+          ) : (
+            <HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={2.2} />
+          )}
+        </span>
+      ) : null}
     </StartLink>
+  );
+}
+
+/**
+ * The eyes of the mascot in the portal video, which has its own painted out:
+ * they follow the pointer, blink, and smile for a moment when poked.
+ */
+function HeroMascotEyes() {
+  const [happy, setHappy] = useState(false);
+  useEffect(() => {
+    if (!happy) return;
+    const timer = window.setTimeout(() => setHappy(false), 1400);
+    return () => window.clearTimeout(timer);
+  }, [happy]);
+  return (
+    <PeekingMascot
+      face
+      happy={happy}
+      rise={false}
+      className="hero-mascot"
+      onPoke={() => {
+        setHappy(true);
+        trackToy("hero-mascot");
+      }}
+    />
   );
 }
 
@@ -162,6 +221,7 @@ function Hero() {
   const sceneRef = useRef<HTMLDivElement>(null);
   // Temporarily disabled, do not delete. Hero collage pointer parallax.
   // usePointerParallax(sceneRef);
+  const task = useHeroTask();
 
   return (
     <section
@@ -178,7 +238,7 @@ function Hero() {
         <div ref={sceneRef} className="hero-scene relative isolate">
           <div className="hero-portal absolute aspect-square">
             <div
-              className="reveal-item h-full w-full"
+              className="reveal-item relative h-full w-full"
               data-reveal="mount"
               data-reveal-delay="1"
             >
@@ -195,6 +255,7 @@ function Hero() {
                   />
                 </span>
               </StartLink>
+              <HeroMascotEyes />
             </div>
           </div>
           <div className="hero-report absolute z-20">
@@ -203,19 +264,13 @@ function Hero() {
               data-reveal="mount"
               data-reveal-delay="2"
             >
-              <StartLink
-                source="hero-report"
-                label="Try Construct - research report"
-                className="hero-link block"
-              >
-                <img
-                  src="/assets/landing/hero/research-report.webp"
-                  alt="Generated PDF research report produced by the Construct AI agent"
-                  width="1272"
-                  height="705"
-                  className="hero-interactive block w-full"
-                />
-              </StartLink>
+              <HeroTaskCard
+                stage={task.stage}
+                task={task.task}
+                onSend={task.send}
+                onReset={task.reset}
+                onExample={task.follow}
+              />
             </div>
           </div>
           <div className="hero-chat absolute z-20">
@@ -267,9 +322,10 @@ function Hero() {
               data-reveal-delay="3"
             >
               <WorkflowChip
-                image="/assets/landing/hero/google-meet.png"
-                label="Researched the Topic"
-                className=""
+                step={task.steps[0]}
+                swapKey={`${task.example}`}
+                stage={task.stage}
+                index={0}
               />
             </div>
             <div
@@ -278,9 +334,10 @@ function Hero() {
               data-reveal-delay="4"
             >
               <WorkflowChip
-                image="/assets/landing/hero/gmail.png"
-                label="Replied to the Mails"
-                className=""
+                step={task.steps[1]}
+                swapKey={`${task.example}`}
+                stage={task.stage}
+                index={1}
               />
             </div>
             <div
@@ -289,9 +346,10 @@ function Hero() {
               data-reveal-delay="5"
             >
               <WorkflowChip
-                image="/assets/landing/hero/google-docs.png"
-                label="Prepared the Report"
-                className=""
+                step={task.steps[2]}
+                swapKey={`${task.example}`}
+                stage={task.stage}
+                index={2}
               />
             </div>
           </div>
@@ -495,16 +553,21 @@ function ClosingCta() {
   const floor = pricingFloorLabel(plans) ?? "$9";
   const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth ?? null;
   const trialLabel = trialDays ? `${trialDays}-day` : "7-day";
+  const part = usePartOfDay();
 
   return (
-    <section aria-labelledby="closing-heading" className="closing-cta">
+    <section
+      aria-labelledby="closing-heading"
+      className="closing-cta"
+      data-sky={part ?? undefined}
+    >
       <div className="closing-cta-inner reveal-item" data-reveal-delay="1">
         <h2 id="closing-heading" className="closing-cta-title">
           Hire your first{" "}
           <span className="font-display italic text-[#01b4c8]">
             AI employee
           </span>{" "}
-          tonight
+          {part === null || part === "night" ? "tonight" : `this ${part}`}
         </h2>
         <p className="closing-cta-lead">
           {trialLabel} trial on Pro, then plans from {floor}/month. Cancel any
@@ -576,18 +639,27 @@ export function LandingPage() {
             className="landing-light-beams pointer-events-none absolute left-0 top-[5%] z-0 w-full"
           />
           <div className="relative z-10">
-            <img
-              src="/assets/landing/atmosphere/clouds.webp"
-              srcSet="/assets/landing/atmosphere/clouds-768.webp 768w, /assets/landing/atmosphere/clouds-1280.webp 1280w, /assets/landing/atmosphere/clouds.webp 1728w"
-              sizes="100vw"
-              alt=""
+            {/* The same image twice, one half each, so the clouds can part
+                as the page scrolls into them (landing.css). */}
+            <div
               aria-hidden
-              width="1728"
-              height="806"
-              loading="lazy"
-              decoding="async"
-              className="landing-clouds pointer-events-none absolute inset-x-0 top-0 z-0 w-full"
-            />
+              className="landing-clouds pointer-events-none absolute inset-x-0 top-0 z-0"
+            >
+              {(["left", "right"] as const).map((side) => (
+                <img
+                  key={side}
+                  src="/assets/landing/atmosphere/clouds.webp"
+                  srcSet="/assets/landing/atmosphere/clouds-768.webp 768w, /assets/landing/atmosphere/clouds-1280.webp 1280w, /assets/landing/atmosphere/clouds.webp 1728w"
+                  sizes="100vw"
+                  alt=""
+                  width="1728"
+                  height="806"
+                  loading="lazy"
+                  decoding="async"
+                  className={`landing-clouds-half landing-clouds-${side} w-full`}
+                />
+              ))}
+            </div>
             <AdaptsSection />
             <WorkflowSection />
             <FeatureGrid />
@@ -606,6 +678,7 @@ export function LandingPage() {
         <FaqSection />
         <JournalSection />
         <ClosingCta />
+        <MascotParty />
       </main>
       <SiteFooter />
     </div>

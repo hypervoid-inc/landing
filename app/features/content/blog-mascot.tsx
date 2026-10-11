@@ -1,24 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
 import { usePrefersReducedMotion } from "../landing/media";
-import "./blog.css";
-
-/**
- * Where each layer of the mascot sits in its square, as fractions. Copied
- * from the agent-avatar catalog in the product repo
- * (`packages/agent-avatar/src/core/catalog.generated.ts`), whose 512px
- * layers live in `public/assets/construct/mascot/`.
- */
-const LAYERS = {
-  "body-construct": { x: 0.203125, y: 0.296875, w: 0.59375, h: 0.59375 },
-  gloss: { x: 0.21875, y: 0.296875, w: 0.5625, h: 0.59375 },
-  sockets: { x: 0.34375, y: 0.46875, w: 0.3125, h: 0.25 },
-  eyes: { x: 0.359375, y: 0.484375, w: 0.28125, h: 0.203125 },
-  "sockets-happy": { x: 0.328125, y: 0.5, w: 0.34375, h: 0.109375 },
-  "eyes-happy": { x: 0.328125, y: 0.5, w: 0.34375, h: 0.109375 },
-} as const;
-
-type LayerKey = keyof typeof LAYERS;
+import {
+  mascotLayerSrc,
+  mascotLayerStyle,
+  type MascotLayer,
+} from "./mascot-layers";
+import "./blog-mascot.css";
 
 /** The eyes' resting centre, and how far they may wander, as box fractions. */
 const PIVOT = { x: 0.5, y: 0.59 };
@@ -26,20 +14,14 @@ const REACH = { x: 0.045, y: 0.03 };
 /** Pointer distance, in px, at which the eyes are fully turned. */
 const FULL_TURN_PX = 360;
 
-function Layer({ name }: { name: LayerKey }) {
-  const rect = LAYERS[name];
+function Layer({ name }: { name: MascotLayer }) {
   return (
     <img
-      src={`/assets/construct/mascot/${name}.webp`}
+      src={mascotLayerSrc(name)}
       alt=""
       draggable={false}
       className="blog-mascot-layer"
-      style={{
-        left: `${rect.x * 100}%`,
-        top: `${rect.y * 100}%`,
-        width: `${rect.w * 100}%`,
-        height: `${rect.h * 100}%`,
-      }}
+      style={mascotLayerStyle(name)}
     />
   );
 }
@@ -51,13 +33,24 @@ function Layer({ name }: { name: LayerKey }) {
  *
  * Purely decorative and `aria-hidden`. With reduced motion it simply sits
  * there, eyes forward, with no rise, blink, gaze or hop.
+ *
+ * `face` draws only the eyes, to bring a mascot already in the art to life
+ * (the hero video's, whose own eyes are painted out): no body, so no breath
+ * or hop either, which would pull the eyes off it.
  */
 export function PeekingMascot({
   happy,
   className = "",
+  rise = true,
+  face = false,
+  onPoke,
 }: {
   happy: boolean;
   className?: string;
+  /** Rise into view on mount; off where it already sits in place. */
+  rise?: boolean;
+  face?: boolean;
+  onPoke?: () => void;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const reducedMotion = usePrefersReducedMotion();
@@ -100,15 +93,24 @@ export function PeekingMascot({
       className={`blog-mascot ${className}`}
       data-happy={happy ? "true" : "false"}
       data-motion={reducedMotion ? "off" : "on"}
-      onPointerDown={() => setHops((count) => count + 1)}
+      data-rise={rise ? "true" : "false"}
+      data-face={face ? "true" : undefined}
+      onPointerDown={() => {
+        setHops((count) => count + 1);
+        onPoke?.();
+      }}
     >
       <span
         key={hops}
         className="blog-mascot-body"
-        data-hop={hops > 0 ? "true" : "false"}
+        data-hop={hops > 0 && !face ? "true" : "false"}
       >
-        <Layer name="body-construct" />
-        <Layer name="gloss" />
+        {face ? null : (
+          <>
+            <Layer name="body-construct" />
+            <Layer name="gloss" />
+          </>
+        )}
         <span className="blog-mascot-face">
           <span className="blog-mascot-open">
             <Layer name="sockets" />

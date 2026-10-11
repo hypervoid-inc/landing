@@ -1,0 +1,258 @@
+/*
+ * "Team of N" under the pricing toggle: one wide, short strip. Faces and the
+ * slider on the left, the two monthly prices on the right; two rows on phones.
+ */
+
+.team-sizer {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  max-width: 900px;
+  margin: 28px auto 0;
+  border: 1px solid #dcecef;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff, #f7fbfc);
+  padding: 10px 28px 10px 18px;
+  text-align: left;
+  box-shadow: 0 18px 40px -30px rgb(1 95 110 / 45%);
+}
+
+.team-sizer-input {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  gap: 16px;
+}
+
+.team-sizer-label {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #4e4646;
+}
+
+.team-sizer-label output {
+  display: inline-block;
+  min-width: 1.4em;
+  font-variant-numeric: tabular-nums;
+  color: #017b89;
+}
+
+/* Overlapping faces: the crowd grows, the price beside it does not. */
+.team-sizer-faces {
+  display: flex;
+  height: 38px;
+  align-items: center;
+  padding-right: 4px;
+}
+
+/* Faces off the team take no room, so the row grows from the left. */
+.team-sizer-faces img {
+  width: 0;
+  height: auto;
+  margin-left: 0;
+  filter: drop-shadow(0 2px 3px rgb(1 95 110 / 25%));
+  transform: translateY(6px) scale(0.5);
+  opacity: 0;
+  transition:
+    width 0.25s ease,
+    margin 0.25s ease,
+    transform 0.32s cubic-bezier(0.3, 1.6, 0.5, 1),
+    opacity 0.2s ease;
+}
+
+.team-sizer-faces img[data-on="true"] {
+  width: 28px;
+  margin-left: -14px;
+  transform: none;
+  opacity: 1;
+}
+
+.team-sizer-faces img[data-on="true"]:first-child {
+  margin-left: 0;
+}
+
+.team-sizer-range {
+  flex: 1 1 0;
+  min-width: 120px;
+  height: 30px;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.team-sizer-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #01b4c8 var(--fill), #dcecef var(--fill));
+}
+
+.team-sizer-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #01b4c8 var(--fill), #dcecef var(--fill));
+}
+
+/* The thumb is the mascot. */
+.team-sizer-range::-webkit-slider-thumb {
+  width: 32px;
+  height: 34px;
+  margin-top: -14px;
+  appearance: none;
+  border: 0;
+  background: url("/assets/construct/mascot-eyes-static.webp") center / contain
+    no-repeat;
+  filter: drop-shadow(0 4px 6px rgb(1 95 110 / 35%));
+  transition: transform 0.15s ease;
+}
+
+.team-sizer-range::-moz-range-thumb {
+  width: 32px;
+  height: 34px;
+  border: 0;
+  border-radius: 0;
+  background: url("/assets/construct/mascot-eyes-static.webp") center / contain
+    no-repeat;
+  filter: drop-shadow(0 4px 6px rgb(1 95 110 / 35%));
+}
+
+.team-sizer-range:active::-webkit-slider-thumb {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+/* Keyboard focus rings the mascot, not the whole track. */
+.team-sizer-range:focus-visible {
+  outline: none;
+}
+
+.team-sizer-range:focus-visible::-webkit-slider-thumb {
+  border-radius: 50%;
+  outline: 2px solid #01b4c8;
+  outline-offset: 2px;
+}
+
+.team-sizer-range:focus-visible::-moz-range-thumb {
+  border-radius: 50%;
+  outline: 2px solid #01b4c8;
+  outline-offset: 2px;
+}
+
+.team-sizer-result {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  text-align: right;
+}
+
+.team-sizer-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  color: #627c86;
+}
+
+.team-sizer-price strong {
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: #017b89;
+}
+
+.team-sizer-price strong span {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.team-sizer-why {
+  font-size: 12px;
+  color: #8a9aa2;
+}
+
+@media (max-width: 767px) {
+  .team-sizer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    max-width: 430px;
+    border-radius: 22px;
+    padding: 12px 16px;
+  }
+
+  .team-sizer-input {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+
+  .team-sizer-range {
+    flex-basis: 100%;
+  }
+
+  .team-sizer-faces img[data-on="true"] {
+    width: 24px;
+    margin-left: -12px;
+  }
+
+  .team-sizer-result {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .team-sizer-price {
+    flex-wrap: wrap;
+    row-gap: 0;
+  }
+}
+
+/* The plan the sizer suggests, lit up in the cards. */
+.pricing-card[data-suggested] {
+  box-shadow:
+    0 0 0 2px #01b4c8,
+    0 24px 60px -24px rgb(1 143 160 / 55%);
+  transition: box-shadow 0.3s ease;
+}
+
+.pricing-suggested-tag {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 30;
+  border-radius: 999px;
+  background: #fff;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #017b89;
+  box-shadow: 0 6px 16px -8px rgb(1 143 160 / 60%);
+  animation: team-sizer-tag 0.4s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+/* Under the "Recommended" badge when the card has one. */
+.pricing-card[data-recommended] .pricing-suggested-tag {
+  top: 50px;
+}
+
+@keyframes team-sizer-tag {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-sizer-faces img {
+    transition: none;
+  }
+  .pricing-suggested-tag {
+    animation: none;
+  }
+}

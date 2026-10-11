@@ -16,6 +16,8 @@ export type BillingPeriod = "monthly" | "annual";
 export const pricingPlans = [
   {
     name: "Lite",
+    /** Agent limit; the team sizer assumes one agent per person. */
+    agents: 2,
     price: "$9",
     annualMonthlyPrice: "$7.50",
     annualSavingsLabel: "2 months free",
@@ -39,6 +41,7 @@ export const pricingPlans = [
   },
   {
     name: "Starter",
+    agents: 5,
     price: "$59",
     annualMonthlyPrice: "$39",
     annualSavingsLabel: "4 months free",
@@ -62,6 +65,7 @@ export const pricingPlans = [
   },
   {
     name: "Pro",
+    agents: 15,
     price: "$299",
     annualMonthlyPrice: "$199",
     annualSavingsLabel: "4 months free",
@@ -86,6 +90,7 @@ export const pricingPlans = [
   },
 ] as const satisfies ReadonlyArray<{
   name: string;
+  agents: number;
   price: string;
   annualMonthlyPrice: string;
   annualSavingsLabel: string;
@@ -122,6 +127,7 @@ export const landingFaq = [
   },
   {
     question: "Can I see and control what it does?",
+    demo: "activity",
     answer:
       "Yes. The desktop shows files, live browser activity, terminal transcripts, workflows, memories, and tool records. Activity records each action, what it touched, when it ran, and why, for the last 30 days. You can interrupt a run mid turn, answer its questions, and correct or delete anything it remembers.",
   },
@@ -132,6 +138,7 @@ export const landingFaq = [
   },
   {
     question: "What happens when a job fails partway through?",
+    demo: "resume",
     answer:
       "Finished work lands in the workspace as it is produced, so a run that dies at step thirty keeps the first twenty-nine steps. The next run picks up from what already exists instead of starting over, and Activity lets you trace the failure to a step. Steps with irreversible external effects, such as a payment or a customer email, still need supervision before you let them run unattended.",
   },

@@ -1,0 +1,165 @@
+/* Pictures that play under two FAQ answers as they open. */
+
+.faq-demo {
+  display: grid;
+  gap: 8px;
+  margin: 0 16px 16px;
+  border: 1px solid #e3eef0;
+  border-radius: 14px;
+  background: #fff;
+  padding: 12px 14px;
+}
+
+@media (min-width: 1280px) {
+  .faq-demo {
+    margin: -6px 55px 28px;
+  }
+}
+
+/* Resume: two rows of 30 steps. */
+.faq-run {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #627c86;
+}
+
+.faq-run-label {
+  font-weight: 600;
+}
+
+.faq-run-steps {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  gap: 2px;
+}
+
+.faq-step {
+  height: 10px;
+  border-radius: 2px;
+  background: #e6eef0;
+}
+
+.faq-run[data-run="first"] .faq-step {
+  animation: faq-step-done 0.2s calc(var(--i) * 50ms) both;
+}
+
+.faq-run[data-run="first"] .faq-step[data-last] {
+  animation: faq-step-failed 0.3s 1.6s both;
+}
+
+/* The second run starts with what the first one kept. */
+.faq-run[data-run="next"] {
+  animation: faq-fade-in 0.3s 2.3s both;
+}
+
+.faq-run[data-run="next"] .faq-step {
+  background: #01b4c8;
+}
+
+.faq-run[data-run="next"] .faq-step[data-last] {
+  animation: faq-step-resumed 0.4s 2.9s both;
+}
+
+.faq-run-note {
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .faq-run-note {
+    min-width: 128px;
+  }
+}
+
+.faq-run[data-run="first"] .faq-run-note {
+  color: #d14343;
+  animation: faq-fade-in 0.3s 1.7s both;
+}
+
+.faq-run[data-run="next"] .faq-run-note {
+  color: #12a150;
+  animation: faq-fade-in 0.3s 3.1s both;
+}
+
+/* Activity: lines arriving one by one. */
+.faq-log li {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #4e4646;
+  animation: faq-fade-in 0.3s calc(0.2s + var(--i) * 0.45s) both;
+}
+
+.faq-log time {
+  font-variant-numeric: tabular-nums;
+  color: #8a9aa2;
+}
+
+.faq-log-tag {
+  border-radius: 999px;
+  background: #effbfc;
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #017b89;
+}
+
+.faq-log-tag[data-who="You"] {
+  background: #fff4e5;
+  color: #b26a00;
+}
+
+@keyframes faq-step-done {
+  from {
+    background: #e6eef0;
+  }
+  to {
+    background: #01b4c8;
+  }
+}
+
+@keyframes faq-step-failed {
+  to {
+    background: #f06b6b;
+  }
+}
+
+@keyframes faq-step-resumed {
+  from {
+    background: #e6eef0;
+  }
+  to {
+    background: #12a150;
+  }
+}
+
+@keyframes faq-fade-in {
+  from {
+    transform: translateY(4px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-demo *,
+  .faq-run {
+    animation: none !important;
+  }
+
+  .faq-run[data-run="first"] .faq-step {
+    background: #01b4c8;
+  }
+
+  .faq-run[data-run="first"] .faq-step[data-last] {
+    background: #f06b6b;
+  }
+
+  .faq-run[data-run="next"] .faq-step[data-last] {
+    background: #12a150;
+  }
+}

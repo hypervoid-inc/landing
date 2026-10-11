@@ -1,3 +1,4 @@
+import canvasConfetti from "canvas-confetti";
 import * as Accordion from "@radix-ui/react-accordion";
 import {
   Cloud,
@@ -33,6 +34,9 @@ import {
 } from "./merge-pricing-catalog";
 import { usePlanCatalog } from "./use-plan-catalog";
 import { usePriceTicker } from "./price-ticker";
+import { FaqDemo } from "./faq-demos";
+import { TeamSizer } from "./team-sizer";
+import { trackToy } from "./track-toy";
 
 function PricingCta({
   plan,
@@ -129,6 +133,28 @@ const pricingIcons: Record<PricingIcon, LucideIcon> = {
   key: KeyRound,
 };
 
+/** A few gold coins out of the "months free" badge on switching to annual. */
+function coinShower(from: HTMLElement | null) {
+  if (!from) return;
+  const box = from.getBoundingClientRect();
+  void canvasConfetti({
+    particleCount: 34,
+    spread: 70,
+    startVelocity: 22,
+    gravity: 1.3,
+    ticks: 120,
+    scalar: 0.9,
+    shapes: ["circle"],
+    colors: ["#f5c542", "#e9b021", "#ffd970", "#d99a0b"],
+    disableForReducedMotion: true,
+    origin: {
+      x: (box.left + box.width / 2) / window.innerWidth,
+      y: (box.top + box.height / 2) / window.innerHeight,
+    },
+  });
+  trackToy("annual-coins");
+}
+
 function BillingPeriodToggle({
   period,
   onChange,
@@ -142,6 +168,8 @@ function BillingPeriodToggle({
   const thumbRef = useRef<HTMLSpanElement>(null);
   const monthlyRef = useRef<HTMLButtonElement>(null);
   const annualRef = useRef<HTMLButtonElement>(null);
+  const savingsRef = useRef<HTMLSpanElement>(null);
+  const [coins, setCoins] = useState(0);
 
   const syncThumb = useCallback(() => {
     const thumb = thumbRef.current;
@@ -188,10 +216,23 @@ function BillingPeriodToggle({
         aria-checked={period === "annual"}
         className="billing-toggle-option"
         data-active={period === "annual" ? "true" : undefined}
-        onClick={() => onChange("annual")}
+        onClick={() => {
+          if (period !== "annual") {
+            coinShower(savingsRef.current);
+            setCoins((count) => count + 1);
+          }
+          onChange("annual");
+        }}
       >
         <span>Annual</span>
-        <span className="billing-toggle-savings">{annualSavingsLabel}</span>
+        <span
+          ref={savingsRef}
+          key={coins}
+          className="billing-toggle-savings"
+          data-pop={coins > 0 ? "" : undefined}
+        >
+          {annualSavingsLabel}
+        </span>
       </button>
     </div>
   );
@@ -202,11 +243,14 @@ function PricingCard({
   period,
   revealDelay = 1,
   titleLevel: Title = "h3",
+  suggested = false,
 }: {
   plan: PricingPlanView;
   period: BillingPeriod;
   revealDelay?: number;
   titleLevel?: "h2" | "h3";
+  /** Lit up by the team sizer as the plan that fits the team. */
+  suggested?: boolean;
 }) {
   const targetPrice =
     period === "annual" ? plan.annualMonthlyPrice : plan.price;
@@ -241,8 +285,12 @@ function PricingCard({
       className={`pricing-card reveal-item relative isolate w-full overflow-hidden rounded-[26px] bg-white shadow-[0_18px_48px_rgba(57,148,154,.08)]${plan.badge ? "" : " xl:shadow-none"}`}
       data-plan={plan.id}
       data-recommended={plan.badge ? "" : undefined}
+      data-suggested={suggested ? "" : undefined}
       data-reveal-delay={String(revealDelay)}
     >
+      {suggested ? (
+        <span className="pricing-suggested-tag">Fits your team</span>
+      ) : null}
       <div
         aria-hidden
         className="pricing-border pointer-events-none absolute inset-0 z-20 rounded-[26px] border border-[#35949a]/50"
@@ -473,6 +521,7 @@ export function PricingSection({
   const Heading = headingLevel;
   const cardHeading = headingLevel === "h1" ? "h2" : "h3";
   const [period, setPeriod] = useState<BillingPeriod>("annual");
+  const [suggestedPlan, setSuggestedPlan] = useState<string | null>(null);
   const catalog = usePlanCatalog();
   const plans = useMemo(
     () => mergePricingPlans(catalog.plans, catalog.recommendedPlan),
@@ -520,6 +569,7 @@ export function PricingSection({
             />
           </div>
         </div>
+        <TeamSizer plans={plans} period={period} onSuggest={setSuggestedPlan} />
         <div className="pricing-grid relative z-10 mx-auto mt-8 grid w-full max-w-[430px] grid-cols-1 gap-5 xl:mt-[100px] xl:max-w-none xl:grid-cols-3 xl:gap-7">
           {plans.map((plan, index) => (
             <PricingCard
@@ -528,6 +578,7 @@ export function PricingSection({
               period={period}
               revealDelay={Math.min(index, 3) + 1}
               titleLevel={cardHeading}
+              suggested={suggestedPlan === plan.id}
             />
           ))}
         </div>
@@ -602,6 +653,7 @@ export function FaqSection() {
                   <p className="px-4 pb-3.5 text-[14px] leading-[19px] text-[#627c86] xl:px-[55px] xl:pb-7 xl:text-base xl:leading-[22px]">
                     {item.answer}
                   </p>
+                  {"demo" in item ? <FaqDemo demo={item.demo} /> : null}
                 </div>
               </Accordion.Content>
             </Accordion.Item>

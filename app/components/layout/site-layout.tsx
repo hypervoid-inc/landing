@@ -12,6 +12,7 @@ import { setSiteChromeHeightPx } from "./site-chrome";
 import { StartCta } from "./start-cta";
 import { UserMenu } from "./user-menu";
 import { SiteNav } from "./site-nav";
+import { FooterMascot } from "./footer-mascot";
 
 function isDocumentScrollLocked() {
   const { body, documentElement } = document;
@@ -236,119 +237,131 @@ export function SiteFooter() {
   // pages stay clean.
   const showListings = pathname === "/" && directoryListings.length > 0;
   return (
-    <footer className="relative isolate overflow-hidden border-t border-[#e5e7eb] bg-[#fafafa]">
-      <div className="page-rail mx-auto w-full px-5 sm:px-6 lg:px-16">
-        <div
-          className={[
-            "grid grid-cols-2 gap-x-6 gap-y-9 py-10 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12 lg:py-16",
-            // The fourth track is the badge list's two-row measure, see
-            // `directory-listings.css`.
-            showListings
-              ? "lg:gap-y-10 xl:grid-cols-[1.2fr_1fr_1fr_1fr_20.5rem] xl:gap-x-10"
-              : "",
-          ].join(" ")}
-        >
-          <div className="col-span-2 flex flex-col items-center gap-4 text-center sm:gap-6 lg:col-span-1 lg:items-start lg:text-left">
-            <Link
-              to="/"
-              className="font-display w-fit text-2xl italic leading-none tracking-[-0.02em] sm:text-[32px]"
-            >
-              <span className="text-[#4e4646]">Construct</span>
-              <span className="text-[#01b4c8]">Computer</span>
-            </Link>
-            <p className="max-w-[280px] text-[13px] leading-[1.55] text-[#627c86] sm:max-w-xs sm:text-sm sm:leading-[1.6]">
-              AI employee for founders and small teams.
-            </p>
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              <SocialLink
-                href="https://x.com/use_construct"
-                label="X (Twitter)"
+    <>
+      <FooterMascot />
+      <footer className="relative isolate overflow-hidden border-t border-[#e5e7eb] bg-[#fafafa]">
+        <div className="page-rail mx-auto w-full px-5 sm:px-6 lg:px-16">
+          <div
+            className={[
+              "grid grid-cols-2 gap-x-6 gap-y-9 py-10 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12 lg:py-16",
+              // The fourth track is the badge list's two-row measure, see
+              // `directory-listings.css`.
+              showListings
+                ? "lg:gap-y-10 xl:grid-cols-[1.2fr_1fr_1fr_1fr_20.5rem] xl:gap-x-10"
+                : "",
+            ].join(" ")}
+          >
+            <div className="col-span-2 flex flex-col items-center gap-4 text-center sm:gap-6 lg:col-span-1 lg:items-start lg:text-left">
+              <Link
+                to="/"
+                className="font-display w-fit text-2xl italic leading-none tracking-[-0.02em] sm:text-[32px]"
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
-                  <path
-                    fill="currentColor"
-                    d="M18.244 2H21.5l-7.51 8.58L22.5 22h-6.78l-5.31-6.94L4.3 22H1.04l8.03-9.18L1.5 2h6.96l4.8 6.35L18.244 2Zm-1.19 18h1.88L7.06 4H5.07l11.984 16Z"
-                  />
-                </svg>
-              </SocialLink>
-              <SocialLink href="https://discord.gg/puArEQHYN9" label="Discord">
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
-                  <path
-                    fill="currentColor"
-                    d="M20.317 4.37a19.8 19.8 0 0 0-4.885-1.515c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25A19.7 19.7 0 0 0 3.677 4.37C.533 9.046-.32 13.58.099 18.057a19.9 19.9 0 0 0 5.993 3.03c.45-.622.862-1.29 1.226-1.994a13 13 0 0 1-1.872-.892l.372-.292c3.928 1.793 8.18 1.793 12.062 0l.373.292a12.3 12.3 0 0 1-1.873.892c.36.698.772 1.362 1.225 1.993a19.8 19.8 0 0 0 6.002-3.03c.5-5.177-.838-9.674-3.549-13.66ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419s.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419s.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"
-                  />
-                </svg>
-              </SocialLink>
-              <SocialLink
-                href="https://linkedin.com/company/construct-computer"
-                label="LinkedIn"
-              >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
-                  <path
-                    fill="currentColor"
-                    d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.83v1.64h.05c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.14V21h-4v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.92V21h-4V9Z"
-                  />
-                </svg>
-              </SocialLink>
+                <span className="text-[#4e4646]">Construct</span>
+                <span className="text-[#01b4c8]">Computer</span>
+              </Link>
+              <p className="max-w-[280px] text-[13px] leading-[1.55] text-[#627c86] sm:max-w-xs sm:text-sm sm:leading-[1.6]">
+                AI employee for founders and small teams.
+              </p>
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <SocialLink
+                  href="https://x.com/use_construct"
+                  label="X (Twitter)"
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
+                    <path
+                      fill="currentColor"
+                      d="M18.244 2H21.5l-7.51 8.58L22.5 22h-6.78l-5.31-6.94L4.3 22H1.04l8.03-9.18L1.5 2h6.96l4.8 6.35L18.244 2Zm-1.19 18h1.88L7.06 4H5.07l11.984 16Z"
+                    />
+                  </svg>
+                </SocialLink>
+                <SocialLink
+                  href="https://discord.gg/puArEQHYN9"
+                  label="Discord"
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
+                    <path
+                      fill="currentColor"
+                      d="M20.317 4.37a19.8 19.8 0 0 0-4.885-1.515c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25A19.7 19.7 0 0 0 3.677 4.37C.533 9.046-.32 13.58.099 18.057a19.9 19.9 0 0 0 5.993 3.03c.45-.622.862-1.29 1.226-1.994a13 13 0 0 1-1.872-.892l.372-.292c3.928 1.793 8.18 1.793 12.062 0l.373.292a12.3 12.3 0 0 1-1.873.892c.36.698.772 1.362 1.225 1.993a19.8 19.8 0 0 0 6.002-3.03c.5-5.177-.838-9.674-3.549-13.66ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419s.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419s.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"
+                    />
+                  </svg>
+                </SocialLink>
+                <SocialLink
+                  href="https://linkedin.com/company/construct-computer"
+                  label="LinkedIn"
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
+                    <path
+                      fill="currentColor"
+                      d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.83v1.64h.05c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.14V21h-4v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.92V21h-4V9Z"
+                    />
+                  </svg>
+                </SocialLink>
+              </div>
+              <NewsletterForm />
             </div>
-            <NewsletterForm />
-          </div>
-          <FooterColumn title="Company" label="Company" links={companyLinks} />
-          <FooterColumn
-            title="Compare"
-            label="Comparisons"
-            links={comparisonLinks}
-          />
-          <FooterColumn
-            title="Free tools"
-            label="Free tools"
-            links={[
-              ...tools.map(
-                (tool) => [tool.name, `/tools/${tool.slug}/`] as const,
-              ),
-              ["All free tools", "/tools/"] as const,
-            ]}
-            className="col-span-2 lg:col-span-1"
-          />
-          {/* A fourth column once there is room for one, and before that a
+            <FooterColumn
+              title="Company"
+              label="Company"
+              links={companyLinks}
+            />
+            <FooterColumn
+              title="Compare"
+              label="Comparisons"
+              links={comparisonLinks}
+            />
+            <FooterColumn
+              title="Free tools"
+              label="Free tools"
+              links={[
+                ...tools.map(
+                  (tool) => [tool.name, `/tools/${tool.slug}/`] as const,
+                ),
+                ["All free tools", "/tools/"] as const,
+              ]}
+              className="col-span-2 lg:col-span-1"
+            />
+            {/* A fourth column once there is room for one, and before that a
               centred full-width row under the link columns. */}
-          {showListings ? (
-            <div className="col-span-2 flex min-w-0 flex-col items-center gap-3 sm:gap-4 lg:col-span-4 xl:col-span-1 xl:items-start">
-              <FooterColumnTitle id={listingsTitleId}>
-                Featured on
-              </FooterColumnTitle>
-              <DirectoryListings labelledBy={listingsTitleId} />
-            </div>
-          ) : null}
-        </div>
-        <div className="site-footer-bar border-t border-[#e5e7eb] py-3 sm:py-6">
-          <div className="site-footer-badges">
-            <ProductHuntProof surface="footer" variant="footer" />
-            <Link
-              to="/affiliates/"
-              className="footer-affiliate-badge"
-              aria-label="Affiliates: 50% for first 25, then 20%"
-            >
-              <span className="footer-affiliate-badge-mark" aria-hidden>
-                %
-              </span>
-              <span className="footer-affiliate-badge-copy">
-                <span className="footer-affiliate-badge-eyebrow">Join our</span>
-                <span className="footer-affiliate-badge-title">
-                  Affiliate program
-                </span>
-              </span>
-              <span className="footer-affiliate-badge-meta" aria-hidden>
-                <span className="footer-affiliate-badge-arrow">▲</span>
-                <span className="footer-affiliate-badge-rate">50%</span>
-              </span>
-            </Link>
+            {showListings ? (
+              <div className="col-span-2 flex min-w-0 flex-col items-center gap-3 sm:gap-4 lg:col-span-4 xl:col-span-1 xl:items-start">
+                <FooterColumnTitle id={listingsTitleId}>
+                  Featured on
+                </FooterColumnTitle>
+                <DirectoryListings labelledBy={listingsTitleId} />
+              </div>
+            ) : null}
           </div>
-          <p className="shrink-0 text-xs leading-[18px] text-[#8a9aa2]">
-            © {new Date().getFullYear()} Construct Computer
-          </p>
+          <div className="site-footer-bar border-t border-[#e5e7eb] py-3 sm:py-6">
+            <div className="site-footer-badges">
+              <ProductHuntProof surface="footer" variant="footer" />
+              <Link
+                to="/affiliates/"
+                className="footer-affiliate-badge"
+                aria-label="Affiliates: 50% for first 25, then 20%"
+              >
+                <span className="footer-affiliate-badge-mark" aria-hidden>
+                  %
+                </span>
+                <span className="footer-affiliate-badge-copy">
+                  <span className="footer-affiliate-badge-eyebrow">
+                    Join our
+                  </span>
+                  <span className="footer-affiliate-badge-title">
+                    Affiliate program
+                  </span>
+                </span>
+                <span className="footer-affiliate-badge-meta" aria-hidden>
+                  <span className="footer-affiliate-badge-arrow">▲</span>
+                  <span className="footer-affiliate-badge-rate">50%</span>
+                </span>
+              </Link>
+            </div>
+            <p className="shrink-0 text-xs leading-[18px] text-[#8a9aa2]">
+              © {new Date().getFullYear()} Construct Computer
+            </p>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }

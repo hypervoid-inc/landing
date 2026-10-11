@@ -1,0 +1,82 @@
+/* The Easter egg: happy mascots hop up along the bottom of the screen. */
+
+.mascot-party {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 80;
+  display: flex;
+  justify-content: space-evenly;
+  pointer-events: none;
+}
+
+.mascot-party-guest {
+  position: relative;
+  display: block;
+  width: clamp(56px, 10vw, 120px);
+  aspect-ratio: 1;
+  animation: mascot-party 3.2s calc(var(--i) * 70ms) both;
+}
+
+.blog-mascot.mascot-party-mascot {
+  inset: 0;
+  width: 100%;
+}
+
+.mascot-party-guest:nth-child(even) {
+  animation-name: mascot-party-even;
+}
+
+@keyframes mascot-party {
+  0% {
+    transform: translateY(110%);
+  }
+  14% {
+    transform: translateY(8%);
+  }
+  24%,
+  48%,
+  72% {
+    transform: translateY(14%);
+  }
+  36%,
+  60% {
+    transform: translateY(-22%) rotate(-8deg);
+  }
+  86% {
+    transform: translateY(14%);
+  }
+  100% {
+    transform: translateY(110%);
+  }
+}
+
+@keyframes mascot-party-even {
+  0% {
+    transform: translateY(110%);
+  }
+  14% {
+    transform: translateY(8%);
+  }
+  24%,
+  48%,
+  72% {
+    transform: translateY(14%);
+  }
+  36%,
+  60% {
+    transform: translateY(-22%) rotate(8deg);
+  }
+  86% {
+    transform: translateY(14%);
+  }
+  100% {
+    transform: translateY(110%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot-party-guest {
+    animation: none;
+    transform: translateY(14%);
+  }
+}

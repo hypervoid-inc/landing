@@ -8,6 +8,7 @@ import {
 } from "react";
 
 import { workflowDemos, type WorkflowDemo } from "~/content/landing";
+import { RailMascot } from "./rail-mascot";
 import { scrollPageTo } from "~/lib/page-scroll";
 
 import { StartLink } from "./beta-access";
@@ -148,7 +149,9 @@ function WorkflowStepper({
       aria-label="Capability walkthrough"
     >
       <span aria-hidden className="workflow-stepper-line" />
-      <span aria-hidden className="workflow-stepper-dot" />
+      <span aria-hidden className="workflow-stepper-dot">
+        <RailMascot demoId={workflowDemos[active]?.id ?? ""} />
+      </span>
       {workflowDemos.map((demo, index) => (
         <button
           key={demo.id}

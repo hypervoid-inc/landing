@@ -62,6 +62,14 @@ type AnalyticsEvent =
   // A prompt block in a post, by `slug` and `action` ("copy" or "try"), so a
   // reader taking a prompt into Construct is told apart from one copying it.
   | "blog_prompt_used"
+  // The hero's task card: `typed` is "own" or "example", never the text.
+  | "hero_task_sent"
+  | "hero_task_run"
+  // Pricing's "Team of N" slider, once per page view.
+  | "team_sizer_used"
+  // The homepage's small toys (poking the mascot, the coin shower, the
+  // Easter egg...), by `toy`, a fixed name; once per toy per page view.
+  | "landing_toy_used"
   // Free tools at /tools/. `tool` is the slug and `action` is what was taken
   // away (copy, download). Never the content: the tools sit inside
   // `ph-no-capture` so what people type stays out of analytics and replay.

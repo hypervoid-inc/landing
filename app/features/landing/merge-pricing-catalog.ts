@@ -12,6 +12,7 @@ import { pricingPlans, type PricingIcon } from "../../content/landing";
 export type PricingPlanView = {
   id: PaidPlanId;
   name: string;
+  agents: number;
   price: string;
   annualMonthlyPrice: string;
   annualSavingsLabel: string;
@@ -88,6 +89,7 @@ export function mergePricingPlans(
       return {
         id,
         name: staticPlan.name,
+        agents: staticPlan.agents,
         price: staticPlan.price,
         annualMonthlyPrice: staticPlan.annualMonthlyPrice,
         annualSavingsLabel: staticPlan.annualSavingsLabel,
@@ -114,6 +116,7 @@ export function mergePricingPlans(
     return {
       id,
       name: staticPlan.name,
+      agents: staticPlan.agents,
       price: monthPrice,
       annualMonthlyPrice: yearEquiv,
       annualSavingsLabel:

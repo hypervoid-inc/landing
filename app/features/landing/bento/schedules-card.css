@@ -149,6 +149,14 @@
   animation: sched-range var(--loop) linear infinite both;
 }
 
+/* Counting down to the next task on the reader's clock. */
+.sched-range[data-live] {
+  left: calc(225 * var(--u));
+  width: auto;
+  padding-inline: calc(10 * var(--u));
+  white-space: nowrap;
+}
+
 /* Task pills */
 .sched-tasks {
   margin: 0;

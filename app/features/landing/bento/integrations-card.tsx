@@ -1,4 +1,13 @@
-import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
+import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { trackToy } from "../track-toy";
 import {
   DiscordLogo,
   DriveLogo,
@@ -113,9 +122,14 @@ const sparkles = [
   [771, 390, 0.3],
 ] as const;
 
-/** Coded replacement for the integrations feature video. */
+/**
+ * Coded replacement for the integrations feature video. Hovering pauses the
+ * stream so a logo can be caught; clicking one "connects" it: the box pulses
+ * and says so.
+ */
 export function IntegrationsCard() {
   const ref = useRef<HTMLDivElement>(null);
+  const [connected, setConnected] = useState<{ label: string; at: number }>();
 
   useEffect(() => {
     const root = ref.current;
@@ -194,6 +208,10 @@ export function IntegrationsCard() {
               className={`integ-icon integ-${name}`}
               style={{ "--delay": `${delay}s` } as CSSProperties}
               aria-hidden={copy === 1 || undefined}
+              onClick={() => {
+                setConnected({ label, at: Date.now() });
+                trackToy("integration-connect");
+              }}
             >
               <span className="integ-disc">{logo}</span>
               {copy === 0 ? <span className="sr-only">{label}</span> : null}
@@ -202,7 +220,12 @@ export function IntegrationsCard() {
         )}
       </ul>
 
-      <div className="integ-box" aria-hidden>
+      <div
+        key={connected?.at}
+        className="integ-box"
+        data-pulse={connected ? "" : undefined}
+        aria-hidden
+      >
         <div className="integ-box-inner">
           <svg className="integ-mascot" viewBox="-52 -51 104 102">
             <path d={mascotPath} fill="#fff" />
@@ -211,6 +234,12 @@ export function IntegrationsCard() {
           </svg>
         </div>
       </div>
+      {connected ? (
+        <p key={connected.at} className="integ-connected" role="status">
+          <HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={2.2} />
+          {connected.label} connected
+        </p>
+      ) : null}
     </div>
   );
 }

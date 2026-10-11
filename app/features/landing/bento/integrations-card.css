@@ -690,3 +690,90 @@
       scale(0.8508);
   }
 }
+
+/* Catch a logo: hovering pauses the stream, a click connects it. */
+.integ-icon {
+  cursor: pointer;
+}
+
+.integ-disc {
+  transition: transform 0.2s ease;
+}
+
+@media (hover: hover) {
+  .integ:hover .integ-icon {
+    animation-play-state: paused;
+  }
+
+  .integ-icon:hover .integ-disc {
+    transform: scale(1.12);
+  }
+}
+
+.integ-box[data-pulse] {
+  animation: integ-pulse 0.6s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.integ-connected {
+  position: absolute;
+  right: calc(28 * var(--u));
+  top: calc(420 * var(--u));
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: #fff;
+  padding: 6px 12px;
+  color: #0b6f7d;
+  font-size: max(11px, calc(26 * var(--u)));
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px -10px rgb(1 95 110 / 55%);
+  animation: integ-connected 2.4s ease both;
+  pointer-events: none;
+}
+
+.integ-connected svg {
+  width: 16px;
+  height: 16px;
+  color: #12a150;
+}
+
+@keyframes integ-connected-calm {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes integ-pulse {
+  40% {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes integ-connected {
+  0% {
+    transform: translateY(8px) scale(0.8);
+    opacity: 0;
+  }
+  12%,
+  80% {
+    transform: none;
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-6px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .integ-box[data-pulse] {
+    animation: none;
+  }
+
+  .integ-connected {
+    animation: integ-connected-calm 2.4s steps(1, end) both;
+  }
+}

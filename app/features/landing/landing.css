@@ -269,15 +269,107 @@
   background: rgb(157 221 234 / 70%);
 }
 
+/* The progress marker is the mascot, dressed for the section on screen
+   (rail-mascot.tsx). The box is the mascot's full square; its body fills
+   the middle 60%, centred on the line. */
 .workflow-stepper-dot {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  background: #4cd8ff;
-  box-shadow: 0 0 14px rgb(76 216 255 / 60%);
+  z-index: 1;
+  width: 48px;
+  height: 48px;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  filter: drop-shadow(0 4px 10px rgb(76 216 255 / 45%));
+}
+
+.rail-mascot,
+.rail-mascot-figure,
+.rail-mascot-blink {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.rail-mascot-figure {
+  animation: rail-mascot-dress 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+  transform-origin: 50% 90%;
+}
+
+.rail-mascot-blink {
+  transform-origin: 50% 59%;
+  animation: rail-mascot-blink 4.6s 1.2s infinite;
+}
+
+/* Scheduling: a clock badge on the mascot's shoulder, ticking in. */
+.rail-mascot-clock {
+  position: absolute;
+  top: 24%;
+  right: 4%;
+  display: grid;
+  width: 42%;
+  height: 42%;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #01b4c8;
+  color: #fff;
+  box-shadow: 0 3px 8px rgb(1 143 160 / 45%);
+  animation: rail-mascot-tick 0.6s 0.15s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.rail-mascot-clock svg {
+  width: 72%;
+  height: 72%;
+}
+
+/* Team workspace: a teammate, smaller and a step behind. */
+.rail-mascot-teammate {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  transform: translate(-46%, 10%) scale(0.74);
+  animation: rail-mascot-join 0.5s 0.1s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+
+@keyframes rail-mascot-tick {
+  from {
+    transform: rotate(-90deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes rail-mascot-join {
+  from {
+    transform: translate(-10%, 10%) scale(0.4);
+    opacity: 0;
+  }
+}
+
+@keyframes rail-mascot-dress {
+  from {
+    transform: translateY(-14%) scale(0.86, 1.1);
+  }
+}
+
+@keyframes rail-mascot-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail-mascot-figure,
+  .rail-mascot-blink,
+  .rail-mascot-clock,
+  .rail-mascot-teammate {
+    animation: none;
+  }
 }
 
 .workflow-step {
@@ -1745,9 +1837,13 @@
     font-size: max(12px, calc(12px * var(--landing-scale)));
   }
 
-  .hero-workflow .hero-interactive img {
+  .hero-workflow .hero-interactive .hero-chip-icon {
     width: max(28px, calc(28px * var(--landing-scale)));
     height: max(28px, calc(28px * var(--landing-scale)));
+  }
+
+  .hero-workflow .hero-interactive .hero-chip-swap {
+    gap: max(14px, calc(14px * var(--landing-scale)));
   }
 
   .hero-workflow > :nth-child(2) {
@@ -1815,7 +1911,67 @@
 
 /* ── Closing CTA ─────────────────────────────────────────────────────────── */
 .closing-cta {
+  position: relative;
+  isolation: isolate;
   padding: 0 20px 72px;
+}
+
+/*
+ * The closer takes on the reader's time of day: a sunrise warmth, a dusk
+ * blush, or a pale night sky with a few stars. Kept light so the copy keeps
+ * its contrast; the afternoon stays plain.
+ */
+.closing-cta[data-sky]::before {
+  position: absolute;
+  inset: -80px 0 0;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  animation: closing-sky-in 1.2s ease both;
+}
+
+.closing-cta[data-sky="morning"]::before {
+  background: radial-gradient(
+    60% 70% at 50% 100%,
+    rgb(255 214 153 / 38%),
+    transparent 70%
+  );
+}
+
+.closing-cta[data-sky="evening"]::before {
+  background: radial-gradient(
+    60% 70% at 50% 100%,
+    rgb(255 170 190 / 32%),
+    transparent 70%
+  );
+}
+
+.closing-cta[data-sky="night"]::before {
+  background:
+    radial-gradient(1.5px 1.5px at 18% 30%, #8e9cf5, transparent),
+    radial-gradient(1px 1px at 27% 62%, #8e9cf5, transparent),
+    radial-gradient(1.5px 1.5px at 41% 18%, #8e9cf5, transparent),
+    radial-gradient(1px 1px at 63% 26%, #8e9cf5, transparent),
+    radial-gradient(1.5px 1.5px at 76% 55%, #8e9cf5, transparent),
+    radial-gradient(1px 1px at 86% 22%, #8e9cf5, transparent),
+    radial-gradient(1px 1px at 9% 70%, #8e9cf5, transparent),
+    radial-gradient(
+      70% 80% at 50% 40%,
+      rgb(200 210 255 / 45%),
+      transparent 72%
+    );
+}
+
+@keyframes closing-sky-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .closing-cta[data-sky]::before {
+    animation: none;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -2218,5 +2374,77 @@
   .hero-workflow > :nth-child(1),
   .hero-workflow > :nth-child(3) {
     display: none;
+  }
+}
+
+/*
+ * The clouds over the timeline part as the page scrolls into them: two
+ * copies of one image, each showing a half, drift apart. Scroll-driven, so
+ * no script; without support, or with reduced motion, they stay whole.
+ */
+.landing-clouds {
+  display: grid;
+  overflow: hidden;
+}
+
+.landing-clouds-half {
+  grid-area: 1 / 1;
+}
+
+/* Soft edges, overlapping in the middle, so no seam shows as they part. */
+.landing-clouds-left {
+  mask-image: linear-gradient(to right, #000 38%, transparent 62%);
+}
+
+.landing-clouds-right {
+  mask-image: linear-gradient(to right, transparent 38%, #000 62%);
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .landing-clouds-half {
+      animation: linear both;
+      animation-timeline: view();
+      animation-range: cover 30% cover 75%;
+    }
+
+    .landing-clouds-left {
+      animation-name: landing-clouds-left;
+    }
+
+    .landing-clouds-right {
+      animation-name: landing-clouds-right;
+    }
+  }
+}
+
+@keyframes landing-clouds-left {
+  to {
+    transform: translateX(-16%);
+    opacity: 0.55;
+  }
+}
+
+@keyframes landing-clouds-right {
+  to {
+    transform: translateX(16%);
+    opacity: 0.55;
+  }
+}
+
+/* Switching to annual: the "months free" badge pops as the coins fly. */
+.billing-toggle-savings[data-pop] {
+  animation: billing-savings-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+@keyframes billing-savings-pop {
+  40% {
+    transform: scale(1.25) rotate(-4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .billing-toggle-savings[data-pop] {
+    animation: none;
   }
 }

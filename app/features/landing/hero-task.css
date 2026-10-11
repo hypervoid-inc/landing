@@ -1,0 +1,428 @@
+/*
+ * The hero's email card, drawn in code at the proportions of the original
+ * artwork (research-report.webp, 1272 by 705). Every length is a multiple of
+ * --u, one artwork pixel, so the card scales with its container exactly as
+ * the image did.
+ */
+
+.hero-task-frame {
+  container-type: inline-size;
+}
+
+.hero-task {
+  --u: calc(100cqw / 1272);
+  --task-blue: #3f96e0;
+  position: relative;
+  aspect-ratio: 1272 / 705;
+  overflow: hidden;
+  border-radius: calc(var(--u) * 92);
+  background: #fff;
+  box-shadow: inset 0 0 0 calc(var(--u) * 3) #edf0f2;
+  color: #6b6b6b;
+}
+
+.hero-task-head {
+  position: absolute;
+  top: calc(var(--u) * 80);
+  right: calc(var(--u) * 94);
+  left: calc(var(--u) * 80);
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--u) * 40);
+}
+
+.hero-task-avatar {
+  width: calc(var(--u) * 160);
+  height: calc(var(--u) * 160);
+  flex: none;
+  border-radius: calc(var(--u) * 36);
+  object-fit: cover;
+}
+
+.hero-task-who {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding-top: calc(var(--u) * 8);
+}
+
+.hero-task-you {
+  font-size: calc(var(--u) * 36);
+  line-height: calc(var(--u) * 48);
+  font-weight: 500;
+  color: #707070;
+}
+
+.hero-task-mail,
+.hero-task-to {
+  font-size: calc(var(--u) * 27);
+  line-height: calc(var(--u) * 46);
+  white-space: nowrap;
+}
+
+.hero-task-mail {
+  color: #a8a8a8;
+}
+
+/* A signed-in reader's own name and email can run long. */
+.hero-task-you,
+.hero-task-mail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-task-to {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 14);
+  color: var(--task-blue);
+}
+
+.hero-task-to svg {
+  width: calc(var(--u) * 34);
+  height: calc(var(--u) * 34);
+}
+
+.hero-task-pencil {
+  display: grid;
+  width: calc(var(--u) * 122);
+  height: calc(var(--u) * 122);
+  flex: none;
+  margin-left: auto;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 calc(var(--u) * 3) #eee;
+  color: #6fa0dc;
+}
+
+.hero-task-pencil svg {
+  width: calc(var(--u) * 46);
+  height: calc(var(--u) * 46);
+}
+
+.hero-task-body {
+  position: absolute;
+  inset: calc(var(--u) * 318) calc(var(--u) * 76) calc(var(--u) * 76)
+    calc(var(--u) * 62);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-task-message {
+  position: relative;
+  height: calc(var(--u) * 124);
+  font-size: calc(var(--u) * 38);
+  line-height: calc(var(--u) * 58);
+}
+
+.hero-task-input,
+.hero-task-example,
+.hero-task-sent {
+  position: absolute;
+  inset: 0;
+  padding: 0 calc(var(--u) * 10);
+}
+
+.hero-task-input {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  overflow: hidden;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #4e4e4e;
+  caret-color: var(--task-blue);
+  font: inherit;
+}
+
+.hero-task-example {
+  pointer-events: none;
+}
+
+.hero-task-example mark {
+  border-radius: calc(var(--u) * 10);
+  background: var(--task-blue);
+  padding: 0 calc(var(--u) * 8);
+  color: #fff;
+}
+
+.hero-task-caret {
+  display: inline-block;
+  width: calc(var(--u) * 3);
+  height: calc(var(--u) * 40);
+  margin-left: calc(var(--u) * 3);
+  vertical-align: calc(var(--u) * -6);
+  background: var(--task-blue);
+  animation: hero-task-caret 1s steps(1) infinite;
+}
+
+@keyframes hero-task-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.hero-task-sent {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #4e4e4e;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  animation: hero-task-lift 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.hero-task[data-stage^="step"] .hero-task-sent {
+  opacity: 0.55;
+  transition: opacity 0.4s ease;
+}
+
+@keyframes hero-task-lift {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--u) * 24));
+  }
+}
+
+.hero-task-result {
+  display: flex;
+  gap: calc(var(--u) * 18);
+  font-size: calc(var(--u) * 32);
+  line-height: calc(var(--u) * 44);
+  color: #4e4e4e;
+  animation: hero-task-lift 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.hero-task-result svg {
+  width: calc(var(--u) * 48);
+  height: calc(var(--u) * 48);
+  flex: none;
+  color: #12a150;
+}
+
+.hero-task-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-task-attach {
+  display: flex;
+  height: calc(var(--u) * 113);
+  align-items: center;
+  gap: calc(var(--u) * 20);
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 calc(var(--u) * 3) #efefef;
+  background: #fff;
+  padding: 0 calc(var(--u) * 44);
+  font-size: calc(var(--u) * 42);
+  color: #c9c9c9;
+}
+
+.hero-task-attach svg,
+.hero-task-send svg {
+  width: calc(var(--u) * 44);
+  height: calc(var(--u) * 44);
+}
+
+.hero-task-again {
+  cursor: pointer;
+  color: var(--task-blue);
+  transition: box-shadow 0.2s ease;
+}
+
+.hero-task-again:hover {
+  box-shadow: inset 0 0 0 calc(var(--u) * 3) #bcdcf6;
+}
+
+.hero-task-send {
+  display: flex;
+  height: calc(var(--u) * 113);
+  min-width: calc(var(--u) * 353);
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 22);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #5aaaf0, #3d93df);
+  padding: 0 calc(var(--u) * 44);
+  font-size: calc(var(--u) * 44);
+  color: #fff;
+  cursor: pointer;
+  box-shadow:
+    inset 0 calc(var(--u) * -6) calc(var(--u) * 10) rgb(0 40 90 / 25%),
+    inset 0 calc(var(--u) * 6) calc(var(--u) * 8) rgb(255 255 255 / 35%),
+    0 calc(var(--u) * 12) calc(var(--u) * 26) calc(var(--u) * -10)
+      rgb(30 110 190 / 55%);
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease;
+}
+
+.hero-task-send:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(calc(var(--u) * -3));
+}
+
+.hero-task-send:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.hero-task-send:disabled {
+  cursor: progress;
+}
+
+.hero-task-send:focus-visible,
+.hero-task-again:focus-visible {
+  outline: 2px solid color-mix(in srgb, #01b4c8 70%, transparent);
+  outline-offset: 2px;
+}
+
+.hero-task[data-stage="sending"] .hero-task-send svg {
+  animation: hero-task-whoosh 0.6s ease-in both;
+}
+
+@keyframes hero-task-whoosh {
+  to {
+    opacity: 0;
+    transform: translate(calc(var(--u) * 60), calc(var(--u) * -30));
+  }
+}
+
+.hero-task-spinner {
+  width: calc(var(--u) * 38);
+  height: calc(var(--u) * 38);
+  border: calc(var(--u) * 5) solid rgb(255 255 255 / 40%);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: hero-task-spin 0.8s linear infinite;
+}
+
+@keyframes hero-task-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* The workflow chips beside the card act the preview out. */
+.hero-chip {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.hero-chip-icon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  place-items: center;
+}
+
+.hero-chip-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Flat brand glyphs, and the mascot, in a tile like the full app icons. */
+.hero-chip-icon-tile {
+  border: 1px solid #ececec;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #fff, #f3f4f6);
+  box-shadow: 0 1px 2px rgb(15 23 42 / 8%);
+}
+
+.hero-chip-icon.hero-chip-icon-tile img {
+  width: 58%;
+  height: 58%;
+}
+
+/* A new task flips the icon and label in. */
+.hero-chip-swap {
+  animation: hero-chip-swap 0.36s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.hero-workflow > :nth-child(2) .hero-chip-swap {
+  animation-delay: 0.06s;
+}
+
+.hero-workflow > :nth-child(3) .hero-chip-swap {
+  animation-delay: 0.12s;
+}
+
+@keyframes hero-chip-swap {
+  from {
+    transform: translateY(6px);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+.hero-chip-waiting {
+  opacity: 0.5;
+}
+
+.hero-chip-running {
+  box-shadow:
+    0 0 0 2px rgb(63 150 224 / 35%),
+    0 8px 22px -10px rgb(63 150 224 / 60%);
+}
+
+.hero-chip-status {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  margin-left: auto;
+  place-items: center;
+}
+
+.hero-chip-status .hero-task-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgb(63 150 224 / 25%);
+  border-top-color: #3f96e0;
+}
+
+.hero-chip-status svg {
+  width: 18px;
+  height: 18px;
+  color: #12a150;
+  animation: hero-chip-pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+@keyframes hero-chip-pop {
+  from {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-task-sent,
+  .hero-task-result,
+  .hero-chip-status svg,
+  .hero-chip-swap,
+  .hero-task[data-stage="sending"] .hero-task-send svg {
+    animation: none;
+  }
+  .hero-task-spinner {
+    animation-duration: 2.4s;
+  }
+}
+
+/*
+ * Eyes for the mascot in the portal video, whose own are painted out. The
+ * box is the layered mascot's, placed so its body would cover the video's
+ * exactly (the video is centred and covers a square, its mascot 14% of the
+ * frame tall), which puts the eyes where the painted ones were.
+ */
+.blog-mascot.hero-mascot {
+  left: 38.23%;
+  top: 36.02%;
+  z-index: 2;
+  width: 23.55%;
+}

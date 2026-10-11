@@ -57,6 +57,15 @@ describe("landing pricing copy", () => {
     },
   );
 
+  it.each(pricingPlans.map((plan) => [plan.name, plan] as const))(
+    "%s: the agent limit matches its card",
+    (_name, plan) => {
+      expect(plan.features.map(([text]) => text)).toContain(
+        `Up to ${plan.agents} agents`,
+      );
+    },
+  );
+
   it("orders tiers by increasing price", () => {
     const amounts = pricingPlans.map((plan) => dollarsToMinor(plan.price));
     expect([...amounts].sort((a, b) => a - b)).toEqual(amounts);
