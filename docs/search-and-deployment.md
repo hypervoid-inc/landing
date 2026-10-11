@@ -44,8 +44,7 @@ Never use Cloudflare's dummy Turnstile keys in production.
 5. Add a rate-limiting rule for `POST /api/campaign-touch` (subscriber UUID → email); start with a Managed Challenge after 20 requests per IP in 10 seconds. The endpoint returns opaque 404s for misses, still throttle enumeration.
 6. Keep verified search bots out of generic challenge rules.
 7. Confirm Managed Robots and AI crawler settings do not override `public/robots.txt`.
-8. Enable Crawler Hints for IndexNow notifications.
-9. Protect preview deployments with Cloudflare Access when possible. `_headers` also marks Pages preview hosts `noindex`.
+8. Protect preview deployments with Cloudflare Access when possible. `_headers` also marks Pages preview hosts `noindex`.
 
 Static requests bypass Functions through `_routes.json`. DDoS absorption, bot screening, and request-rate enforcement belong at Cloudflare's edge rather than in a per-instance JavaScript counter.
 
@@ -72,7 +71,7 @@ Google does not guarantee crawling, indexing, rich results, or rankings. `llms.t
 ## Other Search And AI Systems
 
 1. Import the verified property into Bing Webmaster Tools and submit the same sitemap.
-2. Confirm Cloudflare Crawler Hints submissions in Bing's IndexNow report.
+2. IndexNow: after each production deploy, CI submits the URLs whose sitemap entry was added, re-dated or removed (`scripts/indexnow.mjs`) to `api.indexnow.org`, which shares them with Bing, Yandex, Seznam, Naver and Yep. The key is served at `/4f4cf45200d8fc35b732a9af1c7df772.txt`. Confirm submissions in Bing Webmaster Tools under IndexNow. To resubmit the whole site after a broad change, run `pnpm build && node scripts/indexnow.mjs /dev/null`. Cloudflare Crawler Hints is not a substitute: it reports URLs on cache MISS, and Pages serves our HTML as `DYNAMIC`.
 3. The wildcard allow rule in `robots.txt` permits Bingbot, Applebot, OAI-SearchBot, GPTBot, and other compliant crawlers.
 4. Keep public content visible in raw HTML, use descriptive links and headings, publish representative images, and cite primary sources.
 5. Do not create doorway pages or keyword variants solely for AI systems.
