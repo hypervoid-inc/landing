@@ -49,9 +49,17 @@ export function getClippyPageKind(pathname: string): ClippyPageKind | null {
   ) {
     return "blog-browse";
   }
-  if (kind === "page" || kind === "pricing" || kind === "use-case") {
+  if (
+    kind === "page" ||
+    kind === "pricing" ||
+    kind === "use-case" ||
+    kind === "tool-index"
+  ) {
     return "page";
   }
+  // A free tool carries exactly one CTA, under its result. A popup would be a
+  // second one, landing while someone is still mid-task.
+  if (kind === "tool") return null;
   const _exhaustive: never = kind;
   return _exhaustive;
 }

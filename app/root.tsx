@@ -13,6 +13,7 @@ import { Analytics } from "./features/analytics/analytics";
 import { AuthProvider } from "./features/auth/auth-provider";
 import { BetaAccessProvider } from "./features/landing/beta-access";
 import { ClippyCta } from "./features/landing/clippy-cta";
+import { WebMcpTools } from "./features/tools/webmcp";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -87,6 +88,7 @@ export default function App() {
         <SmoothScroll />
         <Outlet />
         <ClippyCta />
+        <WebMcpTools />
       </BetaAccessProvider>
     </AuthProvider>
   );

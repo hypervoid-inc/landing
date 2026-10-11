@@ -4,6 +4,7 @@ import { apiCatalog, apiDocsHtml, openApiDocument } from "./api-catalog";
 import { resourceEntries } from "../content/resources";
 import { getResourceFaqs } from "../content/faqs";
 import { landingFaq } from "../content/landing";
+import { tools } from "../content/tools";
 import type { CanonicalRoute } from "./route-manifest";
 import { canonicalRoutes, siteUrl } from "./route-manifest";
 import {
@@ -130,6 +131,52 @@ const capabilities = [
   "Custom MCP servers and private agent-authored workspace apps",
 ];
 
+/**
+ * How an agent uses the free tools without a browser: each one is also a
+ * keyless JSON endpoint, and on a page they are registered with WebMCP.
+ */
+function llmsToolsSection(): string {
+  const lines = tools.map(
+    (tool) =>
+      `- [${tool.title}](${siteUrl}/tools/${tool.slug}/): ${tool.description} Agents: GET ${siteUrl}/api/tools/${tool.slug} for the input schema and an example, then GET with ?input=<URL-encoded JSON> or POST the JSON.`,
+  );
+  return `## Free tools for people and AI agents\n\nNo account or key needed. Browser agents with WebMCP find these registered on every page. Index: ${siteUrl}/api/tools\n\n${lines.join("\n")}\n`;
+}
+
+function markdownTable(
+  columns: readonly string[],
+  rows: readonly (readonly string[])[],
+) {
+  const cell = (value: string) => value.replaceAll("|", "\\|");
+  return [
+    `| ${columns.map(cell).join(" | ")} |`,
+    `| ${columns.map(() => "---").join(" | ")} |`,
+    ...rows.map((row) => `| ${row.map(cell).join(" | ")} |`),
+  ].join("\n");
+}
+
+function llmsToolsFull(): string[] {
+  return tools.flatMap((tool) => [
+    `## ${tool.title}`,
+    "",
+    `URL: ${siteUrl}/tools/${tool.slug}/`,
+    `API: ${siteUrl}/api/tools/${tool.slug}`,
+    "",
+    tool.lede,
+    "",
+    `### ${tool.reference.heading}`,
+    "",
+    tool.reference.intro,
+    "",
+    markdownTable(tool.reference.columns, tool.reference.rows),
+    ...(tool.reference.note ? ["", tool.reference.note] : []),
+    "",
+    "### Frequently asked questions",
+    "",
+    ...tool.faqs.map((faq) => `**${faq.question}**\n\n${faq.answer}\n`),
+  ]);
+}
+
 function llmsIndex(): string {
   const pages = canonicalRoutes
     .map(
@@ -137,7 +184,7 @@ function llmsIndex(): string {
         `- [${route.displayTitle ?? route.title}](${route.canonical}): ${route.description}`,
     )
     .join("\n");
-  return `# Construct Computer\n\n> ${summary}\n\n## Pages\n${pages}\n`;
+  return `# Construct Computer\n\n> ${summary}\n\n${llmsToolsSection()}\n## Pages\n${pages}\n`;
 }
 
 /**
@@ -186,12 +233,19 @@ function llmsFull(): string {
           kind === "home" ||
           kind === "page" ||
           kind === "pricing" ||
-          kind === "use-case",
+          kind === "use-case" ||
+          kind === "tool" ||
+          kind === "tool-index",
       )
       .map(
         (route) =>
           `- [${route.displayTitle ?? route.title}](${route.canonical}): ${route.description}`,
       ),
+    "",
+    "# Free tools",
+    "",
+    llmsToolsSection(),
+    ...llmsToolsFull(),
     "",
     "# Resources",
     "",

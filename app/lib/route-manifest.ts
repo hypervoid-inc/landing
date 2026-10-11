@@ -4,6 +4,7 @@ import {
   type ResourceEntry,
 } from "../content/resources";
 import { listedAuthors, type Author } from "../content/authors";
+import { tools } from "../content/tools";
 import { useCases } from "../content/use-cases";
 
 export const siteUrl = "https://construct.computer";
@@ -20,6 +21,8 @@ export type RouteKind =
   | "page"
   | "pricing"
   | "use-case"
+  | "tool"
+  | "tool-index"
   | "blog-index"
   | "blog-post"
   | "guide"
@@ -198,6 +201,28 @@ function buildRoutes(
         description: entry.description,
         kind: "use-case",
         lastModified: "2026-08-14",
+      }),
+    ),
+    route({
+      path: "/tools",
+      title: "Free Tools for Email, Automation and AI Setup | Construct",
+      displayTitle: "Free tools",
+      description:
+        "Free tools from Construct: a Gmail filter generator, a Zapier cost calculator and an MCP config generator. No signup, private, and AI agents can use them.",
+      kind: "tool-index",
+      lastModified: tools.reduce(
+        (latest, entry) => (entry.updated > latest ? entry.updated : latest),
+        siteRevised,
+      ),
+    }),
+    ...tools.map((entry) =>
+      route({
+        path: `/tools/${entry.slug}`,
+        title: entry.seoTitle,
+        displayTitle: entry.title,
+        description: entry.description,
+        kind: "tool",
+        lastModified: entry.updated,
       }),
     ),
     route({

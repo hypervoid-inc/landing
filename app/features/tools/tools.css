@@ -1,0 +1,206 @@
+/*
+ * Micro-interactions for the free tools. Every animation answers an action:
+ * something was added, removed, copied, saved, became ready, or changed its
+ * result. Durations and easing are the site tokens from app.css. Everything
+ * that travels sits inside `no-preference`, so under reduced motion the state
+ * still changes, it just does not move. JS-driven view transitions check the
+ * same preference before starting (see `layoutTransition` in tool-ui.tsx).
+ */
+
+/* The change overlay only exists for motion; without it, it never paints. */
+.tool-change {
+  display: none;
+}
+
+/*
+ * A card the reader just added glows once. Colour only, no travel, so it
+ * stays on under reduced motion: it is the confirmation that something was
+ * added, not decoration.
+ */
+.tool-new {
+  animation: tool-new 1400ms var(--ease-snap) both;
+}
+
+@keyframes tool-new {
+  from {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 4px rgb(1 180 200 / 0.18);
+  }
+}
+
+/* Rows and cards opt into add and remove transitions by class. */
+.tool-item {
+  view-transition-class: tool-item;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /*
+   * Something just changed: a brand ring and tint fade out of the element.
+   * Keyed in React so it replays on every change, and placed behind the text
+   * (the parent is `isolate`) so nothing is ever washed out.
+   */
+  .tool-change {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: var(--color-brand-tint);
+    box-shadow: inset 0 0 0 1.5px var(--color-brand);
+    animation: tool-change 700ms var(--ease-snap) both;
+  }
+
+  @keyframes tool-change {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* A number that changed rolls up into place. */
+  .tool-tick {
+    display: inline-block;
+    animation: tool-tick var(--dur-enter) var(--ease-snap) both;
+  }
+
+  @keyframes tool-tick {
+    from {
+      opacity: 0;
+      transform: translateY(0.4em);
+    }
+  }
+
+  /* Something that just appeared: a problem list, a swapped field group. */
+  .tool-enter {
+    animation: tool-enter var(--dur-enter) var(--ease-snap) both;
+  }
+
+  @keyframes tool-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+
+  /* A badge or confirmation arriving: scale with a small overshoot. */
+  .tool-pop {
+    animation: tool-pop var(--dur-panel) var(--ease-snap) both;
+  }
+
+  @keyframes tool-pop {
+    0% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* A checkmark draws itself. Outside this query it is simply drawn. */
+  .tool-check path {
+    stroke-dasharray: 16;
+    animation: tool-draw var(--dur-panel) var(--ease-snap) both;
+  }
+
+  @keyframes tool-draw {
+    from {
+      stroke-dashoffset: 16;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* The download arrow drops into the tray once per save. */
+  .tool-drop {
+    animation: tool-drop 460ms var(--ease-snap) both;
+  }
+
+  @keyframes tool-drop {
+    0% {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    55% {
+      opacity: 1;
+      transform: translateY(2px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  /* Press feedback on every button and chip in a tool. */
+  .tool-press {
+    transition:
+      transform var(--dur-press) var(--ease-snap),
+      background-color var(--dur-hover) var(--ease-snap),
+      border-color var(--dur-hover) var(--ease-snap),
+      color var(--dur-hover) var(--ease-snap);
+  }
+
+  .tool-press:active {
+    transform: scale(0.96);
+  }
+
+  /*
+   * Disclosure panels open and close by height where the browser supports
+   * `::details-content` and `interpolate-size`; elsewhere they snap, as
+   * before. Closed content stays findable with find-in-page either way.
+   */
+  .tool-details {
+    interpolate-size: allow-keywords;
+  }
+
+  .tool-details::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size var(--dur-panel) var(--ease-snap),
+      content-visibility var(--dur-panel) allow-discrete;
+  }
+
+  .tool-details[open]::details-content {
+    block-size: auto;
+  }
+
+  /*
+   * Add and remove. The tools are the only view transitions on the site, so
+   * the defaults are tuned here: siblings glide to their new place, a new
+   * item rises in, a removed one sinks out.
+   */
+  ::view-transition-group(*) {
+    animation-duration: var(--dur-panel);
+    animation-timing-function: var(--ease-snap);
+  }
+
+  ::view-transition-new(*.tool-item):only-child {
+    animation: tool-item-in var(--dur-panel) var(--ease-snap) both;
+  }
+
+  ::view-transition-old(*.tool-item):only-child {
+    animation: tool-item-out var(--dur-enter) var(--ease-snap) both;
+  }
+
+  @keyframes tool-item-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+    }
+  }
+
+  @keyframes tool-item-out {
+    to {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+  }
+}

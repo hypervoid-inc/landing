@@ -66,6 +66,8 @@ const eyebrowLabels: Record<RouteKind, string> = {
   page: "COMPANY",
   pricing: "PRICING",
   "use-case": "USE CASE",
+  tool: "FREE TOOL",
+  "tool-index": "NO SIGNUP",
   "blog-index": "LIBRARY",
   "blog-post": "ARTICLE",
   guide: "GUIDE",
@@ -191,6 +193,27 @@ export const ogPosters: Record<string, PosterCard> = {
     headline: ["RESEARCH YOU", "CAN SEND"],
     scene:
       "The mascot sitting on top of a finished bound briefing folder with a metal paper fastener through the spine, a stack of source photocopies clipped beside it.",
+  },
+
+  tools: {
+    headline: ["FREE TOOLS", "FOR EMAIL AND", "AUTOMATION"],
+    scene:
+      "The mascot sitting on top of a red metal mechanic's tool chest with two drawers pulled partly open, a few hand tools laid neatly in a row on the table beside it.",
+  },
+  "tools-gmail-filter-generator": {
+    headline: ["GMAIL FILTER", "GENERATOR"],
+    scene:
+      "The mascot sitting on top of a wooden mail sorting rack with rows of labelled pigeonhole slots, a few envelopes already filed in the slots and a short stack waiting in the tray below.",
+  },
+  "tools-zapier-cost-calculator": {
+    headline: ["ZAPIER COST", "CALCULATOR"],
+    scene:
+      "The mascot sitting on top of a large printing desk calculator with a paper roll curling out of the back, a short stack of punched time cards lying beside it.",
+  },
+  "tools-mcp-config-generator": {
+    headline: ["MCP CONFIG", "GENERATOR"],
+    scene:
+      "The mascot sitting on top of a beige network switch with a row of patch cables plugged into its front ports, a coiled spare cable lying on the table beside it.",
   },
 
   blog: {

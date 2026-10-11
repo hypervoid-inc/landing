@@ -3,7 +3,7 @@
   "info": {
     "title": "Construct Computer site API",
     "summary": "Public endpoints served from construct.computer.",
-    "description": "The endpoints behind the construct.computer marketing site. Beta signup is a browser-facing form endpoint protected by Cloudflare Turnstile, so it is only callable from a real page load on this origin. The health endpoint is open and unauthenticated.",
+    "description": "The endpoints behind the construct.computer marketing site. The free tools under /api/tools are open to any client, including AI agents, with no key: GET a tool for its input schema and an example, then GET with ?input=<JSON> or POST the JSON to run it. Beta signup is a browser-facing form endpoint protected by Cloudflare Turnstile, so it is only callable from a real page load on this origin. The health endpoint is open and unauthenticated.",
     "version": "1.0.0",
     "termsOfService": "https://construct.computer/terms/",
     "contact": {
@@ -19,6 +19,700 @@
     }
   ],
   "paths": {
+    "/api/tools": {
+      "get": {
+        "operationId": "listTools",
+        "summary": "List the free tools",
+        "description": "Every free tool with its description, input schema, and a ready-to-run example request. No key, no account.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "The free tools.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tools/gmail-filter-generator": {
+      "get": {
+        "operationId": "get_gmail_filter_generator",
+        "summary": "Gmail filter generator: describe, or run with ?input=",
+        "description": "Builds Gmail filters. Returns a Gmail search string per filter, to preview matches in Gmail's search bar, and a mailFilters.xml file the user imports in Gmail under Settings, Filters and Blocked Addresses, Import filters. Each filter needs at least one condition and one action. Without `input`, returns this tool's schema and an example. With `input` (URL-encoded JSON matching the schema), runs it.",
+        "security": [],
+        "parameters": [
+          {
+            "name": "input",
+            "in": "query",
+            "required": false,
+            "description": "URL-encoded JSON matching the request schema.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{\"filters\":[{\"name\":\"Receipts\",\"from\":[\"billing@stripe.com\",\"@paddle.com\"],\"subject\":[\"receipt\",\"invoice\"],\"label\":\"Receipts\",\"skip_inbox\":true}]}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The tool description, or its result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input was not JSON or failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "invalid_request",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such tool.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "The input was larger than 16 KiB.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "payload_too_large",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "run_gmail_filter_generator",
+        "summary": "Run the gmail filter generator",
+        "description": "Builds Gmail filters. Returns a Gmail search string per filter, to preview matches in Gmail's search bar, and a mailFilters.xml file the user imports in Gmail under Settings, Filters and Blocked Addresses, Import filters. Each filter needs at least one condition and one action.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filters": {
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "description": "A name to tell filters apart. Gmail stores no names, so it is written as a comment in the XML.",
+                          "type": "string",
+                          "maxLength": 80
+                        },
+                        "from": {
+                          "description": "Sender addresses or @domain.com. Any one matches.",
+                          "maxItems": 20,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 200
+                          }
+                        },
+                        "to": {
+                          "description": "Recipient addresses. Any one matches.",
+                          "maxItems": 20,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 200
+                          }
+                        },
+                        "subject": {
+                          "description": "Words or phrases in the subject. Any one matches.",
+                          "maxItems": 20,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 200
+                          }
+                        },
+                        "has_words": {
+                          "description": "Words anywhere in the email. Gmail search operators allowed.",
+                          "maxItems": 20,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 200
+                          }
+                        },
+                        "does_not_have": {
+                          "description": "Words that keep an email out.",
+                          "maxItems": 20,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 200
+                          }
+                        },
+                        "has_attachment": {
+                          "type": "boolean"
+                        },
+                        "larger_than_mb": {
+                          "type": "number",
+                          "exclusiveMinimum": 0,
+                          "maximum": 50
+                        },
+                        "smaller_than_mb": {
+                          "type": "number",
+                          "exclusiveMinimum": 0,
+                          "maximum": 50
+                        },
+                        "label": {
+                          "description": "Label to apply, nested with a slash like Clients/Acme.",
+                          "type": "string",
+                          "maxLength": 200
+                        },
+                        "skip_inbox": {
+                          "type": "boolean"
+                        },
+                        "mark_read": {
+                          "type": "boolean"
+                        },
+                        "star": {
+                          "type": "boolean"
+                        },
+                        "never_spam": {
+                          "type": "boolean"
+                        },
+                        "importance": {
+                          "type": "string",
+                          "enum": ["always", "never"]
+                        },
+                        "delete": {
+                          "type": "boolean"
+                        },
+                        "category": {
+                          "description": "personal is Primary, promo is Promotions, notification is Updates, group is Forums.",
+                          "type": "string",
+                          "enum": [
+                            "personal",
+                            "social",
+                            "promo",
+                            "notification",
+                            "group"
+                          ]
+                        },
+                        "forward_to": {
+                          "type": "string",
+                          "format": "email",
+                          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": ["filters"],
+                "additionalProperties": false
+              },
+              "example": {
+                "filters": [
+                  {
+                    "name": "Receipts",
+                    "from": ["billing@stripe.com", "@paddle.com"],
+                    "subject": ["receipt", "invoice"],
+                    "label": "Receipts",
+                    "skip_inbox": true
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tool's result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input was not JSON or failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "invalid_request",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "The input was larger than 16 KiB.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "payload_too_large",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tools/zapier-cost-calculator": {
+      "get": {
+        "operationId": "get_zapier_cost_calculator",
+        "summary": "Zapier cost calculator: describe, or run with ?input=",
+        "description": "Estimates a monthly Zapier bill from a list of Zaps (action steps and runs per month). Returns monthly tasks, the cheapest plan including any pay-per-task overage, and the smallest plan that covers the tasks outright. Uses Zapier list prices checked on 2026-10-11. Without `input`, returns this tool's schema and an example. With `input` (URL-encoded JSON matching the schema), runs it.",
+        "security": [],
+        "parameters": [
+          {
+            "name": "input",
+            "in": "query",
+            "required": false,
+            "description": "URL-encoded JSON matching the request schema.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{\"zaps\":[{\"name\":\"New lead to CRM and Slack\",\"action_steps\":2,\"runs_per_month\":300},{\"name\":\"Paid invoice to sheet\",\"action_steps\":3,\"runs_per_month\":120}],\"billing\":\"annual\",\"team\":false}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The tool description, or its result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input was not JSON or failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "invalid_request",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such tool.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "The input was larger than 16 KiB.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "payload_too_large",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "run_zapier_cost_calculator",
+        "summary": "Run the zapier cost calculator",
+        "description": "Estimates a monthly Zapier bill from a list of Zaps (action steps and runs per month). Returns monthly tasks, the cheapest plan including any pay-per-task overage, and the smallest plan that covers the tasks outright. Uses Zapier list prices checked on 2026-10-11.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "zaps": {
+                    "minItems": 1,
+                    "maxItems": 25,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "maxLength": 200
+                        },
+                        "action_steps": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100,
+                          "description": "Action steps per run. Triggers, Filter, Paths, Formatter and Delay are free."
+                        },
+                        "runs_per_month": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 10000000
+                        }
+                      },
+                      "required": ["action_steps", "runs_per_month"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "billing": {
+                    "default": "annual",
+                    "type": "string",
+                    "enum": ["annual", "monthly"]
+                  },
+                  "team": {
+                    "default": false,
+                    "description": "True when several people share Zaps, which needs the Team plan.",
+                    "type": "boolean"
+                  }
+                },
+                "required": ["zaps"],
+                "additionalProperties": false
+              },
+              "example": {
+                "zaps": [
+                  {
+                    "name": "New lead to CRM and Slack",
+                    "action_steps": 2,
+                    "runs_per_month": 300
+                  },
+                  {
+                    "name": "Paid invoice to sheet",
+                    "action_steps": 3,
+                    "runs_per_month": 120
+                  }
+                ],
+                "billing": "annual",
+                "team": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tool's result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input was not JSON or failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "invalid_request",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "The input was larger than 16 KiB.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "payload_too_large",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tools/mcp-config-generator": {
+      "get": {
+        "operationId": "get_mcp_config_generator",
+        "summary": "MCP config generator: describe, or run with ?input=",
+        "description": "Writes MCP server configuration for Claude Desktop, Claude Code, Cursor, VS Code and Codex from one description of the server. Give command (and args, env) for a local server, or url (and headers) for a remote one. Returns each client's file location and paste-ready snippet. Without `input`, returns this tool's schema and an example. With `input` (URL-encoded JSON matching the schema), runs it.",
+        "security": [],
+        "parameters": [
+          {
+            "name": "input",
+            "in": "query",
+            "required": false,
+            "description": "URL-encoded JSON matching the request schema.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{\"name\":\"filesystem\",\"command\":\"npx\",\"args\":[\"-y\",\"@modelcontextprotocol/server-filesystem\",\"/Users/you/Documents\"]}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The tool description, or its result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input was not JSON or failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "invalid_request",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such tool.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "not_found",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "The input was larger than 16 KiB.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "payload_too_large",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "run_mcp_config_generator",
+        "summary": "Run the mcp config generator",
+        "description": "Writes MCP server configuration for Claude Desktop, Claude Code, Cursor, VS Code and Codex from one description of the server. Give command (and args, env) for a local server, or url (and headers) for a remote one. Returns each client's file location and paste-ready snippet.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]{1,64}$",
+                    "description": "Server name: letters, numbers, - and _."
+                  },
+                  "command": {
+                    "description": "For a local server, the command to run, like npx.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "args": {
+                    "maxItems": 50,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 1000
+                    }
+                  },
+                  "env": {
+                    "description": "Environment variables for a local server.",
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,99}$"
+                    },
+                    "additionalProperties": {
+                      "type": "string",
+                      "maxLength": 2000,
+                      "pattern": "^[^\\r\\n]*$"
+                    }
+                  },
+                  "url": {
+                    "description": "For a remote server, its HTTP URL. Leave command empty.",
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "headers": {
+                    "description": "HTTP headers for a remote server.",
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9-]{1,100}$"
+                    },
+                    "additionalProperties": {
+                      "type": "string",
+                      "maxLength": 2000,
+                      "pattern": "^[^\\r\\n]*$"
+                    }
+                  }
+                },
+                "required": ["name"],
+                "additionalProperties": false
+              },
+              "example": {
+                "name": "filesystem",
+                "command": "npx",
+                "args": [
+                  "-y",
+                  "@modelcontextprotocol/server-filesystem",
+                  "/Users/you/Documents"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tool's result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input was not JSON or failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "invalid_request",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "The input was larger than 16 KiB.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "code": "payload_too_large",
+                    "message": "Request rejected"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/health": {
       "get": {
         "operationId": "getHealth",
@@ -251,6 +945,7 @@
                   "invalid_request",
                   "origin_rejected",
                   "verification_failed",
+                  "not_found",
                   "method_not_allowed",
                   "payload_too_large",
                   "unsupported_media_type",

@@ -56,7 +56,11 @@ type AnalyticsEvent =
   | "checkout_failed"
   // Onward reading from a post. `source` separates the surfaces (end-of-post
   // grid, mid-article read-next, desktop rail) so they can be compared.
-  | "related_post_clicked";
+  | "related_post_clicked"
+  // Free tools at /tools/. `tool` is the slug and `action` is what was taken
+  // away (copy, download). Never the content: the tools sit inside
+  // `ph-no-capture` so what people type stays out of analytics and replay.
+  | "tool_output_used";
 
 /** First-party ingest proxy, never eu.i.posthog.com in the browser. */
 const POSTHOG_PROXY = "https://x.construct.computer";

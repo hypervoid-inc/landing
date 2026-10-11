@@ -5,6 +5,8 @@ export default [
   route("pricing", "routes/pricing.tsx"),
   route("use-cases", "routes/use-cases-index.tsx"),
   route("use-cases/:slug", "routes/use-case.tsx"),
+  route("tools", "routes/tools-index.tsx"),
+  route("tools/:slug", "routes/tool.tsx"),
   route("about", "routes/about.tsx"),
   route("careers", "routes/careers.tsx"),
   route("affiliates", "routes/affiliates.tsx"),

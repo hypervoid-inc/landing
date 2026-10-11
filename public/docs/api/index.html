@@ -136,8 +136,8 @@
   <body>
     <h1>Construct Computer site API</h1>
     <p class="lede">
-      Two public endpoints, served from <code>https://construct.computer</code>.
-      The machine-readable version of this page is the
+      Public endpoints served from <code>https://construct.computer</code>. The
+      machine-readable version of this page is the
       <a href="https://construct.computer/openapi.json">OpenAPI 3.1 document</a
       >, discoverable through the
       <a href="https://construct.computer/.well-known/api-catalog"
@@ -161,6 +161,70 @@
       </li>
       <li>Request bodies are capped at 8 KiB.</li>
     </ul>
+
+    <h2>Free tools</h2>
+    <p>
+      The free tools on this site, open to any client and any AI agent with no
+      key. <code>GET /api/tools</code> lists them. <code>GET</code> a tool's URL
+      for its input schema and an example, then run it with
+      <code>GET ?input=&lt;URL-encoded JSON&gt;</code> or by posting the JSON.
+      Browser agents with WebMCP find the same tools registered on every page.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Endpoint</th>
+          <th>What it does</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <a
+              href="https://construct.computer/api/tools/gmail-filter-generator"
+              ><code>/api/tools/gmail-filter-generator</code></a
+            >
+          </td>
+          <td>
+            Builds Gmail filters. Returns a Gmail search string per filter, to
+            preview matches in Gmail's search bar, and a mailFilters.xml file
+            the user imports in Gmail under Settings, Filters and Blocked
+            Addresses, Import filters. Each filter needs at least one condition
+            and one action.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a
+              href="https://construct.computer/api/tools/zapier-cost-calculator"
+              ><code>/api/tools/zapier-cost-calculator</code></a
+            >
+          </td>
+          <td>
+            Estimates a monthly Zapier bill from a list of Zaps (action steps
+            and runs per month). Returns monthly tasks, the cheapest plan
+            including any pay-per-task overage, and the smallest plan that
+            covers the tasks outright. Uses Zapier list prices checked on
+            2026-10-11.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href="https://construct.computer/api/tools/mcp-config-generator"
+              ><code>/api/tools/mcp-config-generator</code></a
+            >
+          </td>
+          <td>
+            Writes MCP server configuration for Claude Desktop, Claude Code,
+            Cursor, VS Code and Codex from one description of the server. Give
+            command (and args, env) for a local server, or url (and headers) for
+            a remote one. Returns each client's file location and paste-ready
+            snippet.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pre><code>curl 'https://construct.computer/api/tools/zapier-cost-calculator?input=%7B%22zaps%22%3A%5B%7B%22name%22%3A%22New%20lead%20to%20CRM%20and%20Slack%22%2C%22action_steps%22%3A2%2C%22runs_per_month%22%3A300%7D%2C%7B%22name%22%3A%22Paid%20invoice%20to%20sheet%22%2C%22action_steps%22%3A3%2C%22runs_per_month%22%3A120%7D%5D%2C%22billing%22%3A%22annual%22%2C%22team%22%3Afalse%7D'</code></pre>
 
     <h2><span class="method">GET</span> /api/health</h2>
     <p>
@@ -299,6 +363,11 @@
           <td>The Turnstile token was missing, stale, or issued elsewhere.</td>
         </tr>
         <tr>
+          <td>404</td>
+          <td><code>not_found</code></td>
+          <td>No free tool has that name. GET /api/tools lists them.</td>
+        </tr>
+        <tr>
           <td>405</td>
           <td><code>method_not_allowed</code></td>
           <td>The endpoint was called with the wrong HTTP method.</td>
@@ -306,7 +375,10 @@
         <tr>
           <td>413</td>
           <td><code>payload_too_large</code></td>
-          <td>The request body was larger than 8 KiB.</td>
+          <td>
+            The request body was larger than 8 KiB, or a free tool's input was
+            larger than 16 KiB.
+          </td>
         </tr>
         <tr>
           <td>415</td>

@@ -48,6 +48,10 @@ Finished work lands in the workspace as it is produced, so a run that dies at st
 - [Chat history is not memory you can audit](https://construct.computer/use-cases/memory/): Preferences, decisions, and project context stay with evidence and history. Review, correct, or forget anything Construct learns so nothing important lives only in a thread.
 - [The work is not waiting in a browser tab](https://construct.computer/use-cases/channels/): Message Construct from the web, Slack, Telegram, Discord slash commands, or its native email inbox. Routing and access policies vary by channel so the same agent does not become a leak.
 - [A search dump is not a brief you can send](https://construct.computer/use-cases/research/): Construct gathers sources, compares details, and turns a messy question into cited research a founder can review, correct, or forward without rebuilding the argument.
+- [Free tools](https://construct.computer/tools/): Free tools from Construct: a Gmail filter generator, a Zapier cost calculator and an MCP config generator. No signup, private, and AI agents can use them.
+- [Gmail filter generator](https://construct.computer/tools/gmail-filter-generator/): Build Gmail filters for multiple senders, domains and subjects, test each one in Gmail search, then import them all with one XML file. Free, no signup.
+- [Zapier cost calculator](https://construct.computer/tools/zapier-cost-calculator/): How much will Zapier cost you? Enter your Zaps, steps and runs to see your monthly tasks, the cheapest plan and your cost per task, at current Zapier prices.
+- [MCP config generator](https://construct.computer/tools/mcp-config-generator/): Generate mcp.json and MCP config for Claude Desktop, Claude Code, Cursor, VS Code and Codex from one server. Local or remote, env vars and headers. Free.
 - [About - Construct Computer](https://construct.computer/about/): Construct builds an AI employee for solo founders and small teams: own cloud computer, memory, schedules, workflows, browser and terminal tools, and connected apps.
 - [Careers - Construct Computer](https://construct.computer/careers/): Construct isn't actively hiring, but we'd love to hear from people who want to build AI agents, work interfaces, memory systems, and reliable execution tools.
 - [Affiliate Program - Construct Computer](https://construct.computer/affiliates/): Partner with Construct. First 25 affiliates earn 50% of referred revenue for up to 12 months; then the rate drops to 20%. Apply via PartnerStack.
@@ -56,6 +60,190 @@ Finished work lands in the workspace as it is produced, so a run that dies at st
 - [Privacy Policy - Construct Computer](https://construct.computer/privacy/): How Construct Computer collects, stores, encrypts, and shares data across the agent workspace, memory system, integrations, and billing provider.
 - [Sub-processors - Construct Computer](https://construct.computer/sub-processors/): Third-party vendors Construct uses to host, authenticate, integrate, bill, email, observe, and run models for the construct.computer platform.
 - [Terms & Conditions - Construct Computer](https://construct.computer/terms/): Terms of service for Construct Computer: subscription plans, acceptable use, agent actions, model BYOK, and proprietary platform licensing.
+
+# Free tools
+
+## Free tools for people and AI agents
+
+No account or key needed. Browser agents with WebMCP find these registered on every page. Index: https://construct.computer/api/tools
+
+- [Gmail filter generator](https://construct.computer/tools/gmail-filter-generator/): Build Gmail filters for multiple senders, domains and subjects, test each one in Gmail search, then import them all with one XML file. Free, no signup. Agents: GET https://construct.computer/api/tools/gmail-filter-generator for the input schema and an example, then GET with ?input=<URL-encoded JSON> or POST the JSON.
+- [Zapier cost calculator](https://construct.computer/tools/zapier-cost-calculator/): How much will Zapier cost you? Enter your Zaps, steps and runs to see your monthly tasks, the cheapest plan and your cost per task, at current Zapier prices. Agents: GET https://construct.computer/api/tools/zapier-cost-calculator for the input schema and an example, then GET with ?input=<URL-encoded JSON> or POST the JSON.
+- [MCP config generator](https://construct.computer/tools/mcp-config-generator/): Generate mcp.json and MCP config for Claude Desktop, Claude Code, Cursor, VS Code and Codex from one server. Local or remote, env vars and headers. Free. Agents: GET https://construct.computer/api/tools/mcp-config-generator for the input schema and an example, then GET with ?input=<URL-encoded JSON> or POST the JSON.
+
+## Gmail filter generator
+
+URL: https://construct.computer/tools/gmail-filter-generator/
+API: https://construct.computer/api/tools/gmail-filter-generator
+
+This free Gmail filter generator turns a few plain choices into filters Gmail can import. Set who an email comes from, what it says and what Gmail should do with it. You get a search string to test each filter and one mailFilters.xml file that imports them all, built in your browser so nothing you type is sent anywhere.
+
+### Gmail filter syntax cheat sheet
+
+The generator writes these operators for you. They also work typed straight into Gmail's search bar or the Has the words box.
+
+| Operator | What it matches | Example |
+| --- | --- | --- |
+| from: | The sender, a full address or a domain | from:@acme.com |
+| to: | A recipient | to:you+receipts@gmail.com |
+| subject: | Words in the subject line | subject:invoice |
+| OR | Either term, written in capitals | from:(amy@acme.com OR dan@acme.com) |
+| - | Leaves out emails with the word | newsletter -unsubscribe |
+| " " | An exact phrase | "order confirmation" |
+| ( ) | Groups terms together | subject:(receipt OR invoice) |
+| has:attachment | Emails with any attachment | has:attachment from:@bank.com |
+| filename: | An attachment name or type | filename:pdf |
+| larger: / smaller: | Email size in bytes, K or M | larger:10M |
+| list: | Mailing list emails | list:news@acme.com |
+
+### Frequently asked questions
+
+**How do I import a filters XML file into Gmail?**
+
+Open Gmail on a computer, click the gear icon and choose See all settings. On the Filters and Blocked Addresses tab, click Import filters at the bottom, choose the mailFilters.xml file and click Open file. Tick the filters you want, then click Create filters.
+
+**How do I filter emails from multiple senders or a whole domain?**
+
+Type the addresses in From, separated by commas, and the generator joins them with OR, which is the form Gmail needs: from:(amy@acme.com OR dan@acme.com). For everyone at a company, enter the domain on its own, like @acme.com. Gmail has no wildcard such as *, and the domain does the same job.
+
+**Will a new filter sort the emails I already have?**
+
+Not on its own, because filters act on mail as it arrives. To sort older mail, open Settings, Filters and Blocked Addresses, click edit next to the filter, click Continue, tick Also apply filter to matching conversations and click Update filter.
+
+**Can I create Gmail filters on an iPhone or Android phone?**
+
+Not in the Gmail app, which can't create, edit or import filters. You can build the file on your phone with this page, then import it from Gmail in a browser on a computer.
+
+**Can a Gmail filter delete emails after 30 days?**
+
+No. A filter runs once, when an email arrives, so a rule like older_than:30d never matches new mail. To clear old mail, search for older_than:30d with your other conditions, select all the results and delete them, and repeat when you need to.
+
+**Should I create my labels before importing?**
+
+Yes, that's the safe order. Create any new label in Gmail first, under Settings, Labels, Create new label, and type the name here exactly the same way, capitals included. For a nested label, use a slash, like Clients/Acme.
+
+**Can a filter tell an urgent email from one that can wait?**
+
+Not really. A filter only checks the sender, the subject, words in the email and a few properties like size and attachments. It can't tell a client asking for a quote from a sales pitch that uses the same words. That kind of sorting needs something that reads the email, which is what an AI assistant like Construct does.
+
+**Is anything I type sent to Construct?**
+
+No. The generator builds the search strings and the XML file in your browser, and this part of the page is excluded from our analytics and session recordings. We only count that a file was copied or downloaded, never what was in it.
+
+## Zapier cost calculator
+
+URL: https://construct.computer/tools/zapier-cost-calculator/
+API: https://construct.computer/api/tools/zapier-cost-calculator
+
+This free Zapier cost calculator works out your monthly bill from the Zaps you run. Add each Zap's action steps and how often it runs, and it counts tasks the way Zapier bills them, then finds your cheapest plan, including when a smaller plan plus pay-per-task costs less than the next tier up.
+
+### Zapier pricing tiers
+
+Professional and Team list prices in US dollars per month, from Zapier's pricing page on 11 October 2026. Cost per task is on annual billing with every included task used.
+
+| Plan | Tasks a month | Annual billing | Monthly billing | Cost per task |
+| --- | --- | --- | --- | --- |
+| Free | 100 | $0 | $0 | 0 cents |
+| Professional | 750 | $19.99 | $29.99 | 2.67 cents |
+| Professional | 1,500 | $39 | $58.50 | 2.60 cents |
+| Professional | 2,000 | $49 | $73.50 | 2.45 cents |
+| Professional | 5,000 | $89 | $133.50 | 1.78 cents |
+| Professional | 10,000 | $129 | $193.50 | 1.29 cents |
+| Professional | 20,000 | $189 | $283.50 | 0.94 cents |
+| Professional | 50,000 | $289 | $433.50 | 0.58 cents |
+| Professional | 100,000 | $489 | $733.50 | 0.49 cents |
+| Team | 2,000 | $69 | $103.50 | 3.45 cents |
+| Team | 5,000 | $119 | $178.50 | 2.38 cents |
+| Team | 10,000 | $169 | $253.50 | 1.69 cents |
+| Team | 20,000 | $249 | $373.50 | 1.25 cents |
+| Team | 50,000 | $399 | $598.50 | 0.80 cents |
+| Team | 100,000 | $599 | $898.50 | 0.60 cents |
+
+Tiers continue to 2,000,000 tasks a month on both plans. Above that, Zapier quotes Enterprise through its sales team.
+
+### Frequently asked questions
+
+**How much does Zapier cost per month?**
+
+Zapier Professional starts at $19.99 a month billed annually, or $29.99 billed monthly, for 750 tasks. Team starts at $69 a month billed annually, or $103.50 monthly, for 2,000 tasks. The Free plan costs nothing and includes 100 tasks a month. Prices rise with the number of tasks you choose.
+
+**What counts as a task in Zapier?**
+
+Each successful action step in a Zap run is one task. Triggers don't count, and neither do Filter, Paths, Formatter or Delay steps, steps that error, or steps that never ran because a filter stopped the Zap. So a Zap with a trigger and three actions that runs 100 times uses 300 tasks.
+
+**How much does Zapier cost per task?**
+
+About 2.7 cents a task on the smallest Professional plan billed annually, or 4 cents billed monthly. The price per task falls as you buy more, to about 0.17 cents at 2 million tasks a month. Tasks you pay for but don't use still count toward the bill, so the real cost per task is higher if you sit well under your tier.
+
+**What happens when I go over my Zapier task limit?**
+
+If pay-per-task billing is on, your Zaps keep running and each extra task costs more than the ones in your plan, about 1.25 times as much in Zapier's current plan data. That carries on up to three times your plan's task limit, and then Zaps pause until the next period. With pay-per-task off, Zaps pause as soon as you hit the limit.
+
+**Is Zapier's Free plan enough?**
+
+Only if every Zap has two steps, one trigger and one action, and you stay under 100 tasks a month. Free also checks for new data every 15 minutes, against every 2 minutes on Professional and every minute on Team.
+
+**When do I need Team instead of Professional?**
+
+When more than one person builds or manages Zaps. Team adds up to 25 users, shared Zaps and folders, shared app connections and SAML single sign-on, and it starts at 2,000 tasks for $69 a month billed annually. For one person, Professional costs less at every task level.
+
+**Why is Zapier so expensive, and how can I lower the bill?**
+
+Zapier charges for every action step on every run, so a five-step Zap that runs 1,000 times uses 5,000 tasks. Put Filter steps as early as you can, since steps a filter stops never run and cost nothing, use the built-in Formatter instead of extra app steps where it works, and pay annually, which costs about a third less than monthly.
+
+**How accurate is this calculator?**
+
+It uses the list prices on Zapier's pricing page, checked on 11 October 2026, and counts tasks the way Zapier's help center describes. It leaves out AI by Zapier steps and taxes, which can add to a real bill. For your exact usage, open the usage page in your Zapier account.
+
+## MCP config generator
+
+URL: https://construct.computer/tools/mcp-config-generator/
+API: https://construct.computer/api/tools/mcp-config-generator
+
+This free MCP config generator writes the server config each AI client expects. Describe your server once, either a command to run or a URL to call, and copy the exact JSON or TOML for Claude Desktop, Claude Code, Cursor, VS Code and Codex, along with where to paste it. Any keys you type stay in your browser.
+
+### MCP config file locations
+
+Where each client reads its MCP servers, and the key it expects at the top of the file.
+
+| Client | Config file | Top-level key | Remote servers |
+| --- | --- | --- | --- |
+| Claude Desktop | Mac: ~/Library/Application Support/Claude/claude_desktop_config.json. Windows: %APPDATA%\Claude\claude_desktop_config.json | mcpServers | Settings, Connectors, Add custom connector |
+| Claude Code | .mcp.json at the project root, or claude mcp add | mcpServers | "type": "http" with "url" |
+| Cursor | .cursor/mcp.json in a project, or ~/.cursor/mcp.json for all projects | mcpServers | "url" with optional "headers" |
+| VS Code | .vscode/mcp.json in the workspace | servers | "type": "http" with "url" |
+| Codex | ~/.codex/config.toml, or .codex/config.toml in a trusted project | [mcp_servers.<name>] | url with optional http_headers |
+
+### Frequently asked questions
+
+**Where is the Claude Desktop config file?**
+
+On a Mac it's ~/Library/Application Support/Claude/claude_desktop_config.json, and on Windows it's %APPDATA%\Claude\claude_desktop_config.json. The quickest way to open it is Claude's Settings, then the Developer tab, then Edit Config. If the file doesn't exist yet, Edit Config creates it. Quit and reopen Claude after you save.
+
+**How do I add a remote MCP server to Claude Desktop?**
+
+Remote servers don't go in claude_desktop_config.json. Open Settings, then Connectors, click Add and choose Add custom connector, paste the server's URL and click Add. If the server needs you to sign in, Claude walks you through it.
+
+**What's the difference between a local and a remote MCP server?**
+
+A local server is a program the client starts on your computer, usually with npx, uvx or docker, and it talks to the client directly. A remote server runs somewhere else and you reach it by URL over HTTP. Local servers can read files on your machine, while remote ones keep working when your computer is off and a whole team can share them.
+
+**How do I convert mcp.json to Codex's config.toml?**
+
+Each server in the mcpServers object becomes a [mcp_servers.<name>] table in ~/.codex/config.toml, with command and args as keys and environment variables in a [mcp_servers.<name>.env] table. Remote servers use url and http_headers. Describe the server once on this page and the Codex tab gives you the TOML.
+
+**Should I commit .mcp.json or add it to .gitignore?**
+
+Commit it when it holds no secrets, since that's how Claude Code shares project servers with your team. Keys sit in these files as plain text, so keep them out of anything you commit. Files in your home folder, like ~/.cursor/mcp.json or ~/.codex/config.toml, stay on your machine.
+
+**My MCP server doesn't show up. What should I check?**
+
+Quit the client completely and open it again, then check the file is valid JSON or TOML. Run the same command yourself in a terminal to see any errors it prints. File paths in arguments should be absolute, not relative.
+
+**Is it safe to type API keys into this page?**
+
+Nothing you type is sent anywhere. The config is built in your browser, and this part of the page is excluded from our analytics and session recordings. We only count that a snippet was copied, never what was in it.
+
 
 # Resources
 

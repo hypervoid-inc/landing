@@ -1,6 +1,7 @@
 import type { MetaDescriptor } from "react-router";
 import { landingFaq } from "../content/landing";
 import { getResourceFaqs, type FaqItem } from "../content/faqs";
+import { getTool, tools } from "../content/tools";
 import { authorSameAs, listedAuthors, type Author } from "../content/authors";
 import type { CanonicalRoute } from "./route-manifest";
 import {
@@ -145,7 +146,9 @@ function breadcrumbs(route: CanonicalRoute): JsonLd {
         ? { name: "Authors", path: "/authors" }
         : route.kind === "use-case" && route.path !== "/use-cases"
           ? { name: "Use Cases", path: "/use-cases" }
-          : null;
+          : route.kind === "tool"
+            ? { name: "Free tools", path: "/tools" }
+            : null;
   const items = [
     { name: "Home", url: `${siteUrl}/` },
     ...(parent
@@ -180,6 +183,45 @@ export function routeJsonLd(route: CanonicalRoute): JsonLd[] {
 
   if (route.kind === "pricing") {
     values.push(faqPageJsonLd(landingFaq));
+  }
+
+  if (route.kind === "tool-index") {
+    values.push({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": `${route.canonical}#collection`,
+      name: displayTitle(route),
+      description: route.description,
+      isPartOf: { "@id": `${siteUrl}/#website` },
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: tools.map((tool, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: tool.title,
+          url: `${siteUrl}/tools/${tool.slug}/`,
+        })),
+      },
+    });
+  }
+
+  if (route.kind === "tool") {
+    const tool = getTool(route.path.replace("/tools/", ""));
+    values.push({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "@id": `${route.canonical}#app`,
+      name: displayTitle(route),
+      description: route.description,
+      url: route.canonical,
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Any",
+      browserRequirements: "Requires JavaScript",
+      isAccessibleForFree: true,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      publisher: { "@id": `${siteUrl}/#organization` },
+    });
+    if (tool?.faqs.length) values.push(faqPageJsonLd(tool.faqs));
   }
 
   if (isEditorial(route)) {

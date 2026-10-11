@@ -1,3 +1,7 @@
+# Origin-Trial: Chrome's WebMCP origin trial for https://construct.computer,
+# which turns on document.modelContext so browser agents can call the free
+# tools (app/features/tools/webmcp.tsx). Expires 30 March 2027; Google emails
+# a renewal reminder. Public by design, every visitor's browser receives it.
 /*
   Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://x.construct.computer https://join.construct.computer; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://*.googleusercontent.com https://api.producthunt.com https://ph-files.imgix.net; media-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://x.construct.computer wss://x.construct.computer https://api.construct.computer https://join.construct.computer; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; upgrade-insecure-requests
   Permissions-Policy: camera=(), geolocation=(), microphone=(), payment=(), usb=()
@@ -6,6 +10,7 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Cache-Control: public, max-age=0, must-revalidate, s-maxage=600, stale-while-revalidate=86400
+  Origin-Trial: AvokLfydIAHFy3U4luav13EfKani7TOeFA258ORITJ+rv6kc12u92lSC1/Io7nquaUhzJvWKoy74J4BnHSlOVwQAAABSeyJvcmlnaW4iOiJodHRwczovL2NvbnN0cnVjdC5jb21wdXRlcjo0NDMiLCJmZWF0dXJlIjoiV2ViTUNQIiwiZXhwaXJ5IjoxODA2MzY0ODAwfQ==
 
 /_assets/*
   Cache-Control: public, max-age=31536000, immutable

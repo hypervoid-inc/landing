@@ -152,6 +152,10 @@ describe("OpenAPI description", () => {
     expect(Object.keys(openApiDocument.paths).sort()).toEqual([
       "/api/beta-signup",
       "/api/health",
+      "/api/tools",
+      "/api/tools/gmail-filter-generator",
+      "/api/tools/mcp-config-generator",
+      "/api/tools/zapier-cost-calculator",
     ]);
     expect(JSON.parse(crawlerFiles["openapi.json"])).toEqual(openApiDocument);
   });

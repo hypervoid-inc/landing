@@ -85,7 +85,7 @@ export function NumberField({
         {label}
       </label>
       <div
-        className={`mt-1.5 flex items-center rounded-lg border bg-white px-3 focus-within:border-[#01b4c8] ${
+        className={`mt-1.5 flex items-center rounded-lg border bg-white px-3 transition-colors focus-within:border-[#01b4c8] ${
           invalid ? "border-[#b42318]" : "border-[#d7dee2]"
         }`}
       >
@@ -160,7 +160,7 @@ export function ChoiceField<T extends string>({
             <label
               key={option.value}
               htmlFor={id}
-              className={`flex cursor-pointer gap-2.5 rounded-lg border bg-white p-3 ${
+              className={`flex cursor-pointer gap-2.5 rounded-lg border bg-white p-3 transition-colors ${
                 value === option.value
                   ? "border-[#01b4c8]"
                   : "border-[#d7dee2] hover:border-[#01b4c8]"

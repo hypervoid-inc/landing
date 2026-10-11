@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "react-router";
 
 import { companyLinks, comparisonLinks } from "../../content/landing";
+import { tools } from "../../content/tools";
 import { useAuth } from "../../features/auth/auth-provider";
 import { NewsletterForm } from "../../features/landing/newsletter-form";
 import { ProductHuntProof } from "../../features/product-hunt/product-hunt-proof";
@@ -197,13 +198,17 @@ function FooterColumn({
   title,
   label,
   links,
+  className = "",
 }: {
   title: string;
   label: string;
   links: ReadonlyArray<readonly [string, string]>;
+  className?: string;
 }) {
   return (
-    <div className="flex min-w-0 flex-col items-center gap-3 text-center sm:gap-4 lg:items-start lg:text-left">
+    <div
+      className={`flex min-w-0 flex-col items-center gap-3 text-center sm:gap-4 lg:items-start lg:text-left ${className}`}
+    >
       <FooterColumnTitle>{title}</FooterColumnTitle>
       <nav
         aria-label={label}
@@ -235,11 +240,11 @@ export function SiteFooter() {
       <div className="page-rail mx-auto w-full px-5 sm:px-6 lg:px-16">
         <div
           className={[
-            "grid grid-cols-2 gap-x-6 gap-y-9 py-10 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_1fr_1fr] lg:gap-16 lg:py-16",
+            "grid grid-cols-2 gap-x-6 gap-y-9 py-10 sm:gap-10 sm:py-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12 lg:py-16",
             // The fourth track is the badge list's two-row measure, see
             // `directory-listings.css`.
             showListings
-              ? "lg:gap-y-10 xl:grid-cols-[1.4fr_1fr_1fr_20.5rem] xl:gap-x-12"
+              ? "lg:gap-y-10 xl:grid-cols-[1.2fr_1fr_1fr_1fr_20.5rem] xl:gap-x-10"
               : "",
           ].join(" ")}
         >
@@ -294,10 +299,21 @@ export function SiteFooter() {
             label="Comparisons"
             links={comparisonLinks}
           />
+          <FooterColumn
+            title="Free tools"
+            label="Free tools"
+            links={[
+              ...tools.map(
+                (tool) => [tool.name, `/tools/${tool.slug}/`] as const,
+              ),
+              ["All free tools", "/tools/"] as const,
+            ]}
+            className="col-span-2 lg:col-span-1"
+          />
           {/* A fourth column once there is room for one, and before that a
               centred full-width row under the link columns. */}
           {showListings ? (
-            <div className="col-span-2 flex min-w-0 flex-col items-center gap-3 sm:gap-4 lg:col-span-3 xl:col-span-1 xl:items-start">
+            <div className="col-span-2 flex min-w-0 flex-col items-center gap-3 sm:gap-4 lg:col-span-4 xl:col-span-1 xl:items-start">
               <FooterColumnTitle id={listingsTitleId}>
                 Featured on
               </FooterColumnTitle>

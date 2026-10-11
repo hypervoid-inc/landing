@@ -1,4 +1,5 @@
 import { CTA_SOURCES, REFERRAL_SOURCES } from "../../shared/beta-signup-schema";
+import { agentTools, inputJsonSchema } from "../../shared/tools/agent-tools";
 import { siteUrl } from "./route-manifest";
 
 /**
@@ -44,6 +45,11 @@ export const errorCodes = [
     meaning: "The Turnstile token was missing, stale, or issued elsewhere.",
   },
   {
+    code: "not_found",
+    status: 404,
+    meaning: "No free tool has that name. GET /api/tools lists them.",
+  },
+  {
     code: "method_not_allowed",
     status: 405,
     meaning: "The endpoint was called with the wrong HTTP method.",
@@ -51,7 +57,8 @@ export const errorCodes = [
   {
     code: "payload_too_large",
     status: 413,
-    meaning: "The request body was larger than 8 KiB.",
+    meaning:
+      "The request body was larger than 8 KiB, or a free tool's input was larger than 16 KiB.",
   },
   {
     code: "unsupported_media_type",
@@ -81,7 +88,7 @@ export const openApiDocument = {
     title: serviceTitle,
     summary: "Public endpoints served from construct.computer.",
     description:
-      "The endpoints behind the construct.computer marketing site. Beta signup is a browser-facing form endpoint protected by Cloudflare Turnstile, so it is only callable from a real page load on this origin. The health endpoint is open and unauthenticated.",
+      "The endpoints behind the construct.computer marketing site. The free tools under /api/tools are open to any client, including AI agents, with no key: GET a tool for its input schema and an example, then GET with ?input=<JSON> or POST the JSON to run it. Beta signup is a browser-facing form endpoint protected by Cloudflare Turnstile, so it is only callable from a real page load on this origin. The health endpoint is open and unauthenticated.",
     version: "1.0.0",
     termsOfService: `${siteUrl}/terms/`,
     contact: {
@@ -92,6 +99,88 @@ export const openApiDocument = {
   },
   servers: [{ url: siteUrl, description: "Production" }],
   paths: {
+    "/api/tools": {
+      get: {
+        operationId: "listTools",
+        summary: "List the free tools",
+        description:
+          "Every free tool with its description, input schema, and a ready-to-run example request. No key, no account.",
+        security: [],
+        responses: {
+          "200": {
+            description: "The free tools.",
+            content: { "application/json": { schema: { type: "object" } } },
+          },
+        },
+      },
+    },
+    ...Object.fromEntries(
+      agentTools.map((tool) => [
+        `/api/tools/${tool.slug}`,
+        {
+          get: {
+            operationId: `get_${tool.name}`,
+            summary: `${tool.title}: describe, or run with ?input=`,
+            description: `${tool.description} Without \`input\`, returns this tool's schema and an example. With \`input\` (URL-encoded JSON matching the schema), runs it.`,
+            security: [],
+            parameters: [
+              {
+                name: "input",
+                in: "query",
+                required: false,
+                description: "URL-encoded JSON matching the request schema.",
+                schema: { type: "string" },
+                example: JSON.stringify(tool.example),
+              },
+            ],
+            responses: {
+              "200": {
+                description: "The tool description, or its result.",
+                content: { "application/json": { schema: { type: "object" } } },
+              },
+              "400": errorResponse(
+                "The input was not JSON or failed validation.",
+                "invalid_request",
+              ),
+              "404": errorResponse("No such tool.", "not_found"),
+              "413": errorResponse(
+                "The input was larger than 16 KiB.",
+                "payload_too_large",
+              ),
+            },
+          },
+          post: {
+            operationId: `run_${tool.name}`,
+            summary: `Run the ${tool.title.toLowerCase()}`,
+            description: tool.description,
+            security: [],
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  schema: inputJsonSchema(tool),
+                  example: tool.example,
+                },
+              },
+            },
+            responses: {
+              "200": {
+                description: "The tool's result.",
+                content: { "application/json": { schema: { type: "object" } } },
+              },
+              "400": errorResponse(
+                "The input was not JSON or failed validation.",
+                "invalid_request",
+              ),
+              "413": errorResponse(
+                "The input was larger than 16 KiB.",
+                "payload_too_large",
+              ),
+            },
+          },
+        },
+      ]),
+    ),
     "/api/health": {
       get: {
         operationId: "getHealth",
@@ -488,7 +577,7 @@ export function apiDocsHtml(): string {
   <body>
     <h1>${html(serviceTitle)}</h1>
     <p class="lede">
-      Two public endpoints, served from <code>${html(siteUrl)}</code>. The
+      Public endpoints served from <code>${html(siteUrl)}</code>. The
       machine-readable version of this page is the
       <a href="${openApiUrl}">OpenAPI 3.1 document</a>, discoverable through the
       <a href="${apiCatalogUrl}">RFC 9727 API catalog</a>.
@@ -501,6 +590,27 @@ export function apiDocsHtml(): string {
       <li>Errors carry <code>{ "error": { "code", "message" } }</code>. Branch on <code>code</code>, never on <code>message</code>.</li>
       <li>Request bodies are capped at 8 KiB.</li>
     </ul>
+
+    <h2>Free tools</h2>
+    <p>
+      The free tools on this site, open to any client and any AI agent with no
+      key. <code>GET /api/tools</code> lists them. <code>GET</code> a tool's
+      URL for its input schema and an example, then run it with
+      <code>GET ?input=&lt;URL-encoded JSON&gt;</code> or by posting the JSON.
+      Browser agents with WebMCP find the same tools registered on every page.
+    </p>
+    <table>
+      <thead>${row(["Endpoint", "What it does"], "th")}</thead>
+      <tbody>${agentTools
+        .map((tool) =>
+          row([
+            `<a href="${siteUrl}/api/tools/${tool.slug}">${code(`/api/tools/${tool.slug}`)}</a>`,
+            html(tool.description),
+          ]),
+        )
+        .join("")}</tbody>
+    </table>
+    <pre><code>curl '${html(`${siteUrl}/api/tools/${agentTools[1]!.slug}?input=${encodeURIComponent(JSON.stringify(agentTools[1]!.example))}`)}'</code></pre>
 
     <h2><span class="method">GET</span> /api/health</h2>
     <p>
