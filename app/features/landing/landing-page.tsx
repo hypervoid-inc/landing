@@ -249,8 +249,10 @@ function Hero() {
               >
                 <span className="block h-full w-full">
                   <AutoVideo
-                    src="/assets/landing/hero/portal.mp4"
-                    poster="/assets/landing/hero/portal-poster.jpg"
+                    // The video's mascot has no eyes; HeroMascotEyes draws them.
+                    // New names so no cached copy with eyes pairs with them.
+                    src="/assets/landing/hero/portal-no-eyes.mp4"
+                    poster="/assets/landing/hero/portal-no-eyes-poster.jpg"
                     decorative
                   />
                 </span>
