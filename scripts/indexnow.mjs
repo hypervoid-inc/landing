@@ -5,8 +5,8 @@
 //
 // Run after `wrangler pages deploy`, with the sitemap that was live before it:
 //   node scripts/indexnow.mjs <previous-sitemap.xml>
-// A missing or empty previous sitemap submits every URL, so
-// `node scripts/indexnow.mjs /dev/null` resubmits the whole site.
+// With no argument, or a missing previous sitemap, it submits every URL, so
+// `node scripts/indexnow.mjs` resubmits the whole site.
 //
 // Cloudflare Crawler Hints cannot do this for us: it reports a URL on a cache
 // MISS, and Pages serves our HTML as DYNAMIC, so it never sees one.
@@ -47,9 +47,9 @@ export function changedUrls(previousXml, nextXml) {
 
 async function main() {
   const previousPath = process.argv[2];
-  if (!previousPath)
-    throw new Error("Usage: node scripts/indexnow.mjs <previous-sitemap.xml>");
-  const previous = await readFile(previousPath, "utf8").catch(() => "");
+  const previous = previousPath
+    ? await readFile(previousPath, "utf8").catch(() => "")
+    : "";
   const next = await readFile(
     path.join(process.cwd(), "build/client/sitemap.xml"),
     "utf8",

@@ -71,7 +71,7 @@ Google does not guarantee crawling, indexing, rich results, or rankings. `llms.t
 ## Other Search And AI Systems
 
 1. Import the verified property into Bing Webmaster Tools and submit the same sitemap.
-2. IndexNow: after each production deploy, CI submits the URLs whose sitemap entry was added, re-dated or removed (`scripts/indexnow.mjs`) to `api.indexnow.org`, which shares them with Bing, Yandex, Seznam, Naver and Yep. The key is served at `/4f4cf45200d8fc35b732a9af1c7df772.txt`. Confirm submissions in Bing Webmaster Tools under IndexNow. To resubmit the whole site after a broad change, run `pnpm build && node scripts/indexnow.mjs /dev/null`. Cloudflare Crawler Hints is not a substitute: it reports URLs on cache MISS, and Pages serves our HTML as `DYNAMIC`.
+2. IndexNow: after each production deploy, CI submits the URLs whose sitemap entry was added, re-dated or removed (`scripts/indexnow.mjs`) to `api.indexnow.org`, which shares them with Bing, Yandex, Seznam, Naver and Yep. The key is served at `/4f4cf45200d8fc35b732a9af1c7df772.txt`. Confirm submissions in Bing Webmaster Tools under IndexNow. To resubmit the whole site after a broad change, run `pnpm build && node scripts/indexnow.mjs` with no argument. Cloudflare Crawler Hints is not a substitute: it reports URLs on cache MISS, and Pages serves our HTML as `DYNAMIC`.
 3. The wildcard allow rule in `robots.txt` permits Bingbot, Applebot, OAI-SearchBot, GPTBot, and other compliant crawlers.
 4. Keep public content visible in raw HTML, use descriptive links and headings, publish representative images, and cite primary sources.
 5. Do not create doorway pages or keyword variants solely for AI systems.
