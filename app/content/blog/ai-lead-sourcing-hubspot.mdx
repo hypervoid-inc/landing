@@ -1,34 +1,36 @@
 ---
 title: "New Leads Into HubSpot With a Slack Summary Every Morning"
-seoTitle: "AI Lead Sourcing Into HubSpot, With a Daily Slack Summary (2026)"
-description: "Have an AI agent find new leads overnight, add them to HubSpot without duplicates, and send a summary to Slack each morning. Exact prompts and limits."
-published: "2026-10-31"
+seoTitle: "HubSpot AI Lead Generation, With a Slack Summary (2026)"
+description: "Have an AI agent find new leads each weekday, add them to HubSpot without duplicates, and send a Slack summary by 8am. From $9 a month, exact prompts."
+published: "2026-11-01"
 author: "nischal"
 tags: ["ai-agent", "workflow-automation", "small-business", "scheduling"]
 kind: "guide"
-draft: true
+draft: false
 ---
 
-Construct finds new leads that match your customer profile every weekday, adds only the new ones to HubSpot with a note on where each was found, and gets a short summary into your Slack sales channel by 8am. It needs one scheduled task, which every plan includes, and runs best on Starter at $59 a month; Lite at $9 runs a smaller daily batch. Any tool that creates companies through HubSpot's API has to check for duplicates itself, because HubSpot says "companies created through API will not be deduplicated by the Company domain name property. This includes installed third-party sync apps" ([HubSpot Knowledge Base](https://knowledge.hubspot.com/records/deduplication-of-records)).
+Construct runs AI lead generation into HubSpot for you: every weekday it finds new leads that match your customer profile, adds only the new ones to HubSpot with a note on where each was found, and gets a short summary into your Slack sales channel by 8am. It needs one scheduled task, which every plan includes, and runs best on Starter at $59 a month; Lite at $9 runs a smaller daily batch.
 
-For founders and small teams, Construct is the better way to run lead sourcing. One agent does the research, the HubSpot check, and the summary; every lead carries a source link in a dated file; the schedule runs in the cloud while you sleep; and anyone on the team can ask about a lead in Slack.
+The one rule that makes it safe is search before create. HubSpot says "companies created through API will not be deduplicated by the Company domain name property. This includes installed third-party sync apps" ([HubSpot Knowledge Base](https://knowledge.hubspot.com/records/deduplication-of-records)), so any agent or tool that adds companies has to check for them first. For founders and small teams, Construct is the better way to run lead sourcing: one agent does the research, the HubSpot check, and the summary; every lead carries a source link in a dated file; the schedule runs in the cloud while you sleep; and anyone on the team can ask about a lead in Slack.
 
 <BetaCta source="blog_top">Start with Construct for $9</BetaCta>
 
 ## Why do this in Construct?
 
+Construct does the whole job in one scheduled task at a flat plan price, and leaves a dated file with a source for every lead. In practice:
+
 - **One agent for the whole job.** Research, HubSpot records, and the morning summary run in a single scheduled task, with no chain of separate tools to maintain.
 - **A source on every lead.** Each run saves a dated CSV to Files/leads/ with the URL behind every signal, so you can check why a company made the list.
 - **It checks HubSpot before it writes.** The agent searches by domain and by email, skips matches, and records each HubSpot ID or "existing" in the CSV.
 - **It runs while you sleep.** Calendar schedules run server-side. Starter includes 10 scheduled tasks and 150 steps per task.
-- **Questions answered in Slack.** Mention the agent in the summary's thread and it reads the day's CSV and sources to answer.
-- **Finished work is kept.** A run that stops at company seven still has six saved.
+- **A flat price, not a fee per lead.** Construct plans are $9, $59, or $299 a month with published limits ([pricing](/pricing/)).
+- **Finished work is kept.** A run that stops at company seven still has six saved, and anyone on the allow list can ask about a lead in Slack.
 
 <BetaCta source="blog_inline_1">Start sourcing leads</BetaCta>
 
-## What does this job actually do?
+## How does an AI agent find new leads for HubSpot?
 
-Every weekday before work starts, the agent:
+It reads a written profile of your ideal customer, searches public sources for companies that match, and checks HubSpot before creating anything. Every weekday before work starts, the agent:
 
 1. Reads your ideal customer profile from a file in its workspace.
 2. Searches public sources for companies that match, skipping ones it has already found.
@@ -36,22 +38,22 @@ Every weekday before work starts, the agent:
 4. Creates the new records with a note saying where and why each lead was found.
 5. Saves a dated list to Files and emails a short summary to your sales channel in Slack.
 
-You spend your morning on the leads, not on the spreadsheet.
+You spend your morning on the leads, not on the spreadsheet. The research step is the same one our guide to [researching companies into a spreadsheet](/blog/ai-company-research-spreadsheet/) covers in depth.
 
 ## What do you need?
 
-- **Construct Starter or above.** Starter ($59) allows 150 steps per task and 10 scheduled tasks. Lite ($9) can run the job with a smaller daily batch, because each company takes several searches. {/* TODO: measure steps used per company and state a realistic Lite batch size */} See [pricing](/pricing/).
+- **Construct Starter, recommended.** Starter ($59) allows 150 steps per task and 10 scheduled tasks. Lite ($9) can run the job with a smaller daily batch, because each company takes several searches. See [pricing](/pricing/).
 - **HubSpot connected** from the App Store in Construct, by someone with permission to connect apps. In a team workspace, every agent with HubSpot access acts through the account that connected it, so connect a HubSpot user whose permissions fit the job.
 - **Construct added to Slack** from **Settings**, **Messaging**, **Add to Slack**, and a channel email address from Slack, which needs a paid Slack plan. Our [Slack briefing guide](/blog/ai-agent-slack-briefing/) covers both steps.
 - **A written ideal customer profile**: industry, size, location, and the signal that makes a company worth a call this week.
 
 ## Before you start
 
-- **The summary reaches Slack by email.** A scheduled run cannot post into Slack directly yet, so the agent emails the channel's address, which needs a paid Slack plan. Without one, ask for the summary in Slack each morning or read it in Construct. {/* TODO: confirm scheduled delivery to Slack once it ships, and update this guide */}
+- **The summary reaches Slack by email.** A scheduled run cannot post into Slack directly yet, so the agent emails the channel's address, which needs a paid Slack plan. Without one, ask for the summary in Slack each morning or read it in Construct.
 - **Run the HubSpot writes by hand for a week.** Scheduled runs create records without stopping for review, so do steps 2 and 3 yourself first, and keep "never change or delete existing records" in the prompt.
 - **Limit HubSpot by agent.** An agent allowed to use HubSpot can use every action the connection offers, so block HubSpot under **App access** for agents that do not need it.
 - **Public sources, no guessed emails.** The agent researches the open web and pages it can reach in its browser, and the prompts tell it never to guess an address. Finding a lead is not consent to email them; check the rules that apply to the people you contact.
-- **Size the batch to your plan.** Ten companies with several searches each can exceed Lite's 50 steps per task, so start Lite with a smaller batch or move to Starter.
+- **Size the batch to your plan.** Ten companies with several searches each can exceed Lite's 50 steps per task, so start Lite with about three companies a day and raise the number while runs finish inside the limit, or move to Starter.
 - **Write runs that check first.** A run can occasionally be delivered twice; the "if today's CSV already exists, stop" line and the search-first rule keep that harmless.
 
 ## How do you set it up?
@@ -60,41 +62,58 @@ You spend your morning on the leads, not on the spreadsheet.
 
 Ask the agent to save your profile where every future run can read it:
 
-> Save this as Files/leads/profile.md. Target: independent physiotherapy clinics in the UK with 3 to 20 practitioners. Good signal: hiring a clinic manager or opening a second location in the last 60 days. Exclude: hospital groups, franchises, and anyone already in HubSpot. For each lead I need the company name, website domain, city, the signal with a source link, and a named owner or manager only if their name and business email are published on the company's own site.
+<Prompt>
+
+Save this as Files/leads/profile.md. Target: independent physiotherapy clinics in the UK with 3 to 20 practitioners. Good signal: hiring a clinic manager or opening a second location in the last 60 days. Exclude: hospital groups, franchises, and anyone already in HubSpot. For each lead I need the company name, website domain, city, the signal with a source link, and a named owner or manager only if their name and business email are published on the company's own site.
+
+</Prompt>
 
 A file beats a long prompt. When the profile changes, you edit one file and the next run uses it.
 
 ### 2. Run the research once, without touching HubSpot
 
-> Using Files/leads/profile.md, find 10 companies that match. Use public web sources only, and record the URL where you found each signal. Do not guess email addresses; if a person's business email is not published on the company's own site, leave it blank. Save the results to Files/leads/ as a CSV named with today's date. Do not create anything in HubSpot yet.
+<Prompt>
 
-Open the CSV and click the sources. This is where you find out whether "opening a second location" means what you meant. Correct the profile file, then run it again. Our guide to [researching companies into a spreadsheet](/blog/ai-company-research-spreadsheet/) goes deeper on this step.
+Using Files/leads/profile.md, find 10 companies that match. Use public web sources only, and record the URL where you found each signal. Do not guess email addresses; if a person's business email is not published on the company's own site, leave it blank. Save the results to Files/leads/ as a CSV named with today's date. Do not create anything in HubSpot yet.
+
+</Prompt>
+
+Open the CSV and click the sources. This is where you find out whether "opening a second location" means what you meant. Correct the profile file, then run it again.
 
 ### 3. Add the leads to HubSpot, checking first
 
 Once the list is right, let the agent write to HubSpot:
 
-> For each company in today's CSV, search HubSpot for a company with the same website domain, and for each contact, search by email. If a match exists, skip it and mark it "existing" in the CSV. Otherwise create the company with its domain, create the contact if there is one and associate it with the company, set the contact's lifecycle stage to lead, and add a note on the company with the signal and its source link. Do not change or delete any existing record. Update the CSV with the HubSpot record IDs.
+<Prompt>
 
-The search-first instruction matters. HubSpot recommends always including an email because "email address is the primary unique identifier to avoid duplicate contacts," but its automatic company deduplication does not cover this route: "companies created through API will not be deduplicated by the Company domain name property. This includes installed third-party sync apps" ([HubSpot Knowledge Base](https://knowledge.hubspot.com/records/deduplication-of-records); [HubSpot developer docs](https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/guide)). Without the check, the agent can create the same company twice.
+For each company in today's CSV, search HubSpot for a company with the same website domain, and for each contact, search by email. If a match exists, skip it and mark it "existing" in the CSV. Otherwise create the company with its domain, create the contact if there is one and associate it with the company, set the contact's lifecycle stage to lead, and add a note on the company with the signal and its source link. Do not change or delete any existing record. Update the CSV with the HubSpot record IDs.
 
-{/* TODO: confirm in a live run which HubSpot actions the connected app exposes for company search, association, and notes, and add a screenshot of a created record */}
+</Prompt>
+
+Construct's HubSpot connection comes through Composio, whose HubSpot toolkit lists actions to look up companies and contacts by property, create companies and contacts, associate a contact with a company, and add a note ([Composio HubSpot toolkit](https://docs.composio.dev/toolkits/hubspot)). Before you schedule anything, open one created company in HubSpot and check its domain, contact, association, and note.
 
 ### 4. Write the summary and send it to Slack
 
-> Email a summary of today's new leads from your own address to sales-abc123@yourteam.slack.com with the subject "New leads" and today's date. One line per new company: name, city, signal, and the HubSpot link. End with how many you skipped as existing. Under 150 words.
+<Prompt>
 
-The address is a placeholder; use the channel address Slack gave you. Check that the post arrives in the channel.
+Email a summary of today's new leads from your own address to sales-abc123@yourteam.slack.com with the subject "New leads" and today's date. One line per new company: name, city, signal, and the HubSpot link. End with how many you skipped as existing. Under 150 words.
+
+</Prompt>
+
+The address is an example; use the channel address Slack gave you. Check that the post arrives in the channel.
 
 ### 5. Schedule all of it
 
-> Every weekday at 6:30am in my time zone, run the lead job: steps 2 to 4 exactly as we did them today, using Files/leads/profile.md, 10 companies, searching HubSpot before creating anything, never changing or deleting existing records, and emailing the summary to the Slack channel address. Skip any company already listed in an earlier CSV in Files/leads/. If today's CSV already exists, stop.
+<Prompt>
 
-The agent creates a Calendar event that runs in the cloud while you sleep. Once it has run cleanly for a couple of weeks, you can save it as a workflow so the procedure is versioned and anyone on the team can run it on demand ([AI workflow automation](/blog/ai-workflow-automation/)).
+Every weekday at 6:30am in my time zone, run the lead job: steps 2 to 4 exactly as we did them today, using Files/leads/profile.md, 10 companies, searching HubSpot before creating anything, never changing or deleting existing records, and emailing the summary to the Slack channel address. Skip any company already listed in an earlier CSV in Files/leads/. If today's CSV already exists, stop.
+
+</Prompt>
+
+The agent creates a Calendar event that runs in the cloud while you sleep ([scheduling](/use-cases/scheduling/)). Once it has run cleanly for a couple of weeks, you can save it as a workflow so the procedure is versioned and anyone on the team can run it on demand ([AI workflow automation](/blog/ai-workflow-automation/)).
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -111,15 +130,11 @@ The agent creates a Calendar event that runs in the cloud while you sleep. Once 
       src="/blog/ai-lead-sourcing-hubspot/workflow-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
-  <figcaption
-    id="workflow-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
+  </ArticleVideo>
+  <figcaption id="workflow-demo-description" className="mt-3 text-sm leading-6">
     Silent product demo: Construct building and running a reusable workflow,
     with agent steps and connected-app actions encoded once and run again.
   </figcaption>
@@ -129,9 +144,21 @@ The agent creates a Calendar event that runs in the cloud while you sleep. Once 
 
 When the summary lands, anyone on the allow list can ask in a thread:
 
-> @Construct tell me more about the second clinic on today's list. What did their hiring post say?
+<Prompt>
+
+@Construct tell me more about the second clinic on today's list. What did their hiring post say?
+
+</Prompt>
 
 The agent reads the day's CSV and its sources and answers in the thread.
+
+## How do you stop HubSpot creating duplicate companies?
+
+Tell the agent to search HubSpot by website domain before it creates a company, and by email before it creates a contact. HubSpot deduplicates contacts by email: "email address is the primary unique identifier to avoid duplicate contacts" ([HubSpot developer docs](https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/guide)). Companies are different. Its automatic deduplication by domain does not cover companies created through the API or third-party sync apps ([HubSpot Knowledge Base](https://knowledge.hubspot.com/records/deduplication-of-records)), which is the route any agent uses. Without the check in step 3, the agent can create the same company twice.
+
+## How do you get new HubSpot leads into Slack?
+
+Have the agent email a short summary to the Slack channel's email address, which Slack offers on paid plans; by default "any member of a channel can get an email address for a channel or DM," and owners and admins can restrict that ([Slack Help Center](https://slack.com/help/articles/206819278-Send-emails-to-Slack)). To get it, open the channel, click its name, open **Automations**, choose to send emails to the channel, and click **Get email address**.
 
 ## What result should you get?
 
@@ -142,7 +169,19 @@ Each weekday morning:
 3. A summary in your Slack sales channel, posted as an email from the agent's address.
 4. A Calendar history entry for the run, linked to the chat session that did the work.
 
-**Illustrative example.** A two-person clinic software company targets independent physiotherapy practices. Each morning around ten candidates are checked; on a typical day four are new, three are already in HubSpot, and three do not fit on a closer look and are left out of the CSV. The founder reads the summary in Slack over coffee and calls the two with the strongest signal.
+**Illustrative example.** A two-person clinic software company targets independent physiotherapy practices. Suppose a morning's run checks ten candidates: four are new, three are already in HubSpot and marked "existing", and three do not fit on a closer look and are left out of the CSV. The founder reads the summary in Slack over coffee and calls the two with the strongest signal.
+
+## How to check the job in its first two weeks
+
+Keep a short log for the first ten weekdays before you trust the schedule:
+
+1. **Leads found** each day, and how many you would actually call.
+2. **Duplicates** in HubSpot. The target is zero.
+3. **Sources** that do not support the signal they are cited for.
+4. **Steps used** per run, against your plan's steps per task.
+5. **Arrival time** of the Slack summary.
+
+If the accepted share is low, tighten the profile file. If runs stop partway, lower the batch.
 
 ## Troubleshooting
 
@@ -156,13 +195,15 @@ Each weekday morning:
 
 **The run stopped partway.** It reached the plan's steps per task. Lower the daily batch, or move to Starter or Pro.
 
-{/* TODO: run the 6:30am lead job for 10 weekdays and record leads found, share accepted by a human reviewer, duplicates created, steps used per run, and Slack arrival time; add screenshots */}
+## What about HubSpot's own prospecting agent?
+
+HubSpot's prospecting agent works inside HubSpot on Starter, Professional, and Enterprise editions, researching accounts, finding contacts, and drafting outreach, and it costs $1 for each lead it recommends outreach for, paid in HubSpot Credits ([HubSpot](https://www.hubspot.com/products/sales/ai-prospecting-agent)). Construct works from your own written profile across the open web, keeps a dated file with a source for every lead, sends the Slack summary, and costs a flat plan price however many leads it finds. If you already run outreach sequences in HubSpot, you can use both: Construct to find and add the leads, HubSpot to work them.
 
 ## Give Construct its first lead list
 
-Choose Construct for lead sourcing. It researches with sources you can check, writes to HubSpot only after searching it, and has the summary waiting in Slack before your day starts.
+Choose Construct for lead sourcing. It researches with sources you can check, writes to HubSpot only after searching it, costs a flat monthly price, and has the summary waiting in Slack before your day starts.
 
-Your first job: save your ideal customer profile with the prompt from step 1, then run step 2 for ten companies today without touching HubSpot. Click the sources, tighten the profile, and once a week of lists looks right, let it write to HubSpot and put it on the Calendar.
+Your first job: save your ideal customer profile with the prompt from step 1, then run step 2 for ten companies today without touching HubSpot. Click the sources, tighten the profile, and once a week of lists looks right, let it write to HubSpot and put it on the Calendar. Start on [Starter at $59](/pricing/), or on Lite at $9 with a smaller batch.
 
 <BetaCta source="blog_inline_2">Give Construct its first lead list</BetaCta>
 
@@ -170,6 +211,8 @@ Your first job: save your ideal customer profile with the prompt from step 1, th
 
 - [HubSpot Knowledge Base: deduplication of records](https://knowledge.hubspot.com/records/deduplication-of-records)
 - [HubSpot developer docs: contacts API guide](https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/guide)
+- [HubSpot: AI prospecting agent](https://www.hubspot.com/products/sales/ai-prospecting-agent)
+- [Composio: HubSpot toolkit](https://docs.composio.dev/toolkits/hubspot)
 - [Slack Help Center: send emails to Slack](https://slack.com/help/articles/206819278-Send-emails-to-Slack)
 - [Construct pricing](/pricing/)
 

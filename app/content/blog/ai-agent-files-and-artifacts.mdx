@@ -2,7 +2,7 @@
 title: "Where your agent's work goes: files, reports and apps that outlast the chat"
 seoTitle: "AI Agent Persistent Files: Reports and Apps That Outlast the Chat"
 description: "Construct saves agent work as files, PDFs, spreadsheets and small apps in a workspace with 100 MB to 3 GB of storage. How it works, and its limits."
-published: "2026-11-07"
+published: "2026-11-08"
 author: "nischal"
 tags: ["ai-agent", "product", "internal-tools"]
 kind: "guide"
@@ -65,8 +65,7 @@ Incoming material lands in Files too. When an email or a Slack, Telegram, or Dis
 Some outputs are better as a small tool than a document: a review queue, an intake form, a dashboard over last month's reports. Construct can build a private workspace app for that. Its source lives in `Apps/<app-id>/` in Files, its saved records in `AppData/<app-id>/`, and a successful build opens on your desktop. If a later edit fails to build, the last working version keeps running. Our guide to [how Construct builds internal tools](/blog/build-internal-tools-with-construct/) covers the permissions and the build lifecycle.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -83,11 +82,10 @@ Some outputs are better as a small tool than a document: a review queue, an inta
       src="/blog/ai-agent-files-and-artifacts/internal-app-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
+  </ArticleVideo>
   <figcaption
     id="internal-app-demo-description"
     className="mt-3 text-sm leading-6"
@@ -105,13 +103,13 @@ Each kind of output has a natural home in Construct, and putting it in the right
 
 <ArticleTable caption="Where each kind of agent output belongs in Construct">
 
-| Output | Best home | Why |
-| --- | --- | --- |
-| A report, spreadsheet, deck, or PDF | Files | You open it, share it, and compare it next time |
-| A stable fact or preference | Memory | The agent recalls it before the next task, and you can correct it |
-| A queue or tracker people update | Workspace app | People need a screen, not a document |
-| A repeated procedure | Workflow | The steps run the same way each time |
-| A live number, such as today's revenue | Neither, fetch it at run time | A saved figure is right only until it changes |
+| Output                                 | Best home                     | Why                                                               |
+| -------------------------------------- | ----------------------------- | ----------------------------------------------------------------- |
+| A report, spreadsheet, deck, or PDF    | Files                         | You open it, share it, and compare it next time                   |
+| A stable fact or preference            | Memory                        | The agent recalls it before the next task, and you can correct it |
+| A queue or tracker people update       | Workspace app                 | People need a screen, not a document                              |
+| A repeated procedure                   | Workflow                      | The steps run the same way each time                              |
+| A live number, such as today's revenue | Neither, fetch it at run time | A saved figure is right only until it changes                     |
 
 </ArticleTable>
 
@@ -132,7 +130,11 @@ This example is illustrative, not a customer case. A three-person marketing agen
 
 **The request, once, in chat:**
 
-> Every Monday at 8am, for each client folder in Team/clients, read last week's report in reports/, pull this week's numbers from the connected analytics app, and write reports/YYYY-MM-DD-weekly.md comparing the two. Export it to PDF in the same folder. Save the raw numbers to data/YYYY-MM-DD.csv. Then post a one-line summary per client to me in chat. Do not email clients.
+<Prompt>
+
+Every Monday at 8am, for each client folder in Team/clients, read last week's report in reports/, pull this week's numbers from the connected analytics app, and write reports/YYYY-MM-DD-weekly.md comparing the two. Export it to PDF in the same folder. Save the raw numbers to data/YYYY-MM-DD.csv. Then post a one-line summary per client to me in chat. Do not email clients.
+
+</Prompt>
 
 **What is left behind after the first run, for each client:**
 

@@ -2,7 +2,7 @@
 title: "Update Linear Issues From Slack Messages With an AI Agent"
 seoTitle: "Update Linear Issues From Slack With an AI Agent (2026 Guide)"
 description: "Mention an AI agent in Slack to create, update, and comment on Linear issues, including several at once. Setup, exact prompts, limits, and fixes, from $9."
-published: "2026-11-03"
+published: "2026-11-04"
 author: "nischal"
 tags: ["ai-agent", "workflow-automation", "small-business"]
 kind: "guide"
@@ -56,7 +56,11 @@ Open **App Store** in the Construct desktop, find Linear, and press **Connect**.
 
 In Construct chat, have the agent learn your setup and write it down:
 
-> Look up my Linear teams, their issue keys, workflow states, and labels. Save a one-page cheat sheet to Files/linear/conventions.md. Then remember these rules: "fixed" or "shipped" means move to Done; "blocked" means move to Blocked and add a comment saying why; "urgent" means priority Urgent. Never delete or archive an issue. When a message names an issue without its key, search by title and ask me if more than one matches.
+<Prompt>
+
+Look up my Linear teams, their issue keys, workflow states, and labels. Save a one-page cheat sheet to Files/linear/conventions.md. Then remember these rules: "fixed" or "shipped" means move to Done; "blocked" means move to Blocked and add a comment saying why; "urgent" means priority Urgent. Never delete or archive an issue. When a message names an issue without its key, search by title and ask me if more than one matches.
+
+</Prompt>
 
 The cheat sheet means a Slack request can say "the onboarding bug" and the agent can still find ENG-214. You can review the rules later in the Memories app ([AI agent memory](/blog/ai-agent-memory/)).
 
@@ -64,26 +68,37 @@ The cheat sheet means a Slack request can say "the onboarding bug" and the agent
 
 Because the agent cannot read the message you are replying to, include the content. Start a new message in the channel, so the thread belongs to the agent:
 
-> @Construct create a Linear bug in the Web team from this report by Priya: "Checkout page shows a blank screen on Safari 18 after applying a discount code. Started this morning, about 1 in 5 attempts." Priority High, label Bug, assign to me. Reply with the issue link.
+<Prompt>
+
+@Construct create a Linear bug in the Web team from this report by Priya: "Checkout page shows a blank screen on Safari 18 after applying a discount code. Started this morning, about 1 in 5 attempts." Priority High, label Bug, assign to me. Reply with the issue link.
+
+</Prompt>
 
 It replies in the thread with the new issue key. The agent sees each message with the sender's name, so you can ask it to credit the person who reported it.
 
 ### 4. Update existing issues
 
-> @Construct ENG-142 shipped in today's release. Move it to Done and comment "Released in v4.12, confirmed in production by Sam."
+<Prompt>
+
+@Construct ENG-142 shipped in today's release. Move it to Done and comment "Released in v4.12, confirmed in production by Sam."
+
+</Prompt>
 
 For several issues at once, ask for the plan before the changes:
 
-> @Construct here are today's standup notes. List the Linear changes you would make, one line each, and wait for me to reply "go" before changing anything.
-> Sam: finished the CSV export (the one for Acme), starting on rate limits.
-> Priya: Safari checkout bug is blocked on the payments vendor.
-> Jo: onboarding emails ready for review.
+<Prompt>
+
+@Construct here are today's standup notes. List the Linear changes you would make, one line each, and wait for me to reply "go" before changing anything.
+Sam: finished the CSV export (the one for Acme), starting on rate limits.
+Priya: Safari checkout bug is blocked on the payments vendor.
+Jo: onboarding emails ready for review.
+
+</Prompt>
 
 Reply "go" in the same thread. Replies in a thread that a mention started reach the agent without mentioning it again. {/* TODO: confirm that a reply without a mention reaches the agent when the thread was started by a mention, and whether the same holds when the first mention is itself a reply inside someone else's thread */}
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -100,17 +115,16 @@ Reply "go" in the same thread. Replies in a thread that a mention started reach 
       src="/blog/ai-agent-linear-from-slack/integrations-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
+  </ArticleVideo>
   <figcaption
     id="integrations-demo-description"
     className="mt-3 text-sm leading-6"
   >
-    Silent product demo: Construct's live connected-app catalog, with tools
-    such as Drive, Gmail, GitHub, and messaging channels available to connect.
+    Silent product demo: Construct's live connected-app catalog, with tools such
+    as Drive, Gmail, GitHub, and messaging channels available to connect.
   </figcaption>
 </figure>
 

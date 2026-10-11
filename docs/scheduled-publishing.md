@@ -19,16 +19,18 @@ A finished post goes live by itself on its `published` date. Write it ahead, mer
 1. Finish the post and resolve every TODO. Scheduling is publishing in advance: nobody reviews it again on the day.
 2. Set `published: "YYYY-MM-DD"` to the go-live date and `draft: false`. Keep the cadence: one post every day, with no gap after the previous post (the calendar is in the blog plan and the Presence Tracker).
 3. Check its FAQs in `app/content/faqs.ts` (drafts already have them) still match the post.
-4. Make its card. Drafts already have a headline and scene in `app/content/og-poster.ts`, and so do the tag hubs they will create. Run `pnpm og:generate` for the artwork (it only draws cards that have none yet, including a tag hub the post brings to two posts), look at each new image in `assets/og/poster/`, then run `pnpm og`. Scheduled posts get their card now, and the OG tests fail at merge time if one is missing, so publish day never fails on a card.
+4. Make its card. Drafts already have one in `app/content/og-card-content.ts` (see [og-images.md](og-images.md#rendered-cards)), and every topic hub and index is a mosaic of its posts' cards. For a new post, pick the figure its content already is, fill it with the post's own facts, check it full size with `pnpm og:sheet --only <name>` and beside its neighbours with `pnpm og:sheet`, then run `pnpm og`; it re-renders the topic hubs the post appears on too. Scheduled posts get their card now, and the OG tests fail at merge time if one is missing, stale, or repeats a neighbour's figure, so publish day never fails on a card.
 5. Run `pnpm generate:content && pnpm check`, then `CONTENT_DATE=<its date> pnpm test`. Some tests depend on which posts are live (related posts weigh tags by how rare they are), and the morning build runs them, so a failure that only appears on the post's date would block that day's deploy. Then merge to `main`.
 
 ## Preview a future day
 
+`pnpm dev` shows every post, drafts and scheduled ones included, so a post can be read in place while it is written. To see the site exactly as it will look on a given day, build it for that day:
+
 ```
-CONTENT_DATE=2026-10-05 pnpm dev
+CONTENT_DATE=2026-10-05 pnpm build && pnpm preview
 ```
 
-The site renders as it will on that date, scheduled posts included. `CONTENT_DATE` works for `pnpm build` and `pnpm test` too.
+`CONTENT_DATE` works for `pnpm test` too.
 
 ## Links between scheduled posts
 

@@ -2,7 +2,7 @@
 title: "Manus alternatives for recurring business work"
 seoTitle: "Manus Alternatives for Recurring Workflows (2027)"
 description: "Construct runs recurring business work from $9 a month and keeps every file between runs. Manus bills credits per run. 8 Manus alternatives compared."
-published: "2026-11-09"
+published: "2026-11-10"
 author: "construct-team"
 tags: ["comparison", "ai-agent", "workflow-automation", "manus"]
 kind: "comparison"
@@ -53,7 +53,7 @@ We have not yet run the same recurring job on every product. {/* TODO: run "Ever
 | Manus               | $0 (free) or $20 (Pro)                       | Credits; Cloud Computer from $30 extra | Sandbox per task; persistent machine is an add-on | Schedules and events in connected services              | Web, desktop, mobile, Slack, email           |
 | Claude Cowork       | $20 (Claude Pro)                             | Plan usage                             | Cloud tasks; local files only on your desktop     | Hourly, daily, weekly, weekdays                         | Desktop, web, mobile                         |
 | Perplexity Computer | Pro plus credits, or Max with 10,000 a month | Credits, 100 credits = $1              | Cloud sandbox                                     | Schedules no more often than hourly; conditions         | Web, desktop, mobile, Slack, Teams           |
-| Lindy               | $29.99 per user                              | Per user, pooled credits               | Not documented in the pages we reviewed           | Daily, weekly, monthly, or events                       | Slack, iMessage and SMS, web                 |
+| Lindy               | $29.99 per active user                       | Per user, pooled credits               | Not documented in the pages we reviewed           | Daily, weekly, monthly, or events                       | Slack, iMessage and SMS, web                 |
 | Viktor              | $50 per workspace                            | Pooled credits                         | A cloud computer where it writes and runs code    | Schedules recurring tasks                               | Slack, Microsoft Teams                       |
 | Runbear             | $99 per workspace                            | Credits                                | Not documented in the pages we reviewed           | Schedule, webhook, or event in a connected app          | Slack, Microsoft Teams, Discord              |
 | Gemini Spark        | $20 (Google AI Pro, US)                      | Subscription                           | Works in Google's cloud                           | Time-based or conditional triggers                      | Gemini apps and web                          |
@@ -72,8 +72,7 @@ Each Construct agent works from a persistent cloud workspace with files, a brows
 Recurring work follows one path. Run a job by hand until the output is right, save it as a workflow with agent steps and connected-app actions, then put it on the Calendar. A scheduled item can run an agent prompt, a single app action, or a whole workflow, once or on a cadence, and it keeps the result history. Schedules run server-side, so the job fires with your laptop closed, and the result arrives in the web app with a notification.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -90,18 +89,14 @@ Recurring work follows one path. Run a job by hand until the output is right, sa
       src="/blog/manus-alternatives/calendar-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
-  <figcaption
-    id="calendar-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
-    Silent product demo: the Construct Calendar showing scheduled agent jobs
-    and workflow runs, where an agent prompt, a connected-app action, or a
-    complete workflow can run once or on a cadence with its result history.
+  </ArticleVideo>
+  <figcaption id="calendar-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: the Construct Calendar showing scheduled agent jobs and
+    workflow runs, where an agent prompt, a connected-app action, or a complete
+    workflow can run once or on a cadence with its result history.
   </figcaption>
 </figure>
 
@@ -116,7 +111,9 @@ What you get that a credit-per-run setup does not give you:
 
 Two things to set up deliberately. Construct starts runs from the Calendar, by hand, or from an agent, not from events in other apps, so for an event-driven job such as new CRM records, schedule a regular run that picks up everything new since the last file. Workflows do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself once you have checked them. A full Construct vs Manus comparison is coming. {/* TODO: link /blog/construct-vs-manus/ once it is live */}
 
-<BetaCta source="blog_inline_1">Put your weekly report on Construct for $9</BetaCta>
+<BetaCta source="blog_inline_1">
+  Put your weekly report on Construct for $9
+</BetaCta>
 
 ## 2. Manus
 
@@ -140,7 +137,7 @@ Scheduled Tasks run in the cloud no more often than once an hour, each conversat
 
 **Best for:** routines around each person's inbox, meetings, and Slack.
 
-A Lindy Routine runs on a daily, weekly, or monthly schedule or on an event such as an email or Slack message, and can be dry-run on real data ([Lindy Routines](https://docs.lindy.ai/teammate/routines)). Plus is $29.99 per user a month with 3,000 credits, Pro $99.99 with 15,000, and Max $199.99 with 35,000 ([Lindy pricing](https://www.lindy.ai/pricing)). Billing is per user, and work pauses when the shared credit pool runs out. See [Construct vs Lindy](/blog/construct-vs-lindy/).
+A Lindy Routine runs on a daily, weekly, or monthly schedule or on an event such as an email or Slack message, and can be dry-run on real data ([Lindy Routines](https://docs.lindy.ai/teammate/routines)). Team is from $29.99 per active user a month for 3,000 credits (Lindy's pricing page also shows $49.99 for 5,000 credits to some visitors), credits pool across the team, top-ups are $10 per 1,000 credits, and Enterprise is custom ([Lindy pricing](https://www.lindy.ai/pricing)). Billing is per active user, and work pauses when the shared credit pool runs out. See [Construct vs Lindy](/blog/construct-vs-lindy/).
 
 ## 6. Viktor
 

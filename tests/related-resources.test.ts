@@ -42,12 +42,18 @@ describe("related resources", () => {
   });
 
   it("puts the half-life post next to the reliability-adjacent writing", () => {
-    const related = getRelatedResources("agent-task-half-life", 4).map(
-      (entry) => entry.slug,
-    );
-    // Shares `workflow-automation` (3 posts) and `product` (4), both rarer than
-    // the near-universal `ai-agent`.
-    expect(related).toContain("ai-workflow-automation");
+    const related = getRelatedResources("agent-task-half-life", 4);
+    // Ranked by its rare tags, `reliability` and `workflow-automation`, never
+    // by the near-universal `ai-agent`. Which posts win changes as the library
+    // grows, so the check is the tag, not a particular slug: a slug here broke
+    // the morning build the day a newer reliability post went live.
+    expect(
+      related.some(
+        (entry) =>
+          entry.tags.includes("reliability") ||
+          entry.tags.includes("workflow-automation"),
+      ),
+    ).toBe(true);
   });
 
   it("is deterministic across calls, so prerendered pages stay stable", () => {

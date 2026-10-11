@@ -247,12 +247,317 @@ Nothing you type is sent anywhere. The config is built in your browser, and this
 
 # Resources
 
+## Lindy alternatives, compared honestly
+
+URL: https://construct.computer/blog/lindy-alternatives/
+Type: comparison
+Author: Construct Team
+Published: 2026-10-11
+Tags: comparison, ai-employee, small-business
+
+**The best of the Lindy alternatives for founders and small teams is Construct: an AI employee with its own cloud workspace, files, schedules, and email address from $9 a month, priced by plan rather than by person.** Lindy bills every person who uses it, from $29.99 a month for 3,000 credits on its pricing page, and that includes someone who only @mentions it in Slack.
+
+Construct costs less than a third of one Lindy seat to start, a team workspace adds members without seat fees, every finished report or spreadsheet is saved as a file the next run can build on, and you can reach it from Slack, Telegram, Discord, email, or the web. The rest of this list covers narrower needs: Viktor for a coworker that lives only in Slack or Teams, Claude if you already pay for it, Gumloop, Zapier Agents, or n8n if you want to build every step yourself, and Marblism if you mainly need a phone receptionist.
+
+Start with Construct for $9
+
+## Why choose Construct over Lindy?
+
+Construct is cheaper to start, does not bill per person, and keeps every result as a file your team can open. The details:
+
+- **$9 a month instead of $29.99 per person.** Construct Lite includes 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address.
+- **No seats to count.** [Team workspaces](/use-cases/team-workspaces/) have Owner, Admin, and Member roles and no member limit, and everyone's work draws on the owner's plan. On Lindy, anyone who uses it takes a seat.
+- **Work that lands as files.** Reports, spreadsheets, and scripts are saved to the workspace as the agent produces them, so a run that stops at step 30 still keeps steps 1 to 29, and next week's run starts from last week's output.
+- **Memory you can read and fix.** Open what Construct has learned, correct a fact, or tell it to forget one.
+- **Schedules that run with your laptop closed.** Jobs on the Calendar run on Construct's servers at the time you set.
+- **More places to reach it than Slack.** Web, Slack, Telegram, Discord, and the agent's own email inbox, all backed by the same agent and workspace.
+
+## How much does Lindy cost in 2026?
+
+Lindy has three plans: Free, with $50 in credits that last 7 days and no card, then Team, billed per active user, and custom Enterprise. Team starts at $29.99 per active user a month for 3,000 credits, though Lindy is testing its price and its [pricing page](https://www.lindy.ai/pricing) shows some visitors $49.99 for 5,000 credits instead, so confirm the figure you are shown before you budget.
+
+**Seats.** Lindy's [pricing page](https://www.lindy.ai/pricing) and [plan documentation](https://docs.lindy.ai/pricing) both say: "Anyone who uses Lindy takes a seat, whether they sign up directly, join your workspace, or @mention Lindy in Slack." New teammates who join through Slack get a 7-day trial before their seat is billed. A five-person team at $29.99 a seat pays about $150 a month before anyone runs a heavy job.
+
+**Credits that pause the work.** Lindy's [homepage](https://www.lindy.ai/) describes a credit as "about a cent." Its pricing page puts everyday asks at 2 to 250 credits, deep work at 250 to 1,000, and big builds at 1,000 to 2,500. Credits pool across the workspace and "don't roll over." When the pool is empty, "Lindy pauses credit-using actions until your credits reset at the start of your next cycle," unless an admin buys top-ups at $10 per 1,000 credits.
+
+**Computer use on the entry plan.** The Team plan card on Lindy's pricing page lists computer use, while the feature list further down the same page says "Computer use on Pro and Max." Confirm which applies before you choose the entry plan for a job that drives a website.
+
+**A product that changed shape.** Lindy's [changelog](https://www.lindy.ai/changelog) records Lindy 3.0 in August 2025, with an agent builder. Today the site and documentation center on Lindy as a teammate in Slack.
+
+**Reviews.** [Lindy's Trustpilot page](https://www.trustpilot.com/review/lindy.ai) showed 1.7 out of 5 from 40 reviews on October 11, 2026, with one reviewer reporting daily credit use rising from "about 600-1000 credits per day" to "1000-4000." Forty reviews is a small, self-selected sample, so treat it as a reason to model your own busy month rather than as a verdict.
+
+## Methodology
+
+We build Construct, so it leads this list. Here is why it fits small teams: it is priced by plan rather than by person, it keeps finished work in a shared workspace, and its schedules run without anyone online. This is our editorial comparison of documented capabilities and published prices, checked on October 11, 2026. It is not a hands-on performance benchmark.
+
+We included products that people compare with Lindy and that a small business can start without a sales call, grouped by why you might be leaving: you want an AI employee with its own computer, a shared teammate in Slack, a builder for your own agents, or a fixed role such as a receptionist. Prices are in US dollars at monthly billing unless we say otherwise. Every competitor fact comes from the vendor's own pages, fetched on October 11, 2026. Where a vendor's pages disagree with each other, we say so. Where a capability is not documented in the pages we read, we say that rather than treat silence as proof it is missing.
+
+## Lindy alternatives at a glance
+
+Construct combines a flat plan price, a persistent workspace with files, and five ways to reach the agent. The table shows how the other nine compare with it and with Lindy.
+
+| Tool                  | Starting price, monthly                    | Billing unit                         | Its own computer?                                            | Where it works                               | Best for                                                |
+| --------------------- | ------------------------------------------ | ------------------------------------ | ------------------------------------------------------------ | -------------------------------------------- | ------------------------------------------------------- |
+| Construct             | $9 (Lite)                                  | Plan usage, agents, scheduled tasks  | Yes, a persistent cloud workspace                            | Web, Slack, Telegram, Discord, its own email | Recurring cross-app work for one person or a whole team |
+| Viktor                | $50 per workspace                          | Pooled credits per workspace         | Yes, a cloud computer for code                               | Slack, Microsoft Teams                       | A coworker that lives only in Slack or Teams            |
+| CellCog               | $8 (800 credits)                           | Credits                              | Yes, plus your own Chrome with approval                      | Its own email inbox, phone, web app          | One AI worker hired into a role with shifts             |
+| Claude                | $20 (Pro)                                  | Per person or Team seat              | Cloud tasks, in beta on Team; local files need your computer | Desktop, web, mobile                         | People who already pay for Claude                       |
+| Manus                 | $0 free plan, or $20 (Pro)                 | Credits; Cloud Computer from $30     | Sandbox per task; optional always-on add-on                  | Web, desktop, mobile                         | One-off research and build tasks                        |
+| Gumloop               | $37 (Pro)                                  | Credits plus 8% fee, unlimited seats | Not documented in pages we read                              | Web builder                                  | Teams who want to build agents themselves               |
+| Zapier Agents         | Free with 400 activities; Pro about $33.33 | Activities, separate from Zap tasks  | Browses the web as an action                                 | Web, Chrome extension                        | Teams already automating with Zapier                    |
+| n8n                   | €20 billed annually, or self-hosted        | Workflow executions, unlimited users | No; you run workflows                                        | Web editor or your own server                | Technical owners who want to design every step          |
+| Relevance AI          | $29 in its docs, or sales-led              | Actions plus vendor credits          | No dedicated computer                                        | Web builder                                  | Sales and support teams designing agent teams           |
+| Marblism              | $44, or $24 billed yearly                  | Hours of work, unlimited members     | Not documented in pages we read                              | Web, plus a phone line                       | A phone receptionist for a local firm                   |
+| Lindy (for reference) | $29.99 per user                            | Per seat, pooled credits             | Computer use; its pricing page disagrees on which tier       | Slack, iMessage and SMS, email, web          | Teams that already run on Slack                         |
+
+Sources for each row are linked in the sections below and listed at the end. A starting price is the cheapest documented way in, not a working budget for a busy month.
+
+## What does a five-person team pay?
+
+Construct Starter covers a five-person team for $59 a month, against $149.95 for five Lindy seats at its lowest listed price. This is an illustrative calculation using list prices at monthly billing, not a measured test. Allowances differ, so a lower total does not mean equal work.
+
+- **Construct Starter:** $59 a month covers up to 5 agents and 10 scheduled tasks for the whole workspace, with no limit on members; everyone's work draws on the owner's plan.
+- **Lindy Team:** 5 seats at $29.99 is $149.95 a month, with 15,000 pooled credits. At the $49.99 price Lindy's pricing page shows some visitors, it is $249.95, with 25,000 credits.
+- **Claude:** 5 Team Standard seats at $25 is $125 a month.
+- **Viktor:** $50 a month for the workspace and 20,000 credits.
+- **Marblism:** $44 a month, with unlimited team members and 50 hours of work.
+- **Gumloop Pro:** from $37 a month, with unlimited seats.
+- **n8n Starter:** €20 a month billed annually, with unlimited users, and you build every workflow.
+
+For one person, Construct Lite at $9 is less than a third of a $29.99 Lindy seat. For a team, the seat count stops mattering: Construct Starter costs $90.95 a month less than five Lindy seats at $29.99. Every Construct plan is on the [pricing page](/pricing/).
+
+Try Construct Pro free for 7 days
+
+## Is there a free Lindy alternative?
+
+Yes, with limits: Manus has a free plan, Zapier Agents has a free tier of 400 activities a month, and n8n can be self-hosted with no license fee. None of them is a free AI employee with a persistent workspace, and Construct has no free plan, but Lite costs $9 and Pro has a 7-day trial.
+
+- **Manus Free:** 300 credits refreshed daily and 2 scheduled tasks ([Manus Help Center](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus)).
+- **Zapier Agents Free:** 400 activities a month, where a web search or a page browse each counts as one ([Zapier pricing](https://zapier.com/pricing)).
+- **n8n self-hosted:** n8n is "fair-code," distributed under a royalty-free [Sustainable Use License](https://github.com/n8n-io/n8n/blob/master/LICENSE.md), and you run and maintain the server yourself.
+- **Free starting credits:** Viktor gives $100 in credits with no card ([Viktor pricing](https://viktor.com/pricing)), CellCog gives new accounts 200 credits ([CellCog pricing](https://cellcog.ai/pricing)), and Lindy itself gives $50 that lasts 7 days.
+
+## AI employees with their own computer
+
+These take a job rather than a trigger, and they work in a computer environment with files and a browser. They are the closest replacement for Lindy's promise that it "comes back with the work done."
+
+### 1. Construct
+
+**Best for:** solo founders and small teams whose work repeats every week and should leave files, a schedule, and correctable memory behind.
+
+Construct gives each agent a persistent cloud workspace with files, live browser runs, a sandbox terminal, an agent email address, and a Calendar of scheduled jobs. It reaches Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable through its live integration catalog, and you can add custom MCP tools when an entry does not exist. You can assign work from the web desktop, Slack, Telegram, Discord slash commands, or its own inbox, as the [channels page](/use-cases/channels/) shows.
+
+Work lands in the workspace. A report or spreadsheet is saved as a file, so next week's run starts from last week's output and any teammate can open it. Finished work is kept as it is produced, so a run that stops at step 30 keeps steps 1 to 29.
+
+    Your browser does not support this video. The description below explains the
+    demo.
+
+    Silent product demo: Construct reached from the web and from messaging
+    channels, including Slack, Telegram, Discord slash commands, and its native
+    email inbox. The same agent and workspace sit behind each channel.
+
+What a Lindy user gets with it:
+
+- **A team without seat math.** Invite teammates into a team workspace as Owner, Admin, or Member. There is no member limit, and the work draws on the owner's plan, so the person who asks for one report a month adds no seat fee.
+- **Slack where you need it.** Mention the agent in a channel, reply in its thread, or DM it. Scheduled runs report in the web app with a notification rather than posting into Slack, so the finished file is always in one place.
+- **Memory you control.** Tell it once that a client wants figures in euros, and it remembers. If that changes, open the stored fact and correct it, as the [memory guide](/blog/ai-agent-memory/) shows.
+- **Recurring jobs on the Calendar.** Save a run as a workflow and [schedule it](/use-cases/scheduling/): 3 scheduled tasks on Lite, 10 on Starter, 50 on Pro. Schedules run server-side, so nobody has to be online.
+- **Internal tools.** Ask for a review queue or tracker and Construct builds it as a private app inside the workspace.
+- **Your own model keys on Pro.** Bring keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI.
+
+An illustrative first job: every Monday at 8:00, read the last week of the shared inbox through the Gmail integration, list each customer email that still needs a reply with a one-line summary, draft the replies without sending them, and save the list as a dated file. One thing to set up deliberately: Construct's workflows run straight through and do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself.
+
+**Price, checked October 11, 2026:** Lite is $9 a month for up to 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 with 6x Lite usage, up to 5 agents, 150 steps per task, and 10 scheduled tasks. Pro is $299 with 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, and bring-your-own keys, with a 7-day trial ([Construct pricing](/pricing/)).
+
+### 2. CellCog
+
+**Best for:** hiring one AI worker into a defined role that works scheduled shifts.
+
+Each CellCog employee gets its own email inbox, a task board, persistent memory across shifts, and a schedule, and files a written report at the end of each shift ([CellCog AI employees](https://cellcog.ai/ai-employees)). It can work in your own Chrome with your logins behind an approval card, and since September 19, 2026 it can have a local phone number in about fifty countries ([CellCog blog](https://cellcog.ai/blog/ai-employees-have-phone-numbers/)).
+
+**Price, checked October 11, 2026:** Starter is $8 a month for 800 credits, Basic $20 for 2,000, and Pro $40 for 4,000. CellCog labels the $160 tier "Part-time AI employee, a few shifts a month" and the $500 Nitro tier "A full-time AI employee, working weekday shifts" ([CellCog pricing](https://cellcog.ai/pricing)). New accounts get 200 free credits. The pricing FAQ says "All payments to CellCog are final and non-refundable." Bring-your-own model keys are not documented in the pages we read.
+
+### 3. Claude (formerly Cowork)
+
+**Best for:** people who already pay for Claude and want background work for themselves.
+
+On September 16, 2026, Anthropic announced that "Claude Cowork is now just Claude," rolling out first to Pro and Max ([Anthropic](https://claude.com/blog/cowork-is-now-claude)). Cowork tasks run in the cloud on Anthropic's servers, which its help center labels "in beta on Team and Enterprise plans" ([Claude Help Center](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)). Scheduled tasks are on all paid plans and run while your computer is asleep, except tasks that need local files or apps, which only run on your computer ([scheduled tasks](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork)).
+
+**Price, checked October 11, 2026:** Pro is $20 billed monthly, Team Standard seats $25, and Premium seats $125 ([Claude pricing](https://claude.com/pricing)).
+
+### 4. Manus
+
+**Best for:** one-off research, analysis, and build tasks.
+
+Manus 2.0, launched September 28, 2026, can start work when something happens in a connected service, such as a new email or a Slack message ([Manus](https://manus.im/blog/introducing-manus-2-0)). An optional Cloud Computer is a persistent virtual machine.
+
+**Price, checked October 11, 2026:** a free plan with 300 daily refresh credits and 2 scheduled tasks; Pro from $20 a month for 4,000 credits and 20 scheduled tasks; Team from $20 per seat ([Manus Help Center](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus)). The Cloud Computer is $30 or $50 a month extra, and if you stop paying, "the persistent virtual machine will be shut down" and its files are deleted ([Cloud Computer billing](https://help.manus.im/en/articles/15392078-understanding-cloud-computer-plans-and-billing)).
+
+## Lindy vs Viktor: a shared teammate in Slack or Teams
+
+Viktor is the closest match to Lindy's Slack teammate, but it bills per workspace from $50 a month instead of per person. Construct also works in Slack and adds Telegram, Discord, email, and the web.
+
+### 5. Viktor
+
+**Best for:** a team that wants a coworker inside Slack or Microsoft Teams only, billed per workspace.
+
+Viktor works in Slack and Microsoft Teams, runs code on its own cloud computer, connects to over 3,200 tools, runs recurring workflows, and asks for confirmation before high-stakes actions such as sending emails ([Viktor](https://viktor.com/)). Its FAQ says it is "SOC 2 Type 1 compliant." iMessage, a meeting recorder, and channels outside Slack and Teams are not documented in the pages we read.
+
+**Price, checked October 11, 2026:** $100 in starting credits with no card, then Team plans from $50 a month for 20,000 credits, which Viktor estimates at "roughly 40-200 tasks depending on complexity." Pricing is per workspace, and unused plan credits roll over for one month ([Viktor pricing](https://viktor.com/pricing)).
+
+## Lindy vs n8n, Gumloop, and Zapier: if you liked the agent builder
+
+A builder takes more setup and gives you control of each trigger and step. If you would rather describe the job and let the agent work out the steps, Construct saves a successful run as a workflow you can schedule.
+
+### 6. Gumloop
+
+**Best for:** teams that want to build agents themselves and share them without paying per seat.
+
+Gumloop's [pricing page](https://www.gumloop.com/pricing) lists unlimited agents, more than 35 models, bring-your-own API keys, and unlimited seats on Pro, from $37 a month with 20,000 credits and a 14-day trial, checked October 11, 2026. The same page lists an 8% orchestration fee.
+
+### 7. Zapier Agents
+
+**Best for:** teams that already run their automations on Zapier.
+
+Zapier agents work across more than 9,000 apps, on command and in the background ([Zapier Agents](https://zapier.com/agents)). The free tier includes 400 activities a month, and the Agents Pro add-on gives 1,500 activities from about $33.33 a month billed annually. An activity is "any billable action an agent takes," including a web search or a page browse, and "Using activities does not affect your Zapier task usage" ([Zapier pricing](https://zapier.com/pricing)). A workspace for files is not documented.
+
+### 8. n8n
+
+**Best for:** technical owners who want self-hosting and to design every step.
+
+n8n prices "based on monthly workflow executions, regardless of complexity," and "All plans include unlimited users & workflows" ([n8n pricing](https://n8n.io/pricing/)). Cloud Starter is €20 a month billed annually for 2,500 executions and Pro €50 for 10,000; annual billing saves 17%. Self-hosting carries no license fee under n8n's fair-code license, and you maintain the server and workflows.
+
+### 9. Relevance AI
+
+**Best for:** sales and support teams that want to design multi-agent teams.
+
+The public [pricing page](https://relevanceai.com/pricing) shows only a sales-led Enterprise plan. The [pricing documentation](https://relevanceai.com/docs/get-started/pricing) still lists Pro at $29 a month ($19 billed annually) with 2,500 actions, $20 of vendor credits, and 2 build users, and Team at $349. Confirm which applies before you plan around it.
+
+## A role-based alternative
+
+### 10. Marblism
+
+**Best for:** a local business that mainly needs a phone receptionist and inbox drafts.
+
+Marblism sells seven role-based AI employees, including an email assistant that "never sends emails by herself," and a receptionist with a phone number in the United States, Canada, the United Kingdom, Australia, or Mexico ([Marblism integrations](https://help.marblism.com/en/articles/15278633-what-integrations-are-available), [working with Eva](https://help.marblism.com/en/articles/11516676-how-to-work-with-eva-the-exec-assistant)). It is $44 a month, or $24 billed yearly, for 50 hours of work and unlimited team members; a drafted email uses 5 minutes and a handled call 10, and scheduled tasks that come due are cancelled when hours run out ([Marblism billing](https://help.marblism.com/en/articles/15361461-marblism-pricing-plans-billing-cadence)). Marblism says it has "no public API or webhooks."
+
+We also looked at Sintra, which sells 12 role-based helpers; its homepage FAQ says "Every AI worker runs as a chatbot." Our [roundup of AI employee platforms](/blog/best-ai-employee-platforms/) covers it.
+
+## How to test a Lindy alternative yourself
+
+The fairest way to choose is to give two or three products the same job for two weeks. We have not run this comparison, so here is a checklist rather than results.
+
+1. **Pick one real recurring job**, such as "every Monday at 8:00, list last week's customer emails that still need a reply, draft replies without sending, and save the list."
+2. **Write the instruction once** and paste it unchanged into each product.
+3. **Use the same inputs**: the same inbox or a copy of it, the same files, the same connected apps.
+4. **Record setup time** and minutes to the first usable result.
+5. **Check accuracy**: how many emails were correctly flagged, and how many drafts you could send without edits.
+6. **Check safety**: anything sent, deleted, or changed that you did not ask for.
+7. **Check what is left behind**: where the result is saved, and whether a teammate without an account or seat can open it.
+8. **Price four weekly runs**: convert credits or activities to dollars, or count the share of a flat plan.
+
+On Construct, connect Gmail from the integration catalog, run the job once, check the saved file, then save the steps as a workflow and put it on the Calendar, where it uses one of Lite's 3 scheduled tasks. The [workflow guide](/blog/ai-workflow-automation/) walks through each step.
+
+## Already using Lindy? Add Construct in 15 minutes
+
+You do not have to switch everything at once. Start with the one job that eats the most credits or needs a teammate who does not have a Lindy seat.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test longer runs and your own model keys.
+2. **Copy the instructions** you gave Lindy into a Construct chat, and move any reference files into the workspace.
+3. **Connect the apps** the job needs, such as Gmail, Notion, or HubSpot, from the integration catalog.
+4. **Run it once and check the result** in Files.
+5. **Put it on the Calendar** so it runs every week whether or not anyone is online.
+
+There is no import: Lindy's agents, settings, and history do not transfer, so write your rules into the first instruction and Construct saves them as memory you can read. Lindy holds actions with outside impact for approval, which a scheduled Construct workflow does not do yet, so ask for drafts on anything customer-facing and send them yourself.
+
+## When might Lindy still fit?
+
+- You want to text your agent over iMessage or SMS, or want a built-in meeting recorder.
+- You want every action with outside impact, such as sending an email, held for approval by default.
+- Your whole team already has Lindy seats and the credit pool covers your month.
+
+For recurring work that should leave files, run on a schedule, and serve a whole team without per-seat billing, Construct is the better fit.
+
+## Which Lindy alternative should you choose?
+
+Choose Construct. It starts at $9 instead of $29.99 per person, adds teammates without seats, saves every finished file to a workspace your team shares, and keeps memory you can correct. For a side-by-side with Lindy alone, read [Construct vs Lindy](/blog/construct-vs-lindy/).
+
+- **If seat costs are why you are leaving,** choose Construct: Starter at $59 covers the workspace for any number of members.
+- **If you want recurring jobs to leave files and run on a schedule,** choose Construct, from $9.
+- **If your team works in Slack but also Telegram, Discord, or email,** choose Construct.
+- **If you want an agent that works out the steps from a description,** choose Construct; if you would rather wire every step yourself, try n8n or Gumloop.
+- **If you mainly need a phone answered,** Marblism is built around a receptionist.
+
+Pick the weekly inbox review, report, or tracker that keeps landing in your evening. Give Construct the inputs, describe what a finished result looks like, and check the saved file before you schedule it. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+Give Construct its first job
+
+## Sources
+
+Pages checked on October 11, 2026:
+
+- [Lindy pricing](https://www.lindy.ai/pricing), [plan documentation](https://docs.lindy.ai/pricing), [homepage](https://www.lindy.ai/), [iMessage and SMS](https://docs.lindy.ai/features/imessage-sms), and [changelog](https://www.lindy.ai/changelog)
+- [Lindy reviews on Trustpilot](https://www.trustpilot.com/review/lindy.ai)
+- [CellCog AI employees](https://cellcog.ai/ai-employees), [CellCog pricing](https://cellcog.ai/pricing), and [CellCog phone numbers](https://cellcog.ai/blog/ai-employees-have-phone-numbers/)
+- [Viktor](https://viktor.com/) and [Viktor pricing](https://viktor.com/pricing)
+- [Cowork is now Claude](https://claude.com/blog/cowork-is-now-claude), [Claude Cowork getting started](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork), [scheduled tasks](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork), and [Claude pricing](https://claude.com/pricing)
+- [Introducing Manus 2.0](https://manus.im/blog/introducing-manus-2-0), [Manus membership pricing](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus), and [Cloud Computer billing](https://help.manus.im/en/articles/15392078-understanding-cloud-computer-plans-and-billing)
+- [Gumloop pricing](https://www.gumloop.com/pricing)
+- [Zapier Agents](https://zapier.com/agents) and [Zapier pricing](https://zapier.com/pricing)
+- [n8n pricing](https://n8n.io/pricing/) and [n8n Sustainable Use License](https://github.com/n8n-io/n8n/blob/master/LICENSE.md)
+- [Relevance AI pricing](https://relevanceai.com/pricing) and [pricing documentation](https://relevanceai.com/docs/get-started/pricing)
+- [Marblism integrations](https://help.marblism.com/en/articles/15278633-what-integrations-are-available), [working with Eva](https://help.marblism.com/en/articles/11516676-how-to-work-with-eva-the-exec-assistant), and [plans and billing](https://help.marblism.com/en/articles/15361461-marblism-pricing-plans-billing-cadence)
+- [Sintra](https://sintra.ai/)
+- [Construct pricing](/pricing/) and [Construct channels](/use-cases/channels/)
+
+## Related resources
+
+- [Construct vs Lindy](/blog/construct-vs-lindy/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
+- [What is an AI agent with its own computer?](/blog/ai-agent-with-its-own-computer/)
+- [How to give an AI agent its own email address](/blog/ai-agent-email-address/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)
+- [AI workflow automation](/blog/ai-workflow-automation/)
+
+### Frequently asked questions
+
+**What is the best Lindy alternative for a small team?**
+
+Construct is the best Lindy alternative for founders and small teams. It starts at $9 a month, priced by plan rather than by person, while Lindy bills every user from $29.99. Team workspaces have no member limit, finished work is saved as files in a shared workspace, memory can be read and corrected, and Calendar schedules run with your laptop closed. You can reach it from Slack, Telegram, Discord, email, or the web.
+
+**How much does Lindy AI cost per month?**
+
+On October 11, 2026, Lindy's paid Team plan started at $29.99 per active user a month for 3,000 credits, and its pricing page also showed $49.99 for 5,000 credits to some visitors. Anyone who uses Lindy takes a seat, including someone who only @mentions it in Slack. Credits pool across the workspace, do not roll over, and top-ups cost $10 per 1,000.
+
+**Is Lindy AI free?**
+
+Not beyond a trial. Lindy offers $50 in free credits with no credit card, and those credits last 7 days. After that, every person who uses Lindy needs a paid seat, from $29.99 a month on its pricing page. When the shared credit pool runs out, Lindy pauses credit-using actions until the next billing cycle unless an admin buys a top-up.
+
+**Is there a free Lindy AI alternative?**
+
+Partly. Manus has a free plan with 300 credits refreshed daily and 2 scheduled tasks, Zapier Agents has a free tier of 400 activities a month, and n8n can be self-hosted with no license fee. Viktor and CellCog give free starting credits. None is a free AI employee with a persistent workspace. Construct has no free plan, but Lite costs $9 and Pro has a 7-day trial.
+
+**Is there an open-source alternative to Lindy?**
+
+The closest option in this comparison is n8n, which you can self-host. n8n describes itself as fair-code and is distributed under its royalty-free Sustainable Use License, so there is no license fee for self-hosting, but you run and maintain the server and design every workflow yourself. If you would rather describe the job and let an agent work out the steps, Construct starts at $9 a month.
+
+**Lindy vs Viktor: which costs less for a team?**
+
+Viktor bills per workspace, from $50 a month for 20,000 credits, which it estimates at roughly 40 to 200 tasks. Lindy bills per user, so five people at $29.99 each cost $149.95 a month. Construct Starter is $59 a month for the whole workspace with no member limit, and it works in Slack plus Telegram, Discord, email, and the web, while Viktor works in Slack and Microsoft Teams.
+
+**What does a five-person team pay for Construct compared with Lindy?**
+
+Construct Starter is $59 a month for the whole workspace, with up to 5 agents, 10 scheduled tasks, and no member limit. Five Lindy seats cost $149.95 a month at $29.99 per active user, or $249.95 at the $49.99 price Lindy's pricing page shows some visitors. Allowances differ, so model a busy month for your own jobs before you choose.
+
+**Can I use Construct alongside Lindy?**
+
+Yes. Start on Construct Lite for $9 or the 7-day Pro trial, copy your Lindy instructions into a Construct chat, connect the apps the job needs, run it once, check the result in Files, and put it on the Calendar. There is no import, so write your rules into the first instruction. Construct workflows do not pause for approval yet, so ask for drafts on customer-facing work and send them yourself.
 ## Gemini Spark alternatives, including for Workspace accounts and the UK and EU
 
 URL: https://construct.computer/blog/gemini-spark-alternatives/
 Type: comparison
 Author: Construct Team
-Published: 2026-10-09
+Published: 2026-10-09 (updated 2026-10-11)
 Tags: comparison, gemini-spark, google-workspace, ai-employee
 
 **Construct gives you an always-on AI employee for $9 a month that connects to Gmail and Google Calendar from its integration catalog, with no Google AI subscription required.** Gemini Spark only works with a personal Google account on Google AI Pro or Ultra (Pro is about $20 a month in the US), does not support Workspace work or school accounts, and Google's help page lists it as unavailable in the UK, the European Economic Area, Switzerland, and Nigeria.
@@ -306,16 +611,16 @@ We build Construct, so it leads this list. Here is why it fits small teams: it s
 
 ## Gemini Spark alternatives at a glance
 
-| Tool                     | Starting price                          | Billing unit                           | Own cloud computer?                   | Best for                                       |
-| ------------------------ | --------------------------------------- | -------------------------------------- | ------------------------------------- | ---------------------------------------------- |
-| Construct                | $9 (Lite)                               | One plan per workspace, no seats       | Yes, a persistent workspace           | Recurring work across Gmail and other apps     |
-| Claude (Cowork)          | $20 (Pro)                               | Per person or per seat                 | Scheduled tasks run remotely          | People already paying for Claude               |
-| ChatGPT dots             | $125 per seat (Business Premium)        | Per seat, first dot included           | Yes                                   | Businesses already on ChatGPT                  |
-| Microsoft Copilot Cowork | Copilot license plus metered credits    | Per user plus $0.01 per Copilot Credit | Runs in Microsoft's cloud             | Microsoft 365 companies                        |
-| Manus                    | $20 (Pro)                               | Credits; Cloud Computer from $30 extra | Yes, sandbox plus optional add-on     | One-off research and build tasks               |
-| Lindy                    | $29.99 per user                         | Per user plus credits                  | Computer use on Pro and up (per docs) | Teams that work in Slack                       |
-| Grok Bot                 | Included with Cursor Pro ($20)          | Weekly usage allowance                 | Yes, shared across your Bots          | People who already pay for Cursor or SuperGrok |
-| Gemini Spark             | Included with Google AI Pro (about $20) | Per person, personal account           | Cloud agent with a remote browser     | Personal Google accounts outside Europe        |
+| Tool                     | Starting price                          | Billing unit                           | Own cloud computer?               | Best for                                       |
+| ------------------------ | --------------------------------------- | -------------------------------------- | --------------------------------- | ---------------------------------------------- |
+| Construct                | $9 (Lite)                               | One plan per workspace, no seats       | Yes, a persistent workspace       | Recurring work across Gmail and other apps     |
+| Claude (Cowork)          | $20 (Pro)                               | Per person or per seat                 | Scheduled tasks run remotely      | People already paying for Claude               |
+| ChatGPT dots             | $125 per seat (Business Premium)        | Per seat, first dot included           | Yes                               | Businesses already on ChatGPT                  |
+| Microsoft Copilot Cowork | Copilot license plus metered credits    | Per user plus $0.01 per Copilot Credit | Runs in Microsoft's cloud         | Microsoft 365 companies                        |
+| Manus                    | $20 (Pro)                               | Credits; Cloud Computer from $30 extra | Yes, sandbox plus optional add-on | One-off research and build tasks               |
+| Lindy                    | $29.99 per active user (Team)           | Per active user plus credits           | Computer use listed on Team       | Teams that work in Slack                       |
+| Grok Bot                 | Included with Cursor Pro ($20)          | Weekly usage allowance                 | Yes, shared across your Bots      | People who already pay for Cursor or SuperGrok |
+| Gemini Spark             | Included with Google AI Pro (about $20) | Per person, personal account           | Cloud agent with a remote browser | Personal Google accounts outside Europe        |
 
 Sources are linked in each section below and listed at the end.
 
@@ -331,10 +636,6 @@ Sources are linked in each section below and listed at the end.
 | Lindy                    | Up to 5 inboxes; Google specifics not stated on the pages we read             | Not stated; lists GDPR compliance                                            |
 | Grok Bot                 | Signs into sites in its browser; Workspace not mentioned in docs we read      | Not stated                                                                   |
 | Gemini Spark             | Not supported; business preview announced                                     | Excluded in the UK, EEA, and Switzerland                                     |
-
-{/* TODO: confirm Construct's supported countries (UK, EU, Switzerland) and fill in its row above. */}
-
-{/* TODO: verify whether a Google Workspace admin must approve Construct's Gmail and Google Calendar connection, as with Claude's Trusted App step. */}
 
 ## The 7 best Gemini Spark alternatives, ranked
 
@@ -356,12 +657,12 @@ Where Spark is a personal assistant inside the Gemini app, Construct is a shared
     Your browser does not support this video. The description below explains the
     demo.
 
-    Silent product demo: Construct's live connected-app catalog, with tools
-    such as Drive, Gmail, GitHub, and messaging channels available to connect.
+    Silent product demo: Construct's live connected-app catalog, with tools such
+    as Drive, Gmail, GitHub, and messaging channels available to connect.
 
 **Price, checked October 1, 2026:** Lite is $9 a month for 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 with 6x Lite usage, up to 5 agents, 150 steps per task, and 10 scheduled tasks. Pro is $299 with 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, and your own model keys. Pro has a seven-day free trial ([Construct pricing](/pricing/)).
 
-**Setup note:** Construct reaches Google through connected apps rather than inside Google's own apps, so check the catalog for the Docs or Sheets actions your job needs, and upload anything else as a file. If your Workspace admin restricts third-party apps, ask them before you connect Gmail. {/* TODO: confirm Construct availability in the UK, EU, and Switzerland before publishing. */}
+**Setup note:** Construct reaches Google through connected apps rather than inside Google's own apps, so check the catalog for the Docs or Sheets actions your job needs, and upload anything else as a file. If your Workspace admin restricts third-party apps, ask them before you connect Gmail.
 
 Try Construct Pro free for 7 days
 
@@ -381,7 +682,7 @@ Anthropic's Google Workspace connectors let Claude search and send Gmail, manage
 
 OpenAI launched dots on September 29, 2026. Each dot runs on GPT-6 Astra, works from its own cloud computer, can connect to more than 4,000 apps through plugins, and can be messaged in Slack and Teams ([The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)). Custom rules decide what a dot may do on its own, and sensitive operations such as password changes always need a human. For Pro users, "the eligible markets do not currently include the European Economic Area, Switzerland or the UK," while Business Premium users get dots across supported regions.
 
-**Price, checked October 1, 2026:** the first dot is included in Pro and Business Premium. A Business Premium seat is $125 per user monthly or $100 billed annually, and Pro comes in $100, $200, and $500 tiers, according to a pricing guide updated September 9, 2026 ([Layer3 Labs](https://www.layer3labs.io/guides/chatgpt-pricing)). {/* TODO: verify ChatGPT Pro and Business Premium prices on chatgpt.com/pricing (blocked our fetch on October 1). */}
+**Price, checked October 1, 2026:** the first dot is included in Pro and Business Premium. A Business Premium seat is $125 per user monthly or $100 billed annually ([OpenAI business pricing](https://openai.com/business/pricing/)), and Pro comes in $100, $200, and $500 monthly tiers ([OpenAI, About ChatGPT Pro tiers](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)), both confirmed on October 11, 2026.
 
 **Limits:** dots are rolling out gradually, and we could not fetch OpenAI's own pages to check the fine print. OpenAI advises users to "always review consequential work" ([The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)). Our [Construct vs ChatGPT Dots comparison](/blog/construct-vs-openai-dots/) covers the head-to-head.
 
@@ -411,9 +712,9 @@ Manus 2.0, released September 28, 2026, added a dedicated Cloud Computer and eve
 
 Lindy is a Slack-based teammate with scheduled routines, meeting notes, integrations, and up to 5 connected inboxes ([Lindy pricing](https://www.lindy.ai/pricing)). It lists GDPR and SOC 2 compliance, though the pages we checked do not say where data is processed.
 
-**Price, checked October 1, 2026:** Plus is $29.99 per user a month with 3,000 credits, Pro $99.99 with 15,000, and Max $199.99 with 35,000 ([Lindy pricing](https://www.lindy.ai/pricing)).
+**Price, checked October 11, 2026:** a Free plan with $50 in credits that last 7 days, then Team from $29.99 per active user a month for 3,000 credits (Lindy's pricing page also shows $49.99 for 5,000 credits to some visitors), with top-ups at $10 per 1,000 credits. Enterprise is custom ([Lindy pricing](https://www.lindy.ai/pricing)).
 
-**Limits:** "Anyone who uses Lindy takes a seat," including someone who only mentions it in Slack, and when credits run out, "Lindy pauses credit-using actions" until the next cycle. The pricing page lists computer use among core features, while the plan documentation shows it on Pro, Max, and Enterprise only ([Lindy docs](https://docs.lindy.ai/pricing)). Our [Construct vs Lindy comparison](/blog/construct-vs-lindy/) goes further.
+**Limits:** "Anyone who uses Lindy takes a seat," including someone who only mentions it in Slack, and when credits run out, "Lindy pauses credit-using actions" until the next cycle. The pricing page lists computer use on Team, while another line on the same page says "Computer use on Pro and Max," plans Lindy no longer sells. Our [Construct vs Lindy comparison](/blog/construct-vs-lindy/) goes further.
 
 ### 7. Grok Bot
 
@@ -427,7 +728,7 @@ Grok Bot gives you named Bots on a persistent cloud computer with a browser, fil
 
 ### Also considered: Perplexity Computer
 
-Perplexity Computer is a cloud agent for long-running, multi-step work. We could not fetch Perplexity's own pages on October 1, and third-party guides disagree on access: one says Computer requires the $200 Max plan ([Sliq](https://getsliq.com/blog/perplexity-computer-cost)), another says Pro subscribers at $20 gained access on May 7, 2026 ([FindSkill](https://findskill.ai/blog/perplexity-personal-computer-guide/)). Check Perplexity directly before you buy. {/* TODO: verify Perplexity Computer plans, price, and UK/EU availability on perplexity.ai. */}
+Perplexity Computer is a cloud agent for long-running, multi-step work. We could not fetch Perplexity's own pages on October 1, and third-party guides disagree on access: one says Computer requires the $200 Max plan ([Sliq](https://getsliq.com/blog/perplexity-computer-cost)), another says Pro subscribers at $20 gained access on May 7, 2026 ([FindSkill](https://findskill.ai/blog/perplexity-personal-computer-guide/)). Check Perplexity directly before you buy.
 
 ## An illustrative example: a morning inbox digest in Construct
 
@@ -441,8 +742,6 @@ A two-person design studio runs on Google Workspace. The founder wants what Spar
 4. **Schedule it** on the Calendar for weekdays at 8:00. Lite's 3 scheduled tasks cover it.
 
 Each morning's digest stays in Files, so you can see why an email was included and compare one week with the next. The test that matters is the tenth morning, not the first. In Claude, the same prompt can run as a Cowork scheduled task once your Workspace admin has trusted Claude.
-
-{/* TODO: run this digest on Construct, Claude, and ChatGPT dots with the same Workspace test inbox for five weekdays; record setup time, cost, and misses. Add screenshots. */}
 
 ## Already using Spark? Add Construct in 15 minutes
 
@@ -496,7 +795,7 @@ Pages checked on October 1, 2026:
 - [TechTimes: Gemini Spark on Google Cloud VMs](https://www.techtimes.com/articles/317144/20260525/gemini-spark-googles-24-7-cloud-ai-agent-now-executes-tasks-third-party-apps.htm)
 - Hacker News comments on [Workspace accounts](https://news.ycombinator.com/item?id=48994600) and [European availability](https://news.ycombinator.com/item?id=48463560)
 - [Claude Google Workspace connectors](https://support.claude.com/en/articles/10166901-use-google-workspace-connectors), [Cowork scheduled tasks](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork), [Claude pricing](https://claude.com/pricing), and [Anthropic supported countries](https://www.anthropic.com/supported-countries)
-- [The Next Web: OpenAI launches dots](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday) and [Layer3 Labs: ChatGPT pricing](https://www.layer3labs.io/guides/chatgpt-pricing)
+- [The Next Web: OpenAI launches dots](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday), [OpenAI business pricing](https://openai.com/business/pricing/), and [About ChatGPT Pro tiers](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)
 - [Microsoft: Copilot Cowork is generally available](https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/16/copilot-cowork-is-now-generally-available/) and [Microsoft 365 Copilot pricing](https://www.microsoft.com/en-us/microsoft-365-copilot/pricing)
 - [Introducing Manus 2.0](https://manus.im/blog/introducing-manus-2-0), [Manus membership pricing](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus), [Cloud Computer billing](https://help.manus.im/en/articles/15392078-understanding-cloud-computer-plans-and-billing), [Manus pricing unit](https://help.manus.im/en/articles/11711125-what-is-the-pricing-unit-for-manus-globally-can-i-pay-in-local-currency), and [Manus resumes independent operations](https://manus.im/blog/manus-resumes-independent-operations)
 - [Lindy pricing](https://www.lindy.ai/pricing) and [Lindy plan documentation](https://docs.lindy.ai/pricing)
@@ -544,10 +843,10 @@ When you use a personal Google account outside the excluded regions and already 
 URL: https://construct.computer/blog/ai-agent-email-address/
 Type: guide
 Author: Nischal
-Published: 2026-10-08
+Published: 2026-10-08 (updated 2026-10-11)
 Tags: ai-agent, email, ai-employee
 
-Construct gives every AI agent its own email address on every plan, from $9 a month: forward it a task, let it reply as itself, and keep your personal inbox out of its reach. The other routes cost more effort or carry more risk: a developer email API such as AgentMail gives you inboxes but leaves you to build the agent around them, and Gmail delegation lets the agent read, send, and delete mail as you.
+Construct gives your AI agent its own email address on every plan, from $9 a month: forward it a task, let it reply as itself, and keep your personal inbox out of its reach. The other routes cost more effort or carry more risk: a developer email API such as AgentMail gives you inboxes but leaves you to build the agent around them, and Gmail delegation lets the agent read, send, and delete mail as you.
 
 For founders and small teams, Construct is the better choice. There is no code to write, the agent's separate identity limits what a mistake can reach, and the inbox comes with the files, memory, and schedules the agent needs to finish the job. This guide walks through setting it up: forwarding tasks to the agent, choosing which address it sends from, and keeping customer email supervised.
 
@@ -584,14 +883,14 @@ Set these up deliberately, each with a simple workaround:
 
 - **Customer email goes out as drafts first.** Construct's workflows do not pause for approval yet, so ask for drafts, read them, then say "send." Step 5 shows the prompt.
 - **Inbox jobs run on a schedule.** Workflows start from the Calendar or on demand, not the instant a message arrives. Forward anything urgent to the agent directly.
-- **The inbox is for operational mail.** There is a daily sending limit, enforced on the server, so batch updates into one summary rather than many small messages, and do not use it for bulk campaigns or cold outreach. {/* TODO: confirm we are comfortable naming the existence of the daily send ceiling (no number) */}
+- **The inbox is for operational mail.** There is a daily sending limit, enforced on the server, so batch updates into one summary rather than many small messages, and do not use it for bulk campaigns or cold outreach.
 - **Other people's mail is information, not instructions.** Mail from other senders never starts a run, and the rule in step 2 keeps it that way when the agent works through the inbox for you.
 
 ## How do you set up an agent email address in Construct?
 
 ### 1. Find the agent's address
 
-Open the Email app in the Construct web desktop. The agent's native address is included on every plan, so there is nothing extra to buy. In Construct, the agent can read and search its native inbox, draft or send replies, and flag uncertain cases for a person to decide. The address belongs to the workspace rather than being "a personal Gmail forwarding hack," as our [channels page](/use-cases/channels/) puts it. {/* TODO: confirm UI steps for finding and copying the agent address, and add screenshot */} {/* TODO: confirm which domain the native agent address uses and whether custom domains are supported */}
+Open the Email app in the Construct web desktop and claim the inbox: pick a username, and choose which agent answers the mail you send to it. The address takes the form `username@construct-agent.xyz`, and custom domains are not supported today. The native address is included on every plan, so there is nothing extra to buy. In Construct, the agent can read and search its native inbox, draft or send replies, and flag uncertain cases for a person to decide. The address belongs to the workspace rather than being "a personal Gmail forwarding hack," as our [channels page](/use-cases/channels/) puts it.
 
 ### 2. Tell the agent what its inbox is for
 
@@ -605,7 +904,7 @@ Email is one of the channels you can reach Construct from, alongside the web, Sl
 
 > Please read the thread below from our print supplier. Pull out the new prices, compare them with last quarter's quote in Files, and save a one-page summary to Files. Draft a short reply asking about the delivery date, but do not send it.
 
-Only mail you send from your own account address, and that passes the usual sender checks (SPF, DKIM, or DMARC), starts a run. Mail from anyone else, and automated mail, lands in the inbox where the agent can read it when you ask, but it never starts work on its own. {/* TODO: confirm how quickly a forwarded email starts a run, and add the typical delay */}
+Only mail you send from your own account address, and that passes the usual sender checks (SPF, DKIM, or DMARC), starts a run. Mail from anyone else, and automated mail, lands in the inbox where the agent can read it when you ask, but it never starts work on its own. Your forwarded task starts a run when it arrives, and the conversation appears in Construct chat marked with an Email badge.
 
     Your browser does not support this video. The description below explains the
     demo.
@@ -619,7 +918,7 @@ Only mail you send from your own account address, and that passes the usual send
 Decide this per task.
 
 - **Send as the agent** from its native address for anything where it is fine for the recipient to know an agent wrote it: internal updates, vendor questions, weekly reports to your team.
-- **Send from your Gmail** through a connected-app action only when the message has to come from you, such as a reply in an existing client conversation. Construct discovers Gmail from its live integration catalog and asks you to connect an account when needed. {/* TODO: confirm which connected Gmail actions (read, draft, send, label) are available today */}
+- **Send from your Gmail** through a connected-app action only when the message has to come from you, such as a reply in an existing client conversation. Construct discovers Gmail from its live integration catalog and asks you to connect an account when needed. A connected Gmail can read, draft, send, and label mail through [Composio's Gmail actions](https://docs.composio.dev/toolkits/gmail).
 
 A useful default for the prompt:
 
@@ -631,7 +930,7 @@ Supervision comes from how you phrase the job: ask for drafts, read them, then s
 
 > Draft replies to the three open support threads in your inbox. Save each draft and list them for me with one line on why you chose that answer. Do not send anything until I reply "send."
 
-{/* TODO: confirm where drafts from the native inbox appear in the Email app, and add screenshot */}
+Drafts the agent saves in its native inbox appear in the Email app's Drafts folder, where you can send or discard each one.
 
 ### 6. Put the recurring part on a schedule
 
@@ -730,10 +1029,10 @@ AgentMail suits a developer building their own agent from scratch who wants many
 URL: https://construct.computer/blog/construct-vs-lindy/
 Type: comparison
 Author: Construct Team
-Published: 2026-10-07
+Published: 2026-10-07 (updated 2026-10-11)
 Tags: comparison, ai-employee, small-business
 
-Construct gives you an AI employee with its own workspace, files, schedules, and email address from $9 a month, and one plan covers your whole team. Lindy charges per user: Plus is $29.99 a month for each person, with 3,000 credits, and anyone who @mentions Lindy in Slack takes a seat ([Lindy plan documentation](https://docs.lindy.ai/pricing)).
+Construct gives you an AI employee with its own workspace, files, schedules, and email address from $9 a month, and one plan covers your whole team. Lindy charges per active user: its Team plan is from $29.99 per active user a month for 3,000 credits (Lindy's pricing page also shows $49.99 for 5,000 credits to some visitors), and anyone who uses Lindy, including with an @mention in Slack, counts as an active user ([Lindy pricing](https://www.lindy.ai/pricing)).
 
 For most founders and small teams, Construct is the better buy. It starts at less than a third of Lindy's per-seat price, adds teammates without adding seats, keeps finished work in files you can reopen next week, and saves progress when a run stops partway. Already using Lindy in Slack? Keep it for inbox and meeting help and give Construct the recurring reports and research. The two run side by side.
 
@@ -753,62 +1052,61 @@ Start with Construct for $9
 Lindy is an AI teammate built around Slack. Its [quickstart](https://docs.lindy.ai/start-here/quickstart) describes two modes: a shared Lindy that the team summons with an @mention in channels, and a private Lindy in each person's direct messages for inbox, meetings, and scheduling.
 
 - **Other channels:** [iMessage and SMS](https://docs.lindy.ai/features/imessage-sms), a Chrome extension, and a web [Home](https://docs.lindy.ai/teammate/home) page with a chat box.
-- **Features listed on every plan:** scheduled Routines, meeting notes, computer use, approvals, and access to every model ([Lindy pricing](https://www.lindy.ai/pricing)).
+- **Plans:** Free, with $50 in credits that last 7 days; Team, billed per active user; and Enterprise. Team lists computer use and a choice of model for each task ([Lindy pricing](https://www.lindy.ai/pricing)).
 - **Output:** Slack threads, drafts in your connected mailbox, and [Artifact](https://docs.lindy.ai/teammate/artifacts) pages on a `lindy.link` address.
 - **History:** Lindy's [changelog](https://www.lindy.ai/changelog) records Lindy 3.0 in August 2025, with an agent builder and an "Autopilot" cloud computer. The current documentation centers on Lindy Teammate in Slack, which is the product we compare here.
 
 ## Methodology
 
-We build Construct. This is our editorial comparison of documented capabilities and published prices, checked on **October 1, 2026**. It is not a hands-on performance benchmark. We read Lindy's pricing page, its documentation, and its changelog. Where Lindy's own pages disagree with each other, we report both. Where a capability is not documented in the pages we reviewed, we say "not documented" rather than claiming it is absent.
+We build Construct. This is our editorial comparison of documented capabilities and published prices, checked on **October 1, 2026**, with Lindy's prices rechecked on **October 11, 2026** after Lindy replaced its Plus, Pro, and Max plans with a Team plan. It is not a hands-on performance benchmark. We read Lindy's pricing page, its documentation, and its changelog. Where Lindy's own pages disagree with each other, we report both. Where a capability is not documented in the pages we reviewed, we say "not documented" rather than claiming it is absent.
 
 ## Construct vs Lindy: features at a glance
 
-| Capability                | Construct                                                                                    | Lindy                                                                          |
-| ------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| Entry price               | $9 a month (Lite)                                                                            | $29.99 a month per user (Plus)                                                 |
-| Pricing model             | One monthly plan for the workspace, sized by usage, agents, and steps per task               | Per user, with credits pooled across the workspace                             |
-| Team use                  | Team workspaces with Owner, Admin, and Member roles; no member limit and no per-seat fee      | Anyone who uses Lindy, including by @mention in Slack, takes a seat            |
-| Model                     | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro  | Every model on every plan; own API keys not documented                         |
-| Memory                    | Inspect, correct, or forget any stored fact                                                  | Memory files you can edit, with version history                                |
-| Where finished work lives | Workspace files your team can open; a stopped run keeps its finished steps                   | Slack threads, mailbox drafts, and Artifact pages; partial runs not documented |
-| Recurring work            | Calendar schedules and saved workflows: 3 on Lite, 10 on Starter, 50 on Pro                  | Scheduled Routines                                                             |
-| Internal apps             | Builds private workspace apps such as review queues and trackers                             | Artifact pages on a `lindy.link` address                                       |
-| Ways to reach it          | Web, Slack, Telegram, Discord, and its own email inbox                                       | Slack, iMessage and SMS, Chrome extension, web chat                            |
-| Apps                      | Live integration catalog plus your own MCP tools, a live browser, and a sandbox terminal     | Over a thousand tools, MCP servers, and browser use                            |
-| Approvals                 | Agent asks when unsure in chat; ask for drafts on customer-facing jobs                       | Write actions can require approval in Slack, set per action                    |
+| Capability                | Construct                                                                                        | Lindy                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| Entry price               | $9 a month (Lite)                                                                                | From $29.99 a month per active user (Team)                                     |
+| Pricing model             | One monthly plan for the workspace, sized by usage, agents, and steps per task                   | Per user, with credits pooled across the workspace                             |
+| Team use                  | Team workspaces with Owner, Admin, and Member roles; no member limit and no per-seat fee         | Anyone who uses Lindy, including by @mention in Slack, is a billed active user |
+| Model                     | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro      | Choice of model for each task on Team; own API keys not documented             |
+| Memory                    | Inspect, correct, or forget any stored fact                                                      | Memory files you can edit, with version history                                |
+| Where finished work lives | Workspace files your team can open; a stopped run keeps its finished steps                       | Slack threads, mailbox drafts, and Artifact pages; partial runs not documented |
+| Recurring work            | Calendar schedules and saved workflows: 3 on Lite, 10 on Starter, 50 on Pro                      | Scheduled Routines                                                             |
+| Internal apps             | Builds private workspace apps such as review queues and trackers                                 | Artifact pages on a `lindy.link` address                                       |
+| Ways to reach it          | Web, Slack, Telegram, Discord, and its own email inbox                                           | Slack, iMessage and SMS, Chrome extension, web chat                            |
+| Apps                      | Live integration catalog plus your own MCP tools, a live browser, and a sandbox terminal         | Over a thousand tools, MCP servers, and browser use                            |
+| Approvals                 | Agent asks when unsure in chat; ask for drafts on customer-facing jobs                           | Write actions can require approval in Slack, set per action                    |
 | Activity records          | Activity records each action with a short reason for a limited window, plus workflow run history | Home activity stats; audit logs listed on Enterprise                           |
 
 Sources: Lindy's [pricing page](https://www.lindy.ai/pricing), [plan documentation](https://docs.lindy.ai/pricing), [memory](https://docs.lindy.ai/teammate/memory), [integrations](https://docs.lindy.ai/integrations/overview), and [Home](https://docs.lindy.ai/teammate/home) docs. Construct's [product guide](/blog/ai-employee/) and [pricing](/pricing/).
 
 ## How much does each cost?
 
-Construct is priced per plan, not per person. Lindy is priced per user, with a credit allowance that pools across the workspace. These are USD prices billed monthly, without annual discounts.
+Construct is priced per plan, not per person. Lindy is priced per active user, with a credit allowance that pools across the workspace. These are USD prices billed monthly, without annual discounts.
 
-| Plan              | Monthly price    | What you get                                                                                    |
-| ----------------- | ---------------- | ----------------------------------------------------------------------------------------------- |
-| Construct Lite    | $9               | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address                       |
-| Construct Starter | $59              | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                           |
-| Construct Pro     | $299             | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys  |
-| Lindy Plus        | $29.99 per user  | 3,000 credits per user                                                                          |
-| Lindy Pro         | $99.99 per user  | 15,000 credits per user                                                                         |
-| Lindy Max         | $199.99 per user | 35,000 credits per user                                                                         |
-| Lindy Enterprise  | Contact sales    | Adds HIPAA with a signed BAA, audit logs, dedicated support                                      |
+| Plan              | Monthly price               | What you get                                                                                   |
+| ----------------- | --------------------------- | ---------------------------------------------------------------------------------------------- |
+| Construct Lite    | $9                          | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address                      |
+| Construct Starter | $59                         | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                          |
+| Construct Pro     | $299                        | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys |
+| Lindy Free        | $0                          | $50 in credits that last 7 days, no card                                                       |
+| Lindy Team        | From $29.99 per active user | 3,000 credits per user, pooled across the team                                                 |
+| Lindy Enterprise  | Custom                      | Adds HIPAA with a signed BAA, SSO, audit logs, dedicated support                               |
 
-Sources: [Construct pricing](/pricing/), [Lindy pricing](https://www.lindy.ai/pricing), and [Lindy plan documentation](https://docs.lindy.ai/pricing). Lindy's docs round its plans to $30, $100, and $200.
+Sources: [Construct pricing](/pricing/), [Lindy pricing](https://www.lindy.ai/pricing), and [Lindy plan documentation](https://docs.lindy.ai/pricing). Lindy's pricing page also shows some visitors a Team price of $49.99 per active user a month for 5,000 credits, and Team sells larger monthly credit allowances at higher prices.
 
 How Lindy's billing works, from its own documentation:
 
 - **Seats.** "Anyone who uses Lindy takes a seat, whether they sign up directly, join your workspace, or @mention Lindy in Slack." New Slack joiners get a 7-day free trial before the seat is billed.
-- **Credits.** A credit is about one cent. Everyday tasks cost 2 to 250 credits, deep work 250 to 1,000, and major projects 1,000 to 2,500. Credits pool across the workspace and do not roll over.
-- **Running out.** When the pool is empty, Lindy pauses until the next cycle. Admins can buy top-ups at $10 per 1,000 credits, and if overages are enabled, the [usage docs](https://docs.lindy.ai/account-billing/usage) say they are charged at twice the regular credit cost.
-- **Free start.** Lindy's [homepage](https://www.lindy.ai/) offers $50 of free credits. Construct offers a 7-day Pro trial.
+- **Credits.** A credit costs one cent on base plans. Credits pool across the workspace, and monthly credits do not roll over.
+- **Running out.** When the pool is empty, Lindy pauses credit-using work until the next cycle, according to its [usage docs](https://docs.lindy.ai/account-billing/usage). Admins can buy top-ups at $10 per 1,000 credits, and top-up credits stay available until used.
+- **Free start.** Lindy's Free plan gives $50 in credits that last 7 days, with no card required. Construct offers a 7-day Pro trial.
 
-Lindy's own pages disagree on two Plus limits. The pricing page lists computer use on every plan, while the plan documentation shows it on Pro, Max, and Enterprise only. The plan documentation caps connected inboxes at 2 on Plus, 3 on Pro, and 5 on Max, while the [email drafting guide](https://docs.lindy.ai/features/inbox-management/email-drafting) says "You can connect as many inboxes as you like." Confirm both with Lindy before choosing Plus.
+Lindy's own pages have not all caught up with the change. Its plan documentation still names Plus, Pro, and Max, and its pricing page lists computer use on Team while another line on the same page says "Computer use on Pro and Max." Confirm what Team includes with Lindy before you buy.
 
 What this means for your budget:
 
-- **A solo founder:** Construct Lite costs $20.99 a month less than one Lindy Plus seat. At Lindy's published ranges, a Plus seat's 3,000 credits cover about 12 deep-work tasks at 250 credits each, or 3 at 1,000.
-- **A team of three:** Lindy Plus for three people is $89.97 a month before top-ups. Construct Starter at $59 covers up to 5 agents for the whole workspace, and adding a fourth or fifth teammate costs nothing extra.
+- **A solo founder:** Construct Lite costs $20.99 a month less than one Lindy Team seat at $29.99. That seat's 3,000 credits are worth $30 of work at a cent per credit, and more costs $10 per 1,000.
+- **A team of three:** Lindy Team for three active users is $89.97 a month before top-ups, or $149.97 at the $49.99 price some visitors see. Construct Starter at $59 covers up to 5 agents for the whole workspace, and adding a fourth or fifth teammate costs nothing extra.
 - **Growing the team:** on Construct, the plan grows with the work, not the headcount. On Pro, your own model keys bill you directly when they are used.
 
 These are illustrative figures from published prices and limits, not measured usage.
@@ -856,17 +1154,13 @@ Yes, for the requests your team sends it. Add Construct to your Slack workspace 
 
 Lindy is built around Slack, with a shared teammate in channels and a private one in each person's DMs ([Lindy quickstart](https://docs.lindy.ai/start-here/quickstart)). Construct treats Slack as one of five channels, so the same agent, files, and memory are there when work arrives by email, Telegram, or Discord.
 
-## Running the same job on both
+## Test the same job on both
 
-{/* TODO: Hands-on test, not yet run. Do not publish this section until it is filled in with real results.
-Test: inbox triage into drafts.
-Setup: one Gmail inbox seeded with the same 30 emails (10 needing a reply, 10 newsletters or notifications, 5 client requests needing a file or link, 5 scheduling requests).
-Lindy: Plus seat, connect Gmail, create three labels ("Reply needed", "FYI", "Archive") with instructions, enable Email Drafting. Record credits used from the usage page.
-Construct: Lite, connect Gmail through the integration catalog, prompt: "Read the last 30 emails in my Gmail inbox. Label each one Reply needed, FYI, or Archive. For every Reply needed email, write a draft reply in my voice and save it as a Gmail draft. Do not send anything. Save a summary file listing each email, its label, and whether a draft was created." Verify first that Construct's Gmail integration can create Gmail drafts.
-Record for each: setup time, run time, labels correct out of 30, drafts usable without edits out of 10, anything sent by mistake, cost (credits x $0.01 for Lindy; share of plan usage for Construct).
-Add screenshots of both drafts folders. */}
+Give both products one inbox job and compare what each leaves behind:
 
-We have not run this test yet. When we do, we will publish the setup time, run time, accuracy, and cost of the same inbox triage job on both products.
+1. Pick 30 recent emails: some that need a reply, some newsletters, some client requests, and some scheduling.
+2. Ask each to label them Reply needed, FYI, or Archive, and to draft a reply for every Reply needed email without sending anything.
+3. Record the setup time, labels correct out of 30, drafts you would send without edits, anything sent by mistake, and the credits or plan usage spent.
 
 Here is how the Construct side runs, as an illustrative walkthrough rather than a measured result. Forward the week's client requests to the agent's own email address from your account address. Ask it to sort them into Reply needed, FYI, and Archive, save a summary file, and write a draft reply for each Reply needed email without sending anything. Check the first file, then save the steps as a workflow and put a weekday inbox check on the Calendar, where it uses one of Lite's 3 scheduled tasks. The [workflow guide](/blog/ai-workflow-automation/) walks through each step.
 
@@ -892,7 +1186,7 @@ For recurring team work that needs files, schedules, a choice of model, and a pr
 
 ## Which should you choose?
 
-Choose Construct. It starts at $9 instead of $29.99 per person, covers the whole team without seats, keeps every finished file in a workspace the agent returns to, saves progress when a run stops, and runs on your own model keys on Pro. If your team already uses Lindy in Slack, keep it for inbox and meeting help and let Construct run the reports and research your team depends on.
+Choose Construct. It starts at $9 instead of $29.99 per active user, covers the whole team without seats, keeps every finished file in a workspace the agent returns to, saves progress when a run stops, and runs on your own model keys on Pro. If your team already uses Lindy in Slack, keep it for inbox and meeting help and let Construct run the reports and research your team depends on.
 
 Pick the weekly report or research brief that keeps landing in your evening, give Construct the inputs, and judge the saved file. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
 
@@ -936,7 +1230,7 @@ Yes, for founders and small teams with recurring work. Construct starts at $9 a 
 
 **Is Construct cheaper than Lindy?**
 
-Yes at the entry level. Construct Lite is $9 a month, while Lindy Plus is $29.99 a month per user with 3,000 credits. For a team of three, Lindy Plus is $89.97 a month before top-ups, while Construct Starter at $59 covers up to 5 agents for the whole workspace with no member limit.
+Yes at the entry level. Construct Lite is $9 a month, while Lindy Team is from $29.99 per active user a month with 3,000 credits. For a team of three, Lindy Team is $89.97 a month before top-ups, while Construct Starter at $59 covers up to 5 agents for the whole workspace with no member limit.
 
 **Can I use Construct alongside Lindy?**
 
@@ -948,7 +1242,7 @@ Yes, for the requests your team sends it. Construct answers @mentions in Slack c
 
 **How does Lindy pricing work?**
 
-Lindy charges per user: Plus is $29.99, Pro is $99.99, and Max is $199.99 a month, with 3,000, 15,000, and 35,000 credits per user. Anyone who uses Lindy takes a seat, credits pool across the workspace, and work pauses when the pool runs out unless you buy top-ups.
+Lindy has a Free plan with $50 in credits that last 7 days, a Team plan billed per active user, and custom Enterprise. Team is from $29.99 per active user a month for 3,000 credits, and Lindy's pricing page also shows $49.99 for 5,000 credits to some visitors. Anyone who uses Lindy counts, including an @mention in Slack, credits pool across the team, and top-ups are $10 per 1,000 credits.
 
 **When does Lindy still make sense?**
 
@@ -958,7 +1252,7 @@ When your whole team works inside Slack and each person wants a private assistan
 URL: https://construct.computer/blog/muse-for-small-business-alternatives/
 Type: comparison
 Author: Construct Team
-Published: 2026-10-06
+Published: 2026-10-06 (updated 2026-10-11)
 Tags: comparison, ai-employee, small-business
 
 **Construct gives a small business an AI employee with its own workspace, files, Calendar, and email address for $9 a month, working across the apps you already use.** Meta's Muse for Small Business is free to start, with paid Muse plans at $20 and $100 a month metered in weekly tokens, but it lives in your Meta account and Meta's apps and is available only in the US and Canada.
@@ -982,7 +1276,7 @@ Muse is Meta's personal AI agent, [announced September 8, 2026](https://about.fb
 
 On September 29, Meta launched [Muse for Small Business](https://about.fb.com/news/2026/09/introducing-muse-small-business/), which connects the same agent to Asana, Box, Canva, Dropbox, Figma, Granola, HighLevel, Intuit QuickBooks, Klaviyo, Lovable, Notion, Shopify, Slack, Stripe, and Zoom, plus Facebook and Instagram business accounts and custom connectors. [Fox Business](https://www.foxbusiness.com/technology/meta-puts-popular-new-tool-hands-small-businesses) adds Meta ad accounts and describes jobs such as drafting ad campaigns and writing a week of posts. [CNBC Africa](https://www.cnbcafrica.com/2026/meta-launches-muse-for-small-business-as-zuckerberg-pushes-beyond-consumer-ai-market) cites 200 million small businesses on Facebook as the audience.
 
-**Price:** Meta says Muse is free for most uses, with subscription plans for more. The business version uses the same pricing as the consumer app: free with a usage limit, then Power at $20 a month or Maximum at $100, metered in tokens per week. [DataCamp](https://www.datacamp.com/blog/muse-agent) reports that Muse asks for a payment card even on the free tier.
+**Price:** Meta says Muse is free for most uses, with subscription plans for more. The business version uses the same pricing as the consumer app: free with a usage limit, then Power at $20 a month or Max at $100, metered in tokens per week. [DataCamp](https://www.datacamp.com/blog/muse-agent) reports that Muse asks for a payment card even on the free tier.
 
 ## Why do small businesses look for a Muse alternative?
 
@@ -998,22 +1292,20 @@ We build Construct, so it leads this list. Here is why it fits small teams: it s
 
 We picked agents a small business can start without a sales call, that do work across apps rather than only chat, and that people compare with Muse. Prices are in US dollars at monthly billing unless we say otherwise. Where a vendor page would not load for us, we used reputable coverage and say so. Where sources disagree, we report both figures. Where a capability is not documented in the sources we checked, we say that rather than assume it is missing.
 
-{/* TODO: hands-on test. Run the same small business job (for example, the weekly sales and ads summary below) on Muse for Small Business, Construct, and two or three alternatives. Record time to set up, time to finish, cost, and how much editing the output needed. */}
-
 ## Muse for Small Business alternatives at a glance
 
-| Tool                    | Starting price, monthly                          | Billing unit                     | Its own computer?                           | Where it works                                    | Best for                                            |
-| ----------------------- | ------------------------------------------------ | -------------------------------- | ------------------------------------------- | ------------------------------------------------- | --------------------------------------------------- |
-| Construct               | $9 (Lite)                                        | One plan per workspace, no seats | Yes, a persistent cloud workspace           | Web, Slack, Telegram, Discord, its own email      | Recurring cross-app jobs with files and schedules   |
-| OpenAI Dots             | Included with ChatGPT Pro from $100              | Per user or Business seat        | Yes, its own cloud computer                 | ChatGPT, Slack, Teams                             | People already on ChatGPT Pro                       |
-| Claude Cowork           | Included with Claude Pro at $20                  | Per user or Team seat            | Runs in the cloud (beta) or on your desktop | Desktop, web, mobile, Chrome                      | One person's research, documents, and files         |
-| Gemini Spark            | Included with Google AI Pro, about $20 in the US | Personal Google Account          | Remote browser or your own Chrome           | Gemini web, mobile, and Mac apps                  | Solo owners who run on personal Gmail and Drive     |
-| Viktor                  | Free trial credits, then $50                     | Per workspace                    | Yes, a cloud computer for code              | Slack, Microsoft Teams                            | Slack or Teams workspaces that want built tools     |
-| Lindy                   | $29.99                                           | Per user                         | Computer use included                       | Slack                                             | Teams that work in Slack                            |
-| Grok Bot                | Included with Cursor Individual at $20           | Per user                         | Yes, one shared cloud computer              | Grok Bot apps                                     | People who already pay for Cursor                   |
-| Sintra                  | $48.50 on sale ($97 list)                        | Per account                      | Not documented in pages we checked          | Web, iOS, Android                                 | Marketing and admin help for a solo owner           |
-| Marblism                | $44                                              | Per account, hours of work       | Not documented in pages we checked          | Web, plus a phone line                            | A receptionist that answers calls                   |
-| Muse for Small Business | Free with limits; Power $20, Maximum $100        | Meta account, weekly tokens      | Yes, a dedicated cloud VM                   | iOS, Android, web, WhatsApp                       | Businesses that sell and advertise on Meta's apps   |
+| Tool                    | Starting price, monthly                          | Billing unit                     | Its own computer?                           | Where it works                               | Best for                                          |
+| ----------------------- | ------------------------------------------------ | -------------------------------- | ------------------------------------------- | -------------------------------------------- | ------------------------------------------------- |
+| Construct               | $9 (Lite)                                        | One plan per workspace, no seats | Yes, a persistent cloud workspace           | Web, Slack, Telegram, Discord, its own email | Recurring cross-app jobs with files and schedules |
+| OpenAI Dots             | Included with ChatGPT Pro from $100              | Per user or Business seat        | Yes, its own cloud computer                 | ChatGPT, Slack, Teams                        | People already on ChatGPT Pro                     |
+| Claude Cowork           | Included with Claude Pro at $20                  | Per user or Team seat            | Runs in the cloud (beta) or on your desktop | Desktop, web, mobile, Chrome                 | One person's research, documents, and files       |
+| Gemini Spark            | Included with Google AI Pro, about $20 in the US | Personal Google Account          | Remote browser or your own Chrome           | Gemini web, mobile, and Mac apps             | Solo owners who run on personal Gmail and Drive   |
+| Viktor                  | Free trial credits, then $50                     | Per workspace                    | Yes, a cloud computer for code              | Slack, Microsoft Teams                       | Slack or Teams workspaces that want built tools   |
+| Lindy                   | From $29.99 per active user                      | Per active user                  | Computer use listed on Team                 | Slack                                        | Teams that work in Slack                          |
+| Grok Bot                | Included with Cursor Individual at $20           | Per user                         | Yes, one shared cloud computer              | Grok Bot apps                                | People who already pay for Cursor                 |
+| Sintra                  | $48.50 on sale ($97 list)                        | Per account                      | Not documented in pages we checked          | Web, iOS, Android                            | Marketing and admin help for a solo owner         |
+| Marblism                | $44                                              | Per account, hours of work       | Not documented in pages we checked          | Web, plus a phone line                       | A receptionist that answers calls                 |
+| Muse for Small Business | Free with limits; Power $20, Max $100            | Meta account, weekly tokens      | Yes, a dedicated cloud VM                   | iOS, Android, web, WhatsApp                  | Businesses that sell and advertise on Meta's apps |
 
 Sources for each row are linked in the sections below and listed at the end. Plan prices and inclusions change often, so check the vendor page before you buy.
 
@@ -1036,13 +1328,13 @@ Where it differs from Muse is where the work lives and who can use it:
     Your browser does not support this video. The description below explains the
     demo.
 
-    Silent product demo: Construct building and running a reusable workflow
-    with agent steps, connected apps, and notifications that anyone on the team
-    can run again.
+    Silent product demo: Construct building and running a reusable workflow with
+    agent steps, connected apps, and notifications that anyone on the team can
+    run again.
 
 **Price, checked October 1, 2026:** Lite is $9 a month for 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 with 6x Lite's usage, up to 5 agents, 150 steps per task, and 10 scheduled tasks. Pro is $299 with 32x Lite's usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, and your own model keys. Pro has a 7-day free trial. See [Construct pricing](/pricing/).
 
-**Setup note for Meta-heavy businesses:** Construct does not have Meta's first-party access to ad accounts and Instagram analytics, so for ad spend, export the numbers from Ads Manager and drop the file in the workspace. {/* TODO: confirm whether Shopify, QuickBooks, Stripe, and Meta business accounts are in Construct's live integration catalog, and name them here if so */}
+**Setup note for Meta-heavy businesses:** Construct does not have Meta's first-party access to ad accounts and Instagram analytics, so for ad spend, export the numbers from Ads Manager and drop the file in the workspace.
 
 Try Construct Pro free for 7 days
 
@@ -1052,7 +1344,7 @@ Try Construct Pro free for 7 days
 
 OpenAI unveiled Dots on September 29, 2026. [CBS News](https://www.cbsnews.com/news/sam-altman-openai-dots-chatgpt-agents-safety/) reports they run on GPT-6 Astra, work inside ChatGPT with Slack and Teams channels, and handle jobs like scheduling meetings, budgeting, and travel. [BenchLM](https://benchlm.ai/blog/posts/openai-dots-guide), summarizing OpenAI's documentation, says each Dot has its own cloud computer and browser.
 
-**Price, checked October 1, 2026:** your first Dot is included with ChatGPT Pro, which starts at $100 a month, or a Business Premium seat. Sources disagree on that seat: CBS lists $20 a month, while BenchLM lists $125 per seat monthly or $100 billed annually. OpenAI's own pages did not load for us. {/* TODO: verify Business Premium seat price and Dots eligibility on openai.com or help.openai.com */}
+**Price, checked October 1, 2026:** your first Dot is included with ChatGPT Pro, which starts at $100 a month, or a Business Premium seat, which OpenAI prices at $125 per user monthly or $100 billed annually ([OpenAI business pricing](https://openai.com/business/pricing/), checked October 11, 2026).
 
 **Watch for:** the highest entry price on this list. BenchLM reports that Pro users in the EEA, Switzerland, and the UK were excluded at launch and that the price of additional Dots is unpublished. Our [Construct vs ChatGPT Dots comparison](/blog/construct-vs-openai-dots/) covers the head-to-head.
 
@@ -1072,7 +1364,7 @@ Cowork lets you hand Claude an outcome and come back to finished work. Its [gett
 
 [Google's help page](https://support.google.com/gemini/answer/17094507?hl=en) describes Spark as an agent that runs scheduled tasks, browses in your own Chrome or a remote browser, works across Gmail, Calendar, Docs, Drive, Sheets, and other Google apps, and asks before sending messages, changing data, making purchases, or signing into websites.
 
-**Price, checked October 1, 2026:** included with Google AI Pro or Ultra. [Chrome Unboxed](https://chromeunboxed.com/googles-agentic-ai-gemini-spark-is-now-available-on-the-20-pro-tier-in-the-us/) reported in July that Spark came to the $20 Pro tier in the US after starting on Ultra. Google's plan pages showed us regional prices only. {/* TODO: verify exact US Google AI Pro price on a Google page */}
+**Price, checked October 1, 2026:** included with Google AI Pro or Ultra. [Chrome Unboxed](https://chromeunboxed.com/googles-agentic-ai-gemini-spark-is-now-available-on-the-20-pro-tier-in-the-us/) reported in July that Spark came to the Pro tier in the US after starting on Ultra. Google lists AI Pro at $19.99 a month in the US ([Google AI plans](https://one.google.com/intl/en_us/about/google-ai-plans/), checked October 11, 2026).
 
 **Watch for:** Google says Spark "isn't available if you sign in with a work or school Google Account," which rules out businesses on Google Workspace for now. It is also unavailable in the EEA, Nigeria, Switzerland, and the UK.
 
@@ -1090,9 +1382,9 @@ Viktor lives in Slack and Microsoft Teams and writes and runs code on its own cl
 
 **Best for:** teams whose work already happens in Slack.
 
-Lindy is a Slack-based teammate. Its [pricing page](https://www.lindy.ai/pricing) lists scheduled routines, meeting notes, inbox management, computer use, and integrations on every plan, with a credit pool shared across the team.
+Lindy is a Slack-based teammate. Its [pricing page](https://www.lindy.ai/pricing) lists scheduled routines, meeting recording and notes, inbox management, and integrations, plus computer use on the Team plan, with a credit pool shared across the team.
 
-**Price, checked October 1, 2026:** Plus is $29.99 per user a month with 3,000 credits, Pro is $99.99 with 15,000, and Max is $199.99 with 35,000. Enterprise adds HIPAA compliance and audit logs. There is a 7-day trial.
+**Price, checked October 11, 2026:** a Free plan gives $50 in credits that last 7 days, with no card. Team is from $29.99 per active user a month for 3,000 credits (Lindy's pricing page also shows $49.99 for 5,000 credits to some visitors), and top-ups are $10 per 1,000 credits. Enterprise is custom and adds HIPAA compliance and audit logs.
 
 **Watch for:** per-user billing, so cost grows with headcount, and unused credits do not roll over. Our [roundup of AI employee platforms](/blog/best-ai-employee-platforms/) covers Lindy's seat rules.
 
@@ -1102,7 +1394,7 @@ Lindy is a Slack-based teammate. Its [pricing page](https://www.lindy.ai/pricing
 
 Grok Bot's Bots share one persistent cloud computer. Its [computer and apps documentation](https://docs.x.ai/grok-bot/computer-and-apps) says all Bots on an account share the same browser, files, and signed-in accounts, with a separate screen for each Bot, and that it prefers Marketplace connectors over clicking through websites.
 
-**Price, checked October 1, 2026:** included with [Cursor Individual at $20 a month](https://cursor.com/pricing) and Cursor Teams at $40 per user. The Grok Bot product page did not load for us. {/* TODO: verify SuperGrok access and price, and the apps Grok Bot runs in, on x.ai/bot */}
+**Price, checked October 1, 2026:** included with [Cursor Individual at $20 a month](https://cursor.com/pricing) and Cursor Teams at $40 per user. The Grok Bot product page did not load for us.
 
 **Watch for:** Bots share one computer and one set of sign-ins, so they are not separate security boundaries. Our [Grok Bot comparison](/blog/grokbot-alternative/) goes deeper.
 
@@ -1168,7 +1460,7 @@ Choose Construct. It starts at $9 a month, works across the apps your business a
 - **If you want recurring jobs across several apps, with files, schedules, and memory in one place,** choose Construct, starting at $9.
 - **If more than one person needs the agent,** choose Construct. A team workspace has no member limit and no per-seat fee.
 - **If you want a fixed monthly price with published plan limits,** choose Construct: each plan lists its agents, steps per task, and scheduled tasks.
-- **If your team works in Slack,** Construct answers @mentions and DMs there; compare it with Lindy (per user) and Viktor (per workspace) on what five people would cost.
+- **If your team works in Slack,** Construct answers @mentions and DMs there; compare it with Lindy (per active user) and Viktor (per workspace) on what five people would cost.
 - **If you already pay for ChatGPT Pro, Claude, or Cursor,** keep that plan for personal tasks and add Construct for the business's recurring work.
 - **If you need the phone answered,** Marblism is the only option here that does it.
 - **If you are outside the US and Canada,** Muse for Small Business is not available yet, and Gemini Spark and Dots on Pro exclude several European markets. Check availability at sign-up.
@@ -1190,10 +1482,12 @@ Give Construct its first job
 - [DataCamp: Meta Muse features, access, and pricing](https://www.datacamp.com/blog/muse-agent)
 - [CBS News: OpenAI unveils Dots](https://www.cbsnews.com/news/sam-altman-openai-dots-chatgpt-agents-safety/)
 - [BenchLM: OpenAI Dots pricing and access](https://benchlm.ai/blog/posts/openai-dots-guide)
+- [OpenAI business pricing](https://openai.com/business/pricing/)
 - [Claude pricing](https://claude.com/pricing)
 - [Get started with Claude Cowork](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)
 - [Google: Use Gemini Spark](https://support.google.com/gemini/answer/17094507?hl=en)
 - [Chrome Unboxed: Gemini Spark comes to Google AI Pro](https://chromeunboxed.com/googles-agentic-ai-gemini-spark-is-now-available-on-the-20-pro-tier-in-the-us/)
+- [Google AI plans](https://one.google.com/intl/en_us/about/google-ai-plans/)
 - [Cursor pricing](https://cursor.com/pricing)
 - [Grok Bot computer and apps documentation](https://docs.x.ai/grok-bot/computer-and-apps)
 - [Lindy pricing](https://www.lindy.ai/pricing)
@@ -1219,7 +1513,7 @@ Yes, for founders and small teams whose work crosses several apps. Construct sta
 
 **How much does Meta's Muse for Small Business cost?**
 
-Muse for Small Business uses the same pricing as the Muse app: free with a usage limit, then the Power plan at $20 a month or the Maximum plan at $100 a month. Paid plans are metered in Muse tokens per week, and DataCamp reports that Muse asks for a payment card even on the free tier.
+Muse for Small Business uses the same pricing as the Muse app: free with a usage limit, then the Power plan at $20 a month or the Max plan at $100 a month. Paid plans are metered in Muse tokens per week, and DataCamp reports that Muse asks for a payment card even on the free tier.
 
 **Can I use Construct alongside Muse?**
 
@@ -1241,7 +1535,7 @@ When most of your selling and advertising happens on Instagram and Facebook and 
 URL: https://construct.computer/blog/ai-agent-with-its-own-computer/
 Type: article
 Author: Ankush
-Published: 2026-10-05
+Published: 2026-10-05 (updated 2026-10-11)
 Tags: ai-agent, always-on-agent, ai-employee, product
 
 Construct gives every AI agent its own computer in the cloud, with files, a browser, a terminal, schedules, memory you can correct, and its own email address, from $9 a month. Most of the big platforms that shipped one this year bundle it into a $20 to $200 subscription tied to their own ecosystem, and Simular's plan with an always-on machine costs $500.
@@ -1302,7 +1596,7 @@ Strip away the branding and most of these products have the same five parts. Her
 
 **2. A browser the agent drives.** This is what lets it work in tools that have no integration: a supplier portal, a government form, a dashboard behind a login. Construct runs live browser runs inside the agent's workspace, and what it collects lands in Files.
 
-**3. Credentials and app connections.** The agent acts through connected accounts (Gmail, Slack, a CRM), through logins saved in its browser, or through an identity of its own. Construct connects apps from a live integration catalog, adds your own MCP tools, and gives every agent its own email address, so it can send as itself instead of as you. This is the part that makes an agent useful and the part that needs the most care.
+**3. Credentials and app connections.** The agent acts through connected accounts (Gmail, Slack, a CRM), through logins saved in its browser, or through an identity of its own. Construct connects apps from a live integration catalog, adds your own MCP tools, and gives the agent its own email address, so it can send as itself instead of as you. This is the part that makes an agent useful and the part that needs the most care.
 
 **4. Schedules and triggers.** Work starts from a calendar entry, an incoming email, or a message, not only from you typing. In Construct, Calendar schedules run on the server with your laptop closed, and you can hand the agent work from the web, Slack, Telegram, Discord, or by emailing its inbox.
 
@@ -1337,27 +1631,22 @@ The catch with long and recurring jobs is reliability. Small per-step error rate
 
 Construct is our recommendation for founders and small teams, so it leads the table; we build it, and the rest of this page explains why it fits. Prices are USD at monthly billing, checked on October 1, 2026. "Entry price" is the cheapest documented way to get the agent, which is often a bundle, not a standalone product. Usage limits differ widely, so an entry price is not a cost per completed task.
 
-| Product | Launched | Entry price | Where you reach it | Best for |
-| --- | --- | --- | --- | --- |
-| Construct | 2026 | $9 (Lite), no other subscription needed | Web, Slack, Telegram, Discord, its own email inbox | Founders and small teams with recurring work across apps |
-| OpenAI dots | Sep 29, 2026 | One dot included with ChatGPT Pro (from $100) or Business Premium ($125 per seat) | ChatGPT, Slack, Teams; texting planned | People already paying for ChatGPT Pro |
-| Meta Muse | Sep 8, 2026 | Free with weekly limit; $20 Power; $100 Maximum | muse.ai, iOS, Android, WhatsApp | Personal errands: email, bookings, payments |
-| Muse for Small Business | Sep 29, 2026 | Free for most uses; optional subscriptions | Muse, connected to Meta business accounts | Businesses selling through Instagram, Facebook, Shopify |
-| Grok Bot | Aug 11, 2026 (beta) | Included with Cursor Pro ($20) or a linked SuperGrok plan | Desktop apps, iPhone, iPad, Android | Cursor and SuperGrok subscribers |
-| Claude (Cowork) | Cloud sessions Jul 7, 2026 | Claude Pro ($20) | Desktop, web, mobile | People who already work in Claude |
-| Gemini Spark | Announced May 19, 2026; still rolling out | Google AI Ultra (from $100) in the US; AI Pro in India and other markets | Gemini app, macOS app (beta) | Google Workspace users |
-| Perplexity Computer | Feb 2026 | Perplexity Max ($200) | Perplexity | Research-heavy, multi-model jobs |
-| Manus | Cloud Computer Sep 28, 2026 | Pro from $20 in credits; Cloud Computer sold separately | Web, desktop, mobile | One-off research and build tasks |
-| Genspark Claw | Mar 12, 2026 | Standard Cloud Computer $39.99, on top of a Genspark plan | WhatsApp, Slack, Teams, Telegram, Discord, more | A messaging-first personal assistant |
-| Simular Sai | GA Sep 23, 2026 | Free to start; $50 pay as you go; $500 Unlimited with an always-on machine | sai.work | Desktop apps with no API |
-| Viktor | Not stated | Team from $50 for 20,000 credits | Slack, Microsoft Teams | Teams that work in Slack |
+| Product                 | Launched                                  | Entry price                                                                             | Where you reach it                                 | Best for                                                 |
+| ----------------------- | ----------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------- |
+| Construct               | 2026                                      | $9 (Lite), no other subscription needed                                                 | Web, Slack, Telegram, Discord, its own email inbox | Founders and small teams with recurring work across apps |
+| OpenAI dots             | Sep 29, 2026                              | One dot included with ChatGPT Pro (from $100) or Business Premium ($125 per seat)       | ChatGPT, Slack, Teams; texting planned             | People already paying for ChatGPT Pro                    |
+| Meta Muse               | Sep 8, 2026                               | Free with weekly limit; $20 Power; $100 Max                                             | muse.ai, iOS, Android, WhatsApp                    | Personal errands: email, bookings, payments              |
+| Muse for Small Business | Sep 29, 2026                              | Free for most uses; optional subscriptions                                              | Muse, connected to Meta business accounts          | Businesses selling through Instagram, Facebook, Shopify  |
+| Grok Bot                | Aug 11, 2026 (beta)                       | Included with Cursor Pro ($20) or a linked SuperGrok plan                               | Desktop apps, iPhone, iPad, Android                | Cursor and SuperGrok subscribers                         |
+| Claude (Cowork)         | Cloud sessions Jul 7, 2026                | Claude Pro ($20)                                                                        | Desktop, web, mobile                               | People who already work in Claude                        |
+| Gemini Spark            | Announced May 19, 2026; still rolling out | Google AI Ultra (from $100) in the US; AI Pro in India and other markets                | Gemini app, macOS app (beta)                       | Google Workspace users                                   |
+| Perplexity Computer     | Feb 2026                                  | Perplexity Max ($200) at launch                                                         | Perplexity                                         | Research-heavy, multi-model jobs                         |
+| Manus                   | Cloud Computer Sep 28, 2026               | Pro from $20 in credits; Cloud Computer sold separately                                 | Web, desktop, mobile                               | One-off research and build tasks                         |
+| Genspark Claw           | Mar 12, 2026                              | Lite cloud computer $9.99 (shown as discounted), plus Genspark credits (Plus is $24.99) | WhatsApp, Slack, Teams, Telegram, Discord, more    | A messaging-first personal assistant                     |
+| Simular Sai             | GA Sep 23, 2026                           | Free to start; $50 pay as you go; $500 Unlimited with an always-on machine              | sai.work                                           | Desktop apps with no API                                 |
+| Viktor                  | Not stated                                | Team from $50 for 20,000 credits                                                        | Slack, Microsoft Teams                             | Teams that work in Slack                                 |
 
-{/* TODO: verify Construct's public launch date for the Launched column; only "founded 2026" and the Aug 23, 2026 Product Hunt #1 are confirmed. */}
-{/* TODO: verify the Manus Cloud Computer add-on price on manus.im/pricing (page did not render on Oct 1). */}
-{/* TODO: verify Perplexity Computer plan eligibility on perplexity.ai (403 on Oct 1); one third-party source says it reached Pro on March 12, not confirmed. */}
-{/* TODO: verify Genspark Claw Lite tier price; help center lists Lite, Standard, Powerful but the pricing page returned 403. */}
-
-Sources for the table: [Construct pricing](/pricing/); dots from [The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday), with ChatGPT plan prices from [eesel's September 2026 guide](https://www.eesel.ai/blog/chatgpt-pricing) because OpenAI's pricing page did not load for us; [Muse](https://techcrunch.com/2026/09/08/meta-debuts-its-muse-ai-agent-will-consumers-trust-it/); [Muse for Small Business](https://www.testingcatalog.com/meta-launches-muse-for-small-business-with-new-connectors/); [Grok Bot plans](https://cursor.com/help/grok-bot/plans) and [Cursor pricing](https://cursor.com/pricing); [Claude pricing](https://claude.com/pricing); Gemini Spark from [Google](https://blog.google/innovation-and-ai/products/gemini-app/gemini-spark-updates-june-2026/) and [PCWorld](https://www.pcworld.com/article/3143445/googles-new-spark-ai-agent-will-run-your-digital-life-for-100-month.html); [Perplexity Computer](https://techcrunch.com/2026/02/27/perplexitys-new-computer-is-another-bet-that-users-need-many-ai-models); [Manus pricing](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus); [Genspark Claw](https://getsliq.com/blog/genspark-claw-explained); [Sai pricing](https://sai.work/pricing); [Viktor pricing](https://viktor.com/pricing).
+Sources for the table: [Construct pricing](/pricing/); dots from [The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday), with ChatGPT plan prices from [eesel's September 2026 guide](https://www.eesel.ai/blog/chatgpt-pricing) because OpenAI's pricing page did not load for us; [Muse](https://techcrunch.com/2026/09/08/meta-debuts-its-muse-ai-agent-will-consumers-trust-it/); [Muse for Small Business](https://www.testingcatalog.com/meta-launches-muse-for-small-business-with-new-connectors/); [Grok Bot plans](https://cursor.com/help/grok-bot/plans) and [Cursor pricing](https://cursor.com/pricing); [Claude pricing](https://claude.com/pricing); Gemini Spark from [Google](https://blog.google/innovation-and-ai/products/gemini-app/gemini-spark-updates-june-2026/) and [PCWorld](https://www.pcworld.com/article/3143445/googles-new-spark-ai-agent-will-run-your-digital-life-for-100-month.html); [Perplexity Computer](https://techcrunch.com/2026/02/27/perplexitys-new-computer-is-another-bet-that-users-need-many-ai-models); [Manus pricing](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus); Genspark Claw from [Genspark's Claw page](https://www.genspark.ai/claw), checked October 11, 2026, where cloud computers run Lite $9.99, Standard $19.99, and Powerful $39.99 a month; [Sai pricing](https://sai.work/pricing); [Viktor pricing](https://viktor.com/pricing).
 
 Two things the table hides. First, "its own computer" does not always mean one per agent: Grok Bot's documentation says all of your Bots use the same cloud computer and share its files, its browser, and its app logins ([xAI docs](https://docs.x.ai/grok-bot/overview)). Second, the big-platform agents are mostly consumer products tied to one ecosystem, and most of them require a subscription to that ecosystem before you get the agent at all. For head-to-head detail, see [Construct vs ChatGPT Dots](/blog/construct-vs-openai-dots/), [ChatGPT Dots alternatives](/blog/chatgpt-dots-alternatives/), [Construct vs Grok Bot](/blog/grokbot-alternative/), and our [comparison of AI employee platforms](/blog/best-ai-employee-platforms/).
 
@@ -1369,7 +1658,7 @@ Most launch pages read the same. These questions separate the products quickly, 
 
 1. **Is the computer always on, or only the state?** An always-on machine can host a long-running process. A workspace with on-demand compute is cheaper and fits jobs that start, work, and finish. Construct keeps state permanently and starts compute when there is work.
 2. **Does it keep working with every device off?** Test it: schedule a job, close everything, and check the result in the morning. Construct's Calendar schedules run on the server.
-3. **Whose identity does it act with?** Your own Gmail, a scoped connection, or an address of its own? A separate identity limits what a mistake can reach. Every Construct agent has its own email address, and you connect your own accounts only where a job needs them.
+3. **Whose identity does it act with?** Your own Gmail, a scoped connection, or an address of its own? A separate identity limits what a mistake can reach. Construct's agent sends from its own email address, and you connect your own accounts only where a job needs them.
 4. **What needs your approval?** Look for documented rules. Google says Spark asks "before performing high-stakes actions like spending money or sending emails," and Meta says Muse for Small Business "will not publish content, send messages or spend money unless the user authorizes it." In Construct, the agent asks when unsure in chat, and for customer-facing work you ask for drafts and send them yourself.
 5. **Can you see what it did?** Watching a live browser is good. Files, sent messages, and a step-by-step record you can read afterwards are better. Construct saves output to Files, and Activity records each action with a short reason for a limited window.
 6. **What happens when a run fails halfway?** Ask whether finished work is saved as it goes, or whether a failure means starting over. In Construct, a run that stops at step 30 keeps steps 1 to 29.
@@ -1406,10 +1695,7 @@ That design is built for the recurring, cross-app job. Finished work lands in th
 
 See [current plans](/pricing/).
 
-**Before you start.** Each terminal command runs for up to 300 seconds rather than keeping a process alive, so give Construct jobs that start, work, and finish: reports, checks, research, file work. Saved workflows run step by step today, without branching or approval gates, so for anything customer-facing, ask for drafts and send them yourself once you have checked them.
-
-{/* TODO: screenshot of a Construct workspace showing Files, Calendar, and a finished scheduled run. */}
-{/* TODO: hands-on test: run the illustrative competitor-pricing brief on Construct, dots, Grok Bot, and Muse; record setup time, run time, and cost. */}
+**Before you start.** Each terminal command can run for up to 5 minutes, so split longer jobs into steps, and give Construct jobs that start, work, and finish rather than a process that stays alive: reports, checks, research, file work. Saved workflows run step by step today, without branching or approval gates, so for anything customer-facing, ask for drafts and send them yourself once you have checked them.
 
 ## Already using another always-on agent? Add Construct in 15 minutes
 
@@ -2010,10 +2296,10 @@ As of September 29, 2026, all of them let an agent work in the background and ch
 URL: https://construct.computer/blog/chatgpt-dots-alternatives/
 Type: comparison
 Author: Construct Team
-Published: 2026-10-03
+Published: 2026-10-03 (updated 2026-10-11)
 Tags: comparison, chatgpt, ai-employee, ai-agent
 
-**Construct gives you an always-on AI employee with its own workspace, files, Calendar, and email address for $9 a month, with no ChatGPT subscription required.** ChatGPT Dots, OpenAI's always-on agents launched on September 29, 2026, come only with ChatGPT Pro (reported at $200 a month for one person, though some guides say $100) or a Business Premium seat, run only on GPT-6 Astra, and are not offered to personal Pro subscribers in the UK, the EEA, or Switzerland.
+**Construct gives you an always-on AI employee with its own workspace, files, Calendar, and email address for $9 a month, with no ChatGPT subscription required.** ChatGPT Dots, OpenAI's always-on agents launched on September 29, 2026, come only with ChatGPT Pro (from $100 a month for one person) or a Business Premium seat ($125 a month), run only on GPT-6 Astra, and are not offered to personal Pro subscribers in the UK, the EEA, or Switzerland.
 
 For founders and small teams, Construct is the best Dots alternative. It costs a fraction of a Pro plan, keeps every finished file in a workspace the whole team can open, runs your recurring jobs on a schedule with the laptop closed, and lets you choose the model. Below, we rank it against eight other alternatives on price, on **which subscription each one needs**, and on what keeps running after you close the laptop. We checked them all on October 1, 2026.
 
@@ -2040,9 +2326,9 @@ A dot is an agent inside ChatGPT that you give a goal. It works toward that goal
 
 ### Which ChatGPT plan do you need for Dots?
 
-Your first dot comes with ChatGPT Pro or Business Premium; Free and Plus users do not get one ([Decrypt](https://decrypt.co/379584/openai-ai-agents-computers-devday-2026-everything-announced)). OpenAI sells Pro at $100, $200, and $500, and reports disagree on which tier counts. [BGR](https://www.bgr.com/2272332/openai-devday-2026-announcements/) says dots "are only available on ChatGPT's Pro 200 and Business Premium plans," while [Fello AI](https://felloai.com/openai-dots/) lists Pro 100 as including one. [Fortune](https://fortune.com/2026/09/29/openai-takes-on-metas-muse-with-new-dot-agents-and-unveils-a-potential-google-workspace-competitor/) says Pro and Business Premium users get one free dot but discusses only the $200 and $500 plans. OpenAI's own pages blocked our fetch, so budget $200 a month for one person until OpenAI's pricing page says otherwise.
+Your first dot comes with ChatGPT Pro or Business Premium; Free and Plus users do not get one ([Decrypt](https://decrypt.co/379584/openai-ai-agents-computers-devday-2026-everything-announced)). OpenAI sells Pro at $100, $200, and $500 ([OpenAI](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)). Launch coverage disagreed on which tier counts, with [BGR](https://www.bgr.com/2272332/openai-devday-2026-announcements/) reporting Pro 200 and Business Premium only, but [OpenAI's dots documentation](https://learn.chatgpt.com/docs/dots), checked October 11, 2026, lists Pro 100, Pro 200, and Pro 500, so the cheapest route for one person is $100 a month. A Business Premium seat is $125 a month, or $100 billed annually ([OpenAI business pricing](https://openai.com/business/pricing/)).
 
-Three more terms matter. Dots usage is free of plan allowances for the first month, with no published terms after that, and extra dots are planned at undisclosed prices ([SiliconANGLE](https://siliconangle.com/2026/09/29/openai-launches-dots-always-on-ai-agents-in-chatgpt-with-their-own-cloud-computers/)). Pro subscribers in the EEA, Switzerland, and the UK are excluded for now, while Business Premium users get dots in every supported ChatGPT region ([The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)).
+Three more terms matter. Conversations with your dot don't count toward your ChatGPT usage limits, and deeper work draws on a plan allowance "with extended limits for the first month after launch" ([OpenAI's dots documentation](https://learn.chatgpt.com/docs/dots)). Extra dots are planned at undisclosed prices ([SiliconANGLE](https://siliconangle.com/2026/09/29/openai-launches-dots-always-on-ai-agents-in-chatgpt-with-their-own-cloud-computers/)). Pro subscribers in the EEA, Switzerland, and the UK are excluded for now, while Business Premium users get dots in every supported ChatGPT region ([The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)).
 
 ## Why do people look for a ChatGPT Dots alternative?
 
@@ -2058,24 +2344,22 @@ We build Construct, so it leads this list. Here is why it fits small teams: it s
 
 We included products whose own pages describe background, scheduled, or 24/7 work on a computer or cloud environment the vendor runs, or that you can host. Prices are in US dollars at monthly billing unless we say otherwise. Every competitor fact comes from the vendor's own pages or from reporting we fetched on October 1. Where two sources disagree, we show both.
 
-We left out three products we meant to include. Perplexity Computer and Genspark Claw both blocked our fetches of their pricing pages, so we could not confirm their current prices from the vendor. We could not find a current product page for KiloClaw. Their absence here is about verification, not quality.
-
-{/* TODO: hands-on test. Run the same job (for example, "every Monday at 8am, check three competitor pricing pages and save a dated comparison") on Construct, Dots, and two alternatives. Record setup minutes, minutes to first usable file, approval prompts, retries, and cost for one month. */}
+We left out three products we meant to include. Perplexity Computer and Genspark Claw both blocked our fetches of their pricing pages on October 1, so we could not confirm their prices from the vendor in time. Genspark has since published Claw's cloud computer prices on its [Claw page](https://www.genspark.ai/claw): Lite $9.99, Standard $19.99, and Powerful $39.99 a month, shown as discounted, with credits sold on Genspark plans such as Plus at $24.99. We could not find a current product page for KiloClaw. Their absence here is about verification, not quality.
 
 ## ChatGPT Dots alternatives at a glance
 
-| Tool                 | Starting price, monthly                           | Needs which subscription                | Billing unit                              | Has its own computer?                                  | Where it works                          | Best for                                    |
-| -------------------- | ------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ------------------------------------------------------ | --------------------------------------- | ------------------------------------------- |
-| Construct            | $9 (Lite)                                         | None, its own plan                      | One plan per workspace, no seats          | Yes, a persistent cloud workspace                      | Web, Slack, Telegram, Discord, email    | Founders and small teams with recurring work |
-| Claude Cowork        | $20 (Claude Pro)                                  | Any paid Claude plan                    | Plan usage                                | Cloud tasks (beta); uses your computer for local files | Desktop, web, mobile                    | People already paying for Claude            |
-| Gemini Spark         | $20 (Google AI Pro, US)                           | Google AI Pro or Ultra                  | Subscription                              | Works 24/7 in Google's cloud                           | Gemini apps and web                     | Personal Google accounts outside Europe     |
-| Grok Bot             | $20 (Cursor individual plan)                      | Cursor, SuperGrok, or X Premium+        | Weekly usage allowance                    | Yes, one cloud computer shared by your Bots            | Desktop and mobile apps                 | Cursor or SuperGrok subscribers             |
-| Manus                | $0 (free plan) or $20 (Pro)                       | None to start                           | Credits; Cloud Computer add-on from $30   | Sandbox per task; always-on Cloud Computer add-on      | Web, desktop, mobile, Slack             | One-off research and build tasks            |
-| Meta Muse            | $0 with usage limits                              | None to start                           | Free tier, paid plans for more            | Yes, a dedicated cloud VM with a browser               | iOS, Android, web                       | Businesses selling on Meta, US and Canada   |
-| Viktor               | $50 per workspace                                 | None, its own plan                      | Pooled credits; $100 free to start        | Yes, its own cloud computer                            | Slack, Microsoft Teams                  | A shared coworker in Slack or Teams         |
-| Lindy                | $29.99 per user                                   | None, its own plan                      | Seats plus pooled credits                 | Drives a browser; plan pages disagree on which tier    | Slack, iMessage, email                  | Teams that run on Slack                     |
-| OpenClaw (or MyClaw) | $0 self-hosted; MyClaw $29 a month or $199 a year | None; bring your own model access       | Your hosting and model bills              | Your machine, or a hosted private instance             | WhatsApp, Telegram, Slack, and more     | Technical owners who host it themselves     |
-| ChatGPT Dots         | $200 (reports of $100 disputed)                   | ChatGPT Pro or Business Premium         | Subscription; first dot included          | Yes, cloud computer and browser per dot                | ChatGPT, Slack, Teams                   | People already on ChatGPT Pro               |
+| Tool                 | Starting price, monthly                           | Needs which subscription          | Billing unit                            | Has its own computer?                                  | Where it works                       | Best for                                     |
+| -------------------- | ------------------------------------------------- | --------------------------------- | --------------------------------------- | ------------------------------------------------------ | ------------------------------------ | -------------------------------------------- |
+| Construct            | $9 (Lite)                                         | None, its own plan                | One plan per workspace, no seats        | Yes, a persistent cloud workspace                      | Web, Slack, Telegram, Discord, email | Founders and small teams with recurring work |
+| Claude Cowork        | $20 (Claude Pro)                                  | Any paid Claude plan              | Plan usage                              | Cloud tasks (beta); uses your computer for local files | Desktop, web, mobile                 | People already paying for Claude             |
+| Gemini Spark         | $20 (Google AI Pro, US)                           | Google AI Pro or Ultra            | Subscription                            | Works 24/7 in Google's cloud                           | Gemini apps and web                  | Personal Google accounts outside Europe      |
+| Grok Bot             | $20 (Cursor individual plan)                      | Cursor, SuperGrok, or X Premium+  | Weekly usage allowance                  | Yes, one cloud computer shared by your Bots            | Desktop and mobile apps              | Cursor or SuperGrok subscribers              |
+| Manus                | $0 (free plan) or $20 (Pro)                       | None to start                     | Credits; Cloud Computer add-on from $30 | Sandbox per task; always-on Cloud Computer add-on      | Web, desktop, mobile, Slack          | One-off research and build tasks             |
+| Meta Muse            | $0 with usage limits                              | None to start                     | Free tier, paid plans for more          | Yes, a dedicated cloud VM with a browser               | iOS, Android, web                    | Businesses selling on Meta, US and Canada    |
+| Viktor               | $50 per workspace                                 | None, its own plan                | Pooled credits; $100 free to start      | Yes, its own cloud computer                            | Slack, Microsoft Teams               | A shared coworker in Slack or Teams          |
+| Lindy                | From $29.99 per active user                       | None, its own plan                | Seats plus pooled credits               | Drives a browser; plan pages disagree on which tier    | Slack, iMessage, email               | Teams that run on Slack                      |
+| OpenClaw (or MyClaw) | $0 self-hosted; MyClaw $29 a month or $199 a year | None; bring your own model access | Your hosting and model bills            | Your machine, or a hosted private instance             | WhatsApp, Telegram, Slack, and more  | Technical owners who host it themselves      |
+| ChatGPT Dots         | $100 (ChatGPT Pro 100)                            | ChatGPT Pro or Business Premium   | Subscription; first dot included        | Yes, cloud computer and browser per dot                | ChatGPT, Slack, Teams                | People already on ChatGPT Pro                |
 
 Sources for each row are linked in the tool sections below and listed under Sources. "Starting price" is the entry plan that gives access, not a working budget for a busy month.
 
@@ -2138,8 +2422,6 @@ Named Bots share one persistent cloud computer with a browser, filesystem, and t
 
 **Price:** no standalone plan. Access comes with every paid individual Cursor plan and Cursor Teams, or a linked SuperGrok, SuperGrok Plus, SuperGrok Heavy, or X Premium+ subscription ([Cursor help](https://cursor.com/help/grok-bot/plans)). Cursor's individual plan is $20 a month and lists "Grok Bot access" ([Cursor pricing](https://cursor.com/pricing)). Usage resets weekly.
 
-{/* TODO: verify current SuperGrok monthly price. x.ai/bot returned 403 on Oct 1; our Sep 10 post cited $30. */}
-
 **Limits:** all your Bots share one computer, including its files, browser, and app logins. Usage tiers are described relative to each other rather than in published numbers. Our [Grok Bot comparison](/blog/grokbot-alternative/) goes deeper.
 
 ### 5. Manus
@@ -2178,9 +2460,9 @@ Viktor lives in Slack and Microsoft Teams, connects to more than 3,200 tools, wr
 
 Lindy answers in Slack threads, over iMessage, and in your inbox, runs scheduled routines, drives a browser when a tool has no integration, and asks before irreversible actions ([Lindy](https://www.lindy.ai/)).
 
-**Price:** Plus is $29.99 per user per month with 3,000 credits, Pro is $99.99 with 15,000, and Max is $199.99 with 35,000, with credits pooled across seats ([Lindy pricing](https://www.lindy.ai/pricing)).
+**Price:** a Free plan with $50 in credits that last 7 days, then Team from $29.99 per active user a month for 3,000 credits (Lindy's pricing page also shows $49.99 for 5,000 credits to some visitors), with credits pooled across the team and top-ups at $10 per 1,000. Enterprise is custom ([Lindy pricing](https://www.lindy.ai/pricing), checked October 11, 2026).
 
-**Limits:** billing is per user, so five people on Plus pay about $150 a month. Lindy's pricing page lists computer use on every plan, while its homepage says browser driving is "Pro and up," so confirm before choosing Plus for browser work.
+**Limits:** billing is per active user, and anyone who uses Lindy, including with an @mention in Slack, counts, so five people on Team pay $149.95 a month at $29.99 each. Lindy's pricing page lists computer use on Team, while another line on the same page says "Computer use on Pro and Max," plans it no longer sells, so confirm before relying on it for browser work.
 
 ### 9. OpenClaw, self-hosted or on MyClaw
 
@@ -2198,9 +2480,9 @@ Imagine a three-person agency that wants one agent to check three competitor pri
 
 - **Construct Lite:** $9 a month covers up to 2 agents and 3 scheduled tasks, enough for both weekly jobs, and the files land in one shared workspace. If the jobs grow, Starter at $59 adds 6x the usage and 10 scheduled tasks.
 - **Viktor:** $50 a month for the workspace, shared by all three people.
-- **Lindy Plus:** $29.99 per user, so $89.97 for three people.
+- **Lindy Team:** $29.99 per active user, so $89.97 for three people, or $149.97 at the $49.99 price some visitors see.
 - **Claude, Google, or Cursor at $20:** $20 for each person who needs the agent, if the job fits that product's apps and region.
-- **ChatGPT Dots:** one person on ChatGPT Pro 200 is $200 a month, and that dot works on that person's behalf. A dot for each person on Pro is $600. Business Premium seat pricing was not confirmed at the source.
+- **ChatGPT Dots:** one person on ChatGPT Pro 100 is $100 a month, and that dot works on that person's behalf. A dot for each person on Pro 100 is $300, and three Business Premium seats are $375.
 
 For a team, the deciding questions are whether everyone can share one agent and its files, and what a busy month costs. Construct answers both with one plan and no seats, at a fixed monthly price with published plan limits.
 
@@ -2218,7 +2500,7 @@ There is no import: a dot's learned preferences do not transfer, so write your r
 
 ## When might Dots still fit?
 
-- You already pay for ChatGPT Pro 200 and only want a personal assistant inside ChatGPT.
+- You already pay for ChatGPT Pro and only want a personal assistant inside ChatGPT.
 - Your company runs on Microsoft Teams, or you want to talk to your agent by voice call.
 - You need built-in approval rules on every account action today.
 
@@ -2233,13 +2515,11 @@ Choose Construct. It starts at $9 with no ChatGPT subscription, runs scheduled j
 - **If you want to pick the model or bring your own keys,** choose Construct Pro, which supports OpenRouter, OpenAI, Anthropic, Amazon Bedrock, and xAI keys.
 - **If you already pay $20 for Claude, Google AI Pro, or Cursor,** keep that plan for personal tasks and add Construct for the recurring work your team depends on.
 - **If your team lives in Slack,** Construct answers @mentions and DMs there and keeps the results in the shared workspace. Lindy and Viktor are also built around Slack.
-- **If you already have ChatGPT Pro 200,** keep your dot for personal follow-ups and give Construct the team's recurring jobs.
+- **If you already have ChatGPT Pro,** keep your dot for personal follow-ups and give Construct the team's recurring jobs.
 - **If you are in the UK, Switzerland, or the EEA,** Dots on Pro and Gemini Spark are both out for now. The other alternatives here, Construct included, do not list those exclusions on the pages we read; confirm your country at sign-up.
 - **If you need Microsoft Teams, want to spend nothing, or want to host it yourself,** look at Viktor, Manus's free plan, or OpenClaw respectively.
 
 Pick one job that repeats every week and crosses two or three tools, such as the Monday competitor check or a client status draft. Give Construct the inputs, ask it to save the result as a file, check the first run, and put it on the Calendar. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
-
-{/* TODO: screenshot of a Construct scheduled job on the Calendar with its saved output file. */}
 
 Give Construct its first job
 
@@ -2266,6 +2546,11 @@ Pages fetched on October 1, 2026:
 - [Viktor](https://viktor.com/) and [Viktor pricing](https://viktor.com/pricing)
 - [OpenClaw](https://openclaw.ai/) and [MyClaw pricing](https://myclaw.ai/pricing)
 - [Construct pricing](/pricing/) and [Construct product guide](/blog/ai-employee/)
+
+Pages checked on October 11, 2026:
+
+- [OpenAI: Meet dots](https://learn.chatgpt.com/docs/dots), [About ChatGPT Pro tiers](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers), and [OpenAI business pricing](https://openai.com/business/pricing/)
+- [Lindy pricing](https://www.lindy.ai/pricing) and [Genspark Claw](https://www.genspark.ai/claw)
 
 ## Related resources
 
@@ -2306,10 +2591,10 @@ When you already pay for ChatGPT Pro 200 and only want a personal assistant insi
 URL: https://construct.computer/blog/construct-vs-openai-dots/
 Type: comparison
 Author: Construct Team
-Published: 2026-10-01
+Published: 2026-10-01 (updated 2026-10-11)
 Tags: comparison, chatgpt, ai-employee
 
-Construct gives you an AI employee with its own workspace, files, schedules, and email address from $9 a month, and it runs on the model you choose. ChatGPT Dots, OpenAI's new always-on agents, need a ChatGPT Pro plan at $100 or $200 a month, run only on OpenAI's GPT-6 Astra, and are not offered to personal Pro subscribers in the UK, the EU, or Switzerland.
+Construct gives you an AI employee with its own workspace, files, schedules, and email address from $9 a month, and it runs on the model you choose. ChatGPT Dots, OpenAI's new always-on agents, need a ChatGPT Pro plan from $100 a month or a Business Premium seat, run only on OpenAI's GPT-6 Astra, and are not offered to personal Pro subscribers in the UK, the EU, or Switzerland.
 
 For most founders and small teams, Construct is the better buy. It costs less than a tenth as much to start, keeps every finished file in a workspace your team can open, lets you read and correct what the agent remembers, and keeps your work independent of any one AI lab. Already paying for ChatGPT Pro? Keep your dot for personal follow-ups and give Construct the recurring team work. The two run side by side.
 
@@ -2317,9 +2602,9 @@ Start with Construct for $9
 
 ## Why choose Construct over ChatGPT Dots?
 
-- **$9 a month instead of $100 to $200.** Construct Lite includes 2 agents, 3 scheduled tasks, and an agent email address. There is nothing else to subscribe to first.
+- **$9 a month instead of $100 or more.** Construct Lite includes 2 agents, 3 scheduled tasks, and an agent email address. There is nothing else to subscribe to first.
 - **Your model, or your own keys.** Construct runs on bundled models, and Pro lets you bring keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI. Dots run on GPT-6 Astra only.
-- **Memory you can read and fix.** Open what Construct has learned, correct a fact, or delete it. The Dots coverage we reviewed documents no way to see or edit what a dot has learned.
+- **Memory you can read and fix.** Open what Construct has learned, correct a fact, or delete it. OpenAI's dots documentation describes notes a dot keeps and updates, but no way for you to view or edit them.
 - **Work that outlives the chat.** Reports, spreadsheets, and scripts land in workspace files as the agent produces them, so a run that stops at step 30 still leaves steps 1 to 29 behind.
 - **One workspace for the whole team, no seats.** Invite teammates with Owner, Admin, or Member roles. A team workspace has no member limit, and everyone's work draws on the owner's plan.
 - **It answers where your team already talks.** Web, Slack, Telegram, Discord, and its own email inbox.
@@ -2339,15 +2624,13 @@ Dots are a different product from chatting with ChatGPT. For the chat assistant 
 
 We build Construct. This is our editorial comparison of documented capabilities and published prices, checked on October 1, 2026. It is not a hands-on performance benchmark.
 
-OpenAI's own announcement and help pages refused automated requests when we checked, so the Dots facts here come from launch coverage by SiliconANGLE, The Next Web, Fortune, TechCrunch, and BGR, published September 29 and 30, 2026. Where those reports disagree, we show both versions. Where a capability is not documented in the sources we reviewed, we say "not documented" rather than claiming it is absent.
-
-{/* TODO: verify every Dots claim against openai.com/index/introducing-dots/ and the OpenAI help center; both returned HTTP 403 to our fetcher on October 1, 2026. */}
+OpenAI's announcement and help pages refused automated requests when we first checked, so the Dots facts here started from launch coverage by SiliconANGLE, The Next Web, Fortune, TechCrunch, and BGR, published September 29 and 30, 2026. On October 11, 2026, we checked plan eligibility, regions, usage terms, model, channels, and the read-only background research against [OpenAI's dots documentation](https://learn.chatgpt.com/docs/dots) and OpenAI's [business pricing](https://openai.com/business/pricing/). Where a capability is not documented in the sources we reviewed, we say "not documented" rather than claiming it is absent.
 
 ## Construct vs ChatGPT Dots: features at a glance
 
 | Capability                | Construct                                                                                   | ChatGPT Dots                                                   |
 | ------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| Starting price            | $9 a month (Lite)                                                                           | ChatGPT Pro at $100 or $200 a month (reports differ)           |
+| Starting price            | $9 a month (Lite)                                                                           | ChatGPT Pro from $100 a month, or a Business Premium seat      |
 | Model                     | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro | GPT-6 Astra; no other provider documented                      |
 | Where finished work lives | Workspace files your team can open; a stopped run keeps its finished steps                  | Inside ChatGPT, with ChatGPT Space for shared documents        |
 | Memory                    | Inspect, correct, or forget any stored fact                                                 | Learns preferences; no documented way to view or edit them     |
@@ -2369,22 +2652,20 @@ Construct is priced per plan, not per seat. Dots has no standalone price: your f
 | Construct Lite           | $9            | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address                      |
 | Construct Starter        | $59           | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                          |
 | Construct Pro            | $299          | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys |
-| ChatGPT Pro 100          | $100          | Reports disagree on whether a dot is included                                                  |
-| ChatGPT Pro 200          | $200          | First dot included                                                                             |
-| ChatGPT Pro 500          | $500          | Highest included usage; first dot reported included                                            |
-| ChatGPT Business Premium | Per seat      | First dot included                                                                             |
+| ChatGPT Pro 100          | $100          | Dots included                                                                                  |
+| ChatGPT Pro 200          | $200          | Dots included                                                                                  |
+| ChatGPT Pro 500          | $500          | Highest included usage; dots included                                                          |
+| ChatGPT Business Premium | $125 per seat | Dots included, rolling out worldwide; $100 per seat billed annually                            |
 
-Sources: [Construct pricing](/pricing/), [Pulse 2.0 on the three Pro tiers](https://pulse2.com/openai-unveils-dots-gpt-6-1-sol-500-pro-tier-and-new-enterprise-ai-tools/), [BGR](https://www.bgr.com/2272332/openai-devday-2026-announcements/), and [Carly's Dots guide](https://www.usecarly.com/blog/chatgpt-dots/).
+Sources: [Construct pricing](/pricing/), [OpenAI's dots documentation](https://learn.chatgpt.com/docs/dots), [OpenAI business pricing](https://openai.com/business/pricing/), [Pulse 2.0 on the three Pro tiers](https://pulse2.com/openai-unveils-dots-gpt-6-1-sol-500-pro-tier-and-new-enterprise-ai-tools/), [BGR](https://www.bgr.com/2272332/openai-devday-2026-announcements/), and [Carly's Dots guide](https://www.usecarly.com/blog/chatgpt-dots/).
 
-{/* TODO: verify Business Premium per-seat price on OpenAI's site. A third-party guide lists $125/seat/month; we did not include it because we could not confirm it with OpenAI or reputable press. */}
-
-The cheapest route into Dots is still unclear. [BGR](https://www.bgr.com/2272332/openai-devday-2026-announcements/) reports that dots "are only available on ChatGPT's Pro 200 and Business Premium plans," while [Carly's guide](https://www.usecarly.com/blog/chatgpt-dots/) lists Pro 100 as including one. Usage terms are open too: dots usage is free of plan allowances for the first month, and OpenAI has not said what applies after that ([SiliconANGLE](https://siliconangle.com/2026/09/29/openai-launches-dots-always-on-ai-agents-in-chatgpt-with-their-own-cloud-computers/), [Traictory](https://traictory.com/news/2026-09-30-openai-dots-agents)). Construct's limits are on the [pricing page](/pricing/) today.
+The cheapest route into Dots is ChatGPT Pro 100. Some launch coverage said dots were limited to Pro 200 and Business Premium, but [OpenAI's dots documentation](https://learn.chatgpt.com/docs/dots) lists Pro 100, Pro 200, and Pro 500 for users outside the EEA, the UK, and Switzerland, and Business Premium as rolling out worldwide. On usage, OpenAI says conversations with your dot don't count toward your ChatGPT usage limits, and that your plan includes an allowance for deeper work "with extended limits for the first month after launch." Construct's limits are on the [pricing page](/pricing/) today.
 
 What this means for your budget:
 
-- **Starting from zero:** Construct Lite costs $91 to $191 a month less than the cheapest reported route into Dots.
-- **Already paying for ChatGPT Pro:** your dot is one agent on one model, with usage terms still to be announced. For $9 more, Construct adds an independent workspace whose files, schedules, and memory your team can see.
-- **A team of five:** Construct Starter at $59 covers up to 5 agents for the whole workspace. Business Premium is billed for every seat.
+- **Starting from zero:** Construct Lite costs $91 a month less than ChatGPT Pro 100, the cheapest route into Dots.
+- **Already paying for ChatGPT Pro:** your dot is one agent on one model, and its extended usage limits cover only the first month after launch. For $9 more, Construct adds an independent workspace whose files, schedules, and memory your team can see.
+- **A team of five:** Construct Starter at $59 covers up to 5 agents for the whole workspace. Business Premium is billed for every seat that gets a dot, at $125 each, or $625 a month for five.
 
 Try Construct Pro free for 7 days
 
@@ -2421,16 +2702,13 @@ Message Construct from the web app, @mention it in Slack, text it on Telegram, u
 
 Dots lives inside ChatGPT, so access depends on your ChatGPT plan and region. Construct is your own workspace on the models you pick. Your procedures, files, and memory stay put when a lab changes its plans or prices.
 
-## Running the same job on both
+## Test the same job on both
 
-We have not run this test yet. When we do, we will publish the prompt, the time to a usable result, the cost, and what each product left behind.
+Give both products one weekly job and compare what each leaves behind:
 
-{/* TODO: HANDS-ON TEST, NOT YET RUN. Do not publish this section until it is filled in.
-Job: weekly competitor price check saved to a file.
-Prompt (identical on both): "Every Monday at 9am, visit the pricing pages of [3 named competitors], record each plan name and monthly USD price, compare them with last week's file, and save a dated CSV plus a three-line summary of what changed. Do not send anything to anyone."
-Setup: Construct Starter (for the schedule) vs ChatGPT Pro 200 with one dot. Same three competitor URLs. Run for two consecutive weeks.
-Record for each: minutes of setup, minutes to first usable file, any approval prompts, errors or retries, whether week 2 compared correctly against week 1, where the file was saved and whether a teammate could open it, and cost (subscription share plus any metered usage).
-Capture screenshots of both results with dates. */}
+1. Pick three competitor pricing pages and ask each product to record every plan name and monthly price, compare them with last week's file, and save a dated file plus a three-line summary of what changed.
+2. Run it for two consecutive weeks so the second run has something to compare against.
+3. Record the setup time, the time to a usable file, any errors or retries, whether week 2 compared correctly, and whether a teammate could open the saved file.
 
 Here is how the Construct side runs, as an illustrative walkthrough rather than a measured result. Save the three competitor URLs in a workspace file. Ask the agent to visit each pricing page, write a dated CSV, and compare it with last week's file. Check the first file, then save the steps as a workflow and put it on the Calendar, where it uses one of Lite's 3 scheduled tasks. The [workflow guide](/blog/ai-workflow-automation/) walks through each step.
 
@@ -2448,7 +2726,7 @@ There is no import: a dot's learned preferences do not transfer. Write your rule
 
 ## When might Dots still fit?
 
-- You already pay for ChatGPT Pro 200 and only want a personal assistant inside ChatGPT.
+- You already pay for ChatGPT Pro and only want a personal assistant inside ChatGPT.
 - Your company runs on Microsoft Teams, or you want to talk to your agent by voice call.
 - You need built-in approval rules on every account action today.
 
@@ -2456,7 +2734,7 @@ For recurring team work that needs files, schedules, a choice of model, and a pr
 
 ## Which should you choose?
 
-Choose Construct. It starts at $9 instead of $100 to $200, runs on the model you pick, keeps memory you can correct, and leaves every finished file in a workspace your team shares. If you already have a dot, keep it for personal follow-ups and let Construct run the work your team depends on.
+Choose Construct. It starts at $9 instead of $100 or more, runs on the model you pick, keeps memory you can correct, and leaves every finished file in a workspace your team shares. If you already have a dot, keep it for personal follow-ups and let Construct run the work your team depends on.
 
 Pick the report, price check, or tracker that keeps slipping into your evening, give Construct the inputs, and judge the saved result. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
 
@@ -2472,6 +2750,8 @@ Give Construct its first job
 - [Pulse 2.0: Dots, GPT-6.1 Sol, and the $500 Pro tier](https://pulse2.com/openai-unveils-dots-gpt-6-1-sol-500-pro-tier-and-new-enterprise-ai-tools/)
 - [Traictory: OpenAI's dots and its pricing ladder](https://traictory.com/news/2026-09-30-openai-dots-agents)
 - [Carly: ChatGPT Dots plans, costs, and limits](https://www.usecarly.com/blog/chatgpt-dots/)
+- [OpenAI: Meet dots](https://learn.chatgpt.com/docs/dots)
+- [OpenAI business pricing](https://openai.com/business/pricing/)
 - [Construct pricing](/pricing/)
 - [Construct terms, including BYOK](/terms/)
 - [Construct product guide](/blog/ai-employee/)
@@ -2774,10 +3054,10 @@ Yes, in one place. Construct shipped Jev into its memory on September 20, 2026, 
 URL: https://construct.computer/blog/best-ai-employee-platforms/
 Type: comparison
 Author: Construct Team
-Published: 2026-09-29 (updated 2026-10-01)
+Published: 2026-09-29 (updated 2026-10-11)
 Tags: comparison, ai-employee, small-business
 
-**Construct gives a small business an AI employee with its own workspace, files, Calendar schedules, and email address for $9 a month, with no per-seat fee.** Most of the other nine platforms we compared meter work in credits, hours, or seats, and several pause or stop the agent when the allowance runs out: Lindy charges $29.99 per user, Sintra's AI employees stop working without credits, and Manus cannot start a new task at zero credits.
+**Construct gives a small business an AI employee with its own workspace, files, Calendar schedules, and email address for $9 a month, with no per-seat fee.** Most of the other nine platforms we compared meter work in credits, hours, or seats, and several pause or stop the agent when the allowance runs out: Lindy charges from $29.99 per active user, Sintra's AI employees stop working without credits, and Manus cannot start a new task at zero credits.
 
 For founders and small teams, Construct is the best AI employee platform in 2026. It takes any job rather than one fixed role, keeps finished work and its schedule in one workspace your whole team shares, and lets you read and correct what it remembers. We build Construct, and we checked every other product against its own pricing pages and documentation on **September 29, 2026**.
 
@@ -2799,7 +3079,7 @@ Start with Construct for $9
 | 1    | Construct    | General-purpose, own workspace          | Recurring work across apps, with files and schedules | $9                               |
 | 2    | CellCog      | General-purpose, own computer and inbox | One AI employee hired into a role, working in shifts | $8 in credits                    |
 | 3    | Manus        | General-purpose, sandbox computer       | Research and build tasks handed over one at a time   | $20 in credits                   |
-| 4    | Lindy        | Teammate in Slack                       | Teams that already run on Slack                      | $29.99 per user                  |
+| 4    | Lindy        | Teammate in Slack                       | Teams that already run on Slack                      | From $29.99 per active user      |
 | 5    | Grok Bot     | General-purpose, shared cloud computer  | People who already pay for Cursor or SuperGrok       | Included with Cursor Pro ($20)   |
 | 6    | Sintra       | Roster of 12 role-based AI staff        | Marketing and admin help for a solo owner            | $97 list, $48.50 on sale         |
 | 7    | Marblism     | Roster of 7 role-based AI staff         | A phone receptionist plus inbox and social help      | $44                              |
@@ -2882,9 +3162,9 @@ Each Manus task runs in a sandbox virtual machine with a browser, persistent fil
 
 Lindy Teammate is an AI coworker in Slack: each person gets a private assistant in direct messages and the team shares one in channels. It connects to an integration catalog and MCP servers, can drive a browser, runs Routines on a schedule or on events, keeps memory as versioned files, and reaches you over iMessage and SMS. Write actions wait for your approval.
 
-**Price:** billed per user. Plus is $29.99 a month with 3,000 credits, Pro is $99.99 with 15,000, and Max is $199.99 with 35,000. Lindy's docs put a credit at about one cent and pool credits across the workspace.
+**Price:** billed per active user. After a free start with $50 in credits that last 7 days, the Team plan is from $29.99 per active user a month for 3,000 credits (Lindy's pricing page also shows $49.99 for 5,000 credits to some visitors), and Enterprise is custom. Credits cost a cent each on base plans and pool across the team, and top-ups are $10 per 1,000 ([Lindy pricing](https://www.lindy.ai/pricing), checked October 11, 2026).
 
-**Watch for:** anyone who uses Lindy takes a paid seat, including someone who only mentions it in Slack. When the credit pool runs out, work pauses until you top up. Lindy's pricing page lists computer use as included everywhere, while its docs show it from Pro upward.
+**Watch for:** anyone who uses Lindy takes a paid seat, including someone who only mentions it in Slack. When the credit pool runs out, work pauses until you top up. Lindy's pricing page lists computer use on Team, while another line on the same page still says "Computer use on Pro and Max," plans it no longer sells.
 
 ### 5. Grok Bot
 
@@ -2948,20 +3228,20 @@ Artisan's Ava finds and enriches leads from a database of more than 250 million 
 
 ## How much does an AI employee cost?
 
-An AI employee for a small business costs from $0 to $280 a month to start, based on entry prices checked on September 29, 2026. Construct starts at $9 with no seats, self-hosted OpenClaw is free software plus your hosting and model bills, most of the others start between $8 and $50 a month, and Artisan's sales agent starts at $280.
+An AI employee for a small business costs from $0 to $280 a month to start, based on entry prices checked on September 29, 2026, with Lindy rechecked on October 11, 2026. Construct starts at $9 with no seats, self-hosted OpenClaw is free software plus your hosting and model bills, most of the others start between $8 and $50 a month, and Artisan's sales agent starts at $280.
 
-| Platform     | Entry plan, billed monthly      | How usage is metered                       | At the limit                                         |
-| ------------ | ------------------------------- | ------------------------------------------ | ---------------------------------------------------- |
-| Construct    | $9 (Lite), no per-seat fee      | Plan usage, agents, steps, scheduled tasks | Move up a plan, or on Pro continue on your own keys  |
-| CellCog      | $8 (800 credits)                | Credits                                    | Buy top-ups; plan credits expire                     |
-| Manus        | $20 (4,000 credits)             | Credits plus daily refresh credits         | New tasks cannot start                               |
-| Lindy        | $29.99 per user (3,000 credits) | Seats plus pooled credits                  | Work pauses until you top up                         |
-| Grok Bot     | Included with Cursor Pro ($20)  | Weekly allowance in relative tiers         | Optional on-demand usage                             |
-| Sintra       | $97 list, $48.50 on sale        | 250 credits a month                        | AI employees stop working                            |
-| Marblism     | $44 (50 hours of work)          | Fixed time per task type                   | Scheduled tasks cancel; phone line pauses            |
-| Relevance AI | $29 in its docs, or sales-led   | Actions plus model and tool credits        | Buy action or credit top-ups                         |
-| OpenClaw     | $0 for the software             | Your own hosting and model bills           | Set by your providers                                |
-| Artisan      | $280 (Startups Intern)          | Credits, about 20 per lead contacted       | New enrollments pause                                |
+| Platform     | Entry plan, billed monthly             | How usage is metered                       | At the limit                                        |
+| ------------ | -------------------------------------- | ------------------------------------------ | --------------------------------------------------- |
+| Construct    | $9 (Lite), no per-seat fee             | Plan usage, agents, steps, scheduled tasks | Move up a plan, or on Pro continue on your own keys |
+| CellCog      | $8 (800 credits)                       | Credits                                    | Buy top-ups; plan credits expire                    |
+| Manus        | $20 (4,000 credits)                    | Credits plus daily refresh credits         | New tasks cannot start                              |
+| Lindy        | $29.99 per active user (3,000 credits) | Seats plus pooled credits                  | Work pauses until you top up                        |
+| Grok Bot     | Included with Cursor Pro ($20)         | Weekly allowance in relative tiers         | Optional on-demand usage                            |
+| Sintra       | $97 list, $48.50 on sale               | 250 credits a month                        | AI employees stop working                           |
+| Marblism     | $44 (50 hours of work)                 | Fixed time per task type                   | Scheduled tasks cancel; phone line pauses           |
+| Relevance AI | $29 in its docs, or sales-led          | Actions plus model and tool credits        | Buy action or credit top-ups                        |
+| OpenClaw     | $0 for the software                    | Your own hosting and model bills           | Set by your providers                               |
+| Artisan      | $280 (Startups Intern)                 | Credits, about 20 per lead contacted       | New enrollments pause                               |
 
 Entry prices are not working prices. CellCog's own labels put a full-time AI employee at $500 a month. Marblism's 50 hours cover about 300 ten-minute phone calls if you spend them on nothing else. Lindy's 3,000 credits are worth about $30 at its own rate of a cent each. Construct's plan limits are published up front, and a team of five shares one plan instead of paying five seats: Starter at $59 covers up to 5 agents for the whole workspace.
 

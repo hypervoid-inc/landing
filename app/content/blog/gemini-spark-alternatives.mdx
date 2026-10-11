@@ -3,6 +3,7 @@ title: "Gemini Spark alternatives, including for Workspace accounts and the UK a
 seoTitle: "Gemini Spark Alternatives (2026): Options for Work Accounts"
 description: "Gemini Spark needs a personal Google account and skips the UK and EU. Compare 7 always-on agents on price, work accounts, and regional availability."
 published: "2026-10-09"
+updated: "2026-10-11"
 author: "construct-team"
 tags: ["comparison", "gemini-spark", "google-workspace", "ai-employee"]
 kind: "comparison"
@@ -62,16 +63,16 @@ We build Construct, so it leads this list. Here is why it fits small teams: it s
 
 <ArticleTable caption="Construct, Gemini Spark, and six other alternatives, checked October 1, 2026">
 
-| Tool                     | Starting price                          | Billing unit                           | Own cloud computer?                   | Best for                                       |
-| ------------------------ | --------------------------------------- | -------------------------------------- | ------------------------------------- | ---------------------------------------------- |
-| Construct                | $9 (Lite)                               | One plan per workspace, no seats       | Yes, a persistent workspace           | Recurring work across Gmail and other apps     |
-| Claude (Cowork)          | $20 (Pro)                               | Per person or per seat                 | Scheduled tasks run remotely          | People already paying for Claude               |
-| ChatGPT dots             | $125 per seat (Business Premium)        | Per seat, first dot included           | Yes                                   | Businesses already on ChatGPT                  |
-| Microsoft Copilot Cowork | Copilot license plus metered credits    | Per user plus $0.01 per Copilot Credit | Runs in Microsoft's cloud             | Microsoft 365 companies                        |
-| Manus                    | $20 (Pro)                               | Credits; Cloud Computer from $30 extra | Yes, sandbox plus optional add-on     | One-off research and build tasks               |
-| Lindy                    | $29.99 per user                         | Per user plus credits                  | Computer use on Pro and up (per docs) | Teams that work in Slack                       |
-| Grok Bot                 | Included with Cursor Pro ($20)          | Weekly usage allowance                 | Yes, shared across your Bots          | People who already pay for Cursor or SuperGrok |
-| Gemini Spark             | Included with Google AI Pro (about $20) | Per person, personal account           | Cloud agent with a remote browser     | Personal Google accounts outside Europe        |
+| Tool                     | Starting price                          | Billing unit                           | Own cloud computer?               | Best for                                       |
+| ------------------------ | --------------------------------------- | -------------------------------------- | --------------------------------- | ---------------------------------------------- |
+| Construct                | $9 (Lite)                               | One plan per workspace, no seats       | Yes, a persistent workspace       | Recurring work across Gmail and other apps     |
+| Claude (Cowork)          | $20 (Pro)                               | Per person or per seat                 | Scheduled tasks run remotely      | People already paying for Claude               |
+| ChatGPT dots             | $125 per seat (Business Premium)        | Per seat, first dot included           | Yes                               | Businesses already on ChatGPT                  |
+| Microsoft Copilot Cowork | Copilot license plus metered credits    | Per user plus $0.01 per Copilot Credit | Runs in Microsoft's cloud         | Microsoft 365 companies                        |
+| Manus                    | $20 (Pro)                               | Credits; Cloud Computer from $30 extra | Yes, sandbox plus optional add-on | One-off research and build tasks               |
+| Lindy                    | $29.99 per active user (Team)           | Per active user plus credits           | Computer use listed on Team       | Teams that work in Slack                       |
+| Grok Bot                 | Included with Cursor Pro ($20)          | Weekly usage allowance                 | Yes, shared across your Bots      | People who already pay for Cursor or SuperGrok |
+| Gemini Spark             | Included with Google AI Pro (about $20) | Per person, personal account           | Cloud agent with a remote browser | Personal Google accounts outside Europe        |
 
 </ArticleTable>
 
@@ -94,10 +95,6 @@ Sources are linked in each section below and listed at the end.
 
 </ArticleTable>
 
-{/* TODO: confirm Construct's supported countries (UK, EU, Switzerland) and fill in its row above. */}
-
-{/* TODO: verify whether a Google Workspace admin must approve Construct's Gmail and Google Calendar connection, as with Claude's Trusted App step. */}
-
 ## The 7 best Gemini Spark alternatives, ranked
 
 ### 1. Construct
@@ -116,8 +113,7 @@ Where Spark is a personal assistant inside the Gemini app, Construct is a shared
 - **Its own inbox.** Even Lite includes an agent email address, so the agent can send you the digest from its own address.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -134,23 +130,22 @@ Where Spark is a personal assistant inside the Gemini app, Construct is a shared
       src="/blog/gemini-spark-alternatives/integrations-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
+  </ArticleVideo>
   <figcaption
     id="integrations-demo-description"
     className="mt-3 text-sm leading-6"
   >
-    Silent product demo: Construct's live connected-app catalog, with tools
-    such as Drive, Gmail, GitHub, and messaging channels available to connect.
+    Silent product demo: Construct's live connected-app catalog, with tools such
+    as Drive, Gmail, GitHub, and messaging channels available to connect.
   </figcaption>
 </figure>
 
 **Price, checked October 1, 2026:** Lite is $9 a month for 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 with 6x Lite usage, up to 5 agents, 150 steps per task, and 10 scheduled tasks. Pro is $299 with 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, and your own model keys. Pro has a seven-day free trial ([Construct pricing](/pricing/)).
 
-**Setup note:** Construct reaches Google through connected apps rather than inside Google's own apps, so check the catalog for the Docs or Sheets actions your job needs, and upload anything else as a file. If your Workspace admin restricts third-party apps, ask them before you connect Gmail. {/* TODO: confirm Construct availability in the UK, EU, and Switzerland before publishing. */}
+**Setup note:** Construct reaches Google through connected apps rather than inside Google's own apps, so check the catalog for the Docs or Sheets actions your job needs, and upload anything else as a file. If your Workspace admin restricts third-party apps, ask them before you connect Gmail.
 
 <BetaCta source="blog_inline_1">Try Construct Pro free for 7 days</BetaCta>
 
@@ -170,7 +165,7 @@ Anthropic's Google Workspace connectors let Claude search and send Gmail, manage
 
 OpenAI launched dots on September 29, 2026. Each dot runs on GPT-6 Astra, works from its own cloud computer, can connect to more than 4,000 apps through plugins, and can be messaged in Slack and Teams ([The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)). Custom rules decide what a dot may do on its own, and sensitive operations such as password changes always need a human. For Pro users, "the eligible markets do not currently include the European Economic Area, Switzerland or the UK," while Business Premium users get dots across supported regions.
 
-**Price, checked October 1, 2026:** the first dot is included in Pro and Business Premium. A Business Premium seat is $125 per user monthly or $100 billed annually, and Pro comes in $100, $200, and $500 tiers, according to a pricing guide updated September 9, 2026 ([Layer3 Labs](https://www.layer3labs.io/guides/chatgpt-pricing)). {/* TODO: verify ChatGPT Pro and Business Premium prices on chatgpt.com/pricing (blocked our fetch on October 1). */}
+**Price, checked October 1, 2026:** the first dot is included in Pro and Business Premium. A Business Premium seat is $125 per user monthly or $100 billed annually ([OpenAI business pricing](https://openai.com/business/pricing/)), and Pro comes in $100, $200, and $500 monthly tiers ([OpenAI, About ChatGPT Pro tiers](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)), both confirmed on October 11, 2026.
 
 **Limits:** dots are rolling out gradually, and we could not fetch OpenAI's own pages to check the fine print. OpenAI advises users to "always review consequential work" ([The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)). Our [Construct vs ChatGPT Dots comparison](/blog/construct-vs-openai-dots/) covers the head-to-head.
 
@@ -200,9 +195,9 @@ Manus 2.0, released September 28, 2026, added a dedicated Cloud Computer and eve
 
 Lindy is a Slack-based teammate with scheduled routines, meeting notes, integrations, and up to 5 connected inboxes ([Lindy pricing](https://www.lindy.ai/pricing)). It lists GDPR and SOC 2 compliance, though the pages we checked do not say where data is processed.
 
-**Price, checked October 1, 2026:** Plus is $29.99 per user a month with 3,000 credits, Pro $99.99 with 15,000, and Max $199.99 with 35,000 ([Lindy pricing](https://www.lindy.ai/pricing)).
+**Price, checked October 11, 2026:** a Free plan with $50 in credits that last 7 days, then Team from $29.99 per active user a month for 3,000 credits (Lindy's pricing page also shows $49.99 for 5,000 credits to some visitors), with top-ups at $10 per 1,000 credits. Enterprise is custom ([Lindy pricing](https://www.lindy.ai/pricing)).
 
-**Limits:** "Anyone who uses Lindy takes a seat," including someone who only mentions it in Slack, and when credits run out, "Lindy pauses credit-using actions" until the next cycle. The pricing page lists computer use among core features, while the plan documentation shows it on Pro, Max, and Enterprise only ([Lindy docs](https://docs.lindy.ai/pricing)). Our [Construct vs Lindy comparison](/blog/construct-vs-lindy/) goes further.
+**Limits:** "Anyone who uses Lindy takes a seat," including someone who only mentions it in Slack, and when credits run out, "Lindy pauses credit-using actions" until the next cycle. The pricing page lists computer use on Team, while another line on the same page says "Computer use on Pro and Max," plans Lindy no longer sells. Our [Construct vs Lindy comparison](/blog/construct-vs-lindy/) goes further.
 
 ### 7. Grok Bot
 
@@ -216,7 +211,7 @@ Grok Bot gives you named Bots on a persistent cloud computer with a browser, fil
 
 ### Also considered: Perplexity Computer
 
-Perplexity Computer is a cloud agent for long-running, multi-step work. We could not fetch Perplexity's own pages on October 1, and third-party guides disagree on access: one says Computer requires the $200 Max plan ([Sliq](https://getsliq.com/blog/perplexity-computer-cost)), another says Pro subscribers at $20 gained access on May 7, 2026 ([FindSkill](https://findskill.ai/blog/perplexity-personal-computer-guide/)). Check Perplexity directly before you buy. {/* TODO: verify Perplexity Computer plans, price, and UK/EU availability on perplexity.ai. */}
+Perplexity Computer is a cloud agent for long-running, multi-step work. We could not fetch Perplexity's own pages on October 1, and third-party guides disagree on access: one says Computer requires the $200 Max plan ([Sliq](https://getsliq.com/blog/perplexity-computer-cost)), another says Pro subscribers at $20 gained access on May 7, 2026 ([FindSkill](https://findskill.ai/blog/perplexity-personal-computer-guide/)). Check Perplexity directly before you buy.
 
 ## An illustrative example: a morning inbox digest in Construct
 
@@ -230,8 +225,6 @@ A two-person design studio runs on Google Workspace. The founder wants what Spar
 4. **Schedule it** on the Calendar for weekdays at 8:00. Lite's 3 scheduled tasks cover it.
 
 Each morning's digest stays in Files, so you can see why an email was included and compare one week with the next. The test that matters is the tenth morning, not the first. In Claude, the same prompt can run as a Cowork scheduled task once your Workspace admin has trusted Claude.
-
-{/* TODO: run this digest on Construct, Claude, and ChatGPT dots with the same Workspace test inbox for five weekdays; record setup time, cost, and misses. Add screenshots. */}
 
 ## Already using Spark? Add Construct in 15 minutes
 
@@ -285,7 +278,7 @@ Pages checked on October 1, 2026:
 - [TechTimes: Gemini Spark on Google Cloud VMs](https://www.techtimes.com/articles/317144/20260525/gemini-spark-googles-24-7-cloud-ai-agent-now-executes-tasks-third-party-apps.htm)
 - Hacker News comments on [Workspace accounts](https://news.ycombinator.com/item?id=48994600) and [European availability](https://news.ycombinator.com/item?id=48463560)
 - [Claude Google Workspace connectors](https://support.claude.com/en/articles/10166901-use-google-workspace-connectors), [Cowork scheduled tasks](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork), [Claude pricing](https://claude.com/pricing), and [Anthropic supported countries](https://www.anthropic.com/supported-countries)
-- [The Next Web: OpenAI launches dots](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday) and [Layer3 Labs: ChatGPT pricing](https://www.layer3labs.io/guides/chatgpt-pricing)
+- [The Next Web: OpenAI launches dots](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday), [OpenAI business pricing](https://openai.com/business/pricing/), and [About ChatGPT Pro tiers](https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers)
 - [Microsoft: Copilot Cowork is generally available](https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/16/copilot-cowork-is-now-generally-available/) and [Microsoft 365 Copilot pricing](https://www.microsoft.com/en-us/microsoft-365-copilot/pricing)
 - [Introducing Manus 2.0](https://manus.im/blog/introducing-manus-2-0), [Manus membership pricing](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus), [Cloud Computer billing](https://help.manus.im/en/articles/15392078-understanding-cloud-computer-plans-and-billing), [Manus pricing unit](https://help.manus.im/en/articles/11711125-what-is-the-pricing-unit-for-manus-globally-can-i-pay-in-local-currency), and [Manus resumes independent operations](https://manus.im/blog/manus-resumes-independent-operations)
 - [Lindy pricing](https://www.lindy.ai/pricing) and [Lindy plan documentation](https://docs.lindy.ai/pricing)

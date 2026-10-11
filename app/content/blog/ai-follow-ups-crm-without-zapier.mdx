@@ -2,7 +2,7 @@
 title: "Customer Follow-Ups and CRM Updates Without Zapier"
 seoTitle: "Automate Follow-Up Emails and CRM Updates Without Zapier"
 description: "Use Construct to find deals that need a follow-up, draft the emails, and update your CRM while you approve each send. From $9 a month, with no Zaps to build."
-published: "2026-11-23"
+published: "2026-11-24"
 author: "nischal"
 tags: ["ai-agent", "zapier", "workflow-automation", "small-business"]
 kind: "guide"
@@ -42,12 +42,15 @@ Set the job up this way and nothing reaches a customer by surprise:
 - **Send operational email, not campaigns.** The agent's native inbox has a daily sending limit enforced on the server. For customer follow-ups, drafts in your own Gmail are the better route anyway.
 - **Check your CRM's catalog actions first.** Step 1 lists what the agent can do in HubSpot and Gmail. If your CRM is not in the integration catalog, the agent may use a browser instead, which is slower than a structured action.
 
-
 ## How do you set it up?
 
 ### 1. Connect the apps and check what the agent can do
 
-> Connect HubSpot and Gmail. Then list the actions you can use in each one that matter for follow-ups: reading deals and contacts, adding notes, setting tasks or next-step dates, reading email threads, and creating drafts. Do not change anything yet.
+<Prompt>
+
+Connect HubSpot and Gmail. Then list the actions you can use in each one that matter for follow-ups: reading deals and contacts, adding notes, setting tasks or next-step dates, reading email threads, and creating drafts. Do not change anything yet.
+
+</Prompt>
 
 This tells you, in your own account, what is possible before you rely on it. {/* TODO: confirm which HubSpot actions (read deals, add note, create task, update property) and Gmail actions (read thread, create draft, send) are available in the catalog today */}
 
@@ -55,23 +58,39 @@ This tells you, in your own account, what is possible before you rely on it. {/*
 
 Put the guardrails in memory once, rather than in every prompt. You can inspect, correct, or forget them later in the Memories app ([AI agent memory](/blog/ai-agent-memory/)).
 
-> Remember these rules for customer follow-ups. Never send an email to a customer unless I reply "send" for that specific draft. Never change a deal stage or amount. You may add notes and set next-step dates in HubSpot. Write follow-ups in plain language, under 120 words, referring to the last thing the customer said. If a thread shows the customer said no or asked us to stop, do not draft anything; flag it instead.
+<Prompt>
+
+Remember these rules for customer follow-ups. Never send an email to a customer unless I reply "send" for that specific draft. Never change a deal stage or amount. You may add notes and set next-step dates in HubSpot. Write follow-ups in plain language, under 120 words, referring to the last thing the customer said. If a thread shows the customer said no or asked us to stop, do not draft anything; flag it instead.
+
+</Prompt>
 
 ### 3. Build the follow-up list, read-only
 
-> In HubSpot, find open deals with no logged activity in the last 7 days. For each, find the most recent email thread with the main contact in Gmail. Save a table to Files as followups/ with today's date as the file name, with columns: deal, contact, last activity date, what the customer last said in one sentence, suggested next step, and a link to the deal. Do not draft or change anything yet.
+<Prompt>
+
+In HubSpot, find open deals with no logged activity in the last 7 days. For each, find the most recent email thread with the main contact in Gmail. Save a table to Files as followups/ with today's date as the file name, with columns: deal, contact, last activity date, what the customer last said in one sentence, suggested next step, and a link to the deal. Do not draft or change anything yet.
+
+</Prompt>
 
 Read the table. This is where you catch a deal that is stalled for a good reason, such as a customer on holiday, and remove it.
 
 ### 4. Draft the follow-ups
 
-> For each deal still in followups/ with today's date, draft a follow-up email as a Gmail draft from my account, following my follow-up rules. Then list the drafts here with one line on why you chose that angle.
+<Prompt>
+
+For each deal still in followups/ with today's date, draft a follow-up email as a Gmail draft from my account, following my follow-up rules. Then list the drafts here with one line on why you chose that angle.
+
+</Prompt>
 
 Open Gmail, read the drafts, edit them in your voice, and send the ones you like yourself. If you prefer the agent to send, reply "send" with the deal names; the rule in step 2 makes that explicit. For messages where it is fine for the customer to know an agent wrote them, the agent can use its own native address instead ([giving an agent its own email](/blog/ai-agent-email-address/)).
 
 ### 5. Update the CRM after you have sent
 
-> For each follow-up I sent today, add a note to the HubSpot deal: "Follow-up sent [date]: [one-line summary]". Set the next-step date to 5 business days from today. Do not change stage or amount. Save a list of what you changed to followups/ with today's date and "-changes" in the name.
+<Prompt>
+
+For each follow-up I sent today, add a note to the HubSpot deal: "Follow-up sent [date]: [one-line summary]". Set the next-step date to 5 business days from today. Do not change stage or amount. Save a list of what you changed to followups/ with today's date and "-changes" in the name.
+
+</Prompt>
 
 The changes file is your record of every CRM write the agent made, alongside Activity.
 
@@ -79,19 +98,26 @@ The changes file is your record of every CRM write the agent made, alongside Act
 
 This is the CRM chore most people skip. Paste notes into chat, or forward them to the agent's email address from your own account.
 
-> Here are my notes from today's call with Acme: [paste notes]. Update the Acme deal in HubSpot: add the notes as a summary, create a task for each action item I own with a due date, and list anything in the notes that conflicts with what is already in HubSpot. Do not change stage or amount.
+<Prompt>
+
+Here are my notes from today's call with Acme: [paste notes]. Update the Acme deal in HubSpot: add the notes as a summary, create a task for each action item I own with a due date, and list anything in the notes that conflicts with what is already in HubSpot. Do not change stage or amount.
+
+</Prompt>
 
 ### 7. Put the list-building on a schedule
 
 Once steps 3 and 4 have produced good drafts for a few weeks, save them as a workflow and schedule it. Current workflows are linear, with no branching, delays, or approval steps, so keep the schedule draft-only.
 
-> Save steps 3 and 4 as a workflow called "Weekday follow-up drafts" and schedule it every weekday at 8am. End with an in-app notification listing the drafts. Never send.
+<Prompt>
+
+Save steps 3 and 4 as a workflow called "Weekday follow-up drafts" and schedule it every weekday at 8am. End with an in-app notification listing the drafts. Never send.
+
+</Prompt>
 
 You then review and send each morning. Lite includes 3 scheduled tasks, Starter 10, and Pro 50.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -108,15 +134,11 @@ You then review and send each morning. Lite includes 3 scheduled tasks, Starter 
       src="/blog/ai-follow-ups-crm-without-zapier/work-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
-  <figcaption
-    id="work-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
+  </ArticleVideo>
+  <figcaption id="work-demo-description" className="mt-3 text-sm leading-6">
     Silent product demo: Construct organizing work across emails, files, and a
     CRM from one workspace.
   </figcaption>
@@ -143,13 +165,13 @@ Zapier is built for fixed, event-triggered jobs: "when a form is submitted, crea
 
 <ArticleTable caption="Construct vs Zapier for follow-ups and CRM updates, checked October 1, 2026">
 
-| Question                         | Construct                                                       | Zapier                                                     |
-| -------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------- |
-| Entry price                      | Lite $9/month; Starter $59; Pro $299                            | Free (100 tasks, two-step Zaps); Professional $29.99/month |
-| Decides which deals need a nudge | Reads each deal and thread and decides                          | Through rules you build with filters and Paths             |
-| Writes the follow-up             | A draft based on the actual thread                              | A template, or an AI step you configure                    |
-| Review before sending            | Drafts you approve and send                                     | Human in the Loop step on paid plans                       |
-| Starts from                      | A prompt, an email or chat message, or a Calendar schedule      | A trigger such as a new form entry or deal stage change    |
+| Question                         | Construct                                                  | Zapier                                                     |
+| -------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
+| Entry price                      | Lite $9/month; Starter $59; Pro $299                       | Free (100 tasks, two-step Zaps); Professional $29.99/month |
+| Decides which deals need a nudge | Reads each deal and thread and decides                     | Through rules you build with filters and Paths             |
+| Writes the follow-up             | A draft based on the actual thread                         | A template, or an AI step you configure                    |
+| Review before sending            | Drafts you approve and send                                | Human in the Loop step on paid plans                       |
+| Starts from                      | A prompt, an email or chat message, or a Calendar schedule | A trigger such as a new form entry or deal stage change    |
 
 </ArticleTable>
 

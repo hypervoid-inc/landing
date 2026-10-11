@@ -2,7 +2,7 @@
 title: "Construct vs Manus"
 seoTitle: "Manus Alternative: Construct vs Manus (2027)"
 description: "Construct vs Manus on price, recurring work, triggers, persistence, and channels. Manus starts free with Pro at $20 in credits; Construct starts at $9."
-published: "2026-11-18"
+published: "2026-11-19"
 author: "construct-team"
 tags: ["comparison", "ai-agent", "manus"]
 kind: "comparison"
@@ -41,16 +41,16 @@ We build Construct. This is our editorial comparison of documented capabilities 
 
 <ArticleTable caption="Construct vs Manus capabilities, checked October 1, 2026">
 
-| Capability                | Construct                                                                                   | Manus                                                                         |
-| ------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| Pricing model             | Fixed monthly plan from $9 with published limits                                            | Free plan, then credits per task from $20; monthly credits do not roll over   |
-| Model                     | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro | Managed by Manus                                                              |
-| Memory                    | Inspect, correct, or forget any stored fact                                                 | Not documented in the pages we reviewed                                       |
-| Where finished work lives | Persistent workspace files on every plan; a stopped run keeps its finished steps            | Chat history; persistent files on a Cloud Computer add-on                     |
-| Recurring work            | Calendar schedules and saved workflows: 3 on Lite, 10 on Starter, 50 on Pro                 | Scheduled and event-triggered Automations: 2 on Free, 20 on Pro               |
-| Team use                  | Team workspaces with Owner, Admin, and Member roles and no member limit                     | Team plan from $20 per seat with a shared credit pool                         |
-| Ways to reach it          | Web, Slack, Telegram, Discord, and its own email address                                    | Web, desktop, mobile, Slack, and email to a Manus address                     |
-| Internal apps             | Builds private workspace apps such as review queues and trackers                            | Builds and publishes websites and apps, with custom domains                   |
+| Capability                | Construct                                                                                   | Manus                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Pricing model             | Fixed monthly plan from $9 with published limits                                            | Free plan, then credits per task from $20; monthly credits do not roll over    |
+| Model                     | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro | Managed by Manus                                                               |
+| Memory                    | Inspect, correct, or forget any stored fact                                                 | Not documented in the pages we reviewed                                        |
+| Where finished work lives | Persistent workspace files on every plan; a stopped run keeps its finished steps            | Chat history; persistent files on a Cloud Computer add-on                      |
+| Recurring work            | Calendar schedules and saved workflows: 3 on Lite, 10 on Starter, 50 on Pro                 | Scheduled and event-triggered Automations: 2 on Free, 20 on Pro                |
+| Team use                  | Team workspaces with Owner, Admin, and Member roles and no member limit                     | Team plan from $20 per seat with a shared credit pool                          |
+| Ways to reach it          | Web, Slack, Telegram, Discord, and its own email address                                    | Web, desktop, mobile, Slack, and email to a Manus address                      |
+| Internal apps             | Builds private workspace apps such as review queues and trackers                            | Builds and publishes websites and apps, with custom domains                    |
 | Apps                      | Live integration catalog plus your own MCP tools                                            | Connectors such as Gmail, GitHub, Linear, and Postgres, plus custom API or MCP |
 
 </ArticleTable>
@@ -101,8 +101,7 @@ On Manus, the per-task sandbox closes when the task completes and outputs stay i
 Construct turns a job that worked into a saved workflow with agent steps and connected-app actions, then schedules it on the Calendar, where it runs server-side with your laptop closed. A scheduled item can run an agent prompt, an app action, or a whole workflow, and it keeps its result history. The [scheduled tasks guide](/blog/ai-agent-scheduled-tasks/) walks through the setup.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -119,17 +118,13 @@ Construct turns a job that worked into a saved workflow with agent steps and con
       src="/blog/construct-vs-manus/workflow-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
-  <figcaption
-    id="workflow-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
-    Silent product demo: Construct building and running a reusable workflow
-    with agent steps, connected apps, and notifications that can be versioned,
+  </ArticleVideo>
+  <figcaption id="workflow-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct building and running a reusable workflow with
+    agent steps, connected apps, and notifications that can be versioned,
     scheduled, and run again.
   </figcaption>
 </figure>

@@ -2,7 +2,7 @@
 title: "How to Build a Weekly Competitor Pricing Report With an AI Agent"
 seoTitle: "Weekly Competitor Pricing Report With AI: Step-by-Step Setup"
 description: "Have an AI agent check competitor pricing pages every week, save a dated snapshot, compare it with last week's, and post what changed. Prompts and limits."
-published: "2026-11-11"
+published: "2026-11-12"
 author: "nischal"
 tags: ["ai-agent", "workflow-automation", "scheduling", "pricing"]
 kind: "guide"
@@ -46,14 +46,17 @@ Four setup choices keep the numbers trustworthy:
 - **Handle quiet weeks inside the prompt.** Construct's workflows are linear, with no branching, so have the agent write "No pricing changes this week" at the top and a quiet week becomes a one-line notification.
 - **Respect each site's terms.** Some sites restrict automated access. Drop a competitor from the list if its terms require it.
 
-
 ## How do you set up the weekly report?
 
 ### 1. Write the competitor list to a file
 
 Keeping the list in a file means you can edit it without touching the job.
 
-> Create pricing/competitors.csv with columns name, pricing_url, and notes. Add these competitors: [paste names and pricing URLs]. Then fetch each URL once and tell me if any page fails to load or redirects somewhere else.
+<Prompt>
+
+Create pricing/competitors.csv with columns name, pricing_url, and notes. Add these competitors: [paste names and pricing URLs]. Then fetch each URL once and tell me if any page fails to load or redirects somewhere else.
+
+</Prompt>
 
 Fix any broken URL now. A redirected pricing page is the most common reason a weekly report silently goes wrong later.
 
@@ -61,9 +64,13 @@ Fix any broken URL now. A redirected pricing page is the most common reason a we
 
 The first run records the starting point. Be strict about the structure, because every later comparison depends on it.
 
-> For each competitor in pricing/competitors.csv, read the pricing page and record every plan in a table with these columns: competitor, plan, monthly price when billed monthly, annual price per month if shown, currency, billing unit (per seat, per user, flat, usage), main limits (seats, credits, tasks, storage), free trial (yes, no, not stated), source URL, and the exact price text as it appears on the page.
->
-> Rules: use only what is on the page you fetched. If the page shows annual pricing by default, look for the monthly toggle and say which one you recorded. If a plan says "contact sales", record that instead of a number. Save the table as pricing/snapshots/2027-01-10.csv.
+<Prompt>
+
+For each competitor in pricing/competitors.csv, read the pricing page and record every plan in a table with these columns: competitor, plan, monthly price when billed monthly, annual price per month if shown, currency, billing unit (per seat, per user, flat, usage), main limits (seats, credits, tasks, storage), free trial (yes, no, not stated), source URL, and the exact price text as it appears on the page.
+
+Rules: use only what is on the page you fetched. If the page shows annual pricing by default, look for the monthly toggle and say which one you recorded. If a plan says "contact sales", record that instead of a number. Save the table as pricing/snapshots/2027-01-10.csv.
+
+</Prompt>
 
 The "exact price text" column is your evidence. If the agent writes $49 and the page says "$49 per seat, billed annually", the difference shows up in review.
 
@@ -71,7 +78,11 @@ The "exact price text" column is your evidence. If the agent writes $49 and the 
 
 Open the CSV in Files, where it displays as a table. Compare at least one competitor against its live page yourself, especially the monthly versus annual toggle and per-seat wording. Correct anything wrong and ask the agent to remember the correction.
 
-> Remember for pricing reports: Example Co's pricing page defaults to annual billing. Always record their monthly price from the monthly toggle.
+<Prompt>
+
+Remember for pricing reports: Example Co's pricing page defaults to annual billing. Always record their monthly price from the monthly toggle.
+
+</Prompt>
 
 Memory can be inspected and corrected later in the Memories app, so a stale rule is easy to remove when a competitor redesigns their page ([AI agent memory](/blog/ai-agent-memory/)).
 
@@ -79,9 +90,13 @@ Memory can be inspected and corrected later in the Memories app, so a stale rule
 
 This is the prompt the scheduled job will run every week.
 
-> Take a new pricing snapshot for every competitor in pricing/competitors.csv using the same columns and rules as before, and save it as pricing/snapshots/ with today's date as the file name. Then find the most recent earlier snapshot in that folder and compare the two.
->
-> Write pricing/reports/ with today's date as a markdown file, with these sections: Changes (price changes, plans added or removed, limit changes, trial changes, each with old value, new value, and source URL), Could not check (any page that failed or looked different enough that you are unsure), and No change (one line listing competitors with no change). If nothing changed, say "No pricing changes this week" at the top. Do not speculate about why a competitor changed pricing.
+<Prompt>
+
+Take a new pricing snapshot for every competitor in pricing/competitors.csv using the same columns and rules as before, and save it as pricing/snapshots/ with today's date as the file name. Then find the most recent earlier snapshot in that folder and compare the two.
+
+Write pricing/reports/ with today's date as a markdown file, with these sections: Changes (price changes, plans added or removed, limit changes, trial changes, each with old value, new value, and source URL), Could not check (any page that failed or looked different enough that you are unsure), and No change (one line listing competitors with no change). If nothing changed, say "No pricing changes this week" at the top. Do not speculate about why a competitor changed pricing.
+
+</Prompt>
 
 Run it once by hand the following week, or right away to confirm it reports "no changes" against the baseline. A comparison that invents changes against an identical page is a prompt problem worth fixing before it goes on a schedule.
 
@@ -89,7 +104,11 @@ Run it once by hand the following week, or right away to confirm it reports "no 
 
 Once the comparison prompt works, ask Construct to turn it into a workflow. A workflow can combine agent steps, connected-app actions, and in-app notifications. Current workflows are linear: no branching, delays, or approval steps.
 
-> Save this as a workflow called "Weekly pricing report": step 1 runs the comparison prompt, step 2 sends me an in-app notification titled "Pricing report ready" with the Changes section and the file path.
+<Prompt>
+
+Save this as a workflow called "Weekly pricing report": step 1 runs the comparison prompt, step 2 sends me an in-app notification titled "Pricing report ready" with the Changes section and the file path.
+
+</Prompt>
 
 The notification and the file are the delivery; scheduled runs report in the web app rather than posting into Slack or Telegram. If your team wants the report in a channel, share the file there after you have read it. {/* TODO: confirm whether a workflow step can email the report from the agent's native address, and add it as an optional step if so */}
 
@@ -97,13 +116,16 @@ Published workflow versions are kept, so editing the prompt later does not chang
 
 ### 6. Put it on the Calendar
 
-> Schedule the "Weekly pricing report" workflow every Monday at 8am in my time zone.
+<Prompt>
+
+Schedule the "Weekly pricing report" workflow every Monday at 8am in my time zone.
+
+</Prompt>
 
 The Calendar runs it on Construct's cloud computer, not on your laptop, and reconciles a missed or delayed run instead of skipping it silently. See [how to run an AI agent on a schedule](/blog/ai-agent-scheduled-tasks/) for the details of recurrence and pausing.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -120,15 +142,11 @@ The Calendar runs it on Construct's cloud computer, not on your laptop, and reco
       src="/blog/ai-competitor-pricing-report/calendar-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
-  <figcaption
-    id="calendar-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
+  </ArticleVideo>
+  <figcaption id="calendar-demo-description" className="mt-3 text-sm leading-6">
     Silent product demo: Construct Calendar showing scheduled agent jobs and
     workflow runs, the same place a weekly pricing report is scheduled.
   </figcaption>
@@ -146,11 +164,11 @@ A typical report is short. This one is illustrative, with invented competitors:
 
 <ArticleTable caption="Illustrative weekly pricing report: changes section">
 
-| Competitor | Plan     | Change          | Last week       | This week       | Source                    |
-| ---------- | -------- | --------------- | --------------- | --------------- | ------------------------- |
-| Example Co | Team     | Price increase  | $20 per seat    | $25 per seat    | example.test/pricing      |
-| Sample Inc | Starter  | Plan removed    | $15 per month   | not listed      | sample.test/pricing       |
-| Demo Labs  | Pro      | Limit changed   | 5,000 credits   | 3,000 credits   | demolabs.test/pricing     |
+| Competitor | Plan    | Change         | Last week     | This week     | Source                |
+| ---------- | ------- | -------------- | ------------- | ------------- | --------------------- |
+| Example Co | Team    | Price increase | $20 per seat  | $25 per seat  | example.test/pricing  |
+| Sample Inc | Starter | Plan removed   | $15 per month | not listed    | sample.test/pricing   |
+| Demo Labs  | Pro     | Limit changed  | 5,000 credits | 3,000 credits | demolabs.test/pricing |
 
 </ArticleTable>
 

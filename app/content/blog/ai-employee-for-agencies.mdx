@@ -2,7 +2,7 @@
 title: "An AI employee for a small marketing agency"
 seoTitle: "AI Employee for a Marketing Agency: Client Reports, Briefs, and Approvals"
 description: "How a small marketing agency can hand client reports, briefs, and an approval queue to an AI employee, from $9 a month, with clients kept behind a review step."
-published: "2026-11-02"
+published: "2026-11-03"
 author: "nischal"
 tags: ["ai-employee", "small-business", "internal-tools", "workflow-automation"]
 kind: "guide"
@@ -36,13 +36,13 @@ For a five-person agency, a useful split looks like this:
 
 <ArticleTable caption="Agency work an AI employee can prepare, and who owns the last step">
 
-| Job                         | The agent prepares                                            | A person owns                        |
-| --------------------------- | ------------------------------------------------------------- | ------------------------------------ |
-| Weekly client report        | A draft per client, figures linked to sources                 | Checking numbers, sending to client  |
-| Creative brief              | A brief in your template from kickoff notes                   | Strategy, scope, and sign-off        |
-| Approval queue              | Adding drafts to the queue, summarizing what changed          | Approving or returning work          |
-| Competitor and trend scan   | A dated summary of what changed on named pages                | Deciding what to pitch               |
-| Internal status             | A Monday summary of what is overdue or stuck                  | Reassigning work                     |
+| Job                       | The agent prepares                                   | A person owns                       |
+| ------------------------- | ---------------------------------------------------- | ----------------------------------- |
+| Weekly client report      | A draft per client, figures linked to sources        | Checking numbers, sending to client |
+| Creative brief            | A brief in your template from kickoff notes          | Strategy, scope, and sign-off       |
+| Approval queue            | Adding drafts to the queue, summarizing what changed | Approving or returning work         |
+| Competitor and trend scan | A dated summary of what changed on named pages       | Deciding what to pitch              |
+| Internal status           | A Monday summary of what is overdue or stuck         | Reassigning work                    |
 
 </ArticleTable>
 
@@ -66,7 +66,11 @@ For a five-person agency, a useful split looks like this:
 
 Create one folder per client in Files, for example `Files/clients/acme/`, holding the last report, the brand notes, and a short `rules.md`. Then ask the agent to learn the rules:
 
-> For each folder in Files/clients, read rules.md and remember the client's reporting rules: which metrics they care about, the tone, who receives the report, and anything we must never say. Show me what you stored for each client.
+<Prompt>
+
+For each folder in Files/clients, read rules.md and remember the client's reporting rules: which metrics they care about, the tone, who receives the report, and anything we must never say. Show me what you stored for each client.
+
+</Prompt>
 
 Memory in Construct can be inspected, corrected, or forgotten, so when a client changes its main contact, you correct one remembered fact instead of rewriting prompts ([AI agent memory](/blog/ai-agent-memory/)).
 
@@ -74,7 +78,11 @@ Memory in Construct can be inspected, corrected, or forgotten, so when a client 
 
 Run the report once by hand for one client:
 
-> Draft this week's report for Acme. Use the CSV I uploaded to Files/clients/acme/exports and the deals in HubSpot tagged Acme. Match the structure of last-report.md in the same folder. Compare every figure with last week's report and explain any change bigger than 10% in one sentence. Link each figure to its source file or record. If a number is missing, write "not available" instead of estimating. Save it as Files/clients/acme/reports/[today's date].md. Do not send it to anyone.
+<Prompt>
+
+Draft this week's report for Acme. Use the CSV I uploaded to Files/clients/acme/exports and the deals in HubSpot tagged Acme. Match the structure of last-report.md in the same folder. Compare every figure with last week's report and explain any change bigger than 10% in one sentence. Link each figure to its source file or record. If a number is missing, write "not available" instead of estimating. Save it as Files/clients/acme/reports/[today's date].md. Do not send it to anyone.
+
+</Prompt>
 
 Read it against the client's real dashboards. When it is right for one client, ask for all of them in one run, then save that run as a workflow. Construct can offer to save a successful run as a workflow draft; it never publishes or schedules one on its own. Once three Fridays come out clean, schedule it for Friday morning.
 
@@ -84,7 +92,11 @@ Current workflows are linear: no branching, delays, or approval steps. A workflo
 
 Forward the kickoff call notes or the client's email to the agent's own address, or drop them in the client folder, with the job at the top:
 
-> Read the kickoff notes below and draft a creative brief using Files/templates/brief.md. Fill in objective, audience, key message, mandatories, deliverables, and timeline. Where the notes do not answer a section, write the question we need to ask the client instead of guessing. Save it to Files/clients/acme/briefs/ and reply with a one-line summary and the file path.
+<Prompt>
+
+Read the kickoff notes below and draft a creative brief using Files/templates/brief.md. Fill in objective, audience, key message, mandatories, deliverables, and timeline. Where the notes do not answer a section, write the question we need to ask the client instead of guessing. Save it to Files/clients/acme/briefs/ and reply with a one-line summary and the file path.
+
+</Prompt>
 
 You can also mention the agent in a Slack channel such as #briefs with the notes pasted in; the reply comes back in that thread, and the brief still lands in Files. The open questions are the most useful part. A brief with three honest gaps beats one that invents a target audience.
 
@@ -94,11 +106,14 @@ Construct accepts work from the web, Slack, Telegram, Discord slash commands, an
 
 Approvals are where agencies lose time: a draft sits in someone's DMs, the client chases, and nobody knows who has the ball. Construct can build a small private app for this inside the workspace.
 
-> Build a review queue app. Each item has a client, a deliverable name, a link to the file in Files, an owner, a reviewer, a status (draft, in review, changes requested, approved, sent), and reviewer notes. Store the items in Files/review-queue/queue.json so you can read and update them too. Show a board grouped by status and a filter by client. It only needs access to workspace files.
+<Prompt>
+
+Build a review queue app. Each item has a client, a deliverable name, a link to the file in Files, an owner, a reviewer, a status (draft, in review, changes requested, approved, sent), and reviewer notes. Store the items in Files/review-queue/queue.json so you can read and update them too. Show a board grouped by status and a filter by client. It only needs access to workspace files.
+
+</Prompt>
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -115,18 +130,17 @@ Approvals are where agencies lose time: a draft sits in someone's DMs, the clien
       src="/blog/ai-employee-for-agencies/internal-app-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
+  </ArticleVideo>
   <figcaption
     id="agency-app-demo-description"
     className="mt-3 text-sm leading-6"
   >
     Silent product demo: Construct building and opening an internal app in the
-    workspace. A review queue for client work is the same kind of small,
-    private app.
+    workspace. A review queue for client work is the same kind of small, private
+    app.
   </figcaption>
 </figure>
 
@@ -134,7 +148,11 @@ Workspace apps declare what they can touch. This one needs only workspace files,
 
 Then add one line to the Friday report job: "Add each new report to the review queue as draft, with the account lead as reviewer." On Monday, the agent can read the queue and post what is still waiting:
 
-> Read Files/review-queue/queue.json. Email the account leads, from your own address, a list of every item that has been in review for more than two working days, with the reviewer's name.
+<Prompt>
+
+Read Files/review-queue/queue.json. Email the account leads, from your own address, a list of every item that has been in review for more than two working days, with the reviewer's name.
+
+</Prompt>
 
 Scheduled runs report back in the Construct web app with a notification; they do not post into Slack or Telegram. That is why this step asks for an email instead of a Slack message.
 

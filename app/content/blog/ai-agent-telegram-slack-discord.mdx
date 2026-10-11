@@ -2,7 +2,7 @@
 title: "How to Message Your AI Agent From Telegram, Slack, Discord or Email"
 seoTitle: "Message Your AI Agent From Telegram, Slack, Discord or Email"
 description: "Connect one AI agent to Slack, Telegram, Discord and email, then set who can use it in each place. Setup steps, exact prompts, and access rules."
-published: "2026-11-08"
+published: "2026-11-09"
 author: "nischal"
 tags: ["ai-agent", "ai-employee", "email"]
 kind: "guide"
@@ -30,19 +30,21 @@ Work is assigned where the conversation already is. If the only way to hand an a
 
 <ArticleTable caption="Construct channels compared by setup, access, and best use">
 
-| Channel  | How you connect                        | How you start a job                                   | Who can use it by default | Good for                                   |
-| -------- | -------------------------------------- | ----------------------------------------------------- | ------------------------- | ------------------------------------------ |
-| Web      | Sign in                                | Chat in the desktop                                   | You and your workspace    | Long jobs, reviewing files                 |
-| Slack    | Add to Slack                           | @mention in a channel, reply in that thread, or DM    | Only the installer        | Team requests, shared threads              |
-| Telegram | Open Telegram to link                  | Message the bot, or /ask in a group                   | Only your linked account  | Quick jobs from your phone                 |
-| Discord  | Add to Discord                         | Slash commands and mentions in a server               | Only the installer        | Communities and server-based teams         |
-| Email    | Included, nothing to install           | Send or forward from your own account address         | Only you                  | Forwarding threads, vendor mail, invoices  |
+| Channel  | How you connect              | How you start a job                                | Who can use it by default | Good for                                  |
+| -------- | ---------------------------- | -------------------------------------------------- | ------------------------- | ----------------------------------------- |
+| Web      | Sign in                      | Chat in the desktop                                | You and your workspace    | Long jobs, reviewing files                |
+| Slack    | Add to Slack                 | @mention in a channel, reply in that thread, or DM | Only the installer        | Team requests, shared threads             |
+| Telegram | Open Telegram to link        | Message the bot, or /ask in a group                | Only your linked account  | Quick jobs from your phone                |
+| Discord  | Add to Discord               | Slash commands and mentions in a server            | Only the installer        | Communities and server-based teams        |
+| Email    | Included, nothing to install | Send or forward from your own account address      | Only you                  | Forwarding threads, vendor mail, invoices |
 
 </ArticleTable>
 
 Sources: [Construct channels](/use-cases/channels/) and [pricing](/pricing/). Lite, Starter, and Pro all include the agent email address.
 
-<BetaCta source="blog_inline_1">Connect Construct to Slack and Telegram</BetaCta>
+<BetaCta source="blog_inline_1">
+  Connect Construct to Slack and Telegram
+</BetaCta>
 
 ## What do you need?
 
@@ -71,7 +73,11 @@ Open Settings > Messaging and choose **Add to Slack**. The person who completes 
 
 Then talk to it in any of three ways: @mention it in a channel, keep replying in the thread that mention started, or send it a direct message. That is all it sees. The bot cannot read channel history or threads it was not brought into, so put what it needs in the message itself. Public channels work without inviting the bot first; private channels need an invite.
 
-> @Construct here is what Acme asked for on today's call: [paste notes]. Draft a two-paragraph summary of their request and what we promised, save it to Files under customers/acme, and reply here with the link. Do not message the customer.
+<Prompt>
+
+@Construct here is what Acme asked for on today's call: [paste notes]. Draft a two-paragraph summary of their request and what we promised, save it to Files under customers/acme, and reply here with the link. Do not message the customer.
+
+</Prompt>
 
 Slack has no registered slash commands for Construct. Instead, type the command as plain text in the thread, preferably after a mention: "@Construct /stop" stops a running job and "@Construct /new" starts a fresh session. Reacting with ❌ to a message in the thread also stops the run.
 
@@ -81,7 +87,11 @@ Choose **Open Telegram to link** in Settings > Messaging. That opens Construct's
 
 After linking, message the bot directly. In a group, the bot acts only on messages meant for it: a mention, a reply to one of its messages, or a command such as /ask. That matches how Telegram's own privacy mode works; Telegram's documentation says a bot in privacy mode receives "commands explicitly meant for them" and "replies to any messages implicitly or explicitly meant for this bot" ([Telegram Bot API, privacy mode](https://core.telegram.org/bots/features#privacy-mode)). Keep privacy mode on.
 
-> Check my calendar for tomorrow and send me a list of meetings that have no agenda yet, with the attendees for each.
+<Prompt>
+
+Check my calendar for tomorrow and send me a list of meetings that have no agenda yet, with the attendees for each.
+
+</Prompt>
 
 /status shows which agent is answering and your access level, and /help lists the commands. To stop a job you started from Telegram, stop it from the web app. {/* TODO: confirm when /stop and /new are handled on Telegram */}
 
@@ -97,7 +107,11 @@ There is nothing to install. Your agent's native address is in the Email app, an
 
 Today, a job starts by email only when the message comes from the address you use for your Construct account and passes sender authentication. Mail from anyone else is stored in the agent's inbox and notified, but it does not start work on its own; you can still open it and ask the agent to deal with it. Automated mail such as newsletters, bounces, and auto-replies never starts a job.
 
-> (Forwarded from your own account, with this at the top) Pull the new prices out of this supplier quote, compare them with last quarter's quote in Files, and save a one-page summary. Draft a reply asking about delivery dates but do not send it.
+<Prompt label="Forward from your own account, with this at the top">
+
+Pull the new prices out of this supplier quote, compare them with last quarter's quote in Files, and save a one-page summary. Draft a reply asking about delivery dates but do not send it.
+
+</Prompt>
 
 {/* TODO: confirm whether other senders can be allowed to assign work by email; Settings access rules currently apply to chat platforms only */}
 
@@ -122,13 +136,16 @@ Under **Default agent**, pick which agent answers on each platform. Plans includ
 
 Send the same small job from each channel and check that every result lands in the same workspace.
 
-> What is in Files under reports/ from the last 7 days? Reply with file names and one line each.
+<Prompt>
+
+What is in Files under reports/ from the last 7 days? Reply with file names and one line each.
+
+</Prompt>
 
 If every channel returns the same list, routing works.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -145,18 +162,14 @@ If every channel returns the same list, routing works.
       src="/blog/ai-agent-telegram-slack-discord/channels-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
-  <figcaption
-    id="channels-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
-    Silent product demo: Construct is available through Slack, Telegram,
-    Discord slash commands, native email, and the web, with the work landing
-    in the same workspace.
+  </ArticleVideo>
+  <figcaption id="channels-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct is available through Slack, Telegram, Discord
+    slash commands, native email, and the web, with the work landing in the same
+    workspace.
   </figcaption>
 </figure>
 

@@ -2,7 +2,7 @@
 title: "Is Construct Computer safe? Data, permissions and what the agent can touch"
 seoTitle: "Is Construct Computer Safe? Data, Permissions and Risks (2027)"
 description: "What Construct stores, who processes it, what its AI agent can reach, the controls that limit it, and the risks that remain. Written by the team that builds it."
-published: "2026-11-30"
+published: "2026-12-01"
 author: "ankush"
 tags: ["governance", "product", "ai-employee"]
 kind: "article"
@@ -55,16 +55,16 @@ This is the question that matters most. The agent can reach what you give it, th
 
 <ArticleTable caption="What Construct's agent can reach, and what limits each surface">
 
-| Surface | What the agent can do | What limits it |
-| --- | --- | --- |
-| Files | Read, write, and delete workspace files | Your workspace only; team members see Team files, not your private ones |
-| Terminal | Run commands in a Linux sandbox attached to your workspace | Non-root by default; five-minute cap per command; no long-running processes |
-| Live browser | Visit and act on websites in a cloud browser | Not your browser and not your logins; one run per agent; you can watch and stop it |
-| Native email | Read its own inbox, draft, send, and reply from its own address | Only mail you send from your own account address, passing email authentication checks, starts a task; sending is rate limited |
-| Connected apps | Whatever the connected account allows | Per-agent access lists; owners and admins add apps in team workspaces |
-| Custom MCP tools | Call tools on servers you add | Public HTTPS only; 15-second calls; per-agent access |
-| Slack, Telegram, Discord | Reply where it is mentioned or messaged | Allow lists that fail closed; non-listed people get a read-only agent only if you open it to everyone |
-| Schedules | Run jobs while nobody is watching | Plan caps on scheduled tasks; each run re-checks access |
+| Surface                  | What the agent can do                                           | What limits it                                                                                                                |
+| ------------------------ | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Files                    | Read, write, and delete workspace files                         | Your workspace only; team members see Team files, not your private ones                                                       |
+| Terminal                 | Run commands in a Linux sandbox attached to your workspace      | Non-root by default; five-minute cap per command; no long-running processes                                                   |
+| Live browser             | Visit and act on websites in a cloud browser                    | Not your browser and not your logins; one run per agent; you can watch and stop it                                            |
+| Native email             | Read its own inbox, draft, send, and reply from its own address | Only mail you send from your own account address, passing email authentication checks, starts a task; sending is rate limited |
+| Connected apps           | Whatever the connected account allows                           | Per-agent access lists; owners and admins add apps in team workspaces                                                         |
+| Custom MCP tools         | Call tools on servers you add                                   | Public HTTPS only; 15-second calls; per-agent access                                                                          |
+| Slack, Telegram, Discord | Reply where it is mentioned or messaged                         | Allow lists that fail closed; non-listed people get a read-only agent only if you open it to everyone                         |
+| Schedules                | Run jobs while nobody is watching                               | Plan caps on scheduled tasks; each run re-checks access                                                                       |
 
 </ArticleTable>
 
@@ -87,8 +87,7 @@ These are in the product today:
 - **Scheduled work re-checks access.** Each scheduled run checks the agent, the app install, and its permissions again; saved schedules never contain credentials.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -105,11 +104,10 @@ These are in the product today:
       src="/blog/is-construct-computer-safe/memories-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
+  </ArticleVideo>
   <figcaption id="memory-demo-description" className="mt-3 text-sm leading-6">
     Silent product demo: Construct's Memories app showing the preferences and
     procedures the agent has learned, with the evidence behind each one, so you

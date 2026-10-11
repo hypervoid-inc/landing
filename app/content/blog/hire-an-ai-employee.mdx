@@ -2,7 +2,7 @@
 title: "Hire Your First AI Employee: A 30-Day Plan"
 seoTitle: "How to Hire an AI Employee: A Week-by-Week 30-Day Plan"
 description: "A week-by-week plan for your first AI employee: which jobs to give it first, how to supervise it, and the signals that say expand or stop by day 30."
-published: "2026-11-17"
+published: "2026-11-18"
 author: "nischal"
 tags: ["ai-employee", "ai-agent", "small-business"]
 kind: "guide"
@@ -46,12 +46,12 @@ That is an argument for small, checkable jobs rather than against hiring at all.
 
 <ArticleTable caption="A 30-day onboarding plan for a first AI employee">
 
-| Week          | Goal                              | Example jobs                                  | What you check                    | Move on when                              |
-| ------------- | --------------------------------- | --------------------------------------------- | --------------------------------- | ----------------------------------------- |
-| 1 (days 1-7)  | Read-only work you can verify     | Company research, inbox summary, file analysis | Every source and every number     | Two jobs done with only small corrections |
-| 2 (days 8-14) | One recurring job on a schedule   | Weekly competitor pricing report              | Each scheduled run's output       | Two scheduled runs you would have accepted |
-| 3 (days 15-21)| Writes to systems you control     | CRM notes, Linear issues, files in a shared folder | Every write, via a changes list | A week of writes with nothing to undo     |
-| 4 (days 22-30)| Outward-facing work, drafts only  | Customer follow-ups, weekly updates           | Every draft before it is sent     | Drafts you send with light edits          |
+| Week           | Goal                             | Example jobs                                       | What you check                  | Move on when                               |
+| -------------- | -------------------------------- | -------------------------------------------------- | ------------------------------- | ------------------------------------------ |
+| 1 (days 1-7)   | Read-only work you can verify    | Company research, inbox summary, file analysis     | Every source and every number   | Two jobs done with only small corrections  |
+| 2 (days 8-14)  | One recurring job on a schedule  | Weekly competitor pricing report                   | Each scheduled run's output     | Two scheduled runs you would have accepted |
+| 3 (days 15-21) | Writes to systems you control    | CRM notes, Linear issues, files in a shared folder | Every write, via a changes list | A week of writes with nothing to undo      |
+| 4 (days 22-30) | Outward-facing work, drafts only | Customer follow-ups, weekly updates                | Every draft before it is sent   | Drafts you send with light edits           |
 
 </ArticleTable>
 
@@ -59,11 +59,19 @@ That is an argument for small, checkable jobs rather than against hiring at all.
 
 **Set the ground rules first.** Tell the agent how you work and ask it to remember. Memory can be inspected, corrected, or forgotten in the Memories app, so this is safe to adjust later ([AI agent memory](/blog/ai-agent-memory/)).
 
-> Remember these working rules. I run a six-person design studio. Save finished work to Files, not just chat. Cite a source URL for every fact you look up. If you are unsure, ask me instead of guessing. Never send email, post publicly, or change records in any connected app unless I ask for that specific action.
+<Prompt>
+
+Remember these working rules. I run a six-person design studio. Save finished work to Files, not just chat. Cite a source URL for every fact you look up. If you are unsure, ask me instead of guessing. Never send email, post publicly, or change records in any connected app unless I ask for that specific action.
+
+</Prompt>
 
 **Give it one research job.** A prospect or vendor list is ideal because every cell can be checked. The [company research guide](/blog/ai-company-research-spreadsheet/) has the full prompt; the short version:
 
-> Research these 10 companies: [list with websites]. For each, record what they sell, pricing model, lowest published monthly price, and whether they offer a free trial, with a source URL for each fact. Write "not found" when you cannot find something. Save it to Files as research/vendors.csv.
+<Prompt>
+
+Research these 10 companies: [list with websites]. For each, record what they sell, pricing model, lowest published monthly price, and whether they offer a free trial, with a source URL for each fact. Write "not found" when you cannot find something. Save it to Files as research/vendors.csv.
+
+</Prompt>
 
 **Check everything.** In week 1 you read every row and open every source. You are learning where it is reliable and where your instructions were vague. Correct it in plain language and ask it to remember the correction.
 
@@ -73,7 +81,11 @@ Also look at the agent's email address in the Email app. It is included on every
 
 Pick the job that recurs most predictably, run it on demand once or twice, then schedule it. A weekly report is the classic choice; see the [competitor pricing report guide](/blog/ai-competitor-pricing-report/).
 
-> Every Monday at 8am, run the competitor pricing comparison, save the snapshot and report to Files with the date in the name, and notify me when it is ready.
+<Prompt>
+
+Every Monday at 8am, run the competitor pricing comparison, save the snapshot and report to Files with the date in the name, and notify me when it is ready.
+
+</Prompt>
 
 Scheduled jobs run on Construct's cloud computer with your laptop closed and deliver to the web app with a notification ([running an agent on a schedule](/blog/ai-agent-scheduled-tasks/)). Lite's 3 scheduled tasks are enough for this stage.
 
@@ -83,7 +95,11 @@ This is also the week to connect a channel so you can hand over small jobs from 
 
 Now let it change things, but only in places you own and can undo: notes in your CRM, issues in your tracker, files in a shared folder. Construct finds these apps in its live integration catalog and asks you to connect an account when needed.
 
-> For each client call note I paste this week, add a summary note to the matching HubSpot deal and create a task for each action item I own. Do not change deal stage or amount. Keep a list of every change in Files under changes/ with today's date.
+<Prompt>
+
+For each client call note I paste this week, add a summary note to the matching HubSpot deal and create a task for each action item I own. Do not change deal stage or amount. Keep a list of every change in Files under changes/ with today's date.
+
+</Prompt>
 
 The changes list is your review step: read it after each run and undo anything wrong before the next one. Once a job has run cleanly a few times, save it as a workflow. Current workflows are linear, with no branching, delays, or approval steps ([AI workflow automation](/blog/ai-workflow-automation/)).
 
@@ -91,15 +107,18 @@ The changes list is your review step: read it after each run and undo anything w
 
 The last stage is work other people see: follow-up emails, client updates, investor updates. Keep every one as a draft you approve.
 
-> Find deals with no activity in 7 days, draft a short follow-up for each as an email draft, and list them with one line on why. Do not send anything until I reply "send" for a specific draft.
+<Prompt>
+
+Find deals with no activity in 7 days, draft a short follow-up for each as an email draft, and list them with one line on why. Do not send anything until I reply "send" for a specific draft.
+
+</Prompt>
 
 The customer follow-up guide covers this job in detail. {/* TODO: link /blog/ai-follow-ups-crm-without-zapier/ once it is live */} A weekly investor update drafted from your tools is a good second outward job. {/* TODO: link /blog/ai-investor-update/ once it is live */}
 
 If you have been doing every run yourself, this is also when to decide whether a teammate should share the agent. A team workspace puts the agent, files, and conversations in one place with roles. {/* TODO: link /blog/ai-employee-team-workspace/ once it is live */}
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -116,15 +135,11 @@ If you have been doing every run yourself, this is also when to decide whether a
       src="/blog/hire-an-ai-employee/memories-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
-  <figcaption
-    id="memories-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
+  </ArticleVideo>
+  <figcaption id="memories-demo-description" className="mt-3 text-sm leading-6">
     Silent product demo: Construct Memories showing evidence-backed preferences
     and procedures, the rules you build up during the first 30 days.
   </figcaption>

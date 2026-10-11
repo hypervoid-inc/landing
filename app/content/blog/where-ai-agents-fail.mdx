@@ -2,7 +2,7 @@
 title: "Where AI agents fail: what real runs show"
 seoTitle: "Why AI Agents Fail: An Analysis of Real Agent Runs"
 description: "Where AI agents fail in real business runs: at which step, on which tool, and how often a resumable run recovers. Our method, definitions and data."
-published: "2026-11-10"
+published: "2026-11-11"
 author: "ankush"
 tags: ["ai-agent", "reliability", "engineering"]
 kind: "article"
@@ -64,17 +64,17 @@ Each step is assigned one category from what it called:
 
 <ArticleTable caption="Tool categories used to classify each step">
 
-| Category | What it covers |
-| --- | --- |
-| Browser | Live browser runs: opening, reading, clicking, and filling pages |
-| Terminal | Commands in the sandbox terminal |
-| Files | Reading, writing, and moving workspace files |
-| Web search and fetch | Search queries and page fetches without a live browser |
-| Connected apps | Actions through the live integration catalog and custom MCP tools |
-| Email | Reading and sending through the agent's own inbox |
-| Memory | Storing, recalling, or correcting long-term memory |
-| Delegation | Handing a subtask to a temporary agent |
-| No tool | A step where the model only reasons or writes its answer |
+| Category             | What it covers                                                    |
+| -------------------- | ----------------------------------------------------------------- |
+| Browser              | Live browser runs: opening, reading, clicking, and filling pages  |
+| Terminal             | Commands in the sandbox terminal                                  |
+| Files                | Reading, writing, and moving workspace files                      |
+| Web search and fetch | Search queries and page fetches without a live browser            |
+| Connected apps       | Actions through the live integration catalog and custom MCP tools |
+| Email                | Reading and sending through the agent's own inbox                 |
+| Memory               | Storing, recalling, or correcting long-term memory                |
+| Delegation           | Handing a subtask to a temporary agent                            |
+| No tool              | A step where the model only reasons or writes its answer          |
 
 </ArticleTable>
 
@@ -86,15 +86,15 @@ Every run ends with one outcome label. We group them like this:
 
 <ArticleTable caption="How each run outcome is counted">
 
-| Outcome | What it means | Counted as |
-| --- | --- | --- |
-| Completed | The agent finished and gave a final answer | Finished |
-| Reached the step budget | The run used every step its plan allows without finishing | Failure |
-| Errored | The run stopped on an error it could not recover from | Failure |
-| Stopped without an answer | The run ended without a final answer and was not continued | Failure |
-| Waiting on a person | The agent stopped to ask a question or needed a permission | Handed back, not a failure |
-| Interrupted | A person stopped the run | Excluded from failure rates |
-| Deferred | The run was postponed to continue later | Excluded until it resolves |
+| Outcome                   | What it means                                              | Counted as                  |
+| ------------------------- | ---------------------------------------------------------- | --------------------------- |
+| Completed                 | The agent finished and gave a final answer                 | Finished                    |
+| Reached the step budget   | The run used every step its plan allows without finishing  | Failure                     |
+| Errored                   | The run stopped on an error it could not recover from      | Failure                     |
+| Stopped without an answer | The run ended without a final answer and was not continued | Failure                     |
+| Waiting on a person       | The agent stopped to ask a question or needed a permission | Handed back, not a failure  |
+| Interrupted               | A person stopped the run                                   | Excluded from failure rates |
+| Deferred                  | The run was postponed to continue later                    | Excluded until it resolves  |
 
 </ArticleTable>
 
@@ -137,13 +137,13 @@ The analysis runs in five passes, all on aggregate tables:
 <ArticleTable caption="Run length distribution by plan">
 
 | Steps in the run | Runs | Share of runs | Completion rate | Lite share | Starter share | Pro share |
-| --- | --- | --- | --- | --- | --- | --- |
-| 1 to 5 | [n] | [%] | [%] | [%] | [%] | [%] |
-| 6 to 10 | [n] | [%] | [%] | [%] | [%] | [%] |
-| 11 to 25 | [n] | [%] | [%] | [%] | [%] | [%] |
-| 26 to 50 | [n] | [%] | [%] | [%] | [%] | [%] |
-| 51 to 150 | [n] | [%] | [%] | n/a | [%] | [%] |
-| 151 to 1,000 | [n] | [%] | [%] | n/a | n/a | [%] |
+| ---------------- | ---- | ------------- | --------------- | ---------- | ------------- | --------- |
+| 1 to 5           | [n]  | [%]           | [%]             | [%]        | [%]           | [%]       |
+| 6 to 10          | [n]  | [%]           | [%]             | [%]        | [%]           | [%]       |
+| 11 to 25         | [n]  | [%]           | [%]             | [%]        | [%]           | [%]       |
+| 26 to 50         | [n]  | [%]           | [%]             | [%]        | [%]           | [%]       |
+| 51 to 150        | [n]  | [%]           | [%]             | n/a        | [%]           | [%]       |
+| 151 to 1,000     | [n]  | [%]           | [%]             | n/a        | n/a           | [%]       |
 
 </ArticleTable>
 
@@ -153,14 +153,14 @@ The analysis runs in five passes, all on aggregate tables:
 
 <ArticleTable caption="Run outcomes by what started the run">
 
-| Started from | Runs | Completed | Reached step budget | Errored | No answer | Waiting on a person |
-| --- | --- | --- | --- | --- | --- | --- |
-| Chat on the web | [n] | [%] | [%] | [%] | [%] | [%] |
-| Slack, Telegram, or Discord | [n] | [%] | [%] | [%] | [%] | [%] |
-| Email to the agent's inbox | [n] | [%] | [%] | [%] | [%] | [%] |
-| Scheduled job | [n] | [%] | [%] | [%] | [%] | [%] |
-| Workflow step | [n] | [%] | [%] | [%] | [%] | [%] |
-| Delegated subtask | [n] | [%] | [%] | [%] | [%] | [%] |
+| Started from                | Runs | Completed | Reached step budget | Errored | No answer | Waiting on a person |
+| --------------------------- | ---- | --------- | ------------------- | ------- | --------- | ------------------- |
+| Chat on the web             | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
+| Slack, Telegram, or Discord | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
+| Email to the agent's inbox  | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
+| Scheduled job               | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
+| Workflow step               | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
+| Delegated subtask           | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
 
 </ArticleTable>
 
@@ -170,17 +170,17 @@ The analysis runs in five passes, all on aggregate tables:
 
 <ArticleTable caption="Failures per thousand steps by tool category">
 
-| Tool category | Steps run | Share of all steps | Failed runs ending on it | Failures per 1,000 steps | Share of all failures |
-| --- | --- | --- | --- | --- | --- |
-| Browser | [n] | [%] | [n] | [x] | [%] |
-| Terminal | [n] | [%] | [n] | [x] | [%] |
-| Files | [n] | [%] | [n] | [x] | [%] |
-| Web search and fetch | [n] | [%] | [n] | [x] | [%] |
-| Connected apps | [n] | [%] | [n] | [x] | [%] |
-| Email | [n] | [%] | [n] | [x] | [%] |
-| Memory | [n] | [%] | [n] | [x] | [%] |
-| Delegation | [n] | [%] | [n] | [x] | [%] |
-| No tool | [n] | [%] | [n] | [x] | [%] |
+| Tool category        | Steps run | Share of all steps | Failed runs ending on it | Failures per 1,000 steps | Share of all failures |
+| -------------------- | --------- | ------------------ | ------------------------ | ------------------------ | --------------------- |
+| Browser              | [n]       | [%]                | [n]                      | [x]                      | [%]                   |
+| Terminal             | [n]       | [%]                | [n]                      | [x]                      | [%]                   |
+| Files                | [n]       | [%]                | [n]                      | [x]                      | [%]                   |
+| Web search and fetch | [n]       | [%]                | [n]                      | [x]                      | [%]                   |
+| Connected apps       | [n]       | [%]                | [n]                      | [x]                      | [%]                   |
+| Email                | [n]       | [%]                | [n]                      | [x]                      | [%]                   |
+| Memory               | [n]       | [%]                | [n]                      | [x]                      | [%]                   |
+| Delegation           | [n]       | [%]                | [n]                      | [x]                      | [%]                   |
+| No tool              | [n]       | [%]                | [n]                      | [x]                      | [%]                   |
 
 </ArticleTable>
 
@@ -200,12 +200,12 @@ The test is simple to state. If each step fails at the same rate regardless of h
 
 <ArticleTable caption="Recovery after a failed run">
 
-| Failure type | Failed runs | Retried within 24 hours | Retry completed | Median retry ratio |
-| --- | --- | --- | --- | --- |
-| Reached step budget | [n] | [%] | [%] | [x] |
-| Errored | [n] | [%] | [%] | [x] |
-| No answer | [n] | [%] | [%] | [x] |
-| All failures | [n] | [%] | [%] | [x] |
+| Failure type        | Failed runs | Retried within 24 hours | Retry completed | Median retry ratio |
+| ------------------- | ----------- | ----------------------- | --------------- | ------------------ |
+| Reached step budget | [n]         | [%]                     | [%]             | [x]                |
+| Errored             | [n]         | [%]                     | [%]             | [x]                |
+| No answer           | [n]         | [%]                     | [%]             | [x]                |
+| All failures        | [n]         | [%]                     | [%]             | [x]                |
 
 </ArticleTable>
 
@@ -274,8 +274,7 @@ One thing to set up deliberately: Construct's workflows run their steps in order
 Then test it on your own work. Pick the job you most want to hand to an agent and count its steps. Run it on demand a few times, note the step where it stops, and compare that with the tables above. If it fails early, fix the setup. If it fails late, cut it into pieces that save their work. Then put it on the Calendar.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -292,11 +291,10 @@ Then test it on your own work. Pick the job you most want to hand to an agent an
       src="/blog/where-ai-agents-fail/calendar-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
+  </ArticleVideo>
   <figcaption id="calendar-demo-description" className="mt-3 text-sm leading-6">
     Silent product demo: Construct's Calendar showing scheduled agent jobs and
     workflow runs, which run once or repeatedly and keep their result history.

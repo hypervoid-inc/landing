@@ -2,7 +2,7 @@
 title: "Hermes Agent vs OpenClaw vs a managed AI employee"
 seoTitle: "Hermes Agent vs OpenClaw vs a Managed AI Employee (2026)"
 description: "Hermes Agent and OpenClaw are free to self-host; Nous hosts Hermes from $20 a month. Which suits a non-technical founder, and when a managed agent is simpler."
-published: "2026-11-01"
+published: "2026-11-02"
 author: "construct-team"
 tags: ["comparison", "openclaw", "hermes-agent", "ai-employee"]
 kind: "comparison"
@@ -25,8 +25,7 @@ If you are technical and want to own every layer, both open-source agents are co
 - **Its own inbox, plus your chat apps.** Each agent has its own email address, and you can reach it from the web, Slack, Telegram, or Discord.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -43,15 +42,11 @@ If you are technical and want to own every layer, both open-source agents are co
       src="/blog/hermes-vs-openclaw-vs-managed/memories-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
-  <figcaption
-    id="memories-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
+  </ArticleVideo>
+  <figcaption id="memories-demo-description" className="mt-3 text-sm leading-6">
     Silent product demo: Construct Memories showing stored preferences and
     procedures with their evidence, which you can review, correct, or forget.
   </figcaption>
@@ -63,19 +58,19 @@ If you are technical and want to own every layer, both open-source agents are co
 
 <ArticleTable caption="Construct, Hermes Agent, and OpenClaw compared, checked October 1, 2026">
 
-| | Construct (managed AI employee) | Hermes Agent | OpenClaw |
-| --- | --- | --- | --- |
-| Monthly price | $9, $59, or $299 | Software free; Nous Portal plans $20 to $200 in credits | Software free; third-party hosts from $5.99 |
-| Model bill | Included in the plan; your own keys on Pro | Your provider, or Nous Portal credits | Your provider, a ChatGPT subscription sign-in, or a local model |
-| Hosting | Hosted by default; nothing to run | Nous Portal Agent Cloud Hosting, billed from credits | None official; third-party hosts such as Hostinger and MyClaw |
-| Setup | Sign up in a browser | Desktop app or one-line installer; "under two minutes" | Desktop app, installer script, or npm; about 5 minutes for basic setup |
-| Memory and learning | Memory you can inspect, correct, or forget | Creates and improves skills from experience | Skills from the ClawHub registry; persistent memory |
-| Schedules | Calendar runs prompts, actions, or workflows; 3, 10, or 50 by plan | Built-in cron with delivery to any platform | Cron, webhooks, Gmail triggers, heartbeat check-ins |
-| Team use | Team workspace with roles and no per-seat fee | All authorized users are equally trusted | Configured in your own deployment |
-| Chat apps | Web, Slack, Telegram, Discord, its own email inbox | Telegram, Discord, Slack, WhatsApp, Signal, email, CLI, and more | WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Teams, Matrix, SMS, and many more |
-| Safety defaults | No server to expose; Activity records each action and why | Smart command approval on by default; YOLO mode can turn it off | Sandboxing and exec approvals off by default; DM pairing on |
-| Licence | Commercial service | MIT | MIT |
-| Who makes it | Construct | Nous Research, a venture-backed company | OpenClaw Foundation, a 501(c)(3) non-profit |
+|                     | Construct (managed AI employee)                                    | Hermes Agent                                                     | OpenClaw                                                                                |
+| ------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Monthly price       | $9, $59, or $299                                                   | Software free; Nous Portal plans $20 to $200 in credits          | Software free; third-party hosts from $5.99                                             |
+| Model bill          | Included in the plan; your own keys on Pro                         | Your provider, or Nous Portal credits                            | Your provider, a ChatGPT subscription sign-in, or a local model                         |
+| Hosting             | Hosted by default; nothing to run                                  | Nous Portal Agent Cloud Hosting, billed from credits             | None official; third-party hosts such as Hostinger and MyClaw                           |
+| Setup               | Sign up in a browser                                               | Desktop app or one-line installer; "under two minutes"           | Desktop app, installer script, or npm; about 5 minutes for basic setup                  |
+| Memory and learning | Memory you can inspect, correct, or forget                         | Creates and improves skills from experience                      | Skills from the ClawHub registry; persistent memory                                     |
+| Schedules           | Calendar runs prompts, actions, or workflows; 3, 10, or 50 by plan | Built-in cron with delivery to any platform                      | Cron, webhooks, Gmail triggers, heartbeat check-ins                                     |
+| Team use            | Team workspace with roles and no per-seat fee                      | All authorized users are equally trusted                         | Configured in your own deployment                                                       |
+| Chat apps           | Web, Slack, Telegram, Discord, its own email inbox                 | Telegram, Discord, Slack, WhatsApp, Signal, email, CLI, and more | WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Teams, Matrix, SMS, and many more |
+| Safety defaults     | No server to expose; Activity records each action and why          | Smart command approval on by default; YOLO mode can turn it off  | Sandboxing and exec approvals off by default; DM pairing on                             |
+| Licence             | Commercial service                                                 | MIT                                                              | MIT                                                                                     |
+| Who makes it        | Construct                                                          | Nous Research, a venture-backed company                          | OpenClaw Foundation, a 501(c)(3) non-profit                                             |
 
 </ArticleTable>
 
@@ -85,14 +80,14 @@ Sources are linked in each section and listed under Sources. "Software free" is 
 
 <ArticleTable caption="Monthly cost of Construct, hosted Hermes, and hosted OpenClaw, USD, checked October 1, 2026">
 
-| Option | Monthly price | What is included |
-| --- | --- | --- |
-| Construct Lite | $9 | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address, base model usage |
-| Construct Starter | $59 | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks, team workspace |
-| Construct Pro | $299 | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys |
-| Nous Portal Plus, Super, Ultra (Hermes) | $20, $100, $200 | $22, $110, or $220 of credits shared by models, tools, and hosting |
-| Hostinger 1-Click OpenClaw | From $5.99, paid upfront | Hosting only; you add a model provider |
-| MyClaw (OpenClaw) | $29 | Managed hosting; AI token usage is not included |
+| Option                                  | Monthly price            | What is included                                                                               |
+| --------------------------------------- | ------------------------ | ---------------------------------------------------------------------------------------------- |
+| Construct Lite                          | $9                       | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address, base model usage    |
+| Construct Starter                       | $59                      | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks, team workspace          |
+| Construct Pro                           | $299                     | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys |
+| Nous Portal Plus, Super, Ultra (Hermes) | $20, $100, $200          | $22, $110, or $220 of credits shared by models, tools, and hosting                             |
+| Hostinger 1-Click OpenClaw              | From $5.99, paid upfront | Hosting only; you add a model provider                                                         |
+| MyClaw (OpenClaw)                       | $29                      | Managed hosting; AI token usage is not included                                                |
 
 </ArticleTable>
 

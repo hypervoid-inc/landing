@@ -2,7 +2,7 @@
 title: "Construct vs Simular Sai"
 seoTitle: "Simular Sai Alternative: Construct vs Sai (2027)"
 description: "Construct gives a small team an AI employee with shared files, schedules, and email from $9 a month. See how it compares with Simular Sai on price and apps."
-published: "2026-11-26"
+published: "2026-11-27"
 author: "construct-team"
 tags: ["comparison", "simular", "ai-agent"]
 kind: "comparison"
@@ -45,16 +45,16 @@ We read Sai's product and pricing pages on sai.work, Simular's pricing page and 
 
 <ArticleTable caption="Construct vs Simular Sai capabilities, checked October 1, 2026">
 
-| Capability                | Construct                                                                                   | Simular Sai                                                                   |
-| ------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| Pricing model             | Fixed monthly plan from $9 with published limits                                            | Free Explore plan; $50 of credits for AI and machine time; $500 Unlimited     |
-| Model                     | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro | Model-agnostic, per Simular; own keys not documented                          |
-| Memory                    | Inspect, correct, or forget any stored fact                                                 | Setup, logins, preferences, and context persist on the VM                     |
-| Where finished work lives | Workspace files your team can open; a stopped run keeps its finished steps                  | On the cloud VM or your own device                                            |
-| Recurring work            | Calendar schedules and saved workflows: 3 on Lite, 10 on Starter, 50 on Pro                 | Teach a task once and rerun it on a schedule                                  |
-| Team use                  | Team workspaces with Owner, Admin, and Member roles and no member limit                     | Skills shared across a team; Unlimited covers one workspace                   |
-| Ways to reach it          | Web, Slack, Telegram, Discord, and its own email address                                    | Web app; notifications and approvals via iMessage, SMS, and Telegram          |
-| How it does the work      | Integration catalog and your own MCP tools first; live browser and sandbox terminal as needed | Clicks and types through any app's interface on screen                      |
+| Capability                | Construct                                                                                     | Simular Sai                                                               |
+| ------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Pricing model             | Fixed monthly plan from $9 with published limits                                              | Free Explore plan; $50 of credits for AI and machine time; $500 Unlimited |
+| Model                     | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro   | Model-agnostic, per Simular; own keys not documented                      |
+| Memory                    | Inspect, correct, or forget any stored fact                                                   | Setup, logins, preferences, and context persist on the VM                 |
+| Where finished work lives | Workspace files your team can open; a stopped run keeps its finished steps                    | On the cloud VM or your own device                                        |
+| Recurring work            | Calendar schedules and saved workflows: 3 on Lite, 10 on Starter, 50 on Pro                   | Teach a task once and rerun it on a schedule                              |
+| Team use                  | Team workspaces with Owner, Admin, and Member roles and no member limit                       | Skills shared across a team; Unlimited covers one workspace               |
+| Ways to reach it          | Web, Slack, Telegram, Discord, and its own email address                                      | Web app; notifications and approvals via iMessage, SMS, and Telegram      |
+| How it does the work      | Integration catalog and your own MCP tools first; live browser and sandbox terminal as needed | Clicks and types through any app's interface on screen                    |
 
 </ArticleTable>
 
@@ -66,15 +66,15 @@ Construct is a fixed monthly plan. Sai's current pricing page lists four plans, 
 
 <ArticleTable caption="Monthly prices for Construct and Simular Sai, checked October 1, 2026">
 
-| Plan              | Monthly price | What you get                                                                                                     |
-| ----------------- | ------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Construct Lite    | $9            | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address                                        |
-| Construct Starter | $59           | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                                            |
-| Construct Pro     | $299          | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys                   |
-| Sai Explore       | $0            | Daily credit allowance, limited access to a cloud Windows computer                                               |
-| Sai Pay as you go | $50           | 50,000 credits ($50 of usage) for AI and computer time; up to 5 cloud computers at once, billed while they run   |
-| Sai Unlimited     | $500          | Unlimited AI usage within fair use; an always-on cloud computer; one workspace                                   |
-| Sai Enterprise    | Custom        | SSO, RBAC, SOC 2, SLAs                                                                                           |
+| Plan              | Monthly price | What you get                                                                                                   |
+| ----------------- | ------------- | -------------------------------------------------------------------------------------------------------------- |
+| Construct Lite    | $9            | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address                                      |
+| Construct Starter | $59           | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                                          |
+| Construct Pro     | $299          | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys                 |
+| Sai Explore       | $0            | Daily credit allowance, limited access to a cloud Windows computer                                             |
+| Sai Pay as you go | $50           | 50,000 credits ($50 of usage) for AI and computer time; up to 5 cloud computers at once, billed while they run |
+| Sai Unlimited     | $500          | Unlimited AI usage within fair use; an always-on cloud computer; one workspace                                 |
+| Sai Enterprise    | Custom        | SSO, RBAC, SOC 2, SLAs                                                                                         |
 
 </ArticleTable>
 
@@ -101,8 +101,7 @@ Sai uses the screen the way a person does. Construct uses structured connections
 When an app has an integration, a structured connection is the more direct path: no screen to read, and no layout change to break the run. Construct reaches the apps in its live integration catalog directly, and you can add your own MCP tools for internal systems. Our guide to [custom MCP and permission boundaries](/blog/ai-agent-custom-mcp/) covers how. When there is no integration, the same task can use a live browser and a sandbox terminal, as our guide to [browser and terminal work](/blog/ai-agent-browser-and-terminal/) shows.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -119,11 +118,10 @@ When an app has an integration, a structured connection is the more direct path:
       src="/blog/construct-vs-simular-sai/integrations-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
+  </ArticleVideo>
   <figcaption
     id="integrations-demo-description"
     className="mt-3 text-sm leading-6"

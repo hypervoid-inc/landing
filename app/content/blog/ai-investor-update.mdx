@@ -2,7 +2,7 @@
 title: "A Weekly Investor Update Drafted by Your AI Agent"
 seoTitle: "Weekly Investor Update With AI: Drafted by an Agent, Sent by You"
 description: "Have an AI agent draft your weekly investor update from GitHub, Linear and your CRM, with every claim linked. You check the numbers and send it yourself."
-published: "2026-11-24"
+published: "2026-11-25"
 author: "nischal"
 tags: ["ai-agent", "workflow-automation", "scheduling", "small-business"]
 kind: "guide"
@@ -34,14 +34,14 @@ That structure maps cleanly onto a division of labor: the agent fills the parts 
 
 <ArticleTable caption="Where each section of the weekly investor update comes from">
 
-| Section                 | Drafted from                                         | Who signs off               |
-| ----------------------- | ---------------------------------------------------- | --------------------------- |
-| Summary                 | The rest of the draft                                | You rewrite it              |
-| KPIs and financials     | metrics.csv, a file you maintain                     | You, every week             |
-| Shipped this week       | Merged pull requests in GitHub, closed Linear issues | You skim for accuracy       |
-| Pipeline                | Deal stage changes in your CRM                       | You check names and amounts |
-| Lowlights               | Your notes, plus anything the agent flags            | You write it                |
-| Asks                    | Your notes                                           | You write it                |
+| Section             | Drafted from                                         | Who signs off               |
+| ------------------- | ---------------------------------------------------- | --------------------------- |
+| Summary             | The rest of the draft                                | You rewrite it              |
+| KPIs and financials | metrics.csv, a file you maintain                     | You, every week             |
+| Shipped this week   | Merged pull requests in GitHub, closed Linear issues | You skim for accuracy       |
+| Pipeline            | Deal stage changes in your CRM                       | You check names and amounts |
+| Lowlights           | Your notes, plus anything the agent flags            | You write it                |
+| Asks                | Your notes                                           | You write it                |
 
 </ArticleTable>
 
@@ -63,12 +63,15 @@ Four choices keep the update accurate and private:
 - **Check summaries against their links.** Turning commits into outcomes is interpretation; the link on every line is what lets you check it in seconds.
 - **Scope busy weeks.** A week with many pull requests uses more steps. Lite allows up to 50 per task; if a draft stops short, narrow the repository or team, or move to Starter's 150.
 
-
 ## How do you set it up?
 
 ### 1. Connect the sources and scope them
 
-> Connect GitHub, Linear, and HubSpot. Then confirm what you can read: merged pull requests in the acme/app repository, completed issues in the Linear team "Product", and deal stage changes in HubSpot. Do not change anything in any of these tools.
+<Prompt>
+
+Connect GitHub, Linear, and HubSpot. Then confirm what you can read: merged pull requests in the acme/app repository, completed issues in the Linear team "Product", and deal stage changes in HubSpot. Do not change anything in any of these tools.
+
+</Prompt>
 
 Scope matters. Name the repository and team you want included so side projects and internal tooling do not end up in front of investors.
 
@@ -76,19 +79,31 @@ Scope matters. Name the repository and team you want included so side projects a
 
 Upload two or three past updates, then:
 
-> Read the investor updates I uploaded and create investor-updates/template.md with the same sections and tone. Also create investor-updates/metrics.csv with columns week_ending, mrr, net_burn, cash, runway_months, customers, and notes. Leave the values empty; I will fill them in.
+<Prompt>
+
+Read the investor updates I uploaded and create investor-updates/template.md with the same sections and tone. Also create investor-updates/metrics.csv with columns week_ending, mrr, net_burn, cash, runway_months, customers, and notes. Leave the values empty; I will fill them in.
+
+</Prompt>
 
 Fill in metrics.csv yourself each week, or paste the numbers into chat and ask the agent to append them. The agent reads this file; it never estimates what goes in it.
 
 ### 3. Set the rules
 
-> Remember these rules for investor updates. Draft only: never email, message, or share an investor update with anyone but me. Never estimate a financial or KPI number; if a number is missing from metrics.csv, write [NEEDS NUMBER] in its place. Every line in "Shipped" and "Pipeline" must link to the pull request, issue, or deal it came from. Do not name customers unless they are already named in a past update. Keep the draft under 400 words.
+<Prompt>
+
+Remember these rules for investor updates. Draft only: never email, message, or share an investor update with anyone but me. Never estimate a financial or KPI number; if a number is missing from metrics.csv, write [NEEDS NUMBER] in its place. Every line in "Shipped" and "Pipeline" must link to the pull request, issue, or deal it came from. Do not name customers unless they are already named in a past update. Keep the draft under 400 words.
+
+</Prompt>
 
 These rules go into memory, which you can inspect, correct, or forget in the Memories app ([AI agent memory](/blog/ai-agent-memory/)).
 
 ### 4. Draft the first update on demand
 
-> Draft this week's investor update using investor-updates/template.md. Use metrics.csv for KPIs and compare with last week's row. Summarize merged pull requests in acme/app and completed Linear issues from the last 7 days as customer-facing outcomes, not ticket titles, and group small fixes into one line. List HubSpot deals that changed stage this week. Leave Lowlights and Asks as headings with my notes from investor-updates/notes.md if it exists. Save the draft as investor-updates/ with today's date as the file name, and list anything you were unsure about.
+<Prompt>
+
+Draft this week's investor update using investor-updates/template.md. Use metrics.csv for KPIs and compare with last week's row. Summarize merged pull requests in acme/app and completed Linear issues from the last 7 days as customer-facing outcomes, not ticket titles, and group small fixes into one line. List HubSpot deals that changed stage this week. Leave Lowlights and Asks as headings with my notes from investor-updates/notes.md if it exists. Save the draft as investor-updates/ with today's date as the file name, and list anything you were unsure about.
+
+</Prompt>
 
 The "customer-facing outcomes" instruction is what turns "fix race in webhook retry" into "billing webhooks no longer double-charge on retry", which is the level investors read at.
 
@@ -96,13 +111,21 @@ The "customer-facing outcomes" instruction is what turns "fix race in webhook re
 
 Open the draft in Files. Check every number against metrics.csv and every link against its source, then write the summary, lowlights, and asks yourself. Ask for revisions in plain language:
 
-> Shorten Shipped to the three changes that matter most for retention. Move the API work to next week; it is not released yet.
+<Prompt>
+
+Shorten Shipped to the three changes that matter most for retention. Move the API work to next week; it is not released yet.
+
+</Prompt>
 
 ### 6. Make it weekly
 
 After two or three good drafts, save the procedure as a workflow and put it on the Calendar. Current workflows are linear: no branching, delays, or approval steps, which suits a draft-only job.
 
-> Save step 4 as a workflow called "Investor update draft" and schedule it every Friday at 2pm. End with an in-app notification that links the draft. Never send it anywhere.
+<Prompt>
+
+Save step 4 as a workflow called "Investor update draft" and schedule it every Friday at 2pm. End with an in-app notification that links the draft. Never send it anywhere.
+
+</Prompt>
 
 Scheduled runs deliver to the Construct web app with a notification. {/* TODO: confirm whether a workflow step can email the draft to the owner from the agent's native address */}
 
@@ -111,8 +134,7 @@ Scheduled runs deliver to the Construct web app with a notification. {/* TODO: c
 Copy the final text into your own email and send it to your investor list. Keeping the send with you is the point: the agent never needs your investor list, and nothing goes out in your name that you did not read.
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -129,17 +151,13 @@ Copy the final text into your own email and send it to your investor list. Keepi
       src="/blog/ai-investor-update/workflow-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
-  <figcaption
-    id="workflow-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
-    Silent product demo: Construct building and running a reusable workflow,
-    the same way a weekly draft job is saved and scheduled.
+  </ArticleVideo>
+  <figcaption id="workflow-demo-description" className="mt-3 text-sm leading-6">
+    Silent product demo: Construct building and running a reusable workflow, the
+    same way a weekly draft job is saved and scheduled.
   </figcaption>
 </figure>
 
@@ -148,10 +166,15 @@ Copy the final text into your own email and send it to your investor list. Keepi
 Each Friday, Files gets a dated draft next to last week's, with the metrics file and template beside them. A section of a draft might read like this (illustrative, invented company):
 
 > **Shipped this week**
-> Billing webhooks no longer double-charge on retry (PR 412, linked). Team invites now work with SSO (LIN-88, linked). Five smaller fixes to onboarding.
->
-> **KPIs** (week ending February 6)
-> MRR [NEEDS NUMBER]. Customers 41, up from 38. Runway 14 months.
+
+<Prompt>
+
+Billing webhooks no longer double-charge on retry (PR 412, linked). Team invites now work with SSO (LIN-88, linked). Five smaller fixes to onboarding.
+
+**KPIs** (week ending February 6)
+MRR [NEEDS NUMBER]. Customers 41, up from 38. Runway 14 months.
+
+</Prompt>
 
 The [NEEDS NUMBER] marker is doing its job there: the agent found no MRR value for the week and left a visible gap instead of guessing. Because every week is a saved file, the agent can also answer "what did we tell investors about SSO in December?" from the drafts themselves.
 

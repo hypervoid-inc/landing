@@ -2,7 +2,7 @@
 title: "Connect your own tools: custom MCP and permission boundaries"
 seoTitle: "AI Agent Custom MCP Tools: How to Connect Them Safely (2027)"
 description: "Add your own MCP server to Construct by URL, and set which agents can use it. Requirements, the 15-second call limit, permission boundaries, and gaps."
-published: "2026-11-16"
+published: "2026-11-17"
 author: "nischal"
 tags: ["ai-agent", "product", "governance"]
 kind: "guide"
@@ -47,16 +47,16 @@ The current requirements, so you can build to them:
 
 <ArticleTable caption="Custom MCP requirements in Construct">
 
-| Requirement | Current behavior |
-| --- | --- |
-| Address | Public HTTPS URL; private and local network addresses are refused |
-| Transport | JSON-RPC requests over HTTPS POST, answered with JSON |
-| Methods used | Listing tools and calling tools |
-| Time per call | 15 seconds |
-| Response size | Up to 512 KB |
-| Redirects | Up to two, and only to the same origin |
-| Tools read | Up to 200 per server |
-| Result | Text content is passed to the agent; structured content is passed as JSON when there is no text |
+| Requirement    | Current behavior                                                                                                                          |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Address        | Public HTTPS URL; private and local network addresses are refused                                                                         |
+| Transport      | JSON-RPC requests over HTTPS POST, answered with JSON                                                                                     |
+| Methods used   | Listing tools and calling tools                                                                                                           |
+| Time per call  | 15 seconds                                                                                                                                |
+| Response size  | Up to 512 KB                                                                                                                              |
+| Redirects      | Up to two, and only to the same origin                                                                                                    |
+| Tools read     | Up to 200 per server                                                                                                                      |
+| Result         | Text content is passed to the agent; structured content is passed as JSON when there is no text                                           |
 | Authentication | Construct sends a short-lived, Construct-signed bearer token with each call; there is no field yet for your own API key or custom headers |
 
 </ArticleTable>
@@ -111,7 +111,11 @@ This example is illustrative, not a customer case. A small agency tracks client 
 
 **Give the job.**
 
-> For each report dated this week in the reports folder of every client in Team/clients, call get_approval_status. List approved and unapproved reports in a table and save it to Team/approvals/2027-01-22.md. Do not call mark_report_sent; I will tell you which ones to mark after I send them.
+<Prompt>
+
+For each report dated this week in the reports folder of every client in Team/clients, call get_approval_status. List approved and unapproved reports in a table and save it to Team/approvals/2027-01-22.md. Do not call mark_report_sent; I will tell you which ones to mark after I send them.
+
+</Prompt>
 
 **Check the result.** The table is in Files, and Activity shows one line per lookup, linked to the chat ([what Activity records](/blog/ai-agent-activity-log/)). When the account manager has sent the reports, a second message asks the agent to mark them.
 
@@ -122,8 +126,7 @@ We have not yet run this server against Construct and measured it.
 {/* TODO: deploy the two-tool approvals server, run the Friday lookup on a test workspace, and record setup time, call latency, and any schema or timeout errors; add screenshots of Add MCP and the agent's app settings */}
 
 <figure className="my-8">
-  <video
-    controls
+  <ArticleVideo
     muted
     playsInline
     preload="none"
@@ -140,11 +143,10 @@ We have not yet run this server against Construct and measured it.
       src="/blog/ai-agent-custom-mcp/integrations-demo.vtt"
       srcLang="en"
       label="English"
-      default
     />
     Your browser does not support this video. The description below explains the
     demo.
-  </video>
+  </ArticleVideo>
   <figcaption
     id="integrations-demo-description"
     className="mt-3 text-sm leading-6"
