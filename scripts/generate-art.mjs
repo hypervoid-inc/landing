@@ -151,7 +151,8 @@ function select(cards, name) {
   return card;
 }
 
-const cards = await loadCards();
+// Rendered cards are drawn in code from `og-cards.ts`; nothing here makes them.
+const cards = (await loadCards()).filter((card) => !card.card);
 
 // ─── The style plate ─────────────────────────────────────────────────────────
 

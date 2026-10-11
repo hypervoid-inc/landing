@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { blogMetadata } from "../app/content/blog/metadata.generated";
 import { ogPosters, posterEyebrow } from "../app/content/og-poster";
+import { ogCards } from "../app/content/og-cards";
 import {
   canonicalRoutes as liveRoutes,
   ogName,
@@ -106,12 +107,14 @@ function handMade(name: string) {
 
 describe("card content", () => {
   it("gives every route a card", () => {
-    expect(names.filter((name) => !ogPosters[name])).toEqual([]);
+    expect(names.filter((name) => !ogPosters[name] && !ogCards[name])).toEqual(
+      [],
+    );
   });
 
   it("carries no cards for routes that no longer exist", () => {
     expect(
-      Object.keys(ogPosters).filter(
+      [...Object.keys(ogPosters), ...Object.keys(ogCards)].filter(
         (n) => !names.includes(n) && !draftNames.includes(n),
       ),
     ).toEqual([]);

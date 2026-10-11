@@ -87,6 +87,10 @@ export async function readSources(name, stem = name) {
  * `headline` from `app/content/og-poster.ts`, not the page title, so editing an
  * SEO string is not a reason to re-render. Editing the headline or the badge
  * is, because the card is then making a promise it no longer keeps.
+ *
+ * A rendered card is hashed from its whole content, the eyebrow it prints,
+ * the renderer version, and, for a mosaic, the published cards on it.
+ * `rendered` is absent for a hand-made card.
  */
 export function signature({
   stem,
@@ -95,6 +99,7 @@ export function signature({
   fullFrame = false,
   custom,
   poster,
+  rendered,
 }) {
   return digest(
     JSON.stringify({
@@ -105,7 +110,26 @@ export function signature({
       publish: PUBLISH_VERSION,
       custom: custom && digest(custom),
       poster: poster && digest(poster),
+      rendered: rendered && {
+        card: rendered.card,
+        context: rendered.context,
+        version: rendered.version,
+        images: rendered.images.map((image) => digest(image)),
+      },
     }),
+  );
+}
+
+/**
+ * The published cards a mosaic is made of, in the order its context lists
+ * them. Shared by the publisher and the freshness test so both hash the same
+ * bytes.
+ */
+export async function readCardImages(context) {
+  return Promise.all(
+    (context.members ?? []).map((member) =>
+      readFile(path.join(outputDirectory, `${member.stem}.jpg`)),
+    ),
   );
 }
 

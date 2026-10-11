@@ -22,6 +22,7 @@
     "og:master": "node scripts/generate-art.mjs --master",
     "og:pick": "node scripts/generate-art.mjs --pick",
     "og:prompts": "node scripts/generate-og.mjs --prompts",
+    "og:sheet": "node scripts/og-sheet.mjs",
     "preview": "wrangler pages dev",
     "retheme": "node scripts/retheme-asset.mjs",
     "social": "node scripts/generate-social-card.mjs",

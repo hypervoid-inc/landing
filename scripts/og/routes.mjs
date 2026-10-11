@@ -5,7 +5,8 @@ import { createServer } from "vite";
 
 /**
  * One card per canonical route, assembled from the app's own route manifest and
- * poster content.
+ * card content: a rendered card from `og-cards.ts` when the route has one,
+ * otherwise its hand-made card registered in `og-poster.ts`.
  *
  * Both the generator and the publisher need the same list, and reading it
  * through Vite rather than duplicating it is what stops a new post from having
@@ -25,14 +26,29 @@ export async function loadCards() {
     const { ogPosters, posterEyebrow } = await vite.ssrLoadModule(
       "/app/content/og-poster.ts",
     );
+    const { ogCards, cardContext } = await vite.ssrLoadModule(
+      "/app/content/og-cards.ts",
+    );
 
     // Scheduled posts get their card now, so it is ready on the day they go live.
-    return [...canonicalRoutes, ...upcomingRoutes].map((route) => {
+    const routes = [...canonicalRoutes, ...upcomingRoutes];
+    return routes.map((route) => {
       const name = ogName(route.path);
+      const rendered = ogCards[name];
+      if (rendered) {
+        return {
+          name,
+          kind: route.kind,
+          title: routeDisplayTitle(route),
+          card: rendered,
+          context: cardContext(route, routes, rendered),
+          stem: path.basename(new URL(route.image).pathname, ".jpg"),
+        };
+      }
       const card = ogPosters[name];
       if (!card) {
         throw new Error(
-          `${name}: no card. Add a headline and a scene to app/content/og-poster.ts.`,
+          `${name}: no card. Add one to app/content/og-card-content.ts.`,
         );
       }
       return {

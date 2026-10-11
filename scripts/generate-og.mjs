@@ -6,6 +6,7 @@ import {
   manifestPath,
   outputDirectory,
   promptsPath,
+  readCardImages,
   readManifest,
   readSources,
   signature,
@@ -15,6 +16,7 @@ import {
   posterReferences,
   promptHeader,
 } from "./og/poster.mjs";
+import { CARD_VERSION, closeRenderer, renderOgCard } from "./og/card/index.mjs";
 import { publish } from "./og/publish.mjs";
 import { loadCards } from "./og/routes.mjs";
 import { preflight } from "./og/typeset.mjs";
@@ -48,6 +50,7 @@ const root = process.cwd();
  * composition happens to be empty.
  */
 async function publishOne(card) {
+  if (card.card) return publishRendered(card);
   const { custom, poster } = await readSources(card.name, card.stem);
   const source = custom ?? poster;
   if (!source) return null;
@@ -71,6 +74,37 @@ async function publishOne(card) {
   });
 }
 
+/**
+ * A rendered card: drawn in code from its content, never generated, so it
+ * always has a source and is never reported missing.
+ */
+async function publishRendered(card) {
+  const images = await readCardImages(card.context);
+  const image = await renderOgCard(card.card, card.context, images);
+  await writeFile(
+    path.join(outputDirectory, `${card.stem}.jpg`),
+    await publish(image),
+  );
+  return signature({
+    stem: card.stem,
+    rendered: {
+      card: card.card,
+      context: card.context,
+      version: CARD_VERSION,
+      images,
+    },
+  });
+}
+
+/**
+ * A mosaic is made of its pages' published cards, so mosaics go last, after
+ * every page in this run has been written.
+ */
+function publishOrder(cards) {
+  const mosaic = (card) => card.card?.figure.kind === "mosaic";
+  return [...cards.filter((card) => !mosaic(card)), ...cards.filter(mosaic)];
+}
+
 async function render(cards, all) {
   // Before anything is written, not per card: a missing typeface would
   // otherwise be found out after half the set had been republished in it.
@@ -79,11 +113,12 @@ async function render(cards, all) {
   const manifest = all ? {} : await readManifest();
   const missing = [];
 
-  for (const card of cards) {
+  for (const card of publishOrder(cards)) {
     const result = await publishOne(card);
     if (result) manifest[card.name] = result;
     else missing.push(card.name);
   }
+  await closeRenderer();
 
   const sorted = Object.fromEntries(Object.entries(manifest).sort());
   await writeFile(manifestPath, `${JSON.stringify(sorted, null, 2)}\n`);
@@ -128,6 +163,8 @@ function select(cards, name) {
 }
 
 const cards = await loadCards();
+// Prompts are for generated cards; rendered cards are never sent to a model.
+const generated = cards.filter((card) => !card.card);
 const printTarget = flag("--print");
 const onlyTarget = flag("--only");
 
@@ -137,9 +174,9 @@ if (printTarget !== null) {
     console.log(`  ${file}\n    ${note}`);
   }
   console.log();
-  console.log(buildPosterPrompt(select(cards, printTarget)));
+  console.log(buildPosterPrompt(select(generated, printTarget)));
 } else if (args.includes("--prompts")) {
-  await writePrompts(cards);
+  await writePrompts(generated);
 } else if (onlyTarget !== null) {
   await render([select(cards, onlyTarget)], false);
 } else {

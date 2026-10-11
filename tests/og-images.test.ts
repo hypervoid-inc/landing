@@ -3,6 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { ogPosters, posterEyebrow } from "../app/content/og-poster";
+import { cardContext, ogCards } from "../app/content/og-cards";
 import {
   canonicalRoutes as liveRoutes,
   ogName,
@@ -13,11 +14,13 @@ import {
 import {
   manifestPath,
   outputDirectory,
+  readCardImages,
   readManifest,
   readSources,
   signature,
   sourceDirectory,
 } from "../scripts/og/manifest.mjs";
+import { CARD_VERSION } from "../scripts/og/card/index.mjs";
 
 /**
  * Live routes plus the ones scheduled posts will add. A scheduled post's card
@@ -112,6 +115,8 @@ describe("committed OG images", () => {
   it("has a source card for every route", () => {
     const missing = canonicalRoutes
       .filter((route) => {
+        // Rendered cards are drawn in code and need no source file.
+        if (ogCards[ogName(route.path)]) return false;
         const stem = ogStem(route.path);
         const custom = [".png", ".jpg", ".jpeg", ".webp"].some((extension) =>
           existsSync(path.join(sourceDirectory, `${stem}${extension}`)),
@@ -156,6 +161,21 @@ describe("committed OG images", () => {
     for (const route of canonicalRoutes) {
       const name = ogName(route.path);
       const stem = path.basename(imageFile(route), ".jpg");
+      const card = ogCards[name];
+      if (card) {
+        const context = cardContext(route, canonicalRoutes, card);
+        const expected = signature({
+          stem,
+          rendered: {
+            card,
+            context,
+            version: CARD_VERSION,
+            images: await readCardImages(context),
+          },
+        });
+        if (manifest[name] !== expected) stale.push(name);
+        continue;
+      }
       const { custom, poster } = await readSources(name, stem);
       const expected = signature({
         stem,

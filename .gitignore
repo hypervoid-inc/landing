@@ -21,5 +21,8 @@ test-results/
 *.before.webp
 /assets/og/generation-log.jsonl
 
+# Cards rendered by `pnpm og:sheet` for review.
+/assets/og/check/
+
 # Plain-Markdown copies of posts written by `pnpm blog:text`, rebuilt on demand.
 /syndication/

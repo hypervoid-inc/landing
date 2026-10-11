@@ -14,11 +14,22 @@ export declare function readSources(
 
 export declare function signature(input: {
   stem: string;
-  eyebrow: string;
-  headline: readonly string[];
+  eyebrow?: string;
+  headline?: readonly string[];
   fullFrame?: boolean;
-  custom: Buffer | null;
-  poster: Buffer | null;
+  custom?: Buffer | null;
+  poster?: Buffer | null;
+  rendered?: {
+    card: unknown;
+    context: unknown;
+    version: number;
+    images: readonly Buffer[];
+  };
 }): string;
+
+/** The published cards a mosaic is made of, in its context's order. */
+export declare function readCardImages(context: {
+  members?: readonly { stem: string }[];
+}): Promise<Buffer[]>;
 
 export declare function readManifest(): Promise<Record<string, string>>;
