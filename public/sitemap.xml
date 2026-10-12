@@ -90,7 +90,11 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-12</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/ai-agent-gmail-access-safely/</loc>
+    <lastmod>2026-10-12</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/lindy-alternatives/</loc>
@@ -214,7 +218,7 @@
   </url>
   <url>
     <loc>https://construct.computer/authors/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-12</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/authors/ankush/</loc>
@@ -222,7 +226,7 @@
   </url>
   <url>
     <loc>https://construct.computer/authors/nischal/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-12</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/authors/construct-team/</loc>
@@ -230,7 +234,7 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/ai-agent/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-12</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/ai-employee/</loc>
@@ -249,8 +253,16 @@
     <lastmod>2026-10-05</lastmod>
   </url>
   <url>
+    <loc>https://construct.computer/blog/tag/email/</loc>
+    <lastmod>2026-10-12</lastmod>
+  </url>
+  <url>
     <loc>https://construct.computer/blog/tag/google-workspace/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-12</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/tag/governance/</loc>
+    <lastmod>2026-10-12</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/product/</loc>

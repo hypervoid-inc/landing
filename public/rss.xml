@@ -4,6 +4,18 @@
     <link>https://construct.computer/blog/</link>
     <description>AI employee guides, practical articles, and comparisons from Construct Computer.</description>
     <item>
+      <title>How to Let an AI Agent Use Your Gmail Safely</title>
+      <link>https://construct.computer/blog/ai-agent-gmail-access-safely/</link>
+      <guid>https://construct.computer/blog/ai-agent-gmail-access-safely/</guid>
+      <description>AI agent Gmail access without the risk: 8 restricted Gmail scopes explained, a separate agent inbox, drafts instead of sends, and a 1-minute revoke.</description>
+      <dc:creator>Nischal</dc:creator>
+      <category>email</category>
+      <category>ai-agent</category>
+      <category>google-workspace</category>
+      <category>governance</category>
+      <pubDate>Mon, 12 Oct 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Lindy alternatives, compared honestly</title>
       <link>https://construct.computer/blog/lindy-alternatives/</link>
       <guid>https://construct.computer/blog/lindy-alternatives/</guid>
