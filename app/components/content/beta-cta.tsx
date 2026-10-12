@@ -15,12 +15,16 @@ export function BetaCta({
   children,
   source = "blog_inline",
   className = "my-8",
+  eager = false,
 }: {
   children?: ReactNode;
   source?: string;
   /** Wrapper spacing. Overridden by the desktop rail, where `my-8` is too much
    * air inside a small card. */
   className?: string;
+  /** Load the mascot right away. Only for a CTA on the first screen, where a
+   * lazy image pops in after the pill is already painted. */
+  eager?: boolean;
 }) {
   return (
     <p className={`${className} text-center`}>
@@ -28,7 +32,7 @@ export function BetaCta({
         source={source}
         className="inline-flex items-center gap-2.5 rounded-full border border-[#b6ecfb] bg-[#f2fcfe] py-2 pl-4 pr-5 text-[15px] font-medium text-[#017b89] no-underline transition-colors hover:bg-[#e8faff]"
       >
-        <MascotEyes />
+        <MascotEyes eager={eager} />
         {children ?? "Try Construct"}
         <span aria-hidden="true">&rarr;</span>
       </StartLink>
@@ -45,7 +49,7 @@ export function BetaCta({
  * text line and is allowed to overflow top and bottom, contributing only its
  * shrunken box to layout so the pill height stays put.
  */
-function MascotEyes() {
+function MascotEyes({ eager }: { eager: boolean }) {
   return (
     <picture>
       <source
@@ -57,7 +61,7 @@ function MascotEyes() {
         alt=""
         width={34}
         height={36}
-        loading="lazy"
+        loading={eager ? "eager" : "lazy"}
         decoding="async"
         className="-my-2.5 h-9 w-auto shrink-0"
       />

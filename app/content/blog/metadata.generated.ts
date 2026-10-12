@@ -424,6 +424,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Dots vs Muse vs Grok Bot vs Claude Cowork for a small business",
     description:
       "Always-on AI agents for a 3-person team cost $0 to $375 a month. Dots, Muse, Grok Bot and Claude Cowork compared on price, regions and approvals.",
+    pitch:
+      "Construct is an always-on AI employee that needs no Meta, ChatGPT, Claude, or Cursor account, and from $59 one plan covers the whole team, not a seat each.",
     published: "2026-10-14",
     seoTitle: "Always-On AI Agents Compared: Dots, Muse, Grok Bot, Cowork",
     author: "construct-team",
@@ -436,6 +438,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Best AI employees for solo founders (2026), ranked honestly",
     description:
       "The best AI employee for solo founders, ranked: 8 picks compared on monthly cost, setup, and supervision. Construct leads at $9; most cost $9 to $44.",
+    pitch:
+      "Construct takes a founder's repeat weekly jobs off their plate on a fixed schedule, and keeps each report as a file the next run builds on.",
     published: "2026-10-17",
     seoTitle: "Best AI Employee for Solo Founders (2026): 8 Ranked",
     author: "construct-team",
@@ -448,6 +452,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "AI employees for small business: 10 platforms compared",
     description:
       "The best AI employee platforms for small business in 2026, ranked on price, capabilities, and limits: Construct, CellCog, Manus, Lindy, Sintra, and more.",
+    pitch:
+      "Construct takes any job rather than one fixed role, and keeps its files, schedules, and memory in one workspace your whole team shares without seats.",
     published: "2026-09-29",
     updated: "2026-10-11",
     seoTitle: "Best AI Employees for Small Business (2026): 10 Compared",
@@ -486,6 +492,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
       "ChatGPT Dots alternatives: 9 always-on agents that don't need ChatGPT Pro",
     description:
       "ChatGPT Dots needs a Pro or Business Premium plan. Compare 9 always-on agent alternatives from $0 to $50 a month, and which subscription each one needs.",
+    pitch:
+      "Construct is an always-on AI employee with no ChatGPT plan to buy first, a workspace your whole team can open, and bundled models or your own keys on Pro.",
     published: "2026-10-03",
     updated: "2026-10-11",
     seoTitle: "ChatGPT Dots Alternatives: 9 Agents Without ChatGPT Pro (2026)",
@@ -512,6 +520,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Claude Cowork alternatives after the cloud launch",
     description:
       "Claude Cowork needs a paid Claude plan from $20 and its sessions can't be shared. 10 Claude Cowork alternatives from $0 to $200 a month, compared.",
+    pitch:
+      "Construct is built for a team, with one shared workspace for files, schedules, and its own inbox, and on Pro it can keep running on your Anthropic key.",
     published: "2026-10-31",
     seoTitle: "Claude Cowork Alternatives (2026): 10 Options for Teams",
     author: "construct-team",
@@ -563,6 +573,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs ChatGPT, Claude, and Gemini",
     description:
       "Compare Construct with chat assistants such as ChatGPT, Claude, and Gemini across workspace, tools, memory, schedules, and workflows.",
+    pitch:
+      "Construct does the steps around the answer, running recurring jobs on a schedule with your laptop closed and keeping every finished file after the chat ends.",
     published: "2026-07-20",
     updated: "2026-10-01",
     author: "construct-team",
@@ -575,6 +587,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Claude Cowork",
     description:
       "A Claude Cowork alternative for teams: Construct gives you shared files, schedules, and your choice of model from $9 a month. Cowork starts at $20.",
+    pitch:
+      "Construct gives your team one shared workspace without buying Claude seats, and runs on the model you choose, including Claude through your own key on Pro.",
     published: "2026-10-16",
     seoTitle: "Claude Cowork Alternative: Construct vs Cowork (2026)",
     author: "construct-team",
@@ -587,6 +601,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs coding-focused agents",
     description:
       "Compare Construct with coding agents. See when a generalist AI employee for email, research, calendar, CRM, and code is the better fit.",
+    pitch:
+      "Construct handles the email, research, CRM updates, and code around a job, and leaves results anyone on the team can check without reading a diff.",
     published: "2026-07-20",
     updated: "2026-10-01",
     author: "construct-team",
@@ -599,6 +615,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Microsoft Copilot and Google Workspace AI",
     description:
       "Compare Construct with Microsoft Copilot and Google Workspace AI. See how one vendor-neutral AI employee works across apps from a persistent workspace.",
+    pitch:
+      "Construct works across the vendors you use, connecting your apps and driving a live browser for portals, rather than staying inside one office suite.",
     published: "2026-07-20",
     updated: "2026-10-01",
     author: "construct-team",
@@ -611,6 +629,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs building your own AI agent",
     description:
       "Building your own agent means wiring sandbox, apps, channels, memory, schedules, and user-facing activity summaries yourself. Construct provides those pieces as a hosted product.",
+    pitch:
+      "Construct arrives with the sandbox, app connections, memory, schedules, and channels built and hosted, so you assign work this week instead of building it.",
     published: "2026-07-20",
     updated: "2026-10-01",
     seoTitle: "Turnkey AI System vs Building Your Own AI Agent",
@@ -624,6 +644,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Gemini Spark",
     description:
       "Construct vs Gemini Spark: an AI employee for your team from $9 a month, or Spark with Google AI Pro at $19.99 on a personal Google account only.",
+    pitch:
+      "Construct connects to the business Google account you authorize, not a personal one, and its scheduled jobs can work in apps beyond Gmail and Calendar too.",
     published: "2026-10-26",
     seoTitle: "Construct vs Gemini Spark: Price, Work Accounts, Teams",
     author: "construct-team",
@@ -636,6 +658,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Genspark Claw",
     description:
       "Construct is a Genspark Claw alternative at a fixed $9 a month, model usage included. Claw's $9.99 cloud computer is billed apart from the credits it uses.",
+    pitch:
+      "Construct is one fixed monthly plan with model usage included, not a machine subscription plus credits, and its workspace is shared with your whole team.",
     published: "2026-10-21",
     seoTitle: "Genspark Claw Alternative: Construct vs Genspark Claw",
     author: "construct-team",
@@ -648,6 +672,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Lindy",
     description:
       "Construct vs Lindy on pricing, where each works, memory, activity records, and model keys. Lindy starts at $29.99 per active user; Construct starts at $9.",
+    pitch:
+      "Construct is priced by plan rather than by person, so teammates join without seats, and a run that stops partway still leaves its finished work in files.",
     published: "2026-10-07",
     updated: "2026-10-11",
     seoTitle: "Lindy Alternative: Construct vs Lindy (2026)",
@@ -673,6 +699,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Muse for Small Business",
     description:
       "Meta Muse for Small Business is free to start but runs on one Meta account, US and Canada only. Construct gives your whole team an AI employee from $9.",
+    pitch:
+      "Construct is built for a team's recurring work across Gmail, your CRM, and your trackers, rather than one person's agent inside Meta's apps.",
     published: "2026-10-13",
     seoTitle: "Meta Muse for Small Business vs Construct (2026)",
     author: "construct-team",
@@ -685,6 +713,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs ChatGPT Dots",
     description:
       "Construct gives you an always-on AI employee from $9 a month on the model you choose. ChatGPT Dots needs a ChatGPT Pro plan from $100 or a Business Premium seat. How they compare.",
+    pitch:
+      "Construct needs no ChatGPT plan first, runs on bundled models or your own keys on Pro, and shows you what the agent remembers so you can fix a wrong fact.",
     published: "2026-10-01",
     updated: "2026-10-11",
     seoTitle: "ChatGPT Dots Alternative: Construct vs Dots",
@@ -698,6 +728,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs OpenClaw",
     description:
       "Construct is a hosted OpenClaw alternative for a fixed $9 a month, with nothing to install. OpenClaw is free, but you run the server and pay for tokens.",
+    pitch:
+      "Construct is a hosted alternative to OpenClaw with nothing to install or secure, and a fixed monthly price in place of a token bill.",
     published: "2026-10-22",
     seoTitle: "OpenClaw Alternative: Construct vs OpenClaw (2026)",
     author: "construct-team",
@@ -735,6 +767,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Viktor",
     description:
       "Viktor AI starts at $50 a month for 20,000 shared credits. Construct starts at $9 with files, schedules, and email. Price, Slack, and memory compared.",
+    pitch:
+      "Construct turns each finished job into a file you can reopen and build on next week, and it answers on email, Telegram, Discord, and the web, not only Slack.",
     published: "2026-10-29",
     seoTitle: "Viktor AI Alternative: Construct vs Viktor (2026)",
     author: "construct-team",
@@ -747,6 +781,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Zapier, Make, and n8n",
     description:
       "Compare Construct with Zapier, Make, and n8n for deterministic workflows, agentic steps, scheduling, and ambiguous multi-step work.",
+    pitch:
+      "Construct takes an outcome and works out the browser, app, and file steps itself, so inputs that change week to week need no branch built in advance.",
     published: "2026-07-20",
     updated: "2026-10-01",
     author: "construct-team",
@@ -772,6 +808,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
       "Gemini Spark alternatives, including for Workspace accounts and the UK and EU",
     description:
       "Gemini Spark needs a personal Google account and skips the UK and EU. Compare 7 always-on agents on price, work accounts, and regional availability.",
+    pitch:
+      "Construct connects to Gmail and Google Calendar with no Google AI subscription or personal account, and reaches the non-Google apps your business runs on too.",
     published: "2026-10-09",
     updated: "2026-10-11",
     seoTitle: "Gemini Spark Alternatives (2026): Options for Work Accounts",
@@ -785,6 +823,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Grok Bot Alternative: Construct vs Grok Bot",
     description:
       "Compare Construct and Grok Bot on monthly pricing, workflows, integrations, memory, and model choice for small teams.",
+    pitch:
+      "Construct needs no Cursor or SuperGrok subscription first, keeps a memory you can read and correct, and on Pro runs on your own model keys.",
     published: "2026-09-10",
     updated: "2026-10-01",
     seoTitle: "Grok Bot Alternative: Construct vs Grok Bot",
@@ -822,6 +862,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Hosted OpenClaw alternatives: managed claws vs an AI employee",
     description:
       "OpenClaw has no official hosted tier. Compare Construct at $9 a month with managed OpenClaw hosts from $5.99, Genspark Claw, and hosted Hermes.",
+    pitch:
+      "Construct is the always-on AI employee people want from hosted OpenClaw, with model usage in one fixed monthly price and nothing for you to set up or run.",
     published: "2026-10-19",
     seoTitle: "Hosted OpenClaw Alternatives and Managed Hosting (2026)",
     author: "construct-team",
@@ -871,6 +913,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Lindy alternatives, compared honestly",
     description:
       "Lindy bills $29.99 or more per user a month. Compare 10 Lindy alternatives on price, billing unit and channels, from Construct at $9 to self-hosted n8n.",
+    pitch:
+      "Construct is priced by plan, not by person, saves every report as a file the next run builds on, and answers in Slack, Telegram, Discord, email, and the web.",
     published: "2026-10-11",
     seoTitle: "Lindy Alternatives (2026): 10 AI Agents Compared on Price",
     author: "construct-team",
@@ -895,6 +939,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Muse for Small Business alternatives: 9 AI agents for work",
     description:
       "Compare 9 Muse for Small Business alternatives, led by Construct at $9 a month, with prices checked October 1, 2026, and where each one fits.",
+    pitch:
+      "Construct works across your inbox, CRM, store, and shared files rather than inside one Meta account, with a fixed price and published plan limits.",
     published: "2026-10-06",
     updated: "2026-10-11",
     seoTitle: "Meta Muse for Small Business Alternatives (2026)",
@@ -968,6 +1014,8 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Viktor AI alternatives: 7 AI employees that live in Slack",
     description:
       "Viktor AI alternatives: Construct starts at $9 a month vs Viktor's $50. Compare 7 Slack AI employees on price, billing, and where finished work is saved.",
+    pitch:
+      "Construct saves each report and spreadsheet as a file your team can reopen, not a reply lost in Slack, and runs recurring jobs on a schedule with nobody online.",
     published: "2026-10-28",
     seoTitle: "Viktor AI Alternatives: 7 Slack AI Employees Compared",
     author: "construct-team",

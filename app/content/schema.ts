@@ -22,10 +22,20 @@ const ogImageOverride = z
     'Expected a filename in assets/og/, such as "my-post.png"',
   );
 
+/**
+ * One sentence on what Construct does differently for this post's reader,
+ * shown with a call to action above the cover (see `PostPitch`). Kept to one
+ * line on a desktop and three on a phone, so it never pushes the post itself
+ * out of the first screen.
+ */
+export const PITCH_MAX_LENGTH = 160;
+const pitch = z.string().min(1).max(PITCH_MAX_LENGTH);
+
 export const blogFrontmatterSchema = z
   .object({
     title: z.string().min(1),
     description: z.string().min(1),
+    pitch: pitch.optional(),
     published: isoDate,
     updated: isoDate.optional(),
     seoTitle: z.string().min(1).optional(),

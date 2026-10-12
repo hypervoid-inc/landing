@@ -16,6 +16,11 @@ import {
 } from "../../components/content/content-shell";
 import { BetaCta } from "../../components/content/beta-cta";
 import { mdxComponents } from "../../components/content/mdx-components";
+import {
+  PostPitch,
+  pitchedMdxComponents,
+  postPitch,
+} from "../../components/content/post-pitch";
 import { NotFoundPage } from "../not-found/not-found-page";
 import {
   InlineContents,
@@ -56,6 +61,7 @@ export function ResourcePage({ slug }: { slug: string }) {
   const post = getBlogPost(entry.slug);
   if (!post) return <NotFoundPage />;
   const image = getRoute(`/blog/${entry.slug}`)?.image;
+  const pitch = postPitch(post);
   return (
     <ContentShell
       title={post.title}
@@ -104,10 +110,11 @@ export function ResourcePage({ slug }: { slug: string }) {
             )}
           </AuthorByline>
           <TagList tags={entry.tags} className="mt-4" />
+          {pitch && <PostPitch pitch={pitch} />}
         </>
       }
     >
-      <post.Content components={mdxComponents} />
+      <post.Content components={pitch ? pitchedMdxComponents : mdxComponents} />
       <ResourceFaq slug={entry.slug} />
       {/* Rendered here rather than authored so every post closes on one. */}
       <BetaCta source="blog_end">Try Construct</BetaCta>

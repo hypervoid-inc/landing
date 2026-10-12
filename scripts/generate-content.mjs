@@ -22,6 +22,8 @@ const frontmatterSchema = z
   .object({
     title: z.string().min(1),
     description: z.string().min(1),
+    // Mirrors `pitch` in app/content/schema.ts.
+    pitch: z.string().min(1).max(160).optional(),
     published: date,
     updated: date.optional(),
     seoTitle: z.string().min(1).optional(),
