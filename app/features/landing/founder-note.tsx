@@ -1,10 +1,10 @@
 import "./founder-note.css";
 
 /**
- * The only human on the site. There are no customer testimonials yet, so the
- * founder's own history is the trust asset available that is actually true:
- * shipped developer tools, was also the ops team, built this because nothing
- * else could act on its own.
+ * The founder's own history as a trust asset that is actually true: shipped
+ * developer tools, was also the ops team, built this because nothing else
+ * could act on its own. Posts from people using Construct live separately in
+ * `~/content/testimonials`.
  *
  * Shared by `/` and `/launch` so the story cannot drift between them.
  */

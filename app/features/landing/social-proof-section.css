@@ -1,0 +1,226 @@
+/*
+ * "In their own words", public posts from people using Construct, between the
+ * work section and pricing.
+ *
+ * With one or two quotes the cards are wide pull quotes rather than a grid of
+ * small tiles, so a short list reads as chosen, not as a row with gaps in it.
+ */
+.social-proof {
+  position: relative;
+  padding: 24px 20px 56px;
+}
+
+@media (min-width: 1280px) {
+  .social-proof {
+    padding: 40px 64px 88px;
+  }
+}
+
+.social-proof-inner {
+  margin-inline: auto;
+  display: flex;
+  width: 100%;
+  max-width: 1080px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.social-proof-title {
+  text-wrap: balance;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 1024px) {
+  .social-proof-title {
+    font-size: clamp(36px, 3.24vw, 51.8px);
+    line-height: 1.12;
+  }
+}
+
+.social-proof-lead {
+  margin: 12px 0 0;
+  max-width: 460px;
+  font-size: 15px;
+  line-height: 21px;
+  color: #627c86;
+}
+
+.social-proof-list {
+  margin-top: 32px;
+  display: grid;
+  width: 100%;
+  gap: 16px;
+  text-align: left;
+}
+
+.social-proof-list[data-count="1"] {
+  max-width: 820px;
+}
+
+@media (min-width: 900px) {
+  .social-proof-list[data-count="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .social-proof-list[data-count="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+.social-proof-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgb(1 180 200 / 16%);
+  background: linear-gradient(180deg, #f7fbfc 0%, #fff 70%);
+  padding: 24px 22px 20px;
+  box-shadow: 0 8px 32px rgb(71 156 223 / 12%);
+}
+
+@media (min-width: 640px) {
+  .social-proof-card {
+    padding: 32px 36px 26px;
+  }
+}
+
+/* A large opening mark in the display face, as a watermark behind the copy. */
+.social-proof-card::before {
+  position: absolute;
+  top: -18px;
+  right: 18px;
+  content: "\201C";
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 160px;
+  font-style: italic;
+  line-height: 1;
+  color: rgb(1 180 200 / 12%);
+  pointer-events: none;
+}
+
+.social-proof-context {
+  margin: 0;
+  font-family: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7d949c;
+}
+
+.social-proof-quote {
+  position: relative;
+  margin: 14px 0 22px;
+  font-size: 18px;
+  line-height: 1.55;
+  color: #4e4646;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 640px) {
+  .social-proof-list[data-count="1"] .social-proof-quote {
+    font-size: 21px;
+  }
+}
+
+.social-proof-quote p {
+  margin: 0;
+}
+
+/* Pinned to the bottom so bylines line up when quotes differ in length. */
+.social-proof-byline {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 14px;
+  border-top: 1px solid #dcedf0;
+  padding-top: 18px;
+}
+
+.social-proof-avatar {
+  height: 40px;
+  width: 40px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(1, 180, 200, 0.18);
+}
+
+.social-proof-monogram {
+  display: inline-flex;
+  height: 40px;
+  width: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #d9f8ff 0%, #9fe8f1 100%);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-style: italic;
+  color: #017f8d;
+  box-shadow: 0 2px 10px rgb(37 72 82 / 14%);
+}
+
+.social-proof-who {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 180px;
+  flex-direction: column;
+}
+
+.social-proof-name {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #4e4646;
+}
+
+.social-proof-meta {
+  font-size: 13px;
+  line-height: 18px;
+  color: #7d949c;
+}
+
+.social-proof-source,
+.social-proof-award a {
+  color: var(--color-brand);
+  text-decoration: none;
+  text-underline-offset: 3px;
+  transition: color var(--dur-hover) var(--ease-snap);
+}
+
+.social-proof-source {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.social-proof-source:hover,
+.social-proof-award a:hover {
+  color: var(--color-brand-strong);
+  text-decoration: underline;
+}
+
+.social-proof-award {
+  margin: 20px 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: #7d949c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-proof-source,
+  .social-proof-award a {
+    transition: none;
+  }
+}

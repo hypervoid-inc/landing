@@ -2,6 +2,7 @@ import { expect, test, type Page, type Route } from "@playwright/test";
 
 import { directoryListings } from "../app/content/directory-listings";
 import { pricingPlans } from "../app/content/landing";
+import { testimonials } from "../app/content/testimonials";
 import { canonicalRoutes } from "../app/lib/route-manifest";
 
 const API = "https://api.construct.computer/api";
@@ -273,6 +274,24 @@ test("links the directory badges from the homepage footer only", async ({
   }
 });
 
+test("links every homepage testimonial to its public post", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const section = page.locator(
+    'section[aria-labelledby="social-proof-heading"]',
+  );
+  await section.scrollIntoViewIfNeeded();
+  for (const entry of testimonials) {
+    const card = section.locator(`[data-testimonial="${entry.id}"]`);
+    await expect(card).toContainText(entry.handle);
+    const link = card.getByRole("link");
+    await expect(link).toHaveAttribute("href", entry.url);
+    await expect(link).toHaveAttribute("target", "_blank");
+    await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  }
+});
+
 test("toggles pricing between monthly and annual rates", async ({ page }) => {
   await stubPlanCatalog(page);
   await page.setViewportSize({ width: 1280, height: 900 });
@@ -431,4 +450,21 @@ test("scrolls the post rail with the page instead of in a box of its own", async
   await page.waitForTimeout(800);
   // Scrolling back, its top comes back into view under the header.
   expect((await box()).y).toBeGreaterThanOrEqual(header);
+});
+
+// The rail and its CTA are hidden on a phone, so a comparison post makes its
+// ask under the byline, on the first screen, and only once.
+test("opens a comparison post on its pitch and one top CTA on a phone", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/blog/construct-vs-lindy/");
+  const pitch = page.getByRole("complementary", { name: "About Construct" });
+  await expect(pitch).toBeInViewport();
+  await expect(
+    pitch.getByRole("link", { name: /Start with Construct for/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /Start with Construct for/ }),
+  ).toHaveCount(1);
 });

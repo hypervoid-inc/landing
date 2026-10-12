@@ -33,6 +33,7 @@ import { mergePricingPlans, pricingFloorLabel } from "./merge-pricing-catalog";
 // Temporarily disabled, do not delete. Hero collage pointer parallax.
 // import { usePointerParallax } from "./use-pointer-parallax";
 import { JournalSection } from "./journal-section";
+import { SocialProofSection } from "./social-proof-section";
 import { FaqSection, PricingSection } from "./pricing-section";
 import { usePlanCatalog } from "./use-plan-catalog";
 import { WorkflowSection } from "./workflow-section";
@@ -676,6 +677,8 @@ export function LandingPage() {
         >
           <FounderNote headingId="founder-heading" />
         </section> */}
+        {/* Proof from people using it, right before the price. */}
+        <SocialProofSection />
         <PricingSection />
         <FaqSection />
         <JournalSection />
