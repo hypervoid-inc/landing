@@ -1,14 +1,11 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { Cloud, FolderOpen, History, X } from "lucide-react";
 import {
   createContext,
   useContext,
   useEffect,
-  useId,
   useRef,
   useState,
-  type FormEvent,
   type MouseEvent,
   type ReactNode,
 } from "react";
@@ -23,8 +20,7 @@ if (typeof document !== "undefined") {
   (window as unknown as Record<string, unknown>).confetti = confetti;
 }
 
-import { betaSignupSchema } from "../../../shared/beta-signup-schema";
-import { getAppOrigin, getAppUrl } from "../../platform/env";
+import { getAppUrl } from "../../platform/env";
 import { AuthSignInForm } from "../auth/auth-sign-in-form";
 import { useAuth } from "../auth/auth-provider";
 import {
@@ -34,25 +30,11 @@ import {
   shouldOpenPostLoginWelcomePreview,
 } from "../auth/post-login-welcome";
 import { captureAnalytics } from "../analytics/analytics.client";
-import { readAttributionCookie } from "../analytics/campaign-attribution.client";
 import { usePrefersReducedMotion } from "./media";
 import "./beta-access.css";
 
-const STORAGE_KEY = "construct_beta_access_v1";
-const TURNSTILE_SITE_KEY =
-  import.meta.env.VITE_TURNSTILE_SITE_KEY ||
-  (import.meta.env.DEV ? "1x00000000000000000000AA" : "");
-const referrals = [
-  ["twitter", "X / Twitter"],
-  ["reddit", "Reddit"],
-  ["hackernews", "Hacker News"],
-  ["producthunt", "Product Hunt"],
-  ["linkedin", "LinkedIn"],
-  ["discord", "Discord"],
-  ["other", "Other"],
-] as const;
-
-export type AccessDialogMode = "auth" | "updates";
+/** The dialog only signs people in; the field stays so callers still compile. */
+export type AccessDialogMode = "auth";
 
 /**
  * `start` reframes the auth dialog for people who have never had an account.
@@ -67,7 +49,7 @@ export type AccessDialogMode = "auth" | "updates";
 export type AccessDialogIntent = "signin" | "start";
 
 export type OpenAccessDialogOptions = {
-  mode: AccessDialogMode;
+  mode?: AccessDialogMode;
   source: string;
   plan?: string;
   intent?: AccessDialogIntent;
@@ -81,7 +63,7 @@ const BetaAccessContext = createContext<OpenAccessDialog>(() => undefined);
 
 /**
  * Read-only companion to BetaAccessContext. Kept separate so widening it never
- * re-renders every BetaLink on the page each time the dialog opens.
+ * re-renders every StartLink on the page each time the dialog opens.
  */
 const BetaDialogOpenContext = createContext(false);
 
@@ -91,17 +73,6 @@ export function useBetaDialogOpen() {
 
 export function useOpenAccessDialog(): OpenAccessDialog {
   return useContext(BetaAccessContext);
-}
-
-export function hasBetaAccess() {
-  try {
-    const value = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "null") as {
-      granted?: unknown;
-    } | null;
-    return value?.granted === true;
-  } catch {
-    return false;
-  }
 }
 
 /**
@@ -166,74 +137,8 @@ export function StartLink({
   );
 }
 
-/**
- * Email capture for cold surfaces (footer product updates). Keeps referral
- * source; opens updates mode of the shared dialog chrome.
- */
-export function BetaLink({
-  children,
-  className = "",
-  label,
-  source = "unknown",
-  onClick: onBeforeClick,
-}: {
-  children: ReactNode;
-  className?: string;
-  label?: string;
-  source?: string;
-  onClick?: () => void;
-}) {
-  const openDialog = useContext(BetaAccessContext);
-  const appOrigin = getAppOrigin();
-  const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    onBeforeClick?.();
-    if (hasBetaAccess()) {
-      captureAnalytics("beta_opened", { source });
-      return;
-    }
-    event.preventDefault();
-    captureAnalytics("beta_access_opened", { source });
-    openDialog({ mode: "updates", source });
-  };
-
-  return (
-    <a
-      href={appOrigin}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={label}
-      className={className}
-      onClick={onClick}
-    >
-      {children}
-    </a>
-  );
-}
-
-function errorMessage(code?: string) {
-  if (code === "invalid_email") return "Please enter a valid email address.";
-  if (code === "disposable_email")
-    return "Please use a non-disposable email address.";
-  if (code === "no_mx") return "That email domain doesn't look valid.";
-  if (code === "mailbox_not_found")
-    return "We couldn't verify that email address. Check for typos or use your work email.";
-  if (code === "verification_unavailable")
-    return "Email verification is temporarily unavailable. Please try again in a moment.";
-  if (code === "invalid_referral_source")
-    return "Please tell us where you heard about Construct.";
-  if (code === "rate_limited")
-    return "Too many attempts. Please try again in a little while.";
-  if (code === "verification_failed")
-    return "Please complete the verification and try again.";
-  if (code === "origin_rejected") return "This signup page is not trusted.";
-  if (code === "payload_too_large" || code === "invalid_request")
-    return "Please check your email and referral details.";
-  return "Signup is temporarily unavailable. Please try again soon.";
-}
-
 function AccessDialog({
   open,
-  mode,
   source,
   plan,
   intent = "signin",
@@ -242,7 +147,6 @@ function AccessDialog({
   onOpenChange,
 }: {
   open: boolean;
-  mode: AccessDialogMode;
   source: string;
   plan?: string;
   intent?: AccessDialogIntent;
@@ -252,43 +156,9 @@ function AccessDialog({
 }) {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const emailId = useId();
-  const errorId = useId();
-  const otherId = useId();
-  const turnstileRef = useRef<TurnstileInstance | null>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const otherRef = useRef<HTMLInputElement>(null);
   const reducedMotion = usePrefersReducedMotion();
   const [phase, setPhase] = useState<"form" | "success">(initialPhase);
-  const [email, setEmail] = useState("");
-  const [referral, setReferral] = useState("");
-  const [other, setOther] = useState("");
-  const [honeypot, setHoneypot] = useState("");
-  const [turnstileToken, setTurnstileToken] = useState("");
-  const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const appOrigin = getAppOrigin();
   const welcomeShown = useRef(false);
-
-  useEffect(() => {
-    if (mode !== "updates" || phase !== "form") return;
-    const handler = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return;
-      if (e.ctrlKey || e.altKey || e.metaKey) return;
-      if (e.key === "Tab" || e.key === "Escape" || e.key === "Enter") return;
-      const filled = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-        email.trim().toLowerCase(),
-      );
-      if (referral === "other" && filled) {
-        otherRef.current?.focus();
-      } else {
-        emailRef.current?.focus();
-      }
-    };
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
-  }, [mode, phase, email, referral]);
 
   useEffect(() => {
     if (phase !== "success" || reducedMotion) return;
@@ -349,13 +219,13 @@ function AccessDialog({
   }, [phase, reducedMotion]);
 
   useEffect(() => {
-    if (mode !== "auth" || phase !== "success" || welcomeShown.current) return;
+    if (phase !== "success" || welcomeShown.current) return;
     welcomeShown.current = true;
     captureAnalytics("post_login_welcome_shown", { source });
-  }, [mode, phase, source]);
+  }, [phase, source]);
 
   const dismissWelcome = () => {
-    if (mode === "auth" && phase === "success") {
+    if (phase === "success") {
       captureAnalytics("post_login_welcome_dismissed", { source });
     }
     onOpenChange(false);
@@ -372,110 +242,13 @@ function AccessDialog({
     setPhase("success");
   };
 
-  const submitUpdates = async (event: FormEvent) => {
-    event.preventDefault();
-    const normalized = email.trim().toLowerCase();
-    if (
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized) ||
-      normalized.length > 254
-    ) {
-      setError(errorMessage("invalid_email"));
-      return;
-    }
-    if (
-      !referral ||
-      (referral === "other" &&
-        (other.trim().length < 2 || other.trim().length > 120))
-    ) {
-      setError(
-        referral === "other"
-          ? "Please tell us where you heard about us."
-          : errorMessage("invalid_referral_source"),
-      );
-      return;
-    }
-
-    setSubmitting(true);
-    setError("");
-    try {
-      const attr = readAttributionCookie();
-      const payload = betaSignupSchema.safeParse({
-        email: normalized,
-        ctaSource: source,
-        referral,
-        referralOther: referral === "other" ? other.trim() : undefined,
-        turnstileToken,
-        honeypot,
-        meta: {
-          subscribedVia: "landing_footer",
-          ...(attr?.r ? { campaignRef: attr.r } : {}),
-          ...(attr?.c ? { campaignId: attr.c } : {}),
-          ...(attr?.s ? { campaignSubscriberId: attr.s } : {}),
-          ...(attr?.us ? { utmSource: attr.us } : {}),
-          ...(attr?.um ? { utmMedium: attr.um } : {}),
-          ...(attr?.uc ? { utmCampaign: attr.uc } : {}),
-          ...(attr?.uo ? { utmContent: attr.uo } : {}),
-          ...(attr?.p ? { promoCode: attr.p } : {}),
-          ...(attr?.lp ? { landingPath: attr.lp } : {}),
-        },
-      });
-      if (!payload.success) {
-        setError("Please check your email, referral, and verification.");
-        return;
-      }
-
-      captureAnalytics("beta_signup_submitted", {
-        source,
-        referral_source: payload.data.referral,
-      });
-      const response = await fetch("/api/beta-signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload.data),
-      });
-      if (!response.ok) {
-        const body = (await response.json().catch(() => ({}))) as {
-          error?: { code?: string };
-        };
-        setError(errorMessage(body.error?.code));
-        setTurnstileToken("");
-        turnstileRef.current?.reset();
-        return;
-      }
-      try {
-        localStorage.setItem(
-          STORAGE_KEY,
-          JSON.stringify({ granted: true, grantedAt: Date.now() }),
-        );
-      } catch {
-        // Browser storage is a convenience gate, not access control.
-      }
-      captureAnalytics("beta_signup_granted", {
-        source,
-        referral_source: payload.data.referral,
-      });
-      setPhase("success");
-    } catch {
-      setError("Something went wrong. Please try again.");
-      setTurnstileToken("");
-      turnstileRef.current?.reset();
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const canDismiss =
-    phase === "form" || (mode === "auth" && phase === "success");
-  const firstName =
-    user?.displayName?.trim().split(/\s+/)[0] || user?.username || null;
   const successName =
-    mode === "updates" ? email.trim().toLowerCase() : firstName;
+    user?.displayName?.trim().split(/\s+/)[0] || user?.username || null;
 
   return (
     <Dialog.Root
       open={open}
       onOpenChange={(next) => {
-        if (!canDismiss && !next) return;
         if (!next) {
           dismissWelcome();
           return;
@@ -486,27 +259,22 @@ function AccessDialog({
       <Dialog.Portal>
         <Dialog.Overlay className="beta-dialog-overlay fixed inset-0 z-[100] bg-[#235061]/40 backdrop-blur-[2px]" />
         <Dialog.Content
-          onEscapeKeyDown={(event) => !canDismiss && event.preventDefault()}
           onPointerDownOutside={(event) => {
             // Welcome: force an intentional Stay / X, don't treat the dim
             // backdrop as dismiss.
-            if (mode === "auth" && phase === "success") {
-              event.preventDefault();
-              return;
-            }
-            if (!canDismiss) event.preventDefault();
+            if (phase === "success") event.preventDefault();
           }}
           onInteractOutside={(event) => {
-            if (mode === "auth" && phase === "success") {
+            if (phase === "success") {
               event.preventDefault();
             }
           }}
           className="beta-dialog-content fixed left-1/2 top-1/2 z-[101] w-[calc(100%_-_2rem)] max-w-[420px] -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-[28px] border border-[#d9f8ff]/80 bg-white px-8 py-9 font-sans text-[#4e4646] shadow-[0_24px_80px_rgba(1,180,200,.18)] focus:outline-none"
-          {...(phase === "form" && mode === "auth" && intent === "start"
+          {...(phase === "form" && intent === "start"
             ? { "aria-describedby": undefined }
             : {})}
         >
-          {phase === "form" && mode === "auth" ? (
+          {phase === "form" ? (
             <>
               <Dialog.Close
                 aria-label="Close dialog"
@@ -541,6 +309,7 @@ function AccessDialog({
                 appearance="dialog"
                 onSuccess={handleAuthSuccess}
                 postLoginWelcome={{ source, plan, prompt }}
+                askHeardAbout={intent === "start"}
               />
               <p className="mt-4 text-center text-[12px] leading-[17px] text-[#627c86]">
                 {intent === "start" ? (
@@ -568,153 +337,7 @@ function AccessDialog({
             </>
           ) : null}
 
-          {phase === "form" && mode === "updates" ? (
-            <>
-              <Dialog.Close
-                aria-label="Close dialog"
-                className="absolute right-5 top-5 rounded-full p-1 text-[#627c86] hover:bg-[#f3f3f3]"
-              >
-                <X aria-hidden className="h-5 w-5" />
-              </Dialog.Close>
-              <Dialog.Title className="text-balance text-center text-[26px] leading-8">
-                Follow what{" "}
-                <span className="font-serif italic text-[#01b4c8]">
-                  Construct
-                </span>{" "}
-                ships
-              </Dialog.Title>
-              <Dialog.Description className="mt-3 text-center text-[15px] leading-[21px] text-[#627c86]">
-                New capabilities, real agent runs, and what we learned building
-                them. No drip sequence.
-              </Dialog.Description>
-              <form className="mt-7 space-y-4" onSubmit={submitUpdates}>
-                <label htmlFor={emailId} className="sr-only">
-                  Email address
-                </label>
-                <input
-                  ref={emailRef}
-                  id={emailId}
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  required
-                  autoFocus
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  disabled={submitting}
-                  aria-invalid={!!error || undefined}
-                  aria-describedby={error ? errorId : undefined}
-                  className="h-11 w-full rounded-xl border border-[#c5e8ef] bg-[#f8feff] px-3 text-[15px] outline-none focus:border-[#01b4c8]"
-                  placeholder="you@company.com"
-                />
-                <fieldset className="space-y-2.5">
-                  <legend className="text-sm leading-5 text-[#627c86]">
-                    Where did you learn about Construct?
-                  </legend>
-                  <div className="flex flex-wrap gap-1.5">
-                    {referrals.map(([id, label]) => (
-                      <button
-                        key={id}
-                        type="button"
-                        aria-pressed={referral === id}
-                        disabled={submitting}
-                        onClick={() => setReferral(id)}
-                        className={`rounded-full border px-3 py-1.5 text-xs font-medium ${referral === id ? "border-brand bg-brand font-black text-white" : "border-[#c5e8ef] bg-[#f8feff]"}`}
-                      >
-                        {label}
-                      </button>
-                    ))}
-                  </div>
-                  {referral === "other" && (
-                    <>
-                      <label htmlFor={otherId} className="sr-only">
-                        Where did you hear about us?
-                      </label>
-                      <input
-                        ref={otherRef}
-                        id={otherId}
-                        value={other}
-                        onChange={(event) => setOther(event.target.value)}
-                        className="h-11 w-full rounded-xl border border-[#c5e8ef] bg-[#f8feff] px-3 text-[15px] outline-none focus:border-[#01b4c8]"
-                        placeholder="Where did you hear about us?"
-                      />
-                    </>
-                  )}
-                </fieldset>
-                <div className="absolute -left-[10000px]" aria-hidden="true">
-                  <label htmlFor={`${emailId}-website`}>Website</label>
-                  <input
-                    id={`${emailId}-website`}
-                    name="website"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={honeypot}
-                    onChange={(event) => setHoneypot(event.target.value)}
-                  />
-                </div>
-                {TURNSTILE_SITE_KEY ? (
-                  <Turnstile
-                    ref={turnstileRef}
-                    siteKey={TURNSTILE_SITE_KEY}
-                    options={{
-                      action: "beta_signup",
-                      appearance: "interaction-only",
-                      refreshExpired: "auto",
-                      size: "flexible",
-                      theme: "light",
-                    }}
-                    onSuccess={setTurnstileToken}
-                    onExpire={() => setTurnstileToken("")}
-                    onError={() => {
-                      setTurnstileToken("");
-                      setError(
-                        "Verification is unavailable. Please try again.",
-                      );
-                    }}
-                  />
-                ) : (
-                  <p role="alert" className="text-[13px] text-[#c44]">
-                    Signup verification is not configured.
-                  </p>
-                )}
-                <p className="text-[12px] leading-[17px] text-[#627c86]">
-                  By continuing, you agree to receive product update email. See
-                  our{" "}
-                  <a
-                    href="/privacy/"
-                    className="text-[#01b4c8] underline underline-offset-2"
-                  >
-                    Privacy Policy
-                  </a>
-                  .
-                </p>
-                {error && (
-                  <p
-                    id={errorId}
-                    role="alert"
-                    className="text-[13px] leading-[18px] text-[#c44]"
-                  >
-                    {error}
-                  </p>
-                )}
-                <button
-                  type="submit"
-                  disabled={
-                    submitting ||
-                    !turnstileToken ||
-                    !referral ||
-                    (referral === "other" &&
-                      (other.trim().length < 2 || other.trim().length > 120))
-                  }
-                  className="beta-access-cta h-[52px] w-full text-lg disabled:opacity-60"
-                >
-                  {submitting ? "Submitting…" : "Continue"}
-                </button>
-              </form>
-            </>
-          ) : null}
-
-          {phase === "success" && mode === "auth" ? (
+          {phase === "success" ? (
             <div className="text-center">
               <Dialog.Close
                 aria-label="Close dialog"
@@ -794,32 +417,6 @@ function AccessDialog({
               </button>
             </div>
           ) : null}
-
-          {phase === "success" && mode === "updates" ? (
-            <div className="text-center">
-              <Dialog.Title className="text-balance text-2xl leading-[30px]">
-                You&apos;re on the list,{" "}
-                <span className="font-serif italic text-[#01b4c8]">
-                  {email.trim().toLowerCase()}
-                </span>
-              </Dialog.Title>
-              <Dialog.Description className="mt-3 text-[15px] leading-[21px] text-[#627c86]">
-                No need to wait for the next one. Construct is ready now.
-              </Dialog.Description>
-              <a
-                href={appOrigin}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => {
-                  captureAnalytics("app_opened", { source });
-                  onOpenChange(false);
-                }}
-                className="beta-access-cta mt-8 h-[52px] w-full text-lg"
-              >
-                Open Construct
-              </a>
-            </div>
-          ) : null}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -831,7 +428,6 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [source, setSource] = useState("unknown");
-  const [mode, setMode] = useState<AccessDialogMode>("auth");
   const [plan, setPlan] = useState<string | undefined>();
   const [prompt, setPrompt] = useState<string | undefined>();
   const [intent, setIntent] = useState<AccessDialogIntent>("signin");
@@ -846,7 +442,6 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
     if (!shouldOpenPostLoginWelcomePreview(window.location.search)) return;
     previewOpened.current = true;
     queueMicrotask(() => {
-      setMode("auth");
       setSource("url-preview");
       setPlan(undefined);
       setIntent("signin");
@@ -877,7 +472,6 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
     // Defer past the effect body, opening the dialog is a reaction to auth
     // settling + sessionStorage, not derived render state.
     queueMicrotask(() => {
-      setMode("auth");
       setSource(payload.source || "oauth-return");
       setPlan(undefined);
       setPrompt(payload.prompt);
@@ -890,7 +484,6 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
   return (
     <BetaAccessContext.Provider
       value={(options) => {
-        setMode(options.mode);
         setSource(options.source);
         setPlan(options.plan);
         setPrompt(options.prompt);
@@ -906,9 +499,8 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
         {children}
         {open && (
           <AccessDialog
-            key={`${mode}-${source}-${plan ?? ""}-${intent}-${initialPhase}`}
+            key={`${source}-${plan ?? ""}-${intent}-${initialPhase}`}
             open
-            mode={mode}
             source={source}
             plan={plan}
             intent={intent}

@@ -1,6 +1,7 @@
 import {
   ATTRIBUTION_COOKIE_NAME,
   ATTRIBUTION_MAX_AGE_SECONDS,
+  hasCampaign,
   mergeFirstTouch,
   parseAttributionCookie,
   parseCampaignParams,
@@ -28,7 +29,9 @@ export function readAttributionCookie(): CampaignAttribution | null {
   const match = document.cookie
     .split("; ")
     .find((row) => row.startsWith(`${ATTRIBUTION_COOKIE_NAME}=`));
-  return parseAttributionCookie(match?.slice(ATTRIBUTION_COOKIE_NAME.length + 1));
+  return parseAttributionCookie(
+    match?.slice(ATTRIBUTION_COOKIE_NAME.length + 1),
+  );
 }
 
 function writeAttributionCookie(value: CampaignAttribution): void {
@@ -57,6 +60,18 @@ export function writePromoCode(code: string): void {
 }
 
 /**
+ * Remember the "how did you hear about us?" slug so the API can persist it at
+ * signup in a later change. Merged like a promo code: it never touches the
+ * first-touch fields, and a later answer replaces an earlier one.
+ */
+export function writeHeardAbout(slug: string): void {
+  if (typeof window === "undefined") return;
+  const existing = readAttributionCookie();
+  const merged = mergeFirstTouch(existing, { h: slug });
+  if (merged) writeAttributionCookie(merged);
+}
+
+/**
  * Capture campaign params on load and persist first touch.
  *
  * Called synchronously from the `<Analytics />` mount effect rather than inside
@@ -64,9 +79,16 @@ export function writePromoCode(code: string): void {
  * hundred milliseconds must still carry attribution to app.construct.computer.
  * PostHog initialisation can wait; this cannot.
  *
- * Returns the merged attribution (or null), whether this load was the first
- * touch, and the raw this-navigation parse when it carried `s` (for campaign-
- * touch, do not use first-touch-merged cookie fields for that).
+ * The referring domain counts as a touch too, so an organic or social visitor
+ * with no UTMs still gets a first-touch cookie. A plain direct visit (no
+ * params, no external referrer) writes nothing, and the cookie is only
+ * rewritten when the merge actually changed it, so returning visits don't keep
+ * pushing the 90-day expiry out.
+ *
+ * Returns the merged attribution (or null), whether this load carried campaign
+ * params that became the first touch (what `campaign_landed` reports), and the
+ * raw this-navigation parse when it carried `s` (for campaign-touch, do not use
+ * first-touch-merged cookie fields for that).
  */
 export function captureCampaignOnLoad(): {
   attribution: CampaignAttribution | null;
@@ -82,6 +104,7 @@ export function captureCampaignOnLoad(): {
   const incoming = parseCampaignParams(
     window.location.search,
     window.location.pathname,
+    { url: document.referrer, currentHost: window.location.hostname },
   );
   const click = incoming?.s ? incoming : null;
 
@@ -90,10 +113,23 @@ export function captureCampaignOnLoad(): {
   }
 
   const merged = mergeFirstTouch(existing, incoming);
-  if (merged) writeAttributionCookie(merged);
+  if (
+    merged &&
+    serializeAttribution(merged) !==
+      (existing ? serializeAttribution(existing) : "")
+  ) {
+    writeAttributionCookie(merged);
+  }
+  // A bare referrer still counts as a first touch for the cookie, but
+  // `campaign_landed` has always meant "arrived on a campaign link", so it
+  // only fires when this URL carried params of its own. A referrer-only cookie
+  // does not stop it, since the campaign fields land on top of it.
+  const fromQuery = Object.keys(incoming).some(
+    (key) => key !== "rd" && key !== "lp" && key !== "t",
+  );
   return {
     attribution: merged,
-    isFirstTouch: existing === null,
+    isFirstTouch: !hasCampaign(existing) && fromQuery,
     click,
   };
 }

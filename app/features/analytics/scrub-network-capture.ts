@@ -36,9 +36,9 @@ function stripHeaders(
   if (!headers) return headers;
   const safe: Record<string, string> = {};
   for (const [key, value] of Object.entries(headers)) {
-    safe[key] = (
-      SENSITIVE_HEADERS as readonly string[]
-    ).includes(key.toLowerCase())
+    safe[key] = (SENSITIVE_HEADERS as readonly string[]).includes(
+      key.toLowerCase(),
+    )
       ? "[redacted]"
       : value;
   }

@@ -9,10 +9,12 @@ import {
 type AnalyticsEvent =
   | "app_opened"
   | "auth_dialog_opened"
-  | "beta_access_opened"
+  // The optional "How did you hear about us?" on the sign-in form, sent as the
+  // reader signs in. `heard_about` is a fixed slug; `heard_about_detail` is
+  // short, scrubbed free text for "Other" only.
+  | "heard_about_answered"
   | "beta_signup_submitted"
   | "beta_signup_granted"
-  | "beta_opened"
   | "affiliate_link_clicked"
   | "clippy_shown"
   | "clippy_cta_clicked"
@@ -215,6 +217,33 @@ export function registerCampaignAttribution(
     }
     posthog.setPersonProperties(undefined, initial);
   });
+}
+
+/**
+ * Capture right before the page navigates away (the Google sign-in redirect),
+ * with person properties written `$set_once` on the same request.
+ *
+ * Sent immediately over `sendBeacon` so the browser finishes it after the page
+ * unloads. Resolves once handed off, or after `timeoutMs` when PostHog has not
+ * loaded yet, so a slow analytics bundle can never hold sign-in hostage.
+ */
+export function captureAnalyticsBeforeLeave(
+  event: AnalyticsEvent,
+  properties: Properties,
+  setOnce?: Properties,
+  timeoutMs = 400,
+): Promise<void> {
+  const sent = initializeAnalytics().then((posthog) => {
+    posthog?.capture(event, properties, {
+      send_instantly: true,
+      transport: "sendBeacon",
+      ...(setOnce ? { $set_once: setOnce } : {}),
+    });
+  });
+  const timeout = new Promise<void>((resolve) =>
+    globalThis.setTimeout(resolve, timeoutMs),
+  );
+  return Promise.race([sent.catch(() => undefined), timeout]);
 }
 
 export function captureAnalytics(

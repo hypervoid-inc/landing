@@ -193,6 +193,7 @@ export function LoginPage() {
               <AuthSignInForm
                 appearance="page"
                 externalError={authError}
+                askHeardAbout
                 footer={
                   <div className="flex justify-center gap-6 text-sm text-[#627c86]">
                     <button

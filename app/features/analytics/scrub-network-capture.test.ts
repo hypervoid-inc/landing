@@ -88,7 +88,12 @@ describe("scrubNetworkCapture", () => {
       requestBody: "secret",
       status: 200,
       duration: 42,
-    } as { name: string; requestBody: string; status: number; duration: number });
+    } as {
+      name: string;
+      requestBody: string;
+      status: number;
+      duration: number;
+    });
 
     expect(scrubbed.status).toBe(200);
     expect(scrubbed.duration).toBe(42);

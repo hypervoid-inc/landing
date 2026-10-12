@@ -1,12 +1,27 @@
 import { Turnstile } from "@marsidev/react-turnstile";
-import { useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
 
 import { buttonVariants } from "../../components/ui/primitives";
 import { cn } from "../../lib/cn";
 import * as authApi from "../../platform/api/auth";
 import { getTurnstileSiteKey } from "../../platform/env";
+import { captureAnalyticsBeforeLeave } from "../analytics/analytics.client";
+import { writeHeardAbout } from "../analytics/campaign-attribution.client";
 import { AuthPanelFrame } from "./auth-panel-frame";
 import { useAuth } from "./auth-provider";
+import {
+  cleanHeardAboutDetail,
+  markHeardAboutSettled,
+  shouldAskHeardAbout,
+  type HeardAbout,
+} from "./heard-about";
+import { HeardAboutField } from "./heard-about-field";
 import { markPostLoginWelcome } from "./post-login-welcome";
 
 type SignInPanel = "signin" | "magic-otp";
@@ -80,6 +95,12 @@ export type AuthSignInFormProps = {
    * magic-email leave so the OS handoff can reopen after return.
    */
   postLoginWelcome?: { source: string; plan?: string; prompt?: string };
+  /**
+   * Show the optional "How did you hear about us?" question, on surfaces where
+   * new accounts get made. Still hidden once this browser has answered it or
+   * signed in through this form.
+   */
+  askHeardAbout?: boolean;
   className?: string;
 };
 
@@ -93,6 +114,7 @@ export function AuthSignInForm({
   onSuccess,
   externalError,
   postLoginWelcome,
+  askHeardAbout = false,
   className,
 }: AuthSignInFormProps) {
   const { setUser, clearError, refresh } = useAuth();
@@ -104,7 +126,29 @@ export function AuthSignInForm({
   const [error, setError] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [passwordMode, setPasswordMode] = useState(false);
+  // Never rendered on the server (auth starts "loading"), so reading storage
+  // in the initializer cannot cause a hydration mismatch.
+  const [showHeardAbout] = useState(
+    () =>
+      askHeardAbout && typeof window !== "undefined" && shouldAskHeardAbout(),
+  );
+  const [heardAbout, setHeardAbout] = useState<HeardAbout | "">("");
+  const [heardAboutDetail, setHeardAboutDetail] = useState("");
+  const heardAboutSent = useRef(false);
+  const leavingForGoogle = useRef(false);
   const turnstileKey = getTurnstileSiteKey();
+
+  // The guard only stops a double click while the beacon is pending. Pressing
+  // Back on Google's account chooser can restore this page from the
+  // back/forward cache with the ref still set, which would leave "Continue
+  // with Google" dead until a reload, so clear it whenever that happens.
+  useEffect(() => {
+    function onPageShow(event: PageTransitionEvent) {
+      if (event.persisted) leavingForGoogle.current = false;
+    }
+    window.addEventListener("pageshow", onPageShow);
+    return () => window.removeEventListener("pageshow", onPageShow);
+  }, []);
 
   const field = appearance === "dialog" ? dialogField : pageField;
   const btnPrimary = appearance === "dialog" ? dialogPrimary : pagePrimary;
@@ -122,8 +166,59 @@ export function AuthSignInForm({
     markPostLoginWelcome(postLoginWelcome);
   }
 
+  /**
+   * Send the answer, if there is one, as the reader signs in. Returns a promise
+   * only when something was sent, so the Google click knows whether to wait.
+   * Never the email: just the slug and the scrubbed "Other" text.
+   */
+  function recordHeardAbout(
+    method: "google" | "email_code" | "password",
+  ): Promise<void> | null {
+    if (!showHeardAbout || heardAboutSent.current) return null;
+    markHeardAboutSettled();
+    if (!heardAbout) return null;
+    heardAboutSent.current = true;
+    writeHeardAbout(heardAbout);
+    const detail =
+      heardAbout === "other"
+        ? cleanHeardAboutDetail(heardAboutDetail)
+        : undefined;
+    const answer = {
+      heard_about: heardAbout,
+      ...(detail ? { heard_about_detail: detail } : {}),
+    };
+    return captureAnalyticsBeforeLeave(
+      "heard_about_answered",
+      { ...answer, method },
+      answer,
+    );
+  }
+
+  function onGoogleClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (leavingForGoogle.current) {
+      event.preventDefault();
+      return;
+    }
+    markWelcomeIfNeeded();
+    const pending = recordHeardAbout("google");
+    const newTab =
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey;
+    if (!pending || newTab) return;
+    // Hold the redirect until the answer is handed to the beacon, capped by
+    // captureAnalyticsBeforeLeave's timeout so sign-in never waits on it.
+    event.preventDefault();
+    leavingForGoogle.current = true;
+    const href = event.currentTarget.href;
+    void pending.then(() => window.location.assign(href));
+  }
+
   async function onMagicSend(e: React.FormEvent) {
     e.preventDefault();
+    void recordHeardAbout("email_code");
     setBusy(true);
     setError(null);
     clearError();
@@ -158,6 +253,7 @@ export function AuthSignInForm({
 
   async function onPasswordLogin(e: React.FormEvent) {
     e.preventDefault();
+    void recordHeardAbout("password");
     setBusy(true);
     setError(null);
     const result = await authApi.passwordLogin(
@@ -200,10 +296,20 @@ export function AuthSignInForm({
               appearance === "dialog" ? "mt-7 space-y-3" : "mt-6 space-y-3"
             }
           >
+            {showHeardAbout ? (
+              <HeardAboutField
+                appearance={appearance}
+                fieldClassName={field}
+                value={heardAbout}
+                detail={heardAboutDetail}
+                onChange={setHeardAbout}
+                onDetailChange={setHeardAboutDetail}
+              />
+            ) : null}
             <a
               href={authApi.getGoogleAuthUrl()}
               className={btnSecondary}
-              onClick={() => markWelcomeIfNeeded()}
+              onClick={onGoogleClick}
             >
               <GoogleLogo className="shrink-0" />
               Continue with Google
