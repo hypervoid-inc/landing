@@ -18,7 +18,7 @@ export default defineConfig({
     command: [
       "pnpm wrangler d1 migrations apply DB --local",
       process.env.E2E_SKIP_BUILD === "1" ? null : "pnpm build",
-      "pnpm wrangler pages dev --port 8788 --binding TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA --binding TURNSTILE_EXPECTED_HOSTNAME=example.com --binding TURNSTILE_EXPECTED_ACTION=beta_signup --binding TURNSTILE_TEST_MODE=true --binding ALLOWED_ORIGIN_HOSTNAME=localhost",
+      "pnpm wrangler pages dev --port 8788 --binding TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA --binding TURNSTILE_EXPECTED_HOSTNAME=example.com --binding TURNSTILE_EXPECTED_ACTION=beta_signup --binding TURNSTILE_TEST_MODE=true --binding ALLOWED_ORIGIN_HOSTNAME=localhost --binding EMBED_SESSION_SECRET=e2e-embed-secret",
     ]
       .filter(Boolean)
       .join(" && "),

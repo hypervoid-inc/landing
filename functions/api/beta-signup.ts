@@ -3,17 +3,11 @@ import {
   type BetaSignup,
   type SignupMeta,
 } from "../../shared/beta-signup-schema";
-import { buildListmonkAttribs, subscribeListmonk } from "../listmonk";
+import { insertSignup, pushSignupToListmonk } from "../signups";
+import { verifyTurnstile } from "../turnstile";
 import type { BetaSignupEnv, PagesFunction } from "../types";
 
 const MAX_BODY_BYTES = 8 * 1024;
-const TURNSTILE_URL =
-  "https://challenges.cloudflare.com/turnstile/v0/siteverify";
-const INSERT_SIGNUP = `
-  INSERT INTO beta_signups (email, cta_source, referral, referral_other, expires_at)
-  VALUES (?, ?, ?, ?, datetime('now', '+180 days'))
-  ON CONFLICT(email) DO NOTHING
-`;
 
 function timingSafeEqualString(a: string, b: string): boolean {
   if (a.length !== b.length) return false;
@@ -94,61 +88,16 @@ function stripPrivilegedBrowserMeta(data: BetaSignup): BetaSignup {
   return { ...data, meta };
 }
 
-function resolveSubscribedVia(data: BetaSignup): string {
-  if (data.meta?.subscribedVia) return data.meta.subscribedVia;
-  if (data.ctaSource.startsWith("auth-")) return "construct_auth";
-  if (data.ctaSource === "footer") return "landing_footer";
-  return data.ctaSource;
-}
-
 async function persistSignup(
   env: BetaSignupEnv,
   data: BetaSignup,
 ): Promise<{ error: Response } | { listmonk: boolean }> {
-  const referral = data.referral ?? "other";
-  const referralOther =
-    referral === "other" ? (data.referralOther ?? "newsletter") : null;
-
-  try {
-    const result = await env.DB.prepare(INSERT_SIGNUP)
-      .bind(data.email, data.ctaSource, referral, referralOther)
-      .run();
-    if (!result.success) {
-      return {
-        error: error(500, "internal_error", "Unable to process request"),
-      };
-    }
-  } catch {
+  if (!(await insertSignup(env, data))) {
     return {
       error: error(500, "internal_error", "Unable to process request"),
     };
   }
-
-  const meta = data.meta ?? {};
-  const listmonk = await subscribeListmonk(
-    env,
-    data.email,
-    data.name,
-    buildListmonkAttribs({
-      ctaSource: data.ctaSource,
-      referral,
-      referralOther,
-      subscribedVia: resolveSubscribedVia(data),
-      authProvider: meta.authProvider,
-      constructUserId: meta.constructUserId,
-      username: meta.username,
-      campaignRef: meta.campaignRef,
-      campaignId: meta.campaignId,
-      campaignSubscriberId: meta.campaignSubscriberId,
-      utmSource: meta.utmSource,
-      utmMedium: meta.utmMedium,
-      utmCampaign: meta.utmCampaign,
-      utmContent: meta.utmContent,
-      promoCode: meta.promoCode,
-      landingPath: meta.landingPath,
-    }),
-  );
-  return { listmonk: listmonk.ok };
+  return { listmonk: await pushSignupToListmonk(env, data) };
 }
 
 export const onRequest: PagesFunction<BetaSignupEnv> = async ({
@@ -201,82 +150,21 @@ export const onRequest: PagesFunction<BetaSignupEnv> = async ({
     return json({ ok: true, listmonk: result.listmonk });
   }
 
-  const secret = env.TURNSTILE_SECRET_KEY?.trim();
-  const expectedHostname =
-    env.TURNSTILE_EXPECTED_HOSTNAME?.trim().toLowerCase();
-  const expectedAction = env.TURNSTILE_EXPECTED_ACTION?.trim() || "beta_signup";
-  const allowedOriginHostname =
-    env.ALLOWED_ORIGIN_HOSTNAME?.trim().toLowerCase() || expectedHostname;
-  if (!secret || !expectedHostname) {
-    return error(500, "internal_error", "Unable to process request");
-  }
-
   if (!parsed.data.turnstileToken) {
+    const secret = env.TURNSTILE_SECRET_KEY?.trim();
+    const expectedHostname = env.TURNSTILE_EXPECTED_HOSTNAME?.trim();
+    if (!secret || !expectedHostname) {
+      return error(500, "internal_error", "Unable to process request");
+    }
     return error(400, "invalid_request");
   }
 
-  const origin = request.headers.get("origin");
-  if (origin) {
-    try {
-      if (new URL(origin).hostname.toLowerCase() !== allowedOriginHostname) {
-        return error(403, "origin_rejected");
-      }
-    } catch {
-      return error(403, "origin_rejected");
-    }
-  }
-
-  const verificationRequest = new URLSearchParams({
-    secret,
-    response: parsed.data.turnstileToken,
-  });
-  const clientIp = request.headers.get("CF-Connecting-IP")?.trim();
-  if (clientIp) verificationRequest.set("remoteip", clientIp);
-
-  let verification: unknown;
-  try {
-    const response = await fetch(TURNSTILE_URL, {
-      method: "POST",
-      body: verificationRequest,
-    });
-    if (!response.ok) {
-      return error(500, "internal_error", "Unable to process request");
-    }
-    verification = await response.json();
-  } catch {
+  const outcome = await verifyTurnstile(env, request, parsed.data.turnstileToken);
+  if (outcome === "unconfigured" || outcome === "unavailable") {
     return error(500, "internal_error", "Unable to process request");
   }
-
-  if (
-    !verification ||
-    typeof verification !== "object" ||
-    !("success" in verification) ||
-    verification.success !== true
-  ) {
-    return error(403, "verification_failed");
-  }
-
-  const metadata =
-    "metadata" in verification &&
-    verification.metadata &&
-    typeof verification.metadata === "object"
-      ? verification.metadata
-      : null;
-  const isTestResponse =
-    env.TURNSTILE_TEST_MODE === "true" &&
-    metadata &&
-    "result_with_testing_key" in metadata &&
-    metadata.result_with_testing_key === true;
-  if (
-    (!isTestResponse &&
-      (!("action" in verification) ||
-        verification.action !== expectedAction)) ||
-    !("hostname" in verification) ||
-    typeof verification.hostname !== "string" ||
-    verification.hostname.toLowerCase() !== expectedHostname
-  ) {
-    return error(403, "verification_failed");
-  }
+  if (outcome === "origin_rejected") return error(403, "origin_rejected");
+  if (outcome === "failed") return error(403, "verification_failed");
 
   const result = await persistSignup(env, stripPrivilegedBrowserMeta(parsed.data));
   if ("error" in result) return result.error;

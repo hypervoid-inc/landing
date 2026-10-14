@@ -75,7 +75,29 @@ type AnalyticsEvent =
   // Free tools at /tools/. `tool` is the slug and `action` is what was taken
   // away (copy, download). Never the content: the tools sit inside
   // `ph-no-capture` so what people type stays out of analytics and replay.
-  | "tool_output_used";
+  | "tool_output_used"
+  // The live demo inside an X post (/embed/). `src` is the post slug from the
+  // player URL and `framed` whether X rendered it; never a name, an email or
+  // what was typed.
+  | "embed_viewed"
+  | "embed_lead_submitted"
+  | "embed_session_started"
+  | "embed_turn_sent"
+  | "embed_turn_failed"
+  | "embed_wall_shown"
+  | "embed_cta_clicked"
+  | "embed_share_clicked"
+  | "embed_offer_shown"
+  | "embed_email_submitted"
+  | "embed_code_revealed"
+  | "embed_code_copied"
+  // The playable shows at /embed1/ and /embed2/. `beat` names the moment;
+  // nothing the viewer typed is ever sent here.
+  | "show_viewed"
+  | "show_session_started"
+  | "show_beat"
+  | "show_email_submitted"
+  | "show_code_revealed";
 
 /** First-party ingest proxy, never eu.i.posthog.com in the browser. */
 const POSTHOG_PROXY = "https://x.construct.computer";

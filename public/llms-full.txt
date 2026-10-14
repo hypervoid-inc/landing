@@ -247,6 +247,489 @@ Nothing you type is sent anywhere. The config is built in your browser, and this
 
 # Resources
 
+## Dots vs Muse vs Grok Bot vs Claude Cowork for a small business
+
+URL: https://construct.computer/blog/always-on-ai-agents-compared/
+Type: comparison
+Author: Construct Team
+Published: 2026-10-14
+Tags: comparison, small-business, ai-agent
+
+Of the always-on AI agents a small business can buy today, Construct gives you one with its own workspace, files, schedules, and email address from $9 a month, and from $59 one plan covers a whole team workspace with no per-seat fee. The four big-lab agents cost a three-person business from $0 (Muse's free tier) to $375 a month (three ChatGPT Business Premium seats at $125 for Dots), with Claude Team at $75 and Cursor Teams with Grok Bot at $120 in between, and each one needs an account in its maker's ecosystem: Meta, ChatGPT, Claude, or Cursor.
+
+For founders and small teams, Construct is the better choice. It works without any of those accounts, keeps every finished file in a workspace the team shares, lets you read and correct what the agent remembers, and its price does not rise with each person you add. Already paying for one of the four? Keep it for personal work and give Construct the recurring jobs your team depends on.
+
+Start with Construct for $9
+
+## Why choose Construct instead of these four?
+
+Construct is priced per plan rather than per person, needs no other subscription, and leaves finished work as files your whole team can open.
+
+- **One plan for the whole team, not one seat per person.** A Construct [team workspace](/use-cases/team-workspaces/) has Owner, Admin, and Member roles, no member limit, and everyone's work draws on the owner's plan. The same three people pay $75 to $375 a month on the per-seat plans below.
+- **No ecosystem to join first.** You sign up for Construct directly. You do not need a Meta account, a ChatGPT Pro seat, a Cursor plan, or a paid Claude plan.
+- **Work that outlives the chat.** Reports, spreadsheets, and scripts land in workspace files as the agent produces them, so a run that stops at step 30 still leaves steps 1 to 29 behind, and next week's run starts from last week's file.
+- **Recurring jobs on a Calendar.** Save a job as a workflow and [schedule it](/use-cases/scheduling/). Calendar runs happen on Construct's servers with your laptop closed: 3 scheduled tasks on Lite, 10 on Starter, 50 on Pro.
+- **Memory you can read and fix.** Open what Construct has learned, correct a fact, or delete it before the next run relies on it.
+- **It answers where your team already talks.** The web app, Slack, Telegram, Discord, and its own email inbox, with the same workspace behind every channel.
+
+    Your browser does not support this video. The description below explains the
+    demo.
+
+    Silent product demo: Construct is reached through Slack, Telegram, Discord
+    slash commands, native email, and the web, with the same workspace behind
+    each channel.
+
+Try Construct Pro free for 7 days
+
+## Always-on AI agents at a glance: Construct, Dots, Muse, Grok Bot, and Claude Cowork
+
+All five keep working after you close the app, but only Construct is sold per workspace with no seat fee and no other subscription to buy first.
+
+|                           | Construct                                                               | ChatGPT Dots                                    | Muse for Small Business                  | Grok Bot                                          | Claude Cowork                                                    |
+| ------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------- | ---------------------------------------- | ------------------------------------------------- | ---------------------------------------------------------------- |
+| Entry price               | Lite, $9                                                                | Included with ChatGPT Pro, from $100            | Free; Power $20 and Max $100             | Cursor Individual, $20                            | Claude Pro, $20                                                  |
+| Team price                | Team workspace with no per-seat fee; Starter at $59 for team volume     | Business Premium, $125 per seat                 | No team plan found                       | Cursor Teams, $40 per user                        | Team Standard, $25 per seat (2 seat minimum)                     |
+| Account needed            | A Construct account only                                                | ChatGPT Pro or Business Premium                 | Meta account, 18 or over                 | Cursor, SuperGrok, or X Premium+                  | Any paid Claude plan                                             |
+| Where finished work lives | Workspace files the team shares; a stopped run keeps its finished steps | Inside ChatGPT                                  | Your Muse Secure VM                      | The shared Bot computer                           | Your Claude account                                              |
+| Recurring work            | Calendar runs prompts, actions, or workflows: 3, 10, or 50 by plan      | Background research is read-only                | Keeps working after you close the app    | Saved skills rerun on a schedule                  | Hourly, daily, weekly, or weekdays                               |
+| Where you talk to it      | Web, Slack, Telegram, Discord, its own email inbox                      | ChatGPT, Slack, Teams                           | Muse apps and web; WhatsApp per DataCamp | Desktop and mobile apps, @bot on X                | Claude web, desktop, mobile; Slack via Claude Tag on Team        |
+| Its own computer          | Cloud workspace with files, a live browser, and a terminal              | Yes, one per dot                                | Yes, Muse Secure VM                      | Yes, one shared by all your Bots                  | Cloud tasks; local files through the desktop app                 |
+| Approvals                 | Drafts for your review; Activity records each action and why            | Custom Rules: allow, block, or require approval | Nothing sends or spends without approval | Auto Review rules; drafts approved before sending | Waits for approval before sending, posting, or paying by default |
+| Regions                   | Sign up directly; no other subscription needed                          | Pro excludes EEA, Switzerland, UK               | US and Canada only                       | Not listed; @bot on X not in every region         | UK, EU, Switzerland, Canada listed                               |
+| Launched                  | Available today                                                         | September 29, 2026                              | September 29, 2026                       | August 11, 2026, in beta                          | Cloud sessions July 7, 2026; merged into Claude September 16     |
+
+Sources for every competitor cell are in the sections below and listed at the end; Construct's limits are on the [pricing page](/pricing/). OpenAI's Dots pages and xAI's pricing page refused our requests on October 11, 2026, so the Dots row relies on launch coverage and the Grok Bot row on xAI's and Cursor's documentation.
+
+## What does each always-on agent cost a three-person business?
+
+Construct Starter covers three people for $59 a month; the per-seat options run from $75 (Claude Team) to $375 (ChatGPT Business Premium), and Muse is free only because each person gets a separate personal agent.
+
+| Product                 | Plan that covers three people             | Monthly cost | What that buys                                           |
+| ----------------------- | ----------------------------------------- | ------------ | -------------------------------------------------------- |
+| Construct               | Starter, one team workspace               | $59          | Up to 5 agents shared by all three, with no per-seat fee |
+| Muse for Small Business | Three free accounts, or Power at $20 each | $0 to $60    | Three separate personal agents                           |
+| Claude Cowork           | Team Standard, $25 per seat               | $75          | A shared organization with owner controls                |
+| Grok Bot                | Cursor Teams, $40 per user                | $120         | Grok Bot access for every member                         |
+| ChatGPT Dots            | Business Premium, $125 per seat           | $375         | One dot per seat                                         |
+
+These are subscription prices, not the cost of a finished job. Muse meters in weekly tokens, Grok Bot in weekly usage, Claude in usage limits that multi-step tasks use faster than chat, and Dots' usage terms after the launch month are unpublished. Construct's per-plan limits are on the [pricing page](/pricing/), and a fourth or fifth teammate does not change the bill.
+
+## ChatGPT Dots
+
+Dots are OpenAI's always-on agents inside ChatGPT: the first dot comes with a ChatGPT Pro plan (from $100 a month) or a Business Premium seat, it runs only on GPT-6 Astra, and Pro subscribers in the UK, the EEA, and Switzerland do not get one.
+
+Each dot has its own cloud computer and browser and connects to more than 4,000 apps through plugins. You reach it in ChatGPT on desktop, web, and mobile, or in Slack and Microsoft Teams, with texting listed as coming later ([The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)). When you are away it does "proactive research" with read-only app access, so it cannot send messages or change content in that time.
+
+**Price, checked October 11, 2026:** The Next Web says dots are included in Pro and Business Premium plans. [Carly](https://www.usecarly.com/blog/chatgpt-dots/) and [eesel](https://www.eesel.ai/blog/openai-dots-pricing) list all three Pro tiers, at $100, $200, and $500 a month, while [BGR](https://www.bgr.com/2272332/openai-devday-2026-announcements/) reported at launch that dots "are only available on ChatGPT's Pro 200 and Business Premium plans." eesel, citing OpenAI's business pricing page, lists Business Premium at $125 per seat monthly or $100 billed annually. Talking to a dot does not count against plan limits, but tasks it starts in ChatGPT Work or Codex do, and from October 30, 2026, Pro 200's included Work and Codex usage halves to 10 times Plus at the same $200 ([Beam](https://beam.ai/agentic-insights/openai-dots-usage-limits-pro-200)). The price of extra dots has not been disclosed ([SiliconANGLE](https://siliconangle.com/2026/09/29/openai-launches-dots-always-on-ai-agents-in-chatgpt-with-their-own-cloud-computers/)).
+
+**Watch for:** the highest team price of the four, a single model, and usage terms after the launch month that OpenAI has not published. OpenAI itself warns that "Dots can still make mistakes, so always review consequential work," according to The Next Web. Our [Construct vs ChatGPT Dots](/blog/construct-vs-openai-dots/) comparison goes deeper, and our [ChatGPT Dots alternatives](/blog/chatgpt-dots-alternatives/) list covers options that do not need ChatGPT Pro.
+
+## Muse for Small Business
+
+Muse is Meta's personal AI agent, free to start with Power at $20 and Max at $100 a month, and it is available only to adults in the US and Canada.
+
+Muse runs on a dedicated "Muse Secure VM," where a separate service called Sentinel is "the sole permission authority for connector actions and network egress" ([Meta](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse)), and Meta says it keeps working after people close the app ([Meta](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)). The business version connects to Asana, Box, Canva, Dropbox, Figma, Granola, HighLevel, QuickBooks, Klaviyo, Lovable, Notion, Shopify, Slack, Stripe, and Zoom, plus Facebook and Instagram business accounts ([Meta](https://about.fb.com/news/2026/09/introducing-muse-small-business/)). Since October 7, it also has an iPad app ([9to5Mac](https://9to5mac.com/2026/10/07/meta-launches-muse-for-ipad-following-weeks-as-the-top-iphone-app/)).
+
+### Is Muse free?
+
+Yes, with a usage limit Meta does not publish in numbers. Power is $20 a month for 500M Muse tokens per week and Max is $100 for 3B tokens per week ([Meta Help Center](https://www.meta.com/help/subscriptions/1021145227643680/)). DataCamp reports that "Muse requires a payment card to get started, even on the free tier" ([DataCamp](https://www.datacamp.com/blog/muse-agent)).
+
+**Watch for:** it is a personal agent on one Meta account, available "to people in the US and Canada who are 18 and over" ([Muse](https://muse.ai/business)). The pages we read mention no way to add staff, roles, or shared access. Our [Construct vs Muse](/blog/construct-vs-muse/) comparison covers the differences in detail.
+
+## Grok Bot
+
+Grok Bot is xAI's always-on agent, launched in beta on August 11, 2026; it has no standalone price and comes with Cursor plans from $20 a month or with eligible xAI subscriptions.
+
+Grok Bot gives you named Bots on "a persistent cloud computer with a browser, filesystem, and terminal," and closing the app, laptop, or phone does not stop a background turn or a routine ([Grok Bot docs](https://docs.x.ai/grok-bot/overview)). A Bot can save a path you walk it through as a skill and rerun it on a schedule. It runs on macOS, Windows, Linux, iPhone, iPad, and Android. On October 9, 2026, Bots gained their own email addresses on the @mail.grokbot.com domain, and 9to5Mac reports an "intelligence upgrade with the help of Anthropic's Claude" earlier that week ([9to5Mac](https://9to5mac.com/2026/10/09/grok-bot-just-got-its-own-email-address-heres-how-to-claim-yours)).
+
+### Is Grok Bot free, and how much does it cost?
+
+No. Cursor's free Hobby plan does not list it. Cursor lists "Grok Bot access" on Individual at $20 a month and Teams at $40 per user ([Cursor pricing](https://cursor.com/pricing)), and every self-serve Teams member gets access ([Cursor help](https://cursor.com/help/grok-bot/plans)). SuperGrok, SuperGrok Plus, SuperGrok Heavy, and X Premium+ give linked usage, while SuperGrok Lite does not include Grok Bot. Usage resets weekly. xAI's own pricing page refused our requests, so we do not list SuperGrok prices.
+
+**Watch for:** all your Bots share one computer, and xAI says each Bot's screen is a separate work surface, "not separate security boundaries." Browser sessions and files are shared, so "Do not place a credential or file on it if another Bot on your account should not be able to use it" ([Grok Bot computer and apps](https://docs.x.ai/grok-bot/computer-and-apps)). "Cursor manages model selection, so there is no model picker" ([Grok Bot settings](https://docs.x.ai/grok-bot/settings-and-notifications)). More in our [Grok Bot comparison](/blog/grokbot-alternative/).
+
+## Claude Cowork
+
+Claude Cowork is Anthropic's mode for multi-step work, included with every paid Claude plan from Pro at $20 a month, with Team seats at $25 for small businesses.
+
+Cowork went to the web and mobile on July 7, 2026 ([Automaton Agency](https://automatonagency.com/insights/claude-cowork-mobile-and-web)). Cloud sessions keep running when the desktop app is closed or your computer is asleep, though cloud tasks are still in beta on Team and Enterprise plans and work that needs local files runs through the desktop app ([Claude Help Center](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)). On October 6, 2026, new Cowork tasks on Pro and Max moved to the cloud ([Claude Help Center](https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile)). On September 16, Anthropic merged Cowork and chat into one Claude, starting with Pro and Max ([Claude blog](https://claude.com/blog/cowork-is-now-claude)). Scheduled tasks run hourly, daily, weekly, or on weekdays, even when your computer is asleep, unless they need local files or apps ([Claude Help Center](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork)).
+
+### How much does Claude Cowork cost for a small business?
+
+Pro is $20 a month ($17 billed annually), Max starts at $100, and Team is for 2 to 150 people, with Standard seats at $25 monthly ($20 annually) and Premium at $125 ($100 annually) ([Claude pricing](https://claude.com/pricing)). [Claude for Small Business](https://claude.com/blog/claude-for-small-business-launches-new-workflows-integrations-and-training-programs), on every paid plan, adds 43 workflows such as a Monday brief and month-end close, and 27 new integrations including Shopify, Xero, Gusto, Square, and Stripe. Anthropic recommends Team for businesses with more than one person.
+
+**Watch for:** multi-step tasks use more of your usage than a quick question, every teammate needs a seat, and putting Claude in Slack through [Claude Tag](https://claude.com/docs/claude-tag/overview) on Team bills channel work by usage on top of seats.
+
+## Grok Bot vs Claude Cowork vs Dots vs Muse: the small-business lens
+
+The choice between the four comes down to which account your business already has, where you operate, who can see the agent's data, and what it does before it acts.
+
+### Which account do you need?
+
+Muse needs a Meta account, Dots need ChatGPT Pro or Business Premium, Grok Bot needs Cursor or an eligible xAI subscription, and Cowork needs a paid Claude plan. If your business runs on none of them, picking one means choosing an ecosystem, not just an agent. Construct needs only its own sign-up, and Pro lets you bring keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI if you want a particular lab's models.
+
+### Which always-on agents work in the UK and EU?
+
+Claude does, and so do Dots on Business Premium; Muse and Dots on Pro do not. Muse for Small Business is US and Canada only. Dots on Pro exclude the EEA, Switzerland, and the UK, though Business Premium works in every supported ChatGPT region ([The Next Web](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)). Anthropic lists the UK, all EU countries, Switzerland, and Canada as supported ([Anthropic](https://www.anthropic.com/supported-countries)). The Grok Bot documentation lists no regions, beyond saying that tagging @bot on X "is not available in every region yet."
+
+### What data can it reach, and who else sees it?
+
+- **Construct** does not train on your data. Memory is visible and editable, and Activity records each action, what it touched, and why for the last 30 days.
+- **Muse** keeps your data and credentials in your VM and says it "doesn't share a person's conversations or the data in their VM with Meta's ad systems." You can opt out of your interactions being used to train Meta's models.
+- **Dots** connect through plugins; background research is read-only.
+- **Grok Bot** shares files, browser logins, and app logins across all of your Bots.
+- **Claude** uses your personal connectors in Cowork. On consumer plans, Anthropic trains on your chats if you choose to allow it, if a conversation is flagged for safety review, or if you otherwise opt in ([Anthropic privacy](https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training)). Anthropic says it does not train on business data on Team and Enterprise plans by default ([Claude blog](https://claude.com/blog/claude-for-small-business-launches-new-workflows-integrations-and-training-programs)).
+
+### What needs your approval?
+
+Muse says "nothing publishes, sends or spends without your approval" ([Muse](https://muse.ai/business)). Dots let you write Custom Rules to allow, block, or require approval for specific actions. Grok Bot uses Auto Review rules that an admin can enforce for the team ([Grok Bot settings](https://docs.x.ai/grok-bot/settings-and-notifications)). Claude for Small Business waits for approval "before anything sends, posts, or pays" by default, and on Team plans owners decide whether members can let Google actions such as sending Gmail run without asking ([Claude Help Center](https://support.claude.com/en/articles/10166901-use-google-workspace-connectors)).
+
+In Construct, set this up deliberately: its workflows do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself once you have checked them. Our guide to [letting an AI agent use your Gmail safely](/blog/ai-agent-gmail-access-safely/) shows the setup.
+
+## An illustrative example: a three-person design studio
+
+This is an illustrative scenario, not a customer case study or a measured test.
+
+A three-person studio runs on Google Workspace, keeps clients in HubSpot, and posts work on Instagram. It wants a Monday summary of open client emails, unpaid invoices, and last week's Instagram results.
+
+- **Construct** on Starter at $59 connects Gmail and HubSpot from the integration catalog, writes the summary to a dated file in the team workspace, and runs every Monday from the Calendar. All three partners open the same file, and the bill is the same for three people as it would be for six.
+- **Muse** covers the Instagram part and is available in Canada, but each partner would have a separate agent.
+- **Dots** would cost $375 a month on Business Premium.
+- **Grok Bot** costs $120 a month on Cursor Teams unless someone already pays for Cursor.
+- **Claude Team** at $75 a month can schedule the summary in Cowork; putting Claude in the studio's Slack through Claude Tag adds usage-based charges for channel work.
+
+### How to test this yourself
+
+Run the same Monday summary on each agent you are considering, with the same test inbox and CRM, for two weeks. Record:
+
+1. Minutes from sign-up to the first usable summary.
+2. How many open client emails and unpaid invoices it caught, out of the ones you know about.
+3. Every approval prompt, and anything it sent or changed that you did not ask for.
+4. Where the summary was saved, and whether your teammates could open it without their own seat.
+5. What the two weeks cost, including any usage beyond the plan.
+
+## Already using one of these? Add Construct in 15 minutes
+
+You do not have to cancel anything. Move the one recurring job your current agent handles least reliably, or the one your teammates need to see.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test your own model keys and longer runs.
+2. **Copy the instructions** you gave your current agent into a Construct chat, and move the source files into the workspace.
+3. **Connect the apps** the job needs from the integration catalog.
+4. **Run it once and check the result** in Files.
+5. **Put it on the Calendar** so it runs every week whether or not anyone is online.
+
+There is no import from Dots, Muse, Grok Bot, or Claude: write your rules into the first instruction, and Construct saves them as memory you can read and correct.
+
+## When might one of these still fit?
+
+- You sell and advertise on Instagram and Facebook in the US or Canada and want an agent that reads your Meta business accounts directly (Muse).
+- Your company already pays for ChatGPT Business Premium and needs custom approval rules on every account action today (Dots).
+- One person already pays for Claude Pro or Cursor and only wants a personal assistant (Cowork or Grok Bot).
+
+For a team's recurring work that needs shared files, schedules, and one price for everyone, Construct is the better fit.
+
+## Which always-on AI agent should a small business choose?
+
+Choose Construct. It starts at $9, covers a three-person team for $59 instead of $75 to $375, needs no Meta, ChatGPT, Claude, or Cursor account, keeps every finished file in a workspace the whole team shares, and lets you correct what it remembers. If someone already has one of the four, keep it for personal follow-ups and let Construct run the work the team depends on.
+
+Give Construct your Monday summary first: connect your inbox and CRM, ask for a dated file listing open client emails and unpaid invoices, check it once, and put it on the Calendar. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+Give Construct its first job
+
+## Methodology
+
+We build Construct. This is our editorial comparison of documented capabilities and published prices, checked on October 11, 2026. It is not a hands-on performance benchmark.
+
+We compared the four always-on agents that small businesses have most often weighed against each other since September, plus Construct. Prices are in US dollars at monthly billing unless noted. OpenAI's Dots announcement, help center, and pricing pages, and xAI's pricing page and Grok Bot changelog, refused automated requests on October 11, so we used launch coverage and vendor documentation and say where sources disagree. Where a capability is not documented in the sources we reviewed, we say so rather than assume it is missing.
+
+## Sources
+
+Pages checked on October 11, 2026:
+
+- [The Next Web: OpenAI launches dots](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)
+- [SiliconANGLE: OpenAI launches Dots](https://siliconangle.com/2026/09/29/openai-launches-dots-always-on-ai-agents-in-chatgpt-with-their-own-cloud-computers/)
+- [BGR: OpenAI DevDay 2026 announcements](https://www.bgr.com/2272332/openai-devday-2026-announcements/)
+- [Carly: ChatGPT Dots plans, costs, and limits](https://www.usecarly.com/blog/chatgpt-dots/) and [eesel: OpenAI Dots pricing](https://www.eesel.ai/blog/openai-dots-pricing)
+- [Beam: Dots usage limits and the Pro 200 change](https://beam.ai/agentic-insights/openai-dots-usage-limits-pro-200)
+- [Meta: Muse for Small Business](https://about.fb.com/news/2026/09/introducing-muse-small-business/), [Meta: Introducing Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/), and [Muse business page](https://muse.ai/business)
+- [Meta: Security and safety for AI agents with Muse](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse)
+- [Meta Help Center: Muse subscriptions](https://www.meta.com/help/subscriptions/1021145227643680/)
+- [DataCamp: Meta Muse](https://www.datacamp.com/blog/muse-agent) and [9to5Mac: Muse for iPad](https://9to5mac.com/2026/10/07/meta-launches-muse-for-ipad-following-weeks-as-the-top-iphone-app/)
+- [xAI: Introducing Grok Bot](https://x.ai/news/introducing-grok-bot), [Grok Bot overview](https://docs.x.ai/grok-bot/overview), [computer and apps](https://docs.x.ai/grok-bot/computer-and-apps), and [settings](https://docs.x.ai/grok-bot/settings-and-notifications)
+- [9to5Mac: Grok Bot gets its own email address](https://9to5mac.com/2026/10/09/grok-bot-just-got-its-own-email-address-heres-how-to-claim-yours)
+- [Cursor pricing](https://cursor.com/pricing) and [Grok Bot plans](https://cursor.com/help/grok-bot/plans)
+- [Claude Help Center: get started with Cowork](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork), [Cowork on web, desktop, and mobile](https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile), and [scheduled tasks](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork)
+- [Claude blog: Cowork and chat are now one Claude](https://claude.com/blog/cowork-is-now-claude)
+- [Automaton Agency: Claude Cowork on mobile and web](https://automatonagency.com/insights/claude-cowork-mobile-and-web)
+- [Claude Tag overview](https://claude.com/docs/claude-tag/overview)
+- [Claude blog: Claude for Small Business](https://claude.com/blog/claude-for-small-business-launches-new-workflows-integrations-and-training-programs)
+- [Claude pricing](https://claude.com/pricing) and [Google Workspace connectors](https://support.claude.com/en/articles/10166901-use-google-workspace-connectors)
+- [Anthropic supported countries](https://www.anthropic.com/supported-countries) and [Anthropic: is my data used for training?](https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training)
+- [Construct pricing](/pricing/)
+
+## Related resources
+
+- [Construct vs ChatGPT Dots](/blog/construct-vs-openai-dots/)
+- [Construct vs Muse for Small Business](/blog/construct-vs-muse/)
+- [Grok Bot alternative: Construct vs Grok Bot](/blog/grokbot-alternative/)
+- [ChatGPT Dots alternatives](/blog/chatgpt-dots-alternatives/)
+- [Muse for Small Business alternatives](/blog/muse-for-small-business-alternatives/)
+- [What is an AI agent with its own computer?](/blog/ai-agent-with-its-own-computer/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
+
+### Frequently asked questions
+
+**Which always-on AI agent is cheapest for a three-person team?**
+
+Muse for Small Business is $0 on its free tier, but that buys three separate personal agents. Construct Starter is $59 a month for one shared team workspace with up to 5 agents and no per-seat fee. Claude Team Standard is $75 at $25 per seat, Cursor Teams with Grok Bot is $120 at $40 per user, and ChatGPT Business Premium with Dots is $375 at $125 per seat. These are subscription prices, not the cost of a finished job.
+
+**Is Grok Bot free, and how much does it cost?**
+
+No. Cursor's free Hobby plan does not list Grok Bot. It comes with Cursor Individual at $20 a month or Cursor Teams at $40 per user, or as linked usage with SuperGrok, SuperGrok Plus, SuperGrok Heavy, or X Premium+. SuperGrok Lite does not include it, and usage resets weekly. xAI's pricing page refused our requests, so the post does not list SuperGrok prices.
+
+**Is Meta Muse free for a small business?**
+
+Yes, with a usage limit Meta does not publish in numbers. Power costs $20 a month for 500M Muse tokens per week and Max costs $100 for 3B tokens per week. DataCamp reports a payment card is required even on the free tier. Muse is a personal agent on one Meta account, available only to people 18 and over in the US and Canada, and the pages we read mention no way to add staff.
+
+**Grok Bot vs Claude Cowork: which suits a small business better?**
+
+It depends on the account you already have. Grok Bot comes with Cursor or eligible xAI plans, and all your Bots share one computer, files, and logins, which xAI says are not security boundaries. Claude Cowork comes with any paid Claude plan, with Team seats at $25, runs scheduled tasks hourly to weekly, and waits for approval before sending, posting, or paying by default. Both bill per person; Construct covers a whole team workspace from $59.
+
+**Which always-on AI agents work in the UK or EU?**
+
+Anthropic lists the UK, all EU countries, and Switzerland as supported for Claude. Dots on ChatGPT Pro exclude the EEA, Switzerland, and the UK, but Business Premium works in every supported ChatGPT region. Muse for Small Business is US and Canada only. The Grok Bot documentation lists no regions, beyond saying that tagging @bot on X is not available in every region yet. Construct needs only its own sign-up.
+
+**Do these always-on agents ask before acting?**
+
+Muse says nothing publishes, sends, or spends without your approval. Dots use Custom Rules to allow, block, or require approval. Grok Bot uses Auto Review rules an admin can enforce, and Claude for Small Business waits for approval before anything sends, posts, or pays by default. Construct's workflows do not pause for approval yet, so for anything customer-facing, ask it for drafts and send them yourself once you have checked them.
+
+**Is Construct a good alternative to Dots, Muse, Grok Bot, and Claude Cowork?**
+
+Yes, for founders and small teams. Construct starts at $9 a month, needs no Meta, ChatGPT, Claude, or Cursor account, and a team workspace covers everyone with no per-seat fee. Finished work lands in files the team shares, Calendar schedules run with your laptop closed, and you can read and correct what the agent remembers. Keep an existing agent for personal work and give Construct the recurring team jobs.
+
+**Can I use Construct alongside ChatGPT Dots, Muse, Grok Bot, or Claude?**
+
+Yes. Start on Lite for $9 or the 7-day Pro trial, copy your current agent's instructions into a Construct chat, move the source files into the workspace, connect the apps the job needs, run it once, and put it on the Calendar. There is no import from Dots, Muse, Grok Bot, or Claude, so write your rules into the first instruction and Construct saves them as memory you can read and correct.
+## Construct vs Muse for Small Business
+
+URL: https://construct.computer/blog/construct-vs-muse/
+Type: comparison
+Author: Construct Team
+Published: 2026-10-13
+Tags: comparison, small-business, ai-employee
+
+Construct gives your whole team an AI employee with its own workspace, files, schedules, and email address from $9 a month, while Meta's Muse for Small Business is a personal agent on one Meta account, offered only to adults in the US and Canada. Muse is free to start, with Power at $20 and Max at $100 a month metered in weekly tokens, and Meta does not publish the free tier's limit in numbers.
+
+For most founders and small teams, Construct is the better choice. Its work lives in a workspace your team can open, it reaches the Gmail, CRM, and tracker work that happens outside Meta's apps, and a job that works once can be saved and put on a schedule. Already using Muse for your Instagram and Facebook ads? Keep it there and give Construct the reports, follow-ups, and trackers everyone else on the team depends on. The two run side by side.
+
+Start with Construct for $9
+
+## Why choose Construct over Muse for Small Business?
+
+Construct is built for a team's recurring work across many apps, with published plan limits from $9; Muse is one person's agent inside Meta's apps.
+
+- **One workspace for the whole team.** Invite teammates with Owner, Admin, or Member roles. A team workspace has no member limit, and everyone's work draws on the owner's plan. Meta's Muse pages describe a personal agent and mention no team plan or staff accounts.
+- **Built for the apps outside Meta.** Construct's live integration catalog covers Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable, and you can add your own MCP tools.
+- **Recurring jobs that run themselves.** Save a task as a workflow and put it on the Calendar. Schedules run on Construct's servers with your laptop closed: 3 on Lite, 10 on Starter, 50 on Pro.
+- **Limits you can plan around.** Each plan states its agents, steps per task, and scheduled tasks. Muse meters tokens per week, and its free-tier limit is not published in numbers.
+- **Work that outlives the chat.** Reports and spreadsheets land in workspace files as the agent produces them, so a run that stops at step 30 still leaves steps 1 to 29 behind.
+- **Your model, and more ways to reach it.** Pro runs on your own keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI. You can message the agent on the web, in Slack, Telegram, or Discord, or by email.
+
+## What is Meta Muse for Small Business?
+
+Muse for Small Business is Meta's personal Muse agent connected to business apps and to your Facebook, Instagram, and Meta ad accounts, launched on September 29, 2026. Muse itself launched on September 8 and runs on "Muse Secure VM, a dedicated secure computer with its own browser," on Meta's Muse Spark model, in the Muse app, on muse.ai, and in WhatsApp ([Meta](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)).
+
+[Meta's Muse for Small Business announcement](https://about.fb.com/news/2026/09/introducing-muse-small-business/), last updated October 8, 2026, lists:
+
+- **Connectors:** Asana, Box, Canva, Dropbox, Figma, Granola, HighLevel, Intuit QuickBooks, Klaviyo, Lovable, Notion, Shopify, Slack, Stripe, and Zoom, plus custom connectors.
+- **Meta accounts:** Instagram professional account analytics, Facebook Pages, and Meta ad accounts.
+- **Who can use it:** people 18 and over in the US and Canada ([Muse for Small Business](https://muse.ai/business)).
+- **Approvals:** "Nothing publishes, sends, or spends without your approval." For purchases, Meta's [security write-up](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse) says Muse issues a single-use card number tied to one merchant and amount.
+
+Meta does not review custom connectors: its help center says it "doesn't review custom connectors or how they use your information" ([Meta Help Center](https://www.meta.com/help/artificial-intelligence/1687253048996149/)). We found no new Muse for Small Business features announced between October 1 and October 11, 2026.
+
+If you are still weighing several options, our guide to [Muse for Small Business alternatives](/blog/muse-for-small-business-alternatives/) compares nine. This page is the head-to-head with Construct.
+
+## Methodology
+
+We build Construct. This is our editorial comparison of documented capabilities and published prices, checked on October 11, 2026. It is not a hands-on performance benchmark.
+
+Muse facts come from Meta's own announcements, the [Muse for Small Business page](https://muse.ai/business), Meta's help center, and Meta's published security write-up, with DataCamp for what Meta's pages leave unclear. Where a capability is not documented in the sources we reviewed, we say "not documented" rather than claiming it is absent.
+
+## Meta Muse vs Construct: features at a glance
+
+Construct wins on team use, scheduling, and reach beyond Meta; Muse's documented strength is first-party access to Meta's ad and page accounts.
+
+| Capability                | Construct                                                                                   | Muse for Small Business                                                    |
+| ------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Starting price            | $9 a month (Lite), with stated limits                                                       | Free tier with an unpublished usage limit; Power $20, Max $100             |
+| Team use                  | Team workspaces with Owner, Admin, and Member roles and no per-seat fee                     | Personal agent on one Meta account; no team plan documented                |
+| Where finished work lives | Workspace files your team can open; a stopped run keeps its finished steps                  | Inside the Muse apps                                                       |
+| Recurring work            | Calendar schedules and saved workflows: 3 on Lite, 10 on Starter, 50 on Pro                 | Keeps working after you close the app; a scheduling tool is not documented |
+| Business apps             | Live integration catalog (Gmail, Notion, HubSpot, Airtable, more) plus your own MCP tools   | 15 named connectors plus custom connectors                                 |
+| Memory                    | Inspect, correct, or forget any stored fact                                                 | Inspect, edit, and download memory files                                   |
+| Model                     | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro | Meta's Muse Spark; no other provider documented                            |
+| Ways to reach it          | Web, Slack, Telegram, Discord, and its own email address                                    | Muse app on iOS and Android, muse.ai, WhatsApp                             |
+| Account you need          | A Construct account (Google sign-in or email)                                               | A Meta account; 18 or over                                                 |
+| Availability              | Sign up directly; no Meta account or other subscription needed                              | US and Canada                                                              |
+| Meta ads and pages        | Works from exports you save to the workspace                                                | Instagram analytics, Facebook Pages, and Meta ad accounts                  |
+
+Muse sources: [Meta's Muse launch](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/), [Muse for Small Business](https://about.fb.com/news/2026/09/introducing-muse-small-business/), the [Muse business page](https://muse.ai/business), and [Meta's security write-up](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse). Construct's [product guide](/blog/ai-employee/) and [channels page](/use-cases/channels/) cover its side.
+
+## Is Meta Muse free? How much each one costs
+
+Muse is free up to a usage limit Meta does not quantify, then $20 a month for Power or $100 for Max; Construct starts at $9 a month with every limit stated. Meta's [subscription help page](https://www.meta.com/help/subscriptions/1021145227643680/) says "Muse is available for free with a usage limit," and Muse for Small Business uses the same plans as the consumer app. These are USD prices billed monthly.
+
+| Plan              | Monthly price | What you get                                                                                   |
+| ----------------- | ------------- | ---------------------------------------------------------------------------------------------- |
+| Construct Lite    | $9            | Up to 2 agents, 50 steps per task, 3 scheduled tasks, agent email address                      |
+| Construct Starter | $59           | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                          |
+| Construct Pro     | $299          | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys |
+| Muse free tier    | $0            | Usage limit not published in numbers; upgrade or wait for it to refresh                        |
+| Muse Power        | $20           | 500M Muse tokens per week                                                                      |
+| Muse Max          | $100          | 3B Muse tokens per week                                                                        |
+
+Sources: [Construct pricing](/pricing/), [Meta Help Center: Muse subscriptions](https://www.meta.com/help/subscriptions/1021145227643680/), and [DataCamp's Muse guide](https://www.datacamp.com/blog/muse-agent). Paying annually brings Construct to $7.50, $39, and $199 a month.
+
+What this means for your budget:
+
+- **Knowing what you get:** DataCamp notes that "exact task and message quotas for each tier are not clearly published," and reports that Muse asks for a payment card even on the free tier. Construct Lite tells you up front: 2 agents, 50 steps per task, and 3 scheduled tasks for $9.
+- **Compared with Muse Power:** Construct Lite costs $11 a month less and adds a shared workspace, an agent email address, and scheduled jobs.
+- **A team of five:** Construct Starter at $59 covers up to 5 agents for the whole workspace. Muse subscriptions belong to one person's Meta account, and Meta documents no team plan.
+
+Try Construct Pro free for 7 days
+
+## Is Muse for Small Business available in the UK, EU, or India?
+
+No. Meta's [Muse for Small Business page](https://muse.ai/business) says it is available "to people in the US and Canada who are 18 and over," and Meta has not given dates for other countries. Its [subscription help page](https://www.meta.com/help/subscriptions/1021145227643680/) adds that Muse subscriptions "are in limited testing and aren't available in all locations yet." Construct needs no Meta account: you sign up directly with Google or email. Confirm your country at sign-up for any agent, ours included. If you are comparing other options outside North America, our [Gemini Spark alternatives](/blog/gemini-spark-alternatives/) guide covers regional limits for the main agents.
+
+## Can a team share Muse for Small Business?
+
+Not in the pages Meta publishes: Muse is tied to one Meta account, and Meta describes no way to invite an employee or a bookkeeper into the same agent. Construct's [team workspaces](/use-cases/team-workspaces/) hold the agent, files, apps, and conversations together, and people join with roles instead of sharing a login. Finished work lands in Files as it is produced, so the next person, or next week's run, starts from what already exists.
+
+## Where does Construct give you more control?
+
+Construct gives your team a way to make work repeat, a reach beyond Meta's apps, and a choice of model, on top of the computer both agents get.
+
+### Recurring jobs are saved, scheduled, and repeatable
+
+Once a task produces the right result, you save it as a workflow and put it on the Calendar, which runs it on Construct's servers whether or not anyone is online and keeps each run's history. Meta says Muse "keeps working across the apps and services you connect, even after you close it," but its pages do not document a tool for setting a job to run every Monday. The [scheduling page](/use-cases/scheduling/) shows how Construct keeps runs.
+
+    Your browser does not support this video. The description below explains the
+    demo.
+
+    Silent product demo: Construct's Calendar shows scheduled agent jobs and
+    workflow runs, the place a recurring weekly report lives once it works.
+
+### It reaches the apps a small business uses outside Meta
+
+Construct's live integration catalog includes Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable, and you can add custom MCP tools when a connector does not exist. When a structured connection is not enough, the agent still has a live browser and a terminal in its workspace, and you can save an export from your store or ads account to Files for it to work from.
+
+Each Construct agent also has its own email address. Forward an invoice or a vendor thread from your own address and the agent starts work on it, without the job running through a personal inbox. Our guides to [giving an AI agent its own email address](/blog/ai-agent-email-address/) and [letting an agent use your Gmail safely](/blog/ai-agent-gmail-access-safely/) cover the setup.
+
+### Channels with their own access rules
+
+Message Construct from the web, @mention it in Slack, text it on Telegram, use it in Discord, or email it. Access is set per channel: for a Slack, Telegram, or Discord install, allow and deny lists decide who can use the agent, and an install with no rules admits only the person who installed it.
+
+### Your choice of model
+
+Muse runs on Meta's Muse Spark. Construct Pro can run on your own keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI, as the [Construct terms](/terms/) explain, so your procedures and files stay put if you change providers. Your keys bill you directly when they are used.
+
+## How to test both on the same job
+
+The fairest way to choose is to give both the same real job for two weeks and compare the results. We have not published a measured run, so use this checklist on your own data:
+
+1. **Pick one recurring job,** such as a Monday summary of last week's orders, refunds, top five products, and ad spend, saved as a dated report, with "do not send anything to anyone" in the prompt.
+2. **Use the identical prompt** on Muse for Small Business and on Construct, with the same store and ad data on each.
+3. **Record setup minutes** and minutes to the first usable report.
+4. **Count approval prompts, errors, and retries.**
+5. **Check week 2:** did it compare correctly with week 1?
+6. **Check where the report was saved** and whether a teammate could open it without your login.
+7. **Note the cost:** plan price, plus any usage meter warnings.
+
+On the Construct side, save last week's report and the format you want in the workspace, connect the apps the job needs, and save a weekly ad export to Files for the Meta numbers. Ask the agent to compare this week with last week and name the source of each figure. Check the first two reports, then save the job as a workflow and put it on the Calendar, where it uses one of Lite's 3 scheduled tasks. The [workflow guide](/blog/ai-workflow-automation/) walks through each step.
+
+## Already using Muse? Add Construct in 15 minutes
+
+You do not have to give up Muse. Start with the one job your team needs to see, or the one that lives outside Meta's apps.
+
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test your own model keys and longer runs.
+2. **Copy the instructions** you gave Muse into a Construct chat, and download the memory and files you want to keep (Meta says you can) into the workspace.
+3. **Connect the apps** the job needs from the integration catalog.
+4. **Run it once and check the result** in Files.
+5. **Put it on the Calendar** so it runs every week whether or not anyone is online.
+
+There is no import: Muse's memory, connectors, and approval settings do not transfer. Write your rules into the first instruction and Construct saves them as memory you can read. One thing to set up deliberately: Construct's workflows do not pause for approval yet, so for anything customer-facing or anything that spends money, ask for drafts and send them yourself once you have checked them.
+
+## When might Muse still fit?
+
+- Your selling and advertising happen almost entirely on Instagram and Facebook, and you want first-party access to Meta ad accounts.
+- You want approval on every send and spend, plus single-use card numbers for purchases, built in today.
+- You run the business alone from your phone and WhatsApp.
+
+For recurring work that a team shares, that crosses Gmail, a CRM, and the web, and that should run on a schedule, Construct is the better fit.
+
+## Which should you choose?
+
+Choose Construct. It gives a small business one AI employee the whole team can use, with stated plan limits from $9, saved workflows on a schedule, finished files in a shared workspace, and no Meta account or region limit tied to one person. If Muse already runs your Meta ads, keep it for that and let Construct handle the reports, follow-ups, and trackers that live everywhere else.
+
+Pick the report, follow-up list, or tracker that keeps sliding into your evening, give Construct the inputs, and judge the saved result. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+
+Give Construct its first job
+
+## Sources
+
+Pages checked on October 11, 2026:
+
+- [Meta: Introducing Muse, September 8, 2026](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
+- [Meta: Muse for Small Business, September 29, 2026, updated October 8, 2026](https://about.fb.com/news/2026/09/introducing-muse-small-business/)
+- [Muse for Small Business page](https://muse.ai/business)
+- [Meta: Security and safety for AI agents, our approach with Muse](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse)
+- [Meta Help Center: About Muse subscriptions](https://www.meta.com/help/subscriptions/1021145227643680/)
+- [Meta Help Center: Muse custom connectors](https://www.meta.com/help/artificial-intelligence/1687253048996149/)
+- [DataCamp: Meta Muse features, access, and pricing](https://www.datacamp.com/blog/muse-agent)
+- [Construct pricing](/pricing/)
+- [Construct terms, including BYOK](/terms/)
+- [Construct product guide](/blog/ai-employee/)
+
+## Related resources
+
+- [Muse for Small Business alternatives](/blog/muse-for-small-business-alternatives/)
+- [Lindy alternatives, compared honestly](/blog/lindy-alternatives/)
+- [Construct vs ChatGPT Dots](/blog/construct-vs-openai-dots/)
+- [How to let an AI agent use your Gmail safely](/blog/ai-agent-gmail-access-safely/)
+- [AI agent memory you can control](/blog/ai-agent-memory/)
+- [AI employees for small business: 10 platforms compared](/blog/best-ai-employee-platforms/)
+
+### Frequently asked questions
+
+**Is Construct a good Muse for Small Business alternative?**
+
+Yes, for most founders and small teams. Construct starts at $9 a month and gives your business an AI employee with its own workspace, files, schedules, and email address that the whole team can use. Meta's Muse for Small Business is a personal agent tied to one Meta account, offered only to adults in the US and Canada, with no team plan in Meta's pages.
+
+**Is Meta Muse free?**
+
+Muse is free up to a usage limit that Meta does not publish in numbers. When you reach it, you upgrade or wait for it to refresh. Paid plans are Power at $20 a month for 500M Muse tokens per week and Max at $100 for 3B tokens per week, and Muse for Small Business uses the same plans. DataCamp reports Muse asks for a payment card even on the free tier.
+
+**How much does Muse for Small Business cost compared with Construct?**
+
+Muse has a free tier with an unpublished usage limit, then Power at $20 and Max at $100 a month, metered in tokens per week. Construct Lite is $9 a month for 2 agents, 50 steps per task, and 3 scheduled tasks, Starter is $59, and Pro is $299 with a 7-day trial. Construct is priced per plan rather than per person, so a team shares one plan.
+
+**Is Muse for Small Business available in the UK, EU, or India?**
+
+No. Meta says Muse for Small Business is available to people in the US and Canada who are 18 and over, and it has not given dates for other countries. Its help center adds that Muse subscriptions are in limited testing and not available in all locations. Construct needs no Meta account, so you sign up directly with Google or email and confirm your country at sign-up.
+
+**Can my team share Muse or Construct?**
+
+Meta's Muse pages describe a personal agent on one Meta account and document no team plan or way to invite staff. Construct's team workspaces hold the agent, files, apps, and conversations together, with Owner, Admin, and Member roles, no member limit, and usage drawn from the owner's plan, so teammates join with their own login instead of sharing one.
+
+**Can Muse run tasks on a schedule like Construct?**
+
+Meta says Muse keeps working across the apps you connect after you close it, but its pages do not document a tool for setting a job to run at a fixed time. In Construct, you save a task that worked as a workflow and put it on the Calendar, where it runs on Construct's servers with your laptop closed: 3 schedules on Lite, 10 on Starter, and 50 on Pro.
+
+**Can I use Construct alongside Muse?**
+
+Yes. Keep Muse for your Instagram and Facebook ads and give Construct the reports, follow-ups, and trackers that live in Gmail, a CRM, and the web. Start on Lite for $9, copy your instructions, connect the apps, run the job once, and put it on the Calendar. There is no import, and Construct's workflows do not pause for approval yet, so ask for drafts of anything customer-facing.
 ## How to Let an AI Agent Use Your Gmail Safely
 
 URL: https://construct.computer/blog/ai-agent-gmail-access-safely/

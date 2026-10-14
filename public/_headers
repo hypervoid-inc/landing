@@ -12,6 +12,40 @@
   Cache-Control: public, max-age=0, must-revalidate, s-maxage=600, stale-while-revalidate=86400
   Origin-Trial: AvokLfydIAHFy3U4luav13EfKani7TOeFA258ORITJ+rv6kc12u92lSC1/Io7nquaUhzJvWKoy74J4BnHSlOVwQAAABSeyJvcmlnaW4iOiJodHRwczovL2NvbnN0cnVjdC5jb21wdXRlcjo0NDMiLCJmZWF0dXJlIjoiV2ViTUNQIiwiZXhwaXJ5IjoxODA2MzY0ODAwfQ==
 
+# The live demo (/embed/) is what X frames inside a post, so it alone may be
+# framed, and only by X. The site-wide CSP and X-Frame-Options are detached
+# and the CSP restated with those ancestors; everything else in it is the same.
+/embed
+  ! Content-Security-Policy
+  ! X-Frame-Options
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self' https://x.com https://*.x.com https://twitter.com https://*.twitter.com; form-action 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://x.construct.computer https://join.construct.computer; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://x.construct.computer wss://x.construct.computer https://join.construct.computer; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; upgrade-insecure-requests
+
+/embed/*
+  ! Content-Security-Policy
+  ! X-Frame-Options
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self' https://x.com https://*.x.com https://twitter.com https://*.twitter.com; form-action 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://x.construct.computer https://join.construct.computer; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://x.construct.computer wss://x.construct.computer https://join.construct.computer; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; upgrade-insecure-requests
+
+# The two playable shows (/embed1/, /embed2/) are framed the same way.
+/embed1
+  ! Content-Security-Policy
+  ! X-Frame-Options
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self' https://x.com https://*.x.com https://twitter.com https://*.twitter.com; form-action 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://x.construct.computer https://join.construct.computer; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://x.construct.computer wss://x.construct.computer https://join.construct.computer; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; upgrade-insecure-requests
+
+/embed1/*
+  ! Content-Security-Policy
+  ! X-Frame-Options
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self' https://x.com https://*.x.com https://twitter.com https://*.twitter.com; form-action 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://x.construct.computer https://join.construct.computer; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://x.construct.computer wss://x.construct.computer https://join.construct.computer; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; upgrade-insecure-requests
+
+/embed2
+  ! Content-Security-Policy
+  ! X-Frame-Options
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self' https://x.com https://*.x.com https://twitter.com https://*.twitter.com; form-action 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://x.construct.computer https://join.construct.computer; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://x.construct.computer wss://x.construct.computer https://join.construct.computer; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; upgrade-insecure-requests
+
+/embed2/*
+  ! Content-Security-Policy
+  ! X-Frame-Options
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self' https://x.com https://*.x.com https://twitter.com https://*.twitter.com; form-action 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://x.construct.computer https://join.construct.computer; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://x.construct.computer wss://x.construct.computer https://join.construct.computer; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; upgrade-insecure-requests
+
 /_assets/*
   Cache-Control: public, max-age=31536000, immutable
 

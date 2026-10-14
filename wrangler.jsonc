@@ -3,6 +3,8 @@
   "name": "landing-new",
   "pages_build_output_dir": "./build/client",
   "compatibility_date": "2026-07-17",
+  // Workers AI answers the live demo's turns (functions/api/embed/turn.ts).
+  "ai": { "binding": "AI" },
   "d1_databases": [
     {
       "binding": "DB",
@@ -18,5 +20,13 @@
     "ALLOWED_ORIGIN_HOSTNAME": "construct.computer",
     "LISTMONK_BASE_URL": "https://listmonk.construct.computer",
     "LISTMONK_NEWSLETTER_LIST_UUID": "7c3e7b8c-7e05-4482-a5eb-a20c7505dbf6",
+    // The live demo in an X post. The model is a fast, cheap, JSON-capable one;
+    // the caps bound a day's spend whatever the traffic (shared/embed-schema.ts).
+    "EMBED_MODEL": "@cf/meta/llama-4-scout-17b-16e-instruct",
+    "EMBED_DAILY_SESSION_CAP": "1500",
+    "EMBED_DAILY_TURN_CAP": "6000",
+    // Handed out by the exit offer for an email: 100% off the first month of
+    // Pro. Create the matching coupon in Dodo before the demo goes live.
+    "EMBED_PROMO_CODE": "FIRSTMONTH",
   },
 }

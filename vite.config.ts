@@ -18,6 +18,18 @@ export default defineConfig({
   build: {
     assetsDir: "_assets",
   },
+  server: {
+    // `pnpm dev` runs the Pages Functions on :8788 (scripts/dev.mjs); the
+    // app calls `/api/*` on its own origin, as in production, and Vite hands
+    // those to Wrangler. The Origin header passes through unchanged, which
+    // is what the functions' origin check reads.
+    proxy: {
+      "/api": {
+        target: process.env.FUNCTIONS_ORIGIN ?? "http://127.0.0.1:8788",
+        changeOrigin: false,
+      },
+    },
+  },
   define: {
     __CONTENT_DATE__: JSON.stringify(process.env.CONTENT_DATE),
     // Set only by `pnpm dev`, which lists every post, drafts included. The

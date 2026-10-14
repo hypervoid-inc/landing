@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -83,6 +84,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const { pathname } = useLocation();
+  // The live demo is framed inside an X post: no site chrome, no smooth
+  // scroll, no Clippy, and no sign-in probe against the API.
+  if (/^\/embed[12]?(\/|$)/.test(pathname)) {
+    return <Outlet />;
+  }
   return (
     <AuthProvider>
       <BetaAccessProvider>

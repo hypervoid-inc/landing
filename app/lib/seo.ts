@@ -3,6 +3,7 @@ import { landingFaq } from "../content/landing";
 import { getResourceFaqs, type FaqItem } from "../content/faqs";
 import { getTool, tools } from "../content/tools";
 import { authorSameAs, listedAuthors, type Author } from "../content/authors";
+import { playerCardMeta } from "./player-card";
 import type { CanonicalRoute } from "./route-manifest";
 import {
   resourcesByAuthor,
@@ -341,7 +342,11 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
           content: tag,
         }))
       : []),
-    { name: "twitter:card", content: "summary_large_image" },
+    // The homepage is a player card: pasted into a post, it becomes the live
+    // demo at /embed/. Every other page is a large image link.
+    ...(route.kind === "home"
+      ? playerCardMeta("home")
+      : [{ name: "twitter:card", content: "summary_large_image" }]),
     { name: "twitter:site", content: "@use_construct" },
     ...(author
       ? [{ name: "twitter:creator", content: author.twitterHandle }]

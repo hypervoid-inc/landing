@@ -993,7 +993,8 @@
               "workflow-channels",
               "pricing-lite",
               "pricing-starter",
-              "pricing-pro"
+              "pricing-pro",
+              "embed-x"
             ]
           },
           "referral": {

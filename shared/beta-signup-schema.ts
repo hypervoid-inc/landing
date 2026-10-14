@@ -13,6 +13,8 @@ export const CTA_SOURCES = [
   "pricing-lite",
   "pricing-starter",
   "pricing-pro",
+  /** The live demo's gate inside an X post (functions/api/embed/session.ts). */
+  "embed-x",
 ] as const;
 
 export const REFERRAL_SOURCES = [

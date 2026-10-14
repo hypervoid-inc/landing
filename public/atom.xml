@@ -3,7 +3,31 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-10-12T00:00:00Z</updated>
+  <updated>2026-10-14T00:00:00Z</updated>
+  <entry>
+    <title>Dots vs Muse vs Grok Bot vs Claude Cowork for a small business</title>
+    <id>https://construct.computer/blog/always-on-ai-agents-compared/</id>
+    <link href="https://construct.computer/blog/always-on-ai-agents-compared/"/>
+    <author><name>Construct Team</name></author>
+    <published>2026-10-14T00:00:00Z</published>
+    <updated>2026-10-14T00:00:00Z</updated>
+    <category term="comparison"/>
+    <category term="small-business"/>
+    <category term="ai-agent"/>
+    <summary>Always-on AI agents for a 3-person team cost $0 to $375 a month. Dots, Muse, Grok Bot and Claude Cowork compared on price, regions and approvals.</summary>
+  </entry>
+  <entry>
+    <title>Construct vs Muse for Small Business</title>
+    <id>https://construct.computer/blog/construct-vs-muse/</id>
+    <link href="https://construct.computer/blog/construct-vs-muse/"/>
+    <author><name>Construct Team</name></author>
+    <published>2026-10-13T00:00:00Z</published>
+    <updated>2026-10-13T00:00:00Z</updated>
+    <category term="comparison"/>
+    <category term="small-business"/>
+    <category term="ai-employee"/>
+    <summary>Meta Muse for Small Business is free to start but runs on one Meta account, US and Canada only. Construct gives your whole team an AI employee from $9.</summary>
+  </entry>
   <entry>
     <title>How to Let an AI Agent Use Your Gmail Safely</title>
     <id>https://construct.computer/blog/ai-agent-gmail-access-safely/</id>

@@ -32,6 +32,36 @@ export type BetaSignupEnv = {
   POSTHOG_HOST?: string;
 };
 
+/** The slice of D1 the embed functions use: one row reads and counted writes. */
+export type D1Statement = {
+  bind(...values: unknown[]): D1Statement;
+  run(): Promise<{ success: boolean; meta?: { changes?: number } }>;
+  first<T = Record<string, unknown>>(): Promise<T | null>;
+};
+
+export type D1Like = { prepare(query: string): D1Statement };
+
+/** Workers AI, as the embed turn uses it: one text generation call. */
+export type AiBinding = {
+  run(model: string, input: Record<string, unknown>): Promise<unknown>;
+};
+
+/** The live demo in an X post (`functions/api/embed/*`). */
+export type EmbedEnv = Omit<BetaSignupEnv, "DB"> & {
+  DB: D1Like;
+  AI?: AiBinding;
+  /** Signs session tokens and keys the email and address hashes. Required. */
+  EMBED_SESSION_SECRET?: string;
+  /** Workers AI model id for demo turns. */
+  EMBED_MODEL?: string;
+  /** New sessions a day across everyone before the demo answers "full". */
+  EMBED_DAILY_SESSION_CAP?: string;
+  /** Turns a day across everyone before the demo answers "full". */
+  EMBED_DAILY_TURN_CAP?: string;
+  /** The code the exit offer hands out: a free first month of the top plan. */
+  EMBED_PROMO_CODE?: string;
+};
+
 export type PagesFunction<Env> = (context: {
   request: Request;
   env: Env;
