@@ -1,32 +1,14 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * The two playable shows, /embed1/ (Night Shift Live) and /embed2/
- * (Episode 01). These cover the card tags, the framing headers and the
- * first interactive beats; the full shows run about a minute each.
+ * Night Shift at /embed/. The card tags and framing headers are covered in
+ * embed.spec.ts; this walks the first interactive beats, since the full show
+ * runs about a minute.
  */
-
-for (const path of ["/embed1/", "/embed2/"]) {
-  test(`${path} is a player card that only X may frame`, async ({ page, request }) => {
-    const response = await request.get(path);
-    expect(response.status()).toBe(200);
-    const csp = response.headers()["content-security-policy"] ?? "";
-    expect(csp).toContain("frame-ancestors 'self' https://x.com https://*.x.com https://twitter.com https://*.twitter.com");
-    expect(response.headers()["x-frame-options"]).toBeUndefined();
-
-    await page.goto(path);
-    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "player");
-    await expect(page.locator('meta[name="twitter:player"]')).toHaveAttribute(
-      "content",
-      `https://construct.computer${path}?src=${path.replaceAll("/", "")}`,
-    );
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
-  });
-}
 
 test("Night Shift wakes up, takes the list and goes dark when the chain is pulled", async ({ page }) => {
   await page.setViewportSize({ width: 516, height: 387 });
-  await page.goto("/embed1/");
+  await page.goto("/embed/?src=e2e");
   await page.getByRole("button", { name: "Wake it up and start the night shift" }).click();
 
   await expect(page.getByText("Is your to-do list done for today?")).toBeVisible({ timeout: 12_000 });
@@ -51,14 +33,4 @@ test("Night Shift wakes up, takes the list and goes dark when the chain is pulle
   await page.mouse.up();
   await expect(page.getByText(/Good night, Ada/)).toBeVisible({ timeout: 6_000 });
   await expect(page.locator(".ns")).toHaveAttribute("data-tod", "night");
-});
-
-test("Episode 01 lets the reader name the episode and its star", async ({ page }) => {
-  await page.setViewportSize({ width: 516, height: 387 });
-  await page.goto("/embed2/");
-  await page.getByRole("button", { name: "Forty new leads" }).click({ timeout: 12_000 });
-  await page.getByLabel("Your first name").fill("ada");
-  await page.getByRole("button", { name: "Roll it" }).click();
-  await expect(page.getByText("Starring Ada")).toBeVisible();
-  await expect(page.getByText(/Forty/)).toBeVisible();
 });

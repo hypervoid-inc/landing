@@ -29,10 +29,6 @@ export default [
   // The live demo that X renders inside a post (app/lib/player-card.ts).
   // Prerendered, framed by x.com, and kept out of the sitemap like /launch.
   route("embed", "routes/embed.tsx"),
-  // Two playable shows for the same card, kept side by side while we pick:
-  // Night Shift Live (embed1) and the Episode 01 manga (embed2).
-  route("embed1", "routes/embed1.tsx"),
-  route("embed2", "routes/embed2.tsx"),
   // `/404` is deliberately NOT its own route. finalize-build.mjs promotes the
   // prerendered /404 output to build/client/404.html, which Cloudflare then
   // serves (with a real 404 status) at every unmatched URL. Those URLs resolve

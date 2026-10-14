@@ -32,7 +32,7 @@ The public Construct Computer website. It preserves the established landing-page
 2. Run `pnpm install`.
 3. Use `.env.example` for public Vite variables and `.dev.vars.example` for local Pages secrets.
 4. Apply the local database migration with `pnpm wrangler d1 migrations apply DB --local`.
-5. Run `pnpm dev` for the site with its Functions (it applies the local D1 migrations and writes `.dev.vars` from the example if missing; Workers AI runs remotely, so `wrangler login` first for the live demo), or `pnpm test:e2e` for the complete Pages, Function, Turnstile, and D1 flow.
+5. Run `pnpm dev` for the site with its Functions (it applies the local D1 migrations and writes `.dev.vars` from the example if missing; ), or `pnpm test:e2e` for the complete Pages, Function, Turnstile, and D1 flow.
 
 Cloudflare's published Turnstile test keys are intentionally included in the example and E2E configuration. Production keys must be configured in Cloudflare.
 
@@ -43,16 +43,16 @@ Cloudflare's published Turnstile test keys are intentionally included in the exa
 - `app/content/resources.ts` maps generated MDX metadata into one ordered collection.
 - Every editorial resource uses `/blog/<slug>/`; company and legal utilities remain top-level.
 - `app/lib/route-manifest.ts` drives prerendering, canonical metadata, sitemap entries, feeds, crawler files, and OG images.
-- `functions/api/beta-signup.ts` takes the site's signups; `functions/api/embed/` runs the live demo that X renders inside a post (see below).
+- `functions/api/beta-signup.ts` takes the site's signups; `functions/api/embed/` runs Night Shift, the playable show X renders inside a post (see below).
 - `scripts/finalize-build.mjs` creates a real `404.html` and removes the SPA fallback.
 
 See `docs/decisions/001-static-prerendered-react.md` for the architectural rationale and `docs/search-and-deployment.md` for production setup and indexing operations.
 
-## Live demo in an X post
+## Night Shift, the show in an X post
 
-The homepage carries X Player Card tags (`app/lib/player-card.ts`), so a post that links `construct.computer` renders `/embed/` inside the post on desktop and opens it full screen from the phone apps. The page (`app/features/embed/`) is Construct's own computer, watched over its shoulder: a lock screen that asks for a first name, then a desktop where Spotlight takes a job and the viewer watches Construct open apps, move the cursor and fill glass windows (notes, calendar, tasks, mail). The email comes last, as the exit offer of a free first month of Pro. The design canvas it follows: https://claude.ai/artifact/JYrTRtxrqamepjoF4PpbYa. `public/_headers` lets only X frame that path.
+The homepage carries X Player Card tags (`app/lib/player-card.ts`), so a post that links `construct.computer` renders `/embed/` inside the post on desktop and opens it full screen from the phone apps. The page is Night Shift (`app/features/night-shift/`), the launch film as a one minute show you play: wake the mascot at 11 pm, hand it your list in a Slack thread, pull the chain, then skip or peek through its night shift until the morning report. The email comes last, as the exit offer of a free first month of Pro. The show runs on a small engine in `app/features/show/` (a 960 by 720 board scaled to fit, the mascot, the speech bubble and the CRT). `public/_headers` lets only X frame that path.
 
-`functions/api/embed/session.ts` turns the lock screen into a signed session token (Turnstile, per-address and daily caps). `functions/api/embed/turn.ts` charges a turn in D1 (`embed_sessions`, keyed hashes only) and asks Workers AI (`EMBED_MODEL`) for a short JSON reply of actions. `functions/api/embed/claim.ts` takes the email at the exit offer, stores the lead the way every other form does (`beta_signups` row and Listmonk subscriber, `cta_source` `embed-x`, the post's `src` as the campaign) and hands back `EMBED_PROMO_CODE`. `shared/embed-schema.ts` holds the wire shapes and the caps: eight turns a session, 280 characters a message, and `EMBED_DAILY_SESSION_CAP` / `EMBED_DAILY_TURN_CAP` across everyone. `EMBED_SESSION_SECRET` is a Pages secret.
+`functions/api/embed/session.ts` turns the viewer's first name into a signed session token (Turnstile, per-address and daily caps, a row in D1's `embed_sessions` with keyed hashes only). `functions/api/embed/claim.ts` takes the email at the exit offer, stores the lead the way every other form does (`beta_signups` row and Listmonk subscriber, `cta_source` `embed-x`, the post's `src` as the campaign) and hands back `EMBED_PROMO_CODE`. `shared/embed-schema.ts` holds the wire shapes and the per-address cap; `EMBED_DAILY_SESSION_CAP` caps sessions across everyone. `EMBED_SESSION_SECRET` is a Pages secret.
 
 ## Content
 

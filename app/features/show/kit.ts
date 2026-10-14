@@ -1,5 +1,5 @@
 /**
- * The small engine behind the two playable shows (/embed1/, /embed2/). Each
+ * The small engine behind the playable show at /embed/ (Night Shift). The
  * show is drawn on a fixed 960 by 720 artboard that the host scales to fit,
  * so every position below is in design pixels. A show is one async script;
  * aborting its signal stops it wherever it is waiting.

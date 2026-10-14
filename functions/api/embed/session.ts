@@ -1,5 +1,4 @@
 import {
-  EMBED_MAX_TURNS,
   EMBED_SESSIONS_PER_IP_PER_HOUR,
   embedSessionRequestSchema,
   type EmbedSessionResponse,
@@ -10,9 +9,9 @@ import { verifyTurnstile } from "../../turnstile";
 import type { EmbedEnv, PagesFunction } from "../../types";
 
 /**
- * `POST /api/embed/session`: the lock screen of the live demo. A first name
- * and a Turnstile check buy a short-lived session token good for a handful
- * of turns. The email comes later, through `claim.ts`, as the exit offer.
+ * `POST /api/embed/session`: the show's first step. A first name and a
+ * Turnstile check buy a short-lived session token. The email comes later,
+ * through `claim.ts`, as the exit offer.
  */
 
 const DEFAULT_DAILY_SESSION_CAP = 1500;
@@ -63,7 +62,6 @@ export const onRequest: PagesFunction<EmbedEnv> = async ({ request, env, waitUnt
       ok: true,
       token: crypto.randomUUID(),
       firstName: firstNameOf(data.name),
-      turnsLeft: EMBED_MAX_TURNS,
     };
     return json(reply);
   }
@@ -108,7 +106,6 @@ export const onRequest: PagesFunction<EmbedEnv> = async ({ request, env, waitUnt
     ok: true,
     token,
     firstName: firstNameOf(data.name),
-    turnsLeft: EMBED_MAX_TURNS,
   };
   return json(reply);
 };

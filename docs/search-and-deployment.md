@@ -26,7 +26,7 @@ Configure these production values:
 | `POSTHOG_PROJECT_KEY`         | Encrypted Pages secret (campaign-touch server capture)  |
 | `POSTHOG_HOST`                | Runtime variable, optional; default `https://x.construct.computer` |
 | `TURNSTILE_SECRET_KEY`        | Encrypted Pages secret                                  |
-| `EMBED_SESSION_SECRET`        | Encrypted Pages secret; signs live-demo session tokens and keys its hashes (`functions/api/embed/`) |
+| `EMBED_SESSION_SECRET`        | Encrypted Pages secret; signs the show's session tokens and keys its hashes (`functions/api/embed/`) |
 | `TURNSTILE_EXPECTED_HOSTNAME` | Runtime variable, `construct.computer`                  |
 | `TURNSTILE_EXPECTED_ACTION`   | Runtime variable, `beta_signup`                         |
 | `TURNSTILE_TEST_MODE`         | Runtime variable, `false`                               |
@@ -36,7 +36,7 @@ Configure these production values:
 
 Never use Cloudflare's dummy Turnstile keys in production.
 
-The live demo (`functions/api/embed/`) also needs the `AI` binding from `wrangler.jsonc` on the Pages project and the `embed_sessions` table: run `pnpm wrangler d1 migrations apply DB --remote` before the first deploy that carries it. `EMBED_MODEL`, `EMBED_DAILY_SESSION_CAP`, `EMBED_DAILY_TURN_CAP` and `EMBED_PROMO_CODE` are plain variables in `wrangler.jsonc`; lower the caps there to close the demo for a day without touching code, and create the promo code as a 100% off first-month coupon on the Pro plan in Dodo before the demo goes live.
+The show in an X post (`functions/api/embed/`) needs the `embed_sessions` table: run `pnpm wrangler d1 migrations apply DB --remote` before the first deploy that carries it. `EMBED_DAILY_SESSION_CAP` and `EMBED_PROMO_CODE` are plain variables in `wrangler.jsonc`; lower the cap there to close the demo for a day without touching code, and create the promo code as a 100% off first-month coupon on the Pro plan in Dodo before the demo goes live.
 
 ## Cloudflare Security
 

@@ -1,4 +1,4 @@
-/* Night Shift Live (/embed1/). Poster world on a 960 by 720 board:
+/* Night Shift Live (/embed/). Poster world on a 960 by 720 board:
    paper frame 22px, art 22 to 846 wide, CONSTRUCT strip 846 to 938. */
 .ns {
   position: absolute;
@@ -19,6 +19,8 @@
   width: 824px;
   height: 676px;
   overflow: clip;
+  /* Its own stacking context: the skies' z-indexes stay inside it. */
+  isolation: isolate;
   background: #3a72c0;
 }
 .ns-sky {
@@ -37,8 +39,27 @@
   from { transform: translateX(0); }
   to { transform: translateX(-30px); }
 }
+/* The skies stack by z-index as they change (setTod); the glow and the
+   stars always sit above whichever is showing. */
+.ns-glow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 500;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+/* The tube warms up a beat after the click, so its light follows it. */
+[data-tod="night"] .ns-glow {
+  opacity: 1;
+  transition: opacity 1.8s cubic-bezier(.4, 0, .2, 1) .3s;
+}
 .ns-stars {
   position: absolute;
+  z-index: 501;
   inset: 0 0 45% 0;
   opacity: 0;
   transition: opacity 1.6s ease;
@@ -291,11 +312,16 @@
   animation: ns-nudge 1.2s ease-in-out infinite;
 }
 @keyframes ns-nudge { 50% { transform: translateY(6px); } }
-.ns-flash {
+/* The room going dark on the click, before the night sky has come up. */
+.ns-dim {
   position: absolute;
-  inset: 0;
-  z-index: 20;
-  background: #fff8d9;
+  left: 22px;
+  top: 22px;
+  width: 824px;
+  height: 676px;
+  z-index: 5;
+  background: #070b22;
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -595,60 +621,139 @@
   height: 118px;
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 20px;
+  padding: 4px 6px 0 10px;
+}
+/* The moulded seam between the bezel and the chin. */
+.ns-chin::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 6px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(96, 76, 44, .22);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .55);
 }
 .ns-line {
   flex: 1;
   min-width: 0;
   font-family: var(--f-story);
   font-weight: 700;
-  font-size: 27px;
-  line-height: 1.18;
+  font-size: 26px;
+  line-height: 1.2;
   letter-spacing: -.01em;
   color: var(--ink);
   overflow: hidden;
   text-wrap: balance;
 }
 .ns-line span { display: block; }
+/* Speaker slots, pressed into the plastic. */
+.ns-grille {
+  flex: none;
+  display: flex;
+  gap: 6px;
+}
+.ns-grille i {
+  width: 5px;
+  height: 40px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #8f8169, #b3a68e);
+  box-shadow: inset 0 2px 2px rgba(40, 30, 10, .45), 0 1px 0 rgba(255, 255, 255, .6);
+}
+/* A recessed LCD: a dark well in the plastic, glass on top. */
 .ns-lcd {
   flex: none;
+  position: relative;
   display: grid;
-  justify-items: center;
   gap: 8px;
-  padding: 10px 14px 11px;
-  border-radius: 10px;
-  background: #1d2a1d;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, .6), 0 1px 0 rgba(255, 255, 255, .5);
+  width: 244px;
+  padding: 11px 15px 12px;
+  border-radius: 9px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, 0) 45%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .16) 0 1px, transparent 1px 3px),
+    #142214;
+  box-shadow:
+    inset 0 3px 8px rgba(0, 0, 0, .7),
+    inset 0 0 0 1px rgba(0, 0, 0, .5),
+    0 0 0 5px #c2b498,
+    0 0 0 6px rgba(80, 60, 30, .3),
+    0 2px 0 6px rgba(255, 255, 255, .35);
+}
+.ns-lcd-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.ns-lcd-k {
+  white-space: nowrap;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #5d8a58;
 }
 .ns-hud-clock {
+  white-space: nowrap;
   font-family: var(--f-mono);
-  font-size: 26px;
-  letter-spacing: .06em;
+  font-size: 25px;
+  line-height: 1;
+  letter-spacing: .04em;
   color: #b6f5a8;
-  text-shadow: 0 0 10px rgba(150, 255, 140, .5);
+  text-shadow: 0 0 8px rgba(150, 255, 140, .55);
   font-variant-numeric: tabular-nums;
 }
 .ns-lcd .ns-pips {
   position: static;
-  gap: 7px;
+  display: flex;
+  gap: 5px;
 }
 .ns-lcd .ns-pips i {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 9px;
   border: 0;
+  border-radius: 2px;
   box-shadow: none;
-  background: #34503a;
+  background: #27402a;
+  transition: background .3s ease, box-shadow .3s ease;
 }
 .ns-lcd .ns-pips i.done { background: #b6f5a8; box-shadow: 0 0 8px rgba(150, 255, 140, .6); }
-.ns-lcd .ns-pips i.wait { background: #ffb020; }
-.ns-led {
+.ns-lcd .ns-pips i.wait { background: #ffb020; box-shadow: 0 0 8px rgba(255, 176, 32, .55); animation: ns-blink 1.2s steps(2, jump-none) infinite; }
+@keyframes ns-blink { 50% { opacity: .35; } }
+/* The power button, with its LED above it. */
+.ns-power {
   flex: none;
-  width: 12px;
-  height: 12px;
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+}
+.ns-led {
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: #3be27a;
-  box-shadow: 0 0 10px #3be27a;
+  box-shadow: 0 0 0 2px rgba(60, 40, 10, .18), 0 0 10px #3be27a;
+  animation: ns-breathe 3.2s ease-in-out infinite;
 }
+@keyframes ns-breathe { 50% { box-shadow: 0 0 0 2px rgba(60, 40, 10, .18), 0 0 4px #3be27a; } }
+.ns-power b {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #f3ecdf, #cbbd9f 70%);
+  box-shadow:
+    inset 0 -2px 3px rgba(80, 60, 30, .3),
+    0 0 0 4px #c9bca4,
+    0 0 0 5px rgba(80, 60, 30, .3),
+    0 1px 0 5px rgba(255, 255, 255, .45);
+}
+/* Inside the glass the chin's meter tells the progress, so the poster's
+   dashes step aside instead of sitting on the chin. */
+.ns-inside.on ~ .ns-dots { opacity: 0; }
+.ns-dots { transition: opacity .3s ease; }
 
 /* product screens: they fill the glass like an app does, no floating card */
 .ui-card {

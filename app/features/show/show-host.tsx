@@ -4,15 +4,14 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { embedSessionRequestSchema } from "../../../shared/embed-schema";
 import { getAppOrigin, getTurnstileSiteKey } from "../../platform/env";
 import { captureAnalytics } from "../analytics/analytics.client";
-import { ERROR_COPY } from "../embed/copy";
-import { claimOffer, isFramed, startSession } from "../embed/session-client";
 import { BOARD_H, BOARD_W, Stopped } from "./kit";
+import { ERROR_COPY, claimOffer, isFramed, sourceFromLocation, startSession } from "./session-client";
 import "./show.css";
 
 const TURNSTILE_SITE_KEY =
   getTurnstileSiteKey() ?? (import.meta.env.DEV ? "1x00000000000000000000AA" : "");
 
-export type ShowName = "night" | "episode";
+export type ShowName = "night";
 
 export type ShowEnv = {
   src: string;
@@ -35,12 +34,10 @@ export type ShowEnv = {
  */
 export function ShowHost({
   show,
-  src,
   mount,
   label,
 }: {
   show: ShowName;
-  src: string;
   label: string;
   mount: (board: HTMLElement, env: ShowEnv) => () => void;
 }) {
@@ -68,6 +65,8 @@ export function ShowHost({
     const board = boardRef.current;
     if (!board) return;
     const framed = isFramed();
+    // The player card's `?src=` says which post or page the viewer came from.
+    const src = sourceFromLocation(window.location.search);
     let session: Promise<string | null> | null = null;
 
     const turnstileToken = () =>
@@ -126,7 +125,7 @@ export function ShowHost({
       window.removeEventListener("unhandledrejection", onError);
       stop();
     };
-  }, [mount, show, src]);
+  }, [mount, show]);
 
   return (
     // Holding the screen is a gesture here, so the context menu stays out of the way.

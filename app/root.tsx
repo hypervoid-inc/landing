@@ -87,7 +87,7 @@ export default function App() {
   const { pathname } = useLocation();
   // The live demo is framed inside an X post: no site chrome, no smooth
   // scroll, no Clippy, and no sign-in probe against the API.
-  if (/^\/embed[12]?(\/|$)/.test(pathname)) {
+  if (/^\/embed(\/|$)/.test(pathname)) {
     return <Outlet />;
   }
   return (

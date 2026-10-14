@@ -28,8 +28,8 @@ export type CrtPlacement = { x: number; y: number; scale: number };
 export function crtMarkup(face: Face = "open"): string {
   return `<div class="crt" aria-hidden="true">
     <div class="crt-plate">
-      <div class="crt-halo"></div>
       <img class="crt-img" alt="" draggable="false" src="/assets/show/crt.webp">
+      <div class="crt-bloom-clip"><div class="crt-bloom" style="width:${SCREEN_W}px;height:${SCREEN_H}px;transform:${quadTransform(SCREEN_W, SCREEN_H, SCREEN_QUAD)}"></div></div>
       <div class="crt-screen" style="width:${SCREEN_W}px;height:${SCREEN_H}px;transform:${quadTransform(SCREEN_W, SCREEN_H, SCREEN_QUAD)}"><div class="crt-content"></div><div class="crt-glass"></div></div>
       <div class="crt-spill"></div>
       <div class="crt-seat" style="left:${SEAT.x}px;top:${SEAT.y}px;width:${SEAT.size}px;height:${SEAT.size}px">${mascotMarkup(face)}</div>

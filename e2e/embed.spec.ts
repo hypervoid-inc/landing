@@ -1,9 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * The live demo inside an X post. The model is not reachable from a local
- * Pages dev server, so this covers the card, the headers, the gate and the
- * first screen of the desk; the turn itself is covered by the unit tests.
+ * The show inside an X post: the homepage's player card, the framing
+ * headers and the page itself. The show's beats are in shows.spec.ts.
  */
 
 test("the homepage is a player card pointing at the live demo", async ({ page }) => {
@@ -30,34 +29,18 @@ test("/embed/ may be framed by X and by nobody else", async ({ request }) => {
   expect(home.headers()["x-frame-options"]).toBe("DENY");
 });
 
-test("a first name unlocks Construct's computer", async ({ page }) => {
-  await page.setViewportSize({ width: 516, height: 387 });
-  await page.goto("/embed/?src=e2e");
-  await expect(page.getByRole("heading", { name: /Meet Construct\./ })).toBeVisible();
-
-  await page.getByPlaceholder("Your first name").fill("ada");
-  const start = page.getByRole("button", { name: "Start" });
-  await expect(start).toBeEnabled({ timeout: 15_000 });
-  await start.click();
-
-  // The computer is set up, the lock screen slides away, Spotlight asks for a job.
-  await expect(page.getByText(/Setting up Ada's computer/)).toBeVisible();
-  await expect(page.getByPlaceholder(/Hi Ada\. What's first/)).toBeVisible({ timeout: 10_000 });
-  await expect(page.getByText("8 jobs left")).toBeVisible();
-  await expect(page.getByRole("button", { name: /Plan my week/ })).toBeVisible();
-  await expect(page.getByText("Clocked in")).toBeVisible();
-
-  // A reload keeps the session and skips the lock screen.
-  await page.reload();
-  await expect(page.getByPlaceholder(/Hi Ada\. What's first/)).toBeVisible({ timeout: 10_000 });
-
-  await page.setViewportSize({ width: 375, height: 667 });
-  await expect(page.getByRole("button", { name: /Chase an invoice/ })).toBeVisible();
+test("/embed/ is the Night Shift show, kept out of search", async ({ page }) => {
+  await page.goto("/embed/");
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
+  await expect(page.locator('meta[name="twitter:player"]')).toHaveAttribute(
+    "content",
+    "https://construct.computer/embed/?src=embed",
+  );
+  await expect(page.getByRole("button", { name: "Wake it up and start the night shift" })).toBeVisible();
 });
 
-test("the demo stands on its own page too", async ({ page }) => {
-  await page.setViewportSize({ width: 1280, height: 800 });
-  await page.goto("/embed/");
-  await expect(page.getByText(/live demo inside Construct/)).toBeVisible();
-  await page.screenshot({ path: "test-results/embed-page-1280.png" });
+test("the old show routes are gone", async ({ request }) => {
+  for (const path of ["/embed1/", "/embed2/"]) {
+    expect((await request.get(path)).status()).toBe(404);
+  }
 });

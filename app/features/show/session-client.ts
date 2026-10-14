@@ -2,22 +2,24 @@ import {
   embedSourceSchema,
   type EmbedClaimResponse,
   type EmbedErrorCode,
-  type EmbedHistoryEntry,
   type EmbedSessionResponse,
-  type EmbedTurnResponse,
 } from "../../../shared/embed-schema";
 
-/** Talking to the embed functions, and keeping a session across a reload. */
-
-const STORAGE_KEY = "construct_embed_session_v1";
+/** Talking to the embed functions: a session for the viewer, then the claim. */
 
 export type EmbedFailure = { ok: false; code: EmbedErrorCode | "network"; status: number };
 
-export type StoredSession = {
-  token: string;
-  firstName: string;
-  turnsLeft: number;
-  src: string;
+/** What the show says when a call fails, by the functions' error code. */
+export const ERROR_COPY: Record<string, string> = {
+  invalid_request: "Please check your name and email.",
+  verification_failed: "Please complete the check and try again.",
+  origin_rejected: "This page is not trusted.",
+  too_many_sessions: "That's a few demos from this connection today. Get the real thing instead.",
+  demo_full: "The demo is full for today. Get the real thing instead.",
+  session_expired: "That session ended. Start again.",
+  invalid_email: "Please enter a valid email.",
+  internal_error: "Something went wrong. Please try again.",
+  network: "Could not reach Construct. Check your connection and try again.",
 };
 
 async function post<T extends { ok: true }>(
@@ -59,14 +61,6 @@ export function claimOffer(input: { token: string; email: string; name?: string 
   return post<EmbedClaimResponse>("/api/embed/claim", input);
 }
 
-export function sendTurn(input: {
-  token: string;
-  message: string;
-  history: EmbedHistoryEntry[];
-}) {
-  return post<EmbedTurnResponse>("/api/embed/turn", input);
-}
-
 /** The `src` the player URL carries, or `home`. */
 export function sourceFromLocation(search: string): string {
   const raw = new URLSearchParams(search).get("src") ?? undefined;
@@ -80,33 +74,5 @@ export function isFramed(): boolean {
     return window.self !== window.top;
   } catch {
     return true;
-  }
-}
-
-export function readStoredSession(): StoredSession | null {
-  try {
-    const raw = sessionStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    const value = JSON.parse(raw) as Partial<StoredSession>;
-    if (
-      typeof value.token !== "string" ||
-      typeof value.firstName !== "string" ||
-      typeof value.turnsLeft !== "number" ||
-      typeof value.src !== "string"
-    ) {
-      return null;
-    }
-    return value as StoredSession;
-  } catch {
-    return null;
-  }
-}
-
-export function writeStoredSession(session: StoredSession | null): void {
-  try {
-    if (session) sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session));
-    else sessionStorage.removeItem(STORAGE_KEY);
-  } catch {
-    // A convenience across reloads only; a blocked store changes nothing.
   }
 }

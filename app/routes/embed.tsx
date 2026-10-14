@@ -1,19 +1,24 @@
-import type { MetaDescriptor } from "react-router";
+import type { LinksFunction, MetaDescriptor } from "react-router";
 
-import { EmbedApp } from "../features/embed/embed-app";
+import { NightShiftApp } from "../features/night-shift/night-shift-app";
 import { playerCardMeta } from "../lib/player-card";
 import { siteUrl } from "../lib/route-manifest";
 
-const TITLE = "Try Construct live";
+const TITLE = "Night Shift, a playable short";
 const DESCRIPTION =
-  "Give Construct's AI employee a task and watch it work on its own little desktop. Two minutes, no account.";
+  "Give Construct's AI employee your list at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.";
 const IMAGE = `${siteUrl}/og/home.jpg?v=2`;
+
+export const links: LinksFunction = () => [
+  { rel: "preload", href: "/assets/show/fonts/sora-latin-wght-normal.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+  { rel: "preload", href: "/assets/show/sky-day.webp", as: "image" },
+  { rel: "preload", href: "/assets/show/crt.webp", as: "image" },
+];
 
 export function meta(): MetaDescriptor[] {
   return [
     { title: `${TITLE} · Construct Computer` },
     { name: "description", content: DESCRIPTION },
-    // The frame inside a post, not a page to rank.
     { name: "robots", content: "noindex, nofollow" },
     { tagName: "link", rel: "canonical", href: `${siteUrl}/embed/` },
     { property: "og:type", content: "website" },
@@ -32,4 +37,4 @@ export function meta(): MetaDescriptor[] {
   ];
 }
 
-export default EmbedApp;
+export default NightShiftApp;

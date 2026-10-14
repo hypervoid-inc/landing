@@ -3,24 +3,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { onRequest as claim } from "../functions/api/embed/claim";
 import { onRequest as session } from "../functions/api/embed/session";
 import {
-  modelText,
-  onRequest as turn,
-  parseModelJson,
-  systemPrompt,
-} from "../functions/api/embed/turn";
-import {
   keyedHash,
   mintSessionToken,
   verifySessionToken,
 } from "../functions/embed-session";
 import type { D1Statement, EmbedEnv } from "../functions/types";
 import {
-  EMBED_MAX_TURNS,
   EMBED_SESSIONS_PER_IP_PER_HOUR,
 } from "../shared/embed-schema";
 
 const SECRET = "test-secret-test-secret";
-const DASHES = new RegExp("[\\u2013\\u2014]");
 
 type SessionRow = {
   id: string;
@@ -74,19 +66,6 @@ function createDb() {
             }
             return { success: true, meta: { changes: row ? 1 : 0 } };
           }
-          if (query.includes("turns = turns + 1")) {
-            const row = sessions.find((s) => s.id === values[0]);
-            if (!row || row.turns >= Number(values[1])) {
-              return { success: true, meta: { changes: 0 } };
-            }
-            row.turns += 1;
-            return { success: true, meta: { changes: 1 } };
-          }
-          if (query.includes("turns = turns - 1")) {
-            const row = sessions.find((s) => s.id === values[0]);
-            if (row && row.turns > 0) row.turns -= 1;
-            return { success: true, meta: { changes: row ? 1 : 0 } };
-          }
           if (query.includes("DELETE FROM embed_sessions")) {
             return { success: true };
           }
@@ -103,13 +82,6 @@ function createDb() {
             const row = sessions.find((s) => s.id === values[0]);
             return (row ? { src: row.src, claimed_at: row.claimed_at } : null) as T;
           }
-          if (query.includes("SUM(turns)")) {
-            return { turns: sessions.reduce((sum, s) => sum + s.turns, 0) } as T;
-          }
-          if (query.includes("SELECT turns FROM embed_sessions")) {
-            const row = sessions.find((s) => s.id === values[0]);
-            return (row ? { turns: row.turns } : null) as T;
-          }
           throw new Error(`unexpected first: ${query}`);
         },
       };
@@ -121,8 +93,7 @@ function createDb() {
 
 function createEnv(
   db = createDb(),
-  ai?: EmbedEnv["AI"],
-  overrides: Partial<Omit<EmbedEnv, "DB" | "AI">> = {},
+  overrides: Partial<Omit<EmbedEnv, "DB">> = {},
 ): EmbedEnv & { DB: ReturnType<typeof createDb> } {
   return {
     TURNSTILE_SECRET_KEY: "secret",
@@ -130,7 +101,6 @@ function createEnv(
     EMBED_SESSION_SECRET: SECRET,
     ...overrides,
     DB: db,
-    AI: ai,
   };
 }
 
@@ -154,11 +124,6 @@ async function startSession(env: EmbedEnv, body: unknown = lead, ip = "203.0.113
     env,
   });
   return { response, body: (await response.json()) as Record<string, unknown> };
-}
-
-function aiAnswering(answer: unknown) {
-  const run = vi.fn(async () => answer);
-  return { run, binding: { run } };
 }
 
 describe("session tokens", () => {
@@ -204,7 +169,7 @@ describe("POST /api/embed/session", () => {
     const env = createEnv();
     const { response, body } = await startSession(env);
     expect(response.status).toBe(200);
-    expect(body).toMatchObject({ ok: true, firstName: "Ada", turnsLeft: EMBED_MAX_TURNS });
+    expect(body).toMatchObject({ ok: true, firstName: "Ada" });
     expect(env.DB.signups).toEqual([]);
     expect(env.DB.sessions).toHaveLength(1);
     expect(env.DB.sessions[0]).toMatchObject({ src: "launch", turns: 0, email_hash: "" });
@@ -220,7 +185,7 @@ describe("POST /api/embed/session", () => {
   });
 
   it("closes the demo past the daily cap", async () => {
-    const env = createEnv(createDb(), undefined, { EMBED_DAILY_SESSION_CAP: "1" });
+    const env = createEnv(createDb(), { EMBED_DAILY_SESSION_CAP: "1" });
     expect((await startSession(env)).response.status).toBe(200);
     const second = await startSession(env);
     expect(second.response.status).toBe(503);
@@ -247,7 +212,7 @@ describe("POST /api/embed/session", () => {
   });
 
   it("refuses without the session secret", async () => {
-    const env = createEnv(createDb(), undefined, { EMBED_SESSION_SECRET: "" });
+    const env = createEnv(createDb(), { EMBED_SESSION_SECRET: "" });
     expect((await startSession(env)).response.status).toBe(500);
   });
 });
@@ -273,7 +238,7 @@ describe("POST /api/embed/claim", () => {
   }
 
   it("stores the lead once and hands out the code, the same code again after", async () => {
-    const env = createEnv(createDb(), undefined, { EMBED_PROMO_CODE: "FIRSTMONTH" });
+    const env = createEnv(createDb(), { EMBED_PROMO_CODE: "FIRSTMONTH" });
     const token = await sessionFor(env);
     const first = await ask(env, { token, email: "Ada@Example.com", name: "Ada" });
     expect(first.status).toBe(200);
@@ -295,130 +260,5 @@ describe("POST /api/embed/claim", () => {
     expect((await ask(env, { token: forged.token, email: "a@b.co" })).status).toBe(401);
     expect((await ask(env, { token, email: "not-an-email" })).status).toBe(400);
     expect(env.DB.signups).toEqual([]);
-  });
-});
-
-describe("POST /api/embed/turn", () => {
-  const reply = {
-    say: "Done, your week is planned.",
-    mood: "happy",
-    actions: [
-      { type: "event", title: "Standup", day: "mon", time: "09:00" },
-      { type: "tasks", title: "This week", items: ["Ship", "Write"] },
-    ],
-  };
-
-  beforeEach(() => {
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(async () =>
-        Response.json({ success: true, action: "beta_signup", hostname: "construct.example" }),
-      ),
-    );
-  });
-  afterEach(() => vi.unstubAllGlobals());
-
-  async function sessionFor(env: EmbedEnv) {
-    const { body } = await startSession(env);
-    return String(body.token);
-  }
-
-  function ask(env: EmbedEnv, body: unknown) {
-    return turn({ request: post("/api/embed/turn", body), env });
-  }
-
-  it("charges a turn, asks the model and returns its actions", async () => {
-    const ai = aiAnswering({ response: JSON.stringify(reply) });
-    const env = createEnv(createDb(), ai.binding);
-    const token = await sessionFor(env);
-    const response = await ask(env, { token, message: "Plan my week", history: [] });
-    expect(response.status).toBe(200);
-    const body = (await response.json()) as Record<string, unknown>;
-    expect(body).toMatchObject({ ok: true, turnsLeft: EMBED_MAX_TURNS - 1 });
-    expect(body.reply).toEqual(reply);
-    expect(ai.run).toHaveBeenCalledTimes(1);
-    const [model, input] = ai.run.mock.calls[0] as unknown as [string, Record<string, unknown>];
-    expect(model).toBe("@cf/meta/llama-4-scout-17b-16e-instruct");
-    expect(input.max_tokens).toBeLessThanOrEqual(800);
-    const messages = input.messages as { role: string; content: string }[];
-    expect(messages[0]?.role).toBe("system");
-    expect(messages.at(-1)?.role).toBe("user");
-    expect(messages.at(-1)?.content).toContain("Plan my week");
-    expect(input.response_format).toBeUndefined();
-  });
-
-  it("keeps the sane actions of a messy answer and refunds a useless one", async () => {
-    const messy = aiAnswering({
-      response: "```json\n" + JSON.stringify({ ...reply, mood: "elated", actions: [reply.actions[0], { type: "note" }] }) + "\n```",
-    });
-    const env = createEnv(createDb(), messy.binding);
-    const token = await sessionFor(env);
-    const ok = (await (await ask(env, { token, message: "hi", history: [] })).json()) as {
-      reply: { mood: string; actions: unknown[] };
-    };
-    expect(ok.reply.mood).toBe("happy");
-    expect(ok.reply.actions).toHaveLength(1);
-
-    const broken = aiAnswering({ response: "I cannot do that" });
-    const env2 = createEnv(createDb(), broken.binding);
-    const token2 = await sessionFor(env2);
-    const response = await ask(env2, { token: token2, message: "hi", history: [] });
-    expect(response.status).toBe(503);
-    expect(await response.json()).toMatchObject({ error: { code: "model_unavailable" } });
-    expect(env2.DB.sessions[0]?.turns).toBe(0);
-  });
-
-  it("stops at the session's turns and at the daily cap", async () => {
-    const ai = aiAnswering({ response: JSON.stringify(reply) });
-    const env = createEnv(createDb(), ai.binding);
-    const token = await sessionFor(env);
-    env.DB.sessions[0]!.turns = EMBED_MAX_TURNS;
-    const exhausted = await ask(env, { token, message: "more", history: [] });
-    expect(exhausted.status).toBe(403);
-    expect(await exhausted.json()).toMatchObject({ error: { code: "turns_exhausted" } });
-    expect(ai.run).not.toHaveBeenCalled();
-
-    const capped = createEnv(createDb(), ai.binding, { EMBED_DAILY_TURN_CAP: "1" });
-    const token2 = await sessionFor(capped);
-    capped.DB.sessions[0]!.turns = 1;
-    const full = await ask(capped, { token: token2, message: "more", history: [] });
-    expect(full.status).toBe(503);
-    expect(await full.json()).toMatchObject({ error: { code: "demo_full" } });
-  });
-
-  it("rejects a forged token, a long message and too much history", async () => {
-    const ai = aiAnswering({ response: JSON.stringify(reply) });
-    const env = createEnv(createDb(), ai.binding);
-    const token = await sessionFor(env);
-    const forged = await mintSessionToken("another-secret", crypto.randomUUID());
-    expect(
-      (await ask(env, { token: forged.token, message: "hi", history: [] })).status,
-    ).toBe(401);
-    expect(
-      (await ask(env, { token, message: "x".repeat(281), history: [] })).status,
-    ).toBe(400);
-    const history = Array.from({ length: 7 }, () => ({ role: "user", text: "hi" }));
-    expect((await ask(env, { token, message: "hi", history })).status).toBe(400);
-    expect(ai.run).not.toHaveBeenCalled();
-  });
-
-  it("reads the model's text whatever shape it comes in", () => {
-    expect(modelText({ response: "{}" })).toBe("{}");
-    expect(modelText({ response: { say: "x" } })).toBe('{"say":"x"}');
-    expect(modelText({ choices: [{ message: { content: "c" } }] })).toBe("c");
-    expect(modelText(42)).toBeNull();
-    expect(parseModelJson('Sure! {"say":"hi","mood":"happy","actions":[]} there')).toEqual({
-      say: "hi",
-      mood: "happy",
-      actions: [],
-    });
-    expect(parseModelJson("no json here")).toBeNull();
-  });
-
-  it("names the four tools and the day in the system prompt, without dashes", () => {
-    const prompt = systemPrompt(new Date("2026-10-14T10:00:00Z"));
-    expect(prompt).toContain("Wednesday, 2026-10-14");
-    for (const tool of ["note", "event", "tasks", "email"]) expect(prompt).toContain(tool);
-    expect(prompt).not.toMatch(DASHES);
   });
 });

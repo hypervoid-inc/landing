@@ -30,6 +30,55 @@ import "./night-shift.css";
  */
 
 const CRT_HOME: CrtPlacement = { x: 470, y: 316, scale: 0.53 };
+/** The poster's art window on the board (night-shift.css, .ns-art). */
+const ART_X = 22;
+const ART_Y = 22;
+const ART_W = 824;
+const ART_H = 676;
+/** Matches the .ns-sky opacity transition. */
+const SKY_FADE_MS = 1600;
+
+/**
+ * The tube's light at night, printed the way the sky is: an 8 px halftone
+ * screen at 20 degrees whose dots swell toward the glass, over a faint
+ * smooth bloom. Drawn once into the art window at twice the board's
+ * resolution, so it stays crisp when the card is scaled up.
+ */
+function paintGlow(canvas: HTMLCanvasElement, cx: number, cy: number): void {
+  const g = canvas.getContext("2d");
+  if (!g) return;
+  g.scale(2, 2);
+  const bloom = g.createRadialGradient(cx, cy, 0, cx, cy, 230);
+  bloom.addColorStop(0, "rgba(140, 220, 255, .42)");
+  bloom.addColorStop(0.45, "rgba(90, 180, 255, .14)");
+  bloom.addColorStop(1, "rgba(90, 180, 255, 0)");
+  g.fillStyle = bloom;
+  g.fillRect(0, 0, ART_W, ART_H);
+
+  const PITCH = 8;
+  const RX = 360;
+  const RY = 290;
+  const a = (20 * Math.PI) / 180;
+  const cos = Math.cos(a);
+  const sin = Math.sin(a);
+  const n = Math.ceil(Math.hypot(RX, RY) / PITCH) + 1;
+  g.fillStyle = "rgb(150, 226, 255)";
+  for (let u = -n; u <= n; u++) {
+    for (let v = -n; v <= n; v++) {
+      const x = cx + (u * cos - v * sin) * PITCH;
+      const y = cy + (u * sin + v * cos) * PITCH;
+      // The light falls off faster upward than across: it pools low, toward the desk.
+      const dy = (y - cy) / (y < cy ? RY * 0.8 : RY);
+      const d = Math.hypot((x - cx) / RX, dy);
+      if (d >= 1) continue;
+      const r = Math.pow(1 - d, 1.7) * PITCH * 0.5;
+      if (r < 0.35) continue;
+      g.beginPath();
+      g.arc(x, y, r, 0, Math.PI * 2);
+      g.fill();
+    }
+  }
+}
 const CRT_END: CrtPlacement = { x: 52, y: 288, scale: 0.6 };
 const TITLE_W_DAY = 770;
 const TITLE_W_NIGHT = 560;
@@ -92,6 +141,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     <div class="ns-world">
       <div class="ns-art">
         ${(["day", "dusk", "night", "dawn"] as Tod[]).map((k) => `<img class="ns-sky${k === "day" ? " on" : ""}" data-sky="${k}" alt="" draggable="false" decoding="async" ${k === "day" ? `src="/assets/show/sky-${k}.webp"` : `data-src="/assets/show/sky-${k}.webp"`}>`).join("")}
+        <canvas class="ns-glow" width="${ART_W * 2}" height="${ART_H * 2}"></canvas>
         <div class="ns-stars"></div>
       </div>
       <div class="ns-vert" aria-hidden="true"><span>CONSTRUCT</span></div>
@@ -107,7 +157,12 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     </div>
     <div class="ns-inside" aria-live="polite">
       <div class="ns-glass"><div class="ns-appbar"><span class="ns-app-mark">${mascotMarkup("happy")}</span><b>Construct</b><span class="ns-app-where"></span><span class="ns-app-run"><i></i>1 running</span></div><div class="ns-slot"></div><div class="ns-glare"></div></div>
-      <div class="ns-chin"><div class="ns-line"></div><div class="ns-lcd"><div class="ns-hud-clock"></div><div class="ns-pips">${"<i></i>".repeat(5)}</div></div><i class="ns-led"></i></div>
+      <div class="ns-chin">
+        <div class="ns-line"></div>
+        <div class="ns-grille" aria-hidden="true">${"<i></i>".repeat(5)}</div>
+        <div class="ns-lcd"><div class="ns-lcd-row"><span class="ns-lcd-k">On shift</span><div class="ns-hud-clock"></div></div><div class="ns-lcd-row"><span class="ns-lcd-k">Jobs</span><div class="ns-pips">${"<i></i>".repeat(5)}</div></div></div>
+        <div class="ns-power" aria-hidden="true"><i class="ns-led"></i><b></b></div>
+      </div>
     </div>
     <div class="ns-dots">${"<i></i>".repeat(6)}</div>
     <button class="ns-start" type="button" aria-label="Wake it up and start the night shift"></button>
@@ -162,14 +217,42 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
   const bubble = new Bubble(root);
   let place = { ...CRT_HOME };
   placeCrt(crt, place);
+  {
+    const sc = screenCenter(CRT_HOME);
+    paintGlow(q<HTMLCanvasElement>(".ns-glow"), sc.x - ART_X, sc.y - ART_Y);
+  }
   cleanups.push(trackPointer(root, mascot));
 
   // ── small helpers ────────────────────────────────────────────────────
   const W = (ms: number) => wait(ms, signal);
   const dots = (n: number) => board.querySelectorAll(".ns-dots i").forEach((d, i) => d.classList.toggle("on", i < n));
+  // Each new sky fades in on top of the one it replaces, which stays fully
+  // opaque underneath until it is covered. Fading one out while the other
+  // fades in would let the backing show through halfway, a visible dip.
+  let skyZ = 1;
   const setTod = (tod: Tod) => {
     root.dataset.tod = tod;
-    board.querySelectorAll<HTMLImageElement>(".ns-sky").forEach((img) => img.classList.toggle("on", img.dataset.sky === tod));
+    const skies = [...board.querySelectorAll<HTMLImageElement>(".ns-sky")];
+    const next = skies.find((img) => img.dataset.sky === tod)!;
+    if (next.classList.contains("on") && Number(next.style.zIndex || 1) === skyZ) return;
+    next.style.zIndex = String(++skyZ);
+    next.classList.remove("on");
+    const show = () => {
+      if (root.dataset.tod !== tod) return;
+      next.classList.add("on");
+      window.setTimeout(() => {
+        for (const img of skies) {
+          if (img === next || img.dataset.sky === root.dataset.tod) continue;
+          img.style.transition = "none";
+          img.classList.remove("on");
+          void img.offsetWidth;
+          img.style.transition = "";
+        }
+      }, SKY_FADE_MS + 60);
+    };
+    // A sky that is still decoding would pop in late; wait for it, briefly.
+    const ready = next.complete && next.naturalWidth ? next.decode() : new Promise((r) => next.addEventListener("load", r, { once: true }));
+    void Promise.race([ready.catch(() => undefined), wait(900, signal)]).then(show, () => undefined);
   };
   const pip = (i: number, state: "done" | "wait") => {
     for (const p of [pips[i], pipsIn[i]]) {
@@ -333,8 +416,22 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
 
   // ── the CRT's own screen ─────────────────────────────────────────────
   const screenShow = (html: string) => {
+    const cold = crt.dataset.screen !== "on";
     crt.dataset.screen = "on";
     screen.innerHTML = html;
+    // From off, the tube warms up the way a real one does: a bright line
+    // that opens into the picture.
+    if (cold) {
+      screen.animate(
+        [
+          { transform: "scale(.5, .012)", filter: "brightness(5)", opacity: 0.4 },
+          { transform: "scale(1, .012)", filter: "brightness(4)", opacity: 1, offset: 0.35 },
+          { transform: "none", filter: "brightness(1.6)", offset: 0.8 },
+          { transform: "none", filter: "none" },
+        ],
+        { duration: 560, easing: "cubic-bezier(.2,.8,.2,1)" },
+      );
+    }
   };
   const screenOff = () => {
     crt.dataset.screen = "off";
@@ -731,14 +828,20 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     await pullChain();
     env.track("lights_out");
 
-    // Lights out.
-    const flash = el("div", "ns-flash");
-    world.appendChild(flash);
-    void tween(flash, [{ opacity: 0.9 }, { opacity: 0 }], { duration: 500, easing: "ease-out" }, signal).then(() => flash.remove());
+    // Lights out. The room drops dark on the click, the tube warms up, and
+    // the night comes up as the eyes adjust. Nothing flashes.
+    void bubble.hide(signal);
+    const dim = el("div", "ns-dim");
+    world.insertBefore(dim, q(".ns-art").nextSibling);
+    void tween(dim, [{ opacity: 0 }, { opacity: 0.62 }], { duration: 90, easing: "ease-out", fill: "forwards" }, signal);
     setTod("night");
+    await W(260);
+    screenShow(SCREEN.boot(`allocating a computer .. ok<br>mounting /home/${esc((name || "you").toLowerCase())} .. ok<br>shift 11:05 pm to 7:00 am`));
+    void tween(dim, [{ opacity: 0.62 }, { opacity: 0 }], { duration: 1500, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" }, signal).then(() => dim.remove());
+    await W(200);
     rollTitle(clockLabel(23, 5));
     q(".ns-world .ns-pips").hidden = false;
-    screenShow(SCREEN.boot(`allocating a computer .. ok<br>mounting /home/${esc((name || "you").toLowerCase())} .. ok<br>shift 11:05 pm to 7:00 am`));
+    await W(700);
     await say(name ? `Good night, ${esc(name)}. Tap to skip ahead, or hold my screen to look in.` : "Good night. Tap to skip ahead, or hold my screen to look in.");
     await W(2600);
     await bubble.hide(signal);
@@ -915,7 +1018,8 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
         const pulled = len - base;
         chain.style.rotate = "";
         if (pulled >= THRESHOLD) {
-          await springTo(len, base, setLen, { stiffness: 320, damping: 11, velocity: -900 });
+          // The light goes out on the click, not after the chain settles.
+          void springTo(len, base, setLen, { stiffness: 320, damping: 11, velocity: -900 });
           finish();
         } else {
           tag.style.opacity = "1";
@@ -936,8 +1040,8 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
         if (e.key !== "Enter" && e.key !== " ") return;
         e.preventDefault();
         chain.classList.add("held");
-        void springTo(base, base + 110, setLen, { stiffness: 300, damping: 30 }).then(async () => {
-          await springTo(base + 110, base, setLen, { stiffness: 320, damping: 11 });
+        void springTo(base, base + 110, setLen, { stiffness: 300, damping: 30 }).then(() => {
+          void springTo(base + 110, base, setLen, { stiffness: 320, damping: 11 });
           finish();
         });
       };
