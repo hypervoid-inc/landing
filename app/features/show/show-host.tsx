@@ -165,7 +165,6 @@ export function ShowHost({
     const unlock = () => snd.unlock();
     const gestures = ["pointerdown", "touchend", "click", "keydown"] as const;
     gestures.forEach((type) => frameEl?.addEventListener(type, unlock, { capture: true, passive: true }));
-    if (frameEl) snd.observe(frameEl);
     const onError = (event: PromiseRejectionEvent) => {
       if (event.reason instanceof Stopped) event.preventDefault();
     };

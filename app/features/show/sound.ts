@@ -47,8 +47,6 @@ export type Sound = {
   scene(scene: Scene): void;
   /** Dips the music while a speech bubble is up: music makes reading harder. */
   duck(on: boolean): void;
-  /** Fades the music out while `el` is scrolled out of view or the page is hidden. */
-  observe(el: Element): void;
   /** Call from inside a tap: creates or resumes the audio context. */
   unlock(): void;
   /** `step` raises a "note" or "chip" cue along the motif's scale. */
@@ -349,13 +347,10 @@ export function createSound(): Sound {
   let worker: Worker | null = null;
   let musicOn = false;
   let current: Scene = "off";
-  let visible = true;
-  let observer: IntersectionObserver | null = null;
   let outroTimer = 0;
   const stemGain = new Map<Stem, GainNode>();
   let keysFilter: BiquadFilterNode | null = null;
   let duckGain: GainNode | null = null;
-  let viewGain: GainNode | null = null;
   const sources: AudioBufferSourceNode[] = [];
 
   const renderMusic = () => {
@@ -398,10 +393,8 @@ export function createSound(): Sound {
     keysFilter.Q.value = 0.5;
     const bus = ctx.createGain();
     duckGain = ctx.createGain();
-    viewGain = ctx.createGain();
-    viewGain.gain.value = visible ? 1 : 0;
     keysFilter.connect(bus);
-    bus.connect(duckGain).connect(viewGain).connect(out);
+    bus.connect(duckGain).connect(out);
     const when = ctx.currentTime + 0.08;
     for (const name of STEMS) {
       const data = stems[name];
@@ -422,11 +415,11 @@ export function createSound(): Sound {
     applyScene(current, 1.2);
   };
 
-  const applyView = () => {
-    const show = visible && document.visibilityState !== "hidden";
-    if (ctx && viewGain) viewGain.gain.setTargetAtTime(show ? 1 : 0, ctx.currentTime, show ? 0.6 : 0.25);
+  // The music keeps playing when the tab or the post loses focus. If the
+  // browser suspended the context meanwhile (iOS does), pick it back up.
+  const onVisibility = () => {
+    if (!muted && ctx && ctx.state !== "running" && ctx.state !== "closed") void ctx.resume().catch(() => undefined);
   };
-  const onVisibility = () => applyView();
   document.addEventListener("visibilitychange", onVisibility);
 
   const render = () => {
@@ -548,20 +541,6 @@ export function createSound(): Sound {
     duck(on) {
       if (ctx && duckGain) duckGain.gain.setTargetAtTime(on ? 0.5 : 1, ctx.currentTime, on ? 0.12 : 0.5);
     },
-    observe(el) {
-      observer?.disconnect();
-      if (!("IntersectionObserver" in window)) return;
-      // Inside an X post, the frame can scroll out of the timeline while still running.
-      observer = new IntersectionObserver(
-        (entries) => {
-          const entry = entries[entries.length - 1];
-          visible = !entry || entry.intersectionRatio >= 0.35;
-          applyView();
-        },
-        { threshold: [0, 0.35, 0.7] },
-      );
-      observer.observe(el);
-    },
     subscribe(fn) {
       listeners.add(fn);
       return () => listeners.delete(fn);
@@ -571,7 +550,6 @@ export function createSound(): Sound {
       else window.clearTimeout(idleId);
       listeners.clear();
       window.clearTimeout(outroTimer);
-      observer?.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       worker?.terminate();
       sources.forEach((src) => {

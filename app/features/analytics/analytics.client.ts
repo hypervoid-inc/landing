@@ -116,6 +116,15 @@ function resolvePostHogHost(): string {
 type PostHogClient =
   typeof import("posthog-js/dist/module.full.no-external").default;
 
+function isEmbedded(): boolean {
+  if (window.location.pathname.startsWith("/embed")) return true;
+  try {
+    return window.self !== window.top;
+  } catch {
+    return true; // A cross-origin parent throws, which means framed.
+  }
+}
+
 let postHogPromise: Promise<PostHogClient | null> | null = null;
 
 export function initializeAnalytics() {
@@ -159,7 +168,8 @@ export function initializeAnalytics() {
       cross_subdomain_cookie: true,
       persistence_name: POSTHOG_PERSISTENCE_NAME,
       disable_session_recording: false,
-      disable_surveys: false,
+      // No survey popovers over the playable embed or inside anyone's frame.
+      disable_surveys: isEmbedded(),
       enable_recording_console_log: true,
       respect_dnt: false,
       secure_cookie: true,
