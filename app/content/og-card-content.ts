@@ -290,6 +290,24 @@ export const postCards: Record<string, OgCard> = {
       },
     },
   },
+  "blog-ai-agent-discord-bot": {
+    title: "Construct is *now on Discord*",
+    eyebrow: "Product",
+    deck: "Mention it in any channel. It works in a thread and keeps up with the channels you pick.",
+    figure: {
+      kind: "message",
+      app: "Discord",
+      channel: "general",
+      sender: "Construct",
+      time: "Today at 9:16 AM",
+      lines: [
+        "Read 63 messages in *#support*. These come up most:",
+        "*Demo saves*: do they carry over to 1.0?",
+        "*Steam Deck*: is it verified?",
+        "*Saved* player-faq.md to Files, ✓ 4 tools",
+      ],
+    },
+  },
   "blog-ai-agent-email-address": {
     title: "Give your AI agent *its own inbox*",
     deck: "Only mail from your own account address can start a run.",

@@ -123,7 +123,7 @@ export const landingFaq = [
   {
     question: "Which apps can it connect to?",
     answer:
-      "Construct reads supported applications from its live integration catalog, including Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable, and you can add your own MCP tools. You can message it from Slack and Telegram directly, and from Discord using slash commands.",
+      "Construct reads supported applications from its live integration catalog, including Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable, and you can add your own MCP tools. You can message it from Slack, Telegram, and Discord, where a mention opens a thread it keeps working in.",
   },
   {
     question: "Can I see and control what it does?",
@@ -249,7 +249,7 @@ export const workflowDemos = [
     title: "Work Together",
     accent: "Across Channels",
     description:
-      "Message Construct from the web, Slack, Telegram, Discord slash commands, or its native email inbox. Routing and access policies vary by channel.",
+      "Message Construct from the web, Slack, Telegram, Discord, or its native email inbox. Routing and access policies vary by channel.",
     cta: "Collaborate",
     mutedAction: "See Shared Threads",
     video: "/assets/landing/workflows/channels.mp4",

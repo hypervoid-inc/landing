@@ -333,7 +333,7 @@ export const useCases = [
     title: "The work is not waiting in a browser tab",
     seoTitle: "AI Agents Across Slack, Email, and Chat | Construct",
     description:
-      "Message Construct from the web, Slack, Telegram, Discord slash commands, or its native email inbox. Routing and access policies vary by channel so the same agent does not become a leak.",
+      "Message Construct from the web, Slack, Telegram, Discord, or its native email inbox. Routing and access policies vary by channel so the same agent does not become a leak.",
     lede: "Founders do not live in one product. They live in Slack, email, and whatever tab is already open. An agent that only exists behind a marketing-site 'Open OS' button will be skipped the moment the real conversation is happening somewhere else. Construct meets the thread where it started, with access that still respects the workspace.",
     ...demoMedia("channels"),
     problems: [
@@ -353,7 +353,7 @@ export const useCases = [
     features: [
       {
         title: "Same agent, several doors",
-        body: "Web, Slack, Telegram, Discord slash commands, and a native agent inbox. The computer is one; the entry points are many.",
+        body: "Web, Slack, Telegram, Discord threads and slash commands, and a native agent inbox. The computer is one; the entry points are many.",
       },
       {
         title: "Policy per channel",

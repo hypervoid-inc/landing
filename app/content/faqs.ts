@@ -801,6 +801,50 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "When your whole team works inside Slack and each person wants a private assistant in their DMs, when you need per-action approval before every write or HIPAA with a signed BAA on Enterprise, or when you want to text your agent over iMessage or SMS.",
     },
   ],
+  "ai-agent-discord-bot": [
+    {
+      question: "How do I add an AI agent to my Discord server?",
+      answer:
+        "In Construct, open Settings, then Messaging, and click Add to Discord. Pick your server, authorize the permissions, and mention @Construct in any channel. You need the Manage Server permission on the server, and in a team workspace the owner or an admin does the install. Discord is included in every Construct plan, from $9 a month.",
+    },
+    {
+      question:
+        "Does the Construct Discord bot read every message in my server?",
+      answer:
+        "No. By default it reads only messages addressed to it: mentions, replies to it, threads it started, slash commands and DMs. Listening is opt-in per channel. An owner or admin turns it on, the agent posts a notice in the channel, it reads only from that moment on, and messages are kept for 14 days by default, adjustable from 1 to 30.",
+    },
+    {
+      question: "What are Construct's Listening modes?",
+      answer:
+        "Off reads nothing beyond mentions. Context keeps recent messages so replies understand the conversation and learns nothing. Learn also keeps a channel brief, open loops and memories. Assist also sends private suggestions to the person who asked and posts nothing unprompted until you raise the ceiling. Listening needs a paid plan.",
+    },
+    {
+      question: "How does Construct work in Discord threads?",
+      answer:
+        "A mention, or a reply to one of its messages, opens a public thread named after your request. Everyone allowed to use the agent can keep talking to it in that thread without mentioning it again. It shows a progress line while it works, replaces it with the answer, attaches any files it made, and saves the thread to your Construct workspace.",
+    },
+    {
+      question: "Who can use Construct in my Discord server?",
+      answer:
+        "Each server starts on Only people I allow, so only the installer gets replies. You can add members or roles to Full access, block anyone, or switch to Everyone, where unlisted members get a read-only guest agent limited to web search and workspace context, at 12 messages every 10 minutes. Requests run under the installer's plan, with no per-seat fees.",
+    },
+    {
+      question:
+        "How do members opt out of an AI bot reading their Discord messages?",
+      answer:
+        "In a channel where Construct is listening, /optout stops it reading and learning from your messages, /optin undoes that, and /forget_me deletes what it holds from your messages. /brief and /status show what the agent keeps in the channel and for how long.",
+    },
+    {
+      question: "Is Construct a verified Discord app?",
+      answer:
+        "Yes. Construct is a verified app listed in Discord's App Directory. To link a server to your Construct workspace, add it from Settings, then Messaging, in Construct. If you add it from the App Directory first, your first mention shows a Connect this server card that sends you to the same settings screen.",
+    },
+    {
+      question: "Do I need to create a Discord bot token to use Construct?",
+      answer:
+        "No. Construct is hosted, so there is no bot to create, no token to store and no gateway to run. Self-hosted agents such as OpenClaw and Hermes Agent ask you to create your own bot in the Discord Developer Portal and run a gateway process yourself.",
+    },
+  ],
   "ai-agent-email-address": [
     {
       question: "How can I give an AI agent its own email address?",

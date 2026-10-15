@@ -77,6 +77,21 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: true,
   },
   {
+    slug: "ai-agent-discord-bot",
+    title:
+      "Construct is now on Discord: an AI agent that works inside your server",
+    description:
+      "Add Construct's AI agent to Discord. Mention it in any channel, it works in a thread, follows channels you pick and keeps your server's context. From $9.",
+    pitch:
+      "Mention Construct in any Discord channel and it does the work on its own computer, in a thread, from $9 a month.",
+    published: "2026-10-15",
+    seoTitle: "AI Agent Discord Bot: Construct Now Works in Your Server",
+    author: "nischal",
+    tags: ["product", "ai-agent", "ai-employee", "discord", "governance"],
+    kind: "guide",
+    draft: false,
+  },
+  {
     slug: "ai-agent-email-address",
     title: "How to Give an AI Agent Its Own Email Address",
     description:
