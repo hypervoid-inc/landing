@@ -13,7 +13,7 @@ export function PrivacyPage() {
       title="Privacy Policy"
       metadata={
         <>
-          Last updated: <time dateTime="2026-09-30">September 30, 2026</time>
+          Last updated: <time dateTime="2026-10-15">October 15, 2026</time>
         </>
       }
     >
@@ -34,7 +34,10 @@ export function PrivacyPage() {
 
       <Section title="2. Information We Collect">
         <Subheading>2.1 Account Information</Subheading>
-        <p>When you create an account or join our waitlist, we collect:</p>
+        <p>
+          When you create an account, join our waitlist, or subscribe to our
+          newsletter (including when you claim an offer), we collect:
+        </p>
         <List>
           <li>
             Your email address and name (provided directly or via Google OAuth)
@@ -403,8 +406,9 @@ export function PrivacyPage() {
             and replay protection, then pruned
           </li>
           <li>
-            <Emph>Waitlist data</Emph> - email addresses and responses are
-            retained for up to 180 days, or until you request removal
+            <Emph>Newsletter and waitlist data</Emph> - your name, email
+            address, and form responses are kept in our newsletter system
+            until you unsubscribe or ask us to remove them
           </li>
         </List>
       </Section>

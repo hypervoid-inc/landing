@@ -2905,7 +2905,7 @@ export const pageCards: Record<string, OgCard> = {
         ["Workspace files", "You close the account"],
         ["Chat and Activity history", "You close the account"],
         ["Agent memory", "You close or forget it"],
-        ["Waitlist answers", "180 days at most"],
+        ["Newsletter sign-ups", "You unsubscribe"],
         ["Card numbers", "Never stored"],
       ],
     },
