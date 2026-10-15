@@ -93,7 +93,12 @@ export function FooterMascot() {
         </button>
         {awake ? (
           <div className="footer-mascot-bubble" role="status">
-            <p>You read all the way down. Want me to do the rest?</p>
+            <p>
+              <span className="footer-mascot-lead">
+                You read all the way down.{" "}
+              </span>
+              Want me to do the rest?
+            </p>
             <StartLink source="footer-mascot" className="footer-mascot-cta">
               Start now
             </StartLink>

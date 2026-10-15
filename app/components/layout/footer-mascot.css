@@ -13,7 +13,6 @@
   bottom: 0;
   display: flex;
   align-items: flex-end;
-  gap: 10px;
 }
 
 .footer-mascot-figure {
@@ -84,31 +83,64 @@
   animation-delay: 2s;
 }
 
+/*
+ * The mascot speaking: the bubble sits just off the footer line, tucked
+ * against the body (the negative margin eats the empty side of the
+ * mascot's square), with its tail pointing at the face. Text and button
+ * share one row so the bubble stays short and clear of whatever the page
+ * ends on above the footer.
+ */
 .footer-mascot-bubble {
   position: relative;
-  max-width: 230px;
-  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 -10px 12px 0;
   border: 1px solid #dcecef;
-  border-radius: 16px 16px 16px 4px;
+  border-radius: 16px;
   background: #fff;
-  padding: 12px 14px;
+  padding: 12px 12px 12px 16px;
   font-size: 13px;
   line-height: 18px;
   color: #4e4646;
-  box-shadow: 0 16px 36px -22px rgb(1 95 110 / 55%);
+  box-shadow:
+    0 10px 24px -14px rgb(1 95 110 / 40%),
+    0 1px 3px rgb(1 95 110 / 8%);
+  transform-origin: 100% 70%;
   animation: footer-mascot-bubble 0.4s 0.25s cubic-bezier(0.3, 1.4, 0.5, 1) both;
   order: -1;
 }
 
+.footer-mascot-bubble p {
+  max-width: 190px;
+  margin: 0;
+}
+
+/* The tail: a turned square whose inner half hides the bubble's border. */
+.footer-mascot-bubble::after {
+  position: absolute;
+  right: -7px;
+  bottom: 16px;
+  width: 12px;
+  height: 12px;
+  border-top: 1px solid #dcecef;
+  border-right: 1px solid #dcecef;
+  border-top-right-radius: 3px;
+  background: #fff;
+  transform: rotate(45deg);
+  content: "";
+}
+
 .footer-mascot-cta {
   display: inline-flex;
-  margin-top: 8px;
+  flex: none;
   border-radius: 999px;
   background: #01b4c8;
-  padding: 5px 12px;
+  padding: 6px 13px;
   font-size: 12px;
   font-weight: 600;
   color: #fff;
+  white-space: nowrap;
   transition: background 0.2s ease;
 }
 
@@ -168,7 +200,7 @@
 @keyframes footer-mascot-bubble {
   from {
     opacity: 0;
-    transform: translateY(8px) scale(0.92);
+    transform: translateX(8px) scale(0.9);
   }
 }
 
@@ -180,8 +212,28 @@
     width: 72px;
     height: 72px;
   }
+  /* Fixed room above the footer, so the bubble clears the page's last block. */
+  .footer-mascot-shelf {
+    height: 24px;
+  }
+  /* One short row on a phone: the question and the button. */
   .footer-mascot-bubble {
-    max-width: 190px;
+    gap: 10px;
+    margin: 0 -8px 8px 0;
+    padding: 7px 7px 7px 13px;
+  }
+  .footer-mascot-bubble p {
+    max-width: none;
+    white-space: nowrap;
+  }
+  .footer-mascot-lead {
+    display: none;
+  }
+  .footer-mascot-cta {
+    padding: 5px 12px;
+  }
+  .footer-mascot-bubble::after {
+    bottom: 12px;
   }
 }
 
