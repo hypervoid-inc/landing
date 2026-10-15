@@ -2,6 +2,7 @@ import { expect, test, type Page, type Route } from "@playwright/test";
 
 import { directoryListings } from "../app/content/directory-listings";
 import { pricingPlans } from "../app/content/landing";
+import { SUB_PROCESSORS } from "../app/content/sub-processors";
 import { testimonials } from "../app/content/testimonials";
 import { canonicalRoutes } from "../app/lib/route-manifest";
 
@@ -402,6 +403,25 @@ test("recommends the plan that fits the team, one card at a time", async ({
   await expect(page.locator("#pricing")).toContainText(
     "Plans start at $9/month",
   );
+});
+
+test("narrows the sub-processor list as you search", async ({ page }) => {
+  await page.goto("/sub-processors/");
+  const rows = page.locator("main li").filter({ has: page.locator("h4") });
+  await expect(rows).toHaveCount(SUB_PROCESSORS.length);
+
+  const search = page.getByRole("searchbox", { name: "Search sub-processors" });
+  await search.fill("eu analytics");
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first()).toContainText("PostHog");
+  await expect(
+    page.getByRole("heading", { name: "Model providers" }),
+  ).toBeHidden();
+
+  await search.fill("nothing like this");
+  await expect(rows).toHaveCount(0);
+  await page.getByRole("button", { name: "Clear search" }).first().click();
+  await expect(rows).toHaveCount(SUB_PROCESSORS.length);
 });
 
 test("returns a real 404 for unknown URLs", async ({ request }) => {

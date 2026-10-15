@@ -279,7 +279,7 @@ function buildRoutes(
       description:
         "Third-party vendors Construct uses to host, authenticate, integrate, bill, email, observe, and run models for the construct.computer platform.",
       kind: "page",
-      lastModified: "2026-08-09",
+      lastModified: "2026-10-15",
     }),
     route({
       path: "/terms",
