@@ -18,7 +18,7 @@ import type { EmbedEnv } from "./types";
 
 const SITE = "https://construct.computer";
 const DEFAULT_FROM = "hello@construct.computer";
-const DEFAULT_FROM_NAME = "Construct";
+const DEFAULT_FROM_NAME = "Construct Computer";
 // Bump when either image changes: mail clients and their image proxies cache
 // by URL, so a new version is the only way to replace one already fetched.
 const ASSET_VERSION = "2";
@@ -106,7 +106,7 @@ export function renderClaimEmail(input: ClaimEmailInput, replyable: boolean) {
     ADDRESS,
     `${SITE}/  ·  X: https://x.com/use_construct  ·  LinkedIn: https://www.linkedin.com/company/construct-computer  ·  Discord: https://discord.gg/puArEQHYN9`,
     "",
-    "You're receiving this because you claimed a free month in Construct's Night Shift demo.",
+    "You're receiving this because you claimed a free month in Construct Computer's Night Shift demo.",
   ].join("\n");
 
   const font = "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif";
@@ -157,7 +157,7 @@ a{color:#2a44a8;}
 <tr><td class="px" style="padding:30px 36px 32px;">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
 <td style="padding:0 10px 0 0;line-height:0;"><img src="${ICON}" width="24" height="24" alt="" style="display:block;width:24px;height:24px;border-radius:6px;"></td>
-<td style="font:600 13px/24px ${font};color:${ink};letter-spacing:0.02em;">Construct</td>
+<td style="font:600 13px/24px ${font};color:${ink};letter-spacing:0.02em;">Construct Computer</td>
 </tr></table>
 <h1 style="margin:16px 0 12px;font:650 26px/32px ${font};letter-spacing:-0.02em;color:${ink};">Hand it tonight's work.</h1>
 <p style="margin:0 0 6px;font:400 15px/24px ${font};color:${body};">${escapeHtml(hi)}</p>
@@ -197,7 +197,7 @@ ${footLink("https://x.com/use_construct", "X")}${dot}${footLink("https://www.lin
 </td></tr>
 <tr><td align="center" style="padding:18px 16px 0;font:400 12px/19px ${font};color:${muted};">
 The code works on any plan, Pro included, and you can cancel anytime before it renews.${escapeHtml(reply)}<br>
-You're receiving this because you claimed a free month in Construct's Night Shift demo.
+You're receiving this because you claimed a free month in Construct Computer's Night Shift demo.
 </td></tr>
 <tr><td align="center" style="padding:12px 16px 0;font:400 12px/19px ${font};color:${muted};">
 Construct Computer, ${escapeHtml(ADDRESS)}

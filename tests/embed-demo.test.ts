@@ -276,7 +276,7 @@ describe("POST /api/embed/claim", () => {
     const body = JSON.parse(String(init?.body));
     expect(body).toMatchObject({
       to: "ada@acme.dev",
-      from: { address: "hello@construct.computer", name: "Construct" },
+      from: { address: "hello@construct.computer", name: "Construct Computer" },
       reply_to: "team@construct.example",
     });
     expect(body.text).toContain("Hi Ada,");

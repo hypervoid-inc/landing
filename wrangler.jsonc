@@ -26,7 +26,7 @@
     "CLOUDFLARE_ACCOUNT_ID": "5d7aa603ebe193d63efb09a759c0c3ed",
     // A mailbox that takes replies: noreply senders read as bulk mail.
     "EMBED_EMAIL_FROM": "hello@construct.computer",
-    "EMBED_EMAIL_FROM_NAME": "Construct",
+    "EMBED_EMAIL_FROM_NAME": "Construct Computer",
     "EMBED_EMAIL_REPLY_TO": "hello@construct.computer",
   },
 }
