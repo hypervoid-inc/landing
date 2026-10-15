@@ -62,13 +62,13 @@ export function renderClaimEmail(input: ClaimEmailInput, replyable: boolean) {
     "How to use it",
     "1. Open the link above. The code is already attached, so there's nothing to type.",
     "2. Sign up with Google or your email. It takes about a minute.",
-    `3. Choose Pro, billed monthly. Checkout applies ${input.code} and your first month comes to $0.`,
+    `3. Pick a plan. Pro gets you the most, and checkout applies ${input.code} so your first month comes to $0.`,
     "",
     "What to hand it first",
     "Whatever you'd otherwise finish at 11 pm: a pricing brief on your competitors, a pile of leads to score, an invoice to chase. It works on its own computer while you sleep and saves the one question that needs you for the morning.",
     ...(reply ? ["", reply] : []),
     "",
-    "The code covers your first month of Pro on the monthly plan, and you can cancel anytime from your account before it renews.",
+    "The code works on any plan and takes your first month to $0, and you can cancel anytime from your account before it renews.",
     "",
     "You're getting this because you claimed a free month in Construct's Night Shift demo.",
     "Construct Computer, construct.computer",
@@ -107,7 +107,7 @@ export function renderClaimEmail(input: ClaimEmailInput, replyable: boolean) {
     <table role="presentation" cellpadding="0" cellspacing="0">
       ${step(1, "Tap the button above. The code is already attached, so there's nothing to type.")}
       ${step(2, "Sign up with Google or your email. It takes about a minute.")}
-      ${step(3, `Choose Pro, billed monthly. Checkout applies <b>${code}</b> and your first month comes to $0.`)}
+      ${step(3, `Pick a plan. Pro gets you the most, and checkout applies <b>${code}</b> so your first month comes to $0.`)}
     </table>
   </td></tr>
   <tr><td style="padding:10px 32px 4px;font:15px/22px Arial,Helvetica,sans-serif;color:#3d3a3a;">
@@ -116,7 +116,7 @@ export function renderClaimEmail(input: ClaimEmailInput, replyable: boolean) {
     ${reply ? `<p style="margin:0 0 16px;">${reply}</p>` : ""}
   </td></tr>
   <tr><td style="padding:14px 32px 28px;font:13px/19px Arial,Helvetica,sans-serif;color:#6b7f87;border-top:1px solid #e6f1f4;">
-    The code covers your first month of Pro on the monthly plan, and you can cancel anytime from your account before it renews.
+    The code works on any plan and takes your first month to $0, and you can cancel anytime from your account before it renews.
   </td></tr>
 </table>
 <p style="max-width:560px;margin:16px auto 0;font:12px/18px Arial,Helvetica,sans-serif;color:#7c8f96;text-align:center;">You're getting this because you claimed a free month in Construct's Night Shift demo.<br>Construct Computer &middot; <a href="${SITE}/" style="color:#7c8f96;">construct.computer</a></p>

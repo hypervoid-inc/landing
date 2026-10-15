@@ -27,9 +27,9 @@ describe("checkoutPromoCode", () => {
     expect(checkoutPromoCode("SAVE10", "lite", "month")).toBe("SAVE10");
   });
 
-  it("keeps FREEMONTH to Pro monthly, the one product its coupon covers", () => {
+  it("passes FREEMONTH on every plan, since its coupon covers them all", () => {
     expect(checkoutPromoCode("FREEMONTH", "pro", "month")).toBe("FREEMONTH");
-    expect(checkoutPromoCode("FREEMONTH", "pro", "year")).toBeUndefined();
-    expect(checkoutPromoCode("FREEMONTH", "lite", "month")).toBeUndefined();
+    expect(checkoutPromoCode("FREEMONTH", "pro", "year")).toBe("FREEMONTH");
+    expect(checkoutPromoCode("FREEMONTH", "lite", "month")).toBe("FREEMONTH");
   });
 });

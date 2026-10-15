@@ -45,8 +45,6 @@ const PROMO_RESTRICTED_TO: Record<
 > = {
   LAUNCH20: { plan: "pro", interval: "month" },
   LAUNCH40: { plan: "pro", interval: "year" },
-  // The free first month from the Night Shift show in an X post.
-  FREEMONTH: { plan: "pro", interval: "month" },
 };
 
 export function checkoutPromoCode(
