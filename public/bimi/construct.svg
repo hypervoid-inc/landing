@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny-ps" viewBox="0 0 512 512">
+<title>Construct</title>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="512" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#2563eb"/>
+<stop offset="0.55" stop-color="#1640a8"/>
+<stop offset="1" stop-color="#08132e"/>
+</linearGradient>
+<radialGradient id="body" cx="240" cy="220" r="240" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#dcebfa"/>
+<stop offset="0.6" stop-color="#b8d4f2"/>
+<stop offset="1" stop-color="#8db4e2"/>
+</radialGradient>
+<linearGradient id="eye" x1="0" y1="202" x2="0" y2="312" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#2b5185"/>
+<stop offset="1" stop-color="#18325c"/>
+</linearGradient>
+</defs>
+<rect width="512" height="512" fill="url(#bg)"/>
+<circle cx="192" cy="192" r="102" fill="url(#body)"/>
+<circle cx="320" cy="192" r="102" fill="url(#body)"/>
+<circle cx="192" cy="322" r="102" fill="url(#body)"/>
+<circle cx="320" cy="322" r="102" fill="url(#body)"/>
+<rect x="192" y="192" width="128" height="130" fill="url(#body)"/>
+<ellipse cx="156" cy="134" rx="42" ry="13" fill="#ffffff" fill-opacity="0.5" transform="rotate(-30 156 134)"/>
+<ellipse cx="362" cy="128" rx="30" ry="9" fill="#ffffff" fill-opacity="0.4" transform="rotate(26 362 128)"/>
+<rect x="180" y="198" width="56" height="118" rx="28" fill="#6f98cc"/>
+<rect x="276" y="198" width="56" height="118" rx="28" fill="#6f98cc"/>
+<rect x="184" y="202" width="48" height="110" rx="24" fill="url(#eye)"/>
+<rect x="280" y="202" width="48" height="110" rx="24" fill="url(#eye)"/>
+<ellipse cx="202" cy="221" rx="9" ry="6" fill="#ffffff" fill-opacity="0.55"/>
+<ellipse cx="298" cy="221" rx="9" ry="6" fill="#ffffff" fill-opacity="0.55"/>
+</svg>
