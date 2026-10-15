@@ -8,11 +8,12 @@ import { z } from "zod";
  */
 
 /**
- * Sessions per address an hour: a brake on scripts, not on people. Phone
- * carriers and offices put many viewers behind one address, and the daily
- * caps bound the cost whatever the traffic.
+ * Sessions per address an hour. Each session can send one claim email, so
+ * this also bounds how much mail one address can trigger. It is low on
+ * purpose; viewers sharing a carrier or office address may hit it, and the
+ * session reply then says "too many demos from this connection".
  */
-export const EMBED_SESSIONS_PER_IP_PER_HOUR = 20;
+export const EMBED_SESSIONS_PER_IP_PER_HOUR = 5;
 /** A session token's life, in seconds. */
 export const EMBED_SESSION_TTL_SECONDS = 2 * 60 * 60;
 
