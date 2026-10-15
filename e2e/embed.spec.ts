@@ -46,12 +46,12 @@ test("the old show routes are gone", async ({ request }) => {
 });
 
 test("a promo link welcomes the visitor once and keeps the code for checkout", async ({ page, context }) => {
-  await page.goto("/?promo=firstmonth&utm_source=x&utm_medium=player&utm_campaign=e2e");
+  await page.goto("/?promo=freemonth&utm_source=x&utm_medium=player&utm_campaign=e2e");
   const dialog = page.getByRole("dialog", { name: /Your free month is ready/ });
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByText("FIRSTMONTH")).toBeVisible();
+  await expect(dialog.getByText("FREEMONTH")).toBeVisible();
   const cookie = (await context.cookies()).find((c) => c.name === "construct_attr");
-  expect(decodeURIComponent(cookie?.value ?? "")).toContain("FIRSTMONTH");
+  expect(decodeURIComponent(cookie?.value ?? "")).toContain("FREEMONTH");
 
   await dialog.getByRole("button", { name: "Look around first" }).click();
   await expect(dialog).toBeHidden();

@@ -27,9 +27,9 @@ describe("checkoutPromoCode", () => {
     expect(checkoutPromoCode("SAVE10", "lite", "month")).toBe("SAVE10");
   });
 
-  it("keeps FIRSTMONTH to Pro monthly, the one product its coupon covers", () => {
-    expect(checkoutPromoCode("FIRSTMONTH", "pro", "month")).toBe("FIRSTMONTH");
-    expect(checkoutPromoCode("FIRSTMONTH", "pro", "year")).toBeUndefined();
-    expect(checkoutPromoCode("FIRSTMONTH", "lite", "month")).toBeUndefined();
+  it("keeps FREEMONTH to Pro monthly, the one product its coupon covers", () => {
+    expect(checkoutPromoCode("FREEMONTH", "pro", "month")).toBe("FREEMONTH");
+    expect(checkoutPromoCode("FREEMONTH", "pro", "year")).toBeUndefined();
+    expect(checkoutPromoCode("FREEMONTH", "lite", "month")).toBeUndefined();
   });
 });

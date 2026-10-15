@@ -30,7 +30,7 @@ type Offer = {
 };
 
 const OFFERS: Record<string, Offer> = {
-  FIRSTMONTH: {
+  FREEMONTH: {
     title: ["Your free month is", "ready"],
     line: "Your first month of Construct Pro is on us. The code is saved on this browser, so checkout applies it for you.",
     plan: "pro",

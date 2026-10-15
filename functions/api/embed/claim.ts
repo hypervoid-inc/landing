@@ -15,7 +15,7 @@ import type { EmbedEnv, PagesFunction } from "../../types";
  * session claims once; asking again returns the same code and sends nothing.
  */
 
-const DEFAULT_CODE = "FIRSTMONTH";
+const DEFAULT_CODE = "FREEMONTH";
 
 const READ_SESSION = `SELECT src, claimed_at FROM embed_sessions WHERE id = ?1 AND expires_at > datetime('now')`;
 const CLAIM = `

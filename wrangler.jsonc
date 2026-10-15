@@ -22,7 +22,7 @@
     "EMBED_DAILY_SESSION_CAP": "1500",
     // Handed out by the exit offer for an email: 100% off the first month of
     // Pro. Create the matching coupon in Dodo before the demo goes live.
-    "EMBED_PROMO_CODE": "FIRSTMONTH",
+    "EMBED_PROMO_CODE": "FREEMONTH",
     // The claim email goes out through Cloudflare Email Service's REST API
     // (functions/claim-email.ts) with the EMAIL_API_TOKEN secret.
     "CLOUDFLARE_ACCOUNT_ID": "5d7aa603ebe193d63efb09a759c0c3ed",

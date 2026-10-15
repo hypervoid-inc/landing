@@ -239,24 +239,24 @@ describe("POST /api/embed/claim", () => {
   }
 
   it("stores the lead once and hands out the code, the same code again after", async () => {
-    const env = createEnv(createDb(), { EMBED_PROMO_CODE: "FIRSTMONTH" });
+    const env = createEnv(createDb(), { EMBED_PROMO_CODE: "FREEMONTH" });
     const token = await sessionFor(env);
     const first = await ask(env, { token, email: "Ada@Example.com", name: "Ada" });
     expect(first.status).toBe(200);
-    expect(await first.json()).toEqual({ ok: true, code: "FIRSTMONTH" });
+    expect(await first.json()).toEqual({ ok: true, code: "FREEMONTH" });
     expect(env.DB.signups).toEqual(["ada@example.com"]);
     expect(env.DB.sessions[0]?.claimed_at).toBe("now");
     expect(env.DB.sessions[0]?.email_hash).not.toContain("ada");
 
     const again = await ask(env, { token, email: "other@example.com" });
     expect(again.status).toBe(200);
-    expect(await again.json()).toEqual({ ok: true, code: "FIRSTMONTH" });
+    expect(await again.json()).toEqual({ ok: true, code: "FREEMONTH" });
     expect(env.DB.signups).toEqual(["ada@example.com"]);
   });
 
   it("emails the code once, through Cloudflare Email Service", async () => {
     const env = createEnv(createDb(), {
-      EMBED_PROMO_CODE: "FIRSTMONTH",
+      EMBED_PROMO_CODE: "FREEMONTH",
       EMAIL_API_TOKEN: "cf-token",
       CLOUDFLARE_ACCOUNT_ID: "acct123",
       EMBED_EMAIL_REPLY_TO: "team@construct.example",
@@ -283,15 +283,15 @@ describe("POST /api/embed/claim", () => {
       reply_to: "team@construct.example",
     });
     expect(body.text).toContain("Hi Ada,");
-    expect(body.text).toContain("FIRSTMONTH");
-    expect(body.html).toContain(claimLink("FIRSTMONTH", "launch").replaceAll("&", "&amp;"));
+    expect(body.text).toContain("FREEMONTH");
+    expect(body.html).toContain(claimLink("FREEMONTH", "launch").replaceAll("&", "&amp;"));
   });
 
   it("still hands out the code when email isn't configured", async () => {
-    const env = createEnv(createDb(), { EMBED_PROMO_CODE: "FIRSTMONTH" });
+    const env = createEnv(createDb(), { EMBED_PROMO_CODE: "FREEMONTH" });
     const token = await sessionFor(env);
     const response = await ask(env, { token, email: "ada@example.com" });
-    expect(await response.json()).toEqual({ ok: true, code: "FIRSTMONTH" });
+    expect(await response.json()).toEqual({ ok: true, code: "FREEMONTH" });
     expect(vi.mocked(fetch).mock.calls.some(([url]) => String(url).includes("/email/sending/send"))).toBe(false);
   });
 
@@ -315,10 +315,10 @@ describe("the claim email", () => {
   });
 
   it("carries the code and the promo link, without dashes, and invites a reply only when one is set", () => {
-    const quiet = renderClaimEmail({ to: "a@b.co", code: "FIRSTMONTH", src: "home" }, false);
-    const replyable = renderClaimEmail({ to: "a@b.co", firstName: "Ada", code: "FIRSTMONTH", src: "home" }, true);
+    const quiet = renderClaimEmail({ to: "a@b.co", code: "FREEMONTH", src: "home" }, false);
+    const replyable = renderClaimEmail({ to: "a@b.co", firstName: "Ada", code: "FREEMONTH", src: "home" }, true);
     expect(quiet.text).toContain("Hi there,");
-    expect(quiet.text).toContain("https://construct.computer/?promo=FIRSTMONTH");
+    expect(quiet.text).toContain("https://construct.computer/?promo=FREEMONTH");
     expect(quiet.text).not.toContain("reply to this email");
     expect(replyable.text).toContain("reply to this email");
     for (const part of [quiet.subject, quiet.text, quiet.html, replyable.html]) {
