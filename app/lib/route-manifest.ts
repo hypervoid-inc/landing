@@ -173,7 +173,7 @@ function buildRoutes(
         "AI employee for startups, small businesses, and solo founders. Own cloud computer, your tools connected, work that finishes while you are away. From $9/month.",
       kind: "home",
       lastModified: siteRevised,
-      imageVersion: "2",
+      imageVersion: "3",
     }),
     route({
       path: "/pricing",

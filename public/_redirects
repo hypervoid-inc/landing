@@ -36,3 +36,16 @@
 /vs/zapier/ /blog/construct-vs-zapier/ 301
 /vs/coding-agents /blog/construct-vs-coding-agents/ 301
 /vs/coding-agents/ /blog/construct-vs-coding-agents/ 301
+
+# X profile links: the website field on each account. Each lands on the
+# homepage with its own utm_content, so analytics splits profile traffic by
+# person, and with the free month's code, since every profile's location line
+# promises "One month on us". 302 so the destination can change later.
+/co /?promo=FREEMONTH&utm_source=x&utm_medium=profile&utm_campaign=bio&utm_content=company 302
+/co/ /?promo=FREEMONTH&utm_source=x&utm_medium=profile&utm_campaign=bio&utm_content=company 302
+/ankush /?promo=FREEMONTH&utm_source=x&utm_medium=profile&utm_campaign=bio&utm_content=ankush 302
+/ankush/ /?promo=FREEMONTH&utm_source=x&utm_medium=profile&utm_campaign=bio&utm_content=ankush 302
+/nischal /?promo=FREEMONTH&utm_source=x&utm_medium=profile&utm_campaign=bio&utm_content=nischal 302
+/nischal/ /?promo=FREEMONTH&utm_source=x&utm_medium=profile&utm_campaign=bio&utm_content=nischal 302
+/vib /?promo=FREEMONTH&utm_source=x&utm_medium=profile&utm_campaign=bio&utm_content=vib 302
+/vib/ /?promo=FREEMONTH&utm_source=x&utm_medium=profile&utm_campaign=bio&utm_content=vib 302

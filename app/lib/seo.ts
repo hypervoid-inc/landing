@@ -353,7 +353,8 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
       : []),
     { name: "twitter:title", content: displayTitle(route) },
     { name: "twitter:description", content: route.description },
-    { name: "twitter:image", content: route.image },
+    // A player card brings its own image (player-card.ts).
+    ...(route.kind === "home" ? [] : [{ name: "twitter:image", content: route.image }]),
     { "script:ld+json": routeJsonLd(route) as never },
   ];
 }
@@ -377,7 +378,7 @@ export const notFoundMeta: MetaDescriptor[] = [
     content:
       "Give Construct's AI employee your work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.",
   },
-  { property: "og:image", content: `${siteUrl}/og/home.jpg?v=2` },
+  { property: "og:image", content: `${siteUrl}/og/home.jpg?v=3` },
   ...playerCardMeta("link"),
   { name: "twitter:site", content: "@use_construct" },
   { name: "twitter:title", content: "Night Shift, a playable short" },
@@ -386,5 +387,4 @@ export const notFoundMeta: MetaDescriptor[] = [
     content:
       "Give Construct's AI employee your work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.",
   },
-  { name: "twitter:image", content: `${siteUrl}/og/home.jpg?v=2` },
 ];

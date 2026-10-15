@@ -13,7 +13,7 @@ test("the homepage is a player card pointing at the live demo", async ({ page })
     "https://construct.computer/embed/?src=home",
   );
   await expect(page.locator('meta[name="twitter:player:width"]')).toHaveAttribute("content", "800");
-  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", /og\/home\.jpg/);
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", /og\/play\.jpg/);
 });
 
 test("/embed/ may be framed by X and by nobody else", async ({ request }) => {
@@ -66,4 +66,23 @@ test("a made-up URL is still a 404, but plays the show when posted to X", async 
   expect(html).toContain('<meta name="twitter:card" content="player"');
   expect(html).toContain('<meta name="twitter:player" content="https://construct.computer/embed/?src=link"');
   expect(html).toContain('<meta name="robots" content="noindex, follow"');
+});
+
+test("each X profile link lands on the homepage with its tags and the free month", async ({ request }) => {
+  const links: Array<[string, string]> = [["/co", "company"], ["/ankush", "ankush"], ["/nischal", "nischal"], ["/vib/", "vib"]];
+  for (const [path, who] of links) {
+    const response = await request.get(path, { maxRedirects: 0 });
+    expect(response.status(), path).toBe(302);
+    const location = new URL(response.headers()["location"] ?? "", "https://construct.computer");
+    expect(location.pathname).toBe("/");
+    expect(location.searchParams.get("promo")).toBe("FREEMONTH");
+    expect(location.searchParams.get("utm_source")).toBe("x");
+    expect(location.searchParams.get("utm_content")).toBe(who);
+  }
+});
+
+test("the X play card image is 4:3 and points at the live show", async ({ page }) => {
+  await page.goto("/embed/");
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", /og\/play\.jpg\?v=2/);
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /og\/home\.jpg\?v=3/);
 });

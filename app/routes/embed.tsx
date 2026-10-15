@@ -7,7 +7,7 @@ import { siteUrl } from "../lib/route-manifest";
 const TITLE = "Night Shift, a playable short";
 const DESCRIPTION =
   "Give Construct's AI employee your work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.";
-const IMAGE = `${siteUrl}/og/home.jpg?v=2`;
+const IMAGE = `${siteUrl}/og/home.jpg?v=3`;
 
 export const links: LinksFunction = () => [
   { rel: "preload", href: "/assets/show/fonts/sora-latin-wght-normal.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
@@ -33,7 +33,6 @@ export function meta(): MetaDescriptor[] {
     { name: "twitter:site", content: "@use_construct" },
     { name: "twitter:title", content: TITLE },
     { name: "twitter:description", content: DESCRIPTION },
-    { name: "twitter:image", content: IMAGE },
   ];
 }
 
