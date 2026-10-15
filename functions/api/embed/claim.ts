@@ -3,15 +3,16 @@ import { embedClaimRequestSchema, type EmbedClaimResponse } from "../../../share
 import { sendClaimEmail } from "../../claim-email";
 import { keyedHash, verifySessionToken } from "../../embed-session";
 import { error, json, readJsonBody } from "../../http";
-import { insertSignup, pushSignupToListmonk } from "../../signups";
+import { isLegitPersonName } from "../../../shared/person-name";
+import { pushSignupToListmonk } from "../../signups";
 import type { EmbedEnv, PagesFunction } from "../../types";
 
 /**
  * `POST /api/embed/claim`: the exit offer. A live session hands over an
  * email and gets the promo code for a free first month of the top plan;
- * the email becomes a lead the way every other form's does (the
- * `beta_signups` row and the Listmonk subscriber, tagged with the post that
- * sent them), and the code goes out by email too (`claim-email.ts`). A
+ * the email is subscribed to the newsletter in Listmonk, tagged with the
+ * post that sent them, and the code goes out by email too
+ * (`claim-email.ts`). A
  * session claims once; asking again returns the same code and sends nothing.
  */
 
@@ -53,7 +54,10 @@ export const onRequest: PagesFunction<EmbedEnv> = async ({ request, env, waitUnt
 
   const lead: BetaSignup = {
     email,
-    name: name && !name.includes("@") ? name : "Construct demo",
+    // Listmonk refuses a name that looks like the address (a bot tell on the
+    // footer form), and it is the only place this lead is kept, so a first
+    // name like "ada" for ada@example.com falls back to the show's "Friend".
+    name: name && isLegitPersonName(name, email) ? name : "Friend",
     ctaSource: "embed-x",
     referral: "twitter",
     meta: {
@@ -65,10 +69,11 @@ export const onRequest: PagesFunction<EmbedEnv> = async ({ request, env, waitUnt
       landingPath: "/embed/",
     },
   };
-  if (!(await insertSignup(env, lead))) {
-    return error(500, "internal_error", "Unable to process request");
-  }
-  const push = pushSignupToListmonk(env, lead);
+  // The code is already earned, so a Listmonk hiccup never takes it away;
+  // the subscribe runs after the reply.
+  const push = pushSignupToListmonk(env, lead).then((ok) => {
+    if (!ok) console.error("claim newsletter subscribe failed");
+  });
   if (waitUntil) waitUntil(push);
   else await push;
 

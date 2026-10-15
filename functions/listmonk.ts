@@ -372,8 +372,9 @@ async function subscribePublic(
 }
 
 /**
- * Dual-write to Listmonk. Empty base URL → `{ ok: true }` (explicitly disabled).
- * Failures return `{ ok: false }` so Construct can retry; D1 is already written.
+ * Subscribe to the newsletter in Listmonk, the only place a signup is kept.
+ * Empty base URL → `{ ok: true }` (explicitly disabled, as in local dev).
+ * Failures return `{ ok: false }` so the caller can surface an error.
  */
 export async function subscribeListmonk(
   env: BetaSignupEnv,

@@ -3,7 +3,7 @@ import {
   type BetaSignup,
   type SignupMeta,
 } from "../../shared/beta-signup-schema";
-import { insertSignup, pushSignupToListmonk } from "../signups";
+import { pushSignupToListmonk } from "../signups";
 import { verifyTurnstile } from "../turnstile";
 import type { BetaSignupEnv, PagesFunction } from "../types";
 
@@ -88,16 +88,21 @@ function stripPrivilegedBrowserMeta(data: BetaSignup): BetaSignup {
   return { ...data, meta };
 }
 
+/**
+ * Listmonk is the only place a signup is kept, so a failed subscribe is a
+ * failed request: the visitor sees an error and can try again, rather than
+ * a success that stored nothing.
+ */
 async function persistSignup(
   env: BetaSignupEnv,
   data: BetaSignup,
-): Promise<{ error: Response } | { listmonk: boolean }> {
-  if (!(await insertSignup(env, data))) {
+): Promise<{ error: Response } | { listmonk: true }> {
+  if (!(await pushSignupToListmonk(env, data))) {
     return {
-      error: error(500, "internal_error", "Unable to process request"),
+      error: error(502, "internal_error", "Unable to process request"),
     };
   }
-  return { listmonk: await pushSignupToListmonk(env, data) };
+  return { listmonk: true };
 }
 
 export const onRequest: PagesFunction<BetaSignupEnv> = async ({
@@ -138,10 +143,6 @@ export const onRequest: PagesFunction<BetaSignupEnv> = async ({
   const parsed = betaSignupSchema.safeParse(body);
   if (!parsed.success) return error(400, "invalid_request");
   if (parsed.data.honeypot?.trim()) return json({ ok: true, listmonk: true });
-
-  if (!env.DB) {
-    return error(500, "internal_error", "Unable to process request");
-  }
 
   const ingestOk = isIngestAuthorized(request, env);
   if (ingestOk) {

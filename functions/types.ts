@@ -1,11 +1,4 @@
 export type BetaSignupEnv = {
-  DB: {
-    prepare(query: string): {
-      bind(...values: unknown[]): {
-        run(): Promise<{ success: boolean }>;
-      };
-    };
-  };
   TURNSTILE_SECRET_KEY: string;
   TURNSTILE_EXPECTED_HOSTNAME: string;
   TURNSTILE_EXPECTED_ACTION?: string;
@@ -42,7 +35,7 @@ export type D1Statement = {
 export type D1Like = { prepare(query: string): D1Statement };
 
 /** The playable show in an X post (`functions/api/embed/*`). */
-export type EmbedEnv = Omit<BetaSignupEnv, "DB"> & {
+export type EmbedEnv = BetaSignupEnv & {
   DB: D1Like;
   /** Signs session tokens and keys the email and address hashes. Required. */
   EMBED_SESSION_SECRET?: string;

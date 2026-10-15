@@ -12,44 +12,8 @@ const validBody = {
   turnstileToken: "verified-token",
 };
 
-type StoredSignup = {
-  email: string;
-  ctaSource: string;
-  referral: string;
-  referralOther: string | null;
-};
-
-function createDb(fail = false) {
-  const rows: StoredSignup[] = [];
-
+function createEnv(): BetaSignupEnv {
   return {
-    rows,
-    prepare() {
-      return {
-        bind(
-          email: string,
-          ctaSource: string,
-          referral: string,
-          referralOther: string | null,
-        ) {
-          return {
-            async run() {
-              if (fail) throw new Error("database unavailable");
-              if (!rows.some((row) => row.email === email)) {
-                rows.push({ email, ctaSource, referral, referralOther });
-              }
-              return { success: true };
-            },
-          };
-        },
-      };
-    },
-  };
-}
-
-function createEnv(db = createDb()): BetaSignupEnv {
-  return {
-    DB: db,
     TURNSTILE_SECRET_KEY: "secret",
     TURNSTILE_EXPECTED_HOSTNAME: "construct.example",
   };
@@ -175,8 +139,8 @@ describe("POST /api/beta-signup", () => {
 
   afterEach(() => vi.unstubAllGlobals());
 
-  it("stores a verified signup without IP or user agent data", async () => {
-    const db = createDb();
+  it("subscribes a verified signup without IP or user agent data", async () => {
+    const fetchMock = vi.mocked(fetch);
     const response = await handle(
       request(validBody, {
         headers: {
@@ -185,25 +149,22 @@ describe("POST /api/beta-signup", () => {
           "User-Agent": "test browser",
         },
       }),
-      createEnv(db),
+      createEnv(),
     );
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ ok: true, listmonk: true });
-    expect(db.rows).toEqual([
-      {
-        email: "person@example.com",
-        ctaSource: "hero",
-        referral: "reddit",
-        referralOther: null,
-      },
-    ]);
-    expect(JSON.stringify(db.rows)).not.toContain("203.0.113.10");
-    expect(JSON.stringify(db.rows)).not.toContain("test browser");
+    const sent = JSON.stringify(
+      fetchMock.mock.calls
+        .filter(([url]) => !String(url).includes("turnstile"))
+        .map(([, init]) => init?.body),
+    );
+    expect(sent).toContain("person@example.com");
+    expect(sent).not.toContain("203.0.113.10");
+    expect(sent).not.toContain("test browser");
   });
 
   it("defaults referral and forwards the email to Listmonk", async () => {
-    const db = createDb();
     const fetchMock = vi.mocked(fetch);
     const response = await handle(
       request({
@@ -212,19 +173,11 @@ describe("POST /api/beta-signup", () => {
         ctaSource: "footer",
         turnstileToken: "verified-token",
       }),
-      createEnv(db),
+      createEnv(),
     );
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ ok: true, listmonk: true });
-    expect(db.rows).toEqual([
-      {
-        email: "founder@example.com",
-        ctaSource: "footer",
-        referral: "other",
-        referralOther: "newsletter",
-      },
-    ]);
     const listmonkCall = fetchMock.mock.calls.find(([url]) =>
       String(url).includes("/api/public/subscription"),
     );
@@ -236,7 +189,7 @@ describe("POST /api/beta-signup", () => {
     });
   });
 
-  it("returns listmonk:false when Listmonk subscribe fails", async () => {
+  it("fails the request when Listmonk can't subscribe, since nothing else keeps it", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(async (input: RequestInfo | URL) => {
@@ -252,15 +205,16 @@ describe("POST /api/beta-signup", () => {
       }),
     );
     const response = await handle(request(), createEnv());
-    expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ ok: true, listmonk: false });
+    expect(response.status).toBe(502);
+    expect(await response.json()).toEqual({
+      error: { code: "internal_error", message: "Unable to process request" },
+    });
   });
 
   it("skips Listmonk when LISTMONK_BASE_URL is empty", async () => {
-    const db = createDb();
     const fetchMock = vi.mocked(fetch);
     const response = await handle(request(), {
-      ...createEnv(db),
+      ...createEnv(),
       LISTMONK_BASE_URL: "",
     });
     expect(await response.json()).toEqual({ ok: true, listmonk: true });
@@ -269,11 +223,9 @@ describe("POST /api/beta-signup", () => {
         String(url).includes("/api/public/subscription"),
       ),
     ).toBe(false);
-    expect(db.rows).toHaveLength(1);
   });
 
   it("accepts server ingest with shared secret and no Turnstile", async () => {
-    const db = createDb();
     const fetchMock = vi.mocked(fetch);
     const response = await handle(
       request(
@@ -298,7 +250,7 @@ describe("POST /api/beta-signup", () => {
         },
       ),
       {
-        ...createEnv(db),
+        ...createEnv(),
         SIGNUP_INGEST_SECRET: "ingest-secret",
         LISTMONK_BASE_URL: "",
       },
@@ -306,21 +258,12 @@ describe("POST /api/beta-signup", () => {
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ ok: true, listmonk: true });
-    expect(db.rows).toEqual([
-      {
-        email: "os-user@example.com",
-        ctaSource: "auth-google",
-        referral: "other",
-        referralOther: "auth-google",
-      },
-    ]);
     expect(
       fetchMock.mock.calls.some(([url]) => String(url).includes("turnstile")),
     ).toBe(false);
   });
 
   it("strips privileged meta on the Turnstile browser path", async () => {
-    const db = createDb();
     const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
       const url = String(input);
       if (url.includes("turnstile")) {
@@ -351,7 +294,7 @@ describe("POST /api/beta-signup", () => {
         },
       }),
       {
-        ...createEnv(db),
+        ...createEnv(),
         LISTMONK_BASE_URL: "https://listmonk.test",
         LISTMONK_NEWSLETTER_LIST_ID: "7",
         LISTMONK_API_USER: "api",
@@ -372,7 +315,6 @@ describe("POST /api/beta-signup", () => {
   });
 
   it("uses private Listmonk API with attribs when credentials are set", async () => {
-    const db = createDb();
     const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
       const url = String(input);
       if (url.includes("turnstile")) {
@@ -402,7 +344,7 @@ describe("POST /api/beta-signup", () => {
         },
       }),
       {
-        ...createEnv(db),
+        ...createEnv(),
         LISTMONK_BASE_URL: "https://listmonk.test",
         LISTMONK_NEWSLETTER_LIST_ID: "7",
         LISTMONK_API_USER: "api",
@@ -454,8 +396,7 @@ describe("POST /api/beta-signup", () => {
   });
 
   it("returns the same success for duplicate emails", async () => {
-    const db = createDb();
-    const env = createEnv(db);
+    const env = createEnv();
 
     const first = await handle(request(), env);
     const duplicate = await handle(
@@ -465,19 +406,18 @@ describe("POST /api/beta-signup", () => {
 
     expect(await first.json()).toEqual({ ok: true, listmonk: true });
     expect(await duplicate.json()).toEqual({ ok: true, listmonk: true });
-    expect(db.rows).toHaveLength(1);
   });
 
-  it("returns generic success for a filled honeypot without storing it", async () => {
-    const db = createDb();
+  it("returns generic success for a filled honeypot without subscribing it", async () => {
+    const fetchMock = vi.mocked(fetch);
     const response = await handle(
       request({ ...validBody, honeypot: "spam" }),
-      createEnv(db),
+      createEnv(),
     );
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ ok: true, listmonk: true });
-    expect(db.rows).toHaveLength(0);
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("rejects submissions from another browser origin", async () => {
@@ -570,7 +510,7 @@ describe("POST /api/beta-signup", () => {
     expect(oversized.status).toBe(413);
   });
 
-  it("returns a generic server error for configuration, Turnstile, or D1 failures", async () => {
+  it("returns a generic server error for configuration or Turnstile failures", async () => {
     const missingConfig = await handle(request(), {
       ...createEnv(),
       TURNSTILE_SECRET_KEY: "",
@@ -582,22 +522,7 @@ describe("POST /api/beta-signup", () => {
     );
     const turnstileFailure = await handle(request());
 
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(async (input: RequestInfo | URL) => {
-        if (String(input).includes("turnstile")) {
-          return Response.json({
-            success: true,
-            action: "beta_signup",
-            hostname: "construct.example",
-          });
-        }
-        return Response.json({ data: true });
-      }),
-    );
-    const databaseFailure = await handle(request(), createEnv(createDb(true)));
-
-    for (const response of [missingConfig, turnstileFailure, databaseFailure]) {
+    for (const response of [missingConfig, turnstileFailure]) {
       expect(response.status).toBe(500);
       expect(await response.json()).toEqual({
         error: { code: "internal_error", message: "Unable to process request" },

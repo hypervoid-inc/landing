@@ -14,7 +14,7 @@ Configure the Pages project with:
 
 Replace the placeholder D1 ID in `wrangler.jsonc` after creating the production database. Bind it as `DB`, apply `migrations/` remotely, and use a separate database for previews.
 
-Beta signups receive an `expires_at` timestamp 180 days after capture. Configure a small scheduled Worker or an operational job to run `DELETE FROM beta_signups WHERE expires_at < datetime('now')` at least daily. Data-subject deletion requests should delete the normalized email immediately rather than waiting for expiry.
+Signups are kept in Listmonk only: the footer newsletter form and the show's claim subscribe there and write nothing to D1, and a failed subscribe returns an error so the visitor can retry. The `beta_signups` table still holds the rows captured before 2026-10-15, each with an `expires_at` 180 days after capture; clear them with `DELETE FROM beta_signups WHERE expires_at < datetime('now')` until the table is empty, or drop it once they are no longer needed. Data-subject deletion requests are handled in Listmonk, and in that table while it has rows.
 
 Configure these production values:
 

@@ -393,7 +393,7 @@ test("returns a real 404 for unknown URLs", async ({ request }) => {
   expect(await response.text()).toContain("Page not found");
 });
 
-test("submits the footer newsletter through Turnstile and D1", async ({
+test("submits the footer newsletter through Turnstile", async ({
   page,
 }) => {
   await page.goto("/");

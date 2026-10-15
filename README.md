@@ -32,7 +32,7 @@ The public Construct Computer website. It preserves the established landing-page
 2. Run `pnpm install`.
 3. Use `.env.example` for public Vite variables and `.dev.vars.example` for local Pages secrets.
 4. Apply the local database migration with `pnpm wrangler d1 migrations apply DB --local`.
-5. Run `pnpm dev` for the site with its Functions (it applies the local D1 migrations and writes `.dev.vars` from the example if missing; ), or `pnpm test:e2e` for the complete Pages, Function, Turnstile, and D1 flow.
+5. Run `pnpm dev` for the site with its Functions (it applies the local D1 migrations and writes `.dev.vars` from the example if missing), or `pnpm test:e2e` for the complete Pages, Function, Turnstile and D1 flow.
 
 Cloudflare's published Turnstile test keys are intentionally included in the example and E2E configuration. Production keys must be configured in Cloudflare.
 
@@ -52,7 +52,7 @@ See `docs/decisions/001-static-prerendered-react.md` for the architectural ratio
 
 The homepage carries X Player Card tags (`app/lib/player-card.ts`), so a post that links `construct.computer` renders `/embed/` inside the post on desktop and opens it full screen from the phone apps. The page is Night Shift (`app/features/night-shift/`), the launch film as a one minute show you play: wake the mascot at 11 pm, hand it your list in a Slack thread, pull the chain, then skip or peek through its night shift until the morning report. The email comes last, as the exit offer of a free first month of Pro. The show runs on a small engine in `app/features/show/` (a 960 by 720 board scaled to fit, the mascot, the speech bubble and the CRT). `public/_headers` lets only X frame that path.
 
-`functions/api/embed/session.ts` turns the viewer's first name into a signed session token (Turnstile, five sessions an hour per address, a row in D1's `embed_sessions` with keyed hashes only). `functions/api/embed/claim.ts` takes the email at the exit offer, stores the lead the way every other form does (`beta_signups` row and Listmonk subscriber, `cta_source` `embed-x`, the post's `src` as the campaign) and hands back `EMBED_PROMO_CODE`, which it also emails through Cloudflare Email Service (`functions/claim-email.ts`). "Start tonight" and the email's button open `/?promo=CODE`, where `app/features/landing/promo-welcome.tsx` welcomes the visitor and keeps the code for checkout. `shared/embed-schema.ts` holds the wire shapes and the per-address cap. There is no overall cap. `EMBED_SESSION_SECRET` is a Pages secret.
+`functions/api/embed/session.ts` turns the viewer's first name into a signed session token (Turnstile, five sessions an hour per address, a row in D1's `embed_sessions` with keyed hashes only). `functions/api/embed/claim.ts` takes the email at the exit offer, subscribes it to the newsletter in Listmonk like every other form does (`cta_source` `embed-x`, the post's `src` as the campaign; Listmonk is the only place leads are kept) and hands back `EMBED_PROMO_CODE`, which it also emails through Cloudflare Email Service (`functions/claim-email.ts`). "Start tonight" and the email's button open `/?promo=CODE`, where `app/features/landing/promo-welcome.tsx` welcomes the visitor and keeps the code for checkout. `shared/embed-schema.ts` holds the wire shapes and the per-address cap. There is no overall cap. `EMBED_SESSION_SECRET` is a Pages secret.
 
 ## Content
 
@@ -64,4 +64,4 @@ The homepage social image source is `assets/og/home.png`. Generation copies it t
 
 ## Verification
 
-`pnpm check && pnpm test:e2e` is the release gate. It verifies all canonical pages, the real 404 response, the ordered resource grid, Turnstile plus D1 signup, and automated accessibility checks.
+`pnpm check && pnpm test:e2e` is the release gate. It verifies all canonical pages, the real 404 response, the ordered resource grid, the Turnstile-checked newsletter signup, and automated accessibility checks.

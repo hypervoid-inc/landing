@@ -30,10 +30,8 @@ type SessionRow = {
  * fragment and keeps rows in memory.
  */
 function createDb() {
-  const signups: string[] = [];
   const sessions: SessionRow[] = [];
   const db = {
-    signups,
     sessions,
     prepare(query: string) {
       let values: unknown[] = [];
@@ -43,10 +41,6 @@ function createDb() {
           return statement;
         },
         async run() {
-          if (query.includes("INSERT INTO beta_signups")) {
-            signups.push(String(values[0]));
-            return { success: true };
-          }
           if (query.includes("INSERT INTO embed_sessions")) {
             sessions.push({
               id: String(values[0]),
@@ -124,6 +118,14 @@ async function startSession(env: EmbedEnv, body: unknown = lead, ip = "203.0.113
   return { response, body: (await response.json()) as Record<string, unknown> };
 }
 
+/** Emails the claim subscribed in Listmonk, read off the mocked fetch. */
+function subscribed(): string[] {
+  return vi
+    .mocked(fetch)
+    .mock.calls.filter(([url]) => String(url).includes("/api/public/subscription"))
+    .map(([, init]) => JSON.parse(String(init?.body)).email as string);
+}
+
 describe("session tokens", () => {
   it("round-trip, and refuse tampering or expiry", async () => {
     const sid = crypto.randomUUID();
@@ -168,7 +170,7 @@ describe("POST /api/embed/session", () => {
     const { response, body } = await startSession(env);
     expect(response.status).toBe(200);
     expect(body).toMatchObject({ ok: true, firstName: "Ada" });
-    expect(env.DB.signups).toEqual([]);
+    expect(subscribed()).toEqual([]);
     expect(env.DB.sessions).toHaveLength(1);
     expect(env.DB.sessions[0]).toMatchObject({ src: "launch", turns: 0, email_hash: "" });
     expect(await verifySessionToken(SECRET, String(body.token))).not.toBeNull();
@@ -239,14 +241,14 @@ describe("POST /api/embed/claim", () => {
     const first = await ask(env, { token, email: "Ada@Example.com", name: "Ada" });
     expect(first.status).toBe(200);
     expect(await first.json()).toEqual({ ok: true, code: "FREEMONTH" });
-    expect(env.DB.signups).toEqual(["ada@example.com"]);
+    expect(subscribed()).toEqual(["ada@example.com"]);
     expect(env.DB.sessions[0]?.claimed_at).toBe("now");
     expect(env.DB.sessions[0]?.email_hash).not.toContain("ada");
 
     const again = await ask(env, { token, email: "other@example.com" });
     expect(again.status).toBe(200);
     expect(await again.json()).toEqual({ ok: true, code: "FREEMONTH" });
-    expect(env.DB.signups).toEqual(["ada@example.com"]);
+    expect(subscribed()).toEqual(["ada@example.com"]);
   });
 
   it("emails the code once, through Cloudflare Email Service", async () => {
@@ -290,13 +292,21 @@ describe("POST /api/embed/claim", () => {
     expect(vi.mocked(fetch).mock.calls.some(([url]) => String(url).includes("/email/sending/send"))).toBe(false);
   });
 
+  it("subscribes a first name that matches the address as Friend rather than dropping it", async () => {
+    const env = createEnv();
+    const token = await sessionFor(env);
+    await ask(env, { token, email: "ada@example.com", name: "Ada" });
+    const call = vi.mocked(fetch).mock.calls.find(([url]) => String(url).includes("/api/public/subscription"));
+    expect(JSON.parse(String(call?.[1]?.body))).toMatchObject({ email: "ada@example.com", name: "Friend" });
+  });
+
   it("refuses a forged token and a bad email", async () => {
     const env = createEnv();
     const token = await sessionFor(env);
     const forged = await mintSessionToken("another-secret", crypto.randomUUID());
     expect((await ask(env, { token: forged.token, email: "a@b.co" })).status).toBe(401);
     expect((await ask(env, { token, email: "not-an-email" })).status).toBe(400);
-    expect(env.DB.signups).toEqual([]);
+    expect(subscribed()).toEqual([]);
   });
 });
 

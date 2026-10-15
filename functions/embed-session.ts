@@ -1,9 +1,9 @@
 import { EMBED_SESSION_TTL_SECONDS } from "../shared/embed-schema";
 
 /**
- * Session tokens for the live demo: a session id and an expiry, signed with
- * `EMBED_SESSION_SECRET`. Turn counting lives in D1 (`embed_sessions`), so a
- * replayed token buys nothing. The same secret keys the email and address
+ * Session tokens for the show: a session id and an expiry, signed with
+ * `EMBED_SESSION_SECRET`. Whether a session has claimed lives in D1
+ * (`embed_sessions`), so a replayed token can't claim twice. The same secret keys the email and address
  * hashes those rows carry, which is what keeps a raw email or IP out of them.
  */
 
