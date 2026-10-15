@@ -58,3 +58,12 @@ test("a promo link welcomes the visitor once and keeps the code for checkout", a
   await page.reload();
   await expect(page.getByRole("dialog", { name: /Your free month is ready/ })).toBeHidden();
 });
+
+test("a made-up URL is still a 404, but plays the show when posted to X", async ({ request }) => {
+  const response = await request.get("/x");
+  expect(response.status()).toBe(404);
+  const html = await response.text();
+  expect(html).toContain('<meta name="twitter:card" content="player"');
+  expect(html).toContain('<meta name="twitter:player" content="https://construct.computer/embed/?src=link"');
+  expect(html).toContain('<meta name="robots" content="noindex, follow"');
+});

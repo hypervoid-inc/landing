@@ -366,4 +366,25 @@ export const notFoundMeta: MetaDescriptor[] = [
       "The page you requested does not exist on construct.computer. Return to the homepage or contact support for help.",
   },
   { name: "robots", content: "noindex, follow" },
+  // A mistyped or made-up link pasted into an X post still plays the show:
+  // the page answers 404 for search engines, but carries the same player
+  // card as the homepage.
+  { property: "og:type", content: "website" },
+  { property: "og:site_name", content: "Construct Computer" },
+  { property: "og:title", content: "Night Shift, a playable short" },
+  {
+    property: "og:description",
+    content:
+      "Give Construct's AI employee your work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.",
+  },
+  { property: "og:image", content: `${siteUrl}/og/home.jpg?v=2` },
+  ...playerCardMeta("link"),
+  { name: "twitter:site", content: "@use_construct" },
+  { name: "twitter:title", content: "Night Shift, a playable short" },
+  {
+    name: "twitter:description",
+    content:
+      "Give Construct's AI employee your work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.",
+  },
+  { name: "twitter:image", content: `${siteUrl}/og/home.jpg?v=2` },
 ];

@@ -6,7 +6,7 @@ import { siteUrl } from "../lib/route-manifest";
 
 const TITLE = "Night Shift, a playable short";
 const DESCRIPTION =
-  "Give Construct's AI employee your list at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.";
+  "Give Construct's AI employee your work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.";
 const IMAGE = `${siteUrl}/og/home.jpg?v=2`;
 
 export const links: LinksFunction = () => [
