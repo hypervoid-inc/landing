@@ -64,6 +64,19 @@ const IGNORED_REFERRER_HOSTS = new Set([
 /** accounts.google.com plus its country variants (accounts.google.co.in...). */
 const GOOGLE_ACCOUNTS_HOST = /^accounts\.google\.[a-z.]+$/;
 
+/**
+ * `Domain=.construct.computer` is what carries a first-party cookie across the
+ * hop to app.construct.computer and os.construct.computer. Preview builds run
+ * on `*.pages.dev` and dev on `localhost`, where that attribute would make the
+ * browser reject the cookie outright, so it is only added on the real domain.
+ */
+export function cookieDomainAttribute(hostname: string): string {
+  return hostname === OWN_ROOT_DOMAIN ||
+    hostname.endsWith(`.${OWN_ROOT_DOMAIN}`)
+    ? `; Domain=.${OWN_ROOT_DOMAIN}`
+    : "";
+}
+
 export type CampaignAttribution = {
   /** `ref`, coarse channel, e.g. `mailinglist`. */
   r?: string;

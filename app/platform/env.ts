@@ -10,13 +10,21 @@ export function getApiBaseUrl(): string {
 
 /**
  * Where "open the app" goes: the Construct dashboard, the shell the product
- * leads with and the only one that runs on a phone. The desktop shell still
- * lives at `os.construct.computer` and is reachable from inside the app, so
- * the site does not need to name it.
+ * leads with and the only one that runs on a phone. The desktop shell lives at
+ * `getOsOrigin()`, and only the chooser at `/app/` offers it.
  */
 export function getAppOrigin(): string {
   const raw = import.meta.env.VITE_APP_ORIGIN?.trim();
   return (raw || "https://app.construct.computer").replace(/\/$/, "");
+}
+
+/**
+ * The desktop shell, Construct OS. It needs a laptop-sized screen, so the
+ * site names it in one place, the chooser at `/app/`.
+ */
+export function getOsOrigin(): string {
+  const raw = import.meta.env.VITE_OS_ORIGIN?.trim();
+  return (raw || "https://os.construct.computer").replace(/\/$/, "");
 }
 
 /** The longest prompt a link carries; the app refuses anything longer. */
@@ -25,10 +33,9 @@ export const APP_PROMPT_MAX_CHARS = 4000;
 /**
  * The app, opened on a prompt when one is given. The app shows the prompt
  * and asks which agent should run it before anything is sent, so a link can
- * suggest work but never start it.
+ * suggest work but never start it. Both shells read `?prompt=` the same way.
  */
-export function getAppUrl(prompt?: string): string {
-  const origin = getAppOrigin();
+export function getAppUrl(prompt?: string, origin = getAppOrigin()): string {
   const text = prompt?.trim().slice(0, APP_PROMPT_MAX_CHARS);
   return text ? `${origin}/?prompt=${encodeURIComponent(text)}` : origin;
 }

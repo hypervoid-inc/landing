@@ -1,0 +1,792 @@
+/*
+ * /app/: two doors side by side, the desktop on its own wallpaper and the
+ * dashboard on the calm paper of Zen Mode, with the mascot on the seam. Below
+ * the OS's own phone cut-off (width under 768, or a touch screen whose short
+ * side is under 500) the doors stack, dashboard first, and the desktop door
+ * says it needs a bigger screen instead of offering a link that would only
+ * show Construct OS's "needs a desktop" screen.
+ */
+
+/*
+ * Light or dark follows the system by default (`light-dark()` below reads
+ * `color-scheme`), so the prerendered page is right before any script runs;
+ * the toggle's choice lands as `data-theme`. The whole page follows it; only
+ * the Construct OS preview stays dark, because the OS has no light theme.
+ */
+.ac {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  color-scheme: light dark;
+  background: light-dark(#f4f2ee, #111110);
+  color: light-dark(#1c1917, #f5f5f4);
+  font-family: var(--font-geist);
+}
+
+.ac[data-theme="light"] {
+  color-scheme: light;
+}
+
+.ac[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Images can't use light-dark(), so the night art shows by selector. No
+ * transition of its own: the toggle's view transition moves the whole page. */
+.ac-night {
+  opacity: 0;
+}
+
+.ac[data-theme="dark"] .ac-night {
+  opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ac:not([data-theme="light"]) .ac-night {
+    opacity: 1;
+  }
+}
+
+/* The theme toggle, top right of the page. */
+.ac-theme {
+  position: absolute;
+  top: clamp(24px, 4.4vw, 64px);
+  right: clamp(24px, 4.4vw, 64px);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid light-dark(rgb(28 25 23 / 12%), rgb(255 255 255 / 12%));
+  border-radius: 999px;
+  background: light-dark(#fffefa, #1a1a19);
+  color: light-dark(#1c1917, #f5f5f4);
+  cursor: pointer;
+  transition: transform var(--dur-press) var(--ease-snap);
+}
+
+.ac-theme:active {
+  transform: scale(0.94);
+}
+
+.ac-theme:focus-visible {
+  outline: 3px solid #01b4c8;
+  outline-offset: 3px;
+}
+
+/*
+ * The question, plain text centred over the seam in the header row, level
+ * with the wordmark and the theme toggle. Both halves share a brightness in
+ * either theme, so it needs no capsule, only a soft halo over the photos.
+ */
+/* Centred without a transform or z-index, so its halo and its text can sit
+ * in different layers (see .ac-seam). */
+.ac-head {
+  position: absolute;
+  top: clamp(24px, 4.4vw, 64px);
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 38px;
+  margin-inline: auto;
+  white-space: nowrap;
+}
+
+/* An edgeless halo in the page colour, so the seam fades out behind the
+ * words; behind the previews, like the mascot's shadow. */
+.ac-head::before {
+  content: "";
+  position: absolute;
+  inset: -56px -140px;
+  z-index: 1;
+  /* Eased falloff, so the halo has no edge of its own. At night both halves
+   * are already dark, so it is only a breath. */
+  background: radial-gradient(
+    closest-side,
+    light-dark(rgb(244 242 238 / 90%), rgb(9 13 28 / 32%)),
+    light-dark(rgb(244 242 238 / 72%), rgb(9 13 28 / 24%)) 30%,
+    light-dark(rgb(244 242 238 / 40%), rgb(9 13 28 / 13%)) 55%,
+    light-dark(rgb(244 242 238 / 14%), rgb(9 13 28 / 5%)) 78%,
+    light-dark(rgb(244 242 238 / 0%), rgb(9 13 28 / 0%))
+  );
+  pointer-events: none;
+}
+
+.ac-head .ac-wordmark,
+.ac-head-mascot,
+.ac-head-note {
+  display: none;
+}
+
+.ac-title {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  color: light-dark(#14110f, #fff);
+  font-size: clamp(24px, 1.5vw + 6px, 38px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-shadow:
+    0 2px 4px light-dark(rgb(244 242 238 / 95%), rgb(0 0 0 / 60%)),
+    0 0 16px light-dark(rgb(244 242 238 / 95%), rgb(8 10 18 / 92%)),
+    0 0 40px light-dark(rgb(244 242 238 / 80%), rgb(8 10 18 / 75%));
+}
+
+.ac-title em {
+  color: light-dark(#017a88, #6fe0ee);
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.ac-wordmark {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 5px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  letter-spacing: -0.015em;
+  text-decoration: none;
+}
+
+/* Over Fuji's sky the wordmark carries a soft halo, paper by day, ink at night. */
+.ac-wordmark--door {
+  text-shadow:
+    0 1px 2px light-dark(rgb(244 242 238 / 40%), rgb(8 10 18 / 45%)),
+    0 0 18px light-dark(rgb(244 242 238 / 55%), rgb(8 10 18 / 35%));
+}
+
+.ac-wordmark--door span:first-child {
+  color: light-dark(#332d2d, #fff);
+}
+
+.ac-wordmark--door span:last-child {
+  color: light-dark(#017a88, #6fe0ee);
+}
+
+.ac-wordmark--head span:first-child {
+  color: light-dark(#4e4646, #f5f5f4);
+}
+
+.ac-wordmark--head span:last-child {
+  color: light-dark(#01b4c8, #6fe0ee);
+}
+
+.ac-doors {
+  display: flex;
+  flex: 1;
+}
+
+.ac-door {
+  position: relative;
+  display: flex;
+  flex: 1 1 50%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/*
+ * Both doors follow the theme. Construct OS itself is always dark, so its
+ * preview stays dark; around it, Fuji gets a paper mist by day (mirroring Zen
+ * Mode's paper tint) and a night shade in the dark theme.
+ */
+.ac-door--desktop {
+  background: light-dark(#c9d3df, #0b0d14);
+  color: light-dark(#1c1917, #fff);
+}
+
+.ac-door--dashboard {
+  background: light-dark(#f4f2ee, #111110);
+  color: light-dark(#1c1917, #f5f5f4);
+}
+
+.ac-door-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Fuji at full strength, shaded only behind the wordmark and the copy. */
+.ac-door--desktop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /*
+   * By day a paper mist at the bottom. At night a navy dusk over the whole
+   * photo: Fuji's sky is pale, and left bright it fought the dashboard's
+   * night side across the seam.
+   */
+  background: linear-gradient(
+    180deg,
+    light-dark(rgb(244 242 238 / 35%), rgb(9 13 28 / 74%)) 0%,
+    light-dark(rgb(244 242 238 / 0%), rgb(9 13 28 / 62%)) 24%,
+    light-dark(rgb(244 242 238 / 0%), rgb(9 13 28 / 50%)) 38%,
+    light-dark(rgb(244 242 238 / 72%), rgb(9 13 28 / 66%)) 62%,
+    light-dark(rgb(244 242 238 / 92%), rgb(9 13 28 / 88%)) 100%
+  );
+  pointer-events: none;
+}
+
+/* Zen Mode's ShellWallpaper: the art blurred under the canvas tint (58% by
+ * day, 66% at night), deepened toward the copy so the text keeps contrast. */
+.ac-door-bg--zen {
+  filter: blur(28px) saturate(1.2);
+  transform: scale(1.1);
+}
+
+.ac-door--dashboard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    light-dark(rgb(244 242 238 / 58%), rgb(17 17 16 / 66%)) 0%,
+    light-dark(rgb(244 242 238 / 58%), rgb(17 17 16 / 66%)) 45%,
+    light-dark(rgb(244 242 238 / 84%), rgb(17 17 16 / 86%)) 100%
+  );
+  pointer-events: none;
+}
+
+.ac-door-inner {
+  --pad: clamp(24px, 4.4vw, 64px);
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: clamp(16px, 3vh, 28px);
+  min-width: 0;
+  /* The bottom clears the footnote capsule on the seam. */
+  padding: var(--pad) var(--pad) clamp(76px, 6.6vw, 96px);
+}
+
+/* Room for the "or" medallion, so a full-size preview never runs under it. */
+.ac-door--desktop .ac-door-inner {
+  padding-right: calc(var(--pad) + 40px);
+}
+
+.ac-door--dashboard .ac-door-inner {
+  padding-left: calc(var(--pad) + 40px);
+}
+
+/* The account row mirrors the wordmark's height so both previews sit level,
+ * and leaves the corner to the theme toggle. */
+.ac-account {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 38px;
+  padding-right: 50px;
+}
+
+.ac-account-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  padding: 5px 6px 5px 6px;
+  border: 1px solid light-dark(rgb(28 25 23 / 12%), rgb(255 255 255 / 12%));
+  border-radius: 999px;
+  background: light-dark(#fffefa, #1a1a19);
+  font-size: 13px;
+}
+
+.ac-account-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ac-account-text strong {
+  font-weight: 600;
+}
+
+.ac-account-switch {
+  flex: none;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: light-dark(#57534e, rgb(245 245 244 / 62%));
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ac-account-switch:hover {
+  color: light-dark(#1c1917, #f5f5f4);
+}
+
+/*
+ * The stage takes whatever height the door has left once the wordmark and
+ * the copy are laid out, and the preview fills it at 16:10: as wide as the
+ * door on a wide screen, as tall as the gap on a short one. Size containment
+ * keeps the preview from pushing the copy down to make room for itself.
+ */
+.ac-stage {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  container-type: size;
+}
+
+.ac-stage .acp {
+  /* The 16px margin keeps the tilted corners inside the stage. */
+  width: min(100cqw - 16px, (100cqh - 16px) * 1.6);
+  transition: transform 520ms var(--ease-snap);
+}
+
+/*
+ * A hairline bezel in each app's own edge colour: the tilted frame's
+ * antialiased edge blends into it instead of the page behind, which read as
+ * a pale line against Fuji's sky.
+ */
+.ac-door--desktop .ac-stage .acp {
+  box-shadow:
+    0 0 0 1px rgb(5 6 11 / 70%),
+    0 30px 70px rgb(0 0 0 / 50%);
+  transform: rotate(-1.5deg);
+}
+
+.ac-door--dashboard .ac-stage .acp {
+  box-shadow:
+    0 0 0 1px light-dark(rgb(28 25 23 / 12%), rgb(255 255 255 / 10%)),
+    0 30px 60px light-dark(rgb(28 25 23 / 16%), rgb(0 0 0 / 45%));
+  transform: rotate(1.5deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ac-door:hover .ac-stage .acp {
+    transform: rotate(0deg) scale(1.015);
+  }
+}
+
+.ac-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: clamp(470px, 34vw, 620px);
+}
+
+.ac-eyebrow-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.ac-eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ac-eyebrow,
+.ac-hint {
+  color: light-dark(#57534e, rgb(245 245 244 / 70%));
+}
+
+.ac-badge {
+  display: inline-flex;
+  padding: 3px 9px;
+  border: 1px solid light-dark(#c9eef3, rgb(111 224 238 / 35%));
+  border-radius: 999px;
+  background: light-dark(#fff, rgb(255 255 255 / 6%));
+  color: light-dark(#017a88, #6fe0ee);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ac-badge--phone {
+  display: none;
+}
+
+.ac-name {
+  margin: 0;
+  font-size: clamp(40px, 4.4vw, 72px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.ac-blurb {
+  margin: 0;
+  color: light-dark(#44403c, rgb(245 245 244 / 84%));
+  font-size: clamp(16px, 0.55vw + 9px, 19px);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.ac-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.ac-hint {
+  font-size: 13px;
+}
+
+/* One button for both doors: an ink pill by day, a light pill at night. */
+.ac-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 22px 0 26px;
+  border-radius: 999px;
+  background: light-dark(#1c1917, #f5f5f4);
+  box-shadow: 0 10px 24px light-dark(rgb(28 25 23 / 18%), rgb(0 0 0 / 35%));
+  color: light-dark(#fff, #111110);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    transform var(--dur-press) var(--ease-snap),
+    box-shadow var(--dur-hover) var(--ease-snap);
+}
+
+.ac-cta svg {
+  transition: transform var(--dur-hover) var(--ease-snap);
+}
+
+.ac-cta:focus-visible,
+.ac-wordmark:focus-visible,
+.ac-account-switch:focus-visible {
+  outline: 3px solid #01b4c8;
+  outline-offset: 3px;
+}
+
+.ac-cta:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ac-cta:hover {
+    transform: translateY(-1px);
+  }
+
+  .ac-cta:hover svg {
+    transform: translateX(2px);
+  }
+
+  .ac-cta:hover:active {
+    transform: scale(0.97);
+  }
+}
+
+.ac-small-screen {
+  display: none;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid light-dark(rgb(28 25 23 / 12%), rgb(255 255 255 / 20%));
+  border-radius: 14px;
+  background: light-dark(rgb(255 255 255 / 60%), rgb(255 255 255 / 12%));
+  color: light-dark(#1c1917, #fff);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/*
+ * The theme switch (theme.ts): the browser's own crossfade of the whole
+ * page, slowed to read as a colour change rather than a cut. Scoped to the
+ * class theme.ts sets for the length of the switch, so the tools pages'
+ * view transitions keep their own timing.
+ */
+:root.ac-theme-switching::view-transition-group(root),
+:root.ac-theme-switching::view-transition-old(root),
+:root.ac-theme-switching::view-transition-new(root) {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*
+ * The seam: a hairline down the middle that fades at both ends and parts
+ * around the mascot, who floats on a soft glow (paper by day, brand teal at
+ * night, like the homepage's portal) above a small "or". No disc, no pills.
+ */
+/*
+ * Three layers: the door backgrounds, then the soft shadows at z 1 (this
+ * pool and the title's halo), then the doors' content at z 2, so the
+ * previews sit in front of the shadows. Only the mascot, the "or", the title
+ * and the toggle rise above the previews. The seam itself sets no z-index,
+ * so its children join those layers instead of stacking as one block.
+ */
+.ac-seam {
+  position: absolute;
+  inset: 0 auto 0 50%;
+  width: 0;
+  pointer-events: none;
+}
+
+/* A soft pool of shadow behind the mascot: ink by day, black at night. */
+.ac-seam-glow {
+  position: absolute;
+  top: 46%;
+  left: 0;
+  z-index: 1;
+  width: 320px;
+  height: 320px;
+  margin: -160px 0 0 -160px;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    light-dark(rgb(28 25 23 / 16%), rgb(0 0 0 / 62%)),
+    light-dark(rgb(28 25 23 / 6%), rgb(0 0 0 / 28%)) 55%,
+    light-dark(rgb(28 25 23 / 0%), rgb(0 0 0 / 0%))
+  );
+}
+
+.ac-seam::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -0.5px;
+  width: 1px;
+  background: light-dark(rgb(28 25 23 / 20%), rgb(255 255 255 / 18%));
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 16%,
+    #000 calc(46% - 96px),
+    transparent calc(46% - 80px),
+    transparent calc(46% + 80px),
+    #000 calc(46% + 96px),
+    #000 84%,
+    transparent 100%
+  );
+}
+
+.ac-seam-mark {
+  position: absolute;
+  top: 46%;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+/* The layer art keeps headroom for hats; the negative margins crop it. */
+.ac-seam-mascot {
+  width: clamp(128px, 8vw, 156px);
+  height: clamp(128px, 8vw, 156px);
+  margin: calc(clamp(128px, 8vw, 156px) * -0.24) 0
+    calc(clamp(128px, 8vw, 156px) * -0.04);
+  filter: drop-shadow(
+    0 12px 16px light-dark(rgb(28 25 23 / 18%), rgb(0 0 0 / 45%))
+  );
+}
+
+.ac-seam-or {
+  color: light-dark(#332d2d, #f5f5f4);
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-style: italic;
+  line-height: 1;
+  text-shadow: 0 1px 10px light-dark(rgb(244 242 238 / 85%), rgb(8 10 18 / 70%));
+}
+
+/* The footnote, quiet plain text under the seam. */
+.ac-foot {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  z-index: 3;
+  margin: 0;
+  transform: translateX(-50%);
+  color: light-dark(#57534e, rgb(245 245 244 / 70%));
+  font-size: 13px;
+  text-shadow: 0 1px 10px light-dark(rgb(244 242 238 / 85%), rgb(8 10 18 / 70%));
+  white-space: nowrap;
+}
+
+/* --lx / --ly come from trackPointer (features/show/mascot.ts). */
+.ac-mascot {
+  --lx: 0%;
+  --ly: 0%;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ac-mascot img {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+}
+
+/*
+ * A gentler gaze than the show's: the pupils ride on the sockets, so each
+ * layer takes 40% of the offset and the pupils move at most about 4% of
+ * the mascot, never into the rim.
+ */
+.ac-mascot-face,
+.ac-mascot-eyes {
+  position: absolute;
+  inset: 0;
+  translate: calc(var(--lx) * 0.4) calc(var(--ly) * 0.4);
+  transition: translate 0.5s var(--ease-snap);
+}
+
+.ac-mascot-eyes {
+  transform-origin: 50% 57%;
+  animation: ac-blink 5.4s infinite;
+}
+
+@keyframes ac-blink {
+  0%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.08);
+  }
+}
+
+@media (max-width: 767px), (pointer: coarse) and (max-height: 499px) {
+  .ac-head {
+    position: static;
+    height: auto;
+    width: auto;
+    margin-inline: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 28px 16px 24px;
+    transform: none;
+    border: 0;
+    border-radius: 0;
+    background: light-dark(#f7fbfc, #111110);
+    box-shadow: none;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .ac-theme {
+    top: 16px;
+    right: 16px;
+  }
+
+  .ac-head .ac-wordmark {
+    display: inline-flex;
+    align-self: center;
+  }
+
+  .ac-head-mascot {
+    display: block;
+    width: 76px;
+    height: 76px;
+    margin: -14px 0 -12px;
+  }
+
+  .ac-head-note {
+    display: block;
+    margin: 0;
+    color: light-dark(#5d727b, rgb(245 245 244 / 62%));
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .ac-title {
+    font-size: 32px;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+
+  .ac-doors {
+    flex-direction: column;
+  }
+
+  .ac-door {
+    flex: none;
+  }
+
+  .ac-door--dashboard {
+    order: -1;
+  }
+
+  .ac-door-inner {
+    padding: 24px 16px 32px;
+  }
+
+  .ac-account {
+    justify-content: center;
+    min-height: 0;
+    padding-right: 0;
+  }
+
+  .ac-head::before,
+  .ac-wordmark--door,
+  .ac-seam,
+  .ac-foot,
+  .ac-actions--desktop,
+  .ac-badge--last {
+    display: none;
+  }
+
+  .ac-door--desktop .ac-stage {
+    pointer-events: none;
+  }
+
+  /* Stacked, the preview is just as wide as the column. */
+  .ac-stage {
+    min-height: 0;
+    container-type: normal;
+  }
+
+  .ac-stage .acp {
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .ac-name {
+    font-size: 40px;
+  }
+
+  .ac-small-screen,
+  .ac-badge--phone {
+    display: block;
+  }
+
+  .ac-badge--phone {
+    display: inline-flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-stage .acp,
+  .ac-cta,
+  .ac-cta svg {
+    transition: none;
+  }
+
+  .ac-mascot-eyes {
+    animation: none;
+  }
+}
+
+/* Beside the centred question, the account pill keeps just the name. */
+@media (max-width: 1099px) {
+  .ac-account-label {
+    display: none;
+  }
+}

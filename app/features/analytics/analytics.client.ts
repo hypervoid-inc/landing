@@ -7,7 +7,12 @@ import {
 } from "./survey-position";
 
 type AnalyticsEvent =
+  // `source` says where; from the chooser at /app/ it also carries `shell`
+  // ("desktop" or "dashboard") and `signed_in`.
   | "app_opened"
+  // The chooser at /app/, once the sign-in check settles: `signed_in` and
+  // `last_used` (the shell this browser opened last, or null).
+  | "app_chooser_viewed"
   | "auth_dialog_opened"
   // The optional "How did you hear about us?" on the sign-in form, sent as the
   // reader signs in. `heard_about` is a fixed slug; `heard_about_detail` is

@@ -11,6 +11,7 @@ export default {
     "/account",
     "/launch",
     "/embed",
+    "/app",
     "/404",
   ],
 } satisfies Config;

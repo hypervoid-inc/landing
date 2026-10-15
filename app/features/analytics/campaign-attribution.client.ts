@@ -1,6 +1,7 @@
 import {
   ATTRIBUTION_COOKIE_NAME,
   ATTRIBUTION_MAX_AGE_SECONDS,
+  cookieDomainAttribute,
   hasCampaign,
   mergeFirstTouch,
   parseAttributionCookie,
@@ -9,20 +10,7 @@ import {
   type CampaignAttribution,
 } from "./campaign-attribution";
 
-const ROOT_DOMAIN = "construct.computer";
 const TOUCH_SESSION_KEY = "construct_campaign_touch";
-
-/**
- * `Domain=.construct.computer` is what carries attribution across the hop to
- * app.construct.computer. Preview builds run on `*.pages.dev` and dev on
- * `localhost`, where that attribute would make the browser reject the cookie
- * outright, so it is only added when we're actually on the real domain.
- */
-function cookieDomainAttribute(hostname: string): string {
-  return hostname === ROOT_DOMAIN || hostname.endsWith(`.${ROOT_DOMAIN}`)
-    ? `; Domain=.${ROOT_DOMAIN}`
-    : "";
-}
 
 export function readAttributionCookie(): CampaignAttribution | null {
   if (typeof document === "undefined") return null;

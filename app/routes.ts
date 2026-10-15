@@ -29,6 +29,9 @@ export default [
   // The live demo that X renders inside a post (app/lib/player-card.ts).
   // Prerendered, framed by x.com, and kept out of the sitemap like /launch.
   route("embed", "routes/embed.tsx"),
+  // Pick the desktop or the dashboard; emails' "open Construct" link lands
+  // here. Prerendered, no site chrome, kept out of the sitemap like /launch.
+  route("app", "routes/app.tsx"),
   // `/404` is deliberately NOT its own route. finalize-build.mjs promotes the
   // prerendered /404 output to build/client/404.html, which Cloudflare then
   // serves (with a real 404 status) at every unmatched URL. Those URLs resolve
