@@ -2,6 +2,7 @@ import {
   embedSourceSchema,
   type EmbedClaimResponse,
   type EmbedErrorCode,
+  type EmbedJob,
   type EmbedSessionResponse,
 } from "../../../shared/embed-schema";
 
@@ -56,7 +57,7 @@ export function startSession(input: {
   return post<EmbedSessionResponse>("/api/embed/session", input);
 }
 
-export function claimOffer(input: { token: string; email: string; name?: string }) {
+export function claimOffer(input: { token: string; email: string; name?: string; job?: EmbedJob }) {
   return post<EmbedClaimResponse>("/api/embed/claim", input);
 }
 

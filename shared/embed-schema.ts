@@ -42,11 +42,17 @@ export const embedSessionRequestSchema = z
 export type EmbedSessionRequest = z.infer<typeof embedSessionRequestSchema>;
 
 /** The exit offer: the session's token and the email the code goes to. */
+/** The show's five jobs, by the key the show and the claim email share. */
+export const EMBED_JOBS = ["brief", "leads", "tracker", "ask", "monday"] as const;
+export type EmbedJob = (typeof EMBED_JOBS)[number];
+
 export const embedClaimRequestSchema = z
   .object({
     token: z.string().min(16).max(512),
     email: z.string().trim().toLowerCase().email().max(254),
     name: z.string().trim().min(2).max(80).optional(),
+    /** The job the viewer handed over first in the show, to personalise the email. */
+    job: z.enum(EMBED_JOBS).optional(),
   })
   .strict();
 

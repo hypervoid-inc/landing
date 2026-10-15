@@ -31,7 +31,7 @@ export const onRequest: PagesFunction<EmbedEnv> = async ({ request, env, waitUnt
 
   const parsed = embedClaimRequestSchema.safeParse(read.body);
   if (!parsed.success) return error(400, "invalid_request");
-  const { token, email, name } = parsed.data;
+  const { token, email, name, job } = parsed.data;
 
   const secret = env.EMBED_SESSION_SECRET?.trim();
   if (!secret || !env.DB) {
@@ -85,7 +85,7 @@ export const onRequest: PagesFunction<EmbedEnv> = async ({ request, env, waitUnt
   // Only the request that actually marked the session sends the email, so a
   // double click or a retry never sends two.
   if (claimed?.success && claimed.meta?.changes !== 0) {
-    const send = sendClaimEmail(env, { to: email, firstName: name, code, src: row.src });
+    const send = sendClaimEmail(env, { to: email, firstName: name, code, src: row.src, ...(job ? { job } : {}) });
     if (waitUntil) waitUntil(send);
     else await send;
   }

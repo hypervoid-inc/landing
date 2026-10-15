@@ -1,7 +1,7 @@
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { embedSessionRequestSchema } from "../../../shared/embed-schema";
+import { embedSessionRequestSchema, type EmbedJob } from "../../../shared/embed-schema";
 import { getTurnstileSiteKey } from "../../platform/env";
 import { captureAnalytics } from "../analytics/analytics.client";
 import { BOARD_H, BOARD_W, Stopped } from "./kit";
@@ -25,7 +25,8 @@ export type ShowEnv = {
   /** Opens a session with the viewer's first name, in the background. */
   begin(name: string): void;
   /** Sends the email and returns the free month's code, or a message to show. */
-  claim(email: string, name: string): Promise<{ ok: true; code: string } | { ok: false; message: string }>;
+  /** `job` is the show's first pick, which the email is written around. */
+  claim(email: string, name: string, job?: EmbedJob): Promise<{ ok: true; code: string } | { ok: false; message: string }>;
   track(beat: string, extra?: Record<string, string | number | boolean>): void;
 };
 
@@ -112,12 +113,12 @@ export function ShowHost({
       begin: (name) => {
         if (!session) void open(name);
       },
-      claim: async (email, name) => {
+      claim: async (email, name, job) => {
         captureAnalytics("show_email_submitted", { show, src, framed });
         let token = session ? await session : null;
         if (!token) token = await open(name);
         if (!token) return { ok: false, message: ERROR_COPY[refused ?? "verification_failed"] ?? ERROR_COPY.internal_error! };
-        const result = await claimOffer({ token, email, ...(name.length >= 2 ? { name } : {}) });
+        const result = await claimOffer({ token, email, ...(name.length >= 2 ? { name } : {}), ...(job ? { job } : {}) });
         if (!result.ok) return { ok: false, message: ERROR_COPY[result.code] ?? ERROR_COPY.internal_error! };
         captureAnalytics("show_code_revealed", { show, src, framed });
         return { ok: true, code: result.code };

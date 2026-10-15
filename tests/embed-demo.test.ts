@@ -276,7 +276,7 @@ describe("POST /api/embed/claim", () => {
     const body = JSON.parse(String(init?.body));
     expect(body).toMatchObject({
       to: "ada@acme.dev",
-      from: { address: "noreply@construct.computer", name: "Construct" },
+      from: { address: "hello@construct.computer", name: "Construct" },
       reply_to: "team@construct.example",
     });
     expect(body.text).toContain("Hi Ada,");
@@ -312,11 +312,26 @@ describe("POST /api/embed/claim", () => {
 
 describe("the claim email", () => {
   it("greets by a plain first name only", () => {
-    expect(greetingName(" ada lovelace ")).toBe("ada");
+    expect(greetingName(" ada lovelace ")).toBe("Ada");
     expect(greetingName("Zoë")).toBe("Zoë");
     expect(greetingName("<b>x</b>")).toBeUndefined();
     expect(greetingName("http://evil")).toBeUndefined();
     expect(greetingName(undefined)).toBeUndefined();
+  });
+
+  it("is written around the job they picked, and stays small enough not to be clipped", () => {
+    const picked = renderClaimEmail({ to: "a@b.co", firstName: "ankush", code: "FREEMONTH", src: "home", job: "leads" }, true);
+    expect(picked.text).toContain("Hi Ankush,");
+    expect(picked.text).toContain("In the demo you handed Construct the 40 new leads to score first.");
+    expect(picked.text).toContain("- Scoring your newest leads (your pick)");
+    expect(picked.html).toContain("Your pick");
+    expect(picked.html).toContain("2261 Market Street STE 68707");
+    expect(picked.html).toContain("https://x.com/use_construct");
+    expect(picked.html).not.toMatch(/<script|<svg|\.webp/);
+    expect(new TextEncoder().encode(picked.html).length).toBeLessThan(60_000);
+    const plain = renderClaimEmail({ to: "a@b.co", code: "FREEMONTH", src: "home" }, false);
+    expect(plain.text).toContain("Your first month of Construct Pro is on us.");
+    expect(plain.text).not.toContain("your pick");
   });
 
   it("carries the code and the promo link, without dashes, and invites a reply only when one is set", () => {

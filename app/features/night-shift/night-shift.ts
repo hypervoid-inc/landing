@@ -19,6 +19,7 @@ import {
 } from "../show/kit";
 import { mascotMarkup, setFace, squash, trackPointer } from "../show/mascot";
 import { PH_DAILY_AWARD, productHuntHref } from "../product-hunt/config";
+import type { EmbedJob } from "../../../shared/embed-schema";
 import type { ShowEnv } from "../show/show-host";
 import "./night-shift.css";
 
@@ -106,7 +107,8 @@ const STOPS: Record<StopKey, Stop> = {
   monday: { key: "monday", job: 4, line: "It saves the Monday brief as a workflow, so you never ask twice." },
   memory: { key: "memory", job: -1, line: "It writes down what it learned. You can read it, fix it or make it forget." },
 };
-const ORDER: StopKey[] = ["brief", "leads", "tracker", "ask", "monday"];
+/** The jobs in list order, keyed the way the claim email knows them. */
+const ORDER: EmbedJob[] = ["brief", "leads", "tracker", "ask", "monday"];
 const TIMES: Array<[number, number]> = [
   [23, 20],
   [0, 5],
@@ -1143,7 +1145,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       busy = true;
       err.textContent = "";
       go.textContent = "Claiming";
-      const result = await env.claim(email, name);
+      const result = await env.claim(email, name, ORDER[pick]);
       busy = false;
       if (!result.ok) {
         go.textContent = "Claim my free month";
