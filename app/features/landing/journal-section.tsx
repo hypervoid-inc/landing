@@ -243,8 +243,8 @@ export function JournalSection() {
           </h2>
           <div className="journal-head-row">
             <p className="journal-lead">
-              What we are learning while building an AI employee: agents,
-              memory, and the workflows that actually finish.
+              What we are learning while building AI agents that work like
+              hires: memory, delegation, and the workflows that actually finish.
             </p>
             <Link
               to="/blog/"

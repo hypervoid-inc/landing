@@ -12,16 +12,17 @@ export function AboutPage() {
   return (
     <ContentShell
       title="About"
-      metadata="An AI employee for solo founders and small teams"
+      metadata="AI agents for startups and small teams"
     >
       <Section title="What we're building">
         <p>
-          Construct Computer gives solo founders and small teams an AI employee
-          with its own cloud computer. Persistent files, memory, schedules,
-          workflows, email, and connected apps sit beside live browser runs and
-          a sandbox terminal, so work can finish while you do something else.
-          Files saved in the workspace remain available after one conversation
-          ends; live browser runs and shell state do not.
+          Construct Computer gives startups and small teams AI agents that work
+          like hires, each set up with its own role, tools, and way of working.
+          Every agent has a persistent cloud workspace: files, memory,
+          schedules, workflows, email, and connected apps sit beside live
+          browser runs and a sandbox terminal, so work can finish while you do
+          something else. Files saved in the workspace remain available after
+          one conversation ends; live browser runs and shell state do not.
         </p>
         <p>
           You assign an outcome and Construct decides which available tools are
@@ -144,10 +145,11 @@ export function AffiliatesPage() {
 
       <Section title="What Construct is">
         <p>
-          Construct Computer is an AI employee for solo founders, early
-          startups, and small teams. It is not another chat window. Every agent
-          gets a real cloud computer: files, memory, a browser, a terminal,
-          email, a calendar, and the apps those teams already run day to day.
+          Construct Computer builds AI agents for solo founders, early startups,
+          and small teams: research, outreach, ops and reporting. They are not
+          another chat window, because every agent gets a real cloud computer
+          with files, memory, a browser, a terminal, email, a calendar, and the
+          apps those teams already run day to day.
         </p>
         <p>
           People use it when hours are the constraint. They assign an outcome,

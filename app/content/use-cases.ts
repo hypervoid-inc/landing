@@ -214,10 +214,10 @@ export const useCases = [
   {
     slug: "team-workspaces",
     navLabel: "Team workspaces",
-    title: "One AI employee is not a team product until the team can share it",
-    seoTitle: "Shared Workspaces for Teams and AI Employees | Construct",
+    title: "AI agents are not a team product until the team can share them",
+    seoTitle: "Shared Workspaces for Teams and AI Agents | Construct",
     description:
-      "Bring people, your AI employee, files, apps, and shared conversations into one workspace, with invitations, roles, and access controls that match how the company actually works.",
+      "Bring people, your AI agents, files, apps, and shared conversations into one workspace, with invitations, roles, and access controls that match how the company actually works.",
     lede: "A personal agent is a power tool. A company agent is infrastructure. The difference is not a better model: it is whether files, conversations, and permissions live in one place that more than one person can enter without forwarding a login.",
     ...demoMedia("team-workspaces"),
     problems: [
@@ -237,7 +237,7 @@ export const useCases = [
     features: [
       {
         title: "Invite people into the same computer",
-        body: "A workspace holds the AI employee, files, apps, and conversations together. Teammates join with roles instead of borrowing a password.",
+        body: "A workspace holds your agents, files, apps, and conversations together. Teammates join with roles instead of borrowing a password.",
       },
       {
         title: "Shared work, scoped access",
@@ -254,8 +254,8 @@ export const useCases = [
     ],
     why: [
       {
-        title: "An AI employee has to outlive one user",
-        body: "If the only way to use Construct is a personal account, it will never be how the company runs. Shared workspaces are what make the agent a teammate.",
+        title: "Your agents have to outlive one user",
+        body: "If the only way to use Construct is a personal account, it will never be how the company runs. Shared workspaces are what make the agents part of the team.",
       },
       {
         title: "Chat assistants do not become this by adding seats",
@@ -321,7 +321,7 @@ export const useCases = [
       },
       {
         title: "This is not a chatbot with a longer thread",
-        body: "An AI employee that cannot remember your stack, your voice, and your constraints will redo the briefing every morning. Memory is how the job compounds.",
+        body: "An agent that cannot remember your stack, your voice, and your constraints will redo the briefing every morning. Memory is how the job compounds.",
       },
     ],
     relatedSlugs: ["ai-agent-memory", "what-is-an-ai-employee"],
@@ -331,10 +331,10 @@ export const useCases = [
     slug: "channels",
     navLabel: "Channels",
     title: "The work is not waiting in a browser tab",
-    seoTitle: "AI Employee Across Slack, Email, and Chat | Construct",
+    seoTitle: "AI Agents Across Slack, Email, and Chat | Construct",
     description:
       "Message Construct from the web, Slack, Telegram, Discord slash commands, or its native email inbox. Routing and access policies vary by channel so the same agent does not become a leak.",
-    lede: "Founders do not live in one product. They live in Slack, email, and whatever tab is already open. An AI employee that only exists on a marketing-site 'Open OS' button will be skipped the moment the real conversation is happening somewhere else. Construct meets the thread where it started, with access that still respects the workspace.",
+    lede: "Founders do not live in one product. They live in Slack, email, and whatever tab is already open. An agent that only exists behind a marketing-site 'Open OS' button will be skipped the moment the real conversation is happening somewhere else. Construct meets the thread where it started, with access that still respects the workspace.",
     ...demoMedia("channels"),
     problems: [
       {

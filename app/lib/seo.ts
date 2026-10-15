@@ -84,7 +84,7 @@ export function organizationJsonLd(): JsonLd {
     name: "Construct Computer",
     alternateName: ["Construct", "Construct AI"],
     description:
-      "Construct Computer builds an AI employee for startups, small businesses, and solo founders: a cloud computer with memory, connected tools, and work that finishes while you are away.",
+      "Construct Computer builds AI agents for startups and small teams: research, outreach, ops and reporting. Each agent works like a hire, with its own role, tools, memory, and a persistent cloud workspace.",
     url: siteUrl,
     logo: {
       "@type": "ImageObject",
@@ -354,7 +354,9 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
     { name: "twitter:title", content: displayTitle(route) },
     { name: "twitter:description", content: route.description },
     // A player card brings its own image (player-card.ts).
-    ...(route.kind === "home" ? [] : [{ name: "twitter:image", content: route.image }]),
+    ...(route.kind === "home"
+      ? []
+      : [{ name: "twitter:image", content: route.image }]),
     { "script:ld+json": routeJsonLd(route) as never },
   ];
 }
@@ -376,7 +378,7 @@ export const notFoundMeta: MetaDescriptor[] = [
   {
     property: "og:description",
     content:
-      "Give Construct's AI employee your work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.",
+      "Hand your Construct agents the work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.",
   },
   { property: "og:image", content: `${siteUrl}/og/home.jpg?v=3` },
   ...playerCardMeta("link"),
@@ -385,6 +387,6 @@ export const notFoundMeta: MetaDescriptor[] = [
   {
     name: "twitter:description",
     content:
-      "Give Construct's AI employee your work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.",
+      "Hand your Construct agents the work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.",
   },
 ];

@@ -258,8 +258,9 @@ export function UseCaseIndexPage() {
           Use Cases
         </h1>
         <p className="mt-4 max-w-2xl text-[17px] leading-7 text-[#627c86]">
-          Construct is an AI employee with its own computer. These are the jobs
-          teams actually hand it, not industry verticals, the work.
+          Construct gives you a team of AI agents that work like hires. These
+          are the jobs teams actually hand them: not industry verticals, the
+          work itself.
         </p>
         <ul className="mt-12 grid list-none gap-6 p-0 sm:grid-cols-2">
           {useCases.map((entry) => (

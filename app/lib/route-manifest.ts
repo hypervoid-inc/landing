@@ -168,16 +168,16 @@ function buildRoutes(
   return [
     route({
       path: "/",
-      title: "AI Employee for Solo Founders and Small Teams | Construct",
+      title: "AI Agents for Startups and Small Teams | Construct Computer",
       description:
-        "AI employee for startups, small businesses, and solo founders. Own cloud computer, your tools connected, work that finishes while you are away. From $9/month.",
+        "AI agents for startups and small teams: research, outreach, ops and reporting. Get more work done than your headcount allows. From $9/month.",
       kind: "home",
       lastModified: siteRevised,
       imageVersion: "3",
     }),
     route({
       path: "/pricing",
-      title: "Simple Pricing for an AI Employee | Construct",
+      title: "Simple Pricing for AI Agents | Construct",
       displayTitle: "Simple Pricing",
       description:
         "Plans for solo founders and small teams. Lite, Starter, and Pro from $9/month, with a 7-day Pro trial, annual savings, and enterprise options.",
@@ -186,7 +186,7 @@ function buildRoutes(
     }),
     route({
       path: "/use-cases",
-      title: "Use Cases for an AI Employee | Construct",
+      title: "AI Agent Use Cases for Small Teams | Construct",
       displayTitle: "Use Cases",
       description:
         "How Construct encodes workflows, builds internal tools, schedules jobs, shares a team workspace, inspects memory, works across channels, and delivers cited research.",
@@ -229,7 +229,7 @@ function buildRoutes(
       path: "/about",
       title: "About - Construct Computer",
       description:
-        "Construct builds an AI employee for solo founders and small teams: own cloud computer, memory, schedules, workflows, browser and terminal tools, and connected apps.",
+        "Construct Computer builds AI agents for startups and small teams, each with its own workspace, memory, schedules, workflows, browser and terminal tools, and connected apps.",
       kind: "page",
       lastModified: siteRevised,
     }),

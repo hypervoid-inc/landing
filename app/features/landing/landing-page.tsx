@@ -58,13 +58,12 @@ function HeroHeadline() {
         data-reveal-delay="1"
       >
         <span className="hero-headline-line">
-          <span>An </span>
-          <span className="text-[#01b4c8]">AI Employee</span>
-          <span> You</span>
+          <span className="text-[#01b4c8]">AI Employees</span>
+          <span> That</span>
         </span>
         <span className="hero-headline-line">
-          <span>Can Actually </span>
-          <span className="text-[#01b4c8]">Work With</span>
+          <span>Work Like </span>
+          <span className="text-[#01b4c8]">Hires</span>
         </span>
       </div>
       <ProductHuntProof
@@ -82,13 +81,14 @@ function HeroHeadline() {
         data-reveal-delay="2"
       >
         <span className="xl:hidden">
-          Your constraint is hours, not ideas. Construct gives an AI employee a
-          real computer so the work finishes while you do something else.
+          Your constraint is hours, not ideas. Construct gives you AI agents
+          that work like hires, so the work finishes while you do something
+          else.
         </span>
         <span className="hidden xl:inline">
-          Your constraint is hours, not ideas. Construct gives an AI employee a
-          real computer so research, inbox, and follow-ups finish while you do
-          something else.
+          Your constraint is hours, not ideas. Construct gives you AI agents
+          that work like hires, so research, inbox, and follow-ups finish while
+          you do something else.
         </span>
       </p> */}
       <div
@@ -159,8 +159,7 @@ function WorkflowChip({
   const state = chipState(stage, index);
   // Idle chips read as finished work, as in the original art; once a task is
   // sent, the steps still to come say what they will do.
-  const shown =
-    state === "idle" || state === "done" ? step.done : step.running;
+  const shown = state === "idle" || state === "done" ? step.done : step.running;
   return (
     <StartLink
       source="hero-workflow"
@@ -230,7 +229,7 @@ function Hero() {
       className="hero-section page-rail relative mx-auto w-full overflow-hidden px-5 sm:px-6 lg:px-16"
     >
       <h1 id="landing-title" className="sr-only">
-        An AI employee you can actually work with
+        AI employees that work like hires
       </h1>
       <div className="hero-stage relative isolate mx-auto w-full">
         <div className="hero-copy relative z-30">
@@ -391,10 +390,10 @@ function WhatConstructIs() {
           not ideas, and Construct closes that gap.
         </p>
         <p>
-          You get one AI employee with its own cloud desktop: files, memory, a
-          browser, a terminal, email, a calendar, and your connected apps.
-          Assign the outcome and it finishes the work while you do something
-          else, in a workspace you can inspect and steer.
+          You get a team of AI agents, each with a persistent cloud workspace:
+          files, memory, a browser, a terminal, email, a calendar, and your
+          connected apps. Assign the outcome and they finish the work while you
+          do something else, in a workspace you can inspect and steer.
         </p>
       </div> */}
     </section>
@@ -567,9 +566,7 @@ function ClosingCta() {
       <div className="closing-cta-inner reveal-item" data-reveal-delay="1">
         <h2 id="closing-heading" className="closing-cta-title">
           Hire your first{" "}
-          <span className="font-display italic text-[#01b4c8]">
-            AI employee
-          </span>{" "}
+          <span className="font-display italic text-[#01b4c8]">AI agent</span>{" "}
           {part === null || part === "night" ? "tonight" : `this ${part}`}
         </h2>
         <p className="closing-cta-lead">

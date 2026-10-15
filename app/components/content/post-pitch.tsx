@@ -10,7 +10,7 @@ import { mdxComponents } from "./mdx-components";
  * products is deciding, so every comparison opens on one, written or not.
  */
 export const COMPARISON_PITCH =
-  "Construct gives each AI employee its own cloud computer, with a browser, a terminal, files, and memory, so the work carries on after you close your laptop.";
+  "Construct gives each of your AI agents a cloud computer with a browser, a terminal, files, and memory, so the work carries on after you close your laptop.";
 
 const entryPrice = pricingPlans[0].price;
 

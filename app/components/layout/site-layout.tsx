@@ -260,7 +260,7 @@ export function SiteFooter() {
                 <span className="text-[#01b4c8]">Computer</span>
               </Link>
               <p className="max-w-[280px] text-[13px] leading-[1.55] text-[#627c86] sm:max-w-xs sm:text-sm sm:leading-[1.6]">
-                AI employee for founders and small teams.
+                AI agents for startups and small teams.
               </p>
               <div className="flex items-center gap-2.5 sm:gap-3">
                 <SocialLink

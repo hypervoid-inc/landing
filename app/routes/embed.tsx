@@ -6,11 +6,17 @@ import { siteUrl } from "../lib/route-manifest";
 
 const TITLE = "Night Shift, a playable short";
 const DESCRIPTION =
-  "Give Construct's AI employee your work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.";
+  "Hand your Construct agents the work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.";
 const IMAGE = `${siteUrl}/og/home.jpg?v=3`;
 
 export const links: LinksFunction = () => [
-  { rel: "preload", href: "/assets/show/fonts/sora-latin-wght-normal.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+  {
+    rel: "preload",
+    href: "/assets/show/fonts/sora-latin-wght-normal.woff2",
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  },
   { rel: "preload", href: "/assets/show/sky-day.webp", as: "image" },
   { rel: "preload", href: "/assets/show/crt.webp", as: "image" },
 ];

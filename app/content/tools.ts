@@ -156,7 +156,7 @@ export const tools: readonly ToolEntry[] = [
     title: "Zapier cost calculator",
     lede: "This free Zapier cost calculator works out your monthly bill from the Zaps you run. Add each Zap's action steps and how often it runs, and it counts tasks the way Zapier bills them, then finds your cheapest plan, including when a smaller plan plus pay-per-task costs less than the next tier up.",
     ctaPitch:
-      "Zapier bills every action step, so the cost climbs with every run. Construct is an AI employee on a fixed monthly plan instead of a per-task bill, and it handles the steps that need reading and judgment, not only moving data between apps.",
+      "Zapier bills every action step, so the cost climbs with every run. Construct's AI agents run on a fixed monthly plan instead of a per-task bill, and they handle the steps that need reading and judgment, not only moving data between apps.",
     ctaLabel: "Try Construct for $9",
     category: "Automation",
     outputs: ["Monthly tasks", "Cheapest plan", "Cost per task"],

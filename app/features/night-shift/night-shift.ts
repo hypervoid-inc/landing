@@ -154,7 +154,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       <h1 class="ns-title ptype"></h1>
       <div class="ns-pips" hidden>${"<i></i>".repeat(5)}</div>
       <div class="ns-pile"></div>
-      <div class="ns-spec">Runs on ....... its own computer\nRemembers ..... what it learned\nWorks ......... while you don't</div>
+      <div class="ns-spec">Runs on ....... a cloud computer\nRemembers ..... what it learned\nWorks ......... while you don't</div>
       <div class="ns-caption" hidden aria-live="polite"><div class="ns-cap-time"></div><div class="ns-cap-line"></div></div>
       <a class="ns-badge" href="${esc(productHuntHref("x-show", "daily"))}" target="_blank" rel="noopener" tabindex="-1" aria-label="${esc(PH_DAILY_AWARD)} on Product Hunt">${PH_MARK}<span><small>Product Hunt</small><b>${esc(PH_DAILY_AWARD)}</b></span></a>
       <div class="ns-url">construct.computer</div>
@@ -751,7 +751,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
 
   const run = async () => {
     await document.fonts.load('800 100px "Show Sora"').catch(() => undefined);
-    setTitle(["AI EMPLOYEE"], TITLE_W_DAY);
+    setTitle(["NIGHT SHIFT"], TITLE_W_DAY);
     await untilTap([start], signal);
     env.sound.play("wake");
     // The other skies load once the viewer is in, so the first frame stays light.
@@ -1193,7 +1193,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       const stamp = el("div", "pass-stamp", "CLAIMED");
       card.querySelector(".pass-top")!.appendChild(stamp);
       stamp.animate([{ transform: "scale(2.6)", opacity: 0 }, { transform: "scale(1)", opacity: 1 }], { duration: 420, easing: EASE_SPRING });
-      const share = encodeURIComponent("My AI employee worked the night shift while I slept, then asked me one question at 7. construct.computer");
+      const share = encodeURIComponent("My AI agents worked the night shift while I slept, then asked me one question at 7. construct.computer");
       const stub = card.querySelector<HTMLElement>(".pass-stub")!;
       stub.innerHTML = `<div class="pass-sent">Sent to ${esc(email)}. Your code:</div>
         <div class="pass-code">${esc(result.code)}</div>

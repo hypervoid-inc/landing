@@ -211,7 +211,7 @@ export const workflowDemos = [
     title: "One Workspace",
     accent: "For The Whole Team",
     description:
-      "Bring people, your AI employee, files, apps, and shared conversations together, with invitations, roles, and precise access controls.",
+      "Bring people, your AI agents, files, apps, and shared conversations together, with invitations, roles, and precise access controls.",
     cta: "Explore Workspaces",
     mutedAction: "See Shared Work in Action",
     video: "/assets/landing/workflows/workspace.mp4",

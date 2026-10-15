@@ -187,7 +187,8 @@ function ResourceRail({
       )}
       <div className="rounded-xl border border-[#b6ecfb] bg-[#f2fcfe] p-4 text-center">
         <p className="text-[13px] leading-5 text-[#016d79]">
-          An AI employee with its own computer, memory, and tools.
+          AI agents that work like hires, with their own workspace, memory, and
+          tools.
         </p>
         <BetaCta source="blog_rail" className="mt-3">
           Try Construct

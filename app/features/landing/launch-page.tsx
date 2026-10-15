@@ -82,7 +82,7 @@ const HERO_SCENES = [
     corner: "bottom-left",
     overlay: {
       src: "/assets/landing/hero/research-report.webp",
-      alt: "Handing tonight's list to your Construct AI employee by email",
+      alt: "Handing tonight's list to your Construct agents by email",
       width: 640,
       height: 355,
       size: "20rem",
@@ -420,23 +420,24 @@ export function LaunchPage() {
                 Product Hunt offer
               </p>
               <h1
-                className="reveal-item mt-4 max-w-xl font-display text-4xl italic leading-[1.05] tracking-[-0.02em] text-[var(--color-ink)] sm:text-5xl lg:text-[3.5rem]"
+                className="reveal-item mt-4 max-w-xl font-display text-4xl italic leading-[1.05] tracking-[-0.02em] text-[var(--color-ink)] sm:text-5xl lg:text-[3.5rem] text-balance"
                 data-reveal="mount"
                 data-reveal-delay="1"
               >
                 You close the laptop at 11. Your{" "}
-                <span className="text-[var(--color-brand)]">AI employee</span>{" "}
-                is on shift.
+                <span className="text-[var(--color-brand)]">agents</span> are on
+                shift.
               </h1>
               <p
                 className="reveal-item mt-5 max-w-xl text-lg leading-relaxed text-[var(--color-ink-muted)]"
                 data-reveal="mount"
                 data-reveal-delay="2"
               >
-                Your constraint was never ideas. It was hours. Construct is an
-                AI employee with its own computer: hand it the list before bed,
-                it works through the night, and you can open the screen any time
-                to watch it or take the mouse back.
+                Your constraint was never ideas, it was hours. Construct gives
+                you a team of AI agents that work like hires: hand them
+                tonight's list before bed, they work through it overnight, and
+                you can open their workspace any time to see the work or step
+                in.
               </p>
               <p
                 className="reveal-item mt-4 max-w-xl text-sm leading-relaxed text-[var(--color-ink-subtle)]"
@@ -682,7 +683,7 @@ export function LaunchPage() {
                 id="launch-close"
                 className="font-display text-2xl italic tracking-[-0.02em] text-[var(--color-ink)] sm:text-3xl"
               >
-                Hire your first AI employee tonight
+                Hire your first AI agent tonight
               </h2>
               <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--color-ink-muted)]">
                 {trialLabel} trial on Pro, then plans from {entryPrice}/month.

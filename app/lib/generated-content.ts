@@ -124,7 +124,7 @@ function atomXml(): string {
 }
 
 const summary =
-  "Construct Computer is an AI employee for startups, small businesses, and solo founders. It gets its own cloud computer, your tools connected, and a workspace where work finishes while you are away.";
+  "Construct Computer (construct.computer) builds AI agents for startups and small teams: research, outreach, ops and reporting. Each agent works like a hire, with its own role, tools, and a persistent cloud workspace, so work finishes while you are away.";
 
 const capabilities = [
   "Persistent files, inspectable memory, native email, schedules, and linear workflows",
