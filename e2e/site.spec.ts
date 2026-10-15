@@ -345,11 +345,12 @@ test("toggles pricing between monthly and annual rates", async ({ page }) => {
   );
 });
 
-test("applies live catalog recommended plan and trial highlight", async ({
+test("recommends the plan that fits the team, one card at a time", async ({
   page,
 }) => {
   await stubPlanCatalog(page, {
     ...HOMEPAGE_CATALOG,
+    // The catalog's own pick no longer marks a card; the team sizer does.
     recommendedPlan: "pro",
     plans: HOMEPAGE_CATALOG.plans.map((plan) =>
       plan.id === "pro"
@@ -372,12 +373,30 @@ test("applies live catalog recommended plan and trial highlight", async ({
   await page.locator("#pricing").scrollIntoViewIfNeeded();
 
   const cards = page.locator(".pricing-card");
-  await expect(cards.nth(2).locator(".pricing-badge")).toHaveText(
+  const lit = page.locator(".pricing-card[data-recommended]");
+  const badges = page.locator("#pricing .pricing-badge");
+
+  // The sizer starts on a team of three, which fits Starter: one card lit.
+  await expect(cards.nth(1)).toHaveAttribute("data-recommended", "");
+  await expect(cards.nth(1).locator(".pricing-badge")).toHaveText(
     "Recommended",
   );
+  await expect(lit).toHaveCount(1);
+  await expect(badges).toHaveCount(1);
+
+  // The recommendation follows the slider, still one card at a time.
+  const sizer = page.getByRole("slider", {
+    name: "How many people are on your team",
+  });
+  await sizer.press("End");
   await expect(cards.nth(2)).toHaveAttribute("data-recommended", "");
-  await expect(cards.nth(1).locator(".pricing-badge")).toHaveCount(0);
-  await expect(cards.nth(1)).not.toHaveAttribute("data-recommended");
+  await expect(lit).toHaveCount(1);
+  await expect(badges).toHaveCount(1);
+  await sizer.press("Home");
+  await expect(cards.nth(0)).toHaveAttribute("data-recommended", "");
+  await expect(lit).toHaveCount(1);
+  await expect(badges).toHaveCount(1);
+
   await expect(cards.nth(2)).toContainText("7-day trial");
   await expect(cards.nth(0)).not.toContainText("7-day trial");
   await expect(page.locator("#pricing")).toContainText(
@@ -393,9 +412,7 @@ test("returns a real 404 for unknown URLs", async ({ request }) => {
   expect(await response.text()).toContain("Page not found");
 });
 
-test("submits the footer newsletter through Turnstile", async ({
-  page,
-}) => {
+test("submits the footer newsletter through Turnstile", async ({ page }) => {
   await page.goto("/");
   const footer = page.locator("footer");
   await footer.scrollIntoViewIfNeeded();

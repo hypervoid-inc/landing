@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type CSSProperties,
-} from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 
 import type { BillingPeriod } from "~/content/landing";
 import { captureAnalytics } from "../analytics/analytics.client";
@@ -37,6 +31,11 @@ function preloadLooks() {
 const MIN_PEOPLE = 1;
 /** Pro's agent limit; past it a team talks to us about Enterprise. */
 const MAX_PEOPLE = 15;
+/**
+ * The team the slider starts on, and so the plan the cards recommend before
+ * anyone touches it (three people fit Starter).
+ */
+export const STARTING_TEAM = STARTING_LOOKS.length;
 
 /**
  * The plan for a team, assuming one agent each. Construct has no per-seat
@@ -54,8 +53,8 @@ export function planForTeam<T extends { agents: number }>(
 /**
  * "Team of N": a one-line strip under the pricing toggle. Drag it and the
  * crowd of mascots grows; the price only moves when the team needs a plan
- * with more agents, never per person. The plan it shows is lit up in the
- * cards below (`onSuggest`).
+ * with more agents, never per person. The plan it shows is the one the cards
+ * below recommend, from the first render on (`onSuggest`).
  */
 export function TeamSizer({
   plans,
@@ -67,7 +66,7 @@ export function TeamSizer({
   onSuggest: (planId: string | null) => void;
 }) {
   const id = useId();
-  const [people, setPeople] = useState(STARTING_LOOKS.length);
+  const [people, setPeople] = useState(STARTING_TEAM);
   // Every teammate who joins gets a fresh random look; the first three are
   // fixed so the prerendered page and the browser agree. `seen` loads a
   // seat's look only once someone has sat there, and keeps it while they go.
@@ -77,8 +76,7 @@ export function TeamSizer({
       (_, index) => STARTING_LOOKS[index % STARTING_LOOKS.length]!,
     ),
   );
-  const [seen, setSeen] = useState(STARTING_LOOKS.length);
-  const [touched, setTouched] = useState(false);
+  const [seen, setSeen] = useState(STARTING_TEAM);
   const reported = useRef(false);
 
   const plan = planForTeam(plans, people);
@@ -88,8 +86,8 @@ export function TeamSizer({
   );
 
   useEffect(() => {
-    onSuggest(touched ? planId : null);
-  }, [touched, planId, onSuggest]);
+    onSuggest(planId);
+  }, [planId, onSuggest]);
 
   const change = (value: number) => {
     if (value > people) {
@@ -103,7 +101,6 @@ export function TeamSizer({
     }
     setSeen((count) => Math.max(count, value));
     setPeople(value);
-    setTouched(true);
     if (!reported.current) {
       reported.current = true;
       captureAnalytics("team_sizer_used", {});

@@ -35,7 +35,7 @@ import {
 import { usePlanCatalog } from "./use-plan-catalog";
 import { usePriceTicker } from "./price-ticker";
 import { FaqDemo } from "./faq-demos";
-import { TeamSizer } from "./team-sizer";
+import { planForTeam, STARTING_TEAM, TeamSizer } from "./team-sizer";
 import { trackToy } from "./track-toy";
 
 function PricingCta({
@@ -243,14 +243,17 @@ function PricingCard({
   period,
   revealDelay = 1,
   titleLevel: Title = "h3",
-  suggested = false,
+  recommended = false,
 }: {
   plan: PricingPlanView;
   period: BillingPeriod;
   revealDelay?: number;
   titleLevel?: "h2" | "h3";
-  /** Lit up by the team sizer as the plan that fits the team. */
-  suggested?: boolean;
+  /**
+   * The plan that fits the team on the sizer. Exactly one card is, and it
+   * alone carries the badge, the ring and the filled button.
+   */
+  recommended?: boolean;
 }) {
   const targetPrice =
     period === "annual" ? plan.annualMonthlyPrice : plan.price;
@@ -282,22 +285,18 @@ function PricingCard({
 
   return (
     <article
-      className={`pricing-card reveal-item relative isolate w-full overflow-hidden rounded-[26px] bg-white shadow-[0_18px_48px_rgba(57,148,154,.08)]${plan.badge ? "" : " xl:shadow-none"}`}
+      className={`pricing-card reveal-item relative isolate w-full overflow-hidden rounded-[26px] bg-white shadow-[0_18px_48px_rgba(57,148,154,.08)]${recommended ? "" : " xl:shadow-none"}`}
       data-plan={plan.id}
-      data-recommended={plan.badge ? "" : undefined}
-      data-suggested={suggested ? "" : undefined}
+      data-recommended={recommended ? "" : undefined}
       data-reveal-delay={String(revealDelay)}
     >
-      {suggested ? (
-        <span className="pricing-suggested-tag">Fits your team</span>
-      ) : null}
       <div
         aria-hidden
         className="pricing-border pointer-events-none absolute inset-0 z-20 rounded-[26px] border border-[#35949a]/50"
       />
-      {plan.badge ? (
+      {recommended ? (
         <span className="pricing-badge z-30 inline-flex items-center rounded-full bg-[#01b4c8] px-2.5 py-1 text-[8px] font-black uppercase tracking-[.12em] text-white sm:text-[9px]">
-          {plan.badge}
+          Recommended
         </span>
       ) : null}
       <div className="pricing-visual relative z-0 overflow-hidden">
@@ -521,12 +520,17 @@ export function PricingSection({
   const Heading = headingLevel;
   const cardHeading = headingLevel === "h1" ? "h2" : "h3";
   const [period, setPeriod] = useState<BillingPeriod>("annual");
-  const [suggestedPlan, setSuggestedPlan] = useState<string | null>(null);
+  const [teamPlan, setTeamPlan] = useState<string | null>(null);
   const catalog = usePlanCatalog();
   const plans = useMemo(
     () => mergePricingPlans(catalog.plans, catalog.recommendedPlan),
     [catalog.plans, catalog.recommendedPlan],
   );
+  // The sizer decides the one recommended card. Until it reports (and in the
+  // prerendered HTML) that is the plan for its starting team, Starter, so the
+  // page never opens with a different card lit, or two.
+  const recommendedPlan =
+    teamPlan ?? planForTeam(plans, STARTING_TEAM)?.id ?? null;
   const floor = pricingFloorLabel(plans) ?? "$9";
   const toggleMonths = maxAnnualMonthsFree(plans);
   const annualSavingsLabel =
@@ -569,7 +573,7 @@ export function PricingSection({
             />
           </div>
         </div>
-        <TeamSizer plans={plans} period={period} onSuggest={setSuggestedPlan} />
+        <TeamSizer plans={plans} period={period} onSuggest={setTeamPlan} />
         <div className="pricing-grid relative z-10 mx-auto mt-8 grid w-full max-w-[430px] grid-cols-1 gap-5 xl:mt-[100px] xl:max-w-none xl:grid-cols-3 xl:gap-7">
           {plans.map((plan, index) => (
             <PricingCard
@@ -578,7 +582,7 @@ export function PricingSection({
               period={period}
               revealDelay={Math.min(index, 3) + 1}
               titleLevel={cardHeading}
-              suggested={suggestedPlan === plan.id}
+              recommended={recommendedPlan === plan.id}
             />
           ))}
         </div>
