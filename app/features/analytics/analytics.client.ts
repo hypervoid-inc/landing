@@ -49,6 +49,12 @@ type AnalyticsEvent =
   | "cta_clicked"
   | "walkthrough_clicked"
   | "promo_code_copied"
+  // The welcome a `?promo=` link opens (promo-welcome.tsx). `code` is the
+  // campaign code, never anything about the visitor.
+  | "promo_welcome_shown"
+  | "promo_welcome_copied"
+  | "promo_welcome_claimed"
+  | "promo_welcome_dismissed"
   | "product_hunt_proof_clicked"
   // `checkout_started` intentionally shares its name with the event in apps/web
   // so both surfaces form one funnel; they are separated by `source`. The `plan`

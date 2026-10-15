@@ -27,6 +27,7 @@ Configure these production values:
 | `POSTHOG_HOST`                | Runtime variable, optional; default `https://x.construct.computer` |
 | `TURNSTILE_SECRET_KEY`        | Encrypted Pages secret                                  |
 | `EMBED_SESSION_SECRET`        | Encrypted Pages secret; signs the show's session tokens and keys its hashes (`functions/api/embed/`) |
+| `EMAIL_API_TOKEN`             | Encrypted Pages secret; a Cloudflare API token with Email Sending send rights, used for the show's claim email (`functions/claim-email.ts`) |
 | `TURNSTILE_EXPECTED_HOSTNAME` | Runtime variable, `construct.computer`                  |
 | `TURNSTILE_EXPECTED_ACTION`   | Runtime variable, `beta_signup`                         |
 | `TURNSTILE_TEST_MODE`         | Runtime variable, `false`                               |
@@ -36,7 +37,7 @@ Configure these production values:
 
 Never use Cloudflare's dummy Turnstile keys in production.
 
-The show in an X post (`functions/api/embed/`) needs the `embed_sessions` table: run `pnpm wrangler d1 migrations apply DB --remote` before the first deploy that carries it. `EMBED_DAILY_SESSION_CAP` and `EMBED_PROMO_CODE` are plain variables in `wrangler.jsonc`; lower the cap there to close the demo for a day without touching code, and create the promo code as a 100% off first-month coupon on the Pro plan in Dodo before the demo goes live.
+The show in an X post (`functions/api/embed/`) needs the `embed_sessions` table: run `pnpm wrangler d1 migrations apply DB --remote` before the first deploy that carries it. `EMBED_DAILY_SESSION_CAP` and `EMBED_PROMO_CODE` are plain variables in `wrangler.jsonc`; lower the cap there to close the demo for a day without touching code, and create the promo code as a 100% off first-month coupon on the Pro plan in Dodo before the demo goes live. A claim also emails the code through Cloudflare Email Service's REST API (Pages Functions can't hold a `send_email` binding), from `EMBED_EMAIL_FROM` on the already onboarded construct.computer sending domain, with `CLOUDFLARE_ACCOUNT_ID` in `wrangler.jsonc` and the `EMAIL_API_TOKEN` secret; without the token the claim still hands out the code and logs that the email was skipped. A `?promo=CODE` link (the email's button, the show's "Start tonight") opens a welcome on the site and keeps the code for checkout (`app/features/landing/promo-welcome.tsx`).
 
 ## Cloudflare Security
 

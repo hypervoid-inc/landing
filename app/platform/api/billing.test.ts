@@ -26,4 +26,10 @@ describe("checkoutPromoCode", () => {
     // A future unrestricted campaign code should still reach Dodo.
     expect(checkoutPromoCode("SAVE10", "lite", "month")).toBe("SAVE10");
   });
+
+  it("keeps FIRSTMONTH to Pro monthly, the one product its coupon covers", () => {
+    expect(checkoutPromoCode("FIRSTMONTH", "pro", "month")).toBe("FIRSTMONTH");
+    expect(checkoutPromoCode("FIRSTMONTH", "pro", "year")).toBeUndefined();
+    expect(checkoutPromoCode("FIRSTMONTH", "lite", "month")).toBeUndefined();
+  });
 });

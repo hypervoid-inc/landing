@@ -90,7 +90,11 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/</loc>
-    <lastmod>2026-10-14</lastmod>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://construct.computer/blog/agent-reliability-calculator/</loc>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/always-on-ai-agents-compared/</loc>
@@ -226,11 +230,11 @@
   </url>
   <url>
     <loc>https://construct.computer/authors/</loc>
-    <lastmod>2026-10-14</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/authors/ankush/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/authors/nischal/</loc>
@@ -242,7 +246,7 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/ai-agent/</loc>
-    <lastmod>2026-10-14</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/ai-employee/</loc>
@@ -265,6 +269,10 @@
     <lastmod>2026-10-12</lastmod>
   </url>
   <url>
+    <loc>https://construct.computer/blog/tag/engineering/</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
     <loc>https://construct.computer/blog/tag/google-workspace/</loc>
     <lastmod>2026-10-12</lastmod>
   </url>
@@ -278,7 +286,7 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/reliability/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/small-business/</loc>
@@ -286,7 +294,7 @@
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/workflow-automation/</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://construct.computer/blog/tag/zapier/</loc>

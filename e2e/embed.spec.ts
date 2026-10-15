@@ -44,3 +44,17 @@ test("the old show routes are gone", async ({ request }) => {
     expect((await request.get(path)).status()).toBe(404);
   }
 });
+
+test("a promo link welcomes the visitor once and keeps the code for checkout", async ({ page, context }) => {
+  await page.goto("/?promo=firstmonth&utm_source=x&utm_medium=player&utm_campaign=e2e");
+  const dialog = page.getByRole("dialog", { name: /Your free month is ready/ });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByText("FIRSTMONTH")).toBeVisible();
+  const cookie = (await context.cookies()).find((c) => c.name === "construct_attr");
+  expect(decodeURIComponent(cookie?.value ?? "")).toContain("FIRSTMONTH");
+
+  await dialog.getByRole("button", { name: "Look around first" }).click();
+  await expect(dialog).toBeHidden();
+  await page.reload();
+  await expect(page.getByRole("dialog", { name: /Your free month is ready/ })).toBeHidden();
+});

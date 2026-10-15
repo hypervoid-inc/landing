@@ -13,6 +13,7 @@ import { SmoothScroll } from "./components/layout/smooth-scroll";
 import { Analytics } from "./features/analytics/analytics";
 import { AuthProvider } from "./features/auth/auth-provider";
 import { BetaAccessProvider } from "./features/landing/beta-access";
+import { PromoWelcome } from "./features/landing/promo-welcome";
 import { ClippyCta } from "./features/landing/clippy-cta";
 import { AwayTab } from "./components/layout/away-tab";
 import { WebMcpTools } from "./features/tools/webmcp";
@@ -95,6 +96,7 @@ export default function App() {
       <BetaAccessProvider>
         <SmoothScroll />
         <Outlet />
+        <PromoWelcome />
         <ClippyCta />
         <AwayTab />
         <WebMcpTools />

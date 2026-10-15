@@ -3,7 +3,20 @@
   <title>Construct Computer Blog</title>
   <id>https://construct.computer/blog/</id>
   <link href="https://construct.computer/atom.xml" rel="self"/>
-  <updated>2026-10-14T00:00:00Z</updated>
+  <updated>2026-10-15T00:00:00Z</updated>
+  <entry>
+    <title>Agent reliability calculator: how many steps will your agent finish?</title>
+    <id>https://construct.computer/blog/agent-reliability-calculator/</id>
+    <link href="https://construct.computer/blog/agent-reliability-calculator/"/>
+    <author><name>Ankush</name></author>
+    <published>2026-10-15T00:00:00Z</published>
+    <updated>2026-10-15T00:00:00Z</updated>
+    <category term="ai-agent"/>
+    <category term="reliability"/>
+    <category term="workflow-automation"/>
+    <category term="engineering"/>
+    <summary>AI agent reliability calculator: a 95% reliable agent finishes a 48-step job in one run 8.5% of the time. See retries, half-life, and what checkpoints fix.</summary>
+  </entry>
   <entry>
     <title>Dots vs Muse vs Grok Bot vs Claude Cowork for a small business</title>
     <id>https://construct.computer/blog/always-on-ai-agents-compared/</id>

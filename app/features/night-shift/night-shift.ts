@@ -18,6 +18,7 @@ import {
   wait,
 } from "../show/kit";
 import { mascotMarkup, setFace, squash, trackPointer } from "../show/mascot";
+import { PH_DAILY_AWARD, productHuntHref } from "../product-hunt/config";
 import type { ShowEnv } from "../show/show-host";
 import "./night-shift.css";
 
@@ -30,6 +31,9 @@ import "./night-shift.css";
  */
 
 const CRT_HOME: CrtPlacement = { x: 470, y: 316, scale: 0.53 };
+/** Product Hunt's mark, inline: the show's CSP serves images from this origin only. */
+const PH_MARK = `<svg class="ns-badge-mark" viewBox="0 0 40 40" aria-hidden="true"><path fill="#da552f" d="M40 20c0 11.046-8.954 20-20 20S0 31.046 0 20 8.954 0 20 0s20 8.954 20 20"/><path fill="#fff" d="M22.667 20H17v-6h5.667a3 3 0 0 1 0 6m0-10H13v20h4v-6h5.667a7 7 0 1 0 0-14"/></svg>`;
+
 /** The poster's art window on the board (night-shift.css, .ns-art). */
 const ART_X = 22;
 const ART_Y = 22;
@@ -150,7 +154,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       <div class="ns-pile"></div>
       <div class="ns-spec">Runs on ....... its own computer\nRemembers ..... what it learned\nWorks ......... the shift you don't</div>
       <div class="ns-caption" hidden aria-live="polite"><div class="ns-cap-time"></div><div class="ns-cap-line"></div></div>
-      <div class="ns-badge">#1 Product of the Day</div>
+      <a class="ns-badge" href="${esc(productHuntHref("x-show", "daily"))}" target="_blank" rel="noopener" tabindex="-1" aria-label="${esc(PH_DAILY_AWARD)} on Product Hunt">${PH_MARK}<span><small>Product Hunt</small><b>${esc(PH_DAILY_AWARD)}</b></span></a>
       <div class="ns-url">construct.computer</div>
       ${crtMarkup("asleep")}
       <div class="ns-props"></div>
@@ -1100,7 +1104,11 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     void tween(props, [{ opacity: 1 }, { opacity: 0 }], { duration: 400, easing: "ease-in" }, signal);
     await dropTitle();
     await raiseTitle(["AI", "EMPLOYEE"], 380, 104);
-    q(".ns-badge").animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, fill: "forwards" });
+    const badge = q<HTMLAnchorElement>(".ns-badge");
+    badge.classList.add("on");
+    badge.tabIndex = 0;
+    badge.addEventListener("click", () => env.track("product_hunt"));
+    badge.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, fill: "forwards" });
 
     // The offer is a pass you tear off, in the poster's own colours: the top
     // says what you get, the stub below the perforation takes the email.
@@ -1150,7 +1158,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       const stub = card.querySelector<HTMLElement>(".pass-stub")!;
       stub.innerHTML = `<div class="pass-sent">Sent to ${esc(email)}. Your code:</div>
         <div class="pass-code">${esc(result.code)}</div>
-        <div class="pass-ctas"><a class="pass-go" target="_blank" rel="noopener" href="${esc(env.appUrl)}">Start tonight</a><a class="pass-go ghost" target="_blank" rel="noopener" href="https://x.com/intent/post?text=${share}">Share</a></div>`;
+        <div class="pass-ctas"><a class="pass-go" target="_blank" rel="noopener" href="${esc(env.startUrl(result.code))}">Start tonight</a><a class="pass-go ghost" target="_blank" rel="noopener" href="https://x.com/intent/post?text=${share}">Share</a></div>`;
       stub.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300 });
       stub.querySelectorAll("a").forEach((a, i) => a.addEventListener("click", () => env.track(i === 0 ? "start_tonight" : "share")));
     };

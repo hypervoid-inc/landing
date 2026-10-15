@@ -169,21 +169,45 @@
 .ns-pips i.done { background: var(--sun); }
 .ns-pips i.wait { background: #ff9f2e; animation: ns-pulse 1.1s ease-in-out infinite; }
 @keyframes ns-pulse { 50% { transform: scale(1.18); } }
+/* Product Hunt's award, in the shape of their own badge: the mark, then
+   the award under a small label. Hidden and unclickable until shown. */
 .ns-badge {
   position: absolute;
   left: 46px;
   bottom: 44px;
   z-index: 8;
-  font-family: var(--f-mono);
-  font-size: 18px;
-  font-weight: 500;
-  color: #da552f;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px 7px 8px;
+  border: 2px solid #da552f;
+  border-radius: 12px;
   background: #fff;
-  border: 3px solid #da552f;
-  border-radius: 10px;
-  padding: 6px 12px;
+  box-shadow: 4px 4px 0 var(--ink);
+  color: #da552f;
+  text-decoration: none;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+  transition: transform .14s var(--ease-out), box-shadow .14s var(--ease-out);
+}
+.ns-badge.on { visibility: visible; pointer-events: auto; }
+.ns-badge.on:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.ns-badge.on:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+.ns-badge-mark { width: 38px; height: 38px; flex: none; }
+.ns-badge span { display: grid; line-height: 1.05; }
+.ns-badge small {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.ns-badge b {
+  font-family: var(--f-story);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.01em;
 }
 .ns-dots {
   position: absolute;

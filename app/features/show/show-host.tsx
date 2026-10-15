@@ -2,7 +2,7 @@ import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { embedSessionRequestSchema } from "../../../shared/embed-schema";
-import { getAppOrigin, getTurnstileSiteKey } from "../../platform/env";
+import { getTurnstileSiteKey } from "../../platform/env";
 import { captureAnalytics } from "../analytics/analytics.client";
 import { BOARD_H, BOARD_W, Stopped } from "./kit";
 import { ERROR_COPY, claimOffer, isFramed, sourceFromLocation, startSession } from "./session-client";
@@ -16,8 +16,12 @@ export type ShowName = "night";
 export type ShowEnv = {
   src: string;
   framed: boolean;
-  /** Where "Start tonight" goes, tagged with the show. */
-  appUrl: string;
+  /**
+   * Where "Start tonight" goes: the site's homepage with the free month's
+   * code and the post's tags, in a new tab. The site keeps the code for
+   * checkout and welcomes the viewer with it (promo-welcome.tsx).
+   */
+  startUrl(code: string): string;
   /** Opens a session with the viewer's first name, in the background. */
   begin(name: string): void;
   /** Sends the email and returns the free month's code, or a message to show. */
@@ -98,7 +102,8 @@ export function ShowHost({
     const env: ShowEnv = {
       src,
       framed,
-      appUrl: `${getAppOrigin()}/?utm_source=x&utm_medium=player&utm_campaign=${encodeURIComponent(src)}`,
+      startUrl: (code) =>
+        `${window.location.origin}/?${new URLSearchParams({ promo: code, utm_source: "x", utm_medium: "player", utm_campaign: src })}`,
       begin: (name) => {
         if (!session) void open(name);
       },

@@ -1,5 +1,6 @@
 import type { BetaSignup } from "../../../shared/beta-signup-schema";
 import { embedClaimRequestSchema, type EmbedClaimResponse } from "../../../shared/embed-schema";
+import { sendClaimEmail } from "../../claim-email";
 import { keyedHash, verifySessionToken } from "../../embed-session";
 import { error, json, readJsonBody } from "../../http";
 import { insertSignup, pushSignupToListmonk } from "../../signups";
@@ -10,7 +11,8 @@ import type { EmbedEnv, PagesFunction } from "../../types";
  * email and gets the promo code for a free first month of the top plan;
  * the email becomes a lead the way every other form's does (the
  * `beta_signups` row and the Listmonk subscriber, tagged with the post that
- * sent them). A session claims once; asking again returns the same code.
+ * sent them), and the code goes out by email too (`claim-email.ts`). A
+ * session claims once; asking again returns the same code and sends nothing.
  */
 
 const DEFAULT_CODE = "FIRSTMONTH";
@@ -71,6 +73,16 @@ export const onRequest: PagesFunction<EmbedEnv> = async ({ request, env, waitUnt
   else await push;
 
   const emailHash = await keyedHash(secret, "email", email);
-  await env.DB.prepare(CLAIM).bind(claims.sid, emailHash).run().catch(() => undefined);
+  const claimed = await env.DB.prepare(CLAIM)
+    .bind(claims.sid, emailHash)
+    .run()
+    .catch(() => null);
+  // Only the request that actually marked the session sends the email, so a
+  // double click or a retry never sends two.
+  if (claimed?.success && claimed.meta?.changes !== 0) {
+    const send = sendClaimEmail(env, { to: email, firstName: name, code, src: row.src });
+    if (waitUntil) waitUntil(send);
+    else await send;
+  }
   return json(reply);
 };

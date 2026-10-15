@@ -14,7 +14,7 @@ export const PH_BADGE_ALT =
 export type ProductHuntAward = "daily" | "weekly-productivity";
 
 export type ProductHuntSurface =
-  "home-corner" | "home-mobile-hero" | "footer" | "blog-article";
+  "home-corner" | "home-mobile-hero" | "footer" | "blog-article" | "x-show";
 
 /**
  * Permanent award links go straight to the product page; there is no

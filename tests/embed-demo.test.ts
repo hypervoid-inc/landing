@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { onRequest as claim } from "../functions/api/embed/claim";
+import { claimLink, greetingName, renderClaimEmail } from "../functions/claim-email";
 import { onRequest as session } from "../functions/api/embed/session";
 import {
   keyedHash,
@@ -253,6 +254,47 @@ describe("POST /api/embed/claim", () => {
     expect(env.DB.signups).toEqual(["ada@example.com"]);
   });
 
+  it("emails the code once, through Cloudflare Email Service", async () => {
+    const env = createEnv(createDb(), {
+      EMBED_PROMO_CODE: "FIRSTMONTH",
+      EMAIL_API_TOKEN: "cf-token",
+      CLOUDFLARE_ACCOUNT_ID: "acct123",
+      EMBED_EMAIL_REPLY_TO: "team@construct.example",
+    });
+    const token = await sessionFor(env);
+    const fetchMock = vi.mocked(fetch);
+    fetchMock.mockImplementation(async (input: RequestInfo | URL) =>
+      String(input).includes("/email/sending/send")
+        ? Response.json({ success: true, errors: [], result: { delivered: ["ada@example.com"], permanent_bounces: [], queued: [] } })
+        : Response.json({ success: true, action: "beta_signup", hostname: "construct.example" }),
+    );
+    await ask(env, { token, email: "ada@example.com", name: "Ada" });
+    await ask(env, { token, email: "ada@example.com", name: "Ada" });
+
+    const sends = fetchMock.mock.calls.filter(([url]) => String(url).includes("/email/sending/send"));
+    expect(sends).toHaveLength(1);
+    const [url, init] = sends[0]!;
+    expect(String(url)).toBe("https://api.cloudflare.com/client/v4/accounts/acct123/email/sending/send");
+    expect((init?.headers as Record<string, string>).Authorization).toBe("Bearer cf-token");
+    const body = JSON.parse(String(init?.body));
+    expect(body).toMatchObject({
+      to: "ada@example.com",
+      from: { address: "noreply@construct.computer", name: "Construct" },
+      reply_to: "team@construct.example",
+    });
+    expect(body.text).toContain("Hi Ada,");
+    expect(body.text).toContain("FIRSTMONTH");
+    expect(body.html).toContain(claimLink("FIRSTMONTH", "launch").replaceAll("&", "&amp;"));
+  });
+
+  it("still hands out the code when email isn't configured", async () => {
+    const env = createEnv(createDb(), { EMBED_PROMO_CODE: "FIRSTMONTH" });
+    const token = await sessionFor(env);
+    const response = await ask(env, { token, email: "ada@example.com" });
+    expect(await response.json()).toEqual({ ok: true, code: "FIRSTMONTH" });
+    expect(vi.mocked(fetch).mock.calls.some(([url]) => String(url).includes("/email/sending/send"))).toBe(false);
+  });
+
   it("refuses a forged token and a bad email", async () => {
     const env = createEnv();
     const token = await sessionFor(env);
@@ -260,5 +302,27 @@ describe("POST /api/embed/claim", () => {
     expect((await ask(env, { token: forged.token, email: "a@b.co" })).status).toBe(401);
     expect((await ask(env, { token, email: "not-an-email" })).status).toBe(400);
     expect(env.DB.signups).toEqual([]);
+  });
+});
+
+describe("the claim email", () => {
+  it("greets by a plain first name only", () => {
+    expect(greetingName(" ada lovelace ")).toBe("ada");
+    expect(greetingName("Zoë")).toBe("Zoë");
+    expect(greetingName("<b>x</b>")).toBeUndefined();
+    expect(greetingName("http://evil")).toBeUndefined();
+    expect(greetingName(undefined)).toBeUndefined();
+  });
+
+  it("carries the code and the promo link, without dashes, and invites a reply only when one is set", () => {
+    const quiet = renderClaimEmail({ to: "a@b.co", code: "FIRSTMONTH", src: "home" }, false);
+    const replyable = renderClaimEmail({ to: "a@b.co", firstName: "Ada", code: "FIRSTMONTH", src: "home" }, true);
+    expect(quiet.text).toContain("Hi there,");
+    expect(quiet.text).toContain("https://construct.computer/?promo=FIRSTMONTH");
+    expect(quiet.text).not.toContain("reply to this email");
+    expect(replyable.text).toContain("reply to this email");
+    for (const part of [quiet.subject, quiet.text, quiet.html, replyable.html]) {
+      expect(part).not.toMatch(/[\u2013\u2014]/);
+    }
   });
 });
