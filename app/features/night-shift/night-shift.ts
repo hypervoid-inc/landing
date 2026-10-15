@@ -273,7 +273,6 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
   };
   const face = () => mascotLeftCheek(place);
   const say = (html: string, side: "left" | "right" = "left", maxWidth = 400, top = 0) => {
-    env.sound.play("blip");
     return bubble.say(
       html,
       // Never over the poster title: the top bound sits under its last row.
@@ -953,7 +952,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       await W(700);
     }
     birds();
-    env.sound.play("birds");
+    env.sound.play("dawn");
     setFace(mascot, "happy");
     squash(mascot);
     q(".ns-world .ns-pips").hidden = true;

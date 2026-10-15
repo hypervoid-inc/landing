@@ -1,9 +1,20 @@
 /**
- * The show's sound: a dozen short cues synthesised in the page from the same
- * voices as the launch film's score (video/scripts/score-launch.mjs), so the
- * two share one palette and nothing is downloaded. Everything sits in A minor
- * pentatonic: the wake plays the first half of a six-note motif, each finished
- * job adds a rising note, and the claim plays the whole motif.
+ * The show's sound: a handful of short, soft cues synthesised in the page, so
+ * nothing is downloaded. Everything sits in A minor pentatonic: the wake plays
+ * the first half of a six-note motif, each finished job adds a rising note,
+ * and the claim plays the whole motif.
+ *
+ * Tuned to soothe, not to cut through (psychoacoustics, not taste):
+ * - Unpleasantness tracks energy at 2.5 to 5.5 kHz, where the ear canal
+ *   resonates (Kumar et al. 2008, JASA), so fundamentals sit at 220 to 660 Hz,
+ *   every tone is low-passed from about 2.5 kHz and the output is shelved
+ *   down above 3.8 kHz. Nothing is built from noise clicks.
+ * - Fast onsets startle (Blumenthal 1988): taps rise over 3 to 8 ms, tones
+ *   over 5 to 10 ms, air over about 60 ms.
+ * - Kalimba and marimba-like sine tones, wood taps and bubble pops: musical
+ *   timbres read clearly without being sharp (Brewster's earcon guidelines).
+ * - Cues are matched by loudness (the loudest 100 ms), not by peak level, and
+ *   kept few: repetition wears a sound out, so speech bubbles stay silent.
  *
  * Browsers only start audio from a gesture, so the context is created on the
  * first tap inside the frame (the show's own "tap to wake"). Until then the
@@ -17,7 +28,6 @@
 
 export type Cue =
   | "wake"
-  | "blip"
   | "chip"
   | "pop"
   | "chime"
@@ -28,7 +38,7 @@ export type Cue =
   | "tick"
   | "note"
   | "stamp"
-  | "birds"
+  | "dawn"
   | "logo";
 
 export type Sound = {
@@ -46,15 +56,15 @@ export type Sound = {
 const STORE_KEY = "construct.show.muted";
 export const SR = 48000;
 const TAU = Math.PI * 2;
-/** A minor pentatonic over two octaves, in semitones above A4. */
+/** A minor pentatonic over two octaves, in semitones above A3 (220 Hz). */
 const SCALE = [0, 3, 5, 7, 10, 12, 15, 17, 19];
 /** The motif: A C E G A C. */
 const MOTIF = [0, 3, 7, 10, 12, 15];
-const NOTE = (semis: number) => 440 * Math.pow(2, semis / 12);
+const NOTE = (semis: number) => 220 * Math.pow(2, semis / 12);
 const sec = (s: number) => Math.round(s * SR);
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
-// ── DSP, ported from the film's score ──────────────────────────────────────
+// ── DSP (shared primitives with the film's score) ──────────────────────────────────────
 let seed = 0x9167517;
 const rnd = () => {
   seed = (seed + 0x6d2b79f5) >>> 0;
@@ -128,182 +138,181 @@ function room(input: Float32Array, wet = 0.22, decay = 0.78) {
   return tailFade(out, sec(0.08));
 }
 
-/** Electric-piano pluck: a filtered saw with a soft octave and a bell partial. */
-function pluck(f: number, dur = 0.7) {
+
+/** A raised-cosine fade-in over `n` samples: soft, with no corner to click. */
+const rise = (i: number, n: number) => (i >= n ? 1 : 0.5 - 0.5 * Math.cos((Math.PI * i) / n));
+/** Two one-pole low-passes in a row: a gentle 12 dB/octave roll-off. */
+function soften(buf: Float32Array, cutoff: number) {
+  const a = new OnePole(cutoff), b = new OnePole(cutoff);
+  for (let i = 0; i < buf.length; i++) buf[i] = b.run(a.run(buf[i]!));
+  return buf;
+}
+
+/**
+ * A kalimba or soft marimba note: a sine fundamental, a soft octave and twelfth, and a
+ * faint fourth partial that is gone within a few hundredths of a second (the
+ * mallet), over a breath of low "felt". Rolled off from 2.6 kHz.
+ */
+function tone(f: number, { dur = 0.9, attack = 0.006, tau = 0.42 } = {}) {
   const n = sec(dur), out = new Float32Array(n);
-  let p = rnd(), po = 0, pb = 0;
-  const lp = new Biquad();
+  const felt = new Biquad().set("lp", 600, 0.7);
+  const atk = sec(attack);
   for (let i = 0; i < n; i++) {
     const t = i / SR;
-    if ((i & 31) === 0) lp.set("lp", f * (1.3 + 4.5 * Math.exp(-t / 0.06)), 1.1);
-    const dt = f / SR;
-    let s = 2 * p - 1;
-    if (p < dt) { const k = p / dt; s -= k + k - k * k - 1; }
-    else if (p > 1 - dt) { const k = (p - 1) / dt; s -= k * k + k + k + 1; }
-    p += dt; if (p >= 1) p -= 1;
-    po += (TAU * f * 2) / SR; pb += (TAU * f * 3.01) / SR;
-    out[i] = (lp.run(s) * 0.7 + Math.sin(po) * 0.25 * Math.exp(-t / 0.2) + Math.sin(pb) * 0.1 * Math.exp(-t / 0.09)) * Math.min(1, t / 0.002) * Math.exp(-t / 0.2);
+    const v =
+      Math.sin(TAU * f * t) * Math.exp(-t / tau) +
+      // An octave and a twelfth, soft: the part a phone speaker actually plays.
+      Math.sin(TAU * 2 * f * t) * 0.24 * Math.exp(-t / (tau * 0.35)) +
+      Math.sin(TAU * 3 * f * t) * 0.08 * Math.exp(-t / (tau * 0.15)) +
+      Math.sin(TAU * 4 * f * t) * 0.045 * Math.exp(-t / 0.03) +
+      felt.run(noise()) * 0.1 * Math.exp(-t / 0.008);
+    out[i] = v * rise(i, atk);
   }
-  return tailFade(out, sec(0.05));
+  return tailFade(soften(out, 2600), sec(0.06));
 }
-/** Soft glass bell. */
-function chime(f: number, dur = 1.0, decay = 0.34) {
+/** A bubble pop: a sine sweeping up onto its pitch over 30 ms, with a soft round tail. */
+function bubble(f: number) {
+  const n = sec(0.16), out = new Float32Array(n);
+  let ph = 0;
+  for (let i = 0; i < n; i++) {
+    const t = i / SR;
+    ph += (TAU * f * (0.55 + 0.45 * Math.min(1, t / 0.03))) / SR;
+    out[i] = (Math.sin(ph) + Math.sin(2 * ph) * 0.08) * Math.exp(-t / 0.05) * rise(i, sec(0.004));
+  }
+  return tailFade(soften(out, 2000), sec(0.02));
+}
+/** A wood tap: a short sine that drops onto 880 Hz, like a small block. */
+function wood(f = 880) {
+  const n = sec(0.08), out = new Float32Array(n);
+  let ph = 0;
+  for (let i = 0; i < n; i++) {
+    const t = i / SR;
+    ph += (TAU * f * (1 + 0.18 * Math.exp(-t / 0.006))) / SR;
+    out[i] = (Math.sin(ph) + Math.sin(ph * 2.7) * 0.06 * Math.exp(-t / 0.01)) * Math.exp(-t / 0.018) * rise(i, sec(0.003));
+  }
+  return tailFade(soften(out, 2400), sec(0.01));
+}
+/** The pull-chain lamp, warmed: a low plastic body and a gentle snap, no hiss. */
+function lamp() {
+  const n = sec(0.3), out = new Float32Array(n);
+  const body = new Biquad().set("bp", 1100, 2), snap = new Biquad().set("bp", 1500, 3);
+  let ph = 0;
+  for (let i = 0; i < n; i++) {
+    const t = i / SR, x = noise();
+    ph += (TAU * (140 + 80 * Math.exp(-t / 0.006))) / SR;
+    let v = body.run(x) * 1.1 * Math.exp(-t / 0.008) + Math.sin(ph) * 0.9 * Math.exp(-t / 0.035);
+    if (t >= 0.045) v += snap.run(noise()) * 0.8 * Math.exp(-(t - 0.045) / 0.006);
+    out[i] = v * rise(i, sec(0.002));
+  }
+  return tailFade(soften(out, 2200), sec(0.02));
+}
+/** The CRT coming on: a low thump and a short, warm hum. No coil whine. */
+function crt(humHz = 110) {
+  const n = sec(0.8), out = new Float32Array(n);
+  const bp = new Biquad().set("bp", 300, 0.7);
+  let p1 = 0, p2 = 0.37, ph = 0, wob = 0;
+  for (let i = 0; i < n; i++) {
+    const t = i / SR;
+    ph += (TAU * (55 + 60 * Math.exp(-t / 0.04))) / SR;
+    const thump = Math.sin(ph) * Math.exp(-t / 0.12);
+    p1 = (p1 + humHz / SR) % 1; p2 = (p2 + humHz / 2 / SR) % 1;
+    wob += 4 / SR;
+    const hum = Math.tanh(bp.run(2 * p1 - 1 + (2 * p2 - 1) * 0.6) * 2) * Math.exp(-t / 0.22) * (0.75 + 0.25 * Math.sin(TAU * wob));
+    out[i] = (thump * 0.7 + hum * 0.5) * rise(i, sec(0.015));
+  }
+  return tailFade(soften(out, 900), sec(0.08));
+}
+/** Paper stamp: the pad meeting the paper. Thud and paper, nothing bright. */
+function stamp() {
+  const n = sec(0.22), out = new Float32Array(n);
+  const lp = new Biquad().set("lp", 380, 0.8), paper = new Biquad().set("bp", 900, 0.9);
+  let ph = 0;
+  for (let i = 0; i < n; i++) {
+    const t = i / SR, x = noise();
+    ph += (TAU * (100 + 60 * Math.exp(-t / 0.012))) / SR;
+    out[i] = (Math.sin(ph) * 0.9 * Math.exp(-t / 0.05) + lp.run(x) * 1.1 * Math.exp(-t / 0.03) + paper.run(x) * 0.4 * Math.exp(-t / 0.02)) * rise(i, sec(0.003));
+  }
+  return tailFade(soften(out, 1800), sec(0.02));
+}
+/** Soft air past the camera: band-passed noise sweeping between 300 Hz and 1.4 kHz. */
+function air(down: boolean, dur = 0.5) {
   const n = sec(dur), out = new Float32Array(n);
-  const parts = [[1, 1, 1], [2, 0.28, 0.55], [3.01, 0.12, 0.35], [5.43, 0.05, 0.18]] as const;
-  const ph = parts.map(() => rnd());
+  const bp = new Biquad();
+  for (let i = 0; i < n; i++) {
+    const t = i / SR, p = i / n;
+    if ((i & 31) === 0) bp.set("bp", down ? 1400 * Math.pow(300 / 1400, p) : 300 * Math.pow(1400 / 300, p), 0.9);
+    const env = Math.sin(Math.PI * Math.pow(p, down ? 0.6 : 1.4));
+    out[i] = bp.run(noise()) * env * rise(i, sec(0.06)) * (t >= 0 ? 1 : 0);
+  }
+  return tailFade(soften(out, 1600), sec(0.04));
+}
+/** Dawn: a C major chord blooming slowly, two sines a few cents apart per note. */
+function dawn() {
+  const n = sec(2.2), out = new Float32Array(n);
+  const notes = [261.6, 329.6, 392.0, 523.3];
   for (let i = 0; i < n; i++) {
     const t = i / SR;
     let v = 0;
-    parts.forEach(([m, g, d], k) => { v += Math.sin(TAU * (ph[k]! + f * m * t)) * g * Math.exp(-t / (decay * d)); });
-    out[i] = v * Math.min(1, t / 0.003) * 0.6;
+    notes.forEach((f, k) => { v += (Math.sin(TAU * f * 0.998 * t) + Math.sin(TAU * f * 1.002 * t + k)) * (k === 3 ? 0.5 : 1); });
+    out[i] = v * rise(i, sec(0.35)) * Math.exp(-t / 0.9);
   }
-  return tailFade(out, sec(0.06));
-}
-/** Bubbly pop: a sine falling fast onto its pitch, plus a tiny tick. */
-function pop(f: number) {
-  const n = sec(0.12), out = new Float32Array(n);
-  const hp = new Biquad().set("hp", 2500);
-  let ph = 0;
-  for (let i = 0; i < n; i++) {
-    const t = i / SR;
-    ph += (TAU * f * (1 + 0.9 * Math.exp(-t / 0.012))) / SR;
-    out[i] = Math.sin(ph) * Math.exp(-t / 0.032) * Math.min(1, t / 0.0015) + hp.run(noise()) * 0.25 * Math.exp(-t / 0.002);
-  }
-  return tailFade(out, sec(0.004));
-}
-/** The pull-chain lamp: contact click, plastic body, low thunk, then the spring snapping over. */
-function lamp() {
-  const n = sec(0.34), out = new Float32Array(n);
-  const hp = new Biquad().set("hp", 2800), body = new Biquad().set("bp", 1750, 3);
-  const hp2 = new Biquad().set("hp", 4000), snap = new Biquad().set("bp", 3300, 4);
-  let ph = 0, ph2 = 0;
-  for (let i = 0; i < n; i++) {
-    const t = i / SR, x = noise();
-    let v = hp.run(x) * 1.2 * Math.exp(-t / 0.0011) + body.run(x) * 1.7 * Math.exp(-t / 0.007);
-    ph += (TAU * (150 + 90 * Math.exp(-t / 0.006))) / SR;
-    v += Math.sin(ph) * 0.8 * Math.exp(-t / 0.03) * Math.min(1, t / 0.0008);
-    if (t >= 0.042) {
-      const tr = t - 0.042, y = noise();
-      ph2 += (TAU * 310) / SR;
-      v += hp2.run(y) * Math.exp(-tr / 0.0009) + snap.run(y) * 1.4 * Math.exp(-tr / 0.005) + Math.sin(ph2) * 0.3 * Math.exp(-tr / 0.02);
-    }
-    out[i] = v;
-  }
-  return tailFade(out, sec(0.008));
-}
-/** The CRT coming on: relay click, soft thump, a short in-key buzz and a fading coil whine. */
-function crt(humHz = 110) {
-  const n = sec(0.9), out = new Float32Array(n);
-  const bp = new Biquad().set("bp", 420, 0.7), lp = new Biquad().set("lp", 2400), hp = new Biquad().set("hp", 3200);
-  let p1 = 0, p2 = 0.37, ph = 0, wob = 0, w1 = 0, w2 = 0;
-  for (let i = 0; i < n; i++) {
-    const t = i / SR;
-    ph += (TAU * (50 + 72 * Math.exp(-t / 0.03))) / SR;
-    const thump = Math.sin(ph) * Math.min(1, t / 0.002) * Math.exp(-t / 0.12);
-    p1 = (p1 + humHz / SR) % 1; p2 = (p2 + humHz / 2 / SR) % 1;
-    wob += (5 + 9 * Math.exp(-t / 0.3)) / SR;
-    const buzz = Math.tanh(lp.run(bp.run(2 * p1 - 1 + (2 * p2 - 1) * 0.6)) * 3) * Math.min(1, t / 0.01) * Math.exp(-t / 0.2) * (0.55 + 0.45 * Math.sin(TAU * wob));
-    const wf = 5400 + 4200 * Math.exp(-t / 0.4);
-    w1 += (TAU * wf) / SR; w2 += (TAU * wf * 1.5) / SR;
-    const whine = (Math.sin(w1) + Math.sin(w2) * 0.3) * Math.min(1, t / 0.02) * Math.exp(-t / 0.25);
-    out[i] = thump * 0.6 + buzz * 0.55 + whine * 0.04 + hp.run(noise()) * 0.5 * Math.exp(-t / 0.0015);
-  }
-  return tailFade(out, sec(0.06));
-}
-/** Wall-clock tick: a bright ring on a little wood. */
-function tick() {
-  const n = sec(0.07), out = new Float32Array(n);
-  const hp = new Biquad().set("hp", 3600);
-  for (let i = 0; i < n; i++) {
-    const t = i / SR;
-    out[i] = (hp.run(noise()) * 0.9 * Math.exp(-t / 0.0012) + Math.sin(TAU * 2130 * t) * 0.55 * Math.exp(-t / 0.007) + Math.sin(TAU * 830 * t) * 0.45 * Math.exp(-t / 0.012)) * Math.min(1, t / 0.0003);
-  }
-  return tailFade(out, sec(0.003));
-}
-/** Paper stamp: pad thud, die click, a breath of paper. */
-function stamp() {
-  const n = sec(0.24), out = new Float32Array(n);
-  const lp = new Biquad().set("lp", 380, 0.8), hp = new Biquad().set("hp", 3000), bp = new Biquad().set("bp", 2300, 2), paper = new Biquad().set("bp", 950, 0.9);
-  let ph = 0;
-  for (let i = 0; i < n; i++) {
-    const t = i / SR, x = noise();
-    ph += (TAU * (92 + 60 * Math.exp(-t / 0.012))) / SR;
-    out[i] = Math.sin(ph) * 0.9 * Math.exp(-t / 0.05) * Math.min(1, t / 0.0015) + lp.run(x) * 1.2 * Math.exp(-t / 0.03) + hp.run(x) * 0.5 * Math.exp(-t / 0.0015) + bp.run(x) * 0.8 * Math.exp(-t / 0.006) + paper.run(x) * 0.5 * Math.exp(-t / 0.022);
-  }
-  return tailFade(out, sec(0.008));
-}
-/** Glass whoosh through the screen; `down` sweeps the other way, for coming back out. */
-function whoosh(down: boolean, dur = 0.55, peakAt = 0.2) {
-  const n = sec(dur), out = new Float32Array(n);
-  const bp = new Biquad(), glass = new Biquad();
-  for (let i = 0; i < n; i++) {
-    const t = i / SR, p = Math.min(1, t / (peakAt * 1.6));
-    if ((i & 31) === 0) {
-      const f = down ? 3600 * Math.pow(260 / 3600, p) : 260 * Math.pow(3600 / 260, p);
-      bp.set("bp", f, 1.3); glass.set("bp", f * 2.1, 9);
-    }
-    const env = t < peakAt ? Math.pow(t / peakAt, 2.2) : Math.exp(-(t - peakAt) / 0.085);
-    const x = noise();
-    out[i] = (bp.run(x) * 1.5 + glass.run(x) * 1.1) * env;
-  }
-  return tailFade(out, sec(0.02));
-}
-/** One bird chirp: a sine that sweeps up, hooks down and trills. */
-function chirp(f0: number, f1: number, dur: number) {
-  const n = sec(dur), out = new Float32Array(n);
-  let ph = 0;
-  for (let i = 0; i < n; i++) {
-    const p = i / n, t = i / SR;
-    ph += (TAU * (f0 + (f1 - f0) * Math.sin(Math.PI * Math.min(1, p * 1.25) * 0.62) + 90 * Math.sin(TAU * 58 * t))) / SR;
-    out[i] = (Math.sin(ph) + Math.sin(ph * 2) * 0.15) * Math.sin(Math.PI * p);
-  }
-  return out;
+  return tailFade(soften(out, 1500), sec(0.3));
 }
 const blank = (s: number) => new Float32Array(sec(s));
 
-/** Every cue, rendered once, with its level in dB (relative to a full-scale peak). */
+/** Every cue, rendered once, with its level: dBFS RMS over its loudest 100 ms. */
 export function renderCues(): Record<Cue, { data: Float32Array; db: number }> {
   const arp = (steps: number[], gap: number, tail: number) => {
     const out = blank(gap * steps.length + tail);
-    steps.forEach((s, i) => mixIn(out, pluck(NOTE(s)), i * gap, 0.8));
+    steps.forEach((s, i) => mixIn(out, tone(NOTE(s)), i * gap, 0.8));
     return out;
   };
-  const wake = mixIn(arp(MOTIF.slice(0, 3), 0.085, 0.9), pop(523), 0, 0.5);
-  mixIn(wake, chime(NOTE(MOTIF[2]! + 12), 0.9), 0.17, 0.25);
-  const logo = arp(MOTIF, 0.075, 1.0);
-  mixIn(logo, chime(NOTE(MOTIF[5]! + 12), 1.1), 0.375, 0.35);
-  const reply = blank(1.1);
-  mixIn(reply, chime(NOTE(15 + 12)), 0, 0.8);
-  mixIn(reply, chime(NOTE(19 + 12)), 0.09, 0.7);
-  const birds = blank(0.8);
-  mixIn(birds, chirp(3300, 4500, 0.085), 0, 0.7);
-  mixIn(birds, chirp(3600, 4800, 0.07), 0.13, 0.6);
-  mixIn(birds, chirp(3100, 4200, 0.1), 0.42, 0.5);
-  const night = mixIn(blank(0.9), lamp(), 0, 1);
+  const wake = mixIn(arp(MOTIF.slice(0, 3), 0.12, 1.0), bubble(330), 0, 0.35);
+  const logo = arp(MOTIF, 0.1, 1.1);
+  mixIn(logo, dawn(), 0.5, 0.18);
+  const reply = blank(1.0);
+  mixIn(reply, tone(NOTE(15), { dur: 0.8 }), 0, 0.8);
+  mixIn(reply, tone(NOTE(19), { dur: 0.8 }), 0.12, 0.7);
   return {
-    wake: { data: room(wake), db: -6 },
-    blip: { data: pop(880), db: -14.5 },
-    chip: { data: pluck(NOTE(SCALE[4]!), 0.5), db: -11 },
-    pop: { data: pop(660), db: -10 },
-    chime: { data: room(reply), db: -13 },
-    whooshIn: { data: whoosh(false), db: -15 },
-    whooshOut: { data: whoosh(true), db: -14.5 },
-    lamp: { data: night, db: -4.5 },
-    crt: { data: crt(), db: -14 },
-    tick: { data: tick(), db: -12.5 },
-    note: { data: room(pluck(NOTE(0), 0.8)), db: -9.5 },
-    stamp: { data: stamp(), db: -5.5 },
-    birds: { data: birds, db: -21.5 },
-    logo: { data: room(logo, 0.28), db: -5 },
+    wake: { data: room(wake, 0.18), db: -24 },
+    chip: { data: tone(NOTE(SCALE[3]!), { dur: 0.5, tau: 0.22 }), db: -29 },
+    pop: { data: bubble(392), db: -30 },
+    chime: { data: room(reply, 0.18), db: -27 },
+    whooshIn: { data: air(false), db: -33 },
+    whooshOut: { data: air(true), db: -34 },
+    lamp: { data: lamp(), db: -28 },
+    crt: { data: crt(), db: -32 },
+    tick: { data: wood(), db: -36 },
+    note: { data: room(tone(NOTE(0)), 0.16), db: -27 },
+    stamp: { data: stamp(), db: -27 },
+    dawn: { data: dawn(), db: -30 },
+    logo: { data: room(logo, 0.22), db: -23 },
   };
 }
 
-/** Peak-normalises each cue to its level, so the dB table above is the mix. */
+/**
+ * Sets each cue's loudness: RMS over its loudest 100 ms window lands on `db`.
+ * Matching by loudness rather than peak keeps a short bright tap from
+ * sounding far louder than a round tone at the same peak.
+ */
 export function normalise(data: Float32Array, db: number) {
+  const win = sec(0.1), hop = sec(0.025);
+  let loudest = 0;
+  for (let s = 0; s + 1 < Math.max(data.length - win, 1); s += hop) {
+    let sum = 0;
+    const end = Math.min(data.length, s + win);
+    for (let i = s; i < end; i++) sum += data[i]! * data[i]!;
+    loudest = Math.max(loudest, Math.sqrt(sum / win));
+  }
+  if (data.length <= win) {
+    let sum = 0;
+    for (let i = 0; i < data.length; i++) sum += data[i]! * data[i]!;
+    loudest = Math.sqrt(sum / win);
+  }
+  let g = loudest > 0 ? Math.pow(10, db / 20) / loudest : 0;
   let peak = 0;
-  for (let i = 0; i < data.length; i++) peak = Math.max(peak, Math.abs(data[i]!));
-  const g = peak > 0 ? Math.pow(10, db / 20) / peak : 0;
-  // Half a millisecond of fade-in: a transient that starts at full level clicks on some speakers.
+  for (let i = 0; i < data.length; i++) peak = Math.max(peak, Math.abs(data[i]!) * g);
+  if (peak > 0.5) g *= 0.5 / peak; // never hot, whatever the shape
   const head = sec(0.0005);
   for (let i = 0; i < data.length; i++) data[i]! *= g * (i < head ? i / head : 1);
   return data;
@@ -361,7 +370,7 @@ export function createSound(): Sound {
           if (!AC) return;
           ctx = new AC({ latencyHint: "interactive" });
           out = ctx.createGain();
-          out.gain.value = 0.9;
+          out.gain.value = 0.85;
           // A gentle limiter, so cues that overlap (the claim's stamp and motif) never distort.
           const limit = ctx.createDynamicsCompressor();
           limit.threshold.value = -9;
@@ -369,7 +378,14 @@ export function createSound(): Sound {
           limit.ratio.value = 6;
           limit.attack.value = 0.002;
           limit.release.value = 0.15;
-          out.connect(limit).connect(ctx.destination);
+          // Gentle on the ears: shelve the presence band down, dip the ear-canal peak, cap the top.
+          const shelf = ctx.createBiquadFilter();
+          shelf.type = "highshelf"; shelf.frequency.value = 3800; shelf.gain.value = -5;
+          const dip = ctx.createBiquadFilter();
+          dip.type = "peaking"; dip.frequency.value = 3000; dip.Q.value = 0.8; dip.gain.value = -2.5;
+          const cap = ctx.createBiquadFilter();
+          cap.type = "lowpass"; cap.frequency.value = 9000; cap.Q.value = 0.5;
+          out.connect(shelf).connect(dip).connect(cap).connect(limit).connect(ctx.destination);
         }
         if (ctx.state !== "running") void ctx.resume().catch(() => undefined);
       } catch {
@@ -386,7 +402,7 @@ export function createSound(): Sound {
       const src = ctx.createBufferSource();
       src.buffer = b;
       // A touch of pitch and level drift, so repeats never sound like a loop.
-      const drift = cue === "wake" || cue === "logo" ? 0 : (Math.random() - 0.5) * 0.5;
+      const drift = cue === "wake" || cue === "logo" || cue === "dawn" ? 0 : (Math.random() - 0.5) * 0.6;
       const step = opts.step === undefined ? 0 : SCALE[clamp(opts.step, 0, SCALE.length - 1)]!;
       src.playbackRate.value = Math.pow(2, (step + drift) / 12);
       const g = ctx.createGain();
@@ -418,7 +434,7 @@ export function createSound(): Sound {
           if (muted && out) out.gain.value = 0;
         }, 120);
       }
-      if (!next && out && ctx) out.gain.setTargetAtTime(0.9, ctx.currentTime, 0.015);
+      if (!next && out && ctx) out.gain.setTargetAtTime(0.85, ctx.currentTime, 0.015);
       listeners.forEach((fn) => fn(muted));
     },
     subscribe(fn) {
