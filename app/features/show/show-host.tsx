@@ -52,6 +52,12 @@ export function ShowHost({
   const tokenRef = useRef("");
   const waitersRef = useRef<Array<(token: string) => void>>([]);
   const [scale, setScale] = useState(0);
+  // The check runs quietly from the start. The card shows only when
+  // Cloudflare wants a click AND the show is waiting on a token, so it never
+  // covers the opening poster; it appears right after the viewer's name.
+  const [needsClick, setNeedsClick] = useState(false);
+  const [waiting, setWaiting] = useState(false);
+  const checking = needsClick && waiting;
 
   useLayoutEffect(() => {
     const frame = frameRef.current;
@@ -76,11 +82,25 @@ export function ShowHost({
     // Why the last session request failed, so the claim can say the real reason.
     let refused: string | null = null;
 
+    // A token is single use. Rather than re-running the check the moment one
+    // is spent, which inside X's frame often needs a click and puts the widget
+    // back over the show, a fresh one is asked for only when it is needed.
+    let spent = false;
     const turnstileToken = () =>
       new Promise<string>((resolve) => {
         if (tokenRef.current) return resolve(tokenRef.current);
-        waitersRef.current.push(resolve);
-        window.setTimeout(() => resolve(tokenRef.current), 9000);
+        if (spent) {
+          spent = false;
+          turnstileRef.current?.reset();
+        }
+        setWaiting(true);
+        const done = (token: string) => {
+          setWaiting(false);
+          resolve(token);
+        };
+        waitersRef.current.push(done);
+        // A click can take a while; give the viewer time before giving up.
+        window.setTimeout(() => done(tokenRef.current), 60000);
       });
 
     const open = (name: string) => {
@@ -94,7 +114,7 @@ export function ShowHost({
         if (!parsed.success) return null;
         const result = await startSession(parsed.data);
         tokenRef.current = "";
-        turnstileRef.current?.reset();
+        spent = true;
         if (!result.ok) {
           refused = result.code;
           return null;
@@ -153,12 +173,17 @@ export function ShowHost({
         }}
       />
       {TURNSTILE_SITE_KEY ? (
-        <div className="show-turnstile">
+        <div className={`show-turnstile${checking ? " on" : ""}`} aria-hidden={!checking}>
+          <p className="show-turnstile-label">One quick check before we go on</p>
           <Turnstile
             ref={turnstileRef}
             siteKey={TURNSTILE_SITE_KEY}
             options={{ action: "beta_signup", theme: "light", size: "normal", appearance: "interaction-only" }}
+            onBeforeInteractive={() => setNeedsClick(true)}
+            onAfterInteractive={() => setNeedsClick(false)}
+            onError={() => setNeedsClick(false)}
             onSuccess={(token) => {
+              setNeedsClick(false);
               tokenRef.current = token;
               waitersRef.current.splice(0).forEach((resolve) => resolve(token));
             }}
