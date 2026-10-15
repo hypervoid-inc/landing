@@ -21,7 +21,7 @@ const DEFAULT_FROM = "hello@construct.computer";
 const DEFAULT_FROM_NAME = "Construct";
 // Bump when either image changes: mail clients and their image proxies cache
 // by URL, so a new version is the only way to replace one already fetched.
-const ASSET_VERSION = "1";
+const ASSET_VERSION = "2";
 const HERO = `${SITE}/assets/email/night-shift.jpg?v=${ASSET_VERSION}`;
 const ICON = `${SITE}/assets/email/construct-icon.png?v=${ASSET_VERSION}`;
 const ADDRESS = "2261 Market Street STE 68707, San Francisco, CA 94114";
@@ -152,7 +152,7 @@ a{color:#2a44a8;}
 <tr><td align="center" class="outer" style="padding:32px 16px 40px;">
 <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:560px;background:#ffffff;border:1px solid ${line};border-radius:16px;border-collapse:separate;">
 <tr><td style="padding:0;line-height:0;font-size:0;">
-<img src="${HERO}" width="560" height="350" alt="Construct's mascot on a glowing monitor at night" style="display:block;width:100%;max-width:560px;height:auto;border-radius:16px 16px 0 0;">
+<img src="${HERO}" width="560" height="350" alt="One month on us. Construct's mascot on a glowing monitor at night." style="display:block;width:100%;max-width:560px;height:auto;border-radius:16px 16px 0 0;">
 </td></tr>
 <tr><td class="px" style="padding:30px 36px 32px;">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>

@@ -11,7 +11,7 @@ test("Night Shift wakes up, takes the list and goes dark when the chain is pulle
   await page.goto("/embed/?src=e2e");
   await page.getByRole("button", { name: "Wake it up and start the night shift" }).click();
 
-  await expect(page.getByText("Is your to-do list done for today?")).toBeVisible({ timeout: 12_000 });
+  await expect(page.getByText("Is today's list done?")).toBeVisible({ timeout: 12_000 });
   await page.getByRole("button", { name: "Not even close" }).click();
 
   await page.getByRole("button", { name: "Score the 40 new leads" }).click({ timeout: 12_000 });
@@ -19,7 +19,7 @@ test("Night Shift wakes up, takes the list and goes dark when the chain is pulle
 
   await page.getByLabel("Your first name").fill("ada", { timeout: 12_000 });
   await page.getByRole("button", { name: "That's me" }).click();
-  await expect(page.getByText(/Nice to meet you, Ada/)).toBeVisible();
+  await expect(page.getByText(/Thanks, Ada/)).toBeVisible();
 
   // The chain has to be pulled down, not clicked.
   const bead = page.getByRole("button", { name: "Pull the chain to turn off the light" });

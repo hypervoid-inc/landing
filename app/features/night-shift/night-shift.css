@@ -1345,6 +1345,9 @@ button.chk:active { transform: scale(.99); }
   paint-order: stroke fill;
   text-shadow: 5px 5px 0 var(--ink);
 }
+/* The headline is top-heavy: the first line is the longest and the largest. */
+.pass-big-top { display: block; font-size: 48px; white-space: nowrap; }
+.pass-big-sub { display: block; font-size: 38px; margin-top: 2px; }
 .pass-sub {
   margin-top: 14px;
   font-family: var(--f-story);

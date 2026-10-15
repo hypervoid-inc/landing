@@ -154,7 +154,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       <h1 class="ns-title ptype"></h1>
       <div class="ns-pips" hidden>${"<i></i>".repeat(5)}</div>
       <div class="ns-pile"></div>
-      <div class="ns-spec">Runs on ....... its own computer\nRemembers ..... what it learned\nWorks ......... the shift you don't</div>
+      <div class="ns-spec">Runs on ....... its own computer\nRemembers ..... what it learned\nWorks ......... while you sleep</div>
       <div class="ns-caption" hidden aria-live="polite"><div class="ns-cap-time"></div><div class="ns-cap-line"></div></div>
       <a class="ns-badge" href="${esc(productHuntHref("x-show", "daily"))}" target="_blank" rel="noopener" tabindex="-1" aria-label="${esc(PH_DAILY_AWARD)} on Product Hunt">${PH_MARK}<span><small>Product Hunt</small><b>${esc(PH_DAILY_AWARD)}</b></span></a>
       <div class="ns-url">construct.computer</div>
@@ -638,7 +638,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       const choice = await untilTap([...body.querySelectorAll(".chip")], signal, { timeoutMs: 8000, fallback: 1 });
       env.track("ask_choice", { choice: choice === 0 ? "now" : "sleep" });
       squash(mascot);
-      await say(choice === 0 ? "Nice try. It can wait until 7, and so can you." : "Good call. I'll keep it on the note.");
+      await say(choice === 0 ? "It can wait. I'll ask you at 7." : "I'll keep it on the note for 7.");
       await W(1700);
       await bubble.hide(signal);
       qm.remove();
@@ -754,10 +754,10 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     if (here.night) {
       setTod("dusk");
       await raiseTitle([here.time.toUpperCase()], TITLE_W_DAY);
-      await say(`Oh, hi. It's ${here.time} in ${esc(here.city)}, and you're still at it.`);
+      await say(`It's ${here.time} in ${esc(here.city)} and you're still working.`);
     } else {
       await raiseTitle([here.time.toUpperCase()], TITLE_W_DAY);
-      await say(`Oh, hi. It's ${here.time} in ${esc(here.city)}. Too early for a night shift, so let's skip ahead.`);
+      await say(`It's ${here.time} in ${esc(here.city)}. Let's skip ahead to tonight.`);
       await W(1600);
       setTod("dusk");
       let mins = here.hours * 60 + here.minutes;
@@ -771,13 +771,13 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     }
     await W(1700);
     const b1 = await say(
-      `Is your to-do list done for today?<div class="chips"><button class="chip" type="button">Not even close</button><button class="chip alt" type="button">What to-do list?</button></div>`,
+      `Is today's list done?<div class="chips"><button class="chip" type="button">Not even close</button><button class="chip alt" type="button">Almost</button></div>`,
       "left",
       480,
     );
     const listAnswer = await untilTap([...b1.querySelectorAll(".chip")], signal, { timeoutMs: 9000 });
     squash(mascot);
-    await say(listAnswer === 0 ? "Classic. Hand it to me before you open a sixth tab." : "The one you'll suddenly remember at 3 am. Hand it to me now.");
+    await say(listAnswer === 0 ? "Then hand it to me. I'll work through it tonight." : "Then hand me the rest. I'll finish it tonight.");
     await W(2100);
     await bubble.hide(signal);
 
@@ -830,7 +830,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     env.begin(name);
     env.track("named", { given: Boolean(name) });
     squash(mascot);
-    await say(name ? `Nice to meet you, ${esc(name)}. Now pull the chain and go to bed.` : "Mysterious. I respect that. Now pull the chain and go to bed.");
+    await say(name ? `Thanks, ${esc(name)}. Pull the chain and get some sleep.` : "Pull the chain and get some sleep.");
     await pullChain();
     env.track("lights_out");
 
@@ -919,7 +919,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     // 5. Dawn.
     dots(5);
     screenOff();
-    await showCaption(clockLabel(3, 0), "The rest of the night is quiet. That's the point.");
+    await showCaption(clockLabel(3, 0), "By 3 am the list is done. One question waits for 7.");
     for (const [h, tod] of [
       [3, "night"],
       [4, "night"],
@@ -974,7 +974,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       pip(i, "done");
       await W(90);
     }
-    setLine("One tap from you, and the list is done before your coffee.");
+    setLine("One tap from you and the whole list is done.");
     await W(2600);
     await surface();
 
@@ -1115,17 +1115,17 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     // The offer is a pass you tear off, in the poster's own colours: the top
     // says what you get, the stub below the perforation takes the email.
     const card = el("div", "pass");
-    const who = name ? `${esc(name)}, same` : "Same";
+    const who = name ? `${esc(name)}, want` : "Want";
     card.innerHTML = `<div class="pass-top">
         <div class="pass-kicker">NIGHT SHIFT PASS · NO. 04821</div>
-        <div class="pass-big">First month<br>free</div>
-        <div class="pass-sub">${who} time tomorrow? Tell me where to send the morning report.</div>
-        <div class="pass-meta">5 jobs · 1 question · 0 coffees</div>
+        <div class="pass-big"><span class="pass-big-top">One month</span><span class="pass-big-sub">on us</span></div>
+        <div class="pass-sub">${who} this on your real list tonight? I'll email you the code.</div>
+        <div class="pass-meta">5 jobs done · 1 question for you</div>
       </div>
       <div class="pass-stub">
         <input class="pass-field" id="ns-email" type="email" autocomplete="email" enterkeyhint="send" placeholder="you@company.com" aria-label="Your email"><button class="pass-go wide" type="button">Claim my free month</button>
         <div class="pass-err" role="alert"></div>
-        <div class="pass-fine">Pro, free for 30 days. No card, leave anytime.</div>
+        <div class="pass-fine">Your first month free on any plan. Cancel anytime.</div>
       </div>`;
     w.appendChild(card);
     await tween(card, [{ transform: "translate(420px, 40px) rotate(14deg)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 760, easing: EASE_SPRING }, signal);
@@ -1152,7 +1152,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
         err.textContent = result.message;
         return;
       }
-      card.querySelector(".pass-sub")!.textContent = `See you tonight${name ? `, ${name}` : ""}. I'll be on shift at 11.`;
+      card.querySelector(".pass-sub")!.textContent = "Check your inbox for the code and how to start.";
       const stamp = el("div", "pass-stamp", "CLAIMED");
       card.querySelector(".pass-top")!.appendChild(stamp);
       stamp.animate([{ transform: "scale(2.6)", opacity: 0 }, { transform: "scale(1)", opacity: 1 }], { duration: 420, easing: EASE_SPRING });
