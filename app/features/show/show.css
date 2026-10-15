@@ -69,6 +69,33 @@
 .show-board input {
   font-size: max(22px, calc(16px / var(--s, 1)));
 }
+/* The sound switch: always visible (WCAG 1.4.2), small, in the top-right corner,
+   outside the scaled board so it stays a comfortable size in a 516 px card. */
+.show-sound {
+  position: fixed;
+  top: max(10px, env(safe-area-inset-top, 0px));
+  right: max(10px, env(safe-area-inset-right, 0px));
+  z-index: 40;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(13, 22, 48, .62);
+  color: #f8f3e6;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background .2s ease, transform .15s ease;
+}
+.show-sound:hover { background: rgba(13, 22, 48, .82); }
+.show-sound:active { transform: scale(.92); }
+.show-sound:focus-visible { outline: 3px solid #f6d23a; outline-offset: 2px; }
+.show-sound svg { width: 19px; height: 19px; }
+/* A bigger invisible target than the drawn circle, for thumbs. */
+.show-sound::after { content: ""; position: absolute; inset: -6px; }
+
 /* Turnstile stays out of sight unless Cloudflare asks for a click; then it
    rises as a small labelled card at the bottom, and drops away on success. */
 .show-turnstile {

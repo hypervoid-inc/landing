@@ -6,6 +6,7 @@ import { getTurnstileSiteKey } from "../../platform/env";
 import { captureAnalytics } from "../analytics/analytics.client";
 import { BOARD_H, BOARD_W, Stopped } from "./kit";
 import { ERROR_COPY, claimOffer, isFramed, sourceFromLocation, startSession } from "./session-client";
+import { createSound, type Sound } from "./sound";
 import "./show.css";
 
 const TURNSTILE_SITE_KEY =
@@ -28,6 +29,8 @@ export type ShowEnv = {
   /** `job` is the show's first pick, which the email is written around. */
   claim(email: string, name: string, job?: EmbedJob): Promise<{ ok: true; code: string } | { ok: false; message: string }>;
   track(beat: string, extra?: Record<string, string | number | boolean>): void;
+  /** Sound cues; silent until the first tap, and whenever the viewer mutes. */
+  sound: Pick<Sound, "play">;
 };
 
 /**
@@ -58,6 +61,8 @@ export function ShowHost({
   const [needsClick, setNeedsClick] = useState(false);
   const [waiting, setWaiting] = useState(false);
   const checking = needsClick && waiting;
+  const [sound, setSound] = useState<Sound | null>(null);
+  const [muted, setMutedState] = useState(false);
 
   useLayoutEffect(() => {
     const frame = frameRef.current;
@@ -76,6 +81,10 @@ export function ShowHost({
     const board = boardRef.current;
     if (!board) return;
     const framed = isFramed();
+    const snd = createSound();
+    setSound(snd);
+    setMutedState(snd.muted);
+    const offSound = snd.subscribe(setMutedState);
     // The player card's `?src=` says which post or page the viewer came from.
     const src = sourceFromLocation(window.location.search);
     let session: Promise<string | null> | null = null;
@@ -143,18 +152,30 @@ export function ShowHost({
         captureAnalytics("show_code_revealed", { show, src, framed });
         return { ok: true, code: result.code };
       },
-      track: (beat, extra) => captureAnalytics("show_beat", { show, src, framed, beat, ...extra }),
+      track: (beat, extra) => captureAnalytics("show_beat", { show, src, framed, sound: !snd.muted, beat, ...extra }),
+      sound: snd,
     };
 
     captureAnalytics("show_viewed", { show, src, framed });
     const stop = mount(board, env);
+    // Audio may only start inside a gesture: the first tap anywhere in the
+    // frame (the show's "tap to wake") creates the context. Capture phase, so
+    // it runs before the show's own handlers play their cue.
+    const frameEl = frameRef.current;
+    const unlock = () => snd.unlock();
+    const gestures = ["pointerdown", "touchend", "click", "keydown"] as const;
+    gestures.forEach((type) => frameEl?.addEventListener(type, unlock, { capture: true, passive: true }));
     const onError = (event: PromiseRejectionEvent) => {
       if (event.reason instanceof Stopped) event.preventDefault();
     };
     window.addEventListener("unhandledrejection", onError);
     return () => {
       window.removeEventListener("unhandledrejection", onError);
+      gestures.forEach((type) => frameEl?.removeEventListener(type, unlock, { capture: true }));
       stop();
+      offSound();
+      snd.dispose();
+      setSound(null);
     };
   }, [mount, show]);
 
@@ -172,6 +193,30 @@ export function ShowHost({
           ["--s" as string]: String(scale || 1),
         }}
       />
+      {sound ? (
+        <button
+          type="button"
+          className="show-sound"
+          aria-pressed={!muted}
+          aria-label={muted ? "Turn sound on" : "Mute sound"}
+          onClick={(event) => {
+            event.stopPropagation();
+            sound.setMuted(!muted, true);
+            captureAnalytics("show_beat", { show, beat: "sound", on: muted });
+          }}
+          onPointerDown={(event) => event.stopPropagation()}
+          onPointerUp={(event) => event.stopPropagation()}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor" />
+            {muted ? (
+              <path d="M16 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            ) : (
+              <path d="M15.5 8.8a4.5 4.5 0 0 1 0 6.4M18.2 6.2a8.2 8.2 0 0 1 0 11.6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            )}
+          </svg>
+        </button>
+      ) : null}
       {TURNSTILE_SITE_KEY ? (
         <div className={`show-turnstile${checking ? " on" : ""}`} aria-hidden={!checking}>
           <p className="show-turnstile-label">One quick check before we go on</p>

@@ -260,7 +260,10 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     const ready = next.complete && next.naturalWidth ? next.decode() : new Promise((r) => next.addEventListener("load", r, { once: true }));
     void Promise.race([ready.catch(() => undefined), wait(900, signal)]).then(show, () => undefined);
   };
+  // Each finished job plays the next note up the scale, so the night builds a melody.
+  let noteStep = 0;
   const pip = (i: number, state: "done" | "wait") => {
+    if (state === "done") env.sound.play("note", { step: noteStep++ });
     for (const p of [pips[i], pipsIn[i]]) {
       if (!p) continue;
       p.classList.remove("done", "wait");
@@ -269,13 +272,15 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     }
   };
   const face = () => mascotLeftCheek(place);
-  const say = (html: string, side: "left" | "right" = "left", maxWidth = 400, top = 0) =>
-    bubble.say(
+  const say = (html: string, side: "left" | "right" = "left", maxWidth = 400, top = 0) => {
+    env.sound.play("blip");
+    return bubble.say(
       html,
       // Never over the poster title: the top bound sits under its last row.
       { anchor: face(), side, maxWidth, bounds: { left: 44, top: Math.max(top, title.offsetTop + title.offsetHeight + 18), right: 840, bottom: 640 } },
       signal,
     );
+  };
   const hint = (text: string, pos: Partial<CSSStyleDeclaration>) => {
     const h = el("div", "ns-hint", esc(text));
     Object.assign(h.style, pos);
@@ -338,6 +343,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
   /** The clock as an odometer: only the characters that change roll. */
   const rollTitle = (text: string) => {
     const old = title.textContent ?? "";
+    env.sound.play("tick");
     setTitle([text], TITLE_W_NIGHT);
     title.querySelectorAll<HTMLElement>(".ch").forEach((c, i) => {
       if (old[i] === text[i]) return;
@@ -385,6 +391,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
   // inside fades up. Short when the viewer is holding to peek.
   let deep = false;
   const dive = async (ms = 760) => {
+    env.sound.play("whooshIn");
     backdrop("#d6ccb8");
     const c = screenCenter(place);
     world.style.transformOrigin = `${c.x}px ${c.y}px`;
@@ -405,6 +412,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     await zoom;
   };
   const surface = async (ms = 700) => {
+    env.sound.play("whooshOut");
     backdrop("#fbfdff");
     deep = false;
     inside.classList.remove("on");
@@ -423,6 +431,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
   // ── the CRT's own screen ─────────────────────────────────────────────
   const screenShow = (html: string) => {
     const cold = crt.dataset.screen !== "on";
+    if (cold) env.sound.play("crt");
     crt.dataset.screen = "on";
     screen.innerHTML = html;
     // From off, the tube warms up the way a real one does: a bright line
@@ -628,6 +637,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       note.style.top = "486px";
       note.style.rotate = "-6deg";
       props.appendChild(note);
+      env.sound.play("pop", { step: 2 });
       await tween(note, [{ transform: "translateY(-260px) scale(1.4) rotate(14deg)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 520, easing: EASE_SPRING }, signal);
       pip(3, "wait");
       const body = await say(
@@ -636,6 +646,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
         460,
       );
       const choice = await untilTap([...body.querySelectorAll(".chip")], signal, { timeoutMs: 8000, fallback: 1 });
+      env.sound.play("chip", { step: choice === 0 ? 0 : 2 });
       env.track("ask_choice", { choice: choice === 0 ? "now" : "sleep" });
       squash(mascot);
       await say(choice === 0 ? "It can wait. I'll ask you at 7." : "I'll keep it on the note for 7.");
@@ -650,6 +661,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       const node = pileItem(`<div class="top">MONDAY</div><div class="day">${nextMonday()}</div><span class="stamp">8:00 BRIEF</span>`, "monday");
       node.classList.add("cal");
       await fly(node, screenCenter(place), pileCount);
+      env.sound.play("stamp");
       node.querySelector(".stamp")?.animate([{ transform: "scale(2.4)", opacity: 0 }, { transform: "scale(1)", opacity: 1 }], { duration: 380, easing: EASE_SPRING, fill: "backwards" });
     },
     memory: async () => {
@@ -736,6 +748,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     await document.fonts.load('800 100px "Show Sora"').catch(() => undefined);
     setTitle(["AI EMPLOYEE"], TITLE_W_DAY);
     await untilTap([start], signal);
+    env.sound.play("wake");
     // The other skies load once the viewer is in, so the first frame stays light.
     board.querySelectorAll<HTMLImageElement>("img[data-src]").forEach((img) => {
       img.src = img.dataset.src!;
@@ -776,6 +789,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       480,
     );
     const listAnswer = await untilTap([...b1.querySelectorAll(".chip")], signal, { timeoutMs: 9000 });
+    env.sound.play("chip", { step: listAnswer === 0 ? 0 : 2 });
     squash(mascot);
     await say(listAnswer === 0 ? "Then hand it to me. I'll work through it tonight." : "Then hand me the rest. I'll finish it tonight.");
     await W(2100);
@@ -792,6 +806,8 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     const chosen = untilTap(rows, signal, { timeoutMs: 12000, fallback: 3 });
     await dive();
     const choice = await chosen;
+    env.sound.play("pop");
+    window.setTimeout(() => env.sound.play("pop", { step: 2 }), 140);
     pick = choice < LIST.length ? choice : 3;
     rows.forEach((r, i) => r.classList.add(i === pick ? "on" : "dim"));
     env.track("handoff", { pick });
@@ -802,6 +818,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     await W(700);
     const reply = card.querySelector<HTMLElement>(".sl-reply")!;
     reply.innerHTML = `<div class="sl-msg"><div class="sl-av m">${mascotMarkup("happy")}</div><div class="sl-body"><div class="sl-who"><b>Construct</b><em>APP</em><span>${clockLabel(23, 4)}</span></div><div class="sl-text">On it. I'll start with <b>${esc(LIST[pick]![0]!.toLowerCase() + LIST[pick]!.slice(1))}</b> and have the rest done before 9.</div></div></div>`;
+    env.sound.play("chime");
     reply.animate([{ opacity: 0, transform: "translateY(12px)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: EASE_OUT });
     await W(2600);
     await surface();
@@ -815,7 +832,10 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     );
     const input = nb.querySelector<HTMLInputElement>("input")!;
     const named = await new Promise<string>((resolve, reject) => {
-      const done = () => resolve(input.value);
+      const done = () => {
+        env.sound.play("chip", { step: 4 });
+        resolve(input.value);
+      };
       nb.querySelector(".chip")!.addEventListener("click", done);
       input.addEventListener("keydown", (e) => {
         if (e.key === "Enter") done();
@@ -836,6 +856,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
 
     // Lights out. The room drops dark on the click, the tube warms up, and
     // the night comes up as the eyes adjust. Nothing flashes.
+    env.sound.play("lamp");
     void bubble.hide(signal);
     const dim = el("div", "ns-dim");
     world.insertBefore(dim, q(".ns-art").nextSibling);
@@ -932,6 +953,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       await W(700);
     }
     birds();
+    env.sound.play("birds");
     setFace(mascot, "happy");
     squash(mascot);
     q(".ns-world .ns-pips").hidden = true;
@@ -967,6 +989,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     const answered = untilTap([...askBox.querySelectorAll(".sl-btn")], signal, { timeoutMs: 15000 });
     await dive();
     const answer = await answered;
+    env.sound.play("chip", { step: answer === 0 ? 2 : 4 });
     env.track("answered", { answer });
     askBox.innerHTML = `<div class="sl-text"><b>One question.</b> Two Acme invoices are open. Should I chase both?</div><div class="sl-answer"><span class="ok">✓</span>${answer === 0 ? "Chased #4821. The reminder went out" : "Chased both. The reminders went out"} from ${mail()} at 7:02 am.</div>`;
     askBox.animate([{ transform: "scale(.96)" }, { transform: "scale(1)" }], { duration: 380, easing: EASE_SPRING });
@@ -1128,6 +1151,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
         <div class="pass-fine">Your first month free on any plan. Cancel anytime.</div>
       </div>`;
     w.appendChild(card);
+    window.setTimeout(() => env.sound.play("pop"), 420);
     await tween(card, [{ transform: "translate(420px, 40px) rotate(14deg)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 760, easing: EASE_SPRING }, signal);
     const field = card.querySelector<HTMLInputElement>(".pass-field")!;
     const go = card.querySelector<HTMLButtonElement>(".pass-go")!;
@@ -1153,6 +1177,8 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
         return;
       }
       card.querySelector(".pass-sub")!.textContent = "Check your inbox for the code and how to start.";
+      env.sound.play("stamp");
+      window.setTimeout(() => env.sound.play("logo"), 160);
       const stamp = el("div", "pass-stamp", "CLAIMED");
       card.querySelector(".pass-top")!.appendChild(stamp);
       stamp.animate([{ transform: "scale(2.6)", opacity: 0 }, { transform: "scale(1)", opacity: 1 }], { duration: 420, easing: EASE_SPRING });
