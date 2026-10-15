@@ -18,6 +18,20 @@
     <summary>AI agent reliability calculator: a 95% reliable agent finishes a 48-step job in one run 8.5% of the time. See retries, half-life, and what checkpoints fix.</summary>
   </entry>
   <entry>
+    <title>Construct is now on Discord: an AI agent that works inside your server</title>
+    <id>https://construct.computer/blog/ai-agent-discord-bot/</id>
+    <link href="https://construct.computer/blog/ai-agent-discord-bot/"/>
+    <author><name>Nischal</name></author>
+    <published>2026-10-15T00:00:00Z</published>
+    <updated>2026-10-15T00:00:00Z</updated>
+    <category term="product"/>
+    <category term="ai-agent"/>
+    <category term="ai-employee"/>
+    <category term="discord"/>
+    <category term="governance"/>
+    <summary>Add Construct&apos;s AI agent to Discord. Mention it in any channel, it works in a thread, follows channels you pick and keeps your server&apos;s context. From $9.</summary>
+  </entry>
+  <entry>
     <title>Dots vs Muse vs Grok Bot vs Claude Cowork for a small business</title>
     <id>https://construct.computer/blog/always-on-ai-agents-compared/</id>
     <link href="https://construct.computer/blog/always-on-ai-agents-compared/"/>

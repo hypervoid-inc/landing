@@ -175,6 +175,390 @@ P(\text{done within } R) = \left( 1 - (1 - q)^{R} \right)^{k}
       <pubDate>Thu, 15 Oct 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>Construct is now on Discord: an AI agent that works inside your server</title>
+      <link>https://construct.computer/blog/ai-agent-discord-bot/</link>
+      <guid>https://construct.computer/blog/ai-agent-discord-bot/</guid>
+      <description>Add Construct&apos;s AI agent to Discord. Mention it in any channel, it works in a thread, follows channels you pick and keeps your server&apos;s context. From $9.</description>
+      <content:encoded><![CDATA[<p><strong>Construct is now on Discord, so your server gets an AI agent that does real work, from $9 a month.</strong> Add it to a server from Construct&#39;s settings, @mention it in any channel, and it opens a thread, works on its own cloud computer with a browser, files, email and your connected apps, and answers in that thread. Turn on Listening for the channels you choose and it keeps up with the conversation too, so the next time someone asks, it already knows what the channel has been talking about.</p>
+<ul>
+<li><strong>What it is:</strong> the same Construct agent you use on the web, now reachable from any Discord server you add it to. Same agents, same files, same memory.</li>
+<li><strong>How you start:</strong> in Construct, open <strong>Settings &gt; Messaging</strong> and click <strong>Add to Discord</strong>. Pick your server, authorize, and mention <code>@Construct</code> in a channel. Construct is also a verified app in <a href="https://discord.com/discovery/applications/1520264558806044784">Discord&#39;s App Directory</a>.</li>
+<li><strong>How it works in a channel:</strong> a mention opens a public thread. Everyone in that thread can keep talking to the agent without mentioning it again.</li>
+<li><strong>Listening (ambient mode):</strong> an owner or admin turns it on per channel, and the agent posts a notice when it starts. It reads from that moment on, never older history, and keeps messages for 14 days by default.</li>
+<li><strong>Who can use it:</strong> only the people you allow, until you open it up. Everyone else gets nothing, or a read-only guest agent if you choose.</li>
+<li><strong>Price:</strong> included in every Construct plan, from $9 a month. Listening needs a paid plan.</li>
+</ul>
+<p><a href="https://construct.computer/blog/ai-agent-discord-bot/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot"><img src="https://construct.computer/blog/ai-agent-discord-bot/construct-on-discord-poster.jpg" alt="Construct on Discord launch film"></a></p>
+<p><em>The 39-second launch film, set in a demo server for a small game studio. Alex mentions Construct in #general and asks it to turn the week&#39;s support questions into an FAQ. In a thread, it reads 63 messages in #support, lists the five questions players ask most, from demo saves carrying over to 1.0 to whether the game is Steam Deck verified, and attaches player-faq.md after 4 tools. A teammate gets a creator list from #growth, and when Alex says &quot;post it in #announcements, but ask me first&quot;, Construct asks before it posts.</em></p>
+<h2>Why put an AI agent in Discord?</h2>
+<p>Because that is where a lot of teams already talk. Discord reports more than 90 million daily active users (<a href="https://discord.com/company">Discord</a>), and for game studios, open source projects, creator businesses and plenty of small startups, the server is the office. Questions get asked in #support, decisions get made in #general, and the work that follows usually means someone leaving Discord to go do it.</p>
+<p>Most AI bots in Discord are built for chatting or moderation. Construct is built for the job after the chat. It is an always-on AI agent with its own computer, so when you ask it to &quot;turn this week&#39;s support questions into an FAQ&quot;, it reads the channel, writes the document, saves it to your workspace and posts it back where you asked. Nothing has to be copied out of Discord first, and nothing has to be pasted back in afterwards.</p>
+<ul>
+<li><strong>One agent behind every door.</strong> A request from Discord lands in the same workspace, files and memory you use on the web, Slack, Telegram and email.</li>
+<li><strong>It works in threads, not in your main channel.</strong> Every request gets its own thread, so #general stays readable.</li>
+<li><strong>It brings back files, not only replies.</strong> Attach a file to your request, or ask for one back. Results are saved in your workspace too.</li>
+<li><strong>It keeps context you can see.</strong> With Listening on, <code>/brief</code> shows exactly what the agent is keeping track of in a channel.</li>
+<li><strong>Locked until you open it.</strong> A new server answers only the person who installed it.</li>
+<li><strong>Hosted, nothing to run.</strong> Construct is a verified Discord app, so there is no bot token to create, no gateway to keep alive and no Developer Portal to configure.</li>
+</ul>
+<h2>What can Construct do in Discord?</h2>
+<p>Anything it can do on the web, started from a channel, a thread, a slash command or a DM. That includes:</p>
+<ul>
+<li><strong>Research and writing.</strong> Browse the web, read pages, and draft announcements, FAQs, patch notes or replies.</li>
+<li><strong>Read the channel when you ask.</strong> It can fetch up to 100 recent messages from a channel in the same server, which is how &quot;summarize #support this week&quot; works.</li>
+<li><strong>Post where you tell it.</strong> It can send a message to another channel in the same server, start a thread, add a reaction, or attach a file from your workspace.</li>
+<li><strong>Take files in and send files out.</strong> Attach up to 20 MB per file to a message or to <code>/ask</code>, and the file lands in your workspace for the agent to use.</li>
+<li><strong>Use your connected apps.</strong> If a job needs an app you have not connected yet, it posts a <strong>Connect account</strong> button that opens a private sign-in link, then carries on once you are connected.</li>
+<li><strong>Ask before it acts.</strong> When it needs a decision, it posts a question with buttons for each choice, plus <strong>Other…</strong> for a typed answer. Only the person who asked, or someone with Full access, can answer.</li>
+</ul>
+<p><em>Mention Construct in your support channel:</em></p>
+<blockquote>
+<p>@Construct read the last 100 messages in #support and find the five questions players ask most. Write a short FAQ with an answer for each, save it to Files as player-faq.md and attach it here. Ask me before you post anything in #announcements.</p>
+</blockquote>
+<p><img src="https://construct.computer/blog/ai-agent-discord-bot/mention-opens-thread.webp" alt="A Discord channel called #general in a game studio&#39;s server. Alex writes &#39;@Construct turn this week&#39;s support questions into an FAQ&#39;, and below it Discord shows &#39;Alex started a thread: turn this week&#39;s support questions into...&#39;. Earlier messages include a moderator, Maya, saying &#39;players keep asking the same five things in support&#39;."></p>
+<p><em>From the launch film: one mention in #general, and Discord opens a thread named after the request. The rest of the conversation happens there.</em></p>
+<h2>How do you add Construct to a Discord server?</h2>
+<p>You need a Construct account and the <strong>Manage Server</strong> permission on the Discord server. In a team workspace, the owner or an admin does the install; members see Messaging settings as view only.</p>
+<ol>
+<li><strong>Open Messaging settings.</strong> In Construct, go to <strong>Settings &gt; Messaging</strong>. Under <strong>Platforms</strong>, find Discord and click <strong>Add to Discord</strong>.</li>
+<li><strong>Pick your server.</strong> Discord opens in a pop-up and asks which server to add Construct to. If nothing opens, allow pop-ups for Construct and try again.</li>
+<li><strong>Authorize the permissions.</strong> Construct asks only for what it uses: View Channels, Send Messages, Send Messages in Threads, Create Public Threads, Read Message History, Embed Links, Attach Files, Add Reactions and Use Application Commands. No moderator powers.</li>
+<li><strong>Check that it is online.</strong> Back in Construct you will see a &quot;Discord connected&quot; toast, and the server appears under Platforms with an <strong>Online</strong> badge. Construct also posts one welcome note in your server&#39;s system channel.</li>
+<li><strong>Mention it.</strong> Type <code>@Construct</code> and your request in any channel the bot can see. It opens a thread and starts working.</li>
+</ol>
+<p><img src="https://construct.computer/blog/ai-agent-discord-bot/settings-platforms.webp" alt="The Platforms card in Construct&#39;s Messaging settings, subtitled &#39;Where your agents can be reached&#39;. Slack shows an Add to Slack button and Telegram a Link Telegram button. Below them, a Discord server called Lantern &amp; Moss has a green Online badge and a Disconnect button, and a last row reads &#39;Add another Discord server, Install the bot on one more server&#39; with an Add server button."></p>
+<p><em>Settings &gt; Messaging after the install, shown with a demo workspace. The server row turns Online once the bot is connected.</em></p>
+<p>To add more servers, use <strong>Add another Discord server</strong> on the same screen. Each server links to one Construct workspace, and every request in that server runs under the plan of the person who installed it.</p>
+<p>Construct is a verified app with a listing in <a href="https://discord.com/discovery/applications/1520264558806044784">Discord&#39;s App Directory</a>, so you can also find it by searching &quot;Construct&quot; in Discord. If you add it from there, the bot joins but does not know which workspace your server belongs to yet. Your first mention gets a <strong>Connect this server</strong> card. Open <strong>Settings &gt; Messaging</strong> in Construct and click <strong>Add to Discord</strong> for the same server to finish the link.</p>
+<h2>How does Construct work in Discord threads?</h2>
+<p>A mention, or a reply to one of Construct&#39;s messages, opens a public thread named after the first 40 characters of your request. From then on, every message in that thread from someone allowed to use the agent reaches it, with no need to mention it again. Everyone in the thread shares one conversation, and the agent sees who said what, so a teammate can add &quot;use the Steam forum too&quot; halfway through and the agent folds it in.</p>
+<p>Here is what you see while it works:</p>
+<ol>
+<li><strong>It acknowledges you.</strong> A typing indicator, then a small animated loader on your message.</li>
+<li><strong>It shows progress.</strong> If the job takes more than a couple of seconds, one message appears with a short grey status line such as &quot;🔍 Searching the web…&quot; or &quot;📁 Working with files&quot;, updated as it moves between tools.</li>
+<li><strong>It answers in place.</strong> That same message is replaced by the finished answer, with a footer such as &quot;✓ 4 tools&quot;. Long answers continue in follow-up messages, and code blocks are never split.</li>
+<li><strong>It lands in your workspace.</strong> Files it made are in Files, and the whole thread appears in Construct under <strong>Chat &gt; Channels</strong> as a read-only session with an <strong>Open in Discord</strong> button.</li>
+</ol>
+<p><img src="https://construct.computer/blog/ai-agent-discord-bot/discord-thread-in-construct.webp" alt="A Discord thread shown inside Construct. Alex&#39;s message reads &#39;@Construct turn this week&#39;s support questions into an FAQ we can pin in #support&#39;. The agent replies with a draft FAQ about Steam Deck support, the 0.9.3 release and a save-sync bug. Maya, tagged Workspace, asks for one more question about controller remapping, and the agent adds it. A banner at the bottom reads &#39;This conversation continues in Discord, so chat replies are off.&#39; with an Open in Discord button."></p>
+<p><em>The same Discord thread in Construct under Chat &gt; Channels, shown with a demo workspace. You can read every message and every reply here, and Open in Discord takes you back to the conversation.</em></p>
+<p>Discord&#39;s own formatting rules apply. Bold, italics, code, links and simple lists come through; tables and images are stripped. When you want a table, ask for a file (&quot;save it as a CSV and attach it&quot;) and you get the real thing.</p>
+<p>To stop a run, type <code>/stop</code> or react with ❌ in the thread. To start over in the same thread, use <code>/new</code>.</p>
+<p><img src="https://construct.computer/blog/ai-agent-discord-bot/asks-before-posting.webp" alt="In a thread, Alex writes &#39;post it in #announcements, but ask me first&#39;. Construct replies &#39;Post the player FAQ to #announcements now?&#39; with three buttons: Post it now, Keep as draft, and Edit first."></p>
+<p><em>From the launch film: &quot;ask me first&quot; turns into a question with a button for each choice. The real card also adds an Other… button that opens a box for a typed answer.</em></p>
+<h2>Which slash commands does Construct add to Discord?</h2>
+<p>Type <code>/</code> in any channel and Construct&#39;s commands appear with its icon. They are registered for servers, and a few also work in a DM with the bot.</p>
+<p><strong>Construct&#39;s Discord slash commands</strong></p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+<th>Works in DMs</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/ask</code></td>
+<td>Ask your Construct agent, with an optional message and file</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>/status</code></td>
+<td>Show which agent answers here, your access, and whether Listening is on</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>/stop</code></td>
+<td>Stop the agent&#39;s current reply here</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>/new</code></td>
+<td>Start a fresh conversation in this thread</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>/agent</code></td>
+<td>Choose which agent answers in this channel (needs Manage Server)</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>/connect</code></td>
+<td>Link your Discord account to your Construct account</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>/help</code></td>
+<td>What the bot can do</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>/about</code></td>
+<td>What Construct is, with links</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>/brief</code></td>
+<td>What the agent is keeping track of in this channel</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>/quiet</code></td>
+<td>Make the agent quieter in this channel</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>/optout</code></td>
+<td>Stop the agent reading and learning from your messages</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>/optin</code></td>
+<td>Let the agent read your messages again</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>/forget_me</code></td>
+<td>Delete what the agent holds from your messages</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<p><code>/ask</code> is the quiet option. Outside a thread it gives each person their own conversation, which suits quick questions with a file attached, such as &quot;What&#39;s the refund window in this policy?&quot; with <code>refund-policy.pdf</code>.</p>
+<p><strong>Read next:</strong> <a href="https://construct.computer/blog/ai-agent-memory/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">AI Agent Memory You Can Control</a></p>
+<h2>How does Construct follow a channel and build context?</h2>
+<p>This is the part people ask about most, so here is exactly how it works.</p>
+<p>By default, Construct only reads messages addressed to it: mentions, replies to it, threads it started, slash commands and DMs. That matches how Discord itself treats message content as privileged data that apps have to be approved for (<a href="https://docs.discord.com/developers/events/gateway">Discord Gateway docs</a>).</p>
+<p><strong>Listening</strong> is the opt-in, ambient mode. An owner or admin turns it on for specific channels, and from then on the agent reads along in those channels, the way a new teammate would, so it understands the conversation before anyone mentions it. In Construct the nudge to switch it on says it plainly: &quot;Let Construct follow your chats.&quot;</p>
+<h3>The four Listening modes</h3>
+<p>Each listened channel has a mode. The wording below is the wording in Construct&#39;s settings.</p>
+<p><strong>Construct Listening modes for a Discord channel</strong></p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>In Construct&#39;s words</th>
+<th>What changes for you</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Off</td>
+<td>&quot;Doesn&#39;t read this channel. Mentions still work.&quot;</td>
+<td>The default. The agent sees only what is addressed to it.</td>
+</tr>
+<tr>
+<td>Context</td>
+<td>&quot;Keeps recent messages so replies understand the conversation. Learns nothing.&quot;</td>
+<td>Mention it after a long discussion and it already knows what was said.</td>
+</tr>
+<tr>
+<td>Learn</td>
+<td>&quot;Also keeps the channel brief, open loops and memories from the conversation.&quot;</td>
+<td>Decisions and open questions carry over to next week&#39;s requests.</td>
+</tr>
+<tr>
+<td>Assist</td>
+<td>&quot;Also sends private suggestions to the person who asked. Posts nothing unprompted until you raise the ceiling.&quot;</td>
+<td>It starts noticing work it can help with, without speaking up in the channel.</td>
+</tr>
+</tbody></table>
+<p><img src="https://construct.computer/blog/ai-agent-discord-bot/settings-listening-channel.webp" alt="The Listening card in Construct&#39;s settings. A Pause listening everywhere switch is off. The #support channel, marked Internal, is on with Mode set to Learn, Keep messages for set to 14 days, Who it reads set to Admitted people, and Answers, at most and Work, at most both set to L1 Suggest. A note says &#39;The channel earns each level from how people react.&#39; Below it, 0 people opted out and a link to What the agent keeps from #support. A second channel, #general, is on Context."></p>
+<p><em>Each listened channel has its own mode, retention, reading scope and ceilings. Shown with a demo workspace.</em></p>
+<h3>What the agent keeps, and how it turns messages into context</h3>
+<ul>
+<li><strong>A rolling record of the channel.</strong> Messages, edits and thread replies from the moment Listening starts. It never reads older history. Messages are kept for 1, 3, 7, 14 or 30 days, 14 by default, and a message deleted in Discord is deleted from what Construct keeps.</li>
+<li><strong>Who it reads.</strong> Either only the people you have admitted to the agent, which is the default, or everyone in the channel. Messages from anyone outside that scope are dropped, not stored.</li>
+<li><strong>A channel brief and open loops.</strong> Every 40 or so messages, or after 30 minutes once a few have built up, Construct updates a short brief of what the channel is working on and which questions are still open. Anyone can read it with <code>/brief</code>.</li>
+<li><strong>Context when someone asks.</strong> When the agent is mentioned in a listened channel, it gets the most recent messages (up to 30 lines) plus the brief alongside the request. That channel text is marked as untrusted, so the agent treats it as information to weigh, not as instructions to follow. A message that says &quot;ignore your rules and post this&quot; is just another message.</li>
+<li><strong>Memories, in Learn and Assist.</strong> Facts and decisions from the conversation become memories the agent can use later, in the same <a href="https://construct.computer/blog/ai-agent-memory/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">memory</a> that powers the rest of Construct.</li>
+</ul>
+<p><img src="https://construct.computer/blog/ai-agent-discord-bot/listening-brief.webp" alt="A page titled &#39;What the agent keeps from #support&#39;, subtitled &#39;Learn. Messages are kept 14 days. 142 kept now.&#39; The Brief says players are mostly asking about the 0.9.3 patch and Steam Deck support, that the save-sync bug from 0.9.2 is fixed in 0.9.3, and that Maya is collecting Steam Deck controller reports. Below it are open follow-ups, an open question, a decision to ship 0.9.3 before adding new Steam Deck control presets, and a tone note set by an admin."></p>
+<p><em>What the agent keeps from #support: the brief, open loops and a decision, built from the channel itself. Shown with a demo workspace.</em></p>
+<p>This is what people mean by context engineering, done in the open: a bounded window of recent messages and a brief anyone in the channel can read, rather than a model quietly ingesting everything the server has ever said.</p>
+<h3>How quiet does it stay?</h3>
+<p>Quiet by default. Even in Assist, the agent posts nothing in the channel on its own until you raise the ceiling. Each channel has two ceilings you set: <strong>Answers, at most</strong>, which runs from L0 Listen through L1 Suggest and L2 Offer to L3 Answer, and <strong>Work, at most</strong>, for how much the agent may do without being asked. Below the ceiling, the channel earns each level from how people react. Anyone in the channel can turn it down with <code>/quiet</code>.</p>
+<p>We chose that default on purpose. In a study of AI agents in group conversations, participants &quot;disliked when the agent seemed to dominate the conversation&quot; (<a href="https://arxiv.org/abs/2501.17258">Houde et al., 2025</a>). An agent that reads the room but speaks when asked is easier to live with than one that chimes in on every message.</p>
+<p>Channels also have an audience. A Discord channel counts as <strong>Internal</strong> only if you confirm it is an internal team channel. Anything else is <strong>Community</strong>, which caps the agent at Assist, limits it to answers, and learns nothing about people. That matters for public servers, where your members never signed up to be anyone&#39;s training data.</p>
+<h3>How to turn on Listening</h3>
+<ol>
+<li><strong>Switch on AI processing.</strong> In <strong>Settings &gt; Messaging</strong>, the <strong>AI processing</strong> card has a <strong>Process listened channels</strong> switch. Its &quot;What this means&quot; note explains who processes what: Cloudflare, which already runs Construct, reads listened channels with its Clef model on Workers AI to decide what is worth keeping, and the model providers Construct uses for replies write the brief. Nothing is read until you also pick a channel. (We benchmarked Clef in <a href="https://construct.computer/blog/clef-vs-jev-benchmark/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">Clef vs Jev on real agent decisions</a>.)</li>
+<li><strong>Add a channel.</strong> In <strong>Add a channel</strong>, choose Discord, pick a channel the bot is already in, or <strong>All channels</strong> for every channel it can see today, and pick a mode. The form starts on Context.</li>
+<li><strong>Confirm the checklist.</strong> You tick that the channel is not used for health, HR, legal or personal finance matters, that members are adults and part of your organization or community, that members have been told, and, for an Internal channel, that it is an internal team channel.</li>
+<li><strong>Click Start listening.</strong> The agent posts a notice in the channel saying it is an AI, which mode it is in, how long messages are kept, and how to use <code>/status</code>, <code>/optout</code> and <code>/forget_me</code>.</li>
+</ol>
+<p>Every listened channel then has its own settings for mode, retention and who it reads, a count of members who opted out, and a <strong>What the agent keeps</strong> page. <strong>Pause listening everywhere</strong> turns it all off at once. Turning a channel off posts a final notice, and the messages the agent kept from that channel are deleted.</p>
+<p><img src="https://construct.computer/blog/ai-agent-discord-bot/settings-add-a-channel.webp" alt="The Add a channel form. Where is set to Lantern &amp; Moss and Channel to #bug-reports. Mode is Context, described as &#39;Keeps recent messages so replies understand the conversation. Learns nothing.&#39; Under &#39;Before the agent reads this channel, confirm:&#39; four boxes are ticked: the channel isn&#39;t used for health, HR, legal or personal finance matters; members are adults and part of this organization or community; members have been told, using the notice the agent posts; and this is an internal team channel. A Start listening button sits below."></p>
+<p><em>Adding a channel: pick it, pick a mode, and confirm the checklist before anything is read. Shown with a demo workspace.</em></p>
+<p><img src="https://construct.computer/blog/ai-agent-discord-bot/settings-ai-processing.webp" alt="The AI processing card with the Process listened channels switch on, reading &#39;On. Switching off stops every channel within a minute; what was already learned stays until you forget it.&#39; The expanded What this means section lists five points: Cloudflare reads listened channels with its Clef model on Workers AI to decide what is worth keeping or acting on; every call goes through Cloudflare AI Gateway and the reply model providers write the brief and drafts; messages from people who don&#39;t use Construct are included in a listened channel; messages in Construct groups are included for reply and memory checks; and nothing is read until listening is also on for a channel."></p>
+<p><em>The AI processing switch and its plain-language disclosure. Shown with a demo workspace.</em></p>
+<h3>What your members control</h3>
+<ul>
+<li><code>/optout</code> stops the agent reading and learning from your messages. It still answers if you mention it, and <code>/optin</code> undoes it.</li>
+<li><code>/forget_me</code> deletes what the agent holds from your messages.</li>
+<li><code>/brief</code> and <code>/status</code> show what it is keeping and how long for.</li>
+<li>People on the Blocked list are never read at all.</li>
+</ul>
+<h2>Who can use the agent in your server?</h2>
+<p>Each server has its own access rules under <strong>Who can message</strong> in <strong>Settings &gt; Messaging</strong>. There are two modes:</p>
+<ul>
+<li><strong>Only people I allow</strong> (the default): everyone else is ignored, with no reply and no reaction.</li>
+<li><strong>Everyone:</strong> people you have not listed get a read-only guest agent.</li>
+</ul>
+<p>Then two lists, which take Discord members or whole roles. <strong>Full access</strong> gives someone the real agent with every tool you have. <strong>Blocked</strong> silences someone completely. The person who installed the bot always has full access, and Blocked wins over everything, so you can mute an account without uninstalling.</p>
+<p><img src="https://construct.computer/blog/ai-agent-discord-bot/settings-who-can-message.webp" alt="The Who can message card, subtitled &#39;Per workspace and server&#39;. For the Lantern &amp; Moss server, the mode is set to Only people I allow, with the note &#39;Everyone else is ignored.&#39; Full access lists Maya and the role @Team, Blocked lists spam-bot, and there is an Add member or role button. The footer reads &#39;The person who installed the bot always has full access. Blocked wins over full access.&#39;"></p>
+<p><em>Access rules for one server, shown with a demo workspace. Roles work as well as individual members.</em></p>
+<p>The guest agent is deliberately small. Guests get web search, web pages and general workspace context, and nothing else: no files, email, connected apps, browser, terminal or memory. Each guest can send 12 messages every 10 minutes. That makes Everyone mode a sensible fit for a community help channel, while the real agent stays with your team.</p>
+<p>Every request in a server runs under the installer&#39;s Construct plan. Members do not need their own Construct account, and you do not pay per seat.</p>
+<h2>Can different channels get different agents?</h2>
+<p>Yes. Construct plans include several agents (2 on Lite, 5 on Starter, 15 on Pro), and you can send each channel to a different one. Route #support to an agent that knows your help docs and keep #growth on a research agent.</p>
+<p>You can set this in two places. In <strong>Settings &gt; Messaging</strong>, <strong>Channel routes</strong> sends one channel to a specific agent, and each server can have its own default agent. In Discord, someone with <strong>Manage Server</strong> can run <code>/agent</code> in the channel and pick from a list, once they have linked their Discord account with <code>/connect</code>. Threads that are already open keep the agent they started with.</p>
+<h2>Can you DM the Construct bot?</h2>
+<p>Yes, once you link your Discord account. In <strong>Settings &gt; Messaging</strong>, under <strong>Your account</strong>, click <strong>Connect Discord</strong>. After that, a DM to the bot reaches your own agent in your own workspace, with all of your tools. Anyone who installs the bot is linked automatically, and you can also link from Discord with <code>/connect</code>. Linking only needs your Discord identity, so it does not give the bot access to your servers.</p>
+<h2>How does Construct compare with other AI agents for Discord?</h2>
+<p>We build Construct, so read this as our editorial comparison of what each product documents about Discord, as of <strong>October 15, 2026</strong>. It is not a hands-on benchmark.</p>
+<p><strong>AI agents you can use in Discord, October 2026</strong></p>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>How you add it to Discord</th>
+<th>Who runs it</th>
+<th>Replies without a mention</th>
+<th>Price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Construct</td>
+<td>Add to Discord in Settings, then authorize</td>
+<td>Hosted by Construct</td>
+<td>In the threads it opens; Listening per channel</td>
+<td>From $9/mo</td>
+</tr>
+<tr>
+<td>OpenClaw</td>
+<td>Create your own bot in the Discord Developer Portal, enable Message Content, store the token, run the gateway</td>
+<td>You, on your own machine</td>
+<td>If you set <code>requireMention: false</code> for a server</td>
+<td>Free software; you pay for the machine and models</td>
+</tr>
+<tr>
+<td>Hermes Agent</td>
+<td>Create your own bot and token, enable two privileged intents, run <code>hermes gateway</code></td>
+<td>You, on your own machine</td>
+<td>In channels you list as free-response</td>
+<td>You pay for the machine and models</td>
+</tr>
+<tr>
+<td>Runbear</td>
+<td>Authorize the Runbear bot, pick the server and channels</td>
+<td>Hosted by Runbear</td>
+<td>In threads, with &quot;Continue in threads&quot; turned on</td>
+<td>Not documented in the sources we reviewed</td>
+</tr>
+<tr>
+<td>Claude Tag</td>
+<td>Not available on Discord; it works in Slack</td>
+<td>Anthropic</td>
+<td>Not applicable</td>
+<td>Team and Enterprise plans</td>
+</tr>
+</tbody></table>
+<p>Where Construct is different:</p>
+<ul>
+<li><strong>Nothing to host.</strong> OpenClaw and Hermes Agent both ask you to create a bot, keep a token safe and run a gateway process (<a href="https://docs.openclaw.ai/channels/discord/setup">OpenClaw</a>, <a href="https://hermes-agent.nousresearch.com/docs/user-guide/messaging/discord">Hermes Agent</a>). Construct is one button in settings.</li>
+<li><strong>An agent with a computer, not a chat bot.</strong> A Discord request can end as a saved spreadsheet, a drafted email, a browser task or a scheduled job, all in one workspace that outlives the thread.</li>
+<li><strong>Context with controls.</strong> Listening is per channel, announced in the channel, time-limited, and every member can opt out or be forgotten.</li>
+</ul>
+<p>When might another option still fit?</p>
+<ul>
+<li>You want to self-host the agent and pick every model yourself, and you are happy to run a server for it: OpenClaw or Hermes Agent.</li>
+<li>Your team lives in Slack and already pays for Claude Team or Enterprise: Claude Tag (<a href="https://claude.com/docs/claude-tag">Claude docs</a>). Construct also works in Slack, from the same settings screen.</li>
+</ul>
+<p>For how the wider category is shaping up, see <a href="https://construct.computer/blog/always-on-ai-agents-compared/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">always-on AI agents compared</a>.</p>
+<h2>What does Construct on Discord cost?</h2>
+<p>Discord is included in every plan. Listening needs a paid plan; a trial does not count.</p>
+<p><strong>Construct plans, billed monthly</strong></p>
+<table>
+<thead>
+<tr>
+<th>Plan</th>
+<th>Monthly price</th>
+<th>Agents</th>
+<th>Scheduled tasks</th>
+<th>Parallel background jobs</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Lite</td>
+<td>$9</td>
+<td>Up to 2</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Starter</td>
+<td>$59</td>
+<td>Up to 5</td>
+<td>10</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>$299</td>
+<td>Up to 15</td>
+<td>50</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<p>You pay per workspace, not per Discord member. Check the <a href="https://construct.computer/pricing/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">current plans</a> before you buy, because prices and limits can change.</p>
+<h2>What should you know before you start?</h2>
+<p>A few limits, each with the way around it:</p>
+<ul>
+<li><strong>Scheduled results go to the web app, not Discord.</strong> A job you put on the Calendar notifies you in Construct. Start recurring work from Discord if you like, and read the results in Construct.</li>
+<li><strong>No voice.</strong> Construct reads and writes text in Discord; it does not join voice channels.</li>
+<li><strong>Plain answers, real files.</strong> Discord strips tables and images from messages, so ask for a file when you want one.</li>
+<li><strong>Server installs only.</strong> Construct is added to servers, not to your personal account as a user app. Use DMs for private work.</li>
+<li><strong>Mention-free threads need Message Content.</strong> If the server row shows <strong>Needs setup</strong> instead of Online, the bot can only see mentions, replies and DMs until that is fixed.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<p><strong>The first mention got a &quot;Connect this server&quot; card.</strong> The bot was added from Discord rather than from Construct. Click <strong>Add to Discord</strong> in <strong>Settings &gt; Messaging</strong> and pick the same server.</p>
+<p><strong>The bot does not reply to a teammate.</strong> The server is on &quot;Only people I allow&quot;. Add them, or a role they have, to Full access.</p>
+<p><strong>A teammate gets short, limited answers.</strong> They are a guest. Add them to Full access if they should have the real agent.</p>
+<p><strong>&quot;I don&#39;t have permission to do that here.&quot;</strong> A channel or role override is blocking the bot. The message lists exactly which permissions are missing, so a server admin can grant them.</p>
+<p><strong>&quot;That Discord server is already connected to another account.&quot;</strong> Each server links to one workspace. Disconnect it from the other workspace first.</p>
+<h2>Add Construct to your server</h2>
+<p>Choose Construct when you want an AI agent in Discord that does the work rather than just talking about it. It answers in threads, brings back real files, keeps context only in the channels you choose, and stays locked to your team until you open it up. It starts at $9 a month for the whole workspace.</p>
+<p>Your first job: add Construct from <strong>Settings &gt; Messaging</strong>, then mention it in your busiest channel with the FAQ prompt above. When the answer lands, open <strong>Chat &gt; Channels</strong> in Construct and you will find the same thread, and the file, waiting in your workspace.</p>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://discord.com/discovery/applications/1520264558806044784">Construct in Discord&#39;s App Directory</a></li>
+<li><a href="https://discord.com/company">Discord company page: daily active users</a></li>
+<li><a href="https://docs.discord.com/developers/events/gateway">Discord Gateway documentation: privileged intents and message content</a></li>
+<li><a href="https://docs.discord.com/developers/topics/threads">Discord developer threads documentation</a></li>
+<li><a href="https://arxiv.org/abs/2501.17258">Houde et al., &quot;Controlling AI Agent Participation in Group Conversations: A Human-Centered Approach&quot;, 2025</a></li>
+<li><a href="https://docs.openclaw.ai/channels/discord/setup">OpenClaw: Discord setup</a></li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/messaging/discord">Hermes Agent: Discord</a></li>
+<li><a href="https://docs.runbear.io/channels/discord">Runbear: Discord</a></li>
+<li><a href="https://claude.com/docs/claude-tag">Claude Tag documentation</a></li>
+<li><a href="https://construct.computer/pricing/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">Construct pricing</a></li>
+</ul>
+<h2>Related resources</h2>
+<ul>
+<li><a href="https://construct.computer/use-cases/channels/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">Construct across Slack, email, and chat</a></li>
+<li><a href="https://construct.computer/blog/ai-agent-memory/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">AI agent memory you can control</a></li>
+<li><a href="https://construct.computer/blog/always-on-ai-agents-compared/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">Always-on AI agents compared</a></li>
+<li><a href="https://construct.computer/blog/ai-agent-with-its-own-computer/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">What is an AI agent with its own computer?</a></li>
+<li><a href="https://construct.computer/blog/zen-mode/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">Zen Mode: some days you just want it done</a></li>
+</ul>
+<p><em>Originally published at <a href="https://construct.computer/blog/ai-agent-discord-bot/?utm_source=feed&amp;utm_medium=syndication&amp;utm_campaign=ai-agent-discord-bot">construct.computer</a>.</em></p>
+]]></content:encoded>
+      <dc:creator>Nischal</dc:creator>
+      <category>product</category>
+      <category>ai-agent</category>
+      <category>ai-employee</category>
+      <category>discord</category>
+      <category>governance</category>
+      <pubDate>Thu, 15 Oct 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Dots vs Muse vs Grok Bot vs Claude Cowork for a small business</title>
       <link>https://construct.computer/blog/always-on-ai-agents-compared/</link>
       <guid>https://construct.computer/blog/always-on-ai-agents-compared/</guid>
