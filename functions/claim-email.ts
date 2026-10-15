@@ -79,8 +79,8 @@ export function renderClaimEmail(input: ClaimEmailInput, replyable: boolean) {
   const hi = name ? `Hi ${name},` : "Hi there,";
   const subject = "Your first night shift is on us";
   const preheader = name
-    ? `${name}, hand it your list tonight. Your first month of Construct Pro is on us.`
-    : "Hand it your list tonight. Your first month of Construct Pro is on us.";
+    ? `${name}, hand it tonight's work. Your first month of Construct Pro is on us.`
+    : "Hand it tonight's work. Your first month of Construct Pro is on us.";
   const intro = input.job
     ? `In the demo you handed Construct ${JOBS[input.job].handed} first. Tonight it can do the real thing with your own work while you sleep, and your first month of Pro is on us.`
     : "Your first month of Construct Pro is on us. Give it the work you'd otherwise finish at 11 pm, then read the report with your morning coffee.";
@@ -159,7 +159,7 @@ a{color:#2a44a8;}
 <td style="padding:0 10px 0 0;line-height:0;"><img src="${ICON}" width="24" height="24" alt="" style="display:block;width:24px;height:24px;border-radius:6px;"></td>
 <td style="font:600 13px/24px ${font};color:${ink};letter-spacing:0.02em;">Construct</td>
 </tr></table>
-<h1 style="margin:16px 0 12px;font:650 26px/32px ${font};letter-spacing:-0.02em;color:${ink};">Hand it your list tonight.</h1>
+<h1 style="margin:16px 0 12px;font:650 26px/32px ${font};letter-spacing:-0.02em;color:${ink};">Hand it tonight's work.</h1>
 <p style="margin:0 0 6px;font:400 15px/24px ${font};color:${body};">${escapeHtml(hi)}</p>
 <p style="margin:0 0 24px;font:400 15px/24px ${font};color:${body};">${escapeHtml(intro)}</p>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f7f8fb" style="background:#f7f8fb;border:1px solid ${line};border-radius:12px;border-collapse:separate;">

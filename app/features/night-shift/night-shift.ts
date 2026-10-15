@@ -154,7 +154,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       <h1 class="ns-title ptype"></h1>
       <div class="ns-pips" hidden>${"<i></i>".repeat(5)}</div>
       <div class="ns-pile"></div>
-      <div class="ns-spec">Runs on ....... its own computer\nRemembers ..... what it learned\nWorks ......... while you sleep</div>
+      <div class="ns-spec">Runs on ....... its own computer\nRemembers ..... what it learned\nWorks ......... while you don't</div>
       <div class="ns-caption" hidden aria-live="polite"><div class="ns-cap-time"></div><div class="ns-cap-line"></div></div>
       <a class="ns-badge" href="${esc(productHuntHref("x-show", "daily"))}" target="_blank" rel="noopener" tabindex="-1" aria-label="${esc(PH_DAILY_AWARD)} on Product Hunt">${PH_MARK}<span><small>Product Hunt</small><b>${esc(PH_DAILY_AWARD)}</b></span></a>
       <div class="ns-url">construct.computer</div>
@@ -771,7 +771,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     }
     await W(1700);
     const b1 = await say(
-      `Is today's list done?<div class="chips"><button class="chip" type="button">Not even close</button><button class="chip alt" type="button">Almost</button></div>`,
+      `Is today's work done?<div class="chips"><button class="chip" type="button">Not even close</button><button class="chip alt" type="button">Almost</button></div>`,
       "left",
       480,
     );
@@ -919,7 +919,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     // 5. Dawn.
     dots(5);
     screenOff();
-    await showCaption(clockLabel(3, 0), "By 3 am the list is done. One question waits for 7.");
+    await showCaption(clockLabel(3, 0), "By 3 am the work is done. One question waits for 7.");
     for (const [h, tod] of [
       [3, "night"],
       [4, "night"],
@@ -974,7 +974,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       pip(i, "done");
       await W(90);
     }
-    setLine("One tap from you and the whole list is done.");
+    setLine("One tap from you and it's all done.");
     await W(2600);
     await surface();
 
@@ -1119,7 +1119,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     card.innerHTML = `<div class="pass-top">
         <div class="pass-kicker">NIGHT SHIFT PASS · NO. 04821</div>
         <div class="pass-big"><span class="pass-big-top">One month</span><span class="pass-big-sub">on us</span></div>
-        <div class="pass-sub">${who} this on your real list tonight? I'll email you the code.</div>
+        <div class="pass-sub">${who} it working for you tonight? I'll email you the code.</div>
         <div class="pass-meta">5 jobs done · 1 question for you</div>
       </div>
       <div class="pass-stub">

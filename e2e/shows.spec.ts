@@ -11,7 +11,7 @@ test("Night Shift wakes up, takes the list and goes dark when the chain is pulle
   await page.goto("/embed/?src=e2e");
   await page.getByRole("button", { name: "Wake it up and start the night shift" }).click();
 
-  await expect(page.getByText("Is today's list done?")).toBeVisible({ timeout: 12_000 });
+  await expect(page.getByText("Is today's work done?")).toBeVisible({ timeout: 12_000 });
   await page.getByRole("button", { name: "Not even close" }).click();
 
   await page.getByRole("button", { name: "Score the 40 new leads" }).click({ timeout: 12_000 });
