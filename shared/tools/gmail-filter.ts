@@ -236,7 +236,7 @@ export function filtersXml(filters: readonly GmailFilter[]): string {
     `  <updated>${UPDATED}</updated>`,
     "  <author>",
     "    <name>Construct Gmail filter generator</name>",
-    "    <email>noreply@construct.computer</email>",
+    "    <email>hello@construct.computer</email>",
     "  </author>",
     ...entries,
     "</feed>",

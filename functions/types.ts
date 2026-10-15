@@ -45,7 +45,7 @@ export type EmbedEnv = BetaSignupEnv & {
   EMAIL_API_TOKEN?: string;
   /** The account that owns construct.computer's Email Sending. */
   CLOUDFLARE_ACCOUNT_ID?: string;
-  /** Sender of the claim email; defaults to noreply@construct.computer, "Construct". */
+  /** Sender of the claim email; defaults to hello@construct.computer, "Construct". */
   EMBED_EMAIL_FROM?: string;
   EMBED_EMAIL_FROM_NAME?: string;
   /** Where replies to the claim email go. Unset, the email doesn't invite one. */
