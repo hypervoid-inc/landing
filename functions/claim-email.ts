@@ -1,3 +1,4 @@
+import { isDeliverableEmail } from "../shared/deliverable-email";
 import type { EmbedEnv } from "./types";
 
 /**
@@ -136,6 +137,10 @@ export async function sendClaimEmail(env: EmbedEnv, input: ClaimEmailInput): Pro
   const account = env.CLOUDFLARE_ACCOUNT_ID?.trim();
   if (!token || !account) {
     console.warn("claim_email skipped: EMAIL_API_TOKEN or CLOUDFLARE_ACCOUNT_ID unset");
+    return false;
+  }
+  if (!isDeliverableEmail(input.to)) {
+    console.warn("claim_email skipped: reserved test domain");
     return false;
   }
   const replyTo = env.EMBED_EMAIL_REPLY_TO?.trim();

@@ -10,6 +10,7 @@
  * actually succeeded (or was intentionally skipped, empty base URL).
  */
 
+import { isDeliverableEmail } from "../shared/deliverable-email";
 import { isLegitPersonName } from "../shared/person-name";
 import type { BetaSignupEnv } from "./types";
 
@@ -384,6 +385,8 @@ export async function subscribeListmonk(
 ): Promise<SubscribeListmonkResult> {
   const base = listmonkBase(env);
   if (!base) return { ok: true };
+  // A test address would only bounce off a campaign; take it, keep nothing.
+  if (!isDeliverableEmail(email)) return { ok: true };
 
   const displayName = name?.trim() ?? "";
   if (!isLegitPersonName(displayName, email)) return { ok: false };

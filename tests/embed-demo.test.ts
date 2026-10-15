@@ -139,8 +139,8 @@ describe("session tokens", () => {
   });
 
   it("hashes with the secret, so the stored value names nobody", async () => {
-    const a = await keyedHash(SECRET, "email", "ada@example.com");
-    const b = await keyedHash("other", "email", "ada@example.com");
+    const a = await keyedHash(SECRET, "email", "ada@acme.dev");
+    const b = await keyedHash("other", "email", "ada@acme.dev");
     expect(a).not.toBe(b);
     expect(a).not.toContain("ada");
   });
@@ -179,7 +179,7 @@ describe("POST /api/embed/session", () => {
   it("takes a plain first name, refuses an email as a name and unknown fields", async () => {
     const env = createEnv();
     expect((await startSession(env, { ...lead, name: "ada" })).response.status).toBe(200);
-    expect((await startSession(env, { ...lead, name: "ada@example.com" })).response.status).toBe(400);
+    expect((await startSession(env, { ...lead, name: "ada@acme.dev" })).response.status).toBe(400);
     expect((await startSession(env, { ...lead, name: "1234" })).response.status).toBe(400);
     expect((await startSession(env, { ...lead, email: "x@y.z" })).response.status).toBe(400);
   });
@@ -238,17 +238,17 @@ describe("POST /api/embed/claim", () => {
   it("stores the lead once and hands out the code, the same code again after", async () => {
     const env = createEnv(createDb(), { EMBED_PROMO_CODE: "FREEMONTH" });
     const token = await sessionFor(env);
-    const first = await ask(env, { token, email: "Ada@Example.com", name: "Ada" });
+    const first = await ask(env, { token, email: "Ada@Acme.dev", name: "Ada" });
     expect(first.status).toBe(200);
     expect(await first.json()).toEqual({ ok: true, code: "FREEMONTH" });
-    expect(subscribed()).toEqual(["ada@example.com"]);
+    expect(subscribed()).toEqual(["ada@acme.dev"]);
     expect(env.DB.sessions[0]?.claimed_at).toBe("now");
     expect(env.DB.sessions[0]?.email_hash).not.toContain("ada");
 
-    const again = await ask(env, { token, email: "other@example.com" });
+    const again = await ask(env, { token, email: "other@acme.dev" });
     expect(again.status).toBe(200);
     expect(await again.json()).toEqual({ ok: true, code: "FREEMONTH" });
-    expect(subscribed()).toEqual(["ada@example.com"]);
+    expect(subscribed()).toEqual(["ada@acme.dev"]);
   });
 
   it("emails the code once, through Cloudflare Email Service", async () => {
@@ -262,11 +262,11 @@ describe("POST /api/embed/claim", () => {
     const fetchMock = vi.mocked(fetch);
     fetchMock.mockImplementation(async (input: RequestInfo | URL) =>
       String(input).includes("/email/sending/send")
-        ? Response.json({ success: true, errors: [], result: { delivered: ["ada@example.com"], permanent_bounces: [], queued: [] } })
+        ? Response.json({ success: true, errors: [], result: { delivered: ["ada@acme.dev"], permanent_bounces: [], queued: [] } })
         : Response.json({ success: true, action: "beta_signup", hostname: "construct.example" }),
     );
-    await ask(env, { token, email: "ada@example.com", name: "Ada" });
-    await ask(env, { token, email: "ada@example.com", name: "Ada" });
+    await ask(env, { token, email: "ada@acme.dev", name: "Ada" });
+    await ask(env, { token, email: "ada@acme.dev", name: "Ada" });
 
     const sends = fetchMock.mock.calls.filter(([url]) => String(url).includes("/email/sending/send"));
     expect(sends).toHaveLength(1);
@@ -275,7 +275,7 @@ describe("POST /api/embed/claim", () => {
     expect((init?.headers as Record<string, string>).Authorization).toBe("Bearer cf-token");
     const body = JSON.parse(String(init?.body));
     expect(body).toMatchObject({
-      to: "ada@example.com",
+      to: "ada@acme.dev",
       from: { address: "noreply@construct.computer", name: "Construct" },
       reply_to: "team@construct.example",
     });
@@ -287,7 +287,7 @@ describe("POST /api/embed/claim", () => {
   it("still hands out the code when email isn't configured", async () => {
     const env = createEnv(createDb(), { EMBED_PROMO_CODE: "FREEMONTH" });
     const token = await sessionFor(env);
-    const response = await ask(env, { token, email: "ada@example.com" });
+    const response = await ask(env, { token, email: "ada@acme.dev" });
     expect(await response.json()).toEqual({ ok: true, code: "FREEMONTH" });
     expect(vi.mocked(fetch).mock.calls.some(([url]) => String(url).includes("/email/sending/send"))).toBe(false);
   });
@@ -295,9 +295,9 @@ describe("POST /api/embed/claim", () => {
   it("subscribes a first name that matches the address as Friend rather than dropping it", async () => {
     const env = createEnv();
     const token = await sessionFor(env);
-    await ask(env, { token, email: "ada@example.com", name: "Ada" });
+    await ask(env, { token, email: "ada@acme.dev", name: "Ada" });
     const call = vi.mocked(fetch).mock.calls.find(([url]) => String(url).includes("/api/public/subscription"));
-    expect(JSON.parse(String(call?.[1]?.body))).toMatchObject({ email: "ada@example.com", name: "Friend" });
+    expect(JSON.parse(String(call?.[1]?.body))).toMatchObject({ email: "ada@acme.dev", name: "Friend" });
   });
 
   it("refuses a forged token and a bad email", async () => {
@@ -329,5 +329,36 @@ describe("the claim email", () => {
     for (const part of [quiet.subject, quiet.text, quiet.html, replyable.html]) {
       expect(part).not.toMatch(/[\u2013\u2014]/);
     }
+  });
+});
+
+describe("reserved test addresses", () => {
+  it("are never subscribed or emailed", async () => {
+    const { isDeliverableEmail } = await import("../shared/deliverable-email");
+    for (const email of ["ada@example.com", "a@sub.example.org", "x@foo.test", "y@bar.invalid", "z@localhost", "q@nodot"]) {
+      expect(isDeliverableEmail(email), email).toBe(false);
+    }
+    for (const email of ["ada@acme.dev", "someone@gmail.com", "me@example-co.com", "me@notexample.com"]) {
+      expect(isDeliverableEmail(email), email).toBe(true);
+    }
+  });
+
+  it("a claim from one gets its code, but nothing reaches Listmonk or the mail API", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => Response.json({ success: true, action: "beta_signup", hostname: "construct.example" })),
+    );
+    const env = createEnv(createDb(), {
+      EMBED_PROMO_CODE: "FREEMONTH",
+      EMAIL_API_TOKEN: "cf-token",
+      CLOUDFLARE_ACCOUNT_ID: "acct123",
+    });
+    const { body } = await startSession(env);
+    const response = await claim({ request: post("/api/embed/claim", { token: String(body.token), email: "ada@example.com", name: "Grace" }), env });
+    expect(await response.json()).toEqual({ ok: true, code: "FREEMONTH" });
+    const urls = vi.mocked(fetch).mock.calls.map(([url]) => String(url));
+    expect(urls.some((u) => u.includes("/api/public/subscription") || u.includes("/api/subscribers"))).toBe(false);
+    expect(urls.some((u) => u.includes("/email/sending/send"))).toBe(false);
+    vi.unstubAllGlobals();
   });
 });

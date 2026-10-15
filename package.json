@@ -12,7 +12,7 @@
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
     "deploy": "pnpm check && pnpm test:e2e && pnpm build && wrangler pages deploy build/client --project-name landing-new --branch main",
     "dev": "node scripts/dev.mjs",
-    "dev:api": "wrangler pages dev public --port 8788 --ip 127.0.0.1",
+    "dev:api": "wrangler pages dev public --port 8788 --ip 127.0.0.1 --binding LISTMONK_BASE_URL=",
     "dev:web": "SHOW_ALL_POSTS=1 react-router dev --host 127.0.0.1",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

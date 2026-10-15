@@ -74,6 +74,9 @@ run("api", "pnpm", [
   String(FUNCTIONS_PORT),
   "--ip",
   "127.0.0.1",
+  // wrangler.jsonc points at the production newsletter list, so local signups
+  // and claims would land there. Off unless LISTMONK_LIVE=1 asks for it.
+  ...(process.env.LISTMONK_LIVE === "1" ? [] : ["--binding", "LISTMONK_BASE_URL="]),
 ]);
 run("web", "pnpm", ["exec", "react-router", "dev", "--host", "127.0.0.1", "--port", String(WEB_PORT)], {
   SHOW_ALL_POSTS: "1",
@@ -83,3 +86,8 @@ run("web", "pnpm", ["exec", "react-router", "dev", "--host", "127.0.0.1", "--por
 console.log(`[dev] site      http://localhost:${WEB_PORT}/`);
 console.log(`[dev] live demo http://localhost:${WEB_PORT}/embed/`);
 console.log(`[dev] functions http://127.0.0.1:${FUNCTIONS_PORT}/api/*  (proxied under the site)`);
+console.log(
+  process.env.LISTMONK_LIVE === "1"
+    ? "[dev] Listmonk  LIVE: signups go to the production newsletter list"
+    : "[dev] Listmonk  off: signups are not sent anywhere (LISTMONK_LIVE=1 to send)",
+);

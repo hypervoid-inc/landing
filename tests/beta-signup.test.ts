@@ -5,7 +5,7 @@ import type { BetaSignupEnv } from "../functions/types";
 import { betaSignupSchema } from "../shared/beta-signup-schema";
 
 const validBody = {
-  email: " Person@Example.COM ",
+  email: " Person@Acme.DEV ",
   name: "Ada",
   ctaSource: "hero",
   referral: "reddit",
@@ -40,13 +40,13 @@ describe("betaSignupSchema", () => {
       referralOther: "  A newsletter  ",
     });
 
-    expect(result.email).toBe("person@example.com");
+    expect(result.email).toBe("person@acme.dev");
     expect(result.referralOther).toBe("A newsletter");
   });
 
   it("allows newsletter footer payloads without referral", () => {
     const result = betaSignupSchema.parse({
-      email: "founder@example.com",
+      email: "founder@acme.dev",
       name: " Ada ",
       ctaSource: "footer",
       turnstileToken: "token",
@@ -58,7 +58,7 @@ describe("betaSignupSchema", () => {
   it("allows server ingest payloads without turnstileToken", () => {
     expect(
       betaSignupSchema.safeParse({
-        email: "user@example.com",
+        email: "user@acme.dev",
         name: "Ada",
         ctaSource: "auth-google",
         referral: "other",
@@ -76,7 +76,7 @@ describe("betaSignupSchema", () => {
   it("rejects email local-part as name", () => {
     expect(
       betaSignupSchema.safeParse({
-        email: "ada@example.com",
+        email: "ada@acme.dev",
         name: "ada",
         ctaSource: "footer",
         turnstileToken: "token",
@@ -87,7 +87,7 @@ describe("betaSignupSchema", () => {
   it("rejects missing name", () => {
     expect(
       betaSignupSchema.safeParse({
-        email: "ada@example.com",
+        email: "ada@acme.dev",
         ctaSource: "footer",
         turnstileToken: "token",
       }).success,
@@ -97,7 +97,7 @@ describe("betaSignupSchema", () => {
   it("rejects unknown meta keys", () => {
     expect(
       betaSignupSchema.safeParse({
-        email: "user@example.com",
+        email: "user@acme.dev",
         name: "Ada",
         ctaSource: "footer",
         meta: { evil: "x" },
@@ -159,7 +159,7 @@ describe("POST /api/beta-signup", () => {
         .filter(([url]) => !String(url).includes("turnstile"))
         .map(([, init]) => init?.body),
     );
-    expect(sent).toContain("person@example.com");
+    expect(sent).toContain("person@acme.dev");
     expect(sent).not.toContain("203.0.113.10");
     expect(sent).not.toContain("test browser");
   });
@@ -168,7 +168,7 @@ describe("POST /api/beta-signup", () => {
     const fetchMock = vi.mocked(fetch);
     const response = await handle(
       request({
-        email: "founder@example.com",
+        email: "founder@acme.dev",
         name: "Ada",
         ctaSource: "footer",
         turnstileToken: "verified-token",
@@ -183,7 +183,7 @@ describe("POST /api/beta-signup", () => {
     );
     expect(listmonkCall).toBeTruthy();
     expect(JSON.parse(String(listmonkCall?.[1]?.body))).toEqual({
-      email: "founder@example.com",
+      email: "founder@acme.dev",
       name: "Ada",
       list_uuids: ["7c3e7b8c-7e05-4482-a5eb-a20c7505dbf6"],
     });
@@ -230,7 +230,7 @@ describe("POST /api/beta-signup", () => {
     const response = await handle(
       request(
         {
-          email: "os-user@example.com",
+          email: "os-user@acme.dev",
           name: "Os User",
           ctaSource: "auth-google",
           referral: "other",
@@ -282,7 +282,7 @@ describe("POST /api/beta-signup", () => {
 
     await handle(
       request({
-        email: "spoof@example.com",
+        email: "spoof@acme.dev",
         name: "Spoof User",
         ctaSource: "footer",
         turnstileToken: "verified-token",
@@ -333,7 +333,7 @@ describe("POST /api/beta-signup", () => {
 
     const response = await handle(
       request({
-        email: "founder@example.com",
+        email: "founder@acme.dev",
         name: "Ada",
         ctaSource: "footer",
         turnstileToken: "verified-token",
@@ -377,7 +377,7 @@ describe("POST /api/beta-signup", () => {
     const response = await handle(
       request(
         {
-          email: "os-user@example.com",
+          email: "os-user@acme.dev",
           ctaSource: "auth-google",
         },
         {
@@ -400,7 +400,7 @@ describe("POST /api/beta-signup", () => {
 
     const first = await handle(request(), env);
     const duplicate = await handle(
-      request({ ...validBody, email: "PERSON@example.com" }),
+      request({ ...validBody, email: "PERSON@acme.dev" }),
       env,
     );
 

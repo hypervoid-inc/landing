@@ -32,7 +32,7 @@ The public Construct Computer website. It preserves the established landing-page
 2. Run `pnpm install`.
 3. Use `.env.example` for public Vite variables and `.dev.vars.example` for local Pages secrets.
 4. Apply the local database migration with `pnpm wrangler d1 migrations apply DB --local`.
-5. Run `pnpm dev` for the site with its Functions (it applies the local D1 migrations and writes `.dev.vars` from the example if missing), or `pnpm test:e2e` for the complete Pages, Function, Turnstile and D1 flow.
+5. Run `pnpm dev` for the site with its Functions (it applies the local D1 migrations and writes `.dev.vars` from the example if missing; signups and claims are not sent to Listmonk unless you start it with `LISTMONK_LIVE=1`, since `wrangler.jsonc` points at the production list), or `pnpm test:e2e` for the complete Pages, Function, Turnstile and D1 flow.
 
 Cloudflare's published Turnstile test keys are intentionally included in the example and E2E configuration. Production keys must be configured in Cloudflare.
 

@@ -126,7 +126,7 @@ describe("subscribeListmonk", () => {
         LISTMONK_BASE_URL: "https://listmonk.test",
         LISTMONK_NEWSLETTER_LIST_UUID: "list-uuid",
       } as BetaSignupEnv,
-      "ada@example.com",
+      "ada@acme.dev",
       "ada",
       {},
     );
