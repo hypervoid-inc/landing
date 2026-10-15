@@ -43,6 +43,12 @@ export type Cue =
 
 export type Sound = {
   readonly muted: boolean;
+  /** Moves the background music to a part of the show (music.ts SCENES). */
+  scene(scene: Scene): void;
+  /** Dips the music while a speech bubble is up: music makes reading harder. */
+  duck(on: boolean): void;
+  /** Fades the music out while `el` is scrolled out of view or the page is hidden. */
+  observe(el: Element): void;
   /** Call from inside a tap: creates or resumes the audio context. */
   unlock(): void;
   /** `step` raises a "note" or "chip" cue along the motif's scale. */
@@ -52,6 +58,8 @@ export type Sound = {
   subscribe(listener: (muted: boolean) => void): () => void;
   dispose(): void;
 };
+
+import { MUSIC_SR, SCENES, STEMS, type Scene, type Stem } from "./music";
 
 const STORE_KEY = "construct.show.muted";
 export const SR = 48000;
@@ -274,19 +282,19 @@ export function renderCues(): Record<Cue, { data: Float32Array; db: number }> {
   mixIn(reply, tone(NOTE(15), { dur: 0.8 }), 0, 0.8);
   mixIn(reply, tone(NOTE(19), { dur: 0.8 }), 0.12, 0.7);
   return {
-    wake: { data: room(wake, 0.18), db: -24 },
-    chip: { data: tone(NOTE(SCALE[3]!), { dur: 0.5, tau: 0.22 }), db: -29 },
-    pop: { data: bubble(392), db: -30 },
-    chime: { data: room(reply, 0.18), db: -27 },
-    whooshIn: { data: air(false), db: -33 },
-    whooshOut: { data: air(true), db: -34 },
-    lamp: { data: lamp(), db: -28 },
-    crt: { data: crt(), db: -32 },
-    tick: { data: wood(), db: -36 },
-    note: { data: room(tone(NOTE(0)), 0.16), db: -27 },
-    stamp: { data: stamp(), db: -27 },
-    dawn: { data: dawn(), db: -30 },
-    logo: { data: room(logo, 0.22), db: -23 },
+    wake: { data: room(wake, 0.18), db: -18 },
+    chip: { data: tone(NOTE(SCALE[3]!), { dur: 0.5, tau: 0.22 }), db: -23 },
+    pop: { data: bubble(392), db: -24 },
+    chime: { data: room(reply, 0.18), db: -21 },
+    whooshIn: { data: air(false), db: -27 },
+    whooshOut: { data: air(true), db: -28 },
+    lamp: { data: lamp(), db: -22 },
+    crt: { data: crt(), db: -26 },
+    tick: { data: wood(), db: -30 },
+    note: { data: room(tone(NOTE(0)), 0.16), db: -21 },
+    stamp: { data: stamp(), db: -21 },
+    dawn: { data: dawn(), db: -24 },
+    logo: { data: room(logo, 0.22), db: -17 },
   };
 }
 
@@ -336,6 +344,91 @@ export function createSound(): Sound {
   /** The last time each cue played, so a burst of the same cue never stacks up. */
   const lastAt = new Map<Cue, number>();
 
+  // ── background music ────────────────────────────────────────────────
+  let stems: Record<Stem, Float32Array> | null = null;
+  let worker: Worker | null = null;
+  let musicOn = false;
+  let current: Scene = "off";
+  let visible = true;
+  let observer: IntersectionObserver | null = null;
+  let outroTimer = 0;
+  const stemGain = new Map<Stem, GainNode>();
+  let keysFilter: BiquadFilterNode | null = null;
+  let duckGain: GainNode | null = null;
+  let viewGain: GainNode | null = null;
+  const sources: AudioBufferSourceNode[] = [];
+
+  const renderMusic = () => {
+    if (worker || stems) return;
+    try {
+      worker = new Worker(new URL("./music.worker.ts", import.meta.url), { type: "module" });
+      worker.onmessage = (event: MessageEvent<Record<Stem, Float32Array>>) => {
+        stems = event.data;
+        worker?.terminate();
+        worker = null;
+        startMusic();
+      };
+      worker.postMessage(null);
+    } catch {
+      worker = null; // No workers: the show plays with cues only.
+    }
+  };
+
+  /** Moves every layer toward a scene; `delay` holds off first, for the lights-out breath. */
+  const applyScene = (scene: Scene, tau: number, delay = 0) => {
+    if (!ctx || !musicOn) return;
+    const at = ctx.currentTime + delay;
+    const { gains, keysCutoff } = SCENES[scene];
+    for (const name of STEMS) {
+      const g = stemGain.get(name)!.gain;
+      g.cancelScheduledValues(ctx.currentTime);
+      g.setValueAtTime(g.value, ctx.currentTime);
+      if (delay) g.setTargetAtTime(0, ctx.currentTime, 0.05);
+      g.setTargetAtTime(gains[name], at, tau);
+    }
+    keysFilter!.frequency.setTargetAtTime(keysCutoff, at, tau);
+  };
+
+  /** Starts every layer looping together, silent, once the audio and the stems are both ready. */
+  const startMusic = () => {
+    if (musicOn || !ctx || !out || !stems || ctx.state === "closed") return;
+    keysFilter = ctx.createBiquadFilter();
+    keysFilter.type = "lowpass";
+    keysFilter.frequency.value = SCENES[current].keysCutoff;
+    keysFilter.Q.value = 0.5;
+    const bus = ctx.createGain();
+    duckGain = ctx.createGain();
+    viewGain = ctx.createGain();
+    viewGain.gain.value = visible ? 1 : 0;
+    keysFilter.connect(bus);
+    bus.connect(duckGain).connect(viewGain).connect(out);
+    const when = ctx.currentTime + 0.08;
+    for (const name of STEMS) {
+      const data = stems[name];
+      const buffer = ctx.createBuffer(1, data.length, MUSIC_SR);
+      buffer.getChannelData(0).set(data);
+      const src = ctx.createBufferSource();
+      src.buffer = buffer;
+      src.loop = true;
+      const g = ctx.createGain();
+      g.gain.value = 0;
+      src.connect(g).connect(name.endsWith("Keys") ? keysFilter : bus);
+      stemGain.set(name, g);
+      src.start(when);
+      sources.push(src);
+    }
+    stems = null; // The buffers hold the audio now.
+    musicOn = true;
+    applyScene(current, 1.2);
+  };
+
+  const applyView = () => {
+    const show = visible && document.visibilityState !== "hidden";
+    if (ctx && viewGain) viewGain.gain.setTargetAtTime(show ? 1 : 0, ctx.currentTime, show ? 0.6 : 0.25);
+  };
+  const onVisibility = () => applyView();
+  document.addEventListener("visibilitychange", onVisibility);
+
   const render = () => {
     if (rendered) return rendered;
     const cues = renderCues();
@@ -344,7 +437,11 @@ export function createSound(): Sound {
   };
   // Render while the poster sits idle, so the wake tap finds everything ready.
   const hasIdle = "requestIdleCallback" in window;
-  const idleId = hasIdle ? window.requestIdleCallback(() => render(), { timeout: 1500 }) : window.setTimeout(() => render(), 400);
+  const warmUp = () => {
+    render();
+    renderMusic();
+  };
+  const idleId = hasIdle ? window.requestIdleCallback(warmUp, { timeout: 1500 }) : window.setTimeout(warmUp, 400);
 
   const buffer = (cue: Cue) => {
     if (!ctx) return null;
@@ -388,6 +485,8 @@ export function createSound(): Sound {
           out.connect(shelf).connect(dip).connect(cap).connect(limit).connect(ctx.destination);
         }
         if (ctx.state !== "running") void ctx.resume().catch(() => undefined);
+        renderMusic();
+        startMusic();
       } catch {
         ctx = null;
       }
@@ -437,6 +536,32 @@ export function createSound(): Sound {
       if (!next && out && ctx) out.gain.setTargetAtTime(0.85, ctx.currentTime, 0.015);
       listeners.forEach((fn) => fn(muted));
     },
+    scene(scene) {
+      if (scene === current) return;
+      current = scene;
+      window.clearTimeout(outroTimer);
+      // The end card should not loop forever: let it settle, then fade away.
+      if (scene === "end") outroTimer = window.setTimeout(() => sound.scene("outro"), 45000);
+      const tau = { off: 0.4, evening: 1.0, night: 0.9, dawn: 1.3, end: 1.0, outro: 2.2 }[scene];
+      applyScene(scene, tau, scene === "night" ? 0.8 : 0);
+    },
+    duck(on) {
+      if (ctx && duckGain) duckGain.gain.setTargetAtTime(on ? 0.5 : 1, ctx.currentTime, on ? 0.12 : 0.5);
+    },
+    observe(el) {
+      observer?.disconnect();
+      if (!("IntersectionObserver" in window)) return;
+      // Inside an X post, the frame can scroll out of the timeline while still running.
+      observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[entries.length - 1];
+          visible = !entry || entry.intersectionRatio >= 0.35;
+          applyView();
+        },
+        { threshold: [0, 0.35, 0.7] },
+      );
+      observer.observe(el);
+    },
     subscribe(fn) {
       listeners.add(fn);
       return () => listeners.delete(fn);
@@ -445,6 +570,17 @@ export function createSound(): Sound {
       if (hasIdle) window.cancelIdleCallback(idleId);
       else window.clearTimeout(idleId);
       listeners.clear();
+      window.clearTimeout(outroTimer);
+      observer?.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+      worker?.terminate();
+      sources.forEach((src) => {
+        try {
+          src.stop();
+        } catch {
+          // Already stopped.
+        }
+      });
       void ctx?.close().catch(() => undefined);
       ctx = null;
     },

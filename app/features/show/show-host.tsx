@@ -30,7 +30,7 @@ export type ShowEnv = {
   claim(email: string, name: string, job?: EmbedJob): Promise<{ ok: true; code: string } | { ok: false; message: string }>;
   track(beat: string, extra?: Record<string, string | number | boolean>): void;
   /** Sound cues; silent until the first tap, and whenever the viewer mutes. */
-  sound: Pick<Sound, "play">;
+  sound: Pick<Sound, "play" | "scene" | "duck">;
 };
 
 /**
@@ -165,6 +165,7 @@ export function ShowHost({
     const unlock = () => snd.unlock();
     const gestures = ["pointerdown", "touchend", "click", "keydown"] as const;
     gestures.forEach((type) => frameEl?.addEventListener(type, unlock, { capture: true, passive: true }));
+    if (frameEl) snd.observe(frameEl);
     const onError = (event: PromiseRejectionEvent) => {
       if (event.reason instanceof Stopped) event.preventDefault();
     };

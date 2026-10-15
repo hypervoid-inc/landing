@@ -272,7 +272,13 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     }
   };
   const face = () => mascotLeftCheek(place);
+  /** Hides the bubble and lets the music back up. */
+  const hideBubble = () => {
+    env.sound.duck(false);
+    return bubble.hide(signal);
+  };
   const say = (html: string, side: "left" | "right" = "left", maxWidth = 400, top = 0) => {
+    env.sound.duck(true);
     return bubble.say(
       html,
       // Never over the poster title: the top bound sits under its last row.
@@ -650,7 +656,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       squash(mascot);
       await say(choice === 0 ? "It can wait. I'll ask you at 7." : "I'll keep it on the note for 7.");
       await W(1700);
-      await bubble.hide(signal);
+      await hideBubble();
       qm.remove();
       mascot.style.setProperty("--lx", "0%");
       mascot.style.setProperty("--ly", "0%");
@@ -763,6 +769,8 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     setFace(mascot, "open");
     squash(mascot);
     await dropTitle();
+    // The music comes in under the wake motif's tail.
+    env.sound.scene("evening");
     if (here.night) {
       setTod("dusk");
       await raiseTitle([here.time.toUpperCase()], TITLE_W_DAY);
@@ -792,7 +800,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     squash(mascot);
     await say(listAnswer === 0 ? "Then hand it to me. I'll work through it tonight." : "Then hand me the rest. I'll finish it tonight.");
     await W(2100);
-    await bubble.hide(signal);
+    await hideBubble();
 
     // 2. The hand-off, through the glass.
     dots(2);
@@ -856,7 +864,8 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     // Lights out. The room drops dark on the click, the tube warms up, and
     // the night comes up as the eyes adjust. Nothing flashes.
     env.sound.play("lamp");
-    void bubble.hide(signal);
+    env.sound.scene("night");
+    void hideBubble();
     const dim = el("div", "ns-dim");
     world.insertBefore(dim, q(".ns-art").nextSibling);
     void tween(dim, [{ opacity: 0 }, { opacity: 0.62 }], { duration: 90, easing: "ease-out", fill: "forwards" }, signal);
@@ -870,7 +879,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     await W(700);
     await say(name ? `Good night, ${esc(name)}. Tap to skip ahead, or hold my screen to look in.` : "Good night. Tap to skip ahead, or hold my screen to look in.");
     await W(2600);
-    await bubble.hide(signal);
+    await hideBubble();
 
     // 4. The shift. A quick tap skips ahead; holding looks inside.
     dots(4);
@@ -948,6 +957,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       [7, "day"],
     ] as Array<[number, Tod]>) {
       setTod(tod);
+      if (h === 5) env.sound.scene("dawn");
       rollTitle(clockLabel(h, 0));
       await W(700);
     }
@@ -961,7 +971,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
     caption.hidden = true;
     await say(`Morning${name ? `, ${esc(name)}` : ""}. Four are done, and I saved one question for you.`, "left", 380, 244);
     await W(2600);
-    await bubble.hide(signal);
+    await hideBubble();
 
     // 6. The one question.
     dots(6);
@@ -1095,7 +1105,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       signal.addEventListener("abort", onAbort);
       bead.focus({ preventScroll: true });
     });
-    void bubble.hide(signal);
+    void hideBubble();
     tag.remove();
     void tween(chain, [{ transform: "none", opacity: 1 }, { transform: "translateY(-340px)", opacity: 1 }], { duration: 700, delay: 500, easing: EASE_MOVE }, signal).then(() => chain.remove());
   }
@@ -1109,6 +1119,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
   }
 
   async function endCard() {
+    env.sound.scene("end");
     const w = q(".ns-world");
     const pileEl = pile;
     void tween(pileEl, [{ opacity: 1, transform: "none" }, { opacity: 0, transform: "translateY(40px)" }], { duration: 420, easing: "ease-in" }, signal);
@@ -1178,6 +1189,7 @@ export function mountNightShift(board: HTMLElement, env: ShowEnv): () => void {
       card.querySelector(".pass-sub")!.textContent = "Check your inbox for the code and how to start.";
       env.sound.play("stamp");
       window.setTimeout(() => env.sound.play("logo"), 160);
+      window.setTimeout(() => env.sound.scene("outro"), 3200);
       const stamp = el("div", "pass-stamp", "CLAIMED");
       card.querySelector(".pass-top")!.appendChild(stamp);
       stamp.animate([{ transform: "scale(2.6)", opacity: 0 }, { transform: "scale(1)", opacity: 1 }], { duration: 420, easing: EASE_SPRING });
