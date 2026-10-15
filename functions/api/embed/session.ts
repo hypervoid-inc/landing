@@ -14,14 +14,11 @@ import type { EmbedEnv, PagesFunction } from "../../types";
  * through `claim.ts`, as the exit offer.
  */
 
-const DEFAULT_DAILY_SESSION_CAP = 1500;
-
+/** The only limit: sessions from one address in the last hour. */
 const COUNT_RECENT = `
-  SELECT
-    COUNT(*) AS total,
-    SUM(CASE WHEN ip_hash = ?1 AND created_at > datetime('now', '-1 hour') THEN 1 ELSE 0 END) AS by_ip
+  SELECT COUNT(*) AS by_ip
   FROM embed_sessions
-  WHERE created_at > datetime('now', '-1 day')
+  WHERE ip_hash = ?1 AND created_at > datetime('now', '-1 hour')
 `;
 
 const INSERT_SESSION = `
@@ -36,11 +33,6 @@ function firstNameOf(name: string): string {
   const first = name.trim().split(/\s+/)[0] ?? "";
   const cased = first.charAt(0).toUpperCase() + first.slice(1);
   return cased.length > 24 ? `${cased.slice(0, 23)}.` : cased;
-}
-
-function dailySessionCap(env: EmbedEnv): number {
-  const parsed = Number(env.EMBED_DAILY_SESSION_CAP);
-  return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : DEFAULT_DAILY_SESSION_CAP;
 }
 
 export const onRequest: PagesFunction<EmbedEnv> = async ({ request, env, waitUntil }) => {
@@ -76,16 +68,13 @@ export const onRequest: PagesFunction<EmbedEnv> = async ({ request, env, waitUnt
   const clientIp = request.headers.get("CF-Connecting-IP")?.trim() ?? "";
   const ipHash = clientIp ? await keyedHash(secret, "ip", clientIp) : null;
 
-  let counts: { total: number; by_ip: number } | null;
-  try {
-    counts = await env.DB.prepare(COUNT_RECENT)
-      .bind(ipHash ?? "")
-      .first<{ total: number; by_ip: number }>();
-  } catch {
-    return error(500, "internal_error", "Unable to process request");
-  }
-  if (Number(counts?.total ?? 0) >= dailySessionCap(env)) {
-    return error(503, "demo_full", "The demo is full for today");
+  let counts: { by_ip: number } | null = null;
+  if (ipHash) {
+    try {
+      counts = await env.DB.prepare(COUNT_RECENT).bind(ipHash).first<{ by_ip: number }>();
+    } catch {
+      return error(500, "internal_error", "Unable to process request");
+    }
   }
   if (ipHash && Number(counts?.by_ip ?? 0) >= EMBED_SESSIONS_PER_IP_PER_HOUR) {
     return error(429, "too_many_sessions", "Try again a little later", { "Retry-After": "3600" });

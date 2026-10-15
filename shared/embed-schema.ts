@@ -69,6 +69,5 @@ export type EmbedErrorCode =
   | "verification_failed"
   | "origin_rejected"
   | "too_many_sessions"
-  | "demo_full"
   | "session_expired"
   | "internal_error";

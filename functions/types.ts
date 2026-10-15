@@ -46,8 +46,6 @@ export type EmbedEnv = Omit<BetaSignupEnv, "DB"> & {
   DB: D1Like;
   /** Signs session tokens and keys the email and address hashes. Required. */
   EMBED_SESSION_SECRET?: string;
-  /** New sessions a day across everyone before the demo answers "full". */
-  EMBED_DAILY_SESSION_CAP?: string;
   /** The code the exit offer hands out: a free first month of the top plan. */
   EMBED_PROMO_CODE?: string;
   /** Cloudflare API token with Email Sending send rights, for the claim email. */

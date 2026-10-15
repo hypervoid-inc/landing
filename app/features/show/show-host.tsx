@@ -72,6 +72,8 @@ export function ShowHost({
     // The player card's `?src=` says which post or page the viewer came from.
     const src = sourceFromLocation(window.location.search);
     let session: Promise<string | null> | null = null;
+    // Why the last session request failed, so the claim can say the real reason.
+    let refused: string | null = null;
 
     const turnstileToken = () =>
       new Promise<string>((resolve) => {
@@ -92,7 +94,10 @@ export function ShowHost({
         const result = await startSession(parsed.data);
         tokenRef.current = "";
         turnstileRef.current?.reset();
-        if (!result.ok) return null;
+        if (!result.ok) {
+          refused = result.code;
+          return null;
+        }
         captureAnalytics("show_session_started", { show, src, framed });
         return result.token;
       })();
@@ -111,7 +116,7 @@ export function ShowHost({
         captureAnalytics("show_email_submitted", { show, src, framed });
         let token = session ? await session : null;
         if (!token) token = await open(name);
-        if (!token) return { ok: false, message: ERROR_COPY.verification_failed! };
+        if (!token) return { ok: false, message: ERROR_COPY[refused ?? "verification_failed"] ?? ERROR_COPY.internal_error! };
         const result = await claimOffer({ token, email, ...(name.length >= 2 ? { name } : {}) });
         if (!result.ok) return { ok: false, message: ERROR_COPY[result.code] ?? ERROR_COPY.internal_error! };
         captureAnalytics("show_code_revealed", { show, src, framed });

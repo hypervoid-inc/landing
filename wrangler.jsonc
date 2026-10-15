@@ -18,8 +18,6 @@
     "ALLOWED_ORIGIN_HOSTNAME": "construct.computer",
     "LISTMONK_BASE_URL": "https://listmonk.construct.computer",
     "LISTMONK_NEWSLETTER_LIST_UUID": "7c3e7b8c-7e05-4482-a5eb-a20c7505dbf6",
-    // The playable show in an X post: new sessions a day across everyone.
-    "EMBED_DAILY_SESSION_CAP": "1500",
     // Handed out by the exit offer for an email: 100% off the first month of
     // Pro. Create the matching coupon in Dodo before the demo goes live.
     "EMBED_PROMO_CODE": "FREEMONTH",

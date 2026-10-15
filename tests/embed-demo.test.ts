@@ -73,11 +73,8 @@ function createDb() {
           throw new Error(`unexpected run: ${query}`);
         },
         async first<T>() {
-          if (query.includes("COUNT(*) AS total")) {
-            return {
-              total: sessions.length,
-              by_ip: sessions.filter((s) => s.ip_hash === values[0]).length,
-            } as T;
+          if (query.includes("COUNT(*) AS by_ip")) {
+            return { by_ip: sessions.filter((s) => s.ip_hash === values[0]).length } as T;
           }
           if (query.includes("SELECT src, claimed_at")) {
             const row = sessions.find((s) => s.id === values[0]);
@@ -185,15 +182,6 @@ describe("POST /api/embed/session", () => {
     expect((await startSession(env, { ...lead, email: "x@y.z" })).response.status).toBe(400);
   });
 
-  it("closes the demo past the daily cap", async () => {
-    const env = createEnv(createDb(), { EMBED_DAILY_SESSION_CAP: "1" });
-    expect((await startSession(env)).response.status).toBe(200);
-    const second = await startSession(env);
-    expect(second.response.status).toBe(503);
-    expect(second.body).toMatchObject({ error: { code: "demo_full" } });
-    expect(env.DB.sessions).toHaveLength(1);
-  });
-
   it("limits sessions per address", async () => {
     const env = createEnv();
     for (let i = 0; i < EMBED_SESSIONS_PER_IP_PER_HOUR; i++) {
@@ -202,6 +190,13 @@ describe("POST /api/embed/session", () => {
     const over = await startSession(env);
     expect(over.response.status).toBe(429);
     expect(over.body).toMatchObject({ error: { code: "too_many_sessions" } });
+  });
+
+  it("has no overall cap: many addresses all get sessions", async () => {
+    const env = createEnv();
+    for (let i = 0; i < 40; i++) {
+      expect((await startSession(env, lead, `198.51.100.${i}`)).response.status).toBe(200);
+    }
   });
 
   it("gives a filled honeypot a token that opens nothing", async () => {
