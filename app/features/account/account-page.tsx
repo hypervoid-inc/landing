@@ -16,7 +16,12 @@ import type {
 import { captureAnalytics } from "../analytics/analytics.client";
 import { readAttributionCookie } from "../analytics/campaign-attribution.client";
 import { useAuth } from "../auth/auth-provider";
-import { billedCatalogPriceLabel, canChangeBillingPlan } from "./account-format";
+import {
+  BILLING_RETURN_PARAMS,
+  billedCatalogPriceLabel,
+  billingReturnNotice,
+  canChangeBillingPlan,
+} from "./account-format";
 import * as llmApi from "../../platform/api/llm";
 import { BillingActionsSection } from "./sections/billing-actions-section";
 import { ByokSection } from "./sections/byok-section";
@@ -26,12 +31,6 @@ import { ProfileSection } from "./sections/profile-section";
 import { SecuritySection } from "./sections/security-section";
 import { UsageSection } from "./sections/usage-section";
 import { usePendingActions, useAccountData } from "./use-account-data";
-
-function billingReturnMessage(status: string | null): string | null {
-  if (status === "success") return "Subscription activating, refreshing…";
-  if (status === "payment_method") return "Payment method updated.";
-  return null;
-}
 
 export function AccountPage() {
   const { status, user, logout, refresh: refreshAuth } = useAuth();
@@ -45,10 +44,13 @@ export function AccountPage() {
   const [intervalChoice, setIntervalChoice] = useState<BillingInterval | null>(
     null,
   );
+  const [returnNotice] = useState(() => billingReturnNotice(params));
   const [message, setMessage] = useState<string | null>(() =>
-    billingReturnMessage(billingStatusParam),
+    returnNotice?.tone === "info" ? returnNotice.text : null,
   );
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(() =>
+    returnNotice?.tone === "error" ? returnNotice.text : null,
+  );
   const [confirmCancel, setConfirmCancel] = useState(false);
   const [pendingSwitch, setPendingSwitch] = useState<PaidPlanId | null>(null);
 
@@ -63,7 +65,7 @@ export function AccountPage() {
   useEffect(() => {
     if (!billingStatusParam) return;
     const next = new URLSearchParams(params);
-    next.delete("billing_status");
+    for (const key of BILLING_RETURN_PARAMS) next.delete(key);
     setParams(next, { replace: true });
   }, [billingStatusParam, params, setParams]);
 

@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import type { BillingPlan } from "../../platform/api/schemas";
 import {
   billedCatalogPriceLabel,
+  billingReturnNotice,
   canOpenBillingPortal,
   formatBytes,
   formatMemberSince,
@@ -233,5 +234,31 @@ describe("canOpenBillingPortal", () => {
         }),
       ),
     ).toBe(false);
+  });
+});
+
+describe("billingReturnNotice", () => {
+  const read = (search: string) =>
+    billingReturnNotice(new URLSearchParams(search));
+
+  it("treats Dodo's failed status on the success URL as a declined charge", () => {
+    expect(
+      read("billing_status=success&subscription_id=sub_1&status=failed"),
+    ).toMatchObject({ tone: "error" });
+    expect(
+      read("billing_status=success&status=requires_payment_method")?.tone,
+    ).toBe("error");
+  });
+
+  it("keeps the activation and payment-method notices", () => {
+    expect(read("billing_status=success&status=active")).toEqual({
+      tone: "info",
+      text: "Subscription activating, refreshing…",
+    });
+    expect(read("billing_status=payment_method")?.text).toBe(
+      "Payment method updated.",
+    );
+    expect(read("billing_status=canceled")).toBeNull();
+    expect(read("")).toBeNull();
   });
 });

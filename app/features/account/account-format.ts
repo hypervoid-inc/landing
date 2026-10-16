@@ -161,3 +161,52 @@ export function canOpenBillingPortal(plan: BillingPlan): boolean {
 export function canChangeBillingPlan(plan: BillingPlan): boolean {
   return plan.canCheckout || plan.canChangePlan;
 }
+
+/**
+ * Dodo appends its own `status` to the checkout return URL. These mean the
+ * charge didn't go through even though the browser came back on our success
+ * URL, so the page must not say the subscription is activating.
+ */
+const DECLINED_RETURN_STATUSES = new Set([
+  "failed",
+  "cancelled",
+  "canceled",
+  "expired",
+  "requires_payment_method",
+]);
+
+/** Query params a Dodo return adds, dropped once the notice is read. */
+export const BILLING_RETURN_PARAMS = [
+  "billing_status",
+  "subscription_id",
+  "payment_id",
+  "status",
+  "email",
+  "license_key",
+];
+
+export type BillingReturnNotice = {
+  tone: "info" | "error";
+  text: string;
+} | null;
+
+export function billingReturnNotice(
+  params: URLSearchParams,
+): BillingReturnNotice {
+  const billingStatus = params.get("billing_status");
+  if (!billingStatus) return null;
+  const status = params.get("status")?.toLowerCase() ?? "";
+  if (DECLINED_RETURN_STATUSES.has(status)) {
+    return {
+      tone: "error",
+      text: "Your payment didn't go through. Nothing was charged. Try again with a different card.",
+    };
+  }
+  if (billingStatus === "success") {
+    return { tone: "info", text: "Subscription activating, refreshing…" };
+  }
+  if (billingStatus === "payment_method") {
+    return { tone: "info", text: "Payment method updated." };
+  }
+  return null;
+}
