@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Mascot } from "./mascot";
 import "./cloud-card.css";
 
@@ -114,9 +114,42 @@ function frameOffset(frame: number) {
   return Math.min(1, Math.max(0, frame / FRAMES));
 }
 
+/** "Wednesday, 6th" for the viewer's local today. */
+function welcomeDate(date: Date) {
+  const day = date.getDate();
+  const teen = day % 100 >= 11 && day % 100 <= 13;
+  const suffix = teen ? "th" : (["th", "st", "nd", "rd"][day % 10] ?? "th");
+  const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
+  return `${weekday}, ${day}${suffix}`;
+}
+
+/*
+ * The page is prerendered, so the build's date is wrong by the time anyone
+ * sees it. Render a fixed date for hydration, then swap in the viewer's
+ * today on mount and roll it over at local midnight. The welcome starts
+ * at opacity 0, so the swap never shows.
+ */
+function useToday() {
+  const [label, setLabel] = useState("Wednesday, 6th");
+  useEffect(() => {
+    let timer: number;
+    const tick = () => {
+      const now = new Date();
+      setLabel(welcomeDate(now));
+      const midnight = new Date(now);
+      midnight.setHours(24, 0, 0, 0);
+      timer = window.setTimeout(tick, midnight.getTime() - now.getTime());
+    };
+    tick();
+    return () => window.clearTimeout(timer);
+  }, []);
+  return label;
+}
+
 /** Coded replacement for the cloud control feature video. */
 export function CloudCard() {
   const ref = useRef<HTMLDivElement>(null);
+  const today = useToday();
 
   useEffect(() => {
     const root = ref.current;
@@ -227,7 +260,7 @@ export function CloudCard() {
           Hi <b>User,</b>
         </p>
         <p className="cloud-line cloud-name">Welcome</p>
-        <p className="cloud-line cloud-date">Wednesday, 6th</p>
+        <p className="cloud-line cloud-date">{today}</p>
         <span className="cloud-pc">
           <img
             src="/assets/landing/clippy/computer.webp"
