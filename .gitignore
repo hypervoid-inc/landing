@@ -26,3 +26,12 @@ test-results/
 
 # Plain-Markdown copies of posts written by `pnpm blog:text`, rebuilt on demand.
 /syndication/
+
+# Feeds, sitemap and llms text written into `public/` by `pnpm generate:content`
+# on every build.
+/public/sitemap.xml
+/public/rss.xml
+/public/atom.xml
+/public/feeds/full-text.xml
+/public/llms.txt
+/public/llms-full.txt
