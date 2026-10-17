@@ -342,21 +342,18 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
           content: tag,
         }))
       : []),
-    // The homepage is a player card: pasted into a post, it becomes the live
-    // demo at /embed/. Every other page is a large image link.
-    ...(route.kind === "home"
-      ? playerCardMeta("home")
-      : [{ name: "twitter:card", content: "summary_large_image" }]),
+    // Every page is a large image link. Pasted into an X post, the homepage
+    // becomes the live demo instead: functions/player-card.ts swaps in the
+    // player card for Twitterbot alone, since Discord and others read these
+    // tags too and would show the play image as a small thumbnail.
+    { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:site", content: "@use_construct" },
     ...(author
       ? [{ name: "twitter:creator", content: author.twitterHandle }]
       : []),
     { name: "twitter:title", content: displayTitle(route) },
     { name: "twitter:description", content: route.description },
-    // A player card brings its own image (player-card.ts).
-    ...(route.kind === "home"
-      ? []
-      : [{ name: "twitter:image", content: route.image }]),
+    { name: "twitter:image", content: route.image },
     { "script:ld+json": routeJsonLd(route) as never },
   ];
 }
@@ -370,8 +367,9 @@ export const notFoundMeta: MetaDescriptor[] = [
   },
   { name: "robots", content: "noindex, follow" },
   // A mistyped or made-up link pasted into an X post still plays the show:
-  // the page answers 404 for search engines, but carries the same player
-  // card as the homepage.
+  // the page answers 404 for search engines, but carries the player card X
+  // gets for the homepage. Unlike the homepage it carries it for every
+  // crawler, since swapping it per crawler would put a Function on every path.
   { property: "og:type", content: "website" },
   { property: "og:site_name", content: "Construct Computer" },
   { property: "og:title", content: "Night Shift, a playable short" },
@@ -380,7 +378,7 @@ export const notFoundMeta: MetaDescriptor[] = [
     content:
       "Hand your Construct agents the work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.",
   },
-  { property: "og:image", content: `${siteUrl}/og/home.jpg?v=3` },
+  { property: "og:image", content: `${siteUrl}/og/home.jpg?v=4` },
   ...playerCardMeta("link"),
   { name: "twitter:site", content: "@use_construct" },
   { name: "twitter:title", content: "Night Shift, a playable short" },

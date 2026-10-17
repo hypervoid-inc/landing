@@ -26,7 +26,7 @@ export default [
   // canonicalRoutes so it stays out of the sitemap and doesn't compete with `/`
   // in search, same treatment as /login and /account.
   route("launch", "routes/launch.tsx"),
-  // The live demo that X renders inside a post (app/lib/player-card.ts).
+  // The live demo that X renders inside a post (functions/player-card.ts).
   // Prerendered, framed by x.com, and kept out of the sitemap like /launch.
   route("embed", "routes/embed.tsx"),
   // Pick the desktop or the dashboard; emails' "open Construct" link lands

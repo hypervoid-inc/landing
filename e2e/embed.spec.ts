@@ -5,15 +5,23 @@ import { expect, test } from "@playwright/test";
  * headers and the page itself. The show's beats are in shows.spec.ts.
  */
 
-test("the homepage is a player card pointing at the live demo", async ({ page }) => {
-  await page.goto("/");
-  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "player");
-  await expect(page.locator('meta[name="twitter:player"]')).toHaveAttribute(
-    "content",
-    "https://construct.computer/embed/?src=home",
-  );
-  await expect(page.locator('meta[name="twitter:player:width"]')).toHaveAttribute("content", "800");
-  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", /og\/play\.jpg/);
+test("the homepage is a large image card for every crawler but X", async ({ request }) => {
+  const html = await (await request.get("/", { headers: { "User-Agent": "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)" } })).text();
+  expect(html).toContain('<meta name="twitter:card" content="summary_large_image"/>');
+  expect(html).toContain('<meta name="twitter:image" content="https://construct.computer/og/home.jpg?v=4"/>');
+  expect(html).not.toContain("twitter:player");
+});
+
+test("for Twitterbot the homepage is a player card pointing at the live demo", async ({ request }) => {
+  const response = await request.get("/", { headers: { "User-Agent": "Twitterbot/1.0" } });
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-security-policy"]).toContain("frame-ancestors 'none'");
+  const html = await response.text();
+  expect(html).toContain('<meta name="twitter:card" content="player"/>');
+  expect(html).toContain('<meta name="twitter:player" content="https://construct.computer/embed/?src=home"/>');
+  expect(html).toContain('<meta name="twitter:player:width" content="800"/>');
+  expect(html).toContain('<meta name="twitter:image" content="https://construct.computer/og/play.jpg?v=2"/>');
+  expect(html).not.toContain("summary_large_image");
 });
 
 test("/embed/ may be framed by X and by nobody else", async ({ request }) => {
@@ -32,11 +40,17 @@ test("/embed/ may be framed by X and by nobody else", async ({ request }) => {
 test("/embed/ is the Night Shift show, kept out of search", async ({ page }) => {
   await page.goto("/embed/");
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
-  await expect(page.locator('meta[name="twitter:player"]')).toHaveAttribute(
-    "content",
-    "https://construct.computer/embed/?src=embed",
-  );
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
   await expect(page.getByRole("button", { name: "Wake it up and start the night shift" })).toBeVisible();
+});
+
+test("for Twitterbot /embed/ is a player card for itself", async ({ request }) => {
+  for (const path of ["/embed/", "/embed"]) {
+    const response = await request.get(path, { headers: { "User-Agent": "Twitterbot/1.0" } });
+    expect(response.status(), path).toBe(200);
+    const html = await response.text();
+    expect(html, path).toContain('<meta name="twitter:player" content="https://construct.computer/embed/?src=embed"/>');
+  }
 });
 
 test("the old show routes are gone", async ({ request }) => {
@@ -81,8 +95,8 @@ test("each X profile link lands on the homepage with its tags and the free month
   }
 });
 
-test("the X play card image is 4:3 and points at the live show", async ({ page }) => {
-  await page.goto("/embed/");
-  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", /og\/play\.jpg\?v=2/);
-  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /og\/home\.jpg\?v=3/);
+test("the X play card image is 4:3 and points at the live show", async ({ request }) => {
+  const html = await (await request.get("/embed/", { headers: { "User-Agent": "Twitterbot/1.0" } })).text();
+  expect(html).toMatch(/<meta name="twitter:image" content="[^"]*og\/play\.jpg\?v=2"/);
+  expect(html).toMatch(/<meta property="og:image" content="[^"]*og\/home\.jpg\?v=4"/);
 });

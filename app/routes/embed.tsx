@@ -1,13 +1,12 @@
 import type { LinksFunction, MetaDescriptor } from "react-router";
 
 import { NightShiftApp } from "../features/night-shift/night-shift-app";
-import { playerCardMeta } from "../lib/player-card";
 import { siteUrl } from "../lib/route-manifest";
 
 const TITLE = "Night Shift, a playable short";
 const DESCRIPTION =
   "Hand your Construct agents the work at 11 pm, pull the chain and go to bed. A one minute night shift you play right in the post.";
-const IMAGE = `${siteUrl}/og/home.jpg?v=3`;
+const IMAGE = `${siteUrl}/og/home.jpg?v=4`;
 
 export const links: LinksFunction = () => [
   {
@@ -35,7 +34,9 @@ export function meta(): MetaDescriptor[] {
     { property: "og:image", content: IMAGE },
     { property: "og:image:width", content: "1200" },
     { property: "og:image:height", content: "630" },
-    ...playerCardMeta("embed"),
+    // X gets the player card instead (functions/player-card.ts).
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:image", content: IMAGE },
     { name: "twitter:site", content: "@use_construct" },
     { name: "twitter:title", content: TITLE },
     { name: "twitter:description", content: DESCRIPTION },

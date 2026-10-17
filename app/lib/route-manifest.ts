@@ -6,8 +6,9 @@ import {
 import { listedAuthors, type Author } from "../content/authors";
 import { tools } from "../content/tools";
 import { useCases } from "../content/use-cases";
+import { siteUrl } from "../../shared/site";
 
-export const siteUrl = "https://construct.computer";
+export { siteUrl };
 
 /**
  * Fallback `lastmod` for pages that carry no date of their own. Bump this when
@@ -173,7 +174,7 @@ function buildRoutes(
         "AI agents for startups and small teams: research, outreach, ops and reporting. Get more work done than your headcount allows. From $9/month.",
       kind: "home",
       lastModified: siteRevised,
-      imageVersion: "3",
+      imageVersion: "4",
     }),
     route({
       path: "/pricing",
