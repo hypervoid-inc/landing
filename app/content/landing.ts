@@ -307,7 +307,7 @@ export const featureCards = [
 export const companyLinks = [
   ["Blog", "/blog/"],
   ["About", "/about/"],
-  ["Affiliates", "/affiliates/"],
+  ["Affiliates", "/partner/"],
   ["Editorial Policy", "/editorial-policy/"],
   ["Careers", "/careers/"],
   ["Support", "/support/"],

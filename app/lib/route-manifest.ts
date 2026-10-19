@@ -243,7 +243,7 @@ function buildRoutes(
       lastModified: siteRevised,
     }),
     route({
-      path: "/affiliates",
+      path: "/partner",
       title: "Affiliate Program - Construct Computer",
       description:
         "Partner with Construct. First 25 affiliates earn 50% of referred revenue for up to 12 months; then the rate drops to 20%. Apply via PartnerStack.",

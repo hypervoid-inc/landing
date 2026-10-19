@@ -2815,7 +2815,7 @@ export const pageCards: Record<string, OgCard> = {
       ],
     },
   },
-  affiliates: {
+  partner: {
     title: "Refer Construct, *earn for 12 months*",
     deck: "Apply on PartnerStack; your rate is locked when you are approved.",
     figure: {

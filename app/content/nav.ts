@@ -45,7 +45,7 @@ function previewFor(path: string, label: string): NavLink {
 const companyNavOrder = [
   ["About", "/about/"],
   ["Careers", "/careers/"],
-  ["Affiliates", "/affiliates/"],
+  ["Affiliates", "/partner/"],
   ["Support", "/support/"],
 ] as const;
 

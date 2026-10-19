@@ -37,6 +37,17 @@
 /vs/coding-agents /blog/construct-vs-coding-agents/ 301
 /vs/coding-agents/ /blog/construct-vs-coding-agents/ 301
 
+# The PartnerStack program page lives at /partner/. It used to be /affiliates/,
+# and people guess at the plural or the other word, so every spelling lands on
+# the one canonical page. 301 because these are aliases of a page we own, not
+# shortlinks we might repoint.
+/partners /partner/ 301
+/partners/ /partner/ 301
+/affiliates /partner/ 301
+/affiliates/ /partner/ 301
+/affiliate /partner/ 301
+/affiliate/ /partner/ 301
+
 # X profile links: the website field on each account. Each lands on the
 # homepage with its own utm_content, so analytics splits profile traffic by
 # person, and with the free month's code, since every profile's location line

@@ -335,7 +335,7 @@ export function SiteFooter() {
             <div className="site-footer-badges">
               <ProductHuntProof surface="footer" variant="footer" />
               <Link
-                to="/affiliates/"
+                to="/partner/"
                 className="footer-affiliate-badge"
                 aria-label="Affiliates: 50% for first 25, then 20%"
               >
