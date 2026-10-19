@@ -76,13 +76,28 @@ function editorialAuthor(route: CanonicalRoute): Author {
   return route.author;
 }
 
+/**
+ * Official profiles Google can tie back to the company. Each one must be
+ * ours and point at construct.computer, or the entity match gets weaker.
+ */
+const productHuntUrl = "https://www.producthunt.com/products/construct-computer";
+
+const officialProfiles = [
+  "https://x.com/use_construct",
+  "https://linkedin.com/company/construct-computer",
+  "https://github.com/construct-computer",
+  "https://www.youtube.com/@constructcomputer",
+  productHuntUrl,
+  "https://discord.gg/puArEQHYN9",
+];
+
 export function organizationJsonLd(): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
     name: "Construct Computer",
-    alternateName: ["Construct", "Construct AI"],
+    alternateName: ["Construct", "Construct AI", "construct.computer"],
     description:
       "Construct Computer builds AI agents for startups and small teams: research, outreach, ops and reporting. Each agent works like a hire, with its own role, tools, memory, and a persistent cloud workspace.",
     url: siteUrl,
@@ -107,11 +122,7 @@ export function organizationJsonLd(): JsonLd {
         availableLanguage: "English",
       },
     ],
-    sameAs: [
-      "https://x.com/use_construct",
-      "https://linkedin.com/company/construct-computer",
-      "https://discord.gg/puArEQHYN9",
-    ],
+    sameAs: officialProfiles,
   };
 }
 
@@ -121,6 +132,7 @@ export function websiteJsonLd(): JsonLd {
     "@type": "WebSite",
     "@id": `${siteUrl}/#website`,
     name: "Construct Computer",
+    alternateName: ["Construct", "construct.computer"],
     url: `${siteUrl}/`,
     publisher: { "@id": `${siteUrl}/#organization` },
   };
@@ -132,9 +144,14 @@ export function softwareApplicationJsonLd(): JsonLd {
     "@type": "SoftwareApplication",
     "@id": `${siteUrl}/#software`,
     name: "Construct Computer",
+    description:
+      "Construct Computer is an AI agent platform for startups and small teams. Each agent gets a persistent cloud workspace with files, memory, a browser, a terminal, email, schedules, and connected apps, so it can finish research, outreach, ops and reporting work on its own.",
     applicationCategory: "ProductivityApplication",
+    applicationSubCategory: "AI agent platform",
     operatingSystem: "Web",
     url: `${siteUrl}/`,
+    image: `${siteUrl}/icon-512.png`,
+    sameAs: [productHuntUrl],
     publisher: { "@id": `${siteUrl}/#organization` },
   };
 }
@@ -181,6 +198,19 @@ export function routeJsonLd(route: CanonicalRoute): JsonLd[] {
       faqPageJsonLd(landingFaq),
     );
   } else values.push(breadcrumbs(route));
+
+  if (route.path === "/about") {
+    values.push({
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "@id": `${route.canonical}#about`,
+      url: route.canonical,
+      name: displayTitle(route),
+      description: route.description,
+      isPartOf: { "@id": `${siteUrl}/#website` },
+      mainEntity: { "@id": `${siteUrl}/#organization` },
+    });
+  }
 
   if (route.kind === "pricing") {
     values.push(faqPageJsonLd(landingFaq));

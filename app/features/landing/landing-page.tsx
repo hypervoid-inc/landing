@@ -229,7 +229,7 @@ function Hero() {
       className="hero-section page-rail relative mx-auto w-full overflow-hidden px-5 sm:px-6 lg:px-16"
     >
       <h1 id="landing-title" className="sr-only">
-        AI employees that work like hires
+        Construct Computer: AI employees that work like hires
       </h1>
       <div className="hero-stage relative isolate mx-auto w-full">
         <div className="hero-copy relative z-30">

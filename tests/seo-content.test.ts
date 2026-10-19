@@ -195,6 +195,34 @@ describe("route metadata", () => {
     });
   });
 
+  it("defines the brand as a named entity, not the phrase", () => {
+    const home = canonicalRoutes.find(({ path }) => path === "/")!;
+    expect(home.description).toMatch(/^Construct Computer is /);
+
+    const org = organizationJsonLd();
+    expect(org.alternateName).toContain("construct.computer");
+    expect(org.sameAs).toEqual(
+      expect.arrayContaining([
+        "https://github.com/construct-computer",
+        "https://www.youtube.com/@constructcomputer",
+        "https://www.producthunt.com/products/construct-computer",
+      ]),
+    );
+    expect(softwareApplicationJsonLd().description).toMatch(
+      /^Construct Computer is /,
+    );
+  });
+
+  it("marks the about page as describing the organization", () => {
+    const about = canonicalRoutes.find(({ path }) => path === "/about")!;
+    expect(routeJsonLd(about)).toContainEqual(
+      expect.objectContaining({
+        "@type": "AboutPage",
+        mainEntity: { "@id": "https://construct.computer/#organization" },
+      }),
+    );
+  });
+
   it("does not publish hardcoded commercial prices in software metadata", () => {
     expect(softwareApplicationJsonLd()).not.toHaveProperty("offers");
   });

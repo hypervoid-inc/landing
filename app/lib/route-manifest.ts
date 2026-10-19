@@ -171,7 +171,7 @@ function buildRoutes(
       path: "/",
       title: "AI Agents for Startups and Small Teams | Construct Computer",
       description:
-        "AI agents for startups and small teams: research, outreach, ops and reporting. Get more work done than your headcount allows. From $9/month.",
+        "Construct Computer is an AI agent platform for startups and small teams: agents that handle research, outreach, ops and reporting. From $9/month.",
       kind: "home",
       lastModified: siteRevised,
       imageVersion: "4",
