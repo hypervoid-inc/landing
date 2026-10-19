@@ -2,7 +2,12 @@ import type { MetaDescriptor } from "react-router";
 import { landingFaq } from "../content/landing";
 import { getResourceFaqs, type FaqItem } from "../content/faqs";
 import { getTool, tools } from "../content/tools";
-import { authorSameAs, listedAuthors, type Author } from "../content/authors";
+import {
+  authorSameAs,
+  founders,
+  listedAuthors,
+  type Author,
+} from "../content/authors";
 import { playerCardMeta } from "./player-card";
 import type { CanonicalRoute } from "./route-manifest";
 import {
@@ -47,9 +52,10 @@ function authorEntityJsonLd(author: Author): JsonLd {
     url: new URL(author.profileUrl, siteUrl).toString(),
     image: new URL(author.image, siteUrl).toString(),
     sameAs: authorSameAs(author),
+    ...(author.founder ? { alternateName: author.founder.fullName } : {}),
     ...(person
       ? {
-          jobTitle: author.role,
+          jobTitle: author.founder?.jobTitle ?? author.role,
           worksFor: { "@id": `${siteUrl}/#organization` },
         }
       : { parentOrganization: { "@id": `${siteUrl}/#organization` } }),
@@ -98,6 +104,15 @@ export function organizationJsonLd(): JsonLd {
     "@id": `${siteUrl}/#organization`,
     name: "Construct Computer",
     alternateName: ["Construct", "Construct AI", "construct.computer"],
+    foundingDate: "2026-06-30",
+    founder: founders.map((author) => ({
+      "@type": "Person",
+      "@id": `${siteUrl}${author.profileUrl}#person`,
+      name: author.founder!.fullName,
+      jobTitle: author.founder!.jobTitle,
+      url: new URL(author.profileUrl, siteUrl).toString(),
+      sameAs: authorSameAs(author),
+    })),
     description:
       "Construct Computer builds AI agents for startups and small teams: research, outreach, ops and reporting. Each agent works like a hire, with its own role, tools, memory, and a persistent cloud workspace.",
     url: siteUrl,

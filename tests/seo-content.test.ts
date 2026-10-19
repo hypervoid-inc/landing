@@ -213,6 +213,25 @@ describe("route metadata", () => {
     );
   });
 
+  it("names the founders and founding date on the organization", () => {
+    const org = organizationJsonLd();
+    expect(org.foundingDate).toBe("2026-06-30");
+    expect(org.founder).toEqual([
+      expect.objectContaining({
+        "@id": "https://construct.computer/authors/ankush/#person",
+        name: "Ankush Singh",
+        sameAs: expect.arrayContaining(["https://x.com/ankushKun_"]),
+      }),
+      expect.objectContaining({
+        "@id": "https://construct.computer/authors/nischal/#person",
+        name: "Nischal Naik",
+        sameAs: expect.arrayContaining([
+          "https://linkedin.com/in/nischal-naik-a188b0288",
+        ]),
+      }),
+    ]);
+  });
+
   it("marks the about page as describing the organization", () => {
     const about = canonicalRoutes.find(({ path }) => path === "/about")!;
     expect(routeJsonLd(about)).toContainEqual(

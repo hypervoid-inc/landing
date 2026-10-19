@@ -27,6 +27,15 @@ export type Author = {
   readonly twitterHandle: string;
   readonly links: readonly AuthorLink[];
   readonly schemaType: "Organization" | "Person";
+  /**
+   * Schema-only details for people who founded the company. Bylines keep the
+   * short `name` and `role`; search engines get the full name and title so
+   * they can match the founders to their off-site profiles.
+   */
+  readonly founder?: {
+    readonly fullName: string;
+    readonly jobTitle: string;
+  };
 };
 
 export const authors: Record<AuthorId, Author> = {
@@ -73,6 +82,7 @@ export const authors: Record<AuthorId, Author> = {
       },
     ],
     schemaType: "Person",
+    founder: { fullName: "Ankush Singh", jobTitle: "Co-founder" },
   },
   nischal: {
     id: "nischal",
@@ -92,6 +102,7 @@ export const authors: Record<AuthorId, Author> = {
       },
     ],
     schemaType: "Person",
+    founder: { fullName: "Nischal Naik", jobTitle: "Co-founder" },
   },
 };
 
@@ -111,6 +122,11 @@ export function authorSameAs(author: Author): string[] {
     ...new Set([author.twitter, ...author.links.map(({ href }) => href)]),
   ];
 }
+
+/** The people who founded Construct Computer, for the Organization entity. */
+export const founders: readonly Author[] = listedAuthors.filter(
+  (author) => author.founder,
+);
 
 export const defaultAuthor = authors["construct-team"];
 
