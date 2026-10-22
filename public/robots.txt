@@ -29,47 +29,58 @@
 
 User-agent: *
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 # Answer engines and AI crawlers are welcome on all public content.
 User-agent: GPTBot
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 User-agent: OAI-SearchBot
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 User-agent: ChatGPT-User
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 User-agent: ClaudeBot
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 User-agent: Claude-User
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 User-agent: PerplexityBot
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 User-agent: Google-Extended
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 User-agent: Applebot-Extended
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 User-agent: Bingbot
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 User-agent: CCBot
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
 Allow: /
 
 Sitemap: https://construct.computer/sitemap.xml

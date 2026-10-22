@@ -87,8 +87,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   const { pathname } = useLocation();
   // The live demo is framed inside an X post: no site chrome, no smooth
-  // scroll, no Clippy, and no sign-in probe against the API.
-  if (/^\/embed(\/|$)/.test(pathname)) {
+  // scroll, no Clippy, and no sign-in probe against the API. The investor
+  // deck at /deck is the same: nothing should sit on top of the Figma embed.
+  if (/^\/(embed|deck)(\/|$)/.test(pathname)) {
     return <Outlet />;
   }
   return (

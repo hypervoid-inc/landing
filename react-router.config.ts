@@ -12,6 +12,7 @@ export default {
     "/launch",
     "/embed",
     "/app",
+    "/deck",
     "/404",
   ],
 } satisfies Config;

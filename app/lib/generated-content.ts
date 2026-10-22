@@ -305,6 +305,13 @@ const contentSignalsPolicy = [
   "# IN THE DIGITAL SINGLE MARKET.",
 ];
 
+/**
+ * The investor deck, kept away from every crawler. Repeated
+ * in each group for the same reason as the content signal: a named crawler
+ * never reads the `*` group.
+ */
+const privateDisallows = ["/deck"].map((path) => `Disallow: ${path}`);
+
 export const crawlerFiles = {
   "sitemap.xml": sitemapXml(canonicalRoutes),
   "rss.xml": rssXml(),
@@ -315,6 +322,7 @@ export const crawlerFiles = {
     "",
     "User-agent: *",
     contentSignal,
+    ...privateDisallows,
     "Allow: /",
     "",
     "# Answer engines and AI crawlers are welcome on all public content.",
@@ -335,6 +343,7 @@ export const crawlerFiles = {
     ].flatMap((agent) => [
       `User-agent: ${agent}`,
       contentSignal,
+      ...privateDisallows,
       "Allow: /",
       "",
     ]),

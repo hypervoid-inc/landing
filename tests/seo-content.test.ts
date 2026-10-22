@@ -126,7 +126,21 @@ describe("generated discovery content", () => {
     for (const agent of ["GPTBot", "ClaudeBot", "PerplexityBot", "Bingbot"]) {
       expect(robots).toContain(`User-agent: ${agent}`);
     }
-    expect(robots).not.toContain("Disallow:");
+    // Only the investor deck is held back, never public content.
+    const disallowed = robots.match(/^Disallow: .+$/gm) ?? [];
+    expect(new Set(disallowed)).toEqual(
+      new Set(["Disallow: /deck"]),
+    );
+  });
+
+  it("keeps the investor deck out of every user-agent group", () => {
+    const robots = crawlerFiles["robots.txt"];
+    const groups = robots.split(/\n(?=User-agent: )/).slice(1);
+
+    expect(groups.length).toBeGreaterThan(1);
+    for (const group of groups) {
+      expect(group).toContain("Disallow: /deck");
+    }
   });
 
   /**
