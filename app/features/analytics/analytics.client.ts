@@ -1,6 +1,7 @@
 import type { Properties } from "posthog-js";
 
 import { scrubNetworkCapture } from "./scrub-network-capture";
+import { stripPiiFromEvent } from "./strip-pii-params";
 import {
   pinPopoverSurveyAppearance,
   watchPostHogSurveyHosts,
@@ -14,6 +15,10 @@ type AnalyticsEvent =
   // `last_used` (the shell this browser opened last, or null).
   | "app_chooser_viewed"
   | "auth_dialog_opened"
+  // Same names as the OS events, told apart by `source: "landing"`. `method`
+  // is "email_otp" or "password"; `reason` is the API's failure slug.
+  | "auth_completed"
+  | "auth_failed"
   // The optional "How did you hear about us?" on the sign-in form, sent as the
   // reader signs in. `heard_about` is a fixed slug; `heard_about_detail` is
   // short, scrubbed free text for "Other" only.
@@ -113,6 +118,16 @@ function resolvePostHogHost(): string {
   return configured === POSTHOG_PROXY ? configured : POSTHOG_PROXY;
 }
 
+/**
+ * The production site. Pages previews (`*.landing-new-9q7.pages.dev`) and
+ * local builds share the prod key, so they must not report into the project.
+ */
+const ANALYTICS_HOSTS = new Set(["construct.computer", "www.construct.computer"]);
+
+export function isAnalyticsHost(hostname: string): boolean {
+  return ANALYTICS_HOSTS.has(hostname.toLowerCase());
+}
+
 type PostHogClient =
   typeof import("posthog-js/dist/module.full.no-external").default;
 
@@ -132,6 +147,8 @@ export function initializeAnalytics() {
   postHogPromise = (async () => {
     const key = import.meta.env.VITE_POSTHOG_KEY;
     if (!import.meta.env.PROD || !key) return null;
+    // Also gates web vitals, which ride on `capture_performance`.
+    if (!isAnalyticsHost(window.location.hostname)) return null;
 
     // Pre-bundle replay/surveys/exceptions, proxy lazy-load stuck at lazy_loading.
     const { default: posthog } =
@@ -146,7 +163,10 @@ export function initializeAnalytics() {
     // which would delete the `ref`/`cid`/`sid`/`utm_*` params that campaign
     // attribution depends on, and would also break PostHog's own `$initial_utm_*`
     // parsing (it reads `$current_url`). The module is deliberately unreferenced.
+    // `stripPiiFromEvent` is the narrow exception: it removes only the email
+    // params Dodo appends to return URLs and keeps every attribution param.
     posthog.init(key, {
+      before_send: stripPiiFromEvent,
       api_host: resolvePostHogHost(),
       ui_host: POSTHOG_UI_HOST,
       defaults: "2026-05-30",

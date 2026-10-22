@@ -156,7 +156,7 @@
   text-decoration: none;
 }
 
-/* Over Fuji's sky the wordmark carries a soft halo, paper by day, ink at night. */
+/* The wordmark tops the left door with a soft halo, paper by day, ink at night. */
 .ac-wordmark--door {
   text-shadow:
     0 1px 2px light-dark(rgb(244 242 238 / 40%), rgb(8 10 18 / 45%)),
@@ -269,12 +269,13 @@
   padding: var(--pad) var(--pad) clamp(76px, 6.6vw, 96px);
 }
 
-/* Room for the "or" medallion, so a full-size preview never runs under it. */
-.ac-door--desktop .ac-door-inner {
+/* Room for the "or" medallion, so a full-size preview never runs under it.
+ * The dashboard is the left door, the desktop the right one. */
+.ac-door--dashboard .ac-door-inner {
   padding-right: calc(var(--pad) + 40px);
 }
 
-.ac-door--dashboard .ac-door-inner {
+.ac-door--desktop .ac-door-inner {
   padding-left: calc(var(--pad) + 40px);
 }
 
@@ -356,14 +357,14 @@
   box-shadow:
     0 0 0 1px rgb(5 6 11 / 70%),
     0 30px 70px rgb(0 0 0 / 50%);
-  transform: rotate(-1.5deg);
+  transform: rotate(1.5deg);
 }
 
 .ac-door--dashboard .ac-stage .acp {
   box-shadow:
     0 0 0 1px light-dark(rgb(28 25 23 / 12%), rgb(255 255 255 / 10%)),
     0 30px 60px light-dark(rgb(28 25 23 / 16%), rgb(0 0 0 / 45%));
-  transform: rotate(1.5deg);
+  transform: rotate(-1.5deg);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -412,6 +413,13 @@
 
 .ac-badge--phone {
   display: none;
+}
+
+/* The one we recommend: the same pill, filled with the brand teal. */
+.ac-badge--recommended {
+  border-color: transparent;
+  background: light-dark(#017a88, #6fe0ee);
+  color: light-dark(#fff, #0b1a1d);
 }
 
 .ac-name {
@@ -463,6 +471,15 @@
 
 .ac-cta svg {
   transition: transform var(--dur-hover) var(--ease-snap);
+}
+
+/* The desktop's button steps back so the recommended door leads: the same
+ * pill, outlined instead of filled. */
+.ac-cta--quiet {
+  border: 1px solid light-dark(rgb(28 25 23 / 28%), rgb(255 255 255 / 34%));
+  background: light-dark(rgb(255 254 250 / 72%), rgb(17 17 16 / 40%));
+  box-shadow: none;
+  color: light-dark(#1c1917, #f5f5f4);
 }
 
 .ac-cta:focus-visible,
@@ -720,11 +737,10 @@
     flex: none;
   }
 
-  .ac-door--dashboard {
-    order: -1;
-  }
-
-  .ac-door-inner {
+  /* Stacked, neither door needs room for the medallion. */
+  .ac-door-inner,
+  .ac-door--dashboard .ac-door-inner,
+  .ac-door--desktop .ac-door-inner {
     padding: 24px 16px 32px;
   }
 

@@ -125,7 +125,20 @@ export function useAccountData(enabled: boolean) {
 
   const refresh = useCallback(() => load(), [load]);
 
-  return { data, refresh };
+  /**
+   * Plan only, for polling after checkout. A failed poll keeps the last good
+   * plan rather than flashing an error while the webhook lands.
+   */
+  const refreshPlan = useCallback(async () => {
+    const plan = await billingApi.getPlan();
+    if (!plan.success) return;
+    setData((current) => ({
+      ...current,
+      plan: { state: "ready", data: plan.data },
+    }));
+  }, []);
+
+  return { data, refresh, refreshPlan };
 }
 
 /** Per-action pending keys, so one request doesn't disable every other button. */

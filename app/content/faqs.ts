@@ -178,7 +178,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How much does Grok Bot cost compared with Construct?",
       answer:
-        "Grok Bot has no standalone price. As of September 10, 2026, access comes with Cursor Pro at $20 a month or SuperGrok at $30 a month. Construct Lite costs $9 a month and includes 2 agents, 3 scheduled tasks, and an agent email address. Starter is $59 with 10 scheduled tasks, and Pro is $299 with 50 scheduled tasks and your own model keys.",
+        "Grok Bot has no standalone price. As of September 10, 2026, access comes with Cursor Pro at $20 a month or SuperGrok at $30 a month. Construct Lite costs $9 a month and includes 2 agents (Construct and one more), 3 scheduled tasks, and an agent email address. Starter is $59 with 10 scheduled tasks, and Pro is $299 with 50 scheduled tasks and your own model keys.",
     },
     {
       question: "Can I use xAI model keys with Construct?",
@@ -375,7 +375,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How do the prices compare?",
       answer:
-        "Construct Lite is $9 a month with 2 agents, 50 steps per task, and 3 scheduled tasks; Starter is $59 and Pro is $299, priced per plan rather than per seat. Zapier's Professional plan started at $29.99 a month for 750 tasks and Team at $103.50 for 2,000 tasks when this post was published.",
+        "Construct Lite is $9 a month with 2 agents (Construct and one more), 50 steps per task, and 3 scheduled tasks; Starter is $59 and Pro is $299, priced per plan rather than per seat. Zapier's Professional plan started at $29.99 a month for 750 tasks and Team at $103.50 for 2,000 tasks when this post was published.",
     },
     {
       question: "When does Zapier still make sense?",
@@ -447,7 +447,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Is Construct an AI employee?",
       answer:
-        "Yes. Construct works from a web desktop with files, memory you can correct, a Calendar, workflows, a live browser, a sandbox terminal, connected apps, and its own email address. Lite costs $9 a month for 2 agents, 50 steps per task, and 3 scheduled tasks, and Pro has a 7-day free trial.",
+        "Yes. Construct works from a web desktop with files, memory you can correct, a Calendar, workflows, a live browser, a sandbox terminal, connected apps, and its own email address. Lite costs $9 a month for 2 agents (Construct and one more), 50 steps per task, and 3 scheduled tasks, and Pro has a 7-day free trial.",
     },
     {
       question: "How is an AI employee different from a chatbot?",
@@ -526,7 +526,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "What does Construct's AI employee cost?",
       answer:
-        "Lite is $9 a month with 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 with 5 agents, 150 steps, and 10 scheduled tasks. Pro is $299 with 15 agents, up to 1,000 steps per task, 50 scheduled tasks, bring-your-own-key support, and a 7-day free trial.",
+        "Lite is $9 a month with 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 with 5 agents, 150 steps, and 10 scheduled tasks. Pro is $299 with 15 agents, up to 1,000 steps per task, 50 scheduled tasks, bring-your-own-key support, and a 7-day free trial.",
     },
     {
       question: "What work can an AI employee complete?",
@@ -1011,7 +1011,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
       question:
         "How much does Muse for Small Business cost compared with Construct?",
       answer:
-        "Muse has a free tier with an unpublished usage limit, then Power at $20 and Max at $100 a month, metered in tokens per week. Construct Lite is $9 a month for 2 agents, 50 steps per task, and 3 scheduled tasks, Starter is $59, and Pro is $299 with a 7-day trial. Construct is priced per plan rather than per person, so a team shares one plan.",
+        "Muse has a free tier with an unpublished usage limit, then Power at $20 and Max at $100 a month, metered in tokens per week. Construct Lite is $9 a month for 2 agents (Construct and one more), 50 steps per task, and 3 scheduled tasks, Starter is $59, and Pro is $299 with a 7-day trial. Construct is priced per plan rather than per person, so a team shares one plan.",
     },
     {
       question: "Is Muse for Small Business available in the UK, EU, or India?",
@@ -1539,7 +1539,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Is Gemini Spark free?",
       answer:
-        "No. Gemini Spark has no free tier and no price of its own. It comes with Google AI Pro at $19.99 a month, which Google began rolling out to US subscribers in English on July 16, 2026, or with Google AI Ultra from $99.99 a month. The $4.99 Google AI Plus plan does not include it. Construct Lite costs $9 a month for 2 agents, 50 steps per task, and 3 scheduled tasks.",
+        "No. Gemini Spark has no free tier and no price of its own. It comes with Google AI Pro at $19.99 a month, which Google began rolling out to US subscribers in English on July 16, 2026, or with Google AI Ultra from $99.99 a month. The $4.99 Google AI Plus plan does not include it. Construct Lite costs $9 a month for 2 agents (Construct and one more), 50 steps per task, and 3 scheduled tasks.",
     },
     {
       question: "Is Gemini Spark available for Google AI Pro users?",
@@ -1630,7 +1630,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Is Viktor AI free?",
       answer:
-        "Not beyond a trial. New Viktor workspaces get $100 in credits with no card required, and those trial credits do not expire. After that, paid Team plans start at $50 a month for 20,000 credits. Construct has no free plan, but Lite costs $9 a month for 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address, and Pro has a 7-day free trial.",
+        "Not beyond a trial. New Viktor workspaces get $100 in credits with no card required, and those trial credits do not expire. After that, paid Team plans start at $50 a month for 20,000 credits. Construct has no free plan, but Lite costs $9 a month for 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, and an agent email address, and Pro has a 7-day free trial.",
     },
     {
       question: "Can Construct work in Slack channels like Viktor?",
@@ -1678,7 +1678,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Is Construct cheaper than Viktor?",
       answer:
-        "Yes, at the entry level. Construct Lite is $9 a month with 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address, which is $41 a month less than Viktor's first Team plan at $50 for 20,000 shared credits. Construct plans are a fixed monthly price with published limits rather than a credit pool.",
+        "Yes, at the entry level. Construct Lite is $9 a month with 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, and an agent email address, which is $41 a month less than Viktor's first Team plan at $50 for 20,000 shared credits. Construct plans are a fixed monthly price with published limits rather than a credit pool.",
     },
     {
       question: "Can Construct work in Slack like Viktor?",
@@ -1858,7 +1858,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How much does an AI employee for an agency cost on Construct?",
       answer:
-        "Construct Lite is $9 a month with 2 agents and 3 scheduled tasks. Starter is $59 a month with up to 5 agents and 10 scheduled tasks, which suits an agency running separate report jobs for several groups of clients. A team workspace has no member limit, and usage draws on the owner's plan.",
+        "Construct Lite is $9 a month with 2 agents (Construct and one more) and 3 scheduled tasks. Starter is $59 a month with up to 5 agents and 10 scheduled tasks, which suits an agency running separate report jobs for several groups of clients. A team workspace has no member limit, and usage draws on the owner's plan.",
     },
     {
       question: "How do approvals work in Construct?",
@@ -2080,7 +2080,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Can I send different channels to different agents?",
       answer:
-        "Yes. Under Default agent you pick which agent answers on each platform, and Route specific channels sends one Slack or Discord channel to a different agent. Lite includes up to 2 agents, Starter 5, and Pro 15.",
+        "Yes. Under Default agent you pick which agent answers on each platform, and Route specific channels sends one Slack or Discord channel to a different agent. Lite includes up to 2 agents (Construct and one more), Starter 5, and Pro 15.",
     },
     {
       question: "Can other people assign work to the agent by email?",
@@ -2102,7 +2102,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Is Construct a good Manus alternative for recurring work?",
       answer:
-        "Yes. Construct runs recurring business work from a persistent cloud workspace starting at $9 a month on Lite, with 3 scheduled tasks, 2 agents, and an agent email address. Finished files stay in the workspace between runs, so this week's report can compare against last week's, and Calendar schedules run server-side with your laptop closed.",
+        "Yes. Construct runs recurring business work from a persistent cloud workspace starting at $9 a month on Lite, with 3 scheduled tasks, 2 agents (Construct and one more), and an agent email address. Finished files stay in the workspace between runs, so this week's report can compare against last week's, and Calendar schedules run server-side with your laptop closed.",
     },
     {
       question: "How does Construct's pricing compare with Manus credits?",
@@ -2237,7 +2237,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How much does Sintra cost compared with Construct?",
       answer:
-        "When we checked on October 1, 2026, Sintra X listed at $97 a month and was on sale at $48.50 for a one-month term, or $15.60 a month on a 12-month sale term, each with 250 credits a month. Construct Lite is $9 a month for 2 agents, 3 scheduled tasks, and an agent email address, Starter is $59, and Pro is $299 with a 7-day trial.",
+        "When we checked on October 1, 2026, Sintra X listed at $97 a month and was on sale at $48.50 for a one-month term, or $15.60 a month on a 12-month sale term, each with 250 credits a month. Construct Lite is $9 a month for 2 agents (Construct and one more), 3 scheduled tasks, and an agent email address, Starter is $59, and Pro is $299 with a 7-day trial.",
     },
     {
       question: "Can I use Construct alongside Sintra?",
@@ -2346,7 +2346,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "When should I move from Lite to Starter or Pro?",
       answer:
-        "Change plans when the limits stop you, not the agent. Lite has 50 steps per task, 3 scheduled tasks, and 2 agents; Starter has 150 steps, 10 scheduled tasks, and 5 agents; Pro has up to 1,000 steps, 50 scheduled tasks, 15 agents, and bring your own model keys.",
+        "Change plans when the limits stop you, not the agent. Lite has 50 steps per task, 3 scheduled tasks, and 2 agents (Construct and one more); Starter has 150 steps, 10 scheduled tasks, and 5 agents; Pro has up to 1,000 steps, 50 scheduled tasks, 15 agents, and bring your own model keys.",
     },
     {
       question: "What if a job still needs heavy corrections by week 3?",
@@ -2446,7 +2446,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "What is the cheapest AI employee?",
       answer:
-        "Construct Lite at $9 a month, or $7.50 a month billed annually. It is the cheapest paid plan we found that gives an agent its own cloud workspace and runs scheduled work there with your laptop closed: up to 2 agents, 50 steps per task, 3 scheduled tasks, an agent email address, and workspace files where every result is saved.",
+        "Construct Lite at $9 a month, or $7.50 a month billed annually. It is the cheapest paid plan we found that gives an agent its own cloud workspace and runs scheduled work there with your laptop closed: up to 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, an agent email address, and workspace files where every result is saved.",
     },
     {
       question: "Is Construct Lite better value than a $20 agent subscription?",
@@ -2560,7 +2560,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
       question:
         "How can I check Construct for myself instead of relying on an AI answer?",
       answer:
-        "Give it one job you repeat every week with the same inputs you would give a person, and read the saved file. Lite costs $9 a month with 2 agents, 50 steps per task, and 3 scheduled tasks, and there is a seven day Pro trial. Finished work lands in workspace files and you can read and correct what it remembers.",
+        "Give it one job you repeat every week with the same inputs you would give a person, and read the saved file. Lite costs $9 a month with 2 agents (Construct and one more), 50 steps per task, and 3 scheduled tasks, and there is a seven day Pro trial. Finished work lands in workspace files and you can read and correct what it remembers.",
     },
   ],
   "ai-investor-update": [
@@ -2664,7 +2664,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How much does it cost?",
       answer:
-        "Construct Lite is $9 a month with up to 2 agents, 50 steps per task, 3 scheduled tasks, and an agent email address, which covers the Friday updates and a weekday follow-up list on a schedule, with research and proposals on demand. Starter at $59 raises that to 10 scheduled tasks, and Pro has a 7-day free trial.",
+        "Construct Lite is $9 a month with up to 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, and an agent email address, which covers the Friday updates and a weekday follow-up list on a schedule, with research and proposals on demand. Starter at $59 raises that to 10 scheduled tasks, and Pro has a 7-day free trial.",
     },
     {
       question:

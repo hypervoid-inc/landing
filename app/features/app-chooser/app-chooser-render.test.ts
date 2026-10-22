@@ -24,6 +24,10 @@ describe("app chooser", () => {
     expect(html).toContain('href="https://app.construct.computer"');
     expect(html).toContain("Open Desktop");
     expect(html).toContain("Open Dashboard");
+    // The recommended dashboard leads, on the left, with the filled button.
+    expect(html.indexOf("Open Dashboard")).toBeLessThan(html.indexOf("Open Desktop"));
+    expect(html).toContain("Recommended");
+    expect(html).toMatch(/class="ac-cta ac-cta--quiet"[^>]*href="https:\/\/os\.construct\.computer"/);
     expect(html).toContain("Construct OS needs a laptop or desktop");
     // No theme chosen yet: CSS follows the system, the toggle offers dark.
     expect(html).not.toContain("data-theme");

@@ -56,23 +56,25 @@ export function IdentityHero({
             </p>
           </div>
         </div>
+        {/* Open Construct leads: people land here after paying and are
+            looking for the product, not the billing portal. */}
         <div className="flex flex-wrap items-center gap-2">
-          {plan.state === "ready" &&
-          canOpenBillingPortal(plan.data) &&
-          onManage ? (
-            <Button variant="primary" onClick={onManage} busy={manageBusy}>
-              Manage plan
-            </Button>
-          ) : null}
           <a
             href={getAppOrigin()}
             className={cn(
-              buttonVariants({ variant: "secondary" }),
+              buttonVariants({ variant: "primary" }),
               "no-underline",
             )}
           >
             Open Construct ↗
           </a>
+          {plan.state === "ready" &&
+          canOpenBillingPortal(plan.data) &&
+          onManage ? (
+            <Button variant="secondary" onClick={onManage} busy={manageBusy}>
+              Manage plan
+            </Button>
+          ) : null}
         </div>
       </div>
 

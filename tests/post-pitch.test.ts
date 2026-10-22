@@ -79,6 +79,10 @@ describe("the pitch a post opens on", () => {
       expect(html, post.slug).toMatch(
         /<a [^>]*>[\s\S]*Start with Construct for \$9/,
       );
+      // Lite has no trial, so the paid ask always sits next to the free one.
+      expect(html, post.slug).toMatch(/<a [^>]*>try Pro free for 7 days<\/a>/);
+      // And says what the trial turns into.
+      expect(html, post.slug).toMatch(/free for 7 days<\/a>(<!-- -->)?, then \$299\/month/);
       expect(html, post.slug).not.toMatch(/<form|<input/);
     }
   });
@@ -89,5 +93,15 @@ describe("the pitch a post opens on", () => {
     expect(
       render(BodyCta, { source: "blog_inline_1", children: "Inline" }),
     ).toContain("Inline");
+  });
+
+  it("puts the post-trial price under a trial CTA and nothing under a paid one", () => {
+    const BodyCta = pitchedMdxComponents.BetaCta;
+    expect(
+      render(BodyCta, { source: "blog_inline_1", plan: "pro", children: "Try" }),
+    ).toContain("$299/month unless you cancel.");
+    expect(
+      render(BodyCta, { source: "blog_inline_1", plan: "lite", children: "Go" }),
+    ).not.toContain("unless you cancel");
   });
 });

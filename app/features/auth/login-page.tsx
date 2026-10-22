@@ -7,9 +7,15 @@ import { Banner, buttonVariants } from "../../components/ui/primitives";
 import { cn } from "../../lib/cn";
 import * as authApi from "../../platform/api/auth";
 import { getAppOrigin, getTurnstileSiteKey } from "../../platform/env";
+import {
+  billingReturnSearch,
+  checkoutIntentPath,
+  parseBillingInterval,
+} from "../account/account-format";
 import { AuthPanelFrame, PANEL_DEPTH } from "./auth-panel-frame";
 import { AuthSignInForm } from "./auth-sign-in-form";
 import { useAuth } from "./auth-provider";
+import { clearPostLoginWelcome } from "./post-login-welcome";
 
 type Panel =
   | "signin"
@@ -36,6 +42,8 @@ export function LoginPage() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const planIntent = params.get("plan");
+  const intervalIntent = parseBillingInterval(params.get("interval"));
+  const [billingReturn] = useState(() => billingReturnSearch(params));
 
   const [deepLinks] = useState(() =>
     typeof window === "undefined"
@@ -69,15 +77,30 @@ export function LoginPage() {
 
   useEffect(() => {
     if (status === "authenticated" && user) {
+      // Signed in on this page, so this page routes; the root-level handoff
+      // is only for the Google round trip, which returns elsewhere.
+      clearPostLoginWelcome();
+      // A plan CTA goes to checkout first, new account or not, so every
+      // sign-in method agrees with the dialog and the Google return.
+      if (planIntent) {
+        navigate(checkoutIntentPath(planIntent, intervalIntent), {
+          replace: true,
+        });
+        return;
+      }
+      // A checkout return that met an expired session goes back to /account,
+      // which shows whether the payment went through.
+      if (billingReturn) {
+        navigate(`/account/${billingReturn}`, { replace: true });
+        return;
+      }
       if (!user.onboardingCompleted) {
         window.location.href = getAppOrigin();
         return;
       }
-      navigate(planIntent ? `/account/?plan=${planIntent}` : "/account/", {
-        replace: true,
-      });
+      navigate("/account/", { replace: true });
     }
-  }, [status, user, navigate, planIntent]);
+  }, [status, user, navigate, planIntent, intervalIntent, billingReturn]);
 
   async function onRegister(e: React.FormEvent) {
     e.preventDefault();
@@ -194,6 +217,17 @@ export function LoginPage() {
                 appearance="page"
                 externalError={authError}
                 askHeardAbout
+                // Google returns to the site root, not here, so the plan rides
+                // along in session storage to reach checkout afterwards.
+                postLoginWelcome={
+                  planIntent
+                    ? {
+                        source: "login",
+                        plan: planIntent,
+                        interval: intervalIntent ?? undefined,
+                      }
+                    : undefined
+                }
                 footer={
                   <div className="flex justify-center gap-6 text-sm text-[#627c86]">
                     <button

@@ -231,6 +231,8 @@ export function ToolPage({ slug }: { slug: string }) {
               slug={tool.slug}
               pitch={tool.ctaPitch}
               label={tool.ctaLabel}
+              plan={tool.ctaPlan}
+              interval={tool.ctaInterval}
             />
           }
         />

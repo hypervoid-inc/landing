@@ -15,7 +15,10 @@ import { FounderNote } from "./founder-note";
 import { INTEGRATION_MARKS } from "./integration-marks";
 import { usePrefersReducedMotion, useRevealOnView } from "./media";
 import { usePointerParallax } from "./use-pointer-parallax";
-import { mergePricingPlans } from "./merge-pricing-catalog";
+import {
+  mergePricingPlans,
+  proTrialThenPrices,
+} from "./merge-pricing-catalog";
 import { usePlanCatalog } from "./use-plan-catalog";
 import "./launch-page.css";
 
@@ -382,6 +385,8 @@ export function LaunchPage() {
   // Entry price anchors the discount codes. The trial itself runs on Pro, so
   // the two numbers are deliberately kept apart in the copy.
   const entryPrice = merged.find((plan) => plan.id === "lite")?.price ?? "$9";
+  // What the trial bills when nobody switches, so "from $9" is not read as it.
+  const proThen = proTrialThenPrices(merged);
 
   return (
     <div ref={pageRef} className="launch-page">
@@ -444,11 +449,12 @@ export function LaunchPage() {
                 data-reveal="mount"
                 data-reveal-delay="2"
               >
-                {trialLabel} trial on Pro, the full desktop. Plans from{" "}
+                {trialLabel} trial on Pro, the full desktop, then {proThen}{" "}
+                unless you switch. Plans from{" "}
                 <span className="font-semibold text-[var(--color-ink)]">
                   {entryPrice}/month
-                </span>{" "}
-                after that, less with the launch codes below.
+                </span>
+                , less with the launch codes below.
               </p>
               <div
                 className="reveal-item mt-8 flex flex-wrap items-center gap-3"
@@ -686,8 +692,9 @@ export function LaunchPage() {
                 Hire your first AI agent tonight
               </h2>
               <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--color-ink-muted)]">
-                {trialLabel} trial on Pro, then plans from {entryPrice}/month.
-                Cancel any time from your account.
+                {trialLabel} trial on Pro, then {proThen} unless you switch.
+                Plans from {entryPrice}/month. Cancel any time from your
+                account.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 <StartLink
@@ -791,7 +798,7 @@ export function LaunchPage() {
             {trialLabel} trial on Pro
           </span>
           <span className="launch-sticky-cta-sub">
-            then from {entryPrice}/month
+            then {proTrialThenPrices(merged, true)}, plans from {entryPrice}
           </span>
         </div>
         <StartLink

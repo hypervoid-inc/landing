@@ -13,7 +13,7 @@ Construct gives a $9 Lite agent its own email address, and only mail from your o
 
 So the practical question for a small team is not whether an agent can be fooled, because any agent that reads outside text can be. It is what the agent is able to do once it is fooled, and that is something you control. Construct is built so that the safe setup is the easy one: strangers cannot trigger work, chat channels are closed to unlisted people by default, sending is capped, connected apps can be switched off per agent, and Activity shows what each agent did. This guide explains the risk and then shows how to set up an email agent in Construct that stays useful when a hostile message arrives.
 
-<BetaCta source="blog_top">Start with Construct for $9</BetaCta>
+<BetaCta source="blog_top" plan="lite" interval="month">Start with Construct for $9</BetaCta>
 
 ## Why run an email agent in Construct?
 
@@ -77,7 +77,7 @@ You will not out-prompt an attacker. The useful controls limit what a fooled age
 1. **Decide who can give the agent work.** In Construct this is already done for email: only your own authenticated address starts a task. In Slack, Discord, and Telegram, leave access on "Only people I allow" and add your teammates by name.
 2. **Ask for drafts, then send them yourself.** Anything that leaves the company, deletes, or pays goes to a person first. OWASP lists "human-in-the-loop controls for privileged operations" as a core mitigation. Construct's workflows do not pause for approval yet, so write "save a draft, do not send" into the job and send from chat once you have read it.
 3. **Split jobs to break the trifecta.** The job that reads vendor email writes a summary file. A separate request, started by you, sends replies.
-4. **Give each agent the least access it needs.** OWASP's wording is "restrict the model's access privileges to the minimum necessary." Lite includes 2 agents: use one for the inbox with connected apps switched off, and the other for work that needs your CRM.
+4. **Give each agent the least access it needs.** OWASP's wording is "restrict the model's access privileges to the minimum necessary." Lite includes 2 agents (Construct and one more): use one for the inbox with connected apps switched off, and the other for work that needs your CRM.
 5. **Use the agent's own address for outward messages.** If something goes wrong, it happens in the agent's mailbox, not yours ([how to give an agent its own address](/blog/ai-agent-email-address/)).
 6. **Mark outside content as information in your instructions.** It helps, and it is not a control to rely on alone, because the model may still follow a well-written injection.
 7. **Read what the agent did, not only what it produced.** The NCSC recommends logging tool use so attempts are visible. Open Activity and filter by kind: a sent email you did not ask for shows up the next morning, not next quarter.

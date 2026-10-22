@@ -41,7 +41,7 @@ const PLAN = {
   trialEndsAt: null,
   trialUsed: false,
   cancelAtPeriodEnd: false,
-  periodEnd: 1_800_000_000,
+  periodEnd: 1_800_000_000_000,
   canCheckout: false,
   canManage: true,
   canChangePlan: true,
@@ -288,12 +288,19 @@ test.describe("/account", () => {
 
     // The plan summary and renewal date, neither of which used to render.
     await expect(page.getByText(/pro · Annual/i).first()).toBeVisible();
-    await expect(page.getByText(/Renews/i).first()).toBeVisible();
+    await expect(page.getByText(/Renews .*2027/i).first()).toBeVisible();
 
     // Dodo portal entry points for the billing owner.
     await expect(
       page.getByRole("button", { name: "Manage plan" }).first(),
     ).toBeVisible();
+    // Opening the product leads in the hero; the portal is the second button.
+    await expect(
+      page
+        .locator("section")
+        .first()
+        .getByRole("link", { name: /^Open Construct/ }),
+    ).toHaveClass(/bg-black/);
     await expect(
       page.getByRole("button", { name: /Annual · yours/i }),
     ).toBeVisible();
@@ -422,6 +429,18 @@ test.describe("/account", () => {
     );
     await page.goto("/account");
     await expect(page).toHaveURL(/\/login/);
+  });
+
+  test("keeps a checkout return's params through the sign-in redirect", async ({
+    page,
+  }) => {
+    await page.route(`${API}/**`, (route) =>
+      json(route, { error: "Unauthorized" }, 401),
+    );
+    await page.goto("/account/?billing_status=success&status=failed");
+    await expect(page).toHaveURL(
+      /\/login\/\?billing_status=success&status=failed$/,
+    );
   });
 
   test("opens the header account menu with Account, Open Construct, and Log out", async ({

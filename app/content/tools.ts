@@ -1,3 +1,4 @@
+import type { BillingInterval, PaidPlanId } from "../platform/api/schemas";
 import {
   formatCents,
   formatCount,
@@ -33,6 +34,9 @@ export type ToolEntry = {
   /** One or two sentences above the single CTA button. */
   readonly ctaPitch: string;
   readonly ctaLabel: string;
+  /** Set when the label names a price, so a new reader lands on that checkout. */
+  readonly ctaPlan?: PaidPlanId;
+  readonly ctaInterval?: BillingInterval;
   /** Short topic shown on the /tools/ card. */
   readonly category: string;
   /** What the person walks away with, as chips on the /tools/ card. */
@@ -157,7 +161,9 @@ export const tools: readonly ToolEntry[] = [
     lede: "This free Zapier cost calculator works out your monthly bill from the Zaps you run. Add each Zap's action steps and how often it runs, and it counts tasks the way Zapier bills them, then finds your cheapest plan, including when a smaller plan plus pay-per-task costs less than the next tier up.",
     ctaPitch:
       "Zapier bills every action step, so the cost climbs with every run. Construct's AI agents run on a fixed monthly plan instead of a per-task bill, and they handle the steps that need reading and judgment, not only moving data between apps.",
-    ctaLabel: "Try Construct for $9",
+    ctaLabel: "Start with Construct for $9",
+    ctaPlan: "lite",
+    ctaInterval: "month",
     category: "Automation",
     outputs: ["Monthly tasks", "Cheapest plan", "Cost per task"],
     reference: {

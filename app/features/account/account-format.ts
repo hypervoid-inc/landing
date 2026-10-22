@@ -30,10 +30,13 @@ export function intervalSuffix(interval: BillingInterval): string {
   return interval === "year" ? "/yr" : "/mo";
 }
 
-/** The API sends unix *seconds*; `new Date(n)` would land in 1970. */
-export function formatUnixDate(seconds: number | null | undefined): string | null {
-  if (seconds == null) return null;
-  const ms = seconds * 1000;
+/**
+ * The billing API sends epoch milliseconds (Date.parse of Dodo's dates).
+ * Unix seconds still read correctly, the same way relativeTime tells them apart.
+ */
+export function formatEpochDate(value: number | null | undefined): string | null {
+  if (value == null) return null;
+  const ms = value > 1e12 ? value : value * 1000;
   if (!Number.isFinite(ms)) return null;
   try {
     return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(
@@ -137,7 +140,7 @@ export function billedCatalogPriceLabel(
 
 /** "Renews 12 Mar 2027" vs "Access until 12 Mar 2027", the distinction matters. */
 export function renewalLabel(plan: BillingPlan): string | null {
-  const date = formatUnixDate(plan.periodEnd);
+  const date = formatEpochDate(plan.periodEnd);
   if (!date) return null;
   if (plan.cancelAtPeriodEnd) return `Access until ${date}`;
   if (plan.plan === "unsubscribed") return null;
@@ -165,7 +168,8 @@ export function canChangeBillingPlan(plan: BillingPlan): boolean {
 /**
  * Dodo appends its own `status` to the checkout return URL. These mean the
  * charge didn't go through even though the browser came back on our success
- * URL, so the page must not say the subscription is activating.
+ * URL, so the page must not say the subscription is activating. Same set as
+ * the apps' `parseBillingReturn` (packages/construct-domain in v2).
  */
 const DECLINED_RETURN_STATUSES = new Set([
   "failed",
@@ -174,6 +178,32 @@ const DECLINED_RETURN_STATUSES = new Set([
   "expired",
   "requires_payment_method",
 ]);
+
+export type BillingReturnKind = "paid" | "declined" | "card" | "canceled";
+
+/**
+ * What a Dodo return means, for /account and the app chooser alike: a
+ * canceled checkout first, then our failed status or a declined Dodo status.
+ * Null for no `billing_status` or one we don't know, as in the apps.
+ */
+export function billingReturnKind(
+  params: URLSearchParams,
+): BillingReturnKind | null {
+  const billing = params.get("billing_status")?.toLowerCase();
+  if (!billing) return null;
+  if (billing === "cancel" || billing === "canceled" || billing === "cancelled") {
+    return "canceled";
+  }
+  if (billing === "failed") return "declined";
+  const declined = DECLINED_RETURN_STATUSES.has(
+    params.get("status")?.toLowerCase() ?? "",
+  );
+  if (billing === "success" || billing === "succeeded" || billing === "active") {
+    return declined ? "declined" : "paid";
+  }
+  if (billing === "payment_method") return declined ? "declined" : "card";
+  return null;
+}
 
 /** Query params a Dodo return adds, dropped once the notice is read. */
 export const BILLING_RETURN_PARAMS = [
@@ -185,28 +215,105 @@ export const BILLING_RETURN_PARAMS = [
   "license_key",
 ];
 
+/** A Dodo return's params as `?...`, kept through sign-in; "" for none. */
+export function billingReturnSearch(params: URLSearchParams): string {
+  if (!params.get("billing_status")) return "";
+  const kept = new URLSearchParams();
+  for (const key of BILLING_RETURN_PARAMS) {
+    const value = params.get(key);
+    if (value != null) kept.set(key, value);
+  }
+  return `?${kept.toString()}`;
+}
+
 export type BillingReturnNotice = {
   tone: "info" | "error";
   text: string;
+  /** Checkout came back paid; the page polls until the plan turns on. */
+  activating?: true;
 } | null;
 
 export function billingReturnNotice(
   params: URLSearchParams,
 ): BillingReturnNotice {
-  const billingStatus = params.get("billing_status");
-  if (!billingStatus) return null;
-  const status = params.get("status")?.toLowerCase() ?? "";
-  if (DECLINED_RETURN_STATUSES.has(status)) {
-    return {
-      tone: "error",
-      text: "Your payment didn't go through. Nothing was charged. Try again with a different card.",
-    };
+  switch (billingReturnKind(params)) {
+    case "canceled":
+      return { tone: "info", text: "Checkout canceled. Nothing was charged." };
+    case "declined":
+      return {
+        tone: "error",
+        text: "Your payment didn't go through. Nothing was charged. Try again with a different card.",
+      };
+    case "paid":
+      return {
+        tone: "info",
+        text: "Subscription activating, refreshing...",
+        activating: true,
+      };
+    case "card":
+      return { tone: "info", text: "Payment method updated." };
+    default:
+      return null;
   }
-  if (billingStatus === "success") {
-    return { tone: "info", text: "Subscription activating, refreshing…" };
+}
+
+/** Dodo's webhook usually lands within seconds; past a minute something is stuck. */
+export const ACTIVATION_POLL_MS = 2_500;
+export const ACTIVATION_TIMEOUT_MS = 60_000;
+
+/** Paid and live. Trialing counts, since a Pro trial starts that way. */
+export function isPlanActivated(plan: BillingPlan): boolean {
+  return (
+    plan.plan !== "unsubscribed" &&
+    (plan.status === "active" || plan.status === "trialing")
+  );
+}
+
+/** `?interval=` from a plan CTA; anything else falls back to the default. */
+export function parseBillingInterval(
+  value: string | null | undefined,
+): BillingInterval | null {
+  return value === "month" || value === "year" ? value : null;
+}
+
+/**
+ * What a `?plan=` handoff does once the plan loads: start checkout, tell a
+ * paid reader they're already on a plan, confirm the price when the Pro trial
+ * is spent (the CTA said free), or nothing for an unknown plan.
+ */
+export function planIntentAction(
+  plan: BillingPlan,
+  wanted: string,
+): "checkout" | "subscribed" | "trial-used" | "ignore" {
+  if (wanted !== "lite" && wanted !== "starter" && wanted !== "pro") {
+    return "ignore";
   }
-  if (billingStatus === "payment_method") {
-    return { tone: "info", text: "Payment method updated." };
+  if (!plan.canCheckout) {
+    return plan.plan !== "unsubscribed" ? "subscribed" : "ignore";
   }
-  return null;
+  // ponytail: Pro is the only plan with a trial today; read trialDays from
+  // the catalog here if another plan gets one.
+  if (wanted === "pro" && plan.trialUsed) return "trial-used";
+  return "checkout";
+}
+
+/** `?plan=&interval=` carried from a plan CTA through sign-in. */
+export function planIntentSearch(
+  plan: string,
+  interval?: BillingInterval | null,
+): string {
+  const params = new URLSearchParams({ plan });
+  if (interval) params.set("interval", interval);
+  return `?${params.toString()}`;
+}
+
+/**
+ * Where a plan CTA lands once the reader is signed in. /account starts
+ * checkout from these params, so the interval picked on pricing survives.
+ */
+export function checkoutIntentPath(
+  plan: string,
+  interval?: BillingInterval | null,
+): string {
+  return `/account/${planIntentSearch(plan, interval)}`;
 }

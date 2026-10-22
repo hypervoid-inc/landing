@@ -5,6 +5,8 @@
   z-index: 1;
   height: 0;
   padding: 0 20px;
+  /* The drifting z's pass the screen edge on a phone; clip keeps y visible. */
+  overflow-x: clip;
 }
 
 .footer-mascot {

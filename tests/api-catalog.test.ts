@@ -271,3 +271,20 @@ describe("health endpoint", () => {
     });
   });
 });
+
+describe("Content-Security-Policy", () => {
+  // The PartnerStack loader from join.construct.computer (app/root.tsx)
+  // reports clicks straight to these hosts, not through our proxy.
+  it("lets the PartnerStack loader report clicks on every page", () => {
+    const policies = [...headerRules.values()]
+      .flat()
+      .filter((line) => line.startsWith("Content-Security-Policy:"));
+    expect(policies.length).toBeGreaterThan(0);
+    for (const policy of policies) {
+      const connect = /connect-src ([^;]+)/.exec(policy)?.[1]?.split(" ");
+      expect(connect).toEqual(
+        expect.arrayContaining(["https://partnerlinks.io", "https://grsm.io"]),
+      );
+    }
+  });
+});

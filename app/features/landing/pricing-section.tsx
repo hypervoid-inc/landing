@@ -17,6 +17,7 @@ import { captureAnalytics } from "../analytics/analytics.client";
 import { readAttributionCookie } from "../analytics/campaign-attribution.client";
 import { useAuth } from "../auth/auth-provider";
 import { createCheckout } from "../../platform/api/billing";
+import { checkoutIntentPath } from "../account/account-format";
 import { getAppOrigin } from "../../platform/env";
 import {
   landingFaq,
@@ -29,7 +30,7 @@ import {
   maxAnnualMonthsFree,
   mergePricingPlans,
   pricingFloorLabel,
-  trialHighlightForPeriod,
+  trialOfferLine,
   type PricingPlanView,
 } from "./merge-pricing-catalog";
 import { usePlanCatalog } from "./use-plan-catalog";
@@ -49,6 +50,7 @@ function PricingCta({
   const openDialog = useOpenAccessDialog();
   const [busy, setBusy] = useState(false);
   const planId = plan.id;
+  const interval = period === "annual" ? "year" : "month";
 
   if (status !== "authenticated" || !user) {
     return (
@@ -59,11 +61,13 @@ function PricingCta({
           captureAnalytics("auth_dialog_opened", {
             source: `pricing-${planId}`,
             plan: planId,
+            interval,
           });
           openDialog({
             mode: "auth",
             source: `pricing-${planId}`,
             plan: planId,
+            interval,
           });
         }}
       >
@@ -88,7 +92,6 @@ function PricingCta({
       onClick={() => {
         void (async () => {
           setBusy(true);
-          const interval = period === "annual" ? "year" : "month";
           const promoCode = readAttributionCookie()?.p;
           // `plan` and `interval` names match the apps/web event so both
           // surfaces roll up into one checkout funnel, split by `source`.
@@ -113,7 +116,7 @@ function PricingCta({
               interval,
               source: `pricing-${planId}`,
             });
-            window.location.href = `/account/?plan=${planId}`;
+            window.location.href = checkoutIntentPath(planId, interval);
           }
         })();
       }}
@@ -258,7 +261,7 @@ function PricingCard({
   const targetPrice =
     period === "annual" ? plan.annualMonthlyPrice : plan.price;
   const displayPrice = usePriceTicker(targetPrice);
-  const highlight = trialHighlightForPeriod(plan, period) ?? plan.highlight;
+  const highlight = trialOfferLine(plan, period);
 
   const stackRef = useRef<HTMLSpanElement>(null);
   const amountRef = useRef<HTMLSpanElement>(null);

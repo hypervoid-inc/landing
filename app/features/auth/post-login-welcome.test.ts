@@ -47,6 +47,14 @@ describe("post-login-welcome", () => {
     expect(peekPostLoginWelcome()?.source).toBe("nav");
   });
 
+  it("keeps the interval picked with a plan", () => {
+    markPostLoginWelcome({ source: "pricing-pro", plan: "pro", interval: "year" });
+    expect(consumePostLoginWelcome()).toMatchObject({
+      plan: "pro",
+      interval: "year",
+    });
+  });
+
   it("consumes once", () => {
     markPostLoginWelcome({ source: "hero" });
     expect(consumePostLoginWelcome()?.source).toBe("hero");

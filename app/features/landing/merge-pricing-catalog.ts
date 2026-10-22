@@ -15,6 +15,8 @@ export type PricingPlanView = {
   agents: number;
   price: string;
   annualMonthlyPrice: string;
+  /** What a year is billed at once, e.g. `$2,388`. */
+  annualPrice: string;
   annualSavingsLabel: string;
   cta: string;
   description: string;
@@ -42,7 +44,9 @@ export function formatLandingPrice(
   const major = money.amount / 100;
   const hasCents = money.amount % 100 !== 0;
   if (money.currency.toUpperCase() === "USD") {
-    return hasCents ? `$${major.toFixed(2)}` : `$${Math.round(major)}`;
+    return hasCents
+      ? `$${major.toFixed(2)}`
+      : `$${Math.round(major).toLocaleString("en-US")}`;
   }
   try {
     return new Intl.NumberFormat(undefined, {
@@ -70,6 +74,67 @@ export function trialHighlightForPeriod(
   );
 }
 
+/**
+ * The card's trial line with what the trial turns into, so nobody reads the
+ * per-month figure of an annual card as the charge: "7-day trial, then
+ * $2,388/year". Null for a plan without a trial.
+ */
+export function trialOfferLine(
+  plan: PricingPlanView,
+  period: "monthly" | "annual",
+): string | null {
+  const trial = trialHighlightForPeriod(plan, period) ?? plan.highlight;
+  if (!trial) return null;
+  return `${trial}, then ${billedPrice(plan, period === "annual")}`;
+}
+
+function billedPrice(plan: PricingPlanView, annual: boolean): string {
+  return annual ? `${plan.annualPrice}/year` : `${plan.price}/month`;
+}
+
+/**
+ * What a trial CTA outside the pricing cards turns into, on the static
+ * prices those prerendered pages carry, e.g. `$299/month`. Null for a plan
+ * without a trial.
+ */
+export function trialThenPrice(
+  planId: PaidPlanId,
+  interval: "month" | "year" = "month",
+): string | null {
+  const plan = mergePricingPlans(null, null).find((p) => p.id === planId);
+  if (!plan?.highlight) return null;
+  return billedPrice(plan, interval === "year");
+}
+
+/**
+ * What the Pro trial turns into, for copy that cannot know which interval the
+ * reader will pick: "$299/month or $2,388/year" (`short`: "$299/mo or
+ * $2,388/yr"). From `plans` when it has Pro, else the static catalog.
+ */
+export function proTrialThenPrices(
+  plans: PricingPlanView[],
+  short = false,
+): string {
+  const pro =
+    plans.find((p) => p.id === "pro") ??
+    mergePricingPlans(null, null).find((p) => p.id === "pro");
+  if (!pro) return "";
+  return short
+    ? `${pro.price}/mo or ${pro.annualPrice}/yr`
+    : `${billedPrice(pro, false)} or ${billedPrice(pro, true)}`;
+}
+
+/** A year at the static per-month figure, `$7.50` becomes `$90`. */
+function staticAnnualPrice(annualMonthlyPrice: string): string {
+  const perMonth = Number(annualMonthlyPrice.replace(/[^0-9.]/g, ""));
+  return (
+    formatLandingPrice({
+      amount: Math.round(perMonth * 100) * 12,
+      currency: "USD",
+    }) ?? annualMonthlyPrice
+  );
+}
+
 function savingsLabel(months: number | null): string {
   if (months == null) return "";
   return `${months} ${months === 1 ? "month" : "months"} free`;
@@ -92,6 +157,7 @@ export function mergePricingPlans(
         agents: staticPlan.agents,
         price: staticPlan.price,
         annualMonthlyPrice: staticPlan.annualMonthlyPrice,
+        annualPrice: staticAnnualPrice(staticPlan.annualMonthlyPrice),
         annualSavingsLabel: staticPlan.annualSavingsLabel,
         cta: staticPlan.cta,
         description: staticPlan.description,
@@ -119,6 +185,9 @@ export function mergePricingPlans(
       agents: staticPlan.agents,
       price: monthPrice,
       annualMonthlyPrice: yearEquiv,
+      annualPrice:
+        formatLandingPrice(live.year?.price) ??
+        staticAnnualPrice(staticPlan.annualMonthlyPrice),
       annualSavingsLabel:
         months != null ? savingsLabel(months) : staticPlan.annualSavingsLabel,
       cta: staticPlan.cta,

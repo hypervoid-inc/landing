@@ -93,4 +93,4 @@ The role pages (`ai-employee-for-agencies`, `ai-employee-for-consultants`) wait 
 
 ## Follow-ups in other repos
 
-The API parser in the v2 repo (`apps/api/src/domain/auth/attribution.ts`) should persist the new cookie keys onto the user row at signup: `rd` (first-touch referring domain), `ut` (`utm_term`) and `h` (where they heard about us). Its test that asserts the cookie literals needs the same keys. Until that ships, these three values live only in PostHog, so any report that needs them comes from PostHog rather than D1.
+The API parser in the v2 repo (`apps/api/src/domain/auth/attribution.ts`) now accepts `rd`, `ut` and `h`, and counts `rd` and `lp` as attribution on their own, so an organic signup is no longer dropped (v2 branch `feat/first-use`, not deployed yet). Only `rd` is stored on the user row, as `attribution_referring_domain`; the API also sends it as `referring_domain` on `auth.signup_completed` and `initial_referring_domain` on the person. `ut` (`utm_term`) and `h` (where they heard about us) are parsed but not stored, so reports that need them still come from PostHog rather than D1.

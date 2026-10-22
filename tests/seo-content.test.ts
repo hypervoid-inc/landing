@@ -271,6 +271,20 @@ describe("route metadata", () => {
     ).toBe(false);
   });
 
+  it("gives every page's JSON-LD block a top-level @context", () => {
+    for (const route of canonicalRoutes) {
+      const entry = routeMeta(route).find(
+        (item) => "script:ld+json" in item,
+      ) as { "script:ld+json": Record<string, unknown> };
+      const block = entry["script:ld+json"];
+      expect(Array.isArray(block)).toBe(false);
+      expect(block["@context"]).toBe("https://schema.org");
+      const graph = block["@graph"] as Record<string, unknown>[];
+      expect(graph.length).toBe(routeJsonLd(route).length);
+      expect(graph.every((node) => !("@context" in node))).toBe(true);
+    }
+  });
+
   it("emits article dates only for articles and gives guides a Blog breadcrumb", () => {
     const policyMeta = routeMeta(
       canonicalRoutes.find(({ path }) => path === "/editorial-policy")!,

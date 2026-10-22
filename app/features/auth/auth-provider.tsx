@@ -11,9 +11,11 @@ import {
 import * as authApi from "../../platform/api/auth";
 import type { AuthUser } from "../../platform/api/auth";
 import {
+  captureAnalytics,
   identifyAnalyticsUser,
   resetAnalyticsUser,
 } from "../analytics/analytics.client";
+import { landingAuthEvent, takeGoogleSignIn } from "./auth-events";
 import { clearPostLoginWelcome } from "./post-login-welcome";
 
 type AuthStatus = "loading" | "authenticated" | "anonymous";
@@ -81,7 +83,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setError(returned.error);
         clearPostLoginWelcome();
       }
+      const google = returned.handled && takeGoogleSignIn();
       await refresh();
+      // Email and password sign-ins send this from the form; Google leaves
+      // the page, so its auth_completed is sent here once the code lands.
+      // Method oauth matches the OS's name for a Google sign-in.
+      if (google && returned.signedIn && !cancelled) {
+        const [event, props] = landingAuthEvent("oauth", "verify", {
+          success: true,
+        });
+        captureAnalytics(event, { ...props, provider: "google" });
+      }
     })();
     return () => {
       cancelled = true;

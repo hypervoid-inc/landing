@@ -29,7 +29,11 @@ import { CloudCard } from "./bento/cloud-card";
 import { IntegrationsCard } from "./bento/integrations-card";
 import { SchedulesCard } from "./bento/schedules-card";
 import { SocialCard } from "./bento/social-card";
-import { mergePricingPlans, pricingFloorLabel } from "./merge-pricing-catalog";
+import {
+  mergePricingPlans,
+  pricingFloorLabel,
+  proTrialThenPrices,
+} from "./merge-pricing-catalog";
 // Temporarily disabled, do not delete. Hero collage pointer parallax.
 // import { usePointerParallax } from "./use-pointer-parallax";
 import { JournalSection } from "./journal-section";
@@ -48,6 +52,7 @@ function HeroHeadline() {
   const floor = pricingFloorLabel(plans) ?? "$9";
   const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth ?? null;
   const trialLabel = trialDays ? `${trialDays}-day` : "7-day";
+  const proThen = proTrialThenPrices(plans);
 
   return (
     <div className="hero-headline mx-auto text-center md:mx-0 md:text-left">
@@ -116,7 +121,8 @@ function HeroHeadline() {
         data-reveal="mount"
         data-reveal-delay="3"
       >
-        {trialLabel} trial on Pro. Then plans from{" "}
+        {trialLabel} trial on Pro, then {proThen} unless you switch. Plans
+        from{" "}
         <span className="font-semibold text-[#4e4646]">{floor}/month</span>.
         Cancel any time.
       </p>
@@ -555,6 +561,7 @@ function ClosingCta() {
   const floor = pricingFloorLabel(plans) ?? "$9";
   const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth ?? null;
   const trialLabel = trialDays ? `${trialDays}-day` : "7-day";
+  const proThen = proTrialThenPrices(plans);
   const part = usePartOfDay();
 
   return (
@@ -570,8 +577,8 @@ function ClosingCta() {
           {part === null || part === "night" ? "tonight" : `this ${part}`}
         </h2>
         <p className="closing-cta-lead">
-          {trialLabel} trial on Pro, then plans from {floor}/month. Cancel any
-          time from your account.
+          {trialLabel} trial on Pro, then {proThen} unless you switch. Plans
+          from {floor}/month. Cancel any time from your account.
         </p>
         <div className="closing-cta-row">
           <StartLink

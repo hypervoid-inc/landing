@@ -249,10 +249,8 @@ function PlanCard({
   const display = view.display;
   const showApprox = display && display.source === "fx";
   const trialDays = view.trialDays ?? 0;
-  const checkoutLabel =
-    canCheckout && trialDays > 0 && !trialUsed
-      ? `Start ${trialDays}d trial`
-      : "Subscribe";
+  const startsTrial = canCheckout && trialDays > 0 && !trialUsed;
+  const checkoutLabel = startsTrial ? `Start ${trialDays}d trial` : "Subscribe";
 
   return (
     <div
@@ -324,15 +322,23 @@ function PlanCard({
       </p>
 
       {current || currentOtherInterval ? null : canCheckout ? (
-        <Button
-          variant={recommended ? "primary" : "secondary"}
-          full
-          busy={busy}
-          className="mt-4"
-          onClick={onCheckout}
-        >
-          {checkoutLabel}
-        </Button>
+        <>
+          <Button
+            variant={recommended ? "primary" : "secondary"}
+            full
+            busy={busy}
+            className="mt-4"
+            onClick={onCheckout}
+          >
+            {checkoutLabel}
+          </Button>
+          {startsTrial && price ? (
+            <p className="mt-1.5 text-center text-xs text-[var(--color-ink-subtle)]">
+              Then {price}
+              {intervalSuffix(interval)} when the trial ends
+            </p>
+          ) : null}
+        </>
       ) : canChangePlan ? (
         <Button
           variant="secondary"

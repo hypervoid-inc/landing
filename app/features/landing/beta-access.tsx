@@ -20,7 +20,12 @@ if (typeof document !== "undefined") {
   (window as unknown as Record<string, unknown>).confetti = confetti;
 }
 
+import type { BillingInterval, PaidPlanId } from "../../platform/api/schemas";
 import { getAppUrl } from "../../platform/env";
+import {
+  checkoutIntentPath,
+  planIntentSearch,
+} from "../account/account-format";
 import { AuthSignInForm } from "../auth/auth-sign-in-form";
 import { useAuth } from "../auth/auth-provider";
 import {
@@ -52,6 +57,8 @@ export type OpenAccessDialogOptions = {
   mode?: AccessDialogMode;
   source: string;
   plan?: string;
+  /** Interval for `plan`'s checkout; /account defaults to monthly without it. */
+  interval?: BillingInterval;
   intent?: AccessDialogIntent;
   /** Opens the app on this prompt once the reader is signed in. */
   prompt?: string;
@@ -87,6 +94,8 @@ export function StartLink({
   authedChildren,
   intent = "start",
   prompt,
+  plan,
+  interval,
   onClick: onBeforeClick,
 }: {
   children: ReactNode;
@@ -102,15 +111,28 @@ export function StartLink({
    * new reader signs up first and the prompt goes with them.
    */
   prompt?: string;
+  /**
+   * For a CTA that names a price or a trial: a new reader goes from sign-up
+   * straight to checkout for this plan rather than to the welcome dialog.
+   */
+  plan?: PaidPlanId;
+  interval?: BillingInterval;
   onClick?: () => void;
 }) {
   const { status } = useAuth();
   const openDialog = useContext(BetaAccessContext);
-  const appOrigin = getAppUrl(prompt);
   const authenticated = status === "authenticated";
+  // A signed-in reader on a priced CTA goes to checkout for that plan, where
+  // /account handles a spent trial or an existing subscription.
+  const toCheckout = authenticated && plan != null;
+  const href = toCheckout
+    ? checkoutIntentPath(plan, interval)
+    : getAppUrl(prompt);
+  const newTab = authenticated && !toCheckout;
 
   const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
     onBeforeClick?.();
+    if (toCheckout) return;
     if (authenticated) {
       captureAnalytics("app_opened", { source });
       return;
@@ -119,15 +141,16 @@ export function StartLink({
     captureAnalytics("auth_dialog_opened", {
       source,
       ...(intent ? { intent } : {}),
+      ...(plan ? { plan } : {}),
     });
-    openDialog({ mode: "auth", source, intent, prompt });
+    openDialog({ mode: "auth", source, intent, prompt, plan, interval });
   };
 
   return (
     <a
-      href={appOrigin}
-      target={authenticated ? "_blank" : undefined}
-      rel={authenticated ? "noreferrer" : undefined}
+      href={href}
+      target={newTab ? "_blank" : undefined}
+      rel={newTab ? "noreferrer" : undefined}
       aria-label={label}
       className={className}
       onClick={onClick}
@@ -141,6 +164,7 @@ function AccessDialog({
   open,
   source,
   plan,
+  interval,
   intent = "signin",
   initialPhase = "form",
   prompt,
@@ -149,6 +173,7 @@ function AccessDialog({
   open: boolean;
   source: string;
   plan?: string;
+  interval?: BillingInterval;
   intent?: AccessDialogIntent;
   prompt?: string;
   initialPhase?: "form" | "success";
@@ -236,11 +261,15 @@ function AccessDialog({
     clearPostLoginWelcome();
     if (plan) {
       onOpenChange(false);
-      navigate(`/account/?plan=${plan}`, { replace: true });
+      navigate(checkoutIntentPath(plan, interval), { replace: true });
       return;
     }
     setPhase("success");
   };
+
+  const loginHref = plan
+    ? `/login/${planIntentSearch(plan, interval)}`
+    : "/login/";
 
   const successName =
     user?.displayName?.trim().split(/\s+/)[0] || user?.username || null;
@@ -308,7 +337,7 @@ function AccessDialog({
               <AuthSignInForm
                 appearance="dialog"
                 onSuccess={handleAuthSuccess}
-                postLoginWelcome={{ source, plan, prompt }}
+                postLoginWelcome={{ source, plan, interval, prompt }}
                 askHeardAbout={intent === "start"}
               />
               <p className="mt-4 text-center text-[12px] leading-[17px] text-[#627c86]">
@@ -316,7 +345,7 @@ function AccessDialog({
                   <>
                     Already have an account? The same buttons sign you in.{" "}
                     <a
-                      href={plan ? `/login/?plan=${plan}` : "/login/"}
+                      href={loginHref}
                       className="whitespace-nowrap text-[#01b4c8] underline underline-offset-2"
                     >
                       Full sign-in page
@@ -326,7 +355,7 @@ function AccessDialog({
                   <>
                     Need a password reset or to create an account?{" "}
                     <a
-                      href={plan ? `/login/?plan=${plan}` : "/login/"}
+                      href={loginHref}
                       className="whitespace-nowrap text-[#01b4c8] underline underline-offset-2"
                     >
                       Full sign-in page
@@ -429,6 +458,9 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [source, setSource] = useState("unknown");
   const [plan, setPlan] = useState<string | undefined>();
+  const [interval, setDialogInterval] = useState<
+    BillingInterval | undefined
+  >();
   const [prompt, setPrompt] = useState<string | undefined>();
   const [intent, setIntent] = useState<AccessDialogIntent>("signin");
   const [initialPhase, setInitialPhase] = useState<"form" | "success">("form");
@@ -465,7 +497,9 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
     if (!payload) return;
 
     if (payload.plan) {
-      navigate(`/account/?plan=${payload.plan}`, { replace: true });
+      navigate(checkoutIntentPath(payload.plan, payload.interval), {
+        replace: true,
+      });
       return;
     }
 
@@ -486,6 +520,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
       value={(options) => {
         setSource(options.source);
         setPlan(options.plan);
+        setDialogInterval(options.interval);
         setPrompt(options.prompt);
         // Signup-first unless a caller explicitly asks otherwise. Callers that
         // reach this directly (pricing cards) are marketing CTAs too, and the
@@ -503,6 +538,7 @@ export function BetaAccessProvider({ children }: { children: ReactNode }) {
             open
             source={source}
             plan={plan}
+            interval={interval}
             intent={intent}
             initialPhase={initialPhase}
             prompt={prompt}

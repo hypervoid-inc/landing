@@ -1,6 +1,7 @@
 import { useId, useState, type ReactNode } from "react";
 
 import { captureAnalytics } from "../analytics/analytics.client";
+import type { BillingInterval, PaidPlanId } from "../../platform/api/schemas";
 import { StartLink } from "../landing/beta-access";
 import {
   ChangeFlash,
@@ -364,10 +365,14 @@ export function ToolCta({
   slug,
   pitch,
   label,
+  plan,
+  interval,
 }: {
   slug: string;
   pitch: string;
   label: string;
+  plan?: PaidPlanId;
+  interval?: BillingInterval;
 }) {
   return (
     <div className="mt-6 rounded-xl border border-[#b6ecfb] bg-white p-4 text-center sm:p-5">
@@ -376,6 +381,8 @@ export function ToolCta({
       </p>
       <StartLink
         source={`tool-${slug}`}
+        plan={plan}
+        interval={interval}
         className="site-cta mt-4 inline-flex min-h-12 items-center justify-center rounded-full bg-black px-6 text-sm font-semibold text-white"
       >
         {label}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate, useSearchParams } from "react-router";
 
 import { SiteFooter, SiteHeader } from "../../components/layout/site-layout";
@@ -17,10 +17,19 @@ import { captureAnalytics } from "../analytics/analytics.client";
 import { readAttributionCookie } from "../analytics/campaign-attribution.client";
 import { useAuth } from "../auth/auth-provider";
 import {
+  ACTIVATION_POLL_MS,
+  ACTIVATION_TIMEOUT_MS,
   BILLING_RETURN_PARAMS,
+  billingReturnSearch,
   billedCatalogPriceLabel,
   billingReturnNotice,
   canChangeBillingPlan,
+  formatMoney,
+  intervalSuffix,
+  isPlanActivated,
+  parseBillingInterval,
+  planIntentAction,
+  planIntentSearch,
 } from "./account-format";
 import * as llmApi from "../../platform/api/llm";
 import { BillingActionsSection } from "./sections/billing-actions-section";
@@ -38,16 +47,27 @@ export function AccountPage() {
   const billingStatusParam = params.get("billing_status");
 
   const authed = status === "authenticated";
-  const { data, refresh } = useAccountData(authed);
+  const { data, refresh, refreshPlan } = useAccountData(authed);
   const { isPending, run } = usePendingActions();
 
+  // Seeded from `?interval=` so annual picked on pricing stays annual here.
   const [intervalChoice, setIntervalChoice] = useState<BillingInterval | null>(
-    null,
+    () => parseBillingInterval(params.get("interval")),
   );
   const [returnNotice] = useState(() => billingReturnNotice(params));
+  // Read once: the params are dropped from the URL before auth resolves.
+  const [billingReturn] = useState(() => billingReturnSearch(params));
   const [message, setMessage] = useState<string | null>(() =>
-    returnNotice?.tone === "info" ? returnNotice.text : null,
+    returnNotice?.tone === "info" && !returnNotice.activating
+      ? returnNotice.text
+      : null,
   );
+  const [activationShown, setActivationShown] = useState(
+    () => returnNotice?.activating === true,
+  );
+  const [activationTimedOut, setActivationTimedOut] = useState(false);
+  const activated =
+    data.plan.state === "ready" && isPlanActivated(data.plan.data);
   const [error, setError] = useState<string | null>(() =>
     returnNotice?.tone === "error" ? returnNotice.text : null,
   );
@@ -61,6 +81,40 @@ export function AccountPage() {
     data.plan.state === "ready" ? data.plan.data.interval : null;
   const interval: BillingInterval = intervalChoice ?? planInterval ?? "month";
   const setInterval = setIntervalChoice;
+
+  // Dodo returns before its webhook lands, so poll the plan until it turns on
+  // instead of leaving "activating" up until a manual reload. Keyed to the
+  // return itself, not the banner, so dismissing the banner keeps polling, and
+  // started only once the first load has written the plan so that load can't
+  // overwrite a newer poll result.
+  const awaitingActivation = returnNotice?.activating === true;
+  const planLoaded = data.plan.state !== "loading";
+  const polledRef = useRef(false);
+  useEffect(() => {
+    if (!authed || !awaitingActivation || !planLoaded || activated) return;
+    polledRef.current = true;
+    const poll = window.setInterval(() => {
+      void refreshPlan();
+    }, ACTIVATION_POLL_MS);
+    const stop = window.setTimeout(() => {
+      window.clearInterval(poll);
+      setActivationTimedOut(true);
+    }, ACTIVATION_TIMEOUT_MS);
+    return () => {
+      window.clearInterval(poll);
+      window.clearTimeout(stop);
+    };
+  }, [authed, awaitingActivation, planLoaded, activated, refreshPlan]);
+
+  // Polling only swaps the plan; plan-gated data like BYOK was loaded while
+  // still unsubscribed, so reload everything once when the plan turns on.
+  useEffect(() => {
+    if (!activated || !polledRef.current) return;
+    polledRef.current = false;
+    void (async () => {
+      await refresh();
+    })();
+  }, [activated, refresh]);
 
   useEffect(() => {
     if (!billingStatusParam) return;
@@ -106,26 +160,49 @@ export function AccountPage() {
     [run],
   );
 
-  // `?plan=` is the handoff from the pricing CTAs.
+  // `?plan=` is the handoff from the pricing CTAs. It is consumed once the
+  // plan loads: a reader who can't check out is told where they stand, and one
+  // whose Pro trial is spent confirms the charge, since the CTA said free.
   const planIntent = params.get("plan");
-  const canCheckout =
-    data.plan.state === "ready" ? data.plan.data.canCheckout : false;
+  const loadedPlan = data.plan.state === "ready" ? data.plan.data : null;
+  const [intentNotice, setIntentNotice] = useState<IntentNotice>(null);
+  // A plan reload can hand the effect a new loadedPlan before the param
+  // removal commits; the ref keeps that from starting a second checkout. It
+  // resets once the param is gone, so a later ?plan= still works.
+  const intentConsumedRef = useRef(false);
   useEffect(() => {
-    if (!planIntent || !canCheckout) return;
-    if (!["lite", "starter", "pro"].includes(planIntent)) return;
+    if (!planIntent) {
+      intentConsumedRef.current = false;
+      return;
+    }
+    if (!loadedPlan || intentConsumedRef.current) return;
+    intentConsumedRef.current = true;
     void (async () => {
       const next = new URLSearchParams(params);
       next.delete("plan");
+      next.delete("interval");
       setParams(next, { replace: true });
-      await startCheckout(planIntent as PaidPlanId, interval);
+      const action = planIntentAction(loadedPlan, planIntent);
+      if (action === "ignore") return;
+      const wanted = planIntent as PaidPlanId;
+      if (action === "checkout") {
+        await startCheckout(wanted, interval);
+        return;
+      }
+      setIntentNotice({ kind: action, wanted });
     })();
-  }, [planIntent, canCheckout, params, setParams, interval, startCheckout]);
+  }, [planIntent, loadedPlan, params, setParams, interval, startCheckout]);
 
   if (status === "loading") {
     return <AccountSkeleton />;
   }
   if (status === "anonymous" || !user) {
-    return <Navigate to="/login/" replace />;
+    // Keep a pricing CTA's plan through sign-in (the checkout_failed fallback
+    // for an expired session lands here), and a checkout return's notice.
+    const to = planIntent
+      ? `/login/${planIntentSearch(planIntent, parseBillingInterval(params.get("interval")))}`
+      : `/login/${billingReturn}`;
+    return <Navigate to={to} replace />;
   }
 
   async function act(
@@ -158,6 +235,16 @@ export function AccountPage() {
       : null;
   const showPlanPicker = planData != null && canChangeBillingPlan(planData);
 
+  const intentCatalog = intentNotice
+    ? catalogPlans.find((p) => p.id === intentNotice.wanted)
+    : undefined;
+  const intentPrice = intentCatalog
+    ? formatMoney(catalogIntervalView(intentCatalog, interval).price)
+    : null;
+  const intentPriceLabel = intentPrice
+    ? `${intentPrice}${intervalSuffix(interval)}`
+    : null;
+
   const workspaceData =
     data.workspaces.state === "ready"
       ? data.workspaces.data
@@ -184,6 +271,75 @@ export function AccountPage() {
         {message ? (
           <Banner tone="info" onDismiss={() => setMessage(null)}>
             {message}
+          </Banner>
+        ) : null}
+        {activationShown ? (
+          <Banner
+            tone={activated || !activationTimedOut ? "info" : "warning"}
+            onDismiss={() => setActivationShown(false)}
+          >
+            {activated ? (
+              <>
+                Your plan is active.{" "}
+                <a
+                  href="/app/"
+                  className="font-medium underline underline-offset-2"
+                >
+                  Open app
+                </a>
+              </>
+            ) : activationTimedOut ? (
+              <>
+                Payment received, but your plan hasn&apos;t switched on yet.
+                Refresh in a minute, or email{" "}
+                <a
+                  href="mailto:support@construct.computer"
+                  className="underline underline-offset-2"
+                >
+                  support@construct.computer
+                </a>{" "}
+                if it stays this way.
+              </>
+            ) : (
+              returnNotice?.text
+            )}
+          </Banner>
+        ) : null}
+        {intentNotice?.kind === "trial-used" ? (
+          <Banner tone="warning" onDismiss={() => setIntentNotice(null)}>
+            You&apos;ve already used your Pro trial, so Pro starts
+            {intentPriceLabel ? ` at ${intentPriceLabel}` : ""} today.{" "}
+            <button
+              type="button"
+              className="font-medium underline underline-offset-2"
+              disabled={isPending(`checkout-${intentNotice.wanted}`)}
+              onClick={() => {
+                const wanted = intentNotice.wanted;
+                setIntentNotice(null);
+                void startCheckout(wanted, interval);
+              }}
+            >
+              Continue to checkout
+            </button>
+          </Banner>
+        ) : null}
+        {intentNotice?.kind === "subscribed" && planData ? (
+          <Banner tone="info" onDismiss={() => setIntentNotice(null)}>
+            You&apos;re already on{" "}
+            <span className="capitalize">{planData.plan}</span>.{" "}
+            {planData.plan !== intentNotice.wanted && showPlanPicker ? (
+              <>
+                You can switch to{" "}
+                <span className="capitalize">{intentNotice.wanted}</span> below.
+              </>
+            ) : (
+              <a
+                href={getAppOrigin()}
+                className="font-medium underline underline-offset-2"
+              >
+                Open app
+              </a>
+            )}
           </Banner>
         ) : null}
         {error ? (
@@ -458,6 +614,11 @@ export function AccountPage() {
     </div>
   );
 }
+
+type IntentNotice = {
+  kind: "trial-used" | "subscribed";
+  wanted: PaidPlanId;
+} | null;
 
 /**
  * Renders the real page frame, including the footer, so nothing shifts when

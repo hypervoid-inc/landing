@@ -22,7 +22,7 @@ export const pricingPlans = [
     annualMonthlyPrice: "$7.50",
     annualSavingsLabel: "2 months free",
     cta: "Start with Lite",
-    description: "Try Construct for yourself",
+    description: "The smallest plan to start on",
     badge: null,
     highlight: null,
     image: "/assets/landing/pricing/lite-v3.webp",
@@ -30,7 +30,7 @@ export const pricingPlans = [
       "Construct mascot completing a focused task at a personal workspace",
     features: [
       ["Base model usage", "footprints"],
-      ["Up to 2 agents", "workflow"],
+      ["Up to 2 agents, including Construct", "workflow"],
       ["Up to 50 steps per task", "footprints"],
       ["3 scheduled tasks", "tabs"],
       ["Agent email address", "mail"],
@@ -54,7 +54,7 @@ export const pricingPlans = [
       "Construct mascot connecting report, schedule, and workflow surfaces",
     features: [
       ["6× the usage of Lite", "footprints"],
-      ["Up to 5 agents", "workflow"],
+      ["Up to 5 agents, including Construct", "workflow"],
       ["Up to 150 steps per task", "footprints"],
       ["10 scheduled tasks", "tabs"],
       ["Agent email address", "mail"],
@@ -78,7 +78,7 @@ export const pricingPlans = [
       "Construct agents orchestrating browser, terminal, files, and schedules",
     features: [
       ["32× the usage of Lite", "footprints"],
-      ["Up to 15 agents", "workflow"],
+      ["Up to 15 agents, including Construct", "workflow"],
       ["Deep runs, up to 1,000 steps per task", "footprints"],
       ["50 scheduled tasks", "tabs"],
       ["Agent email address", "mail"],

@@ -204,6 +204,22 @@ function breadcrumbs(route: CanonicalRoute): JsonLd {
   };
 }
 
+/**
+ * One object with a top-level `@context` and the nodes in `@graph`. A bare
+ * array has no `@context`, and readers that call `["@context"].toLowerCase()`
+ * on the parsed block throw on it (seen from Safari on every page).
+ */
+export function jsonLdDocument(nodes: readonly JsonLd[]): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@graph": nodes.map((node) => {
+      const rest = { ...node };
+      delete rest["@context"];
+      return rest;
+    }),
+  };
+}
+
 export function routeJsonLd(route: CanonicalRoute): JsonLd[] {
   const values = [organizationJsonLd()];
   if (route.kind === "home") {
@@ -399,7 +415,7 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
     { name: "twitter:title", content: displayTitle(route) },
     { name: "twitter:description", content: route.description },
     { name: "twitter:image", content: route.image },
-    { "script:ld+json": routeJsonLd(route) as never },
+    { "script:ld+json": jsonLdDocument(routeJsonLd(route)) as never },
   ];
 }
 

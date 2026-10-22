@@ -53,7 +53,12 @@ export async function logout(): Promise<void> {
 export async function sendMagicLink(
   email: string,
   turnstileToken?: string,
-): Promise<{ success: boolean; error?: string }> {
+): Promise<{
+  success: boolean;
+  error?: string;
+  /** Why it failed, for analytics: a `code` slug or `http_<status>`. */
+  reason?: string;
+}> {
   const response = await fetch(`${getApiBaseUrl()}/auth/magic`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -67,14 +72,34 @@ export async function sendMagicLink(
   if (response.ok) return { success: true };
   const data = (await response.json().catch(() => null)) as {
     error?: string;
+    code?: unknown;
   } | null;
-  return { success: false, error: data?.error ?? "Could not send email" };
+  return {
+    success: false,
+    error: data?.error ?? "Could not send email",
+    reason: failureReason(data?.code, response.status),
+  };
+}
+
+/** The API's failure slugs (`expired`, `mismatch`...), never free text. */
+const FAILURE_REASON = /^[a-z][a-z0-9_]{0,39}$/;
+
+function failureReason(code: unknown, status: number): string {
+  return typeof code === "string" && FAILURE_REASON.test(code)
+    ? code
+    : `http_${status}`;
 }
 
 export async function verifyMagicOtp(
   email: string,
   otp: string,
-): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
+): Promise<{
+  success: boolean;
+  user?: AuthUser;
+  error?: string;
+  /** Why it failed, from the response's `code`, for analytics. */
+  reason?: string;
+}> {
   const response = await fetch(`${getApiBaseUrl()}/auth/magic/verify-otp`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -84,9 +109,14 @@ export async function verifyMagicOtp(
   const data = (await response.json().catch(() => null)) as {
     user?: AuthUser;
     error?: string;
+    code?: unknown;
   } | null;
   if (!response.ok) {
-    return { success: false, error: data?.error ?? "Invalid code" };
+    return {
+      success: false,
+      error: data?.error ?? "Invalid code",
+      reason: failureReason(data?.code, response.status),
+    };
   }
   return { success: true, user: data?.user };
 }
@@ -305,6 +335,8 @@ export async function redeemPasswordSetCode(
 export async function handleAuthReturn(): Promise<{
   handled: boolean;
   error?: string;
+  /** A `?code=` was exchanged for a session (Google or a magic link). */
+  signedIn?: boolean;
 }> {
   const params = new URLSearchParams(window.location.search);
   const authError = params.get("auth_error");
@@ -335,7 +367,7 @@ export async function handleAuthReturn(): Promise<{
     window.history.replaceState({}, "", url.pathname + url.search);
     const ok = await exchangeCode(code);
     return ok
-      ? { handled: true }
+      ? { handled: true, signedIn: true }
       : { handled: true, error: "Invalid or expired login code" };
   }
 

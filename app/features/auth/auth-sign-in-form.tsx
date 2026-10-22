@@ -10,9 +10,14 @@ import {
 import { buttonVariants } from "../../components/ui/primitives";
 import { cn } from "../../lib/cn";
 import * as authApi from "../../platform/api/auth";
+import type { BillingInterval } from "../../platform/api/schemas";
 import { getTurnstileSiteKey } from "../../platform/env";
-import { captureAnalyticsBeforeLeave } from "../analytics/analytics.client";
+import {
+  captureAnalytics,
+  captureAnalyticsBeforeLeave,
+} from "../analytics/analytics.client";
 import { writeHeardAbout } from "../analytics/campaign-attribution.client";
+import { landingAuthEvent, markGoogleSignIn } from "./auth-events";
 import { AuthPanelFrame } from "./auth-panel-frame";
 import { useAuth } from "./auth-provider";
 import {
@@ -94,7 +99,12 @@ export type AuthSignInFormProps = {
    * When set (landing auth dialog), persist a welcome flag before Google or
    * magic-email leave so the OS handoff can reopen after return.
    */
-  postLoginWelcome?: { source: string; plan?: string; prompt?: string };
+  postLoginWelcome?: {
+    source: string;
+    plan?: string;
+    interval?: BillingInterval;
+    prompt?: string;
+  };
   /**
    * Show the optional "How did you hear about us?" question, on surfaces where
    * new accounts get made. Still hidden once this browser has answered it or
@@ -200,6 +210,7 @@ export function AuthSignInForm({
       return;
     }
     markWelcomeIfNeeded();
+    markGoogleSignIn();
     const pending = recordHeardAbout("google");
     const newTab =
       event.button !== 0 ||
@@ -228,6 +239,7 @@ export function AuthSignInForm({
     );
     setBusy(false);
     if (!result.success) {
+      captureAnalytics(...landingAuthEvent("email_otp", "send", result));
       setError(result.error ?? "Failed");
       return;
     }
@@ -242,12 +254,16 @@ export function AuthSignInForm({
     setError(null);
     const result = await authApi.verifyMagicOtp(email, otp);
     setBusy(false);
+    const [event, props] = landingAuthEvent("email_otp", "verify", result);
     if (!result.success) {
+      captureAnalytics(event, props);
       setError(result.error ?? "Invalid code");
       return;
     }
     if (result.user) setUser(result.user);
     else await refresh();
+    // onSuccess may navigate on to checkout; a beacon survives that.
+    void captureAnalyticsBeforeLeave(event, props);
     onSuccess?.();
   }
 
@@ -262,11 +278,14 @@ export function AuthSignInForm({
       turnstileToken ?? undefined,
     );
     setBusy(false);
+    const [event, props] = landingAuthEvent("password", "verify", result);
     if (!result.success) {
+      captureAnalytics(event, props);
       setError(result.error ?? "Login failed");
       return;
     }
     if (result.user) setUser(result.user);
+    void captureAnalyticsBeforeLeave(event, props);
     onSuccess?.();
   }
 

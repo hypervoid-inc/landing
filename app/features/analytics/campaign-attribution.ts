@@ -51,12 +51,17 @@ const HEARD_ABOUT_PATTERN = /^[a-z0-9-]{1,32}$/;
 /**
  * Referrers that are a hop inside our own flow rather than a way people find
  * us: our own pages, the Google sign-in bounce, Gmail's Android app handing a
- * link to the browser, and returning from Stripe. Crediting any of these as a
- * "source" is how accounts.google.com ended up looking like a channel.
+ * link to the browser, and returning from a Dodo (or older Stripe) checkout or
+ * billing portal. Crediting any of these as a "source" is how
+ * accounts.google.com ended up looking like a channel.
  */
 const OWN_ROOT_DOMAIN = "construct.computer";
 const IGNORED_REFERRER_HOSTS = new Set([
   "com.google.android.gm",
+  "checkout.dodopayments.com",
+  "customer.dodopayments.com",
+  "test.checkout.dodopayments.com",
+  "test.customer.dodopayments.com",
   "checkout.stripe.com",
   "billing.stripe.com",
   "accounts.youtube.com",

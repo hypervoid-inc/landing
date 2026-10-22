@@ -7,6 +7,9 @@ import {
   mergePricingPlans,
   pricingFloorLabel,
   trialHighlightForPeriod,
+  proTrialThenPrices,
+  trialOfferLine,
+  trialThenPrice,
 } from "./merge-pricing-catalog";
 
 const CATALOG: CatalogPlan[] = [
@@ -112,5 +115,36 @@ describe("pricingFloorLabel / maxAnnualMonthsFree", () => {
     const plans = mergePricingPlans(CATALOG, "starter");
     expect(pricingFloorLabel(plans)).toBe("$9");
     expect(maxAnnualMonthsFree(plans)).toBe(4);
+  });
+});
+
+describe("the price a trial turns into", () => {
+  it("names the yearly charge on an annual card, not the per-month figure", () => {
+    for (const plans of [
+      mergePricingPlans(CATALOG, null),
+      mergePricingPlans(null, null),
+    ]) {
+      const pro = plans.find((p) => p.id === "pro")!;
+      expect(trialOfferLine(pro, "annual")).toBe(
+        "7-day trial, then $2,388/year",
+      );
+      expect(trialOfferLine(pro, "monthly")).toBe(
+        "7-day trial, then $299/month",
+      );
+      expect(trialOfferLine(plans.find((p) => p.id === "lite")!, "annual")).toBeNull();
+    }
+  });
+
+  it("gives trial CTAs elsewhere the static price, and none without a trial", () => {
+    expect(trialThenPrice("pro")).toBe("$299/month");
+    expect(trialThenPrice("pro", "year")).toBe("$2,388/year");
+    expect(trialThenPrice("lite")).toBeNull();
+  });
+
+  it("names both prices the Pro trial can turn into", () => {
+    expect(proTrialThenPrices(mergePricingPlans(CATALOG, null))).toBe(
+      "$299/month or $2,388/year",
+    );
+    expect(proTrialThenPrices([], true)).toBe("$299/mo or $2,388/yr");
   });
 });

@@ -1,6 +1,11 @@
 import type { ReactNode } from "react";
 
 import { StartLink } from "../../features/landing/beta-access";
+import { trialThenPrice } from "../../features/landing/merge-pricing-catalog";
+import type {
+  BillingInterval,
+  PaidPlanId,
+} from "../../platform/api/schemas";
 
 /**
  * Inline call to action for MDX bodies. Authors place these at roughly even
@@ -16,6 +21,8 @@ export function BetaCta({
   source = "blog_inline",
   className = "my-8",
   eager = false,
+  plan,
+  interval,
 }: {
   children?: ReactNode;
   source?: string;
@@ -25,17 +32,30 @@ export function BetaCta({
   /** Load the mascot right away. Only for a CTA on the first screen, where a
    * lazy image pops in after the pill is already painted. */
   eager?: boolean;
+  /** Set on a CTA that names a price or a trial, so sign-up ends at checkout
+   * for that plan instead of the welcome dialog. */
+  plan?: PaidPlanId;
+  interval?: BillingInterval;
 }) {
+  // A trial CTA says what the trial turns into, so it is never a surprise.
+  const then = plan ? trialThenPrice(plan, interval) : null;
   return (
     <p className={`${className} text-center`}>
       <StartLink
         source={source}
+        plan={plan}
+        interval={interval}
         className="inline-flex items-center gap-2.5 rounded-full border border-[#b6ecfb] bg-[#f2fcfe] py-2 pl-4 pr-5 text-[15px] font-medium text-[#017b89] no-underline transition-colors hover:bg-[#e8faff]"
       >
         <MascotEyes eager={eager} />
         {children ?? "Try Construct"}
         <span aria-hidden="true">&rarr;</span>
       </StartLink>
+      {then ? (
+        <span className="mt-1.5 block text-[13px] leading-5 text-[#016d79]">
+          {`Then ${then} unless you cancel.`}
+        </span>
+      ) : null}
     </p>
   );
 }

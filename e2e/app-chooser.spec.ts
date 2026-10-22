@@ -112,6 +112,22 @@ test("carries a prompt through to both apps", async ({ page }) => {
   );
 });
 
+test("does not claim a declined checkout was paid", async ({ page }) => {
+  await stubSession(page, true);
+  await page.goto("/app/?billing_status=success&status=failed");
+
+  await expect(
+    page.getByText("Your payment didn't go through. Nothing was charged.").last(),
+  ).toBeVisible();
+  await expect(page.getByText("Payment received")).toHaveCount(0);
+  await expect(
+    page.getByRole("link", { name: "Open Dashboard" }),
+  ).toHaveAttribute(
+    "href",
+    "https://app.construct.computer/?billing_status=success&status=failed",
+  );
+});
+
 test("remembers the app this browser opened", async ({ page }) => {
   await stubSession(page, true);
   await page.route("https://app.construct.computer/**", (route) =>

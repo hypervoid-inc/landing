@@ -490,7 +490,8 @@ test("scrolls the post rail with the page instead of in a box of its own", async
 });
 
 // The rail and its CTA are hidden on a phone, so a comparison post makes its
-// ask under the byline, on the first screen, and only once.
+// ask under the byline, on the first screen: one paid ask plus the free trial
+// link.
 test("opens a comparison post on its pitch and one top CTA on a phone", async ({
   page,
 }) => {
@@ -504,4 +505,27 @@ test("opens a comparison post on its pitch and one top CTA on a phone", async ({
   await expect(
     page.getByRole("link", { name: /Start with Construct for/ }),
   ).toHaveCount(1);
+  await expect(
+    pitch.getByRole("link", { name: "try Pro free for 7 days" }),
+  ).toBeInViewport();
+});
+
+// The sleeping footer mascot snores below the fold, and its last z drifts
+// past the right edge of a phone. That must not widen the page.
+test("keeps the snoring footer mascot inside a phone's width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/blog/construct-vs-chatgpt/");
+  await expect(page.locator(".footer-mascot-snore span")).toHaveCount(3);
+  const widths = await page.evaluate(() => {
+    for (const animation of document.getAnimations()) {
+      if ((animation as CSSAnimation).animationName !== "footer-mascot-z") continue;
+      animation.pause();
+      animation.currentTime = 2999;
+    }
+    const root = document.documentElement;
+    return { scroll: root.scrollWidth, client: root.clientWidth };
+  });
+  expect(widths.scroll).toBe(widths.client);
 });

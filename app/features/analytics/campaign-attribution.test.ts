@@ -185,6 +185,12 @@ describe("referringDomain", () => {
       referringDomain("https://checkout.stripe.com/c/pay"),
     ).toBeUndefined();
     expect(
+      referringDomain("https://checkout.dodopayments.com/buy/pdt_1"),
+    ).toBeUndefined();
+    expect(
+      referringDomain("https://customer.dodopayments.com/login"),
+    ).toBeUndefined();
+    expect(
       referringDomain("http://localhost:5173/", "localhost"),
     ).toBeUndefined();
   });

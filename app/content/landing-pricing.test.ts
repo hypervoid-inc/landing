@@ -61,7 +61,7 @@ describe("landing pricing copy", () => {
     "%s: the agent limit matches its card",
     (_name, plan) => {
       expect(plan.features.map(([text]) => text)).toContain(
-        `Up to ${plan.agents} agents`,
+        `Up to ${plan.agents} agents, including Construct`,
       );
     },
   );
