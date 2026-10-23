@@ -366,12 +366,17 @@ export function DeckViewer() {
       </div>
       <div className="pointer-events-none fixed inset-x-0 bottom-3 z-20 flex justify-center px-3 lg:bottom-5 lg:left-56">
         <div className="pointer-events-auto flex max-w-full items-center rounded-full bg-white p-1 text-sm font-medium text-[#0d1630] shadow-[0_6px_24px_rgba(0,0,0,.4)] ring-1 ring-black/10">
+          {/*
+            aria-disabled, not disabled: disabling the focused button as a
+            jump arrives drops focus mid-scroll, which cancels the scroll and
+            lets scroll snap settle a slide short of the end.
+          */}
           <button
             type="button"
-            onClick={() => goTo(active - 1, "button")}
-            disabled={active === 0}
+            onClick={() => active > 0 && goTo(active - 1, "button")}
+            aria-disabled={active === 0}
             aria-label="Previous slide"
-            className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-full transition hover:bg-black/5 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+            className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-full transition hover:bg-black/5 aria-disabled:cursor-default aria-disabled:opacity-30 aria-disabled:hover:bg-transparent"
           >
             <ChevronLeft aria-hidden className="size-5" />
           </button>
@@ -389,10 +394,10 @@ export function DeckViewer() {
           </button>
           <button
             type="button"
-            onClick={() => goTo(active + 1, "button")}
-            disabled={active === slides.length - 1}
+            onClick={() => active < slides.length - 1 && goTo(active + 1, "button")}
+            aria-disabled={active === slides.length - 1}
             aria-label="Next slide"
-            className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-full transition hover:bg-black/5 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent"
+            className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-full transition hover:bg-black/5 aria-disabled:cursor-default aria-disabled:opacity-30 aria-disabled:hover:bg-transparent"
           >
             <ChevronRight aria-hidden className="size-5" />
           </button>

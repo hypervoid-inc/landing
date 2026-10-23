@@ -98,6 +98,23 @@ test("the bar under the slide pages back and forth", async ({ page }) => {
   await expect(where).toHaveAccessibleName("All slides, on 1 of 12");
 });
 
+test("the last slide is reachable with Next and with End, focus on the bar", async ({ page }) => {
+  await page.goto("/deck/");
+  const where = page.getByRole("button", { name: /^All slides, on / });
+  const next = page.getByRole("button", { name: "Next slide" });
+  // Disabling the focused Next button as the jump landed used to stop it a slide short.
+  for (let slide = 2; slide <= 12; slide++) {
+    await next.click();
+    await expect(where).toHaveAccessibleName(`All slides, on ${slide} of 12`);
+  }
+  await expect(next).toBeDisabled();
+  await page.keyboard.press("Home");
+  await expect(where).toHaveAccessibleName("All slides, on 1 of 12");
+  await next.click();
+  await page.keyboard.press("End");
+  await expect(where).toHaveAccessibleName("All slides, on 12 of 12");
+});
+
 test.describe("on a phone", () => {
   test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
 
