@@ -91,7 +91,7 @@ export function DeckPdf({
         identifyAnalyticsUser({ id: parsed.data.email, email: parsed.data.email });
         if (reply?.r) registerDeckRecipient(reply.r);
         captureAnalytics("deck_pdf_sent", { deck_version: DECK_VERSION, slide });
-        notePdf("sent", parsed.data.email.split("@")[1]);
+        notePdf("sent", parsed.data.email);
         setEmail(parsed.data.email);
         setStatus("sent");
         return;

@@ -55,7 +55,7 @@ export type Slide = {
 
 type SlideDetails = Pick<Slide, "title" | "videos" | "links">;
 
-const TRY_HREF = "/?promo=INVEST_IN_US&utm_source=deck";
+const TRY_HREF = "/?promo=SEEDINVEST&utm_source=deck";
 
 /**
  * By Figma slide id. A slide with no entry is titled from its section label
@@ -107,7 +107,7 @@ export const slideDetails: Record<string, SlideDetails> = {
       {
         name: "try",
         href: TRY_HREF,
-        label: "Try Construct with code INVEST_IN_US",
+        label: "Try Construct with code SEEDINVEST",
         box: { x: 1200, y: 325, w: 420, h: 545 },
       },
     ],

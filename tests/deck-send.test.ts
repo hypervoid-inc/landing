@@ -234,9 +234,16 @@ describe("renderDeckEmail", () => {
       expect(part).toContain("https://construct.computer/deck/?r=acme");
       expect(part).toContain("The latest version is always online");
       expect(part).toContain("https://www.youtube.com/watch?v=0lQWyT4PAA8");
-      expect(part).toContain("INVEST_IN_US");
+      expect(part).toContain("SEEDINVEST");
       expect(part).toContain("Ankush and Nischal");
       expect(part).not.toMatch(/[\u2013\u2014]/);
     }
+  });
+
+  it("tags the try-it link with the reader's r, so a signup is credited to it", () => {
+    const { html, text } = renderDeckEmail(true, "acme");
+    const link = "https://construct.computer/?promo=SEEDINVEST&utm_source=deck&utm_medium=email&r=acme";
+    expect(text).toContain(link);
+    expect(html).toContain(link.replaceAll("&", "&amp;"));
   });
 });

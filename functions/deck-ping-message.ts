@@ -5,7 +5,8 @@ import type { DeviceDescription } from "./user-agent";
  * The Discord message for one deck visit (`api/deck/ping.ts`), rebuilt on
  * every ping and edited in place, so it reads like a live card. A visit from
  * a tagged link (`?r=`) is someone we sent the deck to: it gets a full card.
- * An untagged one is a forward or a typed URL: a line of plain text.
+ * An untagged one is a forward or a typed URL: a few plain lines. Either
+ * shows the reader's email once we know it, from the PDF or an earlier visit.
  */
 
 /** What Cloudflare knows about where a request came from (`request.cf`). */
@@ -152,20 +153,32 @@ export function deckPingMessage(input: {
   const replay = context.session ? `${REPLAY}${context.session}` : undefined;
   const base = { username: "Construct deck", avatar_url: ICON, allowed_mentions: { parse: [] as [] } };
 
+  const email = summary?.pdfEmail ?? context.email;
+  const pdfSent = summary?.pdf === "sent";
+  const onSlide = summary?.current && !summary.final ? titles[summary.current - 1] : undefined;
+
   if (!context.r) {
-    const state = { opened: "opened", reading: "being read", finished: "read in full", left: "closed" }[status];
-    const parts = [
-      `Deck ${state}, no r`,
-      literal([location, country].filter(Boolean).join(", ")) || "location unknown",
-      `${device.device}, ${deviceLine(device)}`,
-      `from ${literal(cameFrom(context))}`,
-      visit.toLowerCase(),
+    const heading = {
+      opened: "👀 **Deck opened**",
+      reading: "📖 **Deck being read**",
+      finished: "✅ **Deck read in full**",
+      left: `👋 **Deck closed** after ${seen} of ${total} slides`,
+    }[status];
+    const lines = [
+      `${heading} · untagged link`,
+      `📍 ${literal([location, country].filter(Boolean).join(", ")) || "Location unknown"}`,
+      `💻 ${device.device}${device.os ? ` · ${device.os}` : ""} · ${deviceLine(device)}`,
+      `🔗 ${literal(cameFrom(context))} · ${visit.toLowerCase()}`,
     ];
-    if (summary) parts.push(`${seen} of ${total} slides in ${duration(summary.seconds)}`);
-    if (summary?.pdf === "sent") parts.push(`PDF sent to ${literal(summary.pdfDomain ?? "an address")}`);
+    if (email) lines.push(`✉️ ${pdfSent ? "PDF sent to " : ""}**${literal(email)}**`);
+    if (summary) {
+      lines.push(
+        `⏱️ ${duration(summary.seconds)} reading · ${seen} of ${total} slides${onSlide ? ` · now on ${literal(onSlide)}` : ""}`,
+      );
+    }
     // Angle brackets stop Discord unfurling the link into a preview.
-    if (replay) parts.push(`replay <${replay}>`);
-    return { ...base, content: parts.join(" · "), embeds: [] };
+    if (replay) lines.push(`🎥 [Watch the session replay](<${replay}>)`);
+    return { ...base, content: lines.join("\n"), embeds: [] };
   }
 
   const who = context.r;
@@ -179,7 +192,7 @@ export function deckPingMessage(input: {
     ? [
         `**${duration(summary.seconds)}** reading`,
         `**${seen} of ${total}** slides`,
-        summary.current && !summary.final ? `now on **${literal(titles[summary.current - 1] ?? `slide ${summary.current}`)}**` : undefined,
+        onSlide ? `now on **${literal(onSlide)}**` : undefined,
       ]
         .filter(Boolean)
         .join(" · ")
@@ -187,6 +200,7 @@ export function deckPingMessage(input: {
 
   const fields: Field[] = [
     { name: "🏷️ Link", value: `\`${who}\``, inline: true },
+    ...(email ? [{ name: "✉️ Email", value: `**${literal(email)}**${pdfSent ? "\nasked for the PDF" : ""}`, inline: true }] : []),
     { name: "📍 Location", value: [literal(location), country].filter(Boolean).join("\n") || "Unknown", inline: true },
     {
       name: "🕐 Their time",
@@ -228,14 +242,14 @@ export function deckPingMessage(input: {
   if (videos.length) fields.push({ name: "🎬 Videos", value: videos.join("\n"), inline: true });
   if (summary?.pdf) {
     const pdf = {
-      sent: `Sent to someone at **${literal(summary.pdfDomain ?? "an address")}**`,
+      sent: `Sent to **${literal(summary.pdfEmail ?? "their address")}**`,
       failed: "Asked for it; the email didn't go out",
       opened: "Opened the form, didn't send it",
     }[summary.pdf];
     fields.push({ name: "📄 PDF", value: pdf, inline: true });
   }
   if (summary?.links?.length) {
-    const names = { try: "Try Construct (code INVEST_IN_US)", site: "construct.computer" };
+    const names = { try: "Try Construct (code SEEDINVEST)", site: "construct.computer" };
     fields.push({ name: "🖱️ Clicked", value: summary.links.map((link) => names[link]).join("\n"), inline: true });
   }
   if (replay) fields.push({ name: "🎥 Session replay", value: `[Watch it in PostHog](${replay})` });

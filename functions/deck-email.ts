@@ -17,8 +17,15 @@ const SITE = "https://construct.computer";
 const ICON = `${SITE}/assets/email/construct-icon.png?v=2`;
 const ADDRESS = "2261 Market Street STE 68707, San Francisco, CA 94114";
 const DEMO = "https://www.youtube.com/watch?v=0lQWyT4PAA8";
-const TRY = `${SITE}/?promo=INVEST_IN_US&utm_source=deck&utm_medium=email`;
 const REPLY_FALLBACK = "hello@construct.computer";
+
+/**
+ * Construct with the investor code, tagged with who the email went to, so a
+ * signup from it is credited to their link like a visit to the deck is.
+ */
+export function tryLink(recipient: string): string {
+  return `${SITE}/?${new URLSearchParams({ promo: "SEEDINVEST", utm_source: "deck", utm_medium: "email", r: recipient })}`;
+}
 
 const escapeHtml = (value: string) =>
   value.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
@@ -37,7 +44,8 @@ export function renderDeckEmail(replyable: boolean, recipient: string) {
   const subject = "The Construct Computer deck";
   const preheader = "Our pre-seed deck is attached.";
   const link = deckLink(recipient);
-  const code = "INVEST_IN_US";
+  const TRY = tryLink(recipient);
+  const code = "SEEDINVEST";
   const thanks = "Thanks for taking a look at Construct.";
   const attached = "Our deck is attached.";
   // The round comes from the deck's ask slide (`pnpm deck:sync`).

@@ -309,19 +309,25 @@ export function recordWholeSession(): void {
 }
 
 /**
- * This PostHog session's id, so something else can link to its replay; null
- * off the production site or if PostHog doesn't answer within `timeoutMs`.
+ * This PostHog session's id, so something else can link to its replay, and
+ * the email this browser was identified by (identifyAnalyticsUser), if any.
+ * Empty off the production site or if PostHog doesn't answer within `timeoutMs`.
  */
-export async function analyticsSessionId(timeoutMs = 3000): Promise<string | null> {
-  const timeout = new Promise<null>((resolve) => globalThis.setTimeout(() => resolve(null), timeoutMs));
-  const id = initializeAnalytics().then((posthog) => {
+export async function analyticsVisitor(timeoutMs = 3000): Promise<{ session?: string; email?: string }> {
+  const timeout = new Promise<{ session?: string; email?: string }>((resolve) =>
+    globalThis.setTimeout(() => resolve({}), timeoutMs),
+  );
+  const visitor = initializeAnalytics().then((posthog) => {
+    if (!posthog) return {};
     try {
-      return posthog?.get_session_id() || null;
+      const session = posthog.get_session_id() || undefined;
+      const id = posthog.get_distinct_id();
+      return { session, ...(id?.includes("@") ? { email: id } : {}) };
     } catch {
-      return null;
+      return {};
     }
   });
-  return Promise.race([id.catch(() => null), timeout]);
+  return Promise.race([visitor.catch(() => ({})), timeout]);
 }
 
 /**

@@ -67,7 +67,7 @@ describe("deckPingMessage", () => {
   });
 
   it("charts the reading and says how it ended", () => {
-    const summary = { final: true, seconds: 252, slides: [12, 0, 240], completed: true, videos: { demo: 75 }, pdf: "sent" as const, pdfDomain: "fund.vc", links: ["try" as const] };
+    const summary = { final: true, seconds: 252, slides: [12, 0, 240], completed: true, videos: { demo: 75 }, pdf: "sent" as const, pdfEmail: "jane@fund.vc", links: ["try" as const] };
     const [card] = deckPingMessage({ context, summary, place, device: describeDevice(MAC_CHROME), titles, now }).embeds;
     expect(card!.title).toBe("✅ acme-ventures read the whole deck");
     expect(card!.description).toBe("**4m 12s** reading · **2 of 3** slides");
@@ -76,16 +76,39 @@ describe("deckPingMessage", () => {
     expect(chart).toContain(" 3 Solution        ████████████  4:00");
     expect(chart).not.toContain("Problem");
     expect(card!.fields.find((f) => f.name.includes("Videos"))!.value).toBe("Demo: watched 75%");
-    expect(card!.fields.find((f) => f.name.includes("PDF"))!.value).toBe("Sent to someone at **fund.vc**");
+    expect(card!.fields.find((f) => f.name.includes("PDF"))!.value).toBe("Sent to **jane\\@fund.vc**");
+    expect(card!.fields[1]).toEqual({ name: "✉️ Email", value: "**jane\\@fund.vc**\nasked for the PDF", inline: true });
   });
 
-  it("keeps an untagged visit to a line of plain text", () => {
+  it("shows an email the browser was already known by, from the start", () => {
+    const [card] = deckPingMessage({ context: { ...context, email: "jane@fund.vc" }, place, device: describeDevice(MAC_CHROME), titles, now }).embeds;
+    expect(card!.fields[1]).toEqual({ name: "✉️ Email", value: "**jane\\@fund.vc**", inline: true });
+  });
+
+  it("gives an untagged visit a few plain lines", () => {
     const untagged = { ...context, r: undefined };
-    const message = deckPingMessage({ context: untagged, place, device: describeDevice(MAC_CHROME), titles, now });
-    expect(message.embeds).toEqual([]);
-    expect(message.content).toBe(
-      `Deck opened, no r · San Francisco, California, 🇺🇸 United States · Mac, Chrome · from linkedin.com · 2nd visit · replay <${REPLAY}>`,
+    const opened = deckPingMessage({ context: untagged, place, device: describeDevice(MAC_CHROME), titles, now });
+    expect(opened.embeds).toEqual([]);
+    expect(opened.content).toBe(
+      [
+        "👀 **Deck opened** · untagged link",
+        "📍 San Francisco, California, 🇺🇸 United States",
+        "💻 Mac · macOS · Chrome",
+        "🔗 linkedin.com · 2nd visit",
+        `🎥 [Watch the session replay](<${REPLAY}>)`,
+      ].join("\n"),
     );
+    const read = deckPingMessage({
+      context: untagged,
+      summary: { final: true, seconds: 26, slides: [10, 10, 6], completed: true, pdf: "sent", pdfEmail: "jane@gmail.com" },
+      place,
+      device: describeDevice(MAC_CHROME),
+      titles,
+      now,
+    });
+    expect(read.content).toContain("✅ **Deck read in full** · untagged link");
+    expect(read.content).toContain("✉️ PDF sent to **jane\\@gmail.com**");
+    expect(read.content).toContain("⏱️ 26s reading · 3 of 3 slides");
   });
 });
 

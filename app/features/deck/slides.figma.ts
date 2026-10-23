@@ -9,7 +9,7 @@ export const figmaDeck: {
   slides: Array<{ id: string; label: string | null; text: string; image: string }>;
 } = {
   fileKey: "ml8KWViv95ZR9Lj72h5lcY",
-  version: "2026-10-23-9accd9d2",
+  version: "2026-10-23-454e103a",
   raise: "$450K",
   slides: [
     {
@@ -81,8 +81,8 @@ export const figmaDeck: {
     {
       id: "15:87",
       label: "Try it",
-      image: "ce2e1c4cc9503460",
-      text: "TRY IT. Hire Your First Employee. 60 seconds to set up. construct.computer. use code: INVEST_IN_US. Find us after. We'd love to talk.",
+      image: "2fb40103a24a083c",
+      text: "TRY IT. Hire Your First Employee. 60 seconds to set up. construct.computer. use code: SEEDINVEST. Find us after. We'd love to talk.",
     },
   ],
 };

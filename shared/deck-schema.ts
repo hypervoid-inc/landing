@@ -88,6 +88,8 @@ export const deckPingContextSchema = z
     timezone: z.string().max(64).regex(DECK_TIMEZONE_PATTERN).optional(),
     /** The PostHog session, for a link to its replay. */
     session: z.string().regex(DECK_SESSION_PATTERN).optional(),
+    /** Who this browser already is, when it gave us an email before (a PDF request, a sign-in). */
+    email: z.string().trim().toLowerCase().email().max(254).optional(),
     version: z.string().regex(/^[0-9.a-z-]{1,32}$/),
   })
   .strict();
@@ -110,8 +112,8 @@ export const deckPingSummarySchema = z
       .strict()
       .optional(),
     pdf: z.enum(["opened", "failed", "sent"]).optional(),
-    /** The domain the PDF went to, never the address. */
-    pdfDomain: z.string().regex(DECK_HOSTNAME_PATTERN).optional(),
+    /** The address the PDF went to; the team wants to know who asked for it. */
+    pdfEmail: z.string().trim().toLowerCase().email().max(254).optional(),
     links: z.array(z.enum(["site", "try"])).max(4).optional(),
   })
   .strict();

@@ -33,9 +33,9 @@ test("/deck/ shows every slide and pages with the keyboard and the rail", async 
 
   await rail.getByRole("button", { name: "12. Try it" }).click();
   await expect(rail.getByRole("button", { name: "12. Try it" })).toHaveAttribute("aria-current", "true");
-  await expect(page.getByRole("link", { name: "Try Construct with code INVEST_IN_US" })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Try Construct with code SEEDINVEST" })).toHaveAttribute(
     "href",
-    "/?promo=INVEST_IN_US&utm_source=deck",
+    "/?promo=SEEDINVEST&utm_source=deck",
   );
 });
 

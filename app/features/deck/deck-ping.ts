@@ -8,7 +8,7 @@ import {
   type DeckPingContext,
   type DeckPingSummary,
 } from "../../../shared/deck-schema";
-import { analyticsSessionId, isAnalyticsHost } from "../analytics/analytics.client";
+import { analyticsVisitor, isAnalyticsHost } from "../analytics/analytics.client";
 import { DECK_VERSION } from "./slides";
 
 /**
@@ -50,8 +50,9 @@ export function startDeckPing(recipient: string | null): DeckPing {
   };
 
   // The replay link is worth a short wait: it's what makes the alert useful.
-  const opened = analyticsSessionId().then((session) => {
+  const opened = analyticsVisitor().then(({ session, email }) => {
     if (session && DECK_SESSION_PATTERN.test(session)) context.session = session;
+    if (email && email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) context.email = email;
     lastSent = Date.now();
     return send(null, false);
   });
