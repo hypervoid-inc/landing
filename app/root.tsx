@@ -88,7 +88,7 @@ export default function App() {
   const { pathname } = useLocation();
   // The live demo is framed inside an X post: no site chrome, no smooth
   // scroll, no Clippy, and no sign-in probe against the API. The investor
-  // deck at /deck is the same: nothing should sit on top of the Figma embed.
+  // deck at /deck is the same: nothing should sit on top of the slides.
   if (/^\/(embed|deck)(\/|$)/.test(pathname)) {
     return <Outlet />;
   }

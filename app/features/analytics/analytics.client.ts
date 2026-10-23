@@ -99,7 +99,29 @@ type AnalyticsEvent =
   | "show_session_started"
   | "show_beat"
   | "show_email_submitted"
-  | "show_code_revealed";
+  | "show_code_revealed"
+  // The investor deck at /deck/. Every event carries `deck_version`; who the
+  // link was for rides along as the `deck_recipient` super property.
+  // `deck_slide_viewed` fires on reaching a slide (`via` is open, scroll, rail,
+  // overview, button, key or return, `first_view` whether it's new). `deck_slide_left` closes
+  // each visible stretch with its `seconds`, so summing them by `slide` is the
+  // time spent on it. `deck_video_progress` marks 25/50/75/100 `percent`.
+  | "deck_opened"
+  | "deck_slide_viewed"
+  | "deck_slide_left"
+  | "deck_completed"
+  | "deck_video_played"
+  | "deck_video_progress"
+  | "deck_link_clicked"
+  // The grid of every slide, opened from the bar, with the `slide` the reader was on.
+  | "deck_overview_opened"
+  // "Download PDF", which emails the deck. Each carries the `slide` the reader
+  // was on; `deck_pdf_failed` the API's error code as `reason`. On
+  // `deck_pdf_sent` the person is identified by the address it went to.
+  | "deck_pdf_opened"
+  | "deck_pdf_requested"
+  | "deck_pdf_sent"
+  | "deck_pdf_failed";
 
 /** First-party ingest proxy, never eu.i.posthog.com in the browser. */
 const POSTHOG_PROXY = "https://x.construct.computer";
@@ -131,8 +153,9 @@ export function isAnalyticsHost(hostname: string): boolean {
 type PostHogClient =
   typeof import("posthog-js/dist/module.full.no-external").default;
 
-function isEmbedded(): boolean {
-  if (window.location.pathname.startsWith("/embed")) return true;
+/** The playable embed, the investor deck, or any page inside someone's frame. */
+function isBarePage(): boolean {
+  if (/^\/(embed|deck)(\/|$)/.test(window.location.pathname)) return true;
   try {
     return window.self !== window.top;
   } catch {
@@ -188,8 +211,9 @@ export function initializeAnalytics() {
       cross_subdomain_cookie: true,
       persistence_name: POSTHOG_PERSISTENCE_NAME,
       disable_session_recording: false,
-      // No survey popovers over the playable embed or inside anyone's frame.
-      disable_surveys: isEmbedded(),
+      // No survey popovers over the playable embed, the deck, or inside
+      // anyone's frame.
+      disable_surveys: isBarePage(),
       enable_recording_console_log: true,
       respect_dnt: false,
       secure_cookie: true,
@@ -265,6 +289,54 @@ export function registerCampaignAttribution(
       initial[`initial_${key}`] = value;
     }
     posthog.setPersonProperties(undefined, initial);
+  });
+}
+
+/**
+ * Record this session whatever the project's replay controls say. Sampling,
+ * a linked flag or URL and event triggers added in PostHog later would
+ * otherwise drop sessions we always want, such as an investor reading the deck.
+ */
+export function recordWholeSession(): void {
+  void initializeAnalytics().then((posthog) =>
+    posthog?.startSessionRecording({
+      sampling: true,
+      linked_flag: true,
+      url_trigger: true,
+      event_trigger: true,
+    }),
+  );
+}
+
+/**
+ * This PostHog session's id, so something else can link to its replay; null
+ * off the production site or if PostHog doesn't answer within `timeoutMs`.
+ */
+export async function analyticsSessionId(timeoutMs = 3000): Promise<string | null> {
+  const timeout = new Promise<null>((resolve) => globalThis.setTimeout(() => resolve(null), timeoutMs));
+  const id = initializeAnalytics().then((posthog) => {
+    try {
+      return posthog?.get_session_id() || null;
+    } catch {
+      return null;
+    }
+  });
+  return Promise.race([id.catch(() => null), timeout]);
+}
+
+/**
+ * Who a deck link was sent to (`?r=`), on every later event from this
+ * browser, the app's included, and on the person: the latest as
+ * `deck_recipient`, the first as `initial_deck_recipient`.
+ */
+export function registerDeckRecipient(recipient: string): void {
+  void initializeAnalytics().then((posthog) => {
+    if (!posthog) return;
+    posthog.register({ deck_recipient: recipient });
+    posthog.setPersonProperties(
+      { deck_recipient: recipient },
+      { initial_deck_recipient: recipient },
+    );
   });
 }
 

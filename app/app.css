@@ -92,6 +92,34 @@ html:not(.lenis) {
   pointer-events: auto;
 }
 
+/* The investor deck (/deck/) pages one slide per screen on a wide screen. On
+   a phone it is one plain scroll, which pinch-zoom needs. */
+html:has(.deck) {
+  background: #0b0b0c;
+}
+
+@media (min-width: 64rem) {
+  html:has(.deck) {
+    scroll-snap-type: y mandatory;
+  }
+}
+
+/* A phone on its side shows one slide at a time, snapped, with room under it
+   for the deck's bar, which would otherwise sit on the slide's last lines. */
+@media (orientation: landscape) and (max-height: 32rem) {
+  html:has(.deck) {
+    scroll-snap-type: y mandatory;
+  }
+  .deck section[data-slide] {
+    height: 100svh;
+    padding-bottom: 4.25rem;
+    scroll-snap-align: start;
+  }
+  .deck section[data-slide] figure {
+    max-width: calc((100svh - 5rem) * 16 / 9);
+  }
+}
+
 body {
   margin: 0;
   background: white;

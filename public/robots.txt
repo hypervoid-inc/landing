@@ -83,4 +83,37 @@ Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Disallow: /deck
 Allow: /
 
+# Link previews may read everything, the investor deck included.
+User-agent: Twitterbot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+User-agent: LinkedInBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+User-agent: Slackbot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+User-agent: Slackbot-LinkExpanding
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+User-agent: facebookexternalhit
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+User-agent: WhatsApp
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+User-agent: TelegramBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+User-agent: Discordbot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
 Sitemap: https://construct.computer/sitemap.xml

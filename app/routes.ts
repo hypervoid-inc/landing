@@ -32,8 +32,8 @@ export default [
   // Pick the desktop or the dashboard; emails' "open Construct" link lands
   // here. Prerendered, no site chrome, kept out of the sitemap like /launch.
   route("app", "routes/app.tsx"),
-  // The investor deck, a full-screen Figma embed. Prerendered, no site
-  // chrome, kept out of the sitemap like /launch.
+  // The investor deck, its slides hosted here (features/deck). Prerendered,
+  // no site chrome, kept out of the sitemap like /launch.
   route("deck", "routes/deck.tsx"),
   // `/404` is deliberately NOT its own route. finalize-build.mjs promotes the
   // prerendered /404 output to build/client/404.html, which Cloudflare then

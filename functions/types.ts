@@ -52,6 +52,20 @@ export type EmbedEnv = BetaSignupEnv & {
   EMBED_EMAIL_REPLY_TO?: string;
 };
 
+/**
+ * The investor deck's "Download PDF" (`functions/api/deck/send.ts`). Shares
+ * the embed's D1, hashing secret and email sender.
+ */
+export type DeckEnv = EmbedEnv & {
+  /** The site's static files, where `pnpm deck:slides` puts the PDF. */
+  ASSETS: { fetch(input: Request | URL | string): Promise<Response> };
+  /**
+   * A Discord webhook (secret) that gets a message per deck visit
+   * (`functions/api/deck/ping.ts`). Unset, visits alert nobody.
+   */
+  DECK_DISCORD_WEBHOOK_URL?: string;
+};
+
 export type PagesFunction<Env> = (context: {
   request: Request;
   env: Env;

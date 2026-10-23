@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
-import { crawlerFiles, sitemapXml } from "../app/lib/generated-content";
+import { crawlerFiles, linkPreviewAgents, sitemapXml } from "../app/lib/generated-content";
 import {
   organizationJsonLd,
   routeJsonLd,
@@ -133,13 +133,30 @@ describe("generated discovery content", () => {
     );
   });
 
-  it("keeps the investor deck out of every user-agent group", () => {
+  it("keeps the investor deck out of every crawler's group", () => {
     const robots = crawlerFiles["robots.txt"];
-    const groups = robots.split(/\n(?=User-agent: )/).slice(1);
+    const groups = robots
+      .split(/\n(?=User-agent: )/)
+      .slice(1)
+      .filter(
+        (group) =>
+          !linkPreviewAgents.some((agent) => group.startsWith(`User-agent: ${agent}\n`)),
+      );
 
     expect(groups.length).toBeGreaterThan(1);
     for (const group of groups) {
       expect(group).toContain("Disallow: /deck");
+    }
+  });
+
+  it("lets link-preview bots read the deck so a shared link unfurls", () => {
+    const robots = crawlerFiles["robots.txt"];
+
+    for (const agent of linkPreviewAgents) {
+      const group = robots.split(/\n(?=User-agent: )/).find((g) => g.startsWith(`User-agent: ${agent}\n`));
+      expect(group, agent).toBeDefined();
+      expect(group, agent).toContain("Allow: /");
+      expect(group, agent).not.toContain("Disallow");
     }
   });
 

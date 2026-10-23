@@ -1,6 +1,5 @@
 import type { EmbedJob } from "../shared/embed-schema";
-import { isDeliverableEmail } from "../shared/deliverable-email";
-import type { EmbedEnv } from "./types";
+import { replyAddress, sendEmail, type EmailEnv } from "./email";
 
 /**
  * The email a Night Shift claim sends, written around the job the viewer
@@ -11,14 +10,11 @@ import type { EmbedEnv } from "./types";
  * with alt text), every link on construct.computer or our own social
  * profiles, no tracking pixel or redirect, a plain-text part that says the
  * same, and a body well under Gmail's 102 KB clip. Sent through Cloudflare
- * Email Service's REST API, since Pages Functions can't hold a `send_email`
- * binding, so DKIM signs as construct.computer and DMARC aligns. Nothing
- * about the recipient is logged.
+ * Email Service (`email.ts`), so DKIM signs as construct.computer and DMARC
+ * aligns. Nothing about the recipient is logged.
  */
 
 const SITE = "https://construct.computer";
-const DEFAULT_FROM = "hello@construct.computer";
-const DEFAULT_FROM_NAME = "Construct Computer";
 // Bump when either image changes: mail clients and their image proxies cache
 // by URL, so a new version is the only way to replace one already fetched.
 const ASSET_VERSION = "2";
@@ -215,55 +211,7 @@ Construct Computer, ${escapeHtml(ADDRESS)}
  * Sends the claim email. Resolves to whether Cloudflare accepted it; never
  * throws, since the code is already on the viewer's screen either way.
  */
-export async function sendClaimEmail(env: EmbedEnv, input: ClaimEmailInput): Promise<boolean> {
-  const token = env.EMAIL_API_TOKEN?.trim();
-  const account = env.CLOUDFLARE_ACCOUNT_ID?.trim();
-  if (!token || !account) {
-    console.warn("claim_email skipped: EMAIL_API_TOKEN or CLOUDFLARE_ACCOUNT_ID unset");
-    return false;
-  }
-  if (!isDeliverableEmail(input.to)) {
-    console.warn("claim_email skipped: reserved test domain");
-    return false;
-  }
-  const replyTo = env.EMBED_EMAIL_REPLY_TO?.trim();
-  const { subject, html, text } = renderClaimEmail(input, Boolean(replyTo));
-  try {
-    const response = await fetch(
-      `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(account)}/email/sending/send`,
-      {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          to: input.to,
-          from: {
-            address: env.EMBED_EMAIL_FROM?.trim() || DEFAULT_FROM,
-            name: env.EMBED_EMAIL_FROM_NAME?.trim() || DEFAULT_FROM_NAME,
-          },
-          ...(replyTo ? { reply_to: replyTo } : {}),
-          subject,
-          html,
-          text,
-        }),
-      },
-    );
-    const body = (await response.json().catch(() => null)) as {
-      success?: boolean;
-      errors?: Array<{ code?: number; message?: string }>;
-      result?: { permanent_bounces?: string[] };
-    } | null;
-    if (!response.ok || !body?.success) {
-      const reason = body?.errors?.[0];
-      console.error("claim_email failed", { status: response.status, code: reason?.code, message: reason?.message });
-      return false;
-    }
-    if (body.result?.permanent_bounces?.length) {
-      console.warn("claim_email bounced");
-      return false;
-    }
-    return true;
-  } catch {
-    console.error("claim_email failed: network");
-    return false;
-  }
+export async function sendClaimEmail(env: EmailEnv, input: ClaimEmailInput): Promise<boolean> {
+  const { subject, html, text } = renderClaimEmail(input, Boolean(replyAddress(env)));
+  return sendEmail(env, "claim_email", { to: input.to, subject, html, text });
 }

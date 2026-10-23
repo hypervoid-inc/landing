@@ -312,6 +312,23 @@ const contentSignalsPolicy = [
  */
 const privateDisallows = ["/deck"].map((path) => `Disallow: ${path}`);
 
+/**
+ * The bots that draw a link's preview card in DMs and chats. The deck is
+ * shared exactly that way, and X, LinkedIn and Slack honour robots.txt, so
+ * without their own groups a deck link unfurls into nothing. They only render
+ * a card; the deck's noindex keeps it out of search either way.
+ */
+export const linkPreviewAgents = [
+  "Twitterbot",
+  "LinkedInBot",
+  "Slackbot",
+  "Slackbot-LinkExpanding",
+  "facebookexternalhit",
+  "WhatsApp",
+  "TelegramBot",
+  "Discordbot",
+] as const;
+
 export const crawlerFiles = {
   "sitemap.xml": sitemapXml(canonicalRoutes),
   "rss.xml": rssXml(),
@@ -344,6 +361,13 @@ export const crawlerFiles = {
       `User-agent: ${agent}`,
       contentSignal,
       ...privateDisallows,
+      "Allow: /",
+      "",
+    ]),
+    "# Link previews may read everything, the investor deck included.",
+    ...linkPreviewAgents.flatMap((agent) => [
+      `User-agent: ${agent}`,
+      contentSignal,
       "Allow: /",
       "",
     ]),
