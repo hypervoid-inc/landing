@@ -666,6 +666,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     tags: ["comparison", "ai-agent", "small-business"],
     kind: "comparison",
     draft: false,
+    lead: true,
   },
   {
     slug: "construct-vs-coding-agents",

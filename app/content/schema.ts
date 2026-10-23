@@ -31,6 +31,13 @@ const ogImageOverride = z
 export const PITCH_MAX_LENGTH = 160;
 const pitch = z.string().min(1).max(PITCH_MAX_LENGTH);
 
+/**
+ * Picks the post that leads the blog when several go live on the same day:
+ * it sorts first among that day's posts everywhere posts are listed. A newer
+ * post still takes the lead the next day, so the flag can stay in place.
+ */
+const lead = z.boolean();
+
 export const blogFrontmatterSchema = z
   .object({
     title: z.string().min(1),
@@ -43,6 +50,7 @@ export const blogFrontmatterSchema = z
     tags: z.array(z.string().min(1)).min(1),
     kind: z.enum(["article", "guide", "comparison"]),
     draft: z.boolean(),
+    lead: lead.optional(),
     image: ogImageOverride.optional(),
   })
   .strict()
@@ -57,7 +65,17 @@ export function validateContent(
   posts: readonly ({ slug: string } & BlogFrontmatter)[],
 ): void {
   const slugs = new Set<string>();
+  const leads = new Map<string, string>();
   for (const post of posts) {
+    if (post.lead) {
+      const other = leads.get(post.published);
+      if (other) {
+        throw new Error(
+          `${other} and ${post.slug} both lead ${post.published}; keep one`,
+        );
+      }
+      leads.set(post.published, post.slug);
+    }
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug)) {
       throw new Error(`Invalid blog slug: ${post.slug}`);
     }

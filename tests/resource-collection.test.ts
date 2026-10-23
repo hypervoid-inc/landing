@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { blogMetadata } from "../app/content/blog/metadata.generated";
 import { resourceEntries } from "../app/content/resources";
 
 describe("resourceEntries", () => {
@@ -12,6 +13,21 @@ describe("resourceEntries", () => {
         .sort((left, right) => right.published.localeCompare(left.published))
         .map((entry) => entry.published),
     );
+  });
+
+  it("puts a day's lead post first among that day's posts", () => {
+    const leads = new Set(
+      blogMetadata.filter((post) => post.lead).map((post) => post.slug),
+    );
+    const firstOfDay = resourceEntries.filter(
+      (entry, index) =>
+        resourceEntries[index - 1]?.published !== entry.published,
+    );
+    for (const entry of resourceEntries.filter((entry) =>
+      leads.has(entry.slug),
+    )) {
+      expect(firstOfDay).toContain(entry);
+    }
   });
 
   it("uses unique short slugs suitable for /blog/ URLs", () => {

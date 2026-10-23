@@ -61,19 +61,24 @@ function toEntry(post: (typeof blogMetadata)[number]): ResourceEntry {
   };
 }
 
-const newestFirst = (left: ResourceEntry, right: ResourceEntry) =>
-  right.published.localeCompare(left.published);
+/** Newest first; on a shared day, the post marked `lead` goes first. */
+const newestFirst = (
+  left: (typeof blogMetadata)[number],
+  right: (typeof blogMetadata)[number],
+) =>
+  right.published.localeCompare(left.published) ||
+  Number(right.lead ?? false) - Number(left.lead ?? false);
 
 export const resourceEntries: readonly ResourceEntry[] = blogMetadata
   .filter(isLive)
-  .map(toEntry)
-  .sort(newestFirst);
+  .sort(newestFirst)
+  .map(toEntry);
 
 /** Finished posts waiting for their date. Drafts are in neither list. */
 export const scheduledEntries: readonly ResourceEntry[] = blogMetadata
   .filter((post) => !post.draft && post.published > contentDate)
-  .map(toEntry)
-  .sort(newestFirst);
+  .sort(newestFirst)
+  .map(toEntry);
 
 export function getResource(slug: string): ResourceEntry | undefined {
   return resourceEntries.find((entry) => entry.slug === slug);

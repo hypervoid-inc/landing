@@ -17,6 +17,17 @@ describe("content validation", () => {
     expect(() => validateContent(blogMetadata)).not.toThrow();
   });
 
+  it("lets only one post lead a day", () => {
+    const post = blogMetadata[0]!;
+
+    expect(() =>
+      validateContent([
+        { ...post, lead: true },
+        { ...post, slug: `${post.slug}-twin`, lead: true },
+      ]),
+    ).toThrow(/both lead/);
+  });
+
   it("rejects incomplete and impossible post metadata", () => {
     expect(
       blogFrontmatterSchema.safeParse({

@@ -22,6 +22,10 @@ A finished post goes live by itself on its `published` date. Write it ahead, mer
 4. Make its card. Drafts already have one in `app/content/og-card-content.ts` (see [og-images.md](og-images.md#rendered-cards)), and every topic hub and index is a mosaic of its posts' cards. For a new post, pick the figure its content already is, fill it with the post's own facts, check it full size with `pnpm og:sheet --only <name>` and beside its neighbours with `pnpm og:sheet`, then run `pnpm og`; it re-renders the topic hubs the post appears on too. Scheduled posts get their card now, and the OG tests fail at merge time if one is missing, stale, or repeats a neighbour's figure, so publish day never fails on a card.
 5. Run `pnpm generate:content && pnpm check`, then `CONTENT_DATE=<its date> pnpm test`. Some tests depend on which posts are live (related posts weigh tags by how rare they are), and the morning build runs them, so a failure that only appears on the post's date would block that day's deploy. Then merge to `main`.
 
+## Two posts on one day
+
+The blog leads with the newest post. When two go live on the same day, add `lead: true` to the one that should lead; it sorts first among that day's posts on the blog index, the menu and the feeds. Only one post may lead a day, and the flag can stay after its day, since a newer post takes the lead by date.
+
 ## Preview a future day
 
 `pnpm dev` shows every post, drafts and scheduled ones included, so a post can be read in place while it is written. To see the site exactly as it will look on a given day, build it for that day:

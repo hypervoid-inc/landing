@@ -31,6 +31,8 @@ const frontmatterSchema = z
     tags: z.array(z.string().min(1)).min(1),
     kind: z.enum(["article", "guide", "comparison"]),
     draft: z.boolean(),
+    // Mirrors `lead` in app/content/schema.ts.
+    lead: z.boolean().optional(),
     // Mirrors `ogImageOverride` in app/content/schema.ts.
     image: z
       .string()
