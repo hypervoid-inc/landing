@@ -2784,6 +2784,106 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "You can interrupt a running task and answer when the agent asks for a decision. Construct's workflows do not pause for approval yet, so for anything customer-facing, ask for drafts and send them yourself, and run a new job on demand a few times before scheduling it.",
     },
   ],
+  "construct-vs-claude-duet": [
+    {
+      question: "What is the best Claude Duet alternative for a small team?",
+      answer:
+        "Construct, for most founders and small teams. It is open today with no waitlist and no country limit, starts at $9 a month, gives your team up to 2, 5 or 15 agents with their own roles in one shared workspace, and runs on the model you choose, including Claude through your own Anthropic key on Pro.",
+    },
+    {
+      question: "Is Claude Duet out yet?",
+      answer:
+        "Claude Duet was released on October 21, 2026 as a research preview. Only US Claude Pro and Max subscribers can join the waitlist, and Anthropic has not said when it opens to everyone. Construct has no waitlist.",
+    },
+    {
+      question: "Can I use Claude Duet in India or outside the US?",
+      answer:
+        "Not yet. The research preview is open to US Claude Pro and Max subscribers only, by waitlist, and Anthropic has not published dates for other countries. Construct is available outside the US today.",
+    },
+    {
+      question: "Is Claude Duet free?",
+      answer:
+        "No. Duet comes with Claude Pro at $20 a month or Max from $100 during the preview, and its background checks draw on the same usage limits as the rest of Claude. Construct Lite is $9 a month on its own.",
+    },
+    {
+      question: "Can Claude Duet be used by a team?",
+      answer:
+        "Not today. Anthropic lists Team and Enterprise plans as not included yet, and each Duet belongs to one subscriber. Construct gives the whole team one workspace with Owner, Admin and Member roles, shared files and schedules, and no per-seat fee.",
+    },
+    {
+      question: "When does Claude Duet still make sense?",
+      answer:
+        "When you work alone in the US and already pay for Claude Max, when you want an agent that asks before every send, payment or signature, or when you want it to buy things through Stripe Link or Shop Pay. For shared team work with several agents, a browser you can watch, and access from any country, Construct is the better fit.",
+    },
+  ],
+  "ai-agents-for-content-creation": [
+    {
+      question: "What are the best AI agents for content creation?",
+      answer:
+        "A small team of narrow agents works better than one agent doing everything: a lead that sends a daily brief, a researcher that finds outlier posts in your niche, a writer that drafts in your voice, a fact checker, and an analyst that reports your numbers. Construct runs that five-agent team on Starter at $59 a month, in one shared workspace with schedules.",
+    },
+    {
+      question: "Should AI agents publish content for you?",
+      answer:
+        "No. Keep the agents at the draft stage: they research, write and check, and you edit and post. Construct's workflows do not pause for approval yet, so ask for drafts and publish them yourself.",
+    },
+    {
+      question: "How many AI agents do I need for content creation?",
+      answer:
+        "Start with five: a lead, a researcher, a writer, a fact checker and an analyst. Construct Starter includes up to 5 agents and 10 scheduled tasks. Pro allows up to 15 agents and 50 scheduled tasks if you add a competitor watcher, a bookmarks agent, a reply scout, an ideas sparring agent, a visuals agent and an ideas tracker.",
+    },
+    {
+      question: "How do I keep AI-written content in my voice?",
+      answer:
+        "Have the lead agent build a voice file from your last 50 posts, point the writer at it, and correct the file every time a draft does not sound like you, saying why. Construct also keeps what you tell an agent in memory you can open, fix or delete.",
+    },
+  ],
+  "claude-api-key-ai-agent": [
+    {
+      question: "How do I get a Claude API key?",
+      answer:
+        "Create a Claude Console account, generate an API key in the Console, store it in a password manager, and add credits or a payment method in billing, because API usage is billed as you go.",
+    },
+    {
+      question: "Is a Claude API key free?",
+      answer:
+        "Creating a key is free, but every request is billed by the tokens it reads and writes. Claude Max plans include $100 to $200 a month in API credits and Team plans up to $500 a month in pooled credits, according to Anthropic's pricing page.",
+    },
+    {
+      question:
+        "Can I use my Claude Pro or Max subscription in another app instead of an API key?",
+      answer:
+        "No. Anthropic says using OAuth tokens from Claude Free, Pro or Max accounts in any other product, tool or service is not permitted under its Consumer Terms. An API key is the supported way to use Claude outside Anthropic's own apps, and it is what Construct asks for.",
+    },
+    {
+      question: "How do I use my Claude API key in Construct?",
+      answer:
+        "Bring-your-own-key is on Construct Pro, which has a 7-day free trial. Add your Anthropic key, choose whether it is used for every run or as a fallback once bundled usage runs out, pick a Claude model such as Opus 5.5 or Sonnet 5.5, and give an agent its first job. The key bills you directly at Anthropic's prices.",
+    },
+  ],
+  "ai-agent-team-structure": [
+    {
+      question: "What is an AI agent team?",
+      answer:
+        "A set of agents that each own one job, hand work to each other, and leave the results somewhere people can check. One agent leads and the others report to it, and people stay in charge of anything that leaves the building.",
+    },
+    {
+      question:
+        "What is the best AI agent team structure for a small business?",
+      answer:
+        "A lead agent with two or three specialists under it, each limited to the apps its job needs. Construct Starter fits that structure with up to 5 agents and 10 scheduled tasks for $59 a month, in one shared team workspace.",
+    },
+    {
+      question: "How do AI agents hand off work to each other?",
+      answer:
+        "Through files. Have each agent save its output to a shared folder with a date in the name, and point the next agent at it. In Construct every agent's output lands in the team workspace, so the next agent and your team can both open it.",
+    },
+    {
+      question: "How many agents can I run in Construct?",
+      answer:
+        "Up to 2 on Lite at $9 a month, 5 on Starter at $59, and 15 on Pro at $299, each including the built-in Construct agent.",
+    },
+  ],
 };
 
 export function getResourceFaqs(slug: string): readonly FaqItem[] {

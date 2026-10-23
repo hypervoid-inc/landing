@@ -1,0 +1,141 @@
+---
+title: "AI agents for content creation: build a content team in Construct"
+description: "Set up a team of AI agents for content creation: a lead, a researcher, a writer, a fact checker and an analyst, with role prompts, schedules and a daily brief."
+published: "2026-10-24"
+pitch: "Run a five-agent content team in Construct on Starter: research, drafts, fact checks and numbers, in one daily brief."
+seoTitle: "AI Agents for Content Creation: Build a 5-Agent Team"
+author: "nischal"
+tags: ["ai-agent", "workflow-automation", "small-business"]
+kind: "guide"
+draft: false
+---
+
+The AI agents that work best for content creation are a small team, each with one narrow job: a lead that runs the day, a researcher that finds what is working in your niche, a writer that drafts in your voice, a fact checker, and an analyst that reports your numbers. You still edit and publish every post yourself. In Construct the whole team runs in one workspace on a schedule, from 5 agents on the $59 Starter plan to 15 on Pro.
+
+Below is the whole setup built in Construct, with the role prompts written out.
+
+<BetaCta source="blog_top" plan="lite" interval="month">
+  Build your content team in Construct
+</BetaCta>
+
+## Why a team works better than one AI agent
+
+One agent asked to research, write, check facts and report numbers does all four badly. Keep each agent's job narrow, because mixing two or more roles makes quality drop fast. A team also makes problems easy to trace: when a draft sounds wrong, you fix the writer's instructions, not everything at once.
+
+In Construct each agent has a role, a lead agent it reports to, and only the apps its job needs. Their output lands in shared workspace files, so the writer can read the researcher's report and you can open both.
+
+## Step 1: set up the lead agent and your brand files
+
+The lead is your head of content. It runs the other agents, keeps the brand files current, and sends you one brief a day. In Construct, the built-in Construct agent takes this role.
+
+Connect the apps you use for content from the integration catalog, such as X, Notion, Google Drive and Gmail. Then ask the lead to build three files in the workspace:
+
+- `voice.md`: how you write, pulled from your last 50 posts, with phrases you use and phrases you never use.
+- `audience.md`: who you are writing for, what they already know, and what they want from you.
+- `pillars.md`: the three to five topics you post about, with an example post for each.
+
+Prompt for the lead:
+
+<Prompt>
+
+Read my last 50 posts on X and my Notion content database. Write voice.md, audience.md and pillars.md in the workspace. Then interview me with ten questions about anything you could not work out, and update the files with my answers.
+
+</Prompt>
+
+Every other agent reads these files before it works, and you correct them as you go. Construct's memory also keeps what you tell an agent between runs, and you can open it, fix a fact or delete it.
+
+## Step 2: add the content team
+
+Here is a five-agent team that fits Construct Starter. Each prompt goes in as the agent's role.
+
+<ArticleTable caption="Step 2: add the content team">
+
+| Agent            | Job                                                             | Apps                               | Schedule                          |
+| ---------------- | --------------------------------------------------------------- | ---------------------------------- | --------------------------------- |
+| Construct (lead) | Runs the team, keeps brand files current, sends the daily brief | Workspace files, Slack or Telegram | Weekdays at 8am                   |
+| Researcher       | Finds outlier posts in your niche and why they worked           | X, live browser                    | Weekdays at 6am                   |
+| Writer           | Drafts hooks and posts in your voice from the research          | Workspace files                    | Weekdays at 7am                   |
+| Fact checker     | Checks every number and claim in the drafts                     | Live browser                       | Weekdays at 7:30am                |
+| Analyst          | Reports impressions, replies and new followers                  | X                                  | Weekdays at 8am, before the brief |
+
+</ArticleTable>
+
+### Researcher
+
+<Prompt>
+
+Every weekday at 6am, scan the accounts in niche-accounts.md and the topics in pillars.md. Find 15 posts doing at least three times better than that account's usual. For each, note the hook, the format and why it worked, and turn it into one idea that fits my pillars. Save it as research/DATE.md.
+
+</Prompt>
+
+### Writer
+
+<Prompt>
+
+Read voice.md and today's research file. Pick the five strongest ideas and write three hook options and one full draft for each. Match my voice exactly and never use the phrases listed under "never" in voice.md. Save drafts/DATE.md. Do not post anything.
+
+</Prompt>
+
+### Fact checker
+
+<Prompt>
+
+Read today's drafts. Check every number, name and claim against a primary source in the browser. Mark each one as confirmed, wrong or unverifiable, with the source link, and save checks/DATE.md.
+
+</Prompt>
+
+### Analyst
+
+<Prompt>
+
+Pull yesterday's impressions, replies, new followers and number of posts from X. Compare them with the 7-day average and note the best and worst post. Save stats/DATE.md.
+
+</Prompt>
+
+### The lead's daily brief
+
+<Prompt>
+
+At 8am, read today's research, drafts, checks and stats. Send me one message with the three drafts most worth posting, any fact that failed the check, and yesterday's numbers. Keep it under 200 words.
+
+</Prompt>
+
+<BetaCta source="blog_inline_1" plan="pro" interval="month">
+  Try Construct Pro free for 7 days
+</BetaCta>
+
+## Step 3: grow the team on Pro
+
+Construct Pro allows up to 15 agents and 50 scheduled tasks, which leaves room for six more specialists:
+
+- A competitor watcher that flags new formats and early trends in accounts you follow.
+- A bookmarks agent that summarizes everything you saved during the day.
+- A quote and reply scout that finds posts worth responding to.
+- An ideas sparring agent that pushes back on article titles and angles before you write.
+- A visuals agent that writes image prompts for banners and post graphics.
+- An ideas tracker you text new ideas to, instead of opening Notion.
+
+Pro also takes your own model keys for Anthropic, OpenAI, OpenRouter, Amazon Bedrock or xAI, as a fallback when bundled usage runs out or for every run.
+
+## Should AI agents publish for you?
+
+No. Let the agents research, draft and check, and edit every angle, topic and draft yourself before it goes out. That is the right default. Construct's workflows do not pause for approval yet, so keep the team at the draft stage and post yourself. The agents do the hours of scanning and first drafts, and the taste stays yours.
+
+## Keep usage and quality under control
+
+- Run only the agents you need. Keep three or four active and give only a few a daily schedule, because running all of them burns usage.
+- Ask agents to be brief. Short reports cost less and are faster to read.
+- Keep one file per agent with its tasks, dos and don'ts, and point the agent at it.
+- Correct the voice file every time a draft does not sound like you, and say why. The writer gets better each week.
+- Let the lead bundle everything into one brief, so you read one message instead of five.
+
+## Why build your content team in Construct
+
+Construct starts at $9 a month with 2 agents, Starter at $59 fits the five-agent team above, and Pro at $299 runs up to fifteen. There is no other subscription to buy first. Every report and draft lands in files your whole team can open, the agents work on schedules with your laptop closed, you can watch the live browser while the researcher works, and the daily brief reaches you on Slack, Telegram, Discord or email. Start on Starter, set up the lead and the brand files today, and add one agent a day until the brief is worth reading every morning.
+
+<BetaCta source="blog_inline_2">Set up your content team</BetaCta>
+
+## Related resources
+
+- [AI agent memory you can control](/blog/ai-agent-memory/)
+- [AI workflow automation](/blog/ai-workflow-automation/)

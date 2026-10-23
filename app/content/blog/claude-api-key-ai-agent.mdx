@@ -1,0 +1,110 @@
+---
+title: "How to use your Claude API key with an AI agent"
+description: "How to get a Claude API key, what it costs per run, why your Claude subscription login is not the same thing, and how to run a team of Claude agents in Construct."
+published: "2026-10-25"
+pitch: "Get a Claude API key, see what a run costs, and run a team of Claude agents in Construct on your own key."
+seoTitle: "Claude API Key: How to Get One, Pricing, and Agent Setup"
+author: "nischal"
+tags: ["ai-agent", "pricing", "product"]
+kind: "guide"
+draft: false
+---
+
+To run Claude inside an AI agent you need a Claude API key from the Claude Console, not your Claude Pro or Max login. The key is billed per token, separately from any subscription. Construct Pro takes your Anthropic key and runs your agents on Claude, either for every run or as a fallback when bundled usage runs out, and the key bills you directly.
+
+This guide covers how to get a key, what a run costs, why a subscription login does not work in other apps, and how to set up a team of Claude agents in Construct.
+
+<BetaCta source="blog_top" plan="lite" interval="month">
+  Run Claude agents in Construct
+</BetaCta>
+
+## How do you get a Claude API key?
+
+You need a Claude Console account. Sign in to the Console, create an API key, store it in a password manager, and add credits or a payment method in billing, because API usage is billed as you go. Anthropic's [API overview](https://docs.claude.com/en/api/overview) lists a Console account and an API key as the two things you need, and its Get started guide has the step-by-step setup.
+
+Keep one key per tool. If you use the same key in Construct, a script and a coding tool, you cannot tell which one spent the money, and revoking it breaks all three at once.
+
+## Is a Claude API key free?
+
+No. Creating a key costs nothing, but every request is billed by the tokens it reads and writes.
+
+The one exception is a Claude Max or Team plan. Anthropic's pricing page lists $100 to $200 a month in API credits on Max, and up to $500 a month in pooled API credits on Team, for building on the Claude Platform. If you already pay for one of those plans, check the Console for credits before you add a card. ([Claude pricing](https://claude.com/pricing))
+
+## Claude API key pricing
+
+API prices are per million tokens (MTok), checked on Anthropic's pricing page on October 22, 2026.
+
+<ArticleTable caption="Claude API key pricing">
+
+| Model      | Input        | Output       | Good for                                                         |
+| ---------- | ------------ | ------------ | ---------------------------------------------------------------- |
+| Fable 5.1  | $10 / MTok   | $50 / MTok   | Long-running agent work where quality matters most               |
+| Opus 5.5   | $4 / MTok    | $20 / MTok   | Daily agent work, coding, research                               |
+| Sonnet 5.5 | $2 / MTok    | $10 / MTok   | Most recurring jobs at half the Opus price                       |
+| Haiku 5.5  | $0.10 / MTok | $0.50 / MTok | Sorting, tagging and short summaries (prompts up to 100K tokens) |
+
+</ArticleTable>
+
+Batch processing cuts the price in half for work that does not need an answer right away, and prompt caching makes repeated context cheaper. ([Claude pricing](https://claude.com/pricing))
+
+### What does one agent run cost?
+
+Take a weekly research report where the agent reads 200,000 tokens of pages and files and writes 20,000 tokens of notes and drafts. On Opus 5.5 that is 0.2 × $4 plus 0.02 × $20, or $1.20 a run. On Sonnet 5.5 the same run is $0.60. A daily inbox summary that reads less costs a few cents on Haiku 5.5. These are illustrative token counts, not measurements, so check your Console usage after the first week and adjust the model per job.
+
+## Can you use your Claude subscription instead of an API key?
+
+Not in another product. Anthropic's Claude Code documentation says that using OAuth tokens from Claude Free, Pro or Max accounts "in any other product, tool, or service" is "not permitted and constitutes a violation of the Consumer Terms of Service." ([Claude Code legal and compliance](https://code.claude.com/docs/en/legal-and-compliance)) Tools that ask you to paste a subscription login put your Claude account at risk.
+
+An API key is the supported way to use Claude outside Anthropic's own apps, and it is what Construct asks for. Your subscription stays for chat, and your agents spend from the key.
+
+## How to use your Claude API key in Construct
+
+Bring-your-own-key is on Construct Pro, which is $299 a month with a 7-day free trial.
+
+- Start the Pro trial and create your workspace.
+- Add your Anthropic key in Construct's bring-your-own-key settings.
+- Choose how the key is used: off, as an automatic fallback once bundled usage runs out, or for every run.
+- Pick the Claude model your agents run on, such as Opus 5.5 or Sonnet 5.5.
+- Give an agent its first job, run it once, and check the result in Files.
+
+The key bills you directly at Anthropic's prices. Construct's plan covers the workspace, the agents, the sandbox, the browser, schedules and memory. If you later want OpenAI, OpenRouter, Amazon Bedrock or xAI for a job, add that key and switch without moving a file.
+
+<BetaCta source="blog_inline_1" plan="pro" interval="month">
+  Try Construct Pro free for 7 days
+</BetaCta>
+
+## Why run Claude in Construct instead of calling the API yourself
+
+The API gives you a model. An agent your team relies on also needs somewhere to run code, logins for each app, a scheduler, memory and a screen to watch it on. Construct ships those pieces, so your key pays for Claude's thinking and nothing has to be built around it.
+
+- Several Claude agents with their own roles. Pro includes up to 15 agents, each with a role, a lead agent it reports to, and only the apps its job needs.
+- A shared workspace. Reports and files land where your whole team can open them, and a run that stops at step 30 keeps steps 1 to 29.
+- A live browser and a sandbox terminal. Watch an agent work in the browser and take control if it goes the wrong way.
+- Schedules. Put a job on the Calendar and it runs with your laptop closed. Pro includes 50 scheduled tasks.
+- Memory you can correct. Open what an agent learned, fix a fact, or forget it.
+- Channels your team already uses: the web, Slack, Telegram, Discord and an agent email address.
+
+## A Claude agent team on one key
+
+A five-person agency can run three Claude agents on one Anthropic key. A research agent collects competitor pages every Monday, a writer turns the research into client notes, and an inbox agent sorts the shared inbox every morning and posts a summary to Slack. All three spend from the same key, which shows up as one line in the Console, and the whole team sees every file in one workspace. If the bill runs higher than the work is worth, switch from Opus 5.5 to Sonnet 5.5 and the same jobs cost half as much.
+
+## Which should you choose?
+
+If you want Claude to do recurring work for your team, get an API key and run it in Construct. You keep Anthropic's prices and your choice of model, you stay within Anthropic's terms, and you skip building the sandbox, scheduler, memory and team workspace yourself. Start the 7-day Pro trial, add your key, and give your first Claude agent the report your team keeps meaning to write.
+
+<BetaCta source="blog_inline_2">Add your Claude key to Construct</BetaCta>
+
+## Sources
+
+- [Claude API overview](https://docs.claude.com/en/api/overview)
+- [Claude pricing, including API prices and plan credits](https://claude.com/pricing)
+- [Claude Code legal and compliance](https://code.claude.com/docs/en/legal-and-compliance)
+- [Construct pricing](/pricing/)
+
+## Related resources
+
+- [Construct vs Claude Duet](/blog/construct-vs-claude-duet/)
+- [Construct vs Claude Cowork](/blog/construct-vs-claude-cowork/)
+- [Construct vs building your own AI agent](/blog/construct-vs-diy/)
+
+Claude is a product of Anthropic. Construct is not affiliated with or endorsed by Anthropic.

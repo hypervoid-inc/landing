@@ -57,7 +57,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Browser and terminal in one supervised task",
     description:
       "Construct's AI agent uses a live cloud browser and a Linux terminal in one task, from $9 a month. What you can watch and stop, and the 5-minute limits.",
-    published: "2026-10-30",
+    published: "2026-11-02",
     seoTitle: "AI Agent With a Browser and Terminal in One Task (2026)",
     author: "nischal",
     tags: ["ai-agent", "product", "workflow-automation"],
@@ -69,7 +69,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Connect your own tools: custom MCP and permission boundaries",
     description:
       "Add your own MCP server to Construct by URL, and set which agents can use it. Requirements, the 15-second call limit, permission boundaries, and gaps.",
-    published: "2026-11-17",
+    published: "2026-11-20",
     seoTitle: "AI Agent Custom MCP Tools: How to Connect Them Safely (2027)",
     author: "nischal",
     tags: ["ai-agent", "product", "governance"],
@@ -110,7 +110,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
       "Where your agent's work goes: files, reports and apps that outlast the chat",
     description:
       "Construct saves agent work as files, PDFs, spreadsheets and small apps in a workspace with 100 MB to 3 GB of storage. How it works, and its limits.",
-    published: "2026-11-08",
+    published: "2026-11-11",
     seoTitle:
       "AI Agent Persistent Files: Reports and Apps That Outlast the Chat",
     author: "nischal",
@@ -135,7 +135,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Update Linear Issues From Slack Messages With an AI Agent",
     description:
       "Mention an AI agent in Slack to create, update, and comment on Linear issues, including several at once. Setup, exact prompts, limits, and fixes, from $9.",
-    published: "2026-11-04",
+    published: "2026-11-07",
     seoTitle: "Update Linear Issues From Slack With an AI Agent (2026 Guide)",
     author: "nischal",
     tags: ["ai-agent", "workflow-automation", "small-business"],
@@ -160,7 +160,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
       "Prompt injection for small teams: when your agent reads a hostile email",
     description:
       "Any agent that reads email can be steered by a stranger's message. What prompt injection is, the lethal trifecta, practical controls, and where Construct stands.",
-    published: "2026-11-13",
+    published: "2026-11-16",
     seoTitle: "Prompt Injection and AI Email Agents: A Small Team's Guide",
     author: "ankush",
     tags: ["ai-agent", "email", "governance", "reliability"],
@@ -184,10 +184,24 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "A Daily Slack Briefing From Your AI Agent",
     description:
       "Get a Slack daily briefing at 7:45am every weekday from your calendar, Gmail and files, written by an AI agent for $9 a month. Prompts, steps and fixes.",
-    published: "2026-10-27",
+    published: "2026-10-30",
     seoTitle: "Slack Daily Briefing From an AI Agent: Setup Guide",
     author: "nischal",
     tags: ["ai-agent", "scheduling", "email"],
+    kind: "guide",
+    draft: false,
+  },
+  {
+    slug: "ai-agent-team-structure",
+    title: "How to structure an AI agent team",
+    description:
+      "What an AI agent team is, three team structures that work for small businesses, how agents hand off work, and how to set one up in Construct from $9 a month.",
+    pitch:
+      "Three AI agent team structures that work for small businesses, and how to set one up in Construct from $9 a month.",
+    published: "2026-10-26",
+    seoTitle: "AI Agent Team Structure: 3 Setups That Work for Small Teams",
+    author: "nischal",
+    tags: ["ai-agent", "governance", "small-business"],
     kind: "guide",
     draft: false,
   },
@@ -197,7 +211,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
       "How to Message Your AI Agent From Telegram, Slack, Discord or Email",
     description:
       "Connect one AI agent to Slack, Telegram, Discord and email, then set who can use it in each place. Setup steps, exact prompts, and access rules.",
-    published: "2026-11-09",
+    published: "2026-11-12",
     seoTitle: "Message Your AI Agent From Telegram, Slack, Discord or Email",
     author: "nischal",
     tags: ["ai-agent", "ai-employee", "email"],
@@ -244,12 +258,26 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: false,
   },
   {
+    slug: "ai-agents-for-content-creation",
+    title: "AI agents for content creation: build a content team in Construct",
+    description:
+      "Set up a team of AI agents for content creation: a lead, a researcher, a writer, a fact checker and an analyst, with role prompts, schedules and a daily brief.",
+    pitch:
+      "Run a five-agent content team in Construct on Starter: research, drafts, fact checks and numbers, in one daily brief.",
+    published: "2026-10-24",
+    seoTitle: "AI Agents for Content Creation: Build a 5-Agent Team",
+    author: "nischal",
+    tags: ["ai-agent", "workflow-automation", "small-business"],
+    kind: "guide",
+    draft: false,
+  },
+  {
     slug: "ai-company-research-spreadsheet",
     title:
       "How to Research a List of Companies Into a Spreadsheet, With Sources",
     description:
       "AI company research with a source URL beside every fact: give an agent a list, get back one row per company. 7 steps and exact prompts, from $9 a month.",
-    published: "2026-10-24",
+    published: "2026-10-27",
     seoTitle: "AI Company Research: A List to a Spreadsheet, With Sources",
     author: "nischal",
     tags: ["ai-agent", "small-business", "workflow-automation"],
@@ -261,7 +289,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "How to Build a Weekly Competitor Pricing Report With an AI Agent",
     description:
       "Have an AI agent check competitor pricing pages every week, save a dated snapshot, compare it with last week's, and post what changed. Prompts and limits.",
-    published: "2026-11-12",
+    published: "2026-11-15",
     seoTitle: "Weekly Competitor Pricing Report With AI: Step-by-Step Setup",
     author: "nischal",
     tags: ["ai-agent", "workflow-automation", "scheduling", "pricing"],
@@ -273,7 +301,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "AI coworker, AI employee or AI assistant: which one you need",
     description:
       "An AI assistant answers when you ask, an AI coworker works beside you, and an AI employee owns a recurring job. A decision guide, with prices from $9 to $50 a month.",
-    published: "2026-11-21",
+    published: "2026-11-24",
     seoTitle: "AI Coworker vs AI Employee vs AI Assistant: Which Do You Need?",
     author: "ankush",
     tags: ["ai-employee", "ai-agent", "chatgpt", "small-business"],
@@ -285,7 +313,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "The AI delegation checklist",
     description:
       "A free AI delegation checklist: 24 questions on which tasks to delegate to AI, inputs, done criteria, review and irreversible steps, plus a brief template.",
-    published: "2026-10-25",
+    published: "2026-10-28",
     seoTitle: "AI Delegation Checklist: 24 Questions Before You Delegate",
     author: "nischal",
     tags: ["ai-agent", "ai-employee", "workflow-automation", "governance"],
@@ -309,7 +337,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "AI employee vs virtual assistant cost calculator",
     description:
       "Compare a virtual assistant's monthly cost with an AI agent plan plus review time. Enter VA hours, hourly rate, and the share of tasks an agent can take.",
-    published: "2026-11-05",
+    published: "2026-11-08",
     seoTitle: "Virtual Assistant vs AI Agent Cost Calculator",
     author: "nischal",
     tags: ["virtual-assistant", "ai-employee", "pricing", "small-business"],
@@ -321,7 +349,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "An AI employee for a small marketing agency",
     description:
       "How a small marketing agency can hand client reports, briefs, and an approval queue to an AI employee, from $9 a month, with clients kept behind a review step.",
-    published: "2026-11-03",
+    published: "2026-11-06",
     seoTitle:
       "AI Employee for a Marketing Agency: Client Reports, Briefs, and Approvals",
     author: "nischal",
@@ -339,7 +367,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "An AI employee for a one-person consulting business",
     description:
       "Give a solo consultancy's research, proposals, status updates, and follow-ups to an AI employee from $9 a month, with client email kept as drafts you approve.",
-    published: "2026-11-28",
+    published: "2026-12-01",
     seoTitle:
       "AI Tools for Consultants: An AI Employee for a One-Person Consultancy",
     author: "nischal",
@@ -352,7 +380,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "One AI employee for the whole team: shared workspaces and roles",
     description:
       "How a small team shares one Construct workspace: invites, owner, admin and member roles, shared files and group chats, with no per-seat charge.",
-    published: "2026-11-30",
+    published: "2026-12-03",
     seoTitle:
       "An AI Coworker for a Small Team: Shared Workspaces and Roles (2027)",
     author: "nischal",
@@ -365,7 +393,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Customer Follow-Ups and CRM Updates Without Zapier",
     description:
       "Use Construct to find deals that need a follow-up, draft the emails, and update your CRM while you approve each send. From $9 a month, with no Zaps to build.",
-    published: "2026-11-24",
+    published: "2026-11-27",
     seoTitle: "Automate Follow-Up Emails and CRM Updates Without Zapier",
     author: "nischal",
     tags: ["ai-agent", "zapier", "workflow-automation", "small-business"],
@@ -389,7 +417,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "A Weekly Investor Update Drafted by Your AI Agent",
     description:
       "Have an AI agent draft your weekly investor update from GitHub, Linear and your CRM, with every claim linked. You check the numbers and send it yourself.",
-    published: "2026-11-25",
+    published: "2026-11-28",
     seoTitle:
       "Weekly Investor Update With AI: Drafted by an Agent, Sent by You",
     author: "nischal",
@@ -402,7 +430,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "New Leads Into HubSpot With a Slack Summary Every Morning",
     description:
       "Have an AI agent find new leads each weekday, add them to HubSpot without duplicates, and send a Slack summary by 8am. From $9 a month, exact prompts.",
-    published: "2026-11-01",
+    published: "2026-11-05",
     seoTitle: "HubSpot AI Lead Generation, With a Slack Summary (2026)",
     author: "nischal",
     tags: ["ai-agent", "workflow-automation", "small-business", "scheduling"],
@@ -415,7 +443,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
       "Which AI employees do ChatGPT, Perplexity, Gemini, Google, Claude and Grok recommend?",
     description:
       "We asked six AI engines 60 buyer questions about AI employees: which products ChatGPT, Perplexity, Gemini, Google, Claude and Grok name, and what they cite.",
-    published: "2026-11-29",
+    published: "2026-12-02",
     seoTitle: "Best AI Employee? What 6 AI Search Engines Recommend",
     author: "ankush",
     tags: ["ai-employee", "ai-search", "ai-agent"],
@@ -522,7 +550,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "What $10 and $20 a month buys in an AI agent",
     description:
       "The cheapest AI employee we found is Construct Lite at $9. At $20 a month, Claude, Gemini, Manus, Muse and Grok Bot come bundled. What each plan buys.",
-    published: "2026-11-22",
+    published: "2026-11-25",
     seoTitle:
       "Cheapest AI Employee: What $10 and $20 a Month Buys in an AI Agent",
     author: "construct-team",
@@ -531,13 +559,27 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     draft: true,
   },
   {
+    slug: "claude-api-key-ai-agent",
+    title: "How to use your Claude API key with an AI agent",
+    description:
+      "How to get a Claude API key, what it costs per run, why your Claude subscription login is not the same thing, and how to run a team of Claude agents in Construct.",
+    pitch:
+      "Get a Claude API key, see what a run costs, and run a team of Claude agents in Construct on your own key.",
+    published: "2026-10-25",
+    seoTitle: "Claude API Key: How to Get One, Pricing, and Agent Setup",
+    author: "nischal",
+    tags: ["ai-agent", "pricing", "product"],
+    kind: "guide",
+    draft: false,
+  },
+  {
     slug: "claude-cowork-alternatives",
     title: "Claude Cowork alternatives after the cloud launch",
     description:
       "Claude Cowork needs a paid Claude plan from $20 and its sessions can't be shared. 10 Claude Cowork alternatives from $0 to $200 a month, compared.",
     pitch:
       "Construct is built for a team, with one shared workspace for files, schedules, and its own inbox, and on Pro it can keep running on your Anthropic key.",
-    published: "2026-10-31",
+    published: "2026-11-03",
     seoTitle: "Claude Cowork Alternatives (2026): 10 Options for Teams",
     author: "construct-team",
     tags: ["comparison", "ai-employee", "claude-cowork"],
@@ -563,7 +605,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct Computer alternatives: what you would give up",
     description:
       "Construct runs recurring team work from $9 a month. Twelve alternatives, what each costs you by comparison, and what to try before you switch.",
-    published: "2026-11-26",
+    published: "2026-11-29",
     seoTitle:
       "Construct Computer Alternatives: What You Give Up by Switching (2027)",
     author: "construct-team",
@@ -576,7 +618,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs CellCog",
     description:
       "Construct vs CellCog on price, shifts vs schedules, phone and meetings, memory, and model keys. CellCog starts at $8 in credits; Construct at a fixed $9.",
-    published: "2026-11-23",
+    published: "2026-11-26",
     seoTitle: "CellCog Alternative: Construct vs CellCog (2027)",
     author: "construct-team",
     tags: ["comparison", "ai-employee", "small-business"],
@@ -608,6 +650,20 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     seoTitle: "Claude Cowork Alternative: Construct vs Cowork (2026)",
     author: "construct-team",
     tags: ["comparison", "ai-employee", "claude-cowork"],
+    kind: "comparison",
+    draft: false,
+  },
+  {
+    slug: "construct-vs-claude-duet",
+    title: "Construct vs Claude Duet",
+    description:
+      "Claude Duet is one agent for one US subscriber, behind a waitlist. Construct gives your team a workspace of agents from $9 a month, available today, anywhere.",
+    pitch:
+      "Construct is open today with no waitlist and no country limit, gives your team several agents in one shared workspace, and on Pro runs Claude on your own key.",
+    published: "2026-10-23",
+    seoTitle: "Claude Duet vs Construct: Pricing, Waitlist and Teams",
+    author: "construct-team",
+    tags: ["comparison", "ai-agent", "small-business"],
     kind: "comparison",
     draft: false,
   },
@@ -661,7 +717,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
       "Construct vs Gemini Spark: an AI employee for your team from $9 a month, or Spark with Google AI Pro at $19.99 on a personal Google account only.",
     pitch:
       "Construct connects to the business Google account you authorize, not a personal one, and its scheduled jobs can work in apps beyond Gmail and Calendar too.",
-    published: "2026-10-26",
+    published: "2026-10-29",
     seoTitle: "Construct vs Gemini Spark: Price, Work Accounts, Teams",
     author: "construct-team",
     tags: ["comparison", "gemini-spark", "google-workspace", "ai-employee"],
@@ -702,7 +758,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Manus",
     description:
       "Construct vs Manus on price, recurring work, triggers, persistence, and channels. Manus starts free with Pro at $20 in credits; Construct starts at $9.",
-    published: "2026-11-19",
+    published: "2026-11-22",
     seoTitle: "Manus Alternative: Construct vs Manus (2027)",
     author: "construct-team",
     tags: ["comparison", "ai-agent", "manus"],
@@ -757,7 +813,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Perplexity Computer",
     description:
       "Construct vs Perplexity Computer on price, credits, research, recurring work, memory, and channels. Perplexity Max is about $200; Construct starts at $9.",
-    published: "2026-11-20",
+    published: "2026-11-23",
     seoTitle:
       "Perplexity Computer Alternative: Construct vs Perplexity Computer",
     author: "construct-team",
@@ -770,7 +826,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Construct vs Simular Sai",
     description:
       "Construct gives a small team an AI employee with shared files, schedules, and email from $9 a month. See how it compares with Simular Sai on price and apps.",
-    published: "2026-11-27",
+    published: "2026-11-30",
     seoTitle: "Simular Sai Alternative: Construct vs Sai (2027)",
     author: "construct-team",
     tags: ["comparison", "simular", "ai-agent"],
@@ -784,7 +840,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
       "Viktor AI starts at $50 a month for 20,000 shared credits. Construct starts at $9 with files, schedules, and email. Price, Slack, and memory compared.",
     pitch:
       "Construct turns each finished job into a file you can reopen and build on next week, and it answers on email, Telegram, Discord, and the web, not only Slack.",
-    published: "2026-10-29",
+    published: "2026-11-01",
     seoTitle: "Viktor AI Alternative: Construct vs Viktor (2026)",
     author: "construct-team",
     tags: ["comparison", "ai-employee", "viktor"],
@@ -810,7 +866,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Customer story: how [customer] handed [job] to an AI employee",
     description:
       "How [customer], a [team size] [industry] team, delegated [job] to Construct: the setup, what changed in [metric], what still needs a person.",
-    published: "2026-11-16",
+    published: "2026-11-19",
     seoTitle: "[Customer] and Construct: [job] with an AI employee",
     author: "ankush",
     tags: ["ai-employee", "small-business", "workflow-automation"],
@@ -853,7 +909,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Hermes Agent vs OpenClaw vs a managed AI employee",
     description:
       "Hermes Agent and OpenClaw are free to self-host; Nous hosts Hermes from $20 a month. Which suits a non-technical founder, and when a managed agent is simpler.",
-    published: "2026-11-02",
+    published: "2026-11-04",
     seoTitle: "Hermes Agent vs OpenClaw vs a Managed AI Employee (2026)",
     author: "construct-team",
     tags: ["comparison", "openclaw", "hermes-agent", "ai-employee"],
@@ -865,7 +921,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Hire Your First AI Employee: A 30-Day Plan",
     description:
       "A week-by-week plan for your first AI employee: which jobs to give it first, how to supervise it, and the signals that say expand or stop by day 30.",
-    published: "2026-11-18",
+    published: "2026-11-21",
     seoTitle: "How to Hire an AI Employee: A Week-by-Week 30-Day Plan",
     author: "nischal",
     tags: ["ai-employee", "ai-agent", "small-business"],
@@ -904,7 +960,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
       "Is Construct Computer safe? Data, permissions and what the agent can touch",
     description:
       "What Construct stores, who processes it, what its AI agent can reach, the controls that limit it, and the risks that remain. Written by the team that builds it.",
-    published: "2026-12-01",
+    published: "2026-12-04",
     seoTitle: "Is Construct Computer Safe? Data, Permissions and Risks (2027)",
     author: "ankush",
     tags: ["governance", "product", "ai-employee"],
@@ -942,7 +998,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Manus alternatives for recurring business work",
     description:
       "Construct runs recurring business work from $9 a month and keeps every file between runs. Manus bills credits per run. 8 Manus alternatives compared.",
-    published: "2026-11-10",
+    published: "2026-11-13",
     seoTitle: "Manus Alternatives for Recurring Workflows (2027)",
     author: "construct-team",
     tags: ["comparison", "ai-agent", "workflow-automation", "manus"],
@@ -969,7 +1025,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Perplexity Computer alternatives under $200 a month",
     description:
       "Perplexity Max costs about $200 a month. Construct runs recurring cloud work from $9 on a plan with published limits. 8 cheaper alternatives compared.",
-    published: "2026-11-06",
+    published: "2026-11-09",
     seoTitle: "Perplexity Computer Alternatives Under $200 a Month (2026)",
     author: "construct-team",
     tags: ["comparison", "ai-agent", "pricing", "perplexity"],
@@ -981,7 +1037,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Perplexity Computer vs Claude Cowork vs Manus for background work",
     description:
       "Which agent keeps working with your laptop closed? Perplexity Computer ($200 Max), Claude Cowork ($20 Pro), and Manus (free to start) compared for background work.",
-    published: "2026-11-07",
+    published: "2026-11-10",
     seoTitle: "Perplexity Computer vs Claude Cowork vs Manus (2026)",
     author: "construct-team",
     tags: ["comparison", "ai-agent", "scheduling"],
@@ -1005,7 +1061,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Sintra alternatives that actually do the work",
     description:
       "Sintra X lists at $97 a month with 250 credits, and its FAQ says every helper runs as a chatbot. 8 alternatives that act in your tools, compared.",
-    published: "2026-11-14",
+    published: "2026-11-17",
     seoTitle: "Sintra AI Alternatives That Actually Do Tasks (2027)",
     author: "construct-team",
     tags: ["comparison", "ai-employee", "small-business"],
@@ -1017,7 +1073,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Sintra vs Marblism vs Lindy for a small business",
     description:
       "Sintra is $97 a month list, Marblism $44, Lindy $29.99 per active user. Compare what each does, how each is metered, and which fits your small business.",
-    published: "2026-11-15",
+    published: "2026-11-18",
     seoTitle: "Sintra vs Marblism vs Lindy (2027): Which AI Staff Fits?",
     author: "construct-team",
     tags: ["comparison", "ai-employee", "small-business"],
@@ -1031,7 +1087,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
       "Viktor AI alternatives: Construct starts at $9 a month vs Viktor's $50. Compare 7 Slack AI employees on price, billing, and where finished work is saved.",
     pitch:
       "Construct saves each report and spreadsheet as a file your team can reopen, not a reply lost in Slack, and runs recurring jobs on a schedule with nobody online.",
-    published: "2026-10-28",
+    published: "2026-10-31",
     seoTitle: "Viktor AI Alternatives: 7 Slack AI Employees Compared",
     author: "construct-team",
     tags: ["comparison", "ai-employee", "viktor"],
@@ -1056,7 +1112,7 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
     title: "Where AI agents fail: what real runs show",
     description:
       "Where AI agents fail in real business runs: at which step, on which tool, and how often a resumable run recovers. Our method, definitions and data.",
-    published: "2026-11-11",
+    published: "2026-11-14",
     seoTitle: "Why AI Agents Fail: An Analysis of Real Agent Runs",
     author: "ankush",
     tags: ["ai-agent", "reliability", "engineering"],

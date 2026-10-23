@@ -2782,6 +2782,124 @@ export const postCards: Record<string, OgCard> = {
       ],
     },
   },
+  "blog-construct-vs-claude-duet": {
+    title: "Construct vs Claude Duet, *open to every team*",
+    deck: "Duet is a US-only waitlist for Pro and Max; Team plans are not included yet.",
+    figure: {
+      kind: "chat",
+      messages: [
+        {
+          from: "you",
+          text: "We're outside the US and stuck on the Claude Duet waitlist. Can my team start today?",
+        },
+        {
+          from: "agent",
+          text: "Yes. Invite them to one workspace and give each agent a role. Lite starts at $9 a month.",
+        },
+      ],
+    },
+  },
+  "blog-ai-agents-for-content-creation": {
+    title: "A content team of *five AI agents*",
+    deck: "Research, drafts and checks land before the 8am brief. You still post.",
+    figure: {
+      kind: "week",
+      days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+      rows: ["06:00", "07:00", "08:00"],
+      pill: "Starter: 5 agents for $59",
+      events: [
+        {
+          day: "all",
+          row: 0,
+          text: "Researcher: outlier posts",
+        },
+        {
+          day: "all",
+          row: 1,
+          text: "Writer and fact checker: drafts",
+        },
+        {
+          day: "all",
+          row: 2,
+          text: "Lead: one daily brief",
+        },
+      ],
+    },
+  },
+  "blog-claude-api-key-ai-agent": {
+    title: "Your Claude API key, *priced per run*",
+    figure: {
+      kind: "statement",
+      big: "$1.20",
+      text: "A research run on *Opus 5.5*: 200K tokens read, 20K written.",
+      lines: [
+        {
+          label: "Same run on Sonnet 5.5",
+          value: "$0.60",
+        },
+        {
+          label: "Opus 5.5 input / output",
+          value: "$4 / $20 per MTok",
+        },
+      ],
+    },
+  },
+  "blog-ai-agent-team-structure": {
+    title: "An AI agent team, *one job each*",
+    deck: "A lead with specialists under it, each limited to the apps its job needs.",
+    figure: {
+      kind: "flow",
+      nodes: [
+        {
+          id: "lead",
+          name: "Construct",
+          label: "Lead agent",
+          col: 0,
+          row: 1,
+        },
+        {
+          id: "research",
+          icon: "Search01",
+          label: "Research",
+          col: 2,
+          row: 0,
+        },
+        {
+          id: "inbox",
+          icon: "Mail01",
+          label: "Inbox",
+          col: 2,
+          row: 1,
+        },
+        {
+          id: "sites",
+          icon: "Globe02",
+          label: "Site check",
+          col: 2,
+          row: 2,
+        },
+        {
+          id: "files",
+          icon: "Folder01",
+          label: "Shared files",
+          col: 3,
+          row: 1,
+        },
+      ],
+      links: [
+        { from: "lead", to: "research" },
+        { from: "lead", to: "inbox" },
+        { from: "lead", to: "sites" },
+        { from: "research", to: "files", dashed: true },
+        { from: "inbox", to: "files", dashed: true },
+        { from: "sites", to: "files", dashed: true },
+      ],
+      boundary: {
+        ids: ["research", "inbox", "sites"],
+        label: "Per-agent apps",
+      },
+    },
+  },
 };
 
 export const pageCards: Record<string, OgCard> = {
