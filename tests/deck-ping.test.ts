@@ -1,10 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { onRequest as ping } from "../functions/api/deck/ping";
-import { deckPingMessage } from "../functions/deck-ping-message";
+import { deckEventMessage, deckPingMessage } from "../functions/deck-ping-message";
 import type { D1Statement, DeckEnv } from "../functions/types";
 import { describeDevice } from "../functions/user-agent";
-import { DECK_PINGS_PER_IP_PER_HOUR, type DeckPingContext } from "../shared/deck-schema";
+import {
+  DECK_PING_EVENTS_PER_VISIT,
+  DECK_PINGS_PER_IP_PER_HOUR,
+  type DeckPingContext,
+} from "../shared/deck-schema";
 
 const IPHONE_LINKEDIN =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/22B83 [LinkedInApp]/9.30.1";
@@ -67,7 +71,7 @@ describe("deckPingMessage", () => {
   });
 
   it("charts the reading and says how it ended", () => {
-    const summary = { final: true, seconds: 252, slides: [12, 0, 240], completed: true, videos: { demo: 75 }, pdf: "sent" as const, pdfEmail: "jane@fund.vc", links: ["try" as const] };
+    const summary = { final: true, seconds: 252, slides: [12, 0, 240], completed: true, videos: { demo: 75 }, pdf: "sent" as const, pdfEmails: ["jane@fund.vc", "partners@fund.vc"], links: ["try" as const] };
     const [card] = deckPingMessage({ context, summary, place, device: describeDevice(MAC_CHROME), titles, now }).embeds;
     expect(card!.title).toBe("✅ acme-ventures read the whole deck");
     expect(card!.description).toBe("**4m 12s** reading · **2 of 3** slides");
@@ -76,13 +80,17 @@ describe("deckPingMessage", () => {
     expect(chart).toContain(" 3 Solution        ████████████  4:00");
     expect(chart).not.toContain("Problem");
     expect(card!.fields.find((f) => f.name.includes("Videos"))!.value).toBe("Demo: watched 75%");
-    expect(card!.fields.find((f) => f.name.includes("PDF"))!.value).toBe("Sent to **jane\\@fund.vc**");
-    expect(card!.fields[1]).toEqual({ name: "✉️ Email", value: "**jane\\@fund.vc**\nasked for the PDF", inline: true });
+    // Every address the PDF went to, not just the first.
+    expect(card!.fields.find((f) => f.name.includes("PDF"))!.value).toBe("Sent to **jane\\@fund.vc**, **partners\\@fund.vc**");
+    expect(card!.fields[0]).toEqual({
+      name: "✉️ Email",
+      value: "**jane\\@fund.vc** · PDF sent\n**partners\\@fund.vc** · PDF sent",
+    });
   });
 
-  it("shows an email the browser was already known by, from the start", () => {
+  it("shows an email the browser was already known by, from the start, full width", () => {
     const [card] = deckPingMessage({ context: { ...context, email: "jane@fund.vc" }, place, device: describeDevice(MAC_CHROME), titles, now }).embeds;
-    expect(card!.fields[1]).toEqual({ name: "✉️ Email", value: "**jane\\@fund.vc**", inline: true });
+    expect(card!.fields[0]).toEqual({ name: "✉️ Email", value: "**jane\\@fund.vc**" });
   });
 
   it("gives an untagged visit a few plain lines", () => {
@@ -100,7 +108,7 @@ describe("deckPingMessage", () => {
     );
     const read = deckPingMessage({
       context: untagged,
-      summary: { final: true, seconds: 26, slides: [10, 10, 6], completed: true, pdf: "sent", pdfEmail: "jane@gmail.com" },
+      summary: { final: true, seconds: 26, slides: [10, 10, 6], completed: true, pdf: "sent", pdfEmails: ["jane@gmail.com"] },
       place,
       device: describeDevice(MAC_CHROME),
       titles,
@@ -112,9 +120,36 @@ describe("deckPingMessage", () => {
   });
 });
 
+describe("deckEventMessage", () => {
+  it("says what happened, who it was and how far they'd got, in a few lines", () => {
+    const message = deckEventMessage({
+      event: "left",
+      context,
+      summary: { final: true, seconds: 84, slides: [30, 50, 4], completed: false },
+      place,
+      device: describeDevice(IPHONE_LINKEDIN),
+      titles,
+    });
+    expect(message.embeds).toEqual([]);
+    expect(message.content).toBe(
+      [
+        "👋 **acme-ventures** closed the deck after 3 of 3 slides",
+        "⏱️ 1m 24s reading · 3 of 3 slides · furthest: Solution",
+        "📍 San Francisco, California, 🇺🇸 United States · 💻 iPhone, a browser inside LinkedIn",
+        `🎥 [Watch the session replay](<${REPLAY}>)`,
+      ].join("\n"),
+    );
+  });
+
+  it("names an untagged visit plainly", () => {
+    const message = deckEventMessage({ event: "video", detail: "launch", context: { ...context, r: undefined }, place, device: describeDevice(MAC_CHROME), titles });
+    expect(message.content.split("\n")[0]).toBe("🎬 Someone on an untagged link played the launch video");
+  });
+});
+
 /** Just enough of D1 for the pings. */
 function createDb() {
-  const rows: Array<{ visit_id: string; message_id: string; ip_hash: string | null }> = [];
+  const rows: Array<{ visit_id: string; message_id: string; ip_hash: string | null; events: number }> = [];
   return {
     rows,
     prepare(query: string) {
@@ -128,8 +163,13 @@ function createDb() {
           if (query.includes("INSERT INTO deck_pings")) {
             const existing = rows.find((row) => row.visit_id === values[0]);
             if (existing) existing.message_id = String(values[1]);
-            else rows.push({ visit_id: String(values[0]), message_id: String(values[1]), ip_hash: values[2] === null ? null : String(values[2]) });
+            else rows.push({ visit_id: String(values[0]), message_id: String(values[1]), ip_hash: values[2] === null ? null : String(values[2]), events: 0 });
             return { success: true };
+          }
+          if (query.includes("SET events = events + 1")) {
+            const row = rows.find((r) => r.visit_id === values[0] && r.events < Number(values[1]));
+            if (row) row.events += 1;
+            return { success: true, meta: { changes: row ? 1 : 0 } };
           }
           if (query.includes("DELETE FROM deck_pings")) return { success: true };
           throw new Error(`unexpected run: ${query}`);
@@ -217,6 +257,29 @@ describe("POST /api/deck/ping", () => {
     expect(edited!.body.embeds[0].title).toBe("📖 acme-ventures is reading the deck");
     expect(env.DB.rows).toHaveLength(1);
     expect(JSON.stringify(env.DB.rows)).not.toContain("203.0.113.9");
+  });
+
+  it("posts a moment as a message of its own, since edits notify nobody", async () => {
+    const env = createEnv();
+    await ping({ request: request({ visitId, context }), env });
+    const summary = { final: false, seconds: 40, slides: [40], completed: false, pdf: "sent" as const, pdfEmails: ["jane@fund.vc"] };
+    expect((await ping({ request: request({ visitId, context, summary, event: "pdf_sent" }), env })).status).toBe(200);
+
+    const calls = discordCalls();
+    expect(calls.map((call) => call.method)).toEqual(["POST", "PATCH", "POST"]);
+    expect(calls[2]!.url).toBe(WEBHOOK);
+    expect(calls[2]!.body.content).toContain("📄 **acme-ventures** asked for the PDF");
+    expect(calls[2]!.body.content).toContain("✉️ Sent to **jane\\@fund.vc**");
+  });
+
+  it("caps the moments one visit can post", async () => {
+    const env = createEnv();
+    await ping({ request: request({ visitId, context }), env });
+    for (let i = 0; i < DECK_PING_EVENTS_PER_VISIT + 3; i++) {
+      await ping({ request: request({ visitId, context, event: "link", detail: "try" }), env });
+    }
+    const posts = discordCalls().filter((call) => call.method === "POST");
+    expect(posts).toHaveLength(1 + DECK_PING_EVENTS_PER_VISIT);
   });
 
   it("only takes pings from the deck page, and ignores bots", async () => {

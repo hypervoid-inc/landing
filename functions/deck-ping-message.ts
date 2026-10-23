@@ -1,4 +1,4 @@
-import type { DeckPingContext, DeckPingSummary } from "../shared/deck-schema";
+import type { DeckPingContext, DeckPingEvent, DeckPingSummary } from "../shared/deck-schema";
 import type { DeviceDescription } from "./user-agent";
 
 /**
@@ -153,8 +153,10 @@ export function deckPingMessage(input: {
   const replay = context.session ? `${REPLAY}${context.session}` : undefined;
   const base = { username: "Construct deck", avatar_url: ICON, allowed_mentions: { parse: [] as [] } };
 
-  const email = summary?.pdfEmail ?? context.email;
-  const pdfSent = summary?.pdf === "sent";
+  // Everyone the PDF went to this visit, then who the browser already was.
+  const sentTo = summary?.pdfEmails ?? [];
+  const emails = [...new Set([...sentTo, ...(context.email ? [context.email] : [])])];
+  const bold = (list: string[]) => list.map((address) => `**${literal(address)}**`).join(", ");
   const onSlide = summary?.current && !summary.final ? titles[summary.current - 1] : undefined;
 
   if (!context.r) {
@@ -170,7 +172,8 @@ export function deckPingMessage(input: {
       `💻 ${device.device}${device.os ? ` · ${device.os}` : ""} · ${deviceLine(device)}`,
       `🔗 ${literal(cameFrom(context))} · ${visit.toLowerCase()}`,
     ];
-    if (email) lines.push(`✉️ ${pdfSent ? "PDF sent to " : ""}**${literal(email)}**`);
+    if (sentTo.length) lines.push(`✉️ PDF sent to ${bold(sentTo)}`);
+    else if (emails.length) lines.push(`✉️ ${bold(emails)}`);
     if (summary) {
       lines.push(
         `⏱️ ${duration(summary.seconds)} reading · ${seen} of ${total} slides${onSlide ? ` · now on ${literal(onSlide)}` : ""}`,
@@ -199,8 +202,16 @@ export function deckPingMessage(input: {
     : undefined;
 
   const fields: Field[] = [
+    // Full width, first: an address is the most useful thing on the card and too long for a column.
+    ...(emails.length
+      ? [
+          {
+            name: "✉️ Email",
+            value: emails.map((address) => `**${literal(address)}**${sentTo.includes(address) ? " · PDF sent" : ""}`).join("\n"),
+          },
+        ]
+      : []),
     { name: "🏷️ Link", value: `\`${who}\``, inline: true },
-    ...(email ? [{ name: "✉️ Email", value: `**${literal(email)}**${pdfSent ? "\nasked for the PDF" : ""}`, inline: true }] : []),
     { name: "📍 Location", value: [literal(location), country].filter(Boolean).join("\n") || "Unknown", inline: true },
     {
       name: "🕐 Their time",
@@ -242,7 +253,7 @@ export function deckPingMessage(input: {
   if (videos.length) fields.push({ name: "🎬 Videos", value: videos.join("\n"), inline: true });
   if (summary?.pdf) {
     const pdf = {
-      sent: `Sent to **${literal(summary.pdfEmail ?? "their address")}**`,
+      sent: sentTo.length ? `Sent to ${bold(sentTo)}` : "Sent",
       failed: "Asked for it; the email didn't go out",
       opened: "Opened the form, didn't send it",
     }[summary.pdf];
@@ -269,5 +280,59 @@ export function deckPingMessage(input: {
         timestamp: context.openedAt,
       },
     ],
+  };
+}
+
+/**
+ * A moment in a visit, posted as a message of its own so it notifies: the
+ * card above is edited in place, and Discord tells nobody about an edit.
+ * A few plain lines, the same for tagged and untagged visits.
+ */
+export function deckEventMessage(input: {
+  event: DeckPingEvent;
+  detail?: "demo" | "launch" | "site" | "try";
+  context: DeckPingContext;
+  summary?: DeckPingSummary;
+  place: Place;
+  device: DeviceDescription;
+  titles: string[];
+}): DiscordMessage {
+  const { event, detail, context, summary, place, device, titles } = input;
+  const who = context.r ? `**${literal(context.r)}**` : "Someone on an untagged link";
+  const total = titles.length;
+  const seen = summary ? summary.slides.filter((seconds) => seconds >= 1).length : 0;
+  const furthest = summary ? summary.slides.reduce((last, seconds, index) => (seconds >= 1 ? index : last), -1) : -1;
+  const sentTo = summary?.pdfEmails ?? [];
+  const emails = [...new Set([...sentTo, ...(context.email ? [context.email] : [])])];
+  const bold = (list: string[]) => list.map((address) => `**${literal(address)}**`).join(", ");
+
+  const heading = {
+    pdf_sent: `📄 ${who} asked for the PDF`,
+    completed: `✅ ${who} read the whole deck`,
+    video: `🎬 ${who} played the ${detail === "launch" ? "launch video" : "demo"}`,
+    link: `🖱️ ${who} clicked ${detail === "site" ? "construct.computer" : "Try Construct (code SEEDINVEST)"}`,
+    left: `👋 ${who} closed the deck after ${seen} of ${total} slides`,
+    returned: `🔁 ${who} came back to the deck`,
+  }[event];
+
+  const location = [where(place), place.country ? `${flag(place.country)} ${countryName(place.country)}`.trim() : ""]
+    .filter(Boolean)
+    .join(", ");
+  const lines = [heading];
+  if (event === "pdf_sent" && sentTo.length) lines.push(`✉️ Sent to ${bold(sentTo)}`);
+  else if (emails.length) lines.push(`✉️ ${bold(emails)}`);
+  if (summary) {
+    const last = furthest >= 0 ? ` · furthest: ${literal(titles[furthest] ?? `slide ${furthest + 1}`)}` : "";
+    lines.push(`⏱️ ${duration(summary.seconds)} reading · ${seen} of ${total} slides${last}`);
+  }
+  lines.push(`📍 ${literal(location) || "Location unknown"} · 💻 ${device.device}, ${deviceLine(device)}`);
+  if (context.session) lines.push(`🎥 [Watch the session replay](<${REPLAY}${context.session}>)`);
+
+  return {
+    username: "Construct deck",
+    avatar_url: ICON,
+    content: lines.join("\n"),
+    embeds: [],
+    allowed_mentions: { parse: [] },
   };
 }

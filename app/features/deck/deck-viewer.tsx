@@ -152,6 +152,8 @@ export function DeckViewer() {
           seconds_total: clock.totalSeconds(),
           slides_seen: clock.seenCount,
         });
+        ping.event("completed", summarize(false));
+        return;
       }
       ping.update(summarize(false));
     };
@@ -189,12 +191,12 @@ export function DeckViewer() {
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
         reportLeft(clock.pause(), true);
-        ping.update(summarize(true));
+        ping.event("left", summarize(true));
         return;
       }
       const slide = clock.resume();
       if (slide === null) return;
-      ping.update(summarize(false));
+      ping.event("returned", summarize(false));
       captureAnalytics("deck_slide_viewed", {
         ...slideProperties(slide),
         via: "return",
@@ -203,9 +205,12 @@ export function DeckViewer() {
     };
     const onPageHide = () => {
       reportLeft(clock.pause(), true);
-      ping.update(summarize(true));
+      ping.event("left", summarize(true));
     };
-    const offActivity = onActivity(() => ping.update(summarize(false)));
+    const offActivity = onActivity((moment) => {
+      if (!moment) return ping.update(summarize(false));
+      ping.event(moment.event, summarize(false), "detail" in moment ? moment.detail : undefined);
+    });
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("pagehide", onPageHide);
 

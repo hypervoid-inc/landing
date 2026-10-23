@@ -1,10 +1,11 @@
 import { slides } from "../../../app/features/deck/slides.ts";
 import {
+  DECK_PING_EVENTS_PER_VISIT,
   DECK_PINGS_PER_DAY,
   DECK_PINGS_PER_IP_PER_HOUR,
   deckPingRequestSchema,
 } from "../../../shared/deck-schema";
-import { deckPingMessage, type DiscordMessage, type Place } from "../../deck-ping-message";
+import { deckEventMessage, deckPingMessage, type DiscordMessage, type Place } from "../../deck-ping-message";
 import { keyedHash } from "../../embed-session";
 import { error, json, readJsonBody } from "../../http";
 import type { DeckEnv, PagesFunction } from "../../types";
@@ -14,7 +15,9 @@ import { describeDevice } from "../../user-agent";
  * `POST /api/deck/ping`: a deck visit, told to Discord as it happens. The page
  * sends one ping on opening and more as the reader goes (deck-ping.ts); the
  * first posts a message to the DECK_DISCORD_WEBHOOK_URL channel, the rest edit
- * it, found by the page's visit id in D1. Location and network come from
+ * it, found by the page's visit id in D1. A ping that carries a moment (PDF
+ * sent, finished, closed...) also posts a message of its own, since edits
+ * notify nobody. Location and network come from
  * Cloudflare's view of the request; the address and the User-Agent header
  * themselves are never kept or sent on.
  */
@@ -29,6 +32,8 @@ const RECORD = `
   INSERT INTO deck_pings (visit_id, message_id, ip_hash) VALUES (?1, ?2, ?3)
   ON CONFLICT(visit_id) DO UPDATE SET message_id = excluded.message_id
 `;
+/** Counts a moment against its visit; no change means the visit has posted its share. */
+const COUNT_EVENT = `UPDATE deck_pings SET events = events + 1 WHERE visit_id = ?1 AND events < ?2`;
 /** Rows older than two days have nothing left to edit or count. */
 const PRUNE = `DELETE FROM deck_pings WHERE created_at < strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-2 days')`;
 
@@ -42,7 +47,7 @@ export const onRequest: PagesFunction<DeckEnv> = async ({ request, env, waitUnti
 
   const parsed = deckPingRequestSchema.safeParse(read.body);
   if (!parsed.success) return error(400, "invalid_request");
-  const { visitId, context, summary } = parsed.data;
+  const { visitId, context, summary, event, detail } = parsed.data;
 
   const webhook = env.DECK_DISCORD_WEBHOOK_URL?.trim().replace(/\?.*$/, "").replace(/\/$/, "");
   if (!webhook || !WEBHOOK.test(webhook)) return json({ ok: true });
@@ -64,7 +69,7 @@ export const onRequest: PagesFunction<DeckEnv> = async ({ request, env, waitUnti
   if (!secret || !env.DB) return error(500, "internal_error", "Unable to process request");
 
   const cf = (request as Request & { cf?: Place & { asn?: number } }).cf ?? {};
-  const message = deckPingMessage({
+  const shared = {
     context,
     ...(summary ? { summary } : {}),
     place: {
@@ -77,7 +82,8 @@ export const onRequest: PagesFunction<DeckEnv> = async ({ request, env, waitUnti
     },
     device,
     titles: slides.map((slide) => slide.title),
-  });
+  };
+  const message = deckPingMessage(shared);
 
   let existing: { message_id: string } | null;
   try {
@@ -86,40 +92,54 @@ export const onRequest: PagesFunction<DeckEnv> = async ({ request, env, waitUnti
     return error(500, "internal_error", "Unable to process request");
   }
 
+  // The visit's card: edited in place once it exists.
+  let carded = false;
   if (existing) {
     const edited = await discord(`${webhook}/messages/${encodeURIComponent(existing.message_id)}`, "PATCH", message);
     // Deleted in Discord: start the visit a fresh message.
-    if (edited.status !== 404) return json({ ok: true });
+    carded = edited.status !== 404;
   }
 
-  const clientIp = request.headers.get("CF-Connecting-IP")?.trim() ?? "";
-  const ipHash = clientIp ? await keyedHash(secret, "ip", clientIp) : null;
-  if (!existing) {
-    let counts: Counts | null;
-    try {
-      counts = await env.DB.prepare(COUNT_RECENT).bind(ipHash).first<Counts>();
-    } catch {
-      return error(500, "internal_error", "Unable to process request");
+  if (!carded) {
+    const clientIp = request.headers.get("CF-Connecting-IP")?.trim() ?? "";
+    const ipHash = clientIp ? await keyedHash(secret, "ip", clientIp) : null;
+    if (!existing) {
+      let counts: Counts | null;
+      try {
+        counts = await env.DB.prepare(COUNT_RECENT).bind(ipHash).first<Counts>();
+      } catch {
+        return error(500, "internal_error", "Unable to process request");
+      }
+      if (
+        (ipHash && Number(counts?.by_ip ?? 0) >= DECK_PINGS_PER_IP_PER_HOUR) ||
+        Number(counts?.in_all ?? 0) >= DECK_PINGS_PER_DAY
+      ) {
+        return error(429, "too_many_requests", "Try again a little later", { "Retry-After": "3600" });
+      }
     }
-    if (
-      (ipHash && Number(counts?.by_ip ?? 0) >= DECK_PINGS_PER_IP_PER_HOUR) ||
-      Number(counts?.in_all ?? 0) >= DECK_PINGS_PER_DAY
-    ) {
-      return error(429, "too_many_requests", "Try again a little later", { "Retry-After": "3600" });
-    }
+
+    const posted = await discord(`${webhook}?wait=true`, "POST", message);
+    const id = posted.ok ? ((await posted.json().catch(() => null)) as { id?: string } | null)?.id : undefined;
+    if (!id) return json({ ok: false });
+    // Waited for, so a moment in this same ping can be counted against the row.
+    await env.DB.prepare(RECORD)
+      .bind(visitId, id, ipHash)
+      .run()
+      .catch(() => console.error("deck_ping record failed"));
+    const prune = env.DB.prepare(PRUNE).run().catch(() => undefined);
+    if (waitUntil) waitUntil(prune);
   }
 
-  const posted = await discord(`${webhook}?wait=true`, "POST", message);
-  const id = posted.ok ? ((await posted.json().catch(() => null)) as { id?: string } | null)?.id : undefined;
-  if (!id) return json({ ok: false });
-
-  const record = env.DB.prepare(RECORD)
-    .bind(visitId, id, ipHash)
-    .run()
-    .then(() => env.DB.prepare(PRUNE).run())
-    .catch(() => console.error("deck_ping record failed"));
-  if (waitUntil) waitUntil(record);
-  else await record;
+  // A moment worth a notification gets a message of its own, a few per visit at most.
+  if (event) {
+    const counted = await env.DB.prepare(COUNT_EVENT)
+      .bind(visitId, DECK_PING_EVENTS_PER_VISIT)
+      .run()
+      .catch(() => null);
+    if (counted?.success && counted.meta?.changes) {
+      await discord(webhook, "POST", deckEventMessage({ event, ...(detail ? { detail } : {}), ...shared }));
+    }
+  }
   return json({ ok: true });
 };
 

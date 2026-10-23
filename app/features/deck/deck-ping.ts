@@ -1,11 +1,13 @@
 import {
   DECK_HOSTNAME_PATTERN,
   DECK_LANGUAGE_PATTERN,
+  DECK_PING_LEAVE_EVERY_MS,
   DECK_PING_UPDATE_MS,
   DECK_SESSION_PATTERN,
   DECK_TAG_PATTERN,
   DECK_TIMEZONE_PATTERN,
   type DeckPingContext,
+  type DeckPingEvent,
   type DeckPingSummary,
 } from "../../../shared/deck-schema";
 import { analyticsVisitor, isAnalyticsHost } from "../analytics/analytics.client";
@@ -15,26 +17,42 @@ import { DECK_VERSION } from "./slides";
  * Tells the team's Discord when someone opens the deck, and keeps that
  * message current as they read (functions/api/deck/ping.ts): one ping on
  * opening, a refresh at most every 15 seconds while they read, and one as
- * they leave. Only from the production site, never from an automated browser.
+ * they leave. Moments (PDF sent, finished, closed, back again, a video, a
+ * click) go at once and post a message of their own, since an edit notifies
+ * nobody. Only from the production site, never from an automated browser.
  */
 
 const ENDPOINT = "/api/deck/ping";
 const VISITS_KEY = "construct.deck.visits";
 
-export type DeckPing = { update(summary: DeckPingSummary): void };
+type Detail = "demo" | "launch" | "site" | "try";
+
+export type DeckPing = {
+  update(summary: DeckPingSummary): void;
+  event(event: DeckPingEvent, summary: DeckPingSummary, detail?: Detail): void;
+};
 
 export function startDeckPing(recipient: string | null): DeckPing {
   const enabled = isAnalyticsHost(window.location.hostname) && !navigator.webdriver;
-  if (!enabled) return { update() {} };
+  if (!enabled) return { update() {}, event() {} };
 
   const visitId = crypto.randomUUID();
   const context = visitContext(recipient);
   let latest: DeckPingSummary | null = null;
   let lastSent = 0;
   let timer: ReturnType<typeof setTimeout> | undefined;
+  let lastLeft = 0;
+  let lastReturned = 0;
+  let away = false;
 
-  const send = (summary: DeckPingSummary | null, leaving: boolean) => {
-    const body = JSON.stringify({ visitId, context, ...(summary ? { summary } : {}) });
+  const send = (summary: DeckPingSummary | null, leaving: boolean, event?: DeckPingEvent, detail?: Detail) => {
+    const body = JSON.stringify({
+      visitId,
+      context,
+      ...(summary ? { summary } : {}),
+      ...(event ? { event } : {}),
+      ...(detail ? { detail } : {}),
+    });
     if (leaving && navigator.sendBeacon?.(ENDPOINT, new Blob([body], { type: "application/json" }))) {
       return Promise.resolve();
     }
@@ -57,20 +75,42 @@ export function startDeckPing(recipient: string | null): DeckPing {
     return send(null, false);
   });
 
+  const update = (summary: DeckPingSummary) => {
+    latest = summary;
+    clearTimeout(timer);
+    if (summary.final) {
+      lastSent = Date.now();
+      void send(summary, true);
+      return;
+    }
+    const wait = Math.max(0, lastSent + DECK_PING_UPDATE_MS - Date.now());
+    timer = setTimeout(() => {
+      lastSent = Date.now();
+      void opened.then(() => latest && send(latest, false));
+    }, wait);
+  };
+
   return {
-    update(summary) {
+    update,
+    event(event, summary, detail) {
+      const now = Date.now();
+      // Tab switching would otherwise post a close and a return every time.
+      if (event === "left") {
+        if (now - lastLeft < DECK_PING_LEAVE_EVERY_MS) return update(summary);
+        lastLeft = now;
+        away = true;
+      }
+      if (event === "returned") {
+        if (!away || now - lastReturned < DECK_PING_LEAVE_EVERY_MS) return update(summary);
+        lastReturned = now;
+        away = false;
+      }
       latest = summary;
       clearTimeout(timer);
-      if (summary.final) {
-        lastSent = Date.now();
-        void send(summary, true);
-        return;
-      }
-      const wait = Math.max(0, lastSent + DECK_PING_UPDATE_MS - Date.now());
-      timer = setTimeout(() => {
-        lastSent = Date.now();
-        void opened.then(() => latest && send(latest, false));
-      }, wait);
+      lastSent = now;
+      // A closing tab can't wait for anything; the rest wait for the card to exist.
+      if (event === "left") void send(summary, true, event, detail);
+      else void opened.then(() => send(summary, false, event, detail));
     },
   };
 }

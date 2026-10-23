@@ -53,6 +53,14 @@ export const DECK_PINGS_PER_IP_PER_HOUR = 30;
 export const DECK_PINGS_PER_DAY = 500;
 /** How often a visit's message is refreshed while they read. */
 export const DECK_PING_UPDATE_MS = 15_000;
+/** Moments that post a message of their own, at most this many per visit. */
+export const DECK_PING_EVENTS_PER_VISIT = 25;
+/** Closing and coming back post at most this often, so tab switching doesn't flood the channel. */
+export const DECK_PING_LEAVE_EVERY_MS = 60_000;
+
+/** The moments worth a notification, each a message of its own. */
+export const DECK_PING_EVENTS = ["pdf_sent", "completed", "video", "link", "left", "returned"] as const;
+export type DeckPingEvent = (typeof DECK_PING_EVENTS)[number];
 
 /** Values off a query string or the browser, as short and plain as the attribution cookie's. */
 export const DECK_TAG_PATTERN = /^[A-Za-z0-9._~-]{1,64}$/;
@@ -112,8 +120,8 @@ export const deckPingSummarySchema = z
       .strict()
       .optional(),
     pdf: z.enum(["opened", "failed", "sent"]).optional(),
-    /** The address the PDF went to; the team wants to know who asked for it. */
-    pdfEmail: z.string().trim().toLowerCase().email().max(254).optional(),
+    /** Every address the PDF went to this visit; the team wants to know who asked for it. */
+    pdfEmails: z.array(z.string().trim().toLowerCase().email().max(254)).max(5).optional(),
     links: z.array(z.enum(["site", "try"])).max(4).optional(),
   })
   .strict();
@@ -124,6 +132,9 @@ export const deckPingRequestSchema = z
     visitId: z.uuid(),
     context: deckPingContextSchema,
     summary: deckPingSummarySchema.optional(),
+    /** A moment that also posts its own message; `detail` says which video or link. */
+    event: z.enum(DECK_PING_EVENTS).optional(),
+    detail: z.enum(["demo", "launch", "site", "try"]).optional(),
   })
   .strict();
 
