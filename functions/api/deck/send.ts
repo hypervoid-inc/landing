@@ -1,3 +1,4 @@
+import { figmaDeck } from "../../../app/features/deck/slides.figma.ts";
 import {
   DECK_PDF_MAX_BYTES,
   DECK_PDF_PATH,
@@ -84,7 +85,8 @@ export const onRequest: PagesFunction<DeckEnv> = async ({ request, env, waitUnti
 
   let pdf: Uint8Array;
   try {
-    const file = await env.ASSETS.fetch(new URL(DECK_PDF_PATH, request.url));
+    // Versioned like the slide images, so no cache can attach a deck that's out of date.
+    const file = await env.ASSETS.fetch(new URL(`${DECK_PDF_PATH}?v=${figmaDeck.version}`, request.url));
     if (!file.ok) throw new Error(`status ${file.status}`);
     pdf = new Uint8Array(await file.arrayBuffer());
   } catch {
