@@ -77,6 +77,7 @@ describe("generated discovery content", () => {
       "llms.txt",
       "llms-full.txt",
       "brand/brand.json",
+      "brand/brand.md",
       ".well-known/security.txt",
       ".well-known/api-catalog",
       "openapi.json",

@@ -41,6 +41,9 @@ export const BRAND_CDN = "https://cdn.construct.computer/brand";
 /** The day a file on this page last changed; shown so partners know to refresh. */
 export const BRAND_UPDATED = "2026-10-25";
 export const brandEmail = "hello@construct.computer";
+/** The page's opening line, repeated at the top of `/brand/brand.md`. */
+export const brandIntro =
+  "Logos, the mascot, screenshots, ad banners and approved copy for Construct Computer, the AI agent platform for startups and small teams. Free to use when you list, review or link to us.";
 
 export type BrandFile = {
   readonly format: "SVG" | "PNG" | "JPG";
@@ -402,6 +405,14 @@ export const brandGroups: readonly BrandGroup[] = [
   },
 ];
 
+/** Which mark to use and how to keep it, for the page and `brand.md`. */
+export const brandLogoRules = {
+  choose:
+    "The wordmark is the logo. Use the lockup where a listing wants the logo with its icon, the logomark where space is tight, and the squares where a form asks for a square image.",
+  space:
+    "Leave at least one eye’s width clear around every mark. Keep the logomark at 16px or larger and the wordmark at least 96px wide.",
+} as const;
+
 export function brandGroup(id: string): BrandGroup {
   const group = brandGroups.find((entry) => entry.id === id);
   if (!group) throw new Error(`Unknown brand group: ${id}`);
@@ -598,6 +609,12 @@ export type BrandCopy = {
   /** The field's character limit, when there is one. */
   readonly max?: number;
 };
+
+/** Characters against the field's limit, or words when there is none. */
+export const brandCopyLength = (entry: BrandCopy) =>
+  entry.max
+    ? `${entry.text.length} of ${entry.max} characters`
+    : `${entry.text.trim().split(/\s+/).length} words`;
 
 /**
  * The same description at each length a form or article asks for. Every one

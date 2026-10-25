@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 
 import {
   MASCOT_PREVIEW_PX,
@@ -63,6 +63,8 @@ export function MascotMaker() {
           alt=""
           width={MASCOT_PREVIEW_PX}
           height={MASCOT_PREVIEW_PX}
+          loading="lazy"
+          decoding="async"
           draggable={false}
           className="h-full w-full"
         />
@@ -73,17 +75,19 @@ export function MascotMaker() {
           <legend className={legend}>Role</legend>
           <div className="flex flex-wrap gap-1.5">
             {mascotRoles.map((entry) => (
-              <label key={entry.id} className={chip}>
-                <input
-                  type="radio"
-                  name="mascot-role"
-                  value={entry.id}
-                  checked={entry.id === roleId}
-                  onChange={() => setRoleId(entry.id)}
-                  className="sr-only"
-                />
-                {entry.label}
-              </label>
+              <Fragment key={entry.id}>
+                <label className={chip}>
+                  <input
+                    type="radio"
+                    name="mascot-role"
+                    value={entry.id}
+                    checked={entry.id === roleId}
+                    onChange={() => setRoleId(entry.id)}
+                    className="sr-only"
+                  />
+                  {entry.label}
+                </label>{" "}
+              </Fragment>
             ))}
           </div>
         </fieldset>
@@ -92,28 +96,27 @@ export function MascotMaker() {
           <legend className={legend}>Color</legend>
           <div className="flex flex-wrap gap-2">
             {mascotTints.map((entry) => (
-              <label
-                key={entry.id}
-                className="tool-press grid h-9 w-9 cursor-pointer place-items-center rounded-full border-2 border-transparent has-checked:border-[#01b4c8] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#01b4c8]"
-              >
-                <input
-                  type="radio"
-                  name="mascot-tint"
-                  value={entry.id}
-                  checked={entry.id === tint}
-                  onChange={() => {
-                    setTint(entry.id);
-                    warm(entry.id);
-                  }}
-                  className="sr-only"
-                />
-                <span
-                  aria-hidden
-                  className="h-6 w-6 rounded-full ring-1 ring-black/10"
-                  style={{ background: entry.swatch }}
-                />
-                <span className="sr-only">{entry.id}</span>
-              </label>
+              <Fragment key={entry.id}>
+                <label className="tool-press grid h-9 w-9 cursor-pointer place-items-center rounded-full border-2 border-transparent has-checked:border-[#01b4c8] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#01b4c8]">
+                  <input
+                    type="radio"
+                    name="mascot-tint"
+                    value={entry.id}
+                    checked={entry.id === tint}
+                    onChange={() => {
+                      setTint(entry.id);
+                      warm(entry.id);
+                    }}
+                    className="sr-only"
+                  />
+                  <span
+                    aria-hidden
+                    className="h-6 w-6 rounded-full ring-1 ring-black/10"
+                    style={{ background: entry.swatch }}
+                  />
+                  <span className="sr-only">{entry.id}</span>
+                </label>{" "}
+              </Fragment>
             ))}
           </div>
         </fieldset>
@@ -127,31 +130,40 @@ export function MascotMaker() {
                 [true, "Happy"],
               ] as const
             ).map(([value, label]) => (
-              <label key={label} className={chip}>
-                <input
-                  type="radio"
-                  name="mascot-eyes"
-                  checked={happy === value}
-                  onChange={() => setHappy(value)}
-                  className="sr-only"
-                />
-                {label}
-              </label>
+              <Fragment key={label}>
+                <label className={chip}>
+                  <input
+                    type="radio"
+                    name="mascot-eyes"
+                    checked={happy === value}
+                    onChange={() => setHappy(value)}
+                    className="sr-only"
+                  />
+                  {label}
+                </label>{" "}
+              </Fragment>
             ))}
           </div>
         </fieldset>
 
         <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2">
-          <button
-            type="button"
-            onClick={() => void save()}
+          {/* A real link to the PNG, so an agent reading the page gets the
+              file; a click saves it under its own name instead. */}
+          <a
+            href={mascotHref(combo)}
+            target="_blank"
+            rel="noopener"
+            onClick={(event) => {
+              event.preventDefault();
+              void save();
+            }}
             className={`${primaryButton} min-h-10 px-4 text-[14px]`}
           >
             <SwapLabel
               done={saved}
               idle={
                 <>
-                  Download PNG
+                  Download PNG{" "}
                   <span className="font-normal text-white/80">1024</span>
                 </>
               }
@@ -162,7 +174,7 @@ export function MascotMaker() {
                 </>
               }
             />
-          </button>
+          </a>
           <span aria-live="polite" className="sr-only">
             {saved ? `Saved ${combo.stem}.png` : ""}
           </span>

@@ -33,7 +33,7 @@ import {
   TAGLINE_MAX,
   WORDMARK_BOX,
 } from "../app/content/brand";
-import { brandCatalog } from "../app/lib/generated-content";
+import { brandCatalog, brandMarkdown } from "../app/lib/generated-content";
 import { siteUrl } from "../app/lib/route-manifest";
 import { readme, zip } from "../scripts/brand-kit.mjs";
 
@@ -42,12 +42,14 @@ const brandDir = path.join(publicDir, BRAND_DIR);
 const assets = brandGroups.flatMap((group) => group.assets);
 const stem = (href: string) => path.basename(href, path.extname(href));
 
-/** What `pnpm brand` writes into the repo; `brand.json` is a build output. */
+/** What `pnpm brand` writes into the repo; brand.json and brand.md are build output. */
 function repoFiles() {
   return readdirSync(brandDir, { recursive: true, withFileTypes: true })
     .filter((entry) => entry.isFile() && entry.name !== ".DS_Store")
     .map((entry) => path.join(entry.parentPath, entry.name))
-    .filter((file) => path.basename(file) !== "brand.json");
+    .filter(
+      (file) => !["brand.json", "brand.md"].includes(path.basename(file)),
+    );
 }
 
 /**
@@ -214,6 +216,47 @@ describe("brand copy", () => {
     const dashes = new RegExp("[\\u2013\\u2014]");
     const text = JSON.stringify(brandCatalog());
     expect(text).not.toMatch(dashes);
+    expect(brandMarkdown()).not.toMatch(dashes);
+  });
+});
+
+/** What an agent handed the page reads instead of it. */
+describe("brand.md", () => {
+  const markdown = brandMarkdown();
+
+  it("links every file, the kit, the PDF and brand.json", () => {
+    const missing = [
+      ...brandFiles.map((file) => file.href),
+      brandKit.href,
+      brandDocument.href,
+      `${siteUrl}${BRAND_DIR}/brand.json`,
+    ].filter((href) => !markdown.includes(href));
+    expect(missing).toEqual([]);
+  });
+
+  it("carries the copy word for word", () => {
+    const missing = [...brandDescriptions, ...brandCaptions, ...brandTaglines]
+      .map((entry) => (typeof entry === "string" ? entry : entry.text))
+      .filter((text) => !markdown.includes(text));
+    expect(missing).toEqual([]);
+  });
+
+  it("names every mascot role and color for the URL pattern", () => {
+    const missing = [
+      ...mascotRoles.map((role) => `\`${role.id}\``),
+      ...mascotTints.map((tint) => `\`${tint.id}\``),
+    ].filter((name) => !markdown.includes(name));
+    expect(missing).toEqual([]);
+    expect(markdown).toContain(
+      mascotHref(mascotCombo("developer", "mint", true)),
+    );
+  });
+
+  it("only links absolute URLs", () => {
+    const relative = [...markdown.matchAll(/\]\(([^)]+)\)/g)]
+      .map((match) => match[1]!)
+      .filter((href) => !href.startsWith("https://"));
+    expect(relative).toEqual([]);
   });
 });
 

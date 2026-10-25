@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import { Fragment, type CSSProperties, type ReactNode } from "react";
 
 import {
   LOGOMARK_PATH,
@@ -184,7 +184,7 @@ export function FileLink({
       className={textAction}
     >
       <DownloadIcon />
-      {file.format}
+      {file.format}{" "}
       <span className="font-normal text-[#8a9aa2]">
         {file.width}×{file.height}
       </span>
@@ -204,9 +204,13 @@ export function FileLinks({
   const svg = asset.preview.endsWith(".svg") ? asset.preview : null;
   return (
     <span className="flex flex-wrap items-center gap-x-3.5 gap-y-1">
-      {asset.files.map((file) => (
-        <FileLink key={file.href} file={file} asset={asset} group={group} />
+      {asset.files.map((file, index) => (
+        <Fragment key={file.href}>
+          {index > 0 && " "}
+          <FileLink file={file} asset={asset} group={group} />
+        </Fragment>
       ))}
+      {svg && " "}
       {svg && (
         <CopyButton
           asset={asset.id}
@@ -306,8 +310,8 @@ export function AssetCard({
       <figcaption className="mt-2.5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-0.5">
         <span className="text-[14px] font-medium text-[#4e4646]">
           {asset.name}
-        </span>
-        <FileLinks asset={asset} group={group} />
+        </span>{" "}
+        <FileLinks asset={asset} group={group} />{" "}
         {asset.use && (
           <span className="basis-full text-[13px] leading-5 text-[#8a9aa2]">
             {asset.use}

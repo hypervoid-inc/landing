@@ -39,3 +39,4 @@ test-results/
 # The brand catalog, written by `pnpm generate:content` from
 # app/content/brand.ts. The full-size files and zip live on the CDN.
 /public/brand/brand.json
+/public/brand/brand.md

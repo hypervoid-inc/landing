@@ -8,6 +8,7 @@ import {
   badgeSnippet,
   brandCaptions,
   brandColors,
+  brandCopyLength,
   brandDescriptions,
   brandDisclosure,
   brandEmail,
@@ -16,8 +17,10 @@ import {
   brandFaq,
   brandFeatures,
   brandGroup,
+  brandIntro,
   brandDocument,
   brandKit,
+  brandLogoRules,
   brandName,
   brandTaglines,
   brandTerms,
@@ -214,11 +217,7 @@ const ruleMark = "w-[34%]";
 function LogoSection() {
   return (
     <Section id="logo">
-      <p className={prose}>
-        The wordmark is the logo. Use the lockup where a listing wants the logo
-        with its icon, the logomark where space is tight, and the squares where
-        a form asks for a square image.
-      </p>
+      <p className={prose}>{brandLogoRules.choose}</p>
       {(["wordmark", "logomark", "lockup", "stacked"] as const).map((id) => (
         <Sub key={id} title={brandGroup(id).title}>
           <Assets
@@ -233,10 +232,7 @@ function LogoSection() {
         <Assets group="icon" columns="4" ratio="1/1" pad="none" fit="cover" />
       </Sub>
       <Sub title="Keep it as it is">
-        <p className={`${prose} mb-4`}>
-          Leave at least one eye’s width clear around every mark. Keep the
-          logomark at 16px or larger and the wordmark at least 96px wide.
-        </p>
+        <p className={`${prose} mb-4`}>{brandLogoRules.space}</p>
         <Grid columns="4">
           <Rule ok={false} caption="Stretch or squash it">
             <Logomark
@@ -384,7 +380,7 @@ function VideoSection() {
             <figcaption className="mt-2.5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-0.5">
               <span className="text-[14px] font-medium text-[#4e4646]">
                 {video.title}
-              </span>
+              </span>{" "}
               <span className="flex flex-wrap items-center gap-x-3.5">
                 <a
                   href={youtubeUrl(video)}
@@ -393,7 +389,7 @@ function VideoSection() {
                   className={textAction}
                 >
                   Watch
-                </a>
+                </a>{" "}
                 <CopyButton
                   text={youtubeEmbed(video)}
                   asset={video.id}
@@ -412,11 +408,6 @@ function VideoSection() {
 
 /* ------------------------------------------------------------------ Copy */
 
-const count = (entry: BrandCopy) =>
-  entry.max
-    ? `${entry.text.length} of ${entry.max} characters`
-    : `${entry.text.trim().split(/\s+/).length} words`;
-
 /** A piece of copy with its own copy button. Blank lines split paragraphs. */
 function CopyBlock({
   entry,
@@ -431,16 +422,18 @@ function CopyBlock({
     <article className={`${card} p-5`}>
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <span className="text-[14px] font-medium text-[#4e4646]">
-          {entry.label}
-          <span className={`${muted} ml-3 font-normal`}>{count(entry)}</span>
-        </span>
+          {entry.label}{" "}
+          <span className={`${muted} ml-2 font-normal`}>
+            {brandCopyLength(entry)}
+          </span>
+        </span>{" "}
         <CopyButton
           text={copyText}
           asset={`copy-${entry.id}`}
           label={`Copy ${entry.label.toLowerCase()}`}
         >
           Copy
-        </CopyButton>
+        </CopyButton>{" "}
         <span className={`${muted} basis-full`}>{entry.fits}</span>
       </div>
       {heading}
@@ -501,9 +494,8 @@ function CopySection() {
               className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-5 py-3"
             >
               <span className="text-[15px] text-[#4e4646]">
-                {line}
-                <span className={`${muted} ml-3`}>{line.length}</span>
-              </span>
+                {line} <span className={`${muted} ml-2`}>{line.length}</span>
+              </span>{" "}
               <CopyButton
                 text={line}
                 asset="copy-tagline"
@@ -625,6 +617,8 @@ function Badge({ asset }: { asset: BrandAsset }) {
           alt={`Badge, ${asset.name.toLowerCase()}`}
           width="205"
           height="40"
+          loading="lazy"
+          decoding="async"
           className="h-10 w-auto"
         />
       </div>
@@ -632,7 +626,7 @@ function Badge({ asset }: { asset: BrandAsset }) {
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
           <span className="text-[14px] font-medium text-[#4e4646]">
             {asset.name}
-          </span>
+          </span>{" "}
           <span className="flex flex-wrap items-center gap-x-3.5">
             <CopyButton
               text={snippet}
@@ -640,7 +634,7 @@ function Badge({ asset }: { asset: BrandAsset }) {
               label={`Copy the ${asset.name.toLowerCase()} badge HTML`}
             >
               Copy HTML
-            </CopyButton>
+            </CopyButton>{" "}
             <FileLinks asset={asset} group="Badge" />
           </span>
         </div>
@@ -741,8 +735,8 @@ function Swatch({ color }: { color: BrandColor }) {
         {copied ? `Copied ${color.hex}` : ""}
       </span>
       <p className="mt-2.5 px-0.5 text-[14px] leading-5 text-[#4e4646]">
-        <span className="font-medium">{color.name}</span>
-        <span className="ml-2 font-mono text-[13px] text-[#8a9aa2]">
+        <span className="font-medium">{color.name}</span>{" "}
+        <span className="ml-1 font-mono text-[13px] text-[#8a9aa2]">
           {copied ? "Copied" : color.hex}
         </span>
       </p>
@@ -771,7 +765,7 @@ function ColorSection() {
                 style={{ fontFamily: face.family, fontStyle: face.style }}
               >
                 Construct Computer
-              </span>
+              </span>{" "}
               <span className="text-[14px] leading-6 text-[#627c86]">
                 <span className="font-medium text-[#4e4646]">{face.name}</span>
                 {", "}
@@ -862,15 +856,15 @@ export function BrandPage() {
         className="mx-auto w-full max-w-6xl flex-1 px-4 pb-20 pt-8 sm:px-6 lg:pt-14"
       >
         <Breadcrumbs current="Brand assets" />
-        <header className="mt-6">
+        {/* A div, not a header: Markdown converters, Cloudflare's included,
+            drop <header> as site chrome, and with it the downloads. */}
+        <div className="mt-6">
           <div className="max-w-2xl">
             <h1 className="font-geist text-[38px] italic leading-[1.05] tracking-[-0.02em] text-[#4e4646] sm:text-[48px] lg:text-[56px]">
               Brand assets
             </h1>
             <p className="mt-4 text-[17px] leading-7 text-[#627c86] sm:text-[18px]">
-              Logos, the mascot, screenshots, ad banners and approved copy for
-              Construct Computer, the AI agent platform for startups and small
-              teams. Free to use when you list, review or link to us.
+              {brandIntro}
             </p>
           </div>
           <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
@@ -880,9 +874,9 @@ export function BrandPage() {
               onClick={() => trackBrand("kit", "download")}
               className={primaryButton}
             >
-              Download everything
+              Download everything{" "}
               <span className="font-normal text-white/80">zip</span>
-            </a>
+            </a>{" "}
             <a
               href={brandDocument.href}
               target="_blank"
@@ -890,18 +884,21 @@ export function BrandPage() {
               onClick={() => trackBrand(brandDocument.id, "download")}
               className={textAction}
             >
-              {brandDocument.name}
+              {brandDocument.name}{" "}
               <span className="font-normal text-[#8a9aa2]">PDF</span>
-            </a>
+            </a>{" "}
+            <a href="/brand/brand.md" className={textAction}>
+              brand.md
+            </a>{" "}
             <a href="/brand/brand.json" className={textAction}>
               brand.json
-            </a>
+            </a>{" "}
             <span className={`${muted} sm:ml-auto`}>
               Updated{" "}
               <time dateTime={BRAND_UPDATED}>{updatedOn(BRAND_UPDATED)}</time>
             </span>
           </div>
-        </header>
+        </div>
 
         <nav aria-label="On this page" className="mt-9 mb-10 sm:mt-10 sm:mb-12">
           <ul className="flex flex-wrap gap-x-5 gap-y-2">

@@ -8,6 +8,7 @@ import { tools } from "../content/tools";
 import {
   BRAND_UPDATED,
   brandCaptions,
+  brandCopyLength,
   brandDescriptions,
   brandDisclosure,
   brandEmailTemplate,
@@ -17,21 +18,31 @@ import {
   brandTaglines,
   brandColors,
   brandEmail,
+  brandGroup,
   brandGroups,
+  brandIntro,
   brandKit,
+  brandLogoRules,
   brandName,
+  brandUsage,
   brandTerms,
   brandTypefaces,
   brandVideos,
   brandDocument,
   BRAND_CDN,
   kitMascots,
+  MASCOT_PX,
+  mascotCombo,
   mascotCombos,
+  mascotHref,
   mascotRoles,
   mascotTints,
   YOUTUBE_CHANNEL,
   youtubeEmbed,
   youtubeUrl,
+  AFFILIATE_LINK,
+  badgeSnippet,
+  type BrandAsset,
 } from "../content/brand";
 import type { CanonicalRoute } from "./route-manifest";
 import { canonicalRoutes, siteUrl } from "./route-manifest";
@@ -218,9 +229,10 @@ function llmsToolsFull(): string[] {
  * `/brand/brand.json`: the brand page as data, so an agent writing about or
  * listing Construct can pick the right file without scraping the page.
  */
+const absolute = (href: string) =>
+  href.startsWith("/") ? `${siteUrl}${href}` : href;
+
 export function brandCatalog() {
-  const absolute = (href: string) =>
-    href.startsWith("/") ? `${siteUrl}${href}` : href;
   return {
     name: brandName.full,
     shortName: brandName.short,
@@ -303,13 +315,220 @@ export function brandCatalog() {
   };
 }
 
+/**
+ * `/brand/brand.md`: the brand page as one Markdown document, in the page's
+ * order, for a partner who hands the page's link to an agent. Every URL is
+ * absolute and every choice a form or brief asks for is written out, so the
+ * agent never has to open the zip or click through the mascot maker.
+ */
+export function brandMarkdown(): string {
+  const route = canonicalRoutes.find(({ path }) => path === "/brand")!;
+  const files = (asset: BrandAsset) =>
+    asset.files
+      .map(
+        (file) => `[${file.format} ${file.width}×${file.height}](${file.href})`,
+      )
+      .join(", ");
+  const table = (id: string) => {
+    const { assets } = brandGroup(id);
+    // Only where the set holds both, so "Light" never labels a navy square.
+    const plates = new Set(assets.map((asset) => asset.plate)).size > 1;
+    const uses = assets.some((asset) => asset.use);
+    return markdownTable(
+      [
+        "Variant",
+        ...(plates ? ["Background"] : []),
+        "Files",
+        ...(uses ? ["Use"] : []),
+      ],
+      assets.map((asset) => [
+        asset.name,
+        ...(plates ? [asset.plate === "dark" ? "Dark" : "Light"] : []),
+        files(asset),
+        ...(uses ? [asset.use ?? ""] : []),
+      ]),
+    );
+  };
+  const group = (id: string) => [
+    `### ${brandGroup(id).title}`,
+    "",
+    table(id),
+    "",
+  ];
+  const copyEntry = (entry: (typeof brandDescriptions)[number]) => [
+    `#### ${entry.label} (${brandCopyLength(entry)})`,
+    "",
+    `For: ${entry.fits}.`,
+    "",
+    entry.text,
+    "",
+  ];
+  const example = mascotCombo("support", "construct", false);
+  const happy = mascotCombo("developer", "mint", true);
+
+  return [
+    `# ${route.displayTitle}`,
+    "",
+    `> ${brandIntro}`,
+    "",
+    `- Page: ${route.canonical}`,
+    `- Every file as JSON: ${siteUrl}/brand/brand.json`,
+    `- Everything in one zip: ${brandKit.href}`,
+    `- ${brandDocument.name}, PDF: ${brandDocument.href}`,
+    `- Questions: ${brandEmail}`,
+    `- Updated: ${BRAND_UPDATED}`,
+    "",
+    "## Name",
+    "",
+    `${brandName.rule} The website is ${brandName.domain}, all lowercase. Not ${brandName.wrong.slice(0, -1).join(", ")} or ${brandName.wrong.at(-1)}. "${brandName.short}" alone also means ${brandName.collides.join(" and ")}.`,
+    "",
+    "## Logo",
+    "",
+    brandLogoRules.choose,
+    "",
+    ...["wordmark", "logomark", "lockup", "stacked", "icon"].flatMap((id) =>
+      group(id),
+    ),
+    brandLogoRules.space,
+    "",
+    "## Screenshots",
+    "",
+    table("launch"),
+    "",
+    "## Banner",
+    "",
+    table("banner"),
+    "",
+    "## Color and type",
+    "",
+    markdownTable(
+      ["Color", "Hex", "Use"],
+      brandColors.map(({ name, hex, use }) => [name, hex, use]),
+    ),
+    "",
+    markdownTable(
+      ["Typeface", "Use", "Get it"],
+      brandTypefaces.map(({ name, use, href }) => [name, use, href ?? ""]),
+    ),
+    "",
+    "## Video",
+    "",
+    `Every video is on YouTube: ${YOUTUBE_CHANNEL}`,
+    "",
+    ...brandVideos.flatMap((video) => [
+      `### ${video.title}`,
+      "",
+      youtubeUrl(video),
+      "",
+      "```html",
+      youtubeEmbed(video),
+      "```",
+      "",
+    ]),
+    "## Partners",
+    "",
+    `For affiliates in the partner program (${siteUrl}/partner/) and anyone linking to us. Swap ${AFFILIATE_LINK} for your own link, and point the badge at it.`,
+    "",
+    ...brandGroup("badge").assets.flatMap((asset) => [
+      `### Badge, ${asset.name.toLowerCase()}`,
+      "",
+      files(asset),
+      "",
+      "```html",
+      badgeSnippet(
+        siteUrl,
+        asset.id as "construct-badge" | "construct-badge-dark",
+      ),
+      "```",
+      "",
+    ]),
+    "### Affiliate disclosure",
+    "",
+    "For: Above or below any post or page with your link.",
+    "",
+    brandDisclosure,
+    "",
+    "### Posts",
+    "",
+    ...brandCaptions.flatMap(copyEntry),
+    "### Email",
+    "",
+    "For: Your own list, with the disclosure already in.",
+    "",
+    `Subject: ${brandEmailTemplate.subject}`,
+    "",
+    brandEmailTemplate.body,
+    "",
+    "## Ad banners",
+    "",
+    table("banners"),
+    "",
+    "## Mascot",
+    "",
+    table("mascot"),
+    "",
+    `Every role in every color is a ${MASCOT_PX}px PNG at \`${BRAND_CDN}/mascot/construct-mascot-{role}-{color}.png\`, and \`-happy\` before \`.png\` gives the happy eyes. For example ${mascotHref(example)} or ${mascotHref(happy)}.`,
+    "",
+    `- Roles: ${mascotRoles.map(({ id, label }) => `\`${id}\` (${label})`).join(", ")}`,
+    `- Colors: ${mascotTints.map(({ id, swatch }) => `\`${id}\` (${swatch})`).join(", ")}`,
+    "",
+    "## Copy",
+    "",
+    "### Descriptions",
+    "",
+    ...brandDescriptions.flatMap(copyEntry),
+    "### Taglines",
+    "",
+    ...brandTaglines.map((line) => `- ${line} (${line.length} characters)`),
+    "",
+    "### What it does",
+    "",
+    ...brandFeatures.map((feature) => `- ${feature}`),
+    "",
+    "### Facts",
+    "",
+    markdownTable(
+      ["Fact", "Value"],
+      brandFacts.map(({ label, value, href }) => [
+        label,
+        href && !href.startsWith("mailto:")
+          ? `[${value}](${absolute(href)})`
+          : value,
+      ]),
+    ),
+    "",
+    "### Questions and answers",
+    "",
+    ...brandFaq.flatMap(({ question, answer }) => [
+      `**${question}**`,
+      "",
+      answer,
+      "",
+    ]),
+    "## Usage",
+    "",
+    "### Do",
+    "",
+    ...brandUsage.do.map((item) => `- ${item}`),
+    "",
+    "### Don't",
+    "",
+    ...brandUsage.dont.map((item) => `- ${item}`),
+    "",
+    brandTerms,
+    "",
+    `Something you want to do isn't covered here? Email ${brandEmail}.`,
+    "",
+  ].join("\n");
+}
+
 function llmsBrandSection(): string {
   return [
     "## Brand and press kit",
     "",
-    `Logos, mascot, screenshots, ad banners and usage rules: ${siteUrl}/brand/. Every file with its URL and size: ${siteUrl}/brand/brand.json. Everything in one zip: ${brandKit.href}`,
+    `Logos, mascot, screenshots, ad banners and usage rules: ${siteUrl}/brand/. The same page as Markdown: ${siteUrl}/brand/brand.md. Every file with its URL and size: ${siteUrl}/brand/brand.json. Everything in one zip: ${brandKit.href}`,
     "",
-    `- Name: ${brandName.rule} Not ${brandName.wrong.join(", ")}. "Construct" alone also means ${brandName.collides.join(" and ")}.`,
+    `- Name: ${brandName.rule} Not ${brandName.wrong.slice(0, -1).join(", ")} or ${brandName.wrong.at(-1)}. "Construct" alone also means ${brandName.collides.join(" and ")}.`,
     `- Description: ${boilerplate}`,
     `- Category: ${brandFacts.find((fact) => fact.label === "Category")!.value}.`,
     `- Pricing: ${brandFacts.find((fact) => fact.label === "Pricing")!.value}.`,
@@ -514,6 +733,7 @@ export const crawlerFiles = {
   "llms.txt": llmsIndex(),
   "llms-full.txt": llmsFull(),
   "brand/brand.json": `${JSON.stringify(brandCatalog(), null, 2)}\n`,
+  "brand/brand.md": brandMarkdown(),
   ".well-known/security.txt": `Contact: mailto:security@construct.computer\nExpires: 2027-07-26T00:00:00.000Z\nPreferred-Languages: en\nCanonical: ${siteUrl}/.well-known/security.txt\n`,
   // RFC 9727 discovery: the catalog names the API, the OpenAPI document
   // describes it, and the HTML page documents it for humans. `_headers` serves

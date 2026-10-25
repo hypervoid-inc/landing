@@ -29,6 +29,19 @@ describe("brand page", () => {
     expect(missing).toEqual([]);
   });
 
+  // Markdown converters, Cloudflare's included, drop <header> as chrome.
+  it("keeps the downloads where Markdown converters read them", () => {
+    const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
+    expect(main).not.toContain("<header");
+    for (const href of [
+      brandKit.href,
+      "/brand/brand.md",
+      "/brand/brand.json",
+    ]) {
+      expect(main).toContain(`href="${href}"`);
+    }
+  });
+
   it("shows no tracked uppercase labels", () => {
     const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
     expect(main).not.toMatch(/uppercase tracking-/);

@@ -110,6 +110,19 @@
 /brand/brand.json
   Access-Control-Allow-Origin: *
 
+# The brand page as Markdown, written by `pnpm generate:content`. Cloudflare
+# already turns the HTML into Markdown for agents that ask for it; this file
+# is the version written for them, so the page and its headers point here.
+# The canonical keeps search on the page itself. Scoped to `/brand/` exactly,
+# for the reason given at `/` above.
+/brand/
+  Link: </brand/brand.md>; rel="alternate"; type="text/markdown"
+  Link: </brand/brand.json>; rel="alternate"; type="application/json"
+
+/brand/brand.md
+  Access-Control-Allow-Origin: *
+  Link: <https://construct.computer/brand/>; rel="canonical"
+
 https://landing-new-9q7.pages.dev/*
   X-Robots-Tag: noindex, nofollow
 
