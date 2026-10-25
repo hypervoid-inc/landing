@@ -6,6 +6,7 @@ import {
 import { listedAuthors, type Author } from "../content/authors";
 import { tools } from "../content/tools";
 import { useCases } from "../content/use-cases";
+import { BRAND_UPDATED } from "../content/brand";
 import { siteUrl } from "../../shared/site";
 
 export { siteUrl };
@@ -254,12 +255,14 @@ function buildRoutes(
     }),
     route({
       path: "/brand",
-      title: "Brand Assets and Press Kit - Construct Computer",
-      displayTitle: "Brand assets",
+      title: "Logo, Brand Assets and Press Kit - Construct Computer",
+      // The social title carries the name: a card that says only "Brand
+      // assets" could be anyone's once it is shared without the URL.
+      displayTitle: "Construct Computer brand assets",
       description:
-        "Download Construct Computer logos, mascot and screenshots as SVG and PNG, with colors, naming rules and approved descriptions for press, partners and directories.",
+        "Official Construct Computer logos as SVG and PNG, plus the mascot, screenshots, colors, naming rules and approved copy for press, partners and directories.",
       kind: "page",
-      lastModified: "2026-10-25",
+      lastModified: BRAND_UPDATED,
     }),
     route({
       path: "/editorial-policy",

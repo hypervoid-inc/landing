@@ -1,5 +1,6 @@
 import type { MetaDescriptor } from "react-router";
 import {
+  BRAND_UPDATED,
   brandDescriptions,
   brandEmail,
   brandGroups,
@@ -177,8 +178,24 @@ function brandPageJsonLd(route: CanonicalRoute): JsonLd {
     url: route.canonical,
     name: displayTitle(route),
     description: route.description,
+    inLanguage: "en-US",
+    dateModified: BRAND_UPDATED,
     isPartOf: { "@id": `${siteUrl}/#website` },
     about: organization,
+    // The page again as Markdown and as data, for agents that read the
+    // graph rather than the HTML.
+    encoding: [
+      {
+        "@type": "MediaObject",
+        contentUrl: `${siteUrl}/brand/brand.md`,
+        encodingFormat: "text/markdown",
+      },
+      {
+        "@type": "MediaObject",
+        contentUrl: `${siteUrl}/brand/brand.json`,
+        encodingFormat: "application/json",
+      },
+    ],
     mainEntity: {
       "@type": "ItemList",
       itemListElement: brandGroups
@@ -484,6 +501,7 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
     { name: "twitter:title", content: displayTitle(route) },
     { name: "twitter:description", content: route.description },
     { name: "twitter:image", content: route.image },
+    { name: "twitter:image:alt", content: displayTitle(route) },
     { "script:ld+json": jsonLdDocument(routeJsonLd(route)) as never },
   ];
 }
