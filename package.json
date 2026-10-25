@@ -8,6 +8,9 @@
   },
   "scripts": {
     "blog:text": "node scripts/blog-text.mjs",
+    "brand": "node scripts/brand-sync.mjs",
+    "brand:art": "node scripts/brand-art.mjs",
+    "brand:check": "node scripts/brand-check.mjs",
     "build": "pnpm generate:content && react-router build && node scripts/finalize-build.mjs",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
     "deck:links": "node scripts/deck-links.mjs",

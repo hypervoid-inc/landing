@@ -2956,6 +2956,36 @@ export const pageCards: Record<string, OgCard> = {
       ],
     },
   },
+  brand: {
+    title: "Logos, mascot and *the rules*",
+    deck: "Every file in one zip, free to use when you write about us.",
+    figure: {
+      kind: "checklist",
+      title: "Using the Construct brand",
+      items: [
+        {
+          text: "Use the files from the brand page",
+          mark: "yes",
+        },
+        {
+          text: "Construct Computer, then *Construct*",
+          mark: "yes",
+        },
+        {
+          text: "Navy on light, white on dark",
+          mark: "yes",
+        },
+        {
+          text: "Stretch, recolor or rotate the mark",
+          mark: "no",
+        },
+        {
+          text: "Suggest that we endorse you",
+          mark: "no",
+        },
+      ],
+    },
+  },
   careers: {
     title: "No open roles, *send your work anyway*",
     deck: "A small, remote team with a low meeting load.",

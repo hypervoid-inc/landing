@@ -200,6 +200,11 @@ export function AffiliatesPage() {
           the link, and earn on every conversion for the first year of that
           subscription.
         </p>
+        <p>
+          Logos, screenshots, ready-to-post copy, a disclosure line and ad
+          banners are on the{" "}
+          <InlineLink href="/brand/#partners">brand page</InlineLink>.
+        </p>
       </Section>
 
       <Section title="How to join">

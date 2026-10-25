@@ -92,6 +92,9 @@ type AnalyticsEvent =
   // away (copy, download). Never the content: the tools sit inside
   // `ph-no-capture` so what people type stays out of analytics and replay.
   | "tool_output_used"
+  // The brand page at /brand/. `asset` is a file id from app/content/brand.ts
+  // (or "kit", or a mascot role) and `action` is "download" or "copy".
+  | "brand_asset_used"
   // Night Shift, the playable show inside an X post (/embed/). `src` is the
   // post slug from the player URL, `framed` whether X rendered it and `beat`
   // names the moment; never a name, an email or what was typed.

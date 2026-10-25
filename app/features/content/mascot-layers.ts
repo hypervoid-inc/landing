@@ -64,14 +64,19 @@ const EYEWEAR: ReadonlySet<MascotLayer> = new Set([
 ]);
 const EYEWEAR_NUDGE_Y = 0.03;
 
+/** Where a layer is drawn in its square, as fractions, nudges applied. */
+export function mascotLayerRect(name: MascotLayer) {
+  const rect = MASCOT_LAYERS[name];
+  return { ...rect, y: rect.y + (EYEWEAR.has(name) ? EYEWEAR_NUDGE_Y : 0) };
+}
+
 /** Absolute placement for a layer inside a square, positioned parent. */
 export function mascotLayerStyle(name: MascotLayer): CSSProperties {
-  const rect = MASCOT_LAYERS[name];
-  const y = rect.y + (EYEWEAR.has(name) ? EYEWEAR_NUDGE_Y : 0);
+  const rect = mascotLayerRect(name);
   return {
     position: "absolute",
     left: `${rect.x * 100}%`,
-    top: `${y * 100}%`,
+    top: `${rect.y * 100}%`,
     width: `${rect.w * 100}%`,
     height: `${rect.h * 100}%`,
     maxWidth: "none",

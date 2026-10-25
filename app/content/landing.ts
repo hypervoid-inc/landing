@@ -308,6 +308,7 @@ export const companyLinks = [
   ["Blog", "/blog/"],
   ["About", "/about/"],
   ["Affiliates", "/partner/"],
+  ["Brand", "/brand/"],
   ["Editorial Policy", "/editorial-policy/"],
   ["Careers", "/careers/"],
   ["Support", "/support/"],

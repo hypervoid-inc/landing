@@ -1,5 +1,6 @@
 import { expect, test, type Page, type Route } from "@playwright/test";
 
+import { brandKit } from "../app/content/brand";
 import { directoryListings } from "../app/content/directory-listings";
 import { pricingPlans } from "../app/content/landing";
 import { SUB_PROCESSORS } from "../app/content/sub-processors";
@@ -424,6 +425,57 @@ test("narrows the sub-processor list as you search", async ({ page }) => {
   await expect(rows).toHaveCount(SUB_PROCESSORS.length);
 });
 
+// Partners and directories are sent to /brand/: every thumbnail has to be in
+// the repo, every jump link has to land, and the mascot maker has to dress
+// the mascot without a network round trip.
+test("shows every brand thumbnail and dresses the mascot", async ({
+  page,
+  request,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/brand/");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Brand" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /Download everything/ }),
+  ).toHaveAttribute("href", brandKit.href);
+
+  for (const id of ["logo", "mascot", "screenshots", "copy", "usage"]) {
+    await expect(page.locator(`section#${id}`)).toHaveCount(1);
+  }
+
+  // Every preview is lazy, so ask the server for each one instead of
+  // scrolling the whole page to make the browser fetch them. The mascot
+  // maker's preview is on the CDN, which `pnpm brand:check` covers.
+  const sources = await page.$$eval("main img", (nodes) =>
+    nodes
+      .map((node) => node.getAttribute("src")!)
+      .filter((src) => src.startsWith("/")),
+  );
+  expect(sources.length).toBeGreaterThan(30);
+  for (const src of new Set(sources)) {
+    const response = await request.get(src);
+    expect(response.status(), src).toBe(200);
+    expect(response.headers()["content-type"], src).toMatch(/^image\//);
+  }
+
+  const maker = page.getByRole("img", { name: /The Construct mascot/ });
+  await maker.scrollIntoViewIfNeeded();
+  // Every combination is one assembled file on the CDN; Support to start.
+  await expect(maker.locator("img")).toHaveAttribute(
+    "src",
+    /construct-mascot-support-construct\.webp$/,
+  );
+  // The radio itself is visually hidden; its label takes the click.
+  await page.getByText("Developer", { exact: true }).click();
+  await expect(maker.locator("img")).toHaveAttribute(
+    "src",
+    /construct-mascot-developer-construct\.webp$/,
+  );
+  await expect(maker).toHaveAttribute("aria-label", /developer/);
+});
+
 test("returns a real 404 for unknown URLs", async ({ request }) => {
   const response = await request.get("/definitely-not-a-page", {
     maxRedirects: 0,
@@ -520,7 +572,8 @@ test("keeps the snoring footer mascot inside a phone's width", async ({
   await expect(page.locator(".footer-mascot-snore span")).toHaveCount(3);
   const widths = await page.evaluate(() => {
     for (const animation of document.getAnimations()) {
-      if ((animation as CSSAnimation).animationName !== "footer-mascot-z") continue;
+      if ((animation as CSSAnimation).animationName !== "footer-mascot-z")
+        continue;
       animation.pause();
       animation.currentTime = 2999;
     }

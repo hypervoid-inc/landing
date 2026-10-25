@@ -10,6 +10,7 @@ export default [
   route("about", "routes/about.tsx"),
   route("careers", "routes/careers.tsx"),
   route("partner", "routes/partner.tsx"),
+  route("brand", "routes/brand.tsx"),
   route("editorial-policy", "routes/editorial-policy.tsx"),
   route("support", "routes/support.tsx"),
   route("privacy", "routes/privacy.tsx"),

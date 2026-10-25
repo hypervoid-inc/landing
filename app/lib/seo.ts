@@ -1,4 +1,10 @@
 import type { MetaDescriptor } from "react-router";
+import {
+  brandDescriptions,
+  brandEmail,
+  brandGroups,
+  brandName,
+} from "../content/brand";
 import { landingFaq } from "../content/landing";
 import { getResourceFaqs, type FaqItem } from "../content/faqs";
 import { getTool, tools } from "../content/tools";
@@ -86,7 +92,8 @@ function editorialAuthor(route: CanonicalRoute): Author {
  * Official profiles Google can tie back to the company. Each one must be
  * ours and point at construct.computer, or the entity match gets weaker.
  */
-const productHuntUrl = "https://www.producthunt.com/products/construct-computer";
+const productHuntUrl =
+  "https://www.producthunt.com/products/construct-computer";
 
 const officialProfiles = [
   "https://x.com/use_construct",
@@ -97,13 +104,19 @@ const officialProfiles = [
   "https://discord.gg/puArEQHYN9",
 ];
 
+/** The one description every listing, schema node and crawler file repeats. */
+const boilerplate = (id: string) =>
+  brandDescriptions.find((entry) => entry.id === id)!.text;
+
 export function organizationJsonLd(): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
-    name: "Construct Computer",
-    alternateName: ["Construct", "Construct AI", "construct.computer"],
+    name: brandName.full,
+    // Only names in real use. "Construct AI" is on nobody's listing, and
+    // teaching it to search engines would only blur the entity.
+    alternateName: [brandName.short, brandName.domain],
     foundingDate: "2026-06-30",
     founder: founders.map((author) => ({
       "@type": "Person",
@@ -113,9 +126,9 @@ export function organizationJsonLd(): JsonLd {
       url: new URL(author.profileUrl, siteUrl).toString(),
       sameAs: authorSameAs(author),
     })),
-    description:
-      "Construct Computer builds AI agents for startups and small teams: research, outreach, ops and reporting. Each agent works like a hire, with its own role, tools, memory, and a persistent cloud workspace.",
+    description: boilerplate("listing"),
     url: siteUrl,
+    email: brandEmail,
     logo: {
       "@type": "ImageObject",
       url: `${siteUrl}/icon-512.png`,
@@ -136,8 +149,63 @@ export function organizationJsonLd(): JsonLd {
         email: "enterprise@construct.computer",
         availableLanguage: "English",
       },
+      {
+        "@type": "ContactPoint",
+        contactType: "press",
+        email: brandEmail,
+        url: `${siteUrl}/brand/`,
+        availableLanguage: "English",
+      },
     ],
     sameAs: officialProfiles,
+  };
+}
+
+/**
+ * The brand page as a collection of licensable images: every file on it as
+ * an `ImageObject` with the terms on the page as its licence, which is what
+ * Google asks for before it marks an image licensable and what answer
+ * engines read to credit the logo to its owner. No FAQPage: Google stopped
+ * showing FAQ rich results in May 2026.
+ */
+function brandPageJsonLd(route: CanonicalRoute): JsonLd {
+  const organization = { "@id": `${siteUrl}/#organization` };
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${route.canonical}#collection`,
+    url: route.canonical,
+    name: displayTitle(route),
+    description: route.description,
+    isPartOf: { "@id": `${siteUrl}/#website` },
+    about: organization,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: brandGroups
+        .flatMap((group) => group.assets.map((asset) => ({ group, asset })))
+        .map(({ group, asset }, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "ImageObject",
+            name: `${brandName.full} ${group.title.toLowerCase()}, ${asset.name.toLowerCase()}`,
+            ...(asset.use ? { description: asset.use } : {}),
+            contentUrl: `${siteUrl}${asset.preview}`,
+            thumbnailUrl: `${siteUrl}${asset.preview}`,
+            url: asset.files[0]!.href,
+            encodingFormat: asset.files.map(
+              (file) =>
+                `image/${file.format === "JPG" ? "jpeg" : file.format.toLowerCase()}${file.format === "SVG" ? "+xml" : ""}`,
+            ),
+            license: `${route.canonical}#usage`,
+            acquireLicensePage: route.canonical,
+            creditText: brandName.full,
+            copyrightNotice: brandName.full,
+            creator: organization,
+            copyrightHolder: organization,
+          },
+        })),
+    },
   };
 }
 
@@ -158,9 +226,8 @@ export function softwareApplicationJsonLd(): JsonLd {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "@id": `${siteUrl}/#software`,
-    name: "Construct Computer",
-    description:
-      "Construct Computer is an AI agent platform for startups and small teams. Each agent gets a persistent cloud workspace with files, memory, a browser, a terminal, email, schedules, and connected apps, so it can finish research, outreach, ops and reporting work on its own.",
+    name: brandName.full,
+    description: boilerplate("short"),
     applicationCategory: "ProductivityApplication",
     applicationSubCategory: "AI agent platform",
     operatingSystem: "Web",
@@ -246,6 +313,8 @@ export function routeJsonLd(route: CanonicalRoute): JsonLd[] {
   if (route.kind === "pricing") {
     values.push(faqPageJsonLd(landingFaq));
   }
+
+  if (route.path === "/brand") values.push(brandPageJsonLd(route));
 
   if (route.kind === "tool-index") {
     values.push({

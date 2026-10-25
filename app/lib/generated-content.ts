@@ -5,6 +5,34 @@ import { resourceEntries } from "../content/resources";
 import { getResourceFaqs } from "../content/faqs";
 import { landingFaq } from "../content/landing";
 import { tools } from "../content/tools";
+import {
+  BRAND_UPDATED,
+  brandCaptions,
+  brandDescriptions,
+  brandDisclosure,
+  brandEmailTemplate,
+  brandFacts,
+  brandFaq,
+  brandFeatures,
+  brandTaglines,
+  brandColors,
+  brandEmail,
+  brandGroups,
+  brandKit,
+  brandName,
+  brandTerms,
+  brandTypefaces,
+  brandVideos,
+  brandDocument,
+  BRAND_CDN,
+  kitMascots,
+  mascotCombos,
+  mascotRoles,
+  mascotTints,
+  YOUTUBE_CHANNEL,
+  youtubeEmbed,
+  youtubeUrl,
+} from "../content/brand";
 import type { CanonicalRoute } from "./route-manifest";
 import { canonicalRoutes, siteUrl } from "./route-manifest";
 import {
@@ -123,8 +151,14 @@ function atomXml(): string {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom">\n  <title>Construct Computer Blog</title>\n  <id>${siteUrl}/blog/</id>\n  <link href="${siteUrl}/atom.xml" rel="self"/>\n  <updated>${updated}T00:00:00Z</updated>\n${entries}\n</feed>\n`;
 }
 
-const summary =
-  "Construct Computer (construct.computer) builds AI agents for startups and small teams: research, outreach, ops and reporting. Each agent works like a hire, with its own role, tools, and a persistent cloud workspace, so work finishes while you are away.";
+/** The brand page's 160-character description, the one every listing gets. */
+const boilerplate = brandDescriptions.find(
+  (entry) => entry.id === "listing",
+)!.text;
+const summary = boilerplate.replace(
+  `${brandName.full} is`,
+  `${brandName.full} (${brandName.domain}) is`,
+);
 
 const capabilities = [
   "Persistent files, inspectable memory, native email, schedules, and linear workflows",
@@ -180,6 +214,109 @@ function llmsToolsFull(): string[] {
   ]);
 }
 
+/**
+ * `/brand/brand.json`: the brand page as data, so an agent writing about or
+ * listing Construct can pick the right file without scraping the page.
+ */
+export function brandCatalog() {
+  const absolute = (href: string) =>
+    href.startsWith("/") ? `${siteUrl}${href}` : href;
+  return {
+    name: brandName.full,
+    shortName: brandName.short,
+    domain: brandName.domain,
+    avoid: brandName.wrong,
+    updated: BRAND_UPDATED,
+    page: `${siteUrl}/brand/`,
+    kit: brandKit.href,
+    document: {
+      name: brandDocument.name,
+      filename: brandDocument.filename,
+      url: brandDocument.href,
+      use: brandDocument.use,
+    },
+    contact: brandEmail,
+    colors: brandColors.map(({ name, hex, use }) => ({ name, hex, use })),
+    typefaces: brandTypefaces.map(({ name, use, href }) => ({
+      name,
+      use,
+      ...(href ? { url: href } : {}),
+    })),
+    taglines: brandTaglines,
+    description: Object.fromEntries(
+      brandDescriptions.map(({ id, text, fits, max }) => [
+        id,
+        { text, fits, ...(max ? { max } : {}) },
+      ]),
+    ),
+    features: brandFeatures,
+    facts: brandFacts.map(({ label, value, href }) => ({
+      label,
+      value,
+      ...(href ? { url: absolute(href) } : {}),
+    })),
+    faq: brandFaq,
+    assets: brandGroups.flatMap((group) =>
+      group.assets.map((asset) => ({
+        id: asset.id,
+        group: group.id,
+        name: `${group.title}, ${asset.name}`,
+        ...(asset.use ? { use: asset.use } : {}),
+        background: asset.plate,
+        preview: `${siteUrl}${asset.preview}`,
+        files: asset.files.map((file) => ({
+          format: file.format.toLowerCase(),
+          url: file.href,
+          width: file.width,
+          height: file.height,
+        })),
+      })),
+    ),
+    videos: {
+      channel: YOUTUBE_CHANNEL,
+      list: brandVideos.map((video) => ({
+        title: video.title,
+        url: youtubeUrl(video),
+        embed: youtubeEmbed(video),
+      })),
+    },
+    mascots: {
+      download: `${BRAND_CDN}/mascot/construct-mascot-{role}-{color}.png and -{color}-happy.png`,
+      preview: `${siteUrl}/brand/mascot/construct-mascot-{role}-{color}.webp`,
+      roles: mascotRoles.map(({ id, label }) => ({ id, label })),
+      colors: mascotTints.map(({ id, swatch }) => ({ id, hex: swatch })),
+      count: mascotCombos.length,
+      inKit: `${kitMascots.length} files: every role in the construct color, both eye styles`,
+    },
+    partners: {
+      page: `${siteUrl}/partner/`,
+      disclosure: brandDisclosure,
+      posts: brandCaptions.map(({ id, label, text, fits }) => ({
+        id,
+        label,
+        fits,
+        text,
+      })),
+      email: brandEmailTemplate,
+    },
+    terms: brandTerms,
+  };
+}
+
+function llmsBrandSection(): string {
+  return [
+    "## Brand and press kit",
+    "",
+    `Logos, mascot, screenshots, ad banners and usage rules: ${siteUrl}/brand/. Every file with its URL and size: ${siteUrl}/brand/brand.json. Everything in one zip: ${brandKit.href}`,
+    "",
+    `- Name: ${brandName.rule} Not ${brandName.wrong.join(", ")}. "Construct" alone also means ${brandName.collides.join(" and ")}.`,
+    `- Description: ${boilerplate}`,
+    `- Category: ${brandFacts.find((fact) => fact.label === "Category")!.value}.`,
+    `- Pricing: ${brandFacts.find((fact) => fact.label === "Pricing")!.value}.`,
+    "",
+  ].join("\n");
+}
+
 function llmsIndex(): string {
   const pages = canonicalRoutes
     .map(
@@ -187,7 +324,7 @@ function llmsIndex(): string {
         `- [${route.displayTitle ?? route.title}](${route.canonical}): ${route.description}`,
     )
     .join("\n");
-  return `# Construct Computer\n\n> ${summary}\n\n${llmsToolsSection()}\n## Pages\n${pages}\n`;
+  return `# Construct Computer\n\n> ${summary}\n\n${llmsToolsSection()}\n${llmsBrandSection()}\n## Pages\n${pages}\n`;
 }
 
 /**
@@ -376,6 +513,7 @@ export const crawlerFiles = {
   ].join("\n"),
   "llms.txt": llmsIndex(),
   "llms-full.txt": llmsFull(),
+  "brand/brand.json": `${JSON.stringify(brandCatalog(), null, 2)}\n`,
   ".well-known/security.txt": `Contact: mailto:security@construct.computer\nExpires: 2027-07-26T00:00:00.000Z\nPreferred-Languages: en\nCanonical: ${siteUrl}/.well-known/security.txt\n`,
   // RFC 9727 discovery: the catalog names the API, the OpenAPI document
   // describes it, and the HTML page documents it for humans. `_headers` serves

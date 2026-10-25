@@ -124,7 +124,9 @@ export function ogName(path: string): string {
 export function routeDisplayTitle(route: CanonicalRoute): string {
   return (
     route.displayTitle ??
-    route.title.replace(" - Construct Computer", "").replace(" | Construct", "")
+    route.title
+      .replace(" - Construct Computer", "")
+      .replace(" | Construct Computer", "")
   );
 }
 
@@ -249,6 +251,15 @@ function buildRoutes(
         "Partner with Construct. First 25 affiliates earn 50% of referred revenue for up to 12 months; then the rate drops to 20%. Apply via PartnerStack.",
       kind: "page",
       lastModified: siteRevised,
+    }),
+    route({
+      path: "/brand",
+      title: "Brand Assets and Press Kit - Construct Computer",
+      displayTitle: "Brand assets",
+      description:
+        "Download Construct Computer logos, mascot and screenshots as SVG and PNG, with colors, naming rules and approved descriptions for press, partners and directories.",
+      kind: "page",
+      lastModified: "2026-10-25",
     }),
     route({
       path: "/editorial-policy",
