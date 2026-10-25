@@ -25,7 +25,12 @@ import process from "node:process";
 import sharp from "sharp";
 
 import { figmaDeck } from "../app/features/deck/slides.figma.ts";
-import { deckSlides, slideDetails, SLIDE_HEIGHT, SLIDE_WIDTH } from "../app/features/deck/slides.ts";
+import {
+  deckSlides,
+  slideDetails,
+  SLIDE_HEIGHT,
+  SLIDE_WIDTH,
+} from "../app/features/deck/slides.ts";
 import { DECK_PDF_PATH } from "../shared/deck-schema.ts";
 import { buildDeckAssets } from "./deck/assets.mjs";
 import {
@@ -81,12 +86,19 @@ async function main() {
   const found = slidesFromFile(file);
   for (const slide of found) {
     if (slide.width !== SLIDE_WIDTH || slide.height !== SLIDE_HEIGHT) {
-      throw new Error(`Slide ${slide.id} is ${slide.width}x${slide.height}; the site expects ${SLIDE_WIDTH}x${SLIDE_HEIGHT}.`);
+      throw new Error(
+        `Slide ${slide.id} is ${slide.width}x${slide.height}; the site expects ${SLIDE_WIDTH}x${SLIDE_HEIGHT}.`,
+      );
     }
   }
 
   console.log(`Rendering ${found.length} slides...`);
-  const urls = await exportUrls({ api, fileKey, token, ids: found.map((slide) => slide.id) });
+  const urls = await exportUrls({
+    api,
+    fileKey,
+    token,
+    ids: found.map((slide) => slide.id),
+  });
   const work = await mkdtemp(path.join(os.tmpdir(), "deck-sync-"));
   const files = [];
   const next = [];
@@ -95,9 +107,14 @@ async function main() {
       const png = await download(urls[slide.id]);
       const { width, height } = await sharp(png).metadata();
       if (width !== SLIDE_WIDTH * 2 || height !== SLIDE_HEIGHT * 2) {
-        throw new Error(`Figma rendered slide ${slide.id} at ${width}x${height}, not ${SLIDE_WIDTH * 2}x${SLIDE_HEIGHT * 2}.`);
+        throw new Error(
+          `Figma rendered slide ${slide.id} at ${width}x${height}, not ${SLIDE_WIDTH * 2}x${SLIDE_HEIGHT * 2}.`,
+        );
       }
-      const target = path.join(work, `${String(index + 1).padStart(2, "0")}.png`);
+      const target = path.join(
+        work,
+        `${String(index + 1).padStart(2, "0")}.png`,
+      );
       await writeFile(target, png);
       files.push(target);
       next.push({
@@ -110,11 +127,19 @@ async function main() {
 
     const changes = compareDecks(figmaDeck.slides, next);
     const imageChanged = next
-      .filter((slide) => figmaDeck.slides.some((old) => old.id === slide.id && old.image !== slide.image))
+      .filter((slide) =>
+        figmaDeck.slides.some(
+          (old) => old.id === slide.id && old.image !== slide.image,
+        ),
+      )
       .map((slide) => slide.id);
     const raise = raiseOf(found) ?? figmaDeck.raise;
     const changed =
-      changes.added.length + changes.removed.length + changes.textChanged.length + imageChanged.length > 0 ||
+      changes.added.length +
+        changes.removed.length +
+        changes.textChanged.length +
+        imageChanged.length >
+        0 ||
       changes.reordered ||
       raise !== figmaDeck.raise;
 
@@ -132,16 +157,25 @@ async function main() {
       return 1;
     }
 
-    const version = `${new Date().toISOString().slice(0, 10)}-${createHash("sha256")
+    const version = `${new Date().toISOString().slice(0, 10)}-${createHash(
+      "sha256",
+    )
       .update(next.map((slide) => slide.image).join(""))
       .digest("hex")
       .slice(0, 8)}`;
-    console.log("\nRebuilding the slide images, the PDF and the preview card...");
+    console.log(
+      "\nRebuilding the slide images, the PDF and the preview card...",
+    );
     const slides = deckSlides(next);
     await buildDeckAssets(files, slides);
-    await writeFile(GENERATED, generatedModule({ fileKey, version, raise, slides: next }));
+    await writeFile(
+      GENERATED,
+      generatedModule({ fileKey, version, raise, slides: next }),
+    );
     await verify(next.length);
-    console.log(`\nDone: version ${version}. Review with \`git diff\`, then \`pnpm check\` and deploy.`);
+    console.log(
+      `\nDone: version ${version}. Review with \`git diff\`, then \`pnpm check\` and deploy.`,
+    );
     printNotes(notes);
     return 0;
   } finally {
@@ -153,7 +187,10 @@ async function main() {
 function report({ changes, imageChanged, raise, next }) {
   const title = (id) => {
     const index = next.findIndex((slide) => slide.id === id);
-    const known = slideDetails[id]?.title ?? next[index]?.label ?? figmaDeck.slides.find((s) => s.id === id)?.label;
+    const known =
+      slideDetails[id]?.title ??
+      next[index]?.label ??
+      figmaDeck.slides.find((s) => s.id === id)?.label;
     return `${index >= 0 ? `slide ${index + 1}` : "removed slide"} (${known ?? id})`;
   };
   const lines = [];
@@ -161,15 +198,29 @@ function report({ changes, imageChanged, raise, next }) {
   for (const id of changes.removed) lines.push(`- Gone: ${title(id)}`);
   if (changes.reordered) lines.push("~ The slides are in a new order");
   for (const id of changes.textChanged) {
-    const before = figmaDeck.slides.find((slide) => slide.id === id)?.text ?? "";
+    const before =
+      figmaDeck.slides.find((slide) => slide.id === id)?.text ?? "";
     const after = next.find((slide) => slide.id === id)?.text ?? "";
-    lines.push(before ? `~ Text on ${title(id)}: ${wordDiff(before, after)}` : `~ Text recorded for ${title(id)}`);
+    lines.push(
+      before
+        ? `~ Text on ${title(id)}: ${wordDiff(before, after)}`
+        : `~ Text recorded for ${title(id)}`,
+    );
   }
-  for (const id of imageChanged.filter((id) => !changes.textChanged.includes(id))) {
+  for (const id of imageChanged.filter(
+    (id) => !changes.textChanged.includes(id),
+  )) {
     lines.push(`~ Looks different, same text: ${title(id)}`);
   }
-  if (raise !== figmaDeck.raise) lines.push(`~ The round: ${figmaDeck.raise} is now ${raise} (email and link preview follow)`);
-  console.log(lines.length ? `\nWhat changed in Figma:\n${lines.map((line) => `  ${line}`).join("\n")}` : "\nNothing changed in Figma.");
+  if (raise !== figmaDeck.raise)
+    lines.push(
+      `~ The round: ${figmaDeck.raise} is now ${raise} (email and link preview follow)`,
+    );
+  console.log(
+    lines.length
+      ? `\nWhat changed in Figma:\n${lines.map((line) => `  ${line}`).join("\n")}`
+      : "\nNothing changed in Figma.",
+  );
 }
 
 /** What only a person can settle in slides.ts. */
@@ -179,21 +230,35 @@ function review(found, next) {
     const details = slideDetails[slide.id];
     const where = `slide ${index + 1} (${details?.title ?? next[index].label ?? slide.id})`;
     if (!details) {
-      notes.push(`${where} has no entry in slideDetails; it's titled "${next[index].label ?? `Slide ${index + 1}`}" for now.`);
+      notes.push(
+        `${where} has no entry in slideDetails; it's titled "${next[index].label ?? `Slide ${index + 1}`}" for now.`,
+      );
     }
-    const videos = [...(details?.videos ?? [])].sort((a, b) => a.box.x - b.box.x);
+    const videos = [...(details?.videos ?? [])].sort(
+      (a, b) => a.box.x - b.box.x,
+    );
     if (slide.embeds.length !== videos.length) {
-      notes.push(`${where} has ${slide.embeds.length} video${slide.embeds.length === 1 ? "" : "s"} in Figma and ${videos.length} in slideDetails.`);
+      notes.push(
+        `${where} has ${slide.embeds.length} video${slide.embeds.length === 1 ? "" : "s"} in Figma and ${videos.length} in slideDetails.`,
+      );
     } else {
       videos.forEach((video, i) => {
         const box = slide.embeds[i].box;
-        const off = ["x", "y", "w", "h"].some((key) => Math.abs(video.box[key] - box[key]) > DRIFT);
-        if (off) notes.push(`${where}: the ${video.name} video moved in Figma; set its box to ${JSON.stringify(box)}.`);
+        const off = ["x", "y", "w", "h"].some(
+          (key) => Math.abs(video.box[key] - box[key]) > DRIFT,
+        );
+        if (off)
+          notes.push(
+            `${where}: the ${video.name} video moved in Figma; set its box to ${JSON.stringify(box)}.`,
+          );
       });
     }
     const played = new Set(videos.map((video) => video.youtubeId));
     for (const id of youtubeIdsOf(slide.texts)) {
-      if (!played.has(id)) notes.push(`${where} links youtu.be/${id}, which slideDetails doesn't play.`);
+      if (!played.has(id))
+        notes.push(
+          `${where} links youtu.be/${id}, which slideDetails doesn't play.`,
+        );
     }
   }
   return notes;
@@ -201,19 +266,30 @@ function review(found, next) {
 
 function printNotes(notes) {
   if (!notes.length) return;
-  console.log(`\nFor a person, in app/features/deck/slides.ts:\n${notes.map((note) => `  - ${note}`).join("\n")}`);
+  console.log(
+    `\nFor a person, in app/features/deck/slides.ts:\n${notes.map((note) => `  - ${note}`).join("\n")}`,
+  );
 }
 
 /** Reads back what was written: every image, a page per slide in the PDF, the card. */
 async function verify(count) {
-  const names = (await readdir(ASSETS)).filter((name) => name.endsWith(".webp"));
-  if (names.length !== count * 3) throw new Error(`Expected ${count * 3} slide images, found ${names.length}.`);
+  const names = (await readdir(ASSETS)).filter((name) =>
+    name.endsWith(".webp"),
+  );
+  if (names.length !== count * 3)
+    throw new Error(
+      `Expected ${count * 3} slide images, found ${names.length}.`,
+    );
   const pdf = await readFile(path.join(ASSETS, path.basename(DECK_PDF_PATH)));
   const pages = pdf.toString("latin1").match(/\/Type \/Page /g)?.length ?? 0;
-  if (pages !== count) throw new Error(`The PDF has ${pages} pages, not ${count}.`);
+  if (pages !== count)
+    throw new Error(`The PDF has ${pages} pages, not ${count}.`);
   const card = await sharp(await readFile(CARD)).metadata();
-  if (card.width !== 1200 || card.height !== 630) throw new Error(`The preview card is ${card.width}x${card.height}.`);
-  console.log(`Checked: ${names.length} slide images, a ${pages}-page PDF and a 1200x630 preview card.`);
+  if (card.width !== 1200 || card.height !== 630)
+    throw new Error(`The preview card is ${card.width}x${card.height}.`);
+  console.log(
+    `Checked: ${names.length} slide images, a ${pages}-page PDF and a 1200x630 preview card.`,
+  );
 }
 
 function generatedModule({ fileKey, version, raise, slides }) {

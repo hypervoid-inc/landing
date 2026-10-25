@@ -15,7 +15,9 @@ const WEB_PORT = 5173;
 
 if (!existsSync(".dev.vars")) {
   copyFileSync(".dev.vars.example", ".dev.vars");
-  console.log("[dev] wrote .dev.vars from .dev.vars.example (test keys, local only)");
+  console.log(
+    "[dev] wrote .dev.vars from .dev.vars.example (test keys, local only)",
+  );
 }
 
 const migrate = spawnSync(
@@ -76,16 +78,33 @@ run("api", "pnpm", [
   "127.0.0.1",
   // wrangler.jsonc points at the production newsletter list, so local signups
   // and claims would land there. Off unless LISTMONK_LIVE=1 asks for it.
-  ...(process.env.LISTMONK_LIVE === "1" ? [] : ["--binding", "LISTMONK_BASE_URL="]),
+  ...(process.env.LISTMONK_LIVE === "1"
+    ? []
+    : ["--binding", "LISTMONK_BASE_URL="]),
 ]);
-run("web", "pnpm", ["exec", "react-router", "dev", "--host", "127.0.0.1", "--port", String(WEB_PORT)], {
-  SHOW_ALL_POSTS: "1",
-  FUNCTIONS_ORIGIN: `http://127.0.0.1:${FUNCTIONS_PORT}`,
-});
+run(
+  "web",
+  "pnpm",
+  [
+    "exec",
+    "react-router",
+    "dev",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    String(WEB_PORT),
+  ],
+  {
+    SHOW_ALL_POSTS: "1",
+    FUNCTIONS_ORIGIN: `http://127.0.0.1:${FUNCTIONS_PORT}`,
+  },
+);
 
 console.log(`[dev] site      http://localhost:${WEB_PORT}/`);
 console.log(`[dev] live demo http://localhost:${WEB_PORT}/embed/`);
-console.log(`[dev] functions http://127.0.0.1:${FUNCTIONS_PORT}/api/*  (proxied under the site)`);
+console.log(
+  `[dev] functions http://127.0.0.1:${FUNCTIONS_PORT}/api/*  (proxied under the site)`,
+);
 console.log(
   process.env.LISTMONK_LIVE === "1"
     ? "[dev] Listmonk  LIVE: signups go to the production newsletter list"

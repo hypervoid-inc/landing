@@ -21,7 +21,9 @@ if (!source) {
   process.exit(1);
 }
 
-const pngs = (await readdir(source)).filter((name) => /^\d{2}\.png$/.test(name)).sort();
+const pngs = (await readdir(source))
+  .filter((name) => /^\d{2}\.png$/.test(name))
+  .sort();
 if (pngs.length === 0) {
   console.error(`No slides named 01.png, 02.png, ... in ${source}`);
   process.exit(1);
