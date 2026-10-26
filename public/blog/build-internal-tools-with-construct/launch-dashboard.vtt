@@ -1,0 +1,31 @@
+WEBVTT
+
+00:00.000 --> 00:04.000
+Alice asked Engineering to make a launch dashboard. 41 days later, it's still in the backlog.
+
+00:04.000 --> 00:09.000
+Alice asks Construct: make a launch dashboard with signups from PostHog, traffic from Google Analytics and how each X and LinkedIn post did.
+
+00:09.000 --> 00:13.000
+Construct: On it. I'll pull the numbers from your connected apps and build it for the team. It reads 1,284 signups from PostHog and 41,210 visits from Google Analytics.
+
+00:13.000 --> 00:17.000
+Construct starts building the launch dashboard for Fieldnote 2.0, October 10 to October 23.
+
+00:17.000 --> 00:24.000
+It pulls the numbers from the apps you've connected. Signups per day peak on launch day. Signups by channel: X 412, Blog 356, LinkedIn 288, Other 228.
+
+00:24.000 --> 00:28.000
+The finished dashboard shows 1,284 signups, 41,210 visitors, a 3.1% signup rate and X as the best channel. Alice publishes it for the Fieldnote team and copies the link.
+
+00:28.000 --> 00:33.000
+Dana, 9:02 AM: how did launch week go? need numbers for the board meeting. Alice, 9:41 AM: Launch dashboard for the board meeting, it updates on its own.
+
+00:33.000 --> 00:37.000
+Dana's phone shows the Slack message above a 10:00 board meeting, and the dashboard opens on the phone.
+
+00:37.000 --> 00:41.000
+Every team can build the tools it's been waiting for: renewals at risk, onboarding, feature requests, hiring, refunds, spend by team, pipeline by stage and a content calendar.
+
+00:41.000 --> 00:44.850
+Build the tools your team needs. Try it now on construct.computer. #1 Product of the Day on Product Hunt.

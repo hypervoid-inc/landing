@@ -1,41 +1,84 @@
 ---
-title: "How Construct Builds Internal Tools in Your Workspace"
-description: "Turn a repeated process into a private workspace app that Construct can build, validate, debug, and update while preserving the last successful build."
+title: "How to build internal tools with AI in Construct"
+seoTitle: "How to Build Internal Tools With AI | Construct Computer"
+description: "Describe an internal tool in plain English and Construct builds it on live data from PostHog, Google Analytics and more, then shares it with your team."
+pitch: "Describe the tool and Construct builds it on live data from your connected apps, ready to share with your team, from $9 a month."
 published: "2026-07-27"
-updated: "2026-10-01"
+updated: "2026-10-26"
 author: "ankush"
 tags: ["internal-tools", "workspace-apps", "ai-agent", "product"]
 kind: "article"
 draft: false
 ---
 
-Construct builds a private app for your team's repeated process, such as a request tracker, an intake form, a review queue, or a dashboard, inside the same workspace as the agent and files doing the work, from $9 a month. The usual alternatives are a spreadsheet that people copy values between, or a separate hosting project someone has to set up, secure, and maintain.
+**To build an internal tool with AI in Construct, describe the tool in plain English and Construct's agent writes a working app in your workspace, connects it to live data from apps like PostHog and Google Analytics, and opens it for you to try.** You can keep it to yourself, share it with your team, or send a read-only link that opens on any phone. If a later change breaks it, the last working version keeps running while the agent fixes it. Apps come with every plan, from $9 a month.
 
-For founders and small teams, Construct is the faster way to get an internal tool. You describe the job in plain language; the agent writes the app, checks that it builds, and opens it in your desktop. The source stays in your files, permissions are declared up front, and a broken edit never takes the working version offline.
+- **What you get:** a React app with charts, lists and forms, built and checked by the agent and saved in your workspace with its source.
+- **Where the data comes from:** read-only queries to apps in the live integration catalog, such as PostHog, Google Analytics and Gmail, refreshed every 5 to 60 minutes and marked Live while they are current.
+- **Who can open it:** only you at first. Share it with your workspace, or turn on a public link that is view only and kept out of search engines and AI crawlers.
+- **When something breaks:** the last good build stays up, the last 10 versions can be restored, and the agent reads the app's own error logs to repair it.
+- **Where you ask:** in Construct on the web or your phone, or from Slack and Discord, where the agent's reply carries the app's link.
 
-<BetaCta source="blog_top" plan="lite" interval="month">Start with Construct for $9</BetaCta>
+<BetaCta source="blog_top" plan="lite" interval="month">Build your first internal tool</BetaCta>
 
-## Why build it in Construct?
+<figure className="my-8">
+  <ArticleVideo
+    playsInline
+    preload="none"
+    poster="/blog/build-internal-tools-with-construct/launch-dashboard-poster.jpg"
+    width="1600"
+    height="900"
+    aria-label="Construct launch dashboard film"
+    aria-describedby="launch-film-description"
+    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
+  >
+    <source
+      src="/blog/build-internal-tools-with-construct/launch-dashboard.mp4"
+      type="video/mp4"
+    />
+    <track
+      kind="captions"
+      src="/blog/build-internal-tools-with-construct/launch-dashboard.vtt"
+      srcLang="en"
+      label="English"
+    />
+    Your browser does not support this video. The description below explains the
+    film.
+  </ArticleVideo>
+  <figcaption id="launch-film-description" className="mt-3 text-sm leading-6">
+    The 45-second launch film, an illustrated example with a made-up startup
+    called Fieldnote. Alice asked Engineering for a launch dashboard and it sat
+    in the backlog for 41 days, so Alice asks Construct for one with signups
+    from PostHog, traffic from Google Analytics and how each launch post did.
+    Construct reads 1,284 signups and 41,210 visits, builds the dashboard with a
+    3.1% signup rate and signups by channel (X 412, Blog 356, LinkedIn 288,
+    Other 228), and Alice publishes it for the team. Dana asked at 9:02 for
+    numbers for a 10:00 board meeting. At 9:41 Alice replies in Slack with the
+    link, and the dashboard opens on Dana's phone.
+  </figcaption>
+</figure>
 
-- **Describe the process, get the app.** Construct writes the React and TypeScript, validates it, and opens it in the web desktop. No separate hosting project.
-- **It lives beside the work.** Source sits in Files under `Apps/<app-id>/`, and the app's data in `AppData/<app-id>/`, next to the reports and files it tracks.
-- **Least privilege by default.** Each app declares the capabilities, connected apps, and network origins it needs, and other calls are denied at runtime.
-- **The last good build keeps running.** A failed edit never replaces the working app while the agent repairs it.
-- **The agent maintains it.** Construct reads the app's own diagnostics, fixes the source, and validates again when something breaks.
-- **Private to your workspace.** Teammates with access can open it from the desktop, Launchpad, or Spotlight.
+## What counts as an internal tool
 
-## Start with the repeated process
+An internal tool is software your own team uses to run the company: a dashboard of launch numbers, a queue of refund requests, a tracker for renewals at risk, an intake form for design requests. Small teams usually keep these in a spreadsheet or wait for an engineer, because a real app means hosting, sign-in, connecting to the data and someone to fix it when an API changes. That is why the dashboard in the film spent 41 days in a backlog even though it was a few queries and a page of charts.
 
-The best request describes the work rather than prescribing a software architecture. For example:
+Construct takes those jobs off the list. The agent writes the app, Construct hosts it inside your workspace, your connected apps supply the data, and the same agent keeps the app working when you ask for changes. Nobody on the team has to read the code, though it stays in your Files if someone wants to.
 
-- "Build a research request tracker with an owner, priority, status, and link to the finished report."
-- "Turn this recurring launch checklist into an app the team can update."
-- "Create a dashboard for the JSON reports stored in this workspace."
-- "Build an intake form for customer-review requests and keep the queue in one place."
+## How to build an internal tool with AI in Construct
 
-Construct can start from a list, form, dashboard, or blank interface. The agent creates the app package, writes the React and TypeScript source, declares the capabilities it needs, and validates the result. A successful build opens directly in the Construct web desktop instead of sending you to a separate hosting project.
+1. **Ask for the tool.** Say who will use it, what they need to see or do, and where the data lives. If the app holding the data is not connected yet, Construct asks you to connect it.
+2. **The agent looks at the data first.** It runs a few small queries against the source, writes a short brief as the build's checklist, and asks you a question only when two readings of the request would lead to different apps.
+3. **It writes and checks the app.** The agent writes React and TypeScript into `Apps/<app-id>/` in your Files and draws the app an icon. Construct compiles every file on its own servers, checks that imports stay inside the app, and runs a design review that catches problems such as content cut off at the edge or a page that scrolls twice.
+4. **You follow the build in one card.** The chat shows a single card with one line of progress. It ends on Ready with an Open app button, or on Couldn't build with a Fix button that sends the error straight back to the agent.
+5. **The app opens beside the chat that built it.** On a computer it appears next to the conversation; on a phone you tap Open. To change something, say so in the same chat, or point at the part of the app you mean and the agent gets that element in its next message.
 
-The request still matters. "Build an operations dashboard" leaves important choices unresolved. "Show open research requests, let an operator assign an owner, and mark the linked report as reviewed" gives the agent a bounded workflow and a clear way to tell whether the app is useful.
+A good request names the people, the numbers and the sources. This one builds the dashboard from the film for your own launch:
+
+<Prompt label="Launch dashboard">
+
+Build a launch dashboard for our launch from [start date] to [end date]. Show daily signups from PostHog with launch day marked, visitors and traffic sources from Google Analytics, the signup rate, and signups by channel. Add one date range control that every chart follows. Before you finish, check the headline numbers against PostHog's and Google Analytics' own reports.
+
+</Prompt>
 
 <figure className="my-8">
   <ArticleVideo
@@ -45,7 +88,7 @@ The request still matters. "Build an operations dashboard" leaves important choi
     poster="/assets/landing/workflows/apps-poster.jpg"
     width="1440"
     height="960"
-    aria-label="Construct internal app demo"
+    aria-label="Construct building a lead tracker"
     aria-describedby="apps-demo-description"
     className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
   >
@@ -60,103 +103,128 @@ The request still matters. "Build an operations dashboard" leaves important choi
     demo.
   </ArticleVideo>
   <figcaption id="apps-demo-description" className="mt-3 text-sm leading-6">
-    Silent product demo: Construct writing, validating, and publishing a working
-    internal app, then opening it in the product interface.
+    A real screen recording. Asked to "Build me an internal tool for keeping
+    track of leads", Construct builds a lead tracker with statuses, sources and
+    deal values, and two leads are added in the finished app. It was recorded
+    on an earlier version of the chat, before builds moved into a single card.
   </figcaption>
 </figure>
 
-## The app lives beside the work
+## Live data from PostHog, Google Analytics and the rest of your stack
 
-A workspace app is not a hidden artifact. Its source lives under an `Apps/<app-id>/` folder in Files, where it can be inspected and edited. After a successful build, the app appears as a private workspace install that can be reopened from the desktop, Launchpad, or Spotlight.
+An app reads from your connected apps through queries it declares when it is built. A query can only use read-only tools, such as PostHog's query and trend tools, Google Analytics reports or a Gmail search, and Construct rejects one that would change anything. Its settings are typed, like a choice of date ranges, so nobody using the app can rewrite the query underneath. An app can declare up to 12.
 
-The app's durable state is kept separately under `AppData/<app-id>/`. That separation is important: changing the interface does not overwrite the records the app already manages. Rebuilding updates the code while existing app data remains in the workspace and counts against the normal workspace storage quota.
+Results are cached for between 5 and 60 minutes (15 by default) and shared by everyone who opens the app, and an open app fetches again when that window runs out. The Refresh button forces a new read, at most every 30 seconds. Construct draws the status itself: a Live badge when every source refreshed on time, with "Updated 2 min ago" on hover, a warning that names the source when one fails, such as "Can't reach PostHog", and no badge at all when an app has no live data to show.
 
-This model also makes the surrounding agent useful after launch. The same workspace contains the source, relevant files, conversations, and diagnostics. If the interface needs another field or a runtime error appears, the next task starts with the actual app rather than a screenshot and a vague bug report.
+A dashboard is only worth sending to a board if its numbers match the source. Before it finishes a dashboard, the agent compares the headline numbers with the integration's own overview. When we ran Construct's PostHog overview recipe against our own project on October 26, 2026, visitors, pageviews, sessions and bounce rate came out within a few events of PostHog's web analytics.
 
-## What a workspace app can do
+Apps also keep records of their own, such as the items in a refunds queue, saved as JSON in your workspace. When the agent or a teammate changes a record, every window that has the app open updates without a reload.
 
-The runtime is purpose-built for internal tools, which keeps each app close to its workspace job.
+One gap to plan around: Construct does not read X or LinkedIn post analytics, so the film's table of impressions per post is not something it can fill today. If your launch links carry UTM tags, the same table can come from PostHog or Google Analytics, with visits and signups per post.
 
-<ArticleTable caption="What a Construct workspace app supports">
+## Share it with your team, or with a link
 
-| Capability | Workspace-app support |
-| --- | --- |
-| React interface | Yes |
-| TypeScript and TSX | Yes |
-| Read or write workspace files | With declared permission |
-| App-scoped JSON state | With declared Files permission |
-| Call an allowed connected app | With an explicit app allowlist |
-| Make direct network requests | To declared HTTPS origins |
-| Packages | The Construct SDK; arbitrary npm packages are not installed |
-| Terminal and agent orchestration | Run by the agent, not from the app UI |
-| Visibility | Private to your workspace; the public app registry has its own review process |
+Every app starts private. Its creator, or a workspace owner or admin, can open it up in two steps:
+
+<ArticleTable caption="Who can open a Construct app at each sharing level">
+
+| Level | Who can open it | What they can do | Sign-in |
+| --- | --- | --- | --- |
+| Private | You | Everything | Yes |
+| Workspace | Every member of your workspace | Use it, add data and run its actions; a change in a connected app asks them first | Yes |
+| Public link | Anyone with the link | View only | No |
 
 </ArticleTable>
 
-The app UI receives a small Construct SDK for workspace files, app-scoped storage, notifications, window controls, and explicitly permitted calls. It does not inherit every tool available to the agent that authored it. The agent uses broader execution surfaces while building, but the finished interface runs with its own narrower contract.
+Teammates run the creator's latest working build and share one set of app data, so a refund marked done by one person is done for everyone. Editing the app itself stays with the person who built it. A personal workspace offers Private and Public only.
+
+Paste a public link into Slack and it unfurls as a card with the app's icon, name and description and a chip for each live source. Construct draws that card rather than screenshotting the app, so your numbers never end up in a chat's image cache. The link opens on any phone or laptop without an account.
+
+Public links are built to be safe to forward:
+
+- Visitors can only view. The app runs the queries it declared, on the creator's behalf, and nothing typed into the page can be sent anywhere.
+- Before you turn a link on, the share panel names the data it will serve and flags fields that identify people, such as email addresses, so the agent can drop them first.
+- Search engines and AI crawlers are blocked from the page, while link previews in chat apps still work.
+- Turning Public off revokes the link at once, Reset link swaps it for a new one, and workspace owners can switch public links off for everyone.
+- A link that spreads costs one call to each source per refresh window, however many people open it.
 
 <BetaCta source="blog_inline_1" plan="pro" interval="month">Try Construct Pro free for 7 days</BetaCta>
 
-## Permissions are part of the design
+## When the AI gets something wrong
 
-An internal tool should not gain broad access simply because it was generated inside a trusted workspace. A workspace app declares the native capabilities, connected apps, and network origins it intends to use. Calls outside those allowlists are denied at runtime.
+Mistakes are cheap to undo. A change that fails to build never replaces the working app, so your team keeps using the last good version while the agent repairs the new one. Construct keeps the last 10 builds of every app. Undo on the build card or Versions in the app's menu puts an older one back, source and live app together, and leaves the app's data alone. If two builds in a row fail, the card offers Restore instead of another Fix.
 
-The platform also rechecks current workspace membership and permissions when the app makes a gateway call. File operations remain subject to the user's workspace access, and an app cannot use its file access to rewrite another app's package. Direct network access is limited to exact HTTPS origins rather than wildcard domains.
+The agent works from evidence. Every app reports its console, network and runtime errors to Construct, with credentials stripped, and keeps them for seven days. The agent reads them before it changes anything, a crashed app shows an "Ask agent to fix" button, and you can open the same logs in an inspector beside the app. Whoever built an app can download its full source as a zip at any time.
 
-For a request tracker that only reads and writes workspace files, that can mean declaring Files access and nothing else. A tool that posts an approved record to a connected service needs that specific app target as well. The default is the smallest permission set that completes the job.
+## What a Construct app can do, and where it stops
 
-## Validation, then verification
+<ArticleTable caption="What a Construct workspace app supports">
 
-Before launch, Construct checks the package structure and manifest, follows relative imports, enforces package boundaries, compiles the TypeScript and JSX, and reports design findings. A successful validation creates an immutable artifact with a deterministic build ID and opens the app.
+| Capability | Support |
+| --- | --- |
+| Interface | React and TypeScript, up to 32 files |
+| Charts | Line, bar, sparkline, ranked bar lists and stat tiles, with colours checked for colour blindness and a table for screen readers |
+| Live data | Read-only queries to connected apps, up to 12 per app |
+| Saved data | JSON records in your workspace that update live for everyone using the app |
+| Actions in connected apps | Only the apps it declares; in a shared app, teammates approve before it writes for them |
+| AI inside the app | Summarise, draft or extract, and label or score up to 100 items at a time, billed to the workspace owner and turned off on public links |
+| Web requests | Only to the exact HTTPS addresses the app declares |
+| Packages | React and Construct's own libraries; npm packages are not installed |
+| Hosting | Inside your workspace, with nothing to deploy |
 
-Validation proves the package builds under the workspace runtime. Click through the main actions once after a change, especially after changing permissions, storage behavior, or an external call, and Construct helps with the rest: it captures console, network, gateway, and runtime-error diagnostics from workspace apps, inspects recent errors, repairs the source, validates again, and asks you to verify the changed behavior. The loop is closer to maintaining a small internal product than generating a disposable code snippet.
+</ArticleTable>
 
-## Draft changes do not replace the last good build
+Every app declares what it needs, and Construct denies anything else at runtime. A tracker that only keeps its own records gets no access to your connected apps. An app can also draft a message to the agent about itself, but you are the one who sends it, so an app never starts agent work or spends usage on its own.
 
-A successful build becomes the current runtime artifact. Later source edits mark the app as having draft changes, but opening the app continues to run the last successful build until the new source validates.
+The limits are worth knowing before you start. Saved data is key-value JSON, so an app that needs real database queries across thousands of rows is a poor fit for now. Live data refreshes while someone has the app open rather than on a schedule, so the first person to open it after a quiet night sees the last cached numbers until the refresh lands. And a Construct app is for your team: a customer-facing product belongs on its own hosting.
 
-If validation fails, the working artifact is not replaced. Cancelling an edit also leaves both the source and prior build in place. The desktop shows whether an app is ready, has draft changes, or has never built successfully. This is a last-good-build fallback that protects the working tool while a repair is in progress, rather than a browsable history of every build.
+## Internal tools other teams build
 
-## Internal tool or workflow?
+The end of the film shows the kind of tools each team asks for. These are examples of requests, not customer results:
 
-Not every repeated process needs an interface. Use a workspace app when people need to view, enter, filter, or review state. Use a Construct workflow when the main value is running a known sequence of agent steps, connected-app actions, and notifications. Use a scheduled agent job when the process should run in the background without waiting for someone to open a screen.
+- **Customer success:** renewals at risk in the next 60 days, ranked by account health, with a Reach out button.
+- **Product:** feature requests from support and sales calls, ranked by how often they come up, with a status for each.
+- **Finance:** spend by team, month by month.
+- **Sales:** the pipeline by stage, from lead to won.
+- **People:** an onboarding checklist for each new hire and a hiring board.
+- **Support:** a refunds queue where each request is looked up and marked refunded.
+- **Marketing:** a content calendar of posts by week.
 
-The two support the same operation. A workspace app provides the queue and review surface, files hold durable records, and a scheduled job prepares new work. Automation still runs through the execution surfaces and permissions designed for it, so the app UI stays a focused interface.
+<Prompt label="Refunds queue">
 
-## Before you start: where workspace apps fit
+Build a refunds queue for the support team. Each request has the customer's email, order number, amount, reason and a status of new, approved or refunded. Let anyone on the team add a request and change its status, and show the total refunded this month at the top.
 
-Good fits are narrow tools with a clear operator and a durable workspace context:
+</Prompt>
 
-- Intake forms and review queues
-- Checklists for repeated operations
-- Lightweight trackers over workspace records
-- Dashboards for files or app-scoped JSON data
-- Focused interfaces over an explicitly allowed connected service
-- Small utilities that make an existing workflow easier to run and inspect
+## How Construct compares with other ways to build internal tools
 
-A workspace app is an internal interface for one workspace, not a public product. For a customer-facing site, a product that needs the wider npm ecosystem, or a system with its own infrastructure and security controls, keep a dedicated hosting stack, and let Construct build the internal tools around it.
+<ArticleTable caption="Ways to build an internal tool, checked October 26, 2026">
 
-## Already tracking this in a spreadsheet? Move it in 15 minutes
+| Option | Who builds and maintains it | Live data | Sharing | Starting price |
+| --- | --- | --- | --- | --- |
+| Spreadsheet or Notion database | You, by hand | Pasted in, or synced with add-ons | Anyone with edit access | Included in tools you already pay for |
+| Retool | A builder on your team, in a visual editor | Databases and APIs you connect | People with a seat on your plan | $10 per builder and $5 per internal user a month, billed annually ([pricing](https://retool.com/pricing)) |
+| Lovable | AI from a chat, published by you | Lovable Cloud or a backend you connect | Publish the app | Priced by credits, with unlimited members ([pricing](https://lovable.dev/pricing)) |
+| Coding agents such as Claude Code or Cursor | AI writes the code, your engineers host and maintain it | Whatever your engineers wire up | Your own deployment | Depends on each vendor's plan |
+| Construct | Construct's agent builds and maintains it inside your workspace | Read-only queries to connected apps, marked Live | Private, workspace, or a public read-only link | $9 a month, with no per-seat fee |
 
-1. **Start on Lite for $9, or take the 7-day Pro trial.**
-2. **Upload the spreadsheet or checklist** you use today to the workspace.
-3. **Describe the app:** the records it manages, the actions an operator takes, and what "done" looks like.
-4. **Open the first build and use it** on real records; ask for the missing field or the clearer status.
-5. **Pair it with a schedule** if new items should be prepared automatically, using one of your Calendar tasks.
+</ArticleTable>
 
-There is no import wizard: Construct reads the file you upload and builds the app around it.
+Construct fits a small team without a spare engineer that wants a tool on data it already has in PostHog, Google Analytics or another connected app, shared with the team in Slack the same day. Another option is the better pick in some cases. Use Retool when engineers are building tools on your own production database for a large internal user base. Use Lovable or a coding agent when the app is a product your customers will use. A spreadsheet is still fine when one person tracks a few rows.
 
-## Which should you choose?
+## Which plan to start on
 
-Choose Construct for small internal tools. It starts at $9 a month, builds the app from a plain-language description, keeps it private to your workspace with declared permissions, and protects the working build while it improves the next one.
+Apps come with every plan, and team workspaces have no per-seat fee, since usage comes from the owner's plan. A tool with several data sources is a long task, though, and plans cap the steps the agent can take per task: Lite ($9 a month) allows 50, Starter ($59) allows 150 and Pro ($299) allows 1,000. A simple tracker fits on Lite. For a dashboard across two or three sources, the 7-day Pro trial gives the first build room to check its numbers and finish. Plan details are on the [pricing page](/pricing/).
 
-<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+## How we checked this
 
-Give Construct the process your team tracks in a spreadsheet today, such as research requests or review queues: name the records, the actions an operator takes, and the files it may read, then ask for the smallest interface that makes the process easier to run. Open the first build and use it on real records the same day. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
+Every behaviour in this post was read from Construct's source and design notes on October 26, 2026, after confirming that the release with app sharing, live data and versions was deployed to production. That covered the app runtime and its SDK, the sharing and public link handlers, the query cache, the build card and the plan limits. The PostHog comparison above was run against our own PostHog project the same day. The launch film is an illustrated example with made-up data, and the lead tracker recording is a real build. Retool's and Lovable's pricing pages were read on October 26, 2026. We make Construct.
 
 ## Related resources
 
-- [What is an AI employee?](/blog/what-is-an-ai-employee/)
+- [Internal tools in Construct](/use-cases/internal-tools/)
+- [Construct is now on Discord](/blog/ai-agent-discord-bot/)
 - [AI workflow automation](/blog/ai-workflow-automation/)
 - [Construct vs coding-focused agents](/blog/construct-vs-coding-agents/)
+- [What is an AI employee?](/blog/what-is-an-ai-employee/)
 - [AI agent memory](/blog/ai-agent-memory/)

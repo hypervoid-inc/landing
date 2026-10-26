@@ -551,29 +551,30 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
   ],
   "build-internal-tools-with-construct": [
     {
-      question: "Can Construct build internal tools for my team?",
+      question: "Can I build internal tools with AI without a developer?",
       answer:
-        "Yes. From $9 a month, Construct builds private workspace apps such as request trackers, intake forms, review queues, and dashboards. You describe the process in plain language, and the agent writes the React and TypeScript, validates it, and opens it in your web desktop.",
+        "Yes. In Construct you describe the tool in plain English, and its agent writes a React app in your workspace, checks that it builds, and opens it beside the chat. When you want a change you ask in the same chat, and if an edit fails the last working version keeps running while the agent fixes it. Apps come with every plan, from $9 a month.",
     },
     {
-      question: "What happens if a build breaks?",
+      question:
+        "Can Construct build a dashboard from PostHog and Google Analytics?",
       answer:
-        "Construct keeps the last successful build running, so a failed update does not take the working tool offline while it reads the app's diagnostics, repairs the source, and validates again.",
+        "Yes. An app reads from connected apps through read-only queries, such as PostHog's query and trend tools and Google Analytics reports. Results refresh every 5 to 60 minutes, 15 by default, and a Live badge shows when every source is current. The agent checks the dashboard's headline numbers against the source's own reports before it finishes.",
     },
     {
-      question: "Do I need to be a developer to use it?",
+      question: "How do I share an internal tool with my team?",
       answer:
-        "No. You describe the records the app manages, the actions an operator takes, and the files it may access. Construct writes, validates, and publishes the app, and updates it later as the process changes. The source stays in your Files if anyone wants to read it.",
+        "Every app starts private. Its creator, or a workspace owner or admin, can share it with the workspace so teammates use it and add data, or turn on a public link that anyone can open read only. A public link unfurls as a preview card in Slack, is kept out of search engines and AI crawlers, and stops working the moment you turn it off.",
     },
     {
-      question: "What can a workspace app access?",
+      question: "Is Construct an alternative to Retool for small teams?",
       answer:
-        "Only what it declares. Each app lists the native capabilities, connected apps, and exact HTTPS origins it needs, and calls outside those allowlists are denied at runtime. File operations stay subject to the user's workspace access.",
+        "For small teams without a spare engineer, yes. Construct's agent builds and maintains the tool from a plain-English request, starting at $9 a month with no per-seat fee, while Retool's Team plan was $10 per builder and $5 per internal user a month, billed annually, on October 26, 2026. Retool is the better fit when engineers build tools on your own production database for a large internal user base.",
     },
     {
-      question: "When is a workspace app the wrong choice?",
+      question: "When is a Construct app the wrong choice?",
       answer:
-        "A workspace app is a private internal interface for one workspace. For a public customer-facing site, a product that needs the wider npm ecosystem, or a system with its own infrastructure, keep a dedicated hosting stack and let Construct build the internal tools around it.",
+        "When the app is a product for your customers, when it needs npm packages, or when it has to query thousands of rows the way a database does, since app data is saved as JSON records. Keep those on their own hosting and let Construct build the internal tools around them.",
     },
   ],
   "agent-verification-gap": [

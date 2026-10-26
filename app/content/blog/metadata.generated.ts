@@ -475,11 +475,14 @@ export const blogMetadata: readonly ({ slug: string } & BlogFrontmatter)[] = [
   },
   {
     slug: "build-internal-tools-with-construct",
-    title: "How Construct Builds Internal Tools in Your Workspace",
+    title: "How to build internal tools with AI in Construct",
     description:
-      "Turn a repeated process into a private workspace app that Construct can build, validate, debug, and update while preserving the last successful build.",
+      "Describe an internal tool in plain English and Construct builds it on live data from PostHog, Google Analytics and more, then shares it with your team.",
+    pitch:
+      "Describe the tool and Construct builds it on live data from your connected apps, ready to share with your team, from $9 a month.",
     published: "2026-07-27",
-    updated: "2026-10-01",
+    updated: "2026-10-26",
+    seoTitle: "How to Build Internal Tools With AI | Construct Computer",
     author: "ankush",
     tags: ["internal-tools", "workspace-apps", "ai-agent", "product"],
     kind: "article",
