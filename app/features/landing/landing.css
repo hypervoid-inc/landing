@@ -1824,7 +1824,7 @@
 
   .hero-cta-row .landing-cta {
     height: calc(57px * var(--landing-scale));
-    max-width: calc(227px * var(--landing-scale));
+    max-width: var(--hero-cta-width);
     font-size: calc(21px * var(--landing-scale));
   }
 
@@ -1929,9 +1929,22 @@
   margin-top: 12px;
 }
 
+/* From 1024px the offer line and walkthrough centre on Start Now. The stack
+   is exactly as wide as the button, so the button keeps the headline's left
+   edge, and the offer line wraps into two balanced lines under it. */
 @media (min-width: 1024px) {
-  .hero-walkthrough-row {
-    justify-content: flex-start;
+  .hero-cta-stack {
+    --hero-cta-width: calc(227px * var(--landing-scale));
+    display: flex;
+    width: var(--hero-cta-width);
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-offer-line {
+    width: calc(100% + 32px);
+    text-align: center;
+    text-wrap: balance;
   }
 }
 

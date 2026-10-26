@@ -29,11 +29,7 @@ import { CloudCard } from "./bento/cloud-card";
 import { IntegrationsCard } from "./bento/integrations-card";
 import { SchedulesCard } from "./bento/schedules-card";
 import { SocialCard } from "./bento/social-card";
-import {
-  mergePricingPlans,
-  pricingFloorLabel,
-  proTrialThenPrices,
-} from "./merge-pricing-catalog";
+import { mergePricingPlans, pricingFloorLabel } from "./merge-pricing-catalog";
 // Temporarily disabled, do not delete. Hero collage pointer parallax.
 // import { usePointerParallax } from "./use-pointer-parallax";
 import { JournalSection } from "./journal-section";
@@ -50,9 +46,7 @@ function HeroHeadline() {
     [catalog.plans, catalog.recommendedPlan],
   );
   const floor = pricingFloorLabel(plans) ?? "$9";
-  const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth ?? null;
-  const trialLabel = trialDays ? `${trialDays}-day` : "7-day";
-  const proThen = proTrialThenPrices(plans);
+  const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth || 7;
 
   return (
     <div className="hero-headline mx-auto text-center md:mx-0 md:text-left">
@@ -98,53 +92,58 @@ function HeroHeadline() {
           you do something else.
         </span>
       </p> */}
-      <div
-        className="hero-cta-row reveal-item mt-7 flex w-full flex-col items-center lg:items-start gap-2 xl:mt-8 xl:flex-row xl:flex-wrap xl:items-center xl:justify-start xl:gap-4"
-        data-reveal="mount"
-        data-reveal-delay="3"
-      >
-        <StartLink
-          source="hero"
-          className="landing-cta inline-flex h-[57px] w-full max-w-[227px] items-center justify-center px-[30px] text-[21px]"
-          authedChildren="Open Construct"
-          onClick={() => {
-            captureAnalytics("cta_clicked", {
-              position: "hero",
-              action: "start",
-            });
-          }}
+      <div className="hero-cta-stack">
+        <div
+          className="hero-cta-row reveal-item mt-7 flex w-full flex-col items-center lg:items-start gap-2 xl:mt-8 xl:flex-row xl:flex-wrap xl:items-center xl:justify-start xl:gap-4"
+          data-reveal="mount"
+          data-reveal-delay="3"
         >
-          Start Now
-        </StartLink>
-      </div>
-      {/* The homepage otherwise shows no price until the pricing section. */}
-      <p
-        className="hero-offer-line reveal-item mx-auto mt-3 max-w-[360px] text-[13px] leading-[19px] text-[#7d949c] xl:mx-0 xl:max-w-[520px]"
-        data-reveal="mount"
-        data-reveal-delay="3"
-      >
-        {trialLabel} trial on Pro, then {proThen} unless you switch. Plans from{" "}
-        <span className="font-semibold text-[#4e4646]">{floor}/month</span>.
-        Cancel any time.
-      </p>
-      {/* Low-commitment path for readers who will not sign up on a first
-          visit. Under the offer line, aligned with Start Now. */}
-      <div
-        className="hero-walkthrough-row reveal-item"
-        data-reveal="mount"
-        data-reveal-delay="4"
-      >
-        <a
-          href={WALKTHROUGH_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hero-secondary-cta"
-          onClick={() => {
-            captureAnalytics("walkthrough_clicked", { position: "hero" });
-          }}
+          <StartLink
+            source="hero"
+            className="landing-cta inline-flex h-[57px] w-full max-w-[227px] items-center justify-center px-[30px] text-[21px]"
+            authedChildren="Open Construct"
+            onClick={() => {
+              captureAnalytics("cta_clicked", {
+                position: "hero",
+                action: "start",
+              });
+            }}
+          >
+            Start Now
+          </StartLink>
+        </div>
+        {/* The homepage otherwise shows no price until the pricing section. */}
+        <p
+          className="hero-offer-line reveal-item mt-3 text-[13px] leading-[19px] text-[#7d949c]"
+          data-reveal="mount"
+          data-reveal-delay="3"
         >
-          Book a walkthrough
-        </a>
+          Starts at{" "}
+          <span className="whitespace-nowrap font-semibold text-[#4e4646]">
+            {floor}/mo
+          </span>{" "}
+          with a <span className="whitespace-nowrap">{trialDays}-day</span>{" "}
+          trial on Pro. Cancel anytime.
+        </p>
+        {/* Low-commitment path for readers who will not sign up on a first
+            visit. Under the offer line, centred on Start Now. */}
+        <div
+          className="hero-walkthrough-row reveal-item"
+          data-reveal="mount"
+          data-reveal-delay="4"
+        >
+          <a
+            href={WALKTHROUGH_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-secondary-cta"
+            onClick={() => {
+              captureAnalytics("walkthrough_clicked", { position: "hero" });
+            }}
+          >
+            Book a walkthrough
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -560,9 +559,7 @@ function ClosingCta() {
     [catalog.plans, catalog.recommendedPlan],
   );
   const floor = pricingFloorLabel(plans) ?? "$9";
-  const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth ?? null;
-  const trialLabel = trialDays ? `${trialDays}-day` : "7-day";
-  const proThen = proTrialThenPrices(plans);
+  const trialDays = plans.find((p) => p.id === "pro")?.trialDaysMonth || 7;
   const part = usePartOfDay();
 
   return (
@@ -578,8 +575,8 @@ function ClosingCta() {
           {part === null || part === "night" ? "tonight" : `this ${part}`}
         </h2>
         <p className="closing-cta-lead">
-          {trialLabel} trial on Pro, then {proThen} unless you switch. Plans
-          from {floor}/month. Cancel any time from your account.
+          Starts at {floor}/mo with a {trialDays}-day trial on Pro. Cancel
+          anytime.
         </p>
         <div className="closing-cta-row">
           <StartLink
