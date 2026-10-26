@@ -38,7 +38,7 @@ export const useCases = [
     slug: "workflows",
     navLabel: "Workflows",
     title: "Stop rebuilding the same process every Monday",
-    seoTitle: "AI Workflows for Recurring Business Work | Construct",
+    seoTitle: "AI Workflows for Recurring Business Work | Construct Computer",
     description:
       "Encode a process once with agent steps, connected apps, and notifications. Version it, schedule it, and anyone on the team can run the same outcome again.",
     lede: "The useful work in a small company is rarely a one-off. It is the competitor digest, the invoice chase, the weekly report that only exists because one person still remembers how. When that person is in a meeting, the process does not run. Construct turns a process that already succeeded once into a versioned procedure other people can start.",
@@ -99,7 +99,7 @@ export const useCases = [
     slug: "internal-tools",
     navLabel: "Internal tools",
     title: "Replace the spreadsheet that became the product",
-    seoTitle: "Build Internal Tools in Your Workspace | Construct",
+    seoTitle: "Build Internal Tools in Your Workspace | Construct Computer",
     description:
       "Describe the tool your team needs. Construct writes, validates, and publishes a working internal app into your cloud desktop instead of leaving you with another shared sheet.",
     lede: "Most internal tools start as a sheet, a Notion database, or a Slack thread with a pinned message. Six months later they are still the system of record, and nobody wants to own a rewrite. Construct builds the small app in the workspace you already work in, so the tool does not become a second product you have to host.",
@@ -157,7 +157,7 @@ export const useCases = [
     slug: "scheduling",
     navLabel: "Scheduling",
     title: "Reminders do not finish the work",
-    seoTitle: "Schedule Agent Jobs and Workflows | Construct",
+    seoTitle: "Schedule Agent Jobs and Workflows | Construct Computer",
     description:
       "Schedule an agent prompt, connected-app action, or complete workflow. Construct runs it once or on a cadence and keeps the result history instead of another unread reminder.",
     lede: "A calendar ping that says 'write the digest' is still a task for a person. The useful version is a job that actually writes the digest at 8am, posts it, and leaves a record of whether it succeeded. Construct's Calendar schedules outcomes: prompts, actions, and workflows, not nudges.",
@@ -215,7 +215,7 @@ export const useCases = [
     slug: "team-workspaces",
     navLabel: "Team workspaces",
     title: "AI agents are not a team product until the team can share them",
-    seoTitle: "Shared Workspaces for Teams and AI Agents | Construct",
+    seoTitle: "Shared Workspaces for Teams and AI Agents | Construct Computer",
     description:
       "Bring people, your AI agents, files, apps, and shared conversations into one workspace, with invitations, roles, and access controls that match how the company actually works.",
     lede: "A personal agent is a power tool. A company agent is infrastructure. The difference is not a better model: it is whether files, conversations, and permissions live in one place that more than one person can enter without forwarding a login.",
@@ -273,7 +273,7 @@ export const useCases = [
     slug: "memory",
     navLabel: "Memory",
     title: "Chat history is not memory you can audit",
-    seoTitle: "Inspectable AI Agent Memory | Construct",
+    seoTitle: "Inspectable AI Agent Memory | Construct Computer",
     description:
       "Preferences, decisions, and project context stay with evidence and history. Review, correct, or forget anything Construct learns so nothing important lives only in a thread.",
     lede: "A long context window is not a memory system. It is a pile. Useful memory is a fact you can find, a decision you can correct, and a preference you can forget. Construct stores what it learns with evidence, so you are not arguing with a black box about what it 'remembers.'",
@@ -331,7 +331,7 @@ export const useCases = [
     slug: "channels",
     navLabel: "Channels",
     title: "The work is not waiting in a browser tab",
-    seoTitle: "AI Agents Across Slack, Email, and Chat | Construct",
+    seoTitle: "AI Agents Across Slack, Email, and Chat | Construct Computer",
     description:
       "Message Construct from the web, Slack, Telegram, Discord, or its native email inbox. Routing and access policies vary by channel so the same agent does not become a leak.",
     lede: "Founders do not live in one product. They live in Slack, email, and whatever tab is already open. An agent that only exists behind a marketing-site 'Open OS' button will be skipped the moment the real conversation is happening somewhere else. Construct meets the thread where it started, with access that still respects the workspace.",
@@ -389,7 +389,7 @@ export const useCases = [
     slug: "research",
     navLabel: "Research",
     title: "A search dump is not a brief you can send",
-    seoTitle: "AI Research With Sources You Can Review | Construct",
+    seoTitle: "AI Research With Sources You Can Review | Construct Computer",
     description:
       "Construct gathers sources, compares details, and turns a messy question into cited research a founder can review, correct, or forward without rebuilding the argument.",
     lede: "Paste-and-summarize chat is fine for a first look and dangerous as a deliverable. The output has no trail, the numbers cannot be checked, and the next person has to search again. Construct treats research as a job on a computer: fetch, compare, cite, and leave something you would actually attach to an email.",

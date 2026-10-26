@@ -176,7 +176,9 @@ function UseCaseBody({ entry }: { entry: UseCase }) {
   const related = relatedUseCasePosts(entry);
   return (
     <>
-      <header className="mt-8 max-w-3xl">
+      {/* A div, not a header: Markdown converters, Cloudflare's included,
+          drop <header> as site chrome, and the heading with it. */}
+      <div className="mt-8 max-w-3xl">
         <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#01b4c8]">
           {entry.navLabel}
         </p>
@@ -192,7 +194,7 @@ function UseCaseBody({ entry }: { entry: UseCase }) {
         >
           {entry.ctaLabel}
         </StartLink>
-      </header>
+      </div>
 
       <UseCaseVideo entry={entry} />
 

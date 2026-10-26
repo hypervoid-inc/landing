@@ -8,11 +8,17 @@ import { defineConfig } from "vite";
 
 import { remarkHeadings } from "./scripts/remark-headings.mjs";
 
-// The day this build publishes for (UTC), fixed once so the prerender list in
-// react-router.config.ts and the inlined bundles agree on which scheduled posts
-// are live. Override with CONTENT_DATE=YYYY-MM-DD to preview another day. See
+// The moment this build publishes for (UTC), fixed once so the prerender list
+// in react-router.config.ts and the inlined bundles agree on which scheduled
+// posts are live. Override with CONTENT_DATE=YYYY-MM-DD to preview the end of
+// another day, plus CONTENT_TIME=HH:MM for a moment within it. See
 // app/content/content-date.ts.
-process.env.CONTENT_DATE ??= new Date().toISOString().slice(0, 10);
+if (!process.env.CONTENT_DATE) {
+  const now = new Date().toISOString();
+  process.env.CONTENT_DATE = now.slice(0, 10);
+  process.env.CONTENT_TIME ??= now.slice(11, 16);
+}
+process.env.CONTENT_TIME ??= "23:59";
 
 export default defineConfig({
   build: {
@@ -32,6 +38,7 @@ export default defineConfig({
   },
   define: {
     __CONTENT_DATE__: JSON.stringify(process.env.CONTENT_DATE),
+    __CONTENT_TIME__: JSON.stringify(process.env.CONTENT_TIME),
     // Set only by `pnpm dev`, which lists every post, drafts included. The
     // scripts that load content through Vite (`pnpm og`, generate-content)
     // run in development mode too, so the mode alone cannot be the switch.

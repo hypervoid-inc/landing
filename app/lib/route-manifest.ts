@@ -1,4 +1,5 @@
 import {
+  publishedAt,
   resourceEntries,
   scheduledEntries,
   type ResourceEntry,
@@ -42,6 +43,8 @@ export type CanonicalRoute = {
   readonly kind: RouteKind;
   readonly lastModified?: string;
   readonly published?: string;
+  /** `published` with its go-live time, for structured data. */
+  readonly publishedAt?: string;
   readonly author?: Author;
   readonly tags?: readonly string[];
   readonly image: string;
@@ -181,7 +184,7 @@ function buildRoutes(
     }),
     route({
       path: "/pricing",
-      title: "Simple Pricing for AI Agents | Construct",
+      title: "Construct Computer Pricing: AI Agents From $9 a Month",
       displayTitle: "Simple Pricing",
       description:
         "Plans for solo founders and small teams. Lite, Starter, and Pro from $9/month, with a 7-day Pro trial, annual savings, and enterprise options.",
@@ -190,7 +193,7 @@ function buildRoutes(
     }),
     route({
       path: "/use-cases",
-      title: "AI Agent Use Cases for Small Teams | Construct",
+      title: "AI Agent Use Cases for Small Teams | Construct Computer",
       displayTitle: "Use Cases",
       description:
         "How Construct encodes workflows, builds internal tools, schedules jobs, shares a team workspace, inspects memory, works across channels, and delivers cited research.",
@@ -209,7 +212,7 @@ function buildRoutes(
     ),
     route({
       path: "/tools",
-      title: "Free Tools for Email, Automation and AI Setup | Construct",
+      title: "Free Tools for Email, Automation and AI | Construct Computer",
       displayTitle: "Free tools",
       description:
         "Free tools from Construct: a Gmail filter generator, a Zapier cost calculator and an MCP config generator. No signup, private, and AI agents can use them.",
@@ -321,6 +324,7 @@ function buildRoutes(
         description: entry.description,
         kind: entry.kind === "article" ? "blog-post" : entry.kind,
         published: entry.published,
+        publishedAt: publishedAt(entry),
         lastModified: entry.updated ?? entry.published,
         author: entry.author,
         tags: entry.tags,
@@ -350,7 +354,7 @@ function buildRoutes(
     ...tagsWithHubs(entries).map((tag) =>
       route({
         path: `/blog/tag/${tag}`,
-        title: `${tagTitle(tag)} - Articles and Guides | Construct`,
+        title: `${tagTitle(tag)}: Articles and Guides | Construct Computer`,
         displayTitle: `Writing tagged ${tagLabel(tag)}`,
         description: `${byTag(entries, tag).length} Construct articles, guides, and comparisons tagged ${tagLabel(tag)}, covering AI agents and how they get work done.`,
         kind: "tag",

@@ -25,6 +25,11 @@ const frontmatterSchema = z
     // Mirrors `pitch` in app/content/schema.ts.
     pitch: z.string().min(1).max(160).optional(),
     published: date,
+    // Mirrors `publishTime` in app/content/schema.ts.
+    time: z
+      .string()
+      .regex(/^([01]\d|2[0-3]):[0-5]\d$/)
+      .optional(),
     updated: date.optional(),
     seoTitle: z.string().min(1).optional(),
     author: z.enum(authorIds),

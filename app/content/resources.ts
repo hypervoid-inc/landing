@@ -1,6 +1,6 @@
 import { blogMetadata } from "./blog/metadata.generated";
 import { getAuthor, type Author } from "./authors";
-import { contentDate } from "./content-date";
+import { contentDate, contentTime } from "./content-date";
 import type { BlogFrontmatter } from "./schema";
 
 export type ResourceKind = BlogFrontmatter["kind"];
@@ -12,6 +12,8 @@ export type ResourceEntry = {
   readonly seoTitle?: string;
   readonly description: string;
   readonly published: string;
+  /** Go-live time on `published`, `HH:MM` UTC, when the post has one. */
+  readonly time?: string;
   readonly updated?: string;
   readonly author: Author;
   readonly tags: readonly string[];
@@ -19,16 +21,30 @@ export type ResourceEntry = {
   readonly image?: string;
 };
 
+type Schedulable = { draft: boolean; published: string; time?: string };
+
 /**
- * A post is live once it is not a draft and its `published` date has arrived
- * (see `contentDate`). Finished posts dated ahead stay out of every list, feed,
- * and route until the build that falls on their date.
+ * A post is live once it is not a draft and its `published` date, and its
+ * `time` when it has one, have arrived (see `contentDate` and `contentTime`).
+ * Finished posts dated ahead stay out of every list, feed, and route until the
+ * first build after that moment. A day given without a time means its end.
  */
 export function isLiveOn(
-  post: { draft: boolean; published: string },
+  post: Schedulable,
   day: string,
+  time = "23:59",
 ): boolean {
-  return !post.draft && post.published <= day;
+  if (post.draft) return false;
+  if (post.published !== day) return post.published < day;
+  return (post.time ?? "00:00") <= time;
+}
+
+/**
+ * When a post went (or goes) live: the date alone, or the full UTC timestamp
+ * when it has a `time`, for structured data and feeds.
+ */
+export function publishedAt(post: { published: string; time?: string }): string {
+  return post.time ? `${post.published}T${post.time}:00Z` : post.published;
 }
 
 declare const __SHOW_ALL_POSTS__: boolean | undefined;
@@ -42,8 +58,8 @@ declare const __SHOW_ALL_POSTS__: boolean | undefined;
 const showEverything =
   typeof __SHOW_ALL_POSTS__ === "boolean" && __SHOW_ALL_POSTS__;
 
-export function isLive(post: { draft: boolean; published: string }): boolean {
-  return showEverything || isLiveOn(post, contentDate);
+export function isLive(post: Schedulable): boolean {
+  return showEverything || isLiveOn(post, contentDate, contentTime);
 }
 
 function toEntry(post: (typeof blogMetadata)[number]): ResourceEntry {
@@ -54,6 +70,7 @@ function toEntry(post: (typeof blogMetadata)[number]): ResourceEntry {
     seoTitle: post.seoTitle,
     description: post.description,
     published: post.published,
+    time: post.time,
     updated: post.updated,
     author: getAuthor(post.author),
     tags: post.tags,
@@ -61,13 +78,17 @@ function toEntry(post: (typeof blogMetadata)[number]): ResourceEntry {
   };
 }
 
-/** Newest first; on a shared day, the post marked `lead` goes first. */
+/**
+ * Newest first; on a shared day, the post marked `lead` goes first, then the
+ * later go-live time.
+ */
 const newestFirst = (
   left: (typeof blogMetadata)[number],
   right: (typeof blogMetadata)[number],
 ) =>
   right.published.localeCompare(left.published) ||
-  Number(right.lead ?? false) - Number(left.lead ?? false);
+  Number(right.lead ?? false) - Number(left.lead ?? false) ||
+  (right.time ?? "").localeCompare(left.time ?? "");
 
 export const resourceEntries: readonly ResourceEntry[] = blogMetadata
   .filter(isLive)
@@ -76,7 +97,7 @@ export const resourceEntries: readonly ResourceEntry[] = blogMetadata
 
 /** Finished posts waiting for their date. Drafts are in neither list. */
 export const scheduledEntries: readonly ResourceEntry[] = blogMetadata
-  .filter((post) => !post.draft && post.published > contentDate)
+  .filter((post) => !post.draft && !isLiveOn(post, contentDate, contentTime))
   .sort(newestFirst)
   .map(toEntry);
 

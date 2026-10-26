@@ -78,7 +78,9 @@ function HeroHeadline() {
         motion="inherit"
         revealOnMount
         revealDelay="2"
-        className="reveal-item mx-auto mt-7"
+        // `md:hidden` matches the CSS that hides this copy from 768px, and
+        // tells the Markdown twin (scripts/markdown-twins.mjs) it is phone-only.
+        className="reveal-item mx-auto mt-7 md:hidden"
       />
       {/* <p
         className="reveal-item mx-auto mt-5 max-w-[360px] text-[15px] leading-[21px] text-[#627c86] xl:mx-0 xl:mt-6 xl:max-w-[520px] xl:text-base xl:leading-[22px]"
@@ -121,8 +123,7 @@ function HeroHeadline() {
         data-reveal="mount"
         data-reveal-delay="3"
       >
-        {trialLabel} trial on Pro, then {proThen} unless you switch. Plans
-        from{" "}
+        {trialLabel} trial on Pro, then {proThen} unless you switch. Plans from{" "}
         <span className="font-semibold text-[#4e4646]">{floor}/month</span>.
         Cancel any time.
       </p>

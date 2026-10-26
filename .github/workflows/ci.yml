@@ -4,23 +4,51 @@ on:
   pull_request:
   push:
     branches: [main]
-  # Scheduled publishing: rebuild and redeploy main every morning so posts
-  # dated today go live on their own (docs/scheduled-publishing.md). 00:05 UTC
-  # is 07:05 in Bangkok and 17:05 the previous day in San Francisco.
+  # Scheduled publishing (docs/scheduled-publishing.md): a full rebuild every
+  # morning, plus a check every quarter hour that deploys only when a post's
+  # go-live time has passed and the live site does not have it yet.
   schedule:
     - cron: "5 0 * * *"
+    - cron: "7,22,37,52 * * * *"
   # "Run workflow" in the Actions tab republishes on demand.
   workflow_dispatch:
 
+# Scheduled runs queue rather than cancel, so a check never kills a deploy in
+# progress; pushes and pull requests still cancel their own stale runs.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'schedule' && 'schedule' || 'run' }}
+  cancel-in-progress: ${{ github.event_name != 'schedule' }}
 
 permissions:
   contents: read
 
 jobs:
+  due:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      publish: ${{ steps.check.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            app/content/blog
+            scripts/due-posts.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - id: check
+        run: node scripts/due-posts.mjs ${{ github.event.schedule == '5 0 * * *' && '--always' || '' }} >> "$GITHUB_OUTPUT"
+
   ci:
+    needs: due
+    if: ${{ !cancelled() && (github.event_name != 'schedule' || needs.due.outputs.publish == 'true') }}
+    # One deploy of main at a time, whichever event started it.
+    concurrency:
+      group: deploy-${{ github.ref }}
+      cancel-in-progress: false
     runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 15
     steps:

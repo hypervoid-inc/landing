@@ -119,6 +119,8 @@ export function organizationJsonLd(): JsonLd {
     // Only names in real use. "Construct AI" is on nobody's listing, and
     // teaching it to search engines would only blur the entity.
     alternateName: [brandName.short, brandName.domain],
+    // "Construct" alone finds other products; say which one this is.
+    disambiguatingDescription: `The AI agent platform at ${brandName.domain}. Not ${brandName.collides.join(", or ")}.`,
     foundingDate: "2026-06-30",
     founder: founders.map((author) => ({
       "@type": "Person",
@@ -382,8 +384,13 @@ export function routeJsonLd(route: CanonicalRoute): JsonLd[] {
       headline: displayTitle(route),
       description: route.description,
       inLanguage: "en-US",
-      ...(route.published ? { datePublished: route.published } : {}),
-      dateModified: route.lastModified ?? route.published,
+      ...(route.published
+        ? { datePublished: route.publishedAt ?? route.published }
+        : {}),
+      dateModified:
+        route.lastModified === route.published
+          ? (route.publishedAt ?? route.published)
+          : route.lastModified,
       author: {
         "@type": author.schemaType,
         name: author.name,
@@ -485,7 +492,12 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
       content: displayTitle(route),
     },
     ...(article && route.published
-      ? [{ property: "article:published_time", content: route.published }]
+      ? [
+          {
+            property: "article:published_time",
+            content: route.publishedAt ?? route.published,
+          },
+        ]
       : []),
     ...(article && route.lastModified
       ? [{ property: "article:modified_time", content: route.lastModified }]

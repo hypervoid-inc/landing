@@ -103,7 +103,7 @@ function rssXml(): string {
       const categories = entry.tags
         .map((tag) => `\n      <category>${xml(tag)}</category>`)
         .join("");
-      return `    <item>\n      <title>${xml(entry.title)}</title>\n      <link>${url}</link>\n      <guid>${url}</guid>\n      <description>${xml(entry.description)}</description>\n      <dc:creator>${xml(entry.author.name)}</dc:creator>${categories}\n      <pubDate>${new Date(`${entry.published}T00:00:00Z`).toUTCString()}</pubDate>\n    </item>`;
+      return `    <item>\n      <title>${xml(entry.title)}</title>\n      <link>${url}</link>\n      <guid>${url}</guid>\n      <description>${xml(entry.description)}</description>\n      <dc:creator>${xml(entry.author.name)}</dc:creator>${categories}\n      <pubDate>${new Date(`${entry.published}T${entry.time ?? "00:00"}:00Z`).toUTCString()}</pubDate>\n    </item>`;
     })
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>\n    <title>Construct Computer Blog</title>\n    <link>${siteUrl}/blog/</link>\n    <description>AI employee guides, practical articles, and comparisons from Construct Computer.</description>\n${items}\n  </channel></rss>\n`;
@@ -136,7 +136,7 @@ function fullTextFeedXml(): string {
       const categories = entry.tags
         .map((tag) => `\n      <category>${xml(tag)}</category>`)
         .join("");
-      return `    <item>\n      <title>${xml(entry.title)}</title>\n      <link>${url}</link>\n      <guid>${url}</guid>\n      <description>${xml(entry.description)}</description>\n      <content:encoded><![CDATA[${content}]]></content:encoded>\n      <dc:creator>${xml(entry.author.name)}</dc:creator>${categories}\n      <pubDate>${new Date(`${entry.published}T00:00:00Z`).toUTCString()}</pubDate>\n    </item>`;
+      return `    <item>\n      <title>${xml(entry.title)}</title>\n      <link>${url}</link>\n      <guid>${url}</guid>\n      <description>${xml(entry.description)}</description>\n      <content:encoded><![CDATA[${content}]]></content:encoded>\n      <dc:creator>${xml(entry.author.name)}</dc:creator>${categories}\n      <pubDate>${new Date(`${entry.published}T${entry.time ?? "00:00"}:00Z`).toUTCString()}</pubDate>\n    </item>`;
     })
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>\n    <title>Construct Computer Blog</title>\n    <link>${siteUrl}/blog/</link>\n    <description>Full-text posts from Construct Computer, for syndication.</description>\n${items}\n  </channel></rss>\n`;
@@ -156,7 +156,7 @@ function atomXml(): string {
       const categories = entry.tags
         .map((tag) => `\n    <category term="${xml(tag)}"/>`)
         .join("");
-      return `  <entry>\n    <title>${xml(entry.title)}</title>\n    <id>${url}</id>\n    <link href="${url}"/>\n    <author><name>${xml(entry.author.name)}</name></author>\n    <published>${entry.published}T00:00:00Z</published>\n    <updated>${entry.updated ?? entry.published}T00:00:00Z</updated>${categories}\n    <summary>${xml(entry.description)}</summary>\n  </entry>`;
+      return `  <entry>\n    <title>${xml(entry.title)}</title>\n    <id>${url}</id>\n    <link href="${url}"/>\n    <author><name>${xml(entry.author.name)}</name></author>\n    <published>${entry.published}T${entry.time ?? "00:00"}:00Z</published>\n    <updated>${entry.updated ? `${entry.updated}T00:00:00Z` : `${entry.published}T${entry.time ?? "00:00"}:00Z`}</updated>${categories}\n    <summary>${xml(entry.description)}</summary>\n  </entry>`;
     })
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom">\n  <title>Construct Computer Blog</title>\n  <id>${siteUrl}/blog/</id>\n  <link href="${siteUrl}/atom.xml" rel="self"/>\n  <updated>${updated}T00:00:00Z</updated>\n${entries}\n</feed>\n`;

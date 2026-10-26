@@ -38,12 +38,23 @@ const pitch = z.string().min(1).max(PITCH_MAX_LENGTH);
  */
 const lead = z.boolean();
 
+/**
+ * The time of day, `HH:MM` in UTC, a post goes live on its `published` date.
+ * Without it a post goes live with the first build of that day. The quarter
+ * hourly check in `.github/workflows/ci.yml` deploys once a post's time has
+ * passed, so posts reach readers at different hours rather than all at once.
+ */
+export const publishTime = z
+  .string()
+  .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Expected a UTC time such as "14:35"');
+
 export const blogFrontmatterSchema = z
   .object({
     title: z.string().min(1),
     description: z.string().min(1),
     pitch: pitch.optional(),
     published: isoDate,
+    time: publishTime.optional(),
     updated: isoDate.optional(),
     seoTitle: z.string().min(1).optional(),
     author: z.enum(authorIds),

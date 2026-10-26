@@ -89,7 +89,9 @@ export function ToolsIndexPage() {
         className="mx-auto w-full max-w-6xl flex-1 px-4 pb-20 pt-8 sm:px-6 lg:pt-14"
       >
         <Breadcrumbs current="Free tools" />
-        <header className="mt-6 max-w-3xl">
+        {/* A div, not a header: Markdown converters, Cloudflare's included,
+            drop <header> as site chrome, and the heading with it. */}
+        <div className="mt-6 max-w-3xl">
           <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#01b4c8]">
             Free tools, no signup
           </p>
@@ -116,7 +118,7 @@ export function ToolsIndexPage() {
               </li>
             ))}
           </ul>
-        </header>
+        </div>
 
         <ul className="mt-12 grid list-none gap-6 p-0 sm:grid-cols-2 lg:grid-cols-3">
           {tools.map((tool) => (

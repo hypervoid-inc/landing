@@ -213,7 +213,9 @@ export function ToolPage({ slug }: { slug: string }) {
           current={tool.name}
           parent={{ label: "Free tools", to: "/tools/" }}
         />
-        <header className="mt-6 max-w-3xl">
+        {/* A div, not a header: Markdown converters, Cloudflare's included,
+            drop <header> as site chrome, and the heading with it. */}
+        <div className="mt-6 max-w-3xl">
           <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#01b4c8]">
             Free tool, no signup
           </p>
@@ -223,7 +225,7 @@ export function ToolPage({ slug }: { slug: string }) {
           <p className="mt-4 text-[17px] leading-7 text-[#627c86] sm:text-[18px]">
             {tool.lede}
           </p>
-        </header>
+        </div>
 
         <Tool
           cta={

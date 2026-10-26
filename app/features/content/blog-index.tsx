@@ -198,9 +198,9 @@ function dayAfter(iso: string): string {
 }
 
 /**
- * The newest post, large, with the mascot peeking over its top edge. One post
- * goes live every day, so it says so when the lead is today's, and names the
- * next one: a reason to come back tomorrow.
+ * The newest post, large, with the mascot peeking over its top edge. It says
+ * so when the lead is today's, and names the next scheduled one: a reason to
+ * come back.
  */
 function LeadPost({ entry }: { entry: ResourceEntry }) {
   const [hovered, setHovered] = useState(false);

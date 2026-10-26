@@ -86,6 +86,7 @@ function convert(text, { slug, utmSource, titles }) {
   return promptsToQuotes(text)
     .replaceAll(/\{\/\*[\s\S]*?\*\/\}/g, "")
     .replaceAll(/\{(["']) \1\}/g, " ")
+    .replaceAll(/<BetaCta\b[^>]*\/>\n?/g, "")
     .replaceAll(/<BetaCta\b[^>]*>[\s\S]*?<\/BetaCta>\n?/g, "")
     .replaceAll(/<ReadNext\s+slug="([^"]+)"\s*\/>/g, (_, next) =>
       titles[next] ? `**Read next:** [${titles[next]}](/blog/${next}/)` : "",

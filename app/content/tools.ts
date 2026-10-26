@@ -68,7 +68,7 @@ export const tools: readonly ToolEntry[] = [
   {
     slug: "gmail-filter-generator",
     name: "Gmail filter generator",
-    seoTitle: "Gmail Filter Generator: Free, Import-Ready XML | Construct",
+    seoTitle: "Gmail Filter Generator: Free XML Import | Construct Computer",
     description:
       "Build Gmail filters for multiple senders, domains and subjects, test each one in Gmail search, then import them all with one XML file. Free, no signup.",
     title: "Gmail filter generator",
@@ -154,7 +154,7 @@ export const tools: readonly ToolEntry[] = [
   {
     slug: "zapier-cost-calculator",
     name: "Zapier cost calculator",
-    seoTitle: "Zapier Cost Calculator: Tasks, Tiers and Price | Construct",
+    seoTitle: "Zapier Cost Calculator: Tasks and Price | Construct Computer",
     description:
       "How much will Zapier cost you? Enter your Zaps, steps and runs to see your monthly tasks, the cheapest plan and your cost per task, at current Zapier prices.",
     title: "Zapier cost calculator",
@@ -232,7 +232,7 @@ export const tools: readonly ToolEntry[] = [
   {
     slug: "mcp-config-generator",
     name: "MCP config generator",
-    seoTitle: "MCP Config JSON Generator: Claude, Cursor, VS Code | Construct",
+    seoTitle: "MCP Config Generator for Claude, Cursor and VS Code",
     description:
       "Generate mcp.json and MCP config for Claude Desktop, Claude Code, Cursor, VS Code and Codex from one server. Local or remote, env vars and headers. Free.",
     title: "MCP config generator",

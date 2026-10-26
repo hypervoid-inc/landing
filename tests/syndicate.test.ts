@@ -18,7 +18,7 @@ describe("syndication copy", () => {
   it("drops CTAs and MDX comments", () => {
     expect(
       convert(
-        'Before.\n\n<BetaCta source="blog_top">Meet Construct</BetaCta>\n\nAfter. {/* TODO: data */}',
+        'Before.\n\n<BetaCta source="blog_top">Meet Construct</BetaCta>\n\n<BetaCta source="blog_inline_1" />\n\nAfter. {/* TODO: data */}',
       ),
     ).toBe(`Before.\n\nAfter.${footer}`);
   });
