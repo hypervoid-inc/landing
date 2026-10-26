@@ -41,7 +41,7 @@ export const BRAND_CDN = "https://cdn.construct.computer/brand";
 /** The day a file on this page last changed; shown so partners know to refresh. */
 export const BRAND_UPDATED = "2026-10-25";
 export const brandEmail = "hello@construct.computer";
-/** The page's opening line, repeated at the top of `/brand/brand.md`. */
+/** The page's opening line, repeated at the top of `/brand.md`. */
 export const brandIntro =
   "Logos, the mascot, screenshots, ad banners and approved copy for Construct Computer, the AI agent platform for startups and small teams. Free to use when you list, review or link to us.";
 

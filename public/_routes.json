@@ -1,5 +1,13 @@
 {
   "version": 1,
-  "include": ["/", "/embed", "/embed/", "/api/*", "/redirect", "/redirect/*"],
+  "include": [
+    "/",
+    "/embed",
+    "/embed/",
+    "/api/*",
+    "/redirect",
+    "/redirect/*",
+    "/*.md"
+  ],
   "exclude": []
 }

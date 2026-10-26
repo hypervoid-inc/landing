@@ -887,7 +887,7 @@ export function BrandPage() {
               {brandDocument.name}{" "}
               <span className="font-normal text-[#8a9aa2]">PDF</span>
             </a>{" "}
-            <a href="/brand/brand.md" className={textAction}>
+            <a href="/brand.md" className={textAction}>
               brand.md
             </a>{" "}
             <a href="/brand/brand.json" className={textAction}>

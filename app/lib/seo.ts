@@ -15,6 +15,7 @@ import {
   listedAuthors,
   type Author,
 } from "../content/authors";
+import { twinPath } from "../../shared/markdown-twin";
 import { playerCardMeta } from "./player-card";
 import type { CanonicalRoute } from "./route-manifest";
 import {
@@ -187,7 +188,7 @@ function brandPageJsonLd(route: CanonicalRoute): JsonLd {
     encoding: [
       {
         "@type": "MediaObject",
-        contentUrl: `${siteUrl}/brand/brand.md`,
+        contentUrl: `${siteUrl}/brand.md`,
         encodingFormat: "text/markdown",
       },
       {
@@ -463,6 +464,12 @@ export function routeMeta(route: CanonicalRoute): MetaDescriptor[] {
     { name: "description", content: route.description },
     { name: "robots", content: "index, follow, max-image-preview:large" },
     { tagName: "link", rel: "canonical", href: route.canonical },
+    {
+      tagName: "link",
+      rel: "alternate",
+      type: "text/markdown",
+      href: twinPath(route.path),
+    },
     { property: "og:type", content: article ? "article" : "website" },
     { property: "og:site_name", content: "Construct Computer" },
     { property: "og:locale", content: "en_US" },

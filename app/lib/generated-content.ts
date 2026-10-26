@@ -316,7 +316,7 @@ export function brandCatalog() {
 }
 
 /**
- * `/brand/brand.md`: the brand page as one Markdown document, in the page's
+ * `/brand.md`: the brand page as one Markdown document, in the page's
  * order, for a partner who hands the page's link to an agent. Every URL is
  * absolute and every choice a form or brief asks for is written out, so the
  * agent never has to open the zip or click through the mascot maker.
@@ -526,7 +526,7 @@ function llmsBrandSection(): string {
   return [
     "## Brand and press kit",
     "",
-    `Logos, mascot, screenshots, ad banners and usage rules: ${siteUrl}/brand/. The same page as Markdown: ${siteUrl}/brand/brand.md. Every file with its URL and size: ${siteUrl}/brand/brand.json. Everything in one zip: ${brandKit.href}`,
+    `Logos, mascot, screenshots, ad banners and usage rules: ${siteUrl}/brand/. The same page as Markdown: ${siteUrl}/brand.md. Every file with its URL and size: ${siteUrl}/brand/brand.json. Everything in one zip: ${brandKit.href}`,
     "",
     `- Name: ${brandName.rule} Not ${brandName.wrong.slice(0, -1).join(", ")} or ${brandName.wrong.at(-1)}. "Construct" alone also means ${brandName.collides.join(" and ")}.`,
     `- Description: ${boilerplate}`,
@@ -733,7 +733,7 @@ export const crawlerFiles = {
   "llms.txt": llmsIndex(),
   "llms-full.txt": llmsFull(),
   "brand/brand.json": `${JSON.stringify(brandCatalog(), null, 2)}\n`,
-  "brand/brand.md": brandMarkdown(),
+  "brand.md": brandMarkdown(),
   ".well-known/security.txt": `Contact: mailto:security@construct.computer\nExpires: 2027-07-26T00:00:00.000Z\nPreferred-Languages: en\nCanonical: ${siteUrl}/.well-known/security.txt\n`,
   // RFC 9727 discovery: the catalog names the API, the OpenAPI document
   // describes it, and the HTML page documents it for humans. `_headers` serves

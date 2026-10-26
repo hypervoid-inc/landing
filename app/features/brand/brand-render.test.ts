@@ -33,11 +33,7 @@ describe("brand page", () => {
   it("keeps the downloads where Markdown converters read them", () => {
     const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
     expect(main).not.toContain("<header");
-    for (const href of [
-      brandKit.href,
-      "/brand/brand.md",
-      "/brand/brand.json",
-    ]) {
+    for (const href of [brandKit.href, "/brand.md", "/brand/brand.json"]) {
       expect(main).toContain(`href="${href}"`);
     }
   });

@@ -85,11 +85,59 @@
 # paths, and without parsing HTML. RFC 9727 section 3 defines api-catalog.
 # Scoped to `/` rather than `/*` on purpose. Pages matches paths, not content
 # types, so `/*` would hang four Link headers off every image and script too.
+
+# Every page in the sitemap is also Markdown at its path plus `.md`
+# (shared/markdown-twin.ts), announced here as RFC 8288 alternates. A trailing
+# slash means a page, so these never reach an image or a script. Vary because
+# `/` answers in Markdown to a client that asks (functions/_middleware.ts) and
+# Cloudflare's Markdown for Agents does the same everywhere else.
 /
   Link: </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"
   Link: </openapi.json>; rel="service-desc"; type="application/json"
   Link: </docs/api/>; rel="service-doc"; type="text/html"
   Link: </llms.txt>; rel="describedby"; type="text/plain"
+  Link: </index.md>; rel="alternate"; type="text/markdown"
+  Vary: Accept
+
+/:page/
+  Link: </:page.md>; rel="alternate"; type="text/markdown"
+  Vary: Accept
+
+/:section/:page/
+  Link: </:section/:page.md>; rel="alternate"; type="text/markdown"
+  Vary: Accept
+
+/:section/:group/:page/
+  Link: </:section/:group/:page.md>; rel="alternate"; type="text/markdown"
+  Vary: Accept
+
+# The sign-in and app shells, the demo and the deck are not in the sitemap, so
+# they have no twin. A detach only reaches the rules above it.
+/login/
+  ! Link
+
+/account/
+  ! Link
+
+/launch/
+  ! Link
+
+/app/
+  ! Link
+
+/embed/
+  ! Link
+
+/deck/
+  ! Link
+
+# The twins themselves. Search keeps to the pages, and the middleware adds the
+# token count and a canonical Link back to the page.
+/*.md
+  Access-Control-Allow-Origin: *
+  X-Robots-Tag: noindex
+  Vary: Accept
+  X-AEO-Version: 1.0
 
 # RFC 9727 requires the catalog be served as application/linkset+json. The file
 # is extensionless, so Cloudflare cannot infer that. CORS is open on the
@@ -110,18 +158,11 @@
 /brand/brand.json
   Access-Control-Allow-Origin: *
 
-# The brand page as Markdown, written by `pnpm generate:content`. Cloudflare
-# already turns the HTML into Markdown for agents that ask for it; this file
-# is the version written for them, so the page and its headers point here.
-# The canonical keeps search on the page itself. Scoped to `/brand/` exactly,
-# for the reason given at `/` above.
+# The brand page's Markdown twin, /brand.md, is written by hand in
+# `pnpm generate:content` rather than converted, so every file and rule is in
+# it. The catalog is the same page as data.
 /brand/
-  Link: </brand/brand.md>; rel="alternate"; type="text/markdown"
   Link: </brand/brand.json>; rel="alternate"; type="application/json"
-
-/brand/brand.md
-  Access-Control-Allow-Origin: *
-  Link: <https://construct.computer/brand/>; rel="canonical"
 
 https://landing-new-9q7.pages.dev/*
   X-Robots-Tag: noindex, nofollow

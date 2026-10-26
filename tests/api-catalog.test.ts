@@ -10,7 +10,7 @@ import {
 } from "../app/lib/api-catalog";
 import { onRequest as health } from "../functions/api/health";
 import { crawlerFiles } from "../app/lib/generated-content";
-import { siteUrl } from "../app/lib/route-manifest";
+import { canonicalRoutes, siteUrl } from "../app/lib/route-manifest";
 import { betaSignupSchema } from "../shared/beta-signup-schema";
 
 const headers = readFileSync(
@@ -29,6 +29,8 @@ const publishedPaths = new Map<string, () => boolean>([
   ["/llms.txt", () => "llms.txt" in crawlerFiles],
   ["/.well-known/api-catalog", () => ".well-known/api-catalog" in crawlerFiles],
   ["/api/health", () => typeof health === "function"],
+  // The build writes a Markdown twin of every page in the sitemap.
+  ["/index.md", () => canonicalRoutes.some(({ path }) => path === "/")],
 ]);
 
 function expectPublished(path: string) {
@@ -122,6 +124,7 @@ describe("homepage link headers", () => {
     );
 
     expect([...byRelation.keys()].sort()).toEqual([
+      "alternate",
       "api-catalog",
       "describedby",
       "service-desc",
@@ -130,6 +133,7 @@ describe("homepage link headers", () => {
     expect(byRelation.get("api-catalog")).toBe("/.well-known/api-catalog");
     expect(byRelation.get("service-desc")).toBe("/openapi.json");
     expect(byRelation.get("service-doc")).toBe("/docs/api/");
+    expect(byRelation.get("alternate")).toBe("/index.md");
   });
 
   it("points every relation at a published path with a media type", () => {
