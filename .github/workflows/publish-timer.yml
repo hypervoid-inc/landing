@@ -49,6 +49,6 @@ jobs:
         run: sleep ${{ steps.plan.outputs.seconds }}
       # The built-in token may start workflow_dispatch runs, unlike pushes.
       - if: steps.plan.outputs.action == 'publish'
-        run: gh workflow run ci.yml --ref main
+        run: gh workflow run ci.yml --ref "$GITHUB_REF_NAME"
       - if: steps.plan.outputs.action != 'stop'
-        run: gh workflow run publish-timer.yml --ref main
+        run: gh workflow run publish-timer.yml --ref "$GITHUB_REF_NAME"
