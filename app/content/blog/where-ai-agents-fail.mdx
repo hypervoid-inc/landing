@@ -52,11 +52,11 @@ This section defines every term before any number uses it. If you want to reprod
 
 A **run** is everything an agent does in response to one request, from the moment the request arrives until the agent stops. A request can be a chat message, a message in Slack, Telegram, or a Discord slash command, an email to the agent's own inbox, a scheduled job firing from the Calendar, a step in a workflow, or a subtask delegated to a temporary agent. Each of those starts its own run.
 
-If a run is automatically carried forward after reaching its step budget, the continuation counts as part of the same run, not as a new one. {/* TODO: confirm with engineering how continued segments are linked in the records, and whether to stitch them before counting. State the final rule here in one sentence. */}
+If a run is automatically carried forward after reaching the step limit its plan had at the time, the continuation counts as part of the same run, not as a new one. {/* TODO: confirm with engineering how continued segments are linked in the records, and whether to stitch them before counting. State the final rule here in one sentence. */}
 
 ### What counts as a step
 
-A **step** is one cycle in which the model decides what to do next and, usually, calls one or more tools: open a page in the browser, run a terminal command, read a file, call a connected app, send an email. It is the same unit Construct's plans meter as "steps per task": up to 50 on Lite, 150 on Starter, and 1,000 on Pro ([pricing](/pricing/)). A step that calls several tools at once is still one step; we attribute it to the tool category of its first tool call. {/* TODO: confirm the attribution rule against how multi-tool steps are recorded; if the records allow it, report multi-tool steps separately. */}
+A **step** is one cycle in which the model decides what to do next and, usually, calls one or more tools: open a page in the browser, run a terminal command, read a file, call a connected app, send an email. A step that calls several tools at once is still one step; we attribute it to the tool category of its first tool call. {/* TODO: confirm the attribution rule against how multi-tool steps are recorded; if the records allow it, report multi-tool steps separately. */}
 
 ### Tool categories
 
@@ -89,7 +89,7 @@ Every run ends with one outcome label. We group them like this:
 | Outcome                   | What it means                                              | Counted as                  |
 | ------------------------- | ---------------------------------------------------------- | --------------------------- |
 | Completed                 | The agent finished and gave a final answer                 | Finished                    |
-| Reached the step budget   | The run used every step its plan allows without finishing  | Failure                     |
+| Reached the step limit    | The run stopped at the step limit its plan had at the time | Failure                     |
 | Errored                   | The run stopped on an error it could not recover from      | Failure                     |
 | Stopped without an answer | The run ended without a final answer and was not continued | Failure                     |
 | Waiting on a person       | The agent stopped to ask a question or needed a permission | Handed back, not a failure  |
@@ -107,7 +107,7 @@ Two choices here matter. First, "completed" means the agent said it was done. It
 For each failed run we record:
 
 - **Failure step:** the step number of the last step that ran.
-- **Failure position:** the failure step as a share of the plan's step budget, so a Lite run failing at step 40 and a Pro run failing at step 800 are both "late".
+- **Failure position:** the failure step as a share of the step limit the run's plan had at the time, so a failure near that limit counts as "late" on any plan.
 - **Failure tool:** the tool category of the last step that called a tool.
 
 The last tool before a failure is evidence, not proof, of the cause. A browser step can be where a run stops because an earlier file step wrote the wrong input. We say "failed on" rather than "failed because of" throughout.
@@ -122,7 +122,7 @@ The analysis runs in five passes, all on aggregate tables:
 
 1. **Select runs.** All runs that started inside the period, minus the exclusions above. Output: one row per run with start source, plan tier, step count, outcome label, and start time rounded to the hour.
 2. **Categorise steps.** Join each run's step records to the tool-category mapping. Output: one row per step with run hash, step number, and tool category.
-3. **Locate failures.** For every failed run, take the last step, its number, its position in the budget, and the last tool category used.
+3. **Locate failures.** For every failed run, take the last step, its number, its failure position, and the last tool category used.
 4. **Link retries.** For every failed run, find the next run on the same job by the same agent within 24 hours, and record its outcome and step count.
 5. **Aggregate and suppress.** Build every table below from those three outputs, then suppress small cells and drop all hashes before export.
 
@@ -142,8 +142,8 @@ The analysis runs in five passes, all on aggregate tables:
 | 6 to 10          | [n]  | [%]           | [%]             | [%]        | [%]           | [%]       |
 | 11 to 25         | [n]  | [%]           | [%]             | [%]        | [%]           | [%]       |
 | 26 to 50         | [n]  | [%]           | [%]             | [%]        | [%]           | [%]       |
-| 51 to 150        | [n]  | [%]           | [%]             | n/a        | [%]           | [%]       |
-| 151 to 1,000     | [n]  | [%]           | [%]             | n/a        | n/a           | [%]       |
+| 51 to 150        | [n]  | [%]           | [%]             | [%]        | [%]           | [%]       |
+| 151 or more      | [n]  | [%]           | [%]             | [%]        | [%]           | [%]       |
 
 </ArticleTable>
 
@@ -153,14 +153,14 @@ The analysis runs in five passes, all on aggregate tables:
 
 <ArticleTable caption="Run outcomes by what started the run">
 
-| Started from                | Runs | Completed | Reached step budget | Errored | No answer | Waiting on a person |
-| --------------------------- | ---- | --------- | ------------------- | ------- | --------- | ------------------- |
-| Chat on the web             | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
-| Slack, Telegram, or Discord | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
-| Email to the agent's inbox  | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
-| Scheduled job               | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
-| Workflow step               | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
-| Delegated subtask           | [n]  | [%]       | [%]                 | [%]     | [%]       | [%]                 |
+| Started from                | Runs | Completed | Reached step limit | Errored | No answer | Waiting on a person |
+| --------------------------- | ---- | --------- | ------------------ | ------- | --------- | ------------------- |
+| Chat on the web             | [n]  | [%]       | [%]                | [%]     | [%]       | [%]                 |
+| Slack, Telegram, or Discord | [n]  | [%]       | [%]                | [%]     | [%]       | [%]                 |
+| Email to the agent's inbox  | [n]  | [%]       | [%]                | [%]     | [%]       | [%]                 |
+| Scheduled job               | [n]  | [%]       | [%]                | [%]     | [%]       | [%]                 |
+| Workflow step               | [n]  | [%]       | [%]                | [%]     | [%]       | [%]                 |
+| Delegated subtask           | [n]  | [%]       | [%]                | [%]     | [%]       | [%]                 |
 
 </ArticleTable>
 
@@ -192,7 +192,7 @@ The analysis runs in five passes, all on aggregate tables:
 
 ### Does the p^n model hold?
 
-{/* TODO: data. Chart 2, "Observed vs predicted completion". Line chart. X axis: step number (log scale if runs extend past 150). Y axis: share of runs still going (survival). Series 1: observed survival, Kaplan-Meier style, treating runs that hit the step budget as censored at the budget rather than failed. Series 2: p^n with p fitted from the data (p = 1 minus total failures divided by total steps run, excluding budget stops). Export columns: step, runs_at_risk, failures_at_step, observed_survival, predicted_survival. Also export the per-step failure rate (hazard) by step bucket so readers can see whether it is flat, falling, or rising. */}
+{/* TODO: data. Chart 2, "Observed vs predicted completion". Line chart. X axis: step number (log scale if the longest runs are far past the median). Y axis: share of runs still going (survival). Series 1: observed survival, Kaplan-Meier style, treating runs that hit the step budget as censored at the budget rather than failed. Series 2: p^n with p fitted from the data (p = 1 minus total failures divided by total steps run, excluding budget stops). Export columns: step, runs_at_risk, failures_at_step, observed_survival, predicted_survival. Also export the per-step failure rate (hazard) by step bucket so readers can see whether it is flat, falling, or rising. */}
 
 The test is simple to state. If each step fails at the same rate regardless of how far into the run it is, the share of runs still going after n steps should follow p^n, where p is the per-step success rate. Our observed per-step success was [p], and the observed curve [tracks / falls below / sits above] the prediction. {/* TODO: data */}
 
@@ -202,7 +202,7 @@ The test is simple to state. If each step fails at the same rate regardless of h
 
 | Failure type        | Failed runs | Retried within 24 hours | Retry completed | Median retry ratio |
 | ------------------- | ----------- | ----------------------- | --------------- | ------------------ |
-| Reached step budget | [n]         | [%]                     | [%]             | [x]                |
+| Reached step limit  | [n]         | [%]                     | [%]             | [x]                |
 | Errored             | [n]         | [%]                     | [%]             | [x]                |
 | No answer           | [n]         | [%]                     | [%]             | [x]                |
 | All failures        | [n]         | [%]                     | [%]             | [x]                |
@@ -229,7 +229,7 @@ We wrote this section before seeing the numbers, so it covers the outcomes we th
 
 **If terminal steps fail most,** look at long-running commands. Sandbox commands share a five-minute runtime cap on every plan ([terms](/terms/)), so a long data job should be split into shorter commands that write results to files as they go.
 
-**If many runs end at the step budget,** the plan limit is binding for real work, not just in theory. Split the job or choose a plan with a bigger budget. We will report this honestly even though it is a commercial finding about our own plans.
+**If many runs ended at the step limit,** the plan limit in place at the time was binding for real work, not just in theory. We will report this honestly even though it is a commercial finding about our own plans.
 
 **If scheduled runs stop to ask questions far more than chat runs,** the instructions are missing inputs that a person would normally supply in conversation. Put every input the job needs into the instructions or a workspace file before you schedule it.
 
@@ -242,7 +242,7 @@ Our earlier piece, [your agent has a half-life](/blog/agent-task-half-life/), wo
 Three things make the comparison less direct than it sounds, and we account for each.
 
 - **Steps are not minutes.** Ord measures task length in the minutes a human would need. We measure it in agent steps. A constant rate per step and a constant rate per human-minute are only the same model if steps take roughly equal human time, which they do not. We test the per-step version because it is the one a buyer can act on.
-- **The step budget cuts runs off.** A Lite run cannot go past 50 steps. Counting those stops as failures would make long runs look worse than they are, so the survival curve treats them as censored and the outcome tables count them separately.
+- **The step limit cut some runs off.** Runs in the period could stop at the plan limit in place at the time. Counting those stops as failures would make long runs look worse than they are, so the survival curve treats them as censored and the outcome tables count them separately.
 - **People choose which jobs to give an agent.** If users only hand long jobs to agents they already trust, long runs will look more reliable than they would be on a random job. We cannot correct for that, so we name it.
 
 If the observed curve tracks p^n, the practical advice from the half-life post stands with real data behind it. If it does not, we will say which direction it misses and update that post to link here. {/* TODO: data. Update /blog/agent-task-half-life/ with a one-line link to this report once published. */} For your own jobs, the [agent reliability calculator](/blog/agent-reliability-calculator/) turns a per-step success rate and a step count into an expected completion rate. {/* TODO: data. Once the observed per-step success is known, consider offering it as a preset in the calculator. */}
@@ -264,7 +264,7 @@ The aggregate tables behind every chart are available as a CSV download. {/* TOD
 Whatever the tables show, four questions decide whether a failed run costs you a few minutes or the whole job. Ask them of any agent you are considering. This is how Construct answers them.
 
 - **Does finished work survive a stopped run?** Construct saves reports, spreadsheets, and scripts to workspace files as it produces them. A run that stops at step 30 still leaves steps 1 to 29 behind, so the next run can start from what is already there instead of starting over.
-- **Is the step budget big enough for your job?** Construct meters steps per task: up to 50 on Lite, 150 on Starter, and 1,000 on Pro ([pricing](/pricing/)). Count your job's steps against that before you schedule it, and split anything longer into pieces that each leave a file.
+- **Can a long job be split?** Cut anything long into pieces that each save their work to a file, so a failure costs one piece and the next run starts from the files already there.
 - **Does it keep working when nobody is watching?** Calendar schedules run on Construct's servers with your laptop closed: 3 scheduled tasks on Lite, 10 on Starter, and 50 on Pro. A scheduled run reports back in the web app with a notification.
 - **Can you correct what it relied on?** If a run went wrong because the agent used an outdated fact, open its memory, correct or forget the fact, and every later run uses the fix.
 - **Can you find where it stopped?** Activity records each action with a short reason, which is usually enough to see the step a run stopped on. It covers a limited window, so have important jobs append a line to a run log file as well.
@@ -303,14 +303,14 @@ Then test it on your own work. Pick the job you most want to hand to an agent an
 
 <BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
 
-Start with one recurring job that has a clear output, such as a Monday competitor price check: save the three pricing URLs in a workspace file, ask Construct to record each plan and price in a dated CSV and compare it with last week's file, check the first result, then put it on the Calendar. Start on [Lite at $9](/pricing/), or try Pro free for seven days to test longer runs.
+Start with one recurring job that has a clear output, such as a Monday competitor price check: save the three pricing URLs in a workspace file, ask Construct to record each plan and price in a dated CSV and compare it with last week's file, check the first result, then put it on the Calendar. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
 
 ## Sources
 
 - [Toby Ord, "Is there a half-life for the success rates of AI agents?", arXiv:2505.05115](https://arxiv.org/abs/2505.05115)
 - [Cemri et al., "Why Do Multi-Agent LLM Systems Fail?", arXiv:2503.13657](https://arxiv.org/abs/2503.13657)
 - [METR, measuring AI ability to complete long tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)
-- [Construct plans and step limits](/pricing/)
+- [Construct plans](/pricing/)
 
 {/* TODO: data. Add the terms or privacy clause covering aggregate statistics to this list once confirmed. */}
 

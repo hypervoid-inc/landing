@@ -83,13 +83,13 @@ When the agent calls the terminal tool, we resolve a sandbox:
 sandbox = getSandbox(SANDBOX_BINDING, instanceKeyFor(user, workspace), {
     transport:            rpc,
     enableDefaultSession: false,          # every exec is a fresh shell
-    sleepAfter:           idleWindowFor(plan),
+    sleepAfter:           commandMax + buffer,
 })
 ```
 
 Instance key scoped to user, or workspace when we know it. Not per agent. Not per session. Live containers track active humans, not agent count. Matters the moment somebody spawns twelve agents and goes to lunch.
 
-`sleepAfter` is the pivot. Ten minutes idle and the box is gone. We call that a feature. You can call it edging. Same config value. The idle window is the plan's command ceiling in minutes, clamped by a global 300-second cap, plus a five minute buffer. That resolves to a ten minute sleep on every plan today. Pair with active CPU billing on Cloudflare Containers - charged for CPU consumed, not wall-clock uptime - and an idle sandbox stops being something you manage.
+`sleepAfter` is the pivot. Ten minutes idle and the box is gone. We call that a feature. You can call it edging. Same config value. The idle window is the command cap, 300 seconds on every plan, plus a five minute buffer. That resolves to a ten minute sleep. Pair with active CPU billing on Cloudflare Containers - charged for CPU consumed, not wall-clock uptime - and an idle sandbox stops being something you manage.
 
 Difference between "we should build a reaper for idle machines" and "there is nothing to reap." One is a roadmap item forever. The other is a config value.
 

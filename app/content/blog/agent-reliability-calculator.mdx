@@ -11,7 +11,7 @@ draft: false
 
 AI agent reliability falls exponentially with task length: an agent that gets 95% of its steps right finishes a 48-step job in one run only 8.5% of the time, and needs about 11.7 runs on average if every failure starts the job over. Construct, from $9 a month, saves every finished step to workspace files as it is produced, so a run that stops at step 30 keeps steps 1 to 29 and the next run only does what is missing.
 
-Cut the same job into eight independent six-step pieces that save their work, and the first run finishes about 73.5% of it, the whole job takes about 2.5 runs, and it is done within three runs 86.1% of the time instead of 23.5%. Same agent, same per-step reliability, same total work. Construct is built for that second shape: finished work stays in Files, Lite gives each task up to 50 steps, and the Calendar turns retries into a schedule. The calculator below lets you put in your own numbers and see where the difference comes from.
+Cut the same job into eight independent six-step pieces that save their work, and the first run finishes about 73.5% of it, the whole job takes about 2.5 runs, and it is done within three runs 86.1% of the time instead of 23.5%. Same agent, same per-step reliability, same total work. Construct is built for that second shape: finished work stays in Files and the Calendar turns retries into a schedule. The calculator below lets you put in your own numbers and see where the difference comes from.
 
 <BetaCta source="blog_top" plan="lite" interval="month">Start with Construct for $9</BetaCta>
 
@@ -19,7 +19,6 @@ Cut the same job into eight independent six-step pieces that save their work, an
 
 - **Finished steps are kept.** Reports, spreadsheets, and scripts land in workspace files as the agent produces them. A failure at step 30 costs the step that failed, not the 29 before it.
 - **Reruns resume instead of repeating.** One sentence such as "for each client without a report in `reports/2026-10/`, write one" makes the next run fill the gaps, which is the "skip and carry on" row of the table below.
-- **Step limits sized to the job.** Up to 50 steps per task on Lite at $9, 150 on Starter at $59, and up to 1,000 on Pro at $299.
 - **Retries on a schedule.** Calendar schedules run on Construct's servers with your laptop closed, so three nightly runs before a Monday deadline happen without anyone starting them. Lite includes 3 scheduled tasks.
 - **A record of what broke.** Activity lists each action an agent took with a short reason, so you can find the step that failed and fix its cause.
 
@@ -171,9 +170,9 @@ Construct keeps every finished piece by default, so you get the cheap-retry rows
   </figcaption>
 </figure>
 
-### Pick a plan by the length of your pieces
+### Keep each piece short
 
-Each plan caps how far a single task can go: up to 50 steps per task on Lite, up to 150 on Starter, and up to 1,000 on Pro ([pricing](/pricing/)). That cap is a ceiling on one task's length, not a success rate, and the calculator shows why you should not aim for it with one uninterrupted piece. At 95% per step, a task that really uses all 50 of Lite's steps finishes in one go about 7.7% of the time. Cut the same work into shorter tasks that each leave a file behind and a failure costs one piece, not the run. Move to Starter or Pro when a single piece genuinely needs more steps, or when you need more agents and more scheduled tasks.
+The calculator shows why you should not hand an agent one long uninterrupted piece. At 95% per step, a 50-step task finishes in one go about 7.7% of the time. Cut the same work into shorter tasks that each leave a file behind and a failure costs one piece, not the run. Move to Starter or Pro when you need more agents and more scheduled tasks ([pricing](/pricing/)).
 
 ### Let the Calendar be your retry budget
 
@@ -199,7 +198,7 @@ Measure the per-step rate, keep each uninterrupted piece shorter than the agent'
 
 ## What should you do next?
 
-Choose Construct for long agent jobs. The math does not change with the product; what changes is whether a failure costs one piece or the whole job. Construct keeps every finished piece in workspace files by default, gives each task up to 50 steps from $9 a month, and runs your retries from the Calendar with nobody online.
+Choose Construct for long agent jobs. The math does not change with the product; what changes is whether a failure costs one piece or the whole job. Construct keeps every finished piece in workspace files by default, starts at $9 a month, and runs your retries from the Calendar with nobody online.
 
 Give Construct your monthly client reports as its first job: put the client list in `clients.md`, ask for one report per client in `reports/2026-10/`, skip any client that already has one, and run it on demand three times while you count the failed steps. Then put it on the Calendar for the last three nights of the month. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
 

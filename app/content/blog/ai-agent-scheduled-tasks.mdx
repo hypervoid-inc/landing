@@ -65,7 +65,7 @@ Construct takes the timing side off your hands. You pick presets such as **Every
 - **Agent jobs repeat at most every 15 minutes.** Schedules that only send a notification or run an app tool can repeat every minute. For anything that must react the moment it happens, forward it to the agent's [own email address](/blog/ai-agent-email-address/): mail from your own address starts a run without waiting for a schedule.
 - **Write jobs that check before they act.** Construct delivers a scheduled run at least once, not exactly once, so the prompt in step 2 stops if today's file already exists.
 - **Keep sends out of the job until it has proved itself.** Scheduled runs do not pause for approval, so ask for drafts or files and send anything external yourself.
-- **Size the job to your plan.** Each run is limited by steps per task: 50 on Lite, 150 on Starter, and up to 1,000 on Pro. Split a long job into two scheduled tasks, or move up a plan.
+- **Keep long jobs in pieces.** Split a long job into two scheduled tasks, and have each one save a file after every piece so a stopped run loses little.
 - **Construct's Calendar sets the schedule.** Your connected Google Calendar is something the agent can read and update, not where schedules live.
 
 ## How do you set up AI agent scheduled tasks in Construct?
@@ -183,7 +183,7 @@ After the first week, check four things yourself: that **Recent fires** shows on
 
 Start with the job that breaks most often when your laptop sleeps, such as an OpenClaw cron job or a local desktop task.
 
-1. **Start on Lite for $9, or take the 7-day Pro trial** if the job needs more than 50 steps.
+1. **Start on Lite for $9, or take the 7-day Pro trial.**
 2. **Paste the job's instructions** into a Construct chat, and move the files it reads into the workspace.
 3. **Connect the apps** it touches from the integration catalog.
 4. **Run it once and check the file** it saves, as in step 1 above.

@@ -46,7 +46,7 @@ We build Construct. This is our editorial comparison of documented capabilities 
 | Capability                | Construct                                                                                        | Lindy                                                                          |
 | ------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | Entry price               | $9 a month (Lite)                                                                                | From $29.99 a month per active user (Team)                                     |
-| Pricing model             | One monthly plan for the workspace, sized by usage, agents, and steps per task                   | Per user, with credits pooled across the workspace                             |
+| Pricing model             | One monthly plan for the workspace, sized by usage, agents, and scheduled tasks                  | Per user, with credits pooled across the workspace                             |
 | Team use                  | Team workspaces with Owner, Admin, and Member roles; no member limit and no per-seat fee         | Anyone who uses Lindy, including by @mention in Slack, is a billed active user |
 | Model                     | Bundled models, or your own keys for OpenRouter, OpenAI, Anthropic, Bedrock, and xAI on Pro      | Choice of model for each task on Team; own API keys not documented             |
 | Memory                    | Inspect, correct, or forget any stored fact                                                      | Memory files you can edit, with version history                                |
@@ -68,14 +68,14 @@ Construct is priced per plan, not per person. Lindy is priced per active user, w
 
 <ArticleTable caption="Monthly prices for Construct and Lindy, checked October 11, 2026">
 
-| Plan              | Monthly price               | What you get                                                                                   |
-| ----------------- | --------------------------- | ---------------------------------------------------------------------------------------------- |
-| Construct Lite    | $9                          | Up to 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, agent email address                      |
-| Construct Starter | $59                         | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                          |
-| Construct Pro     | $299                        | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your own keys |
-| Lindy Free        | $0                          | $50 in credits that last 7 days, no card                                                       |
-| Lindy Team        | From $29.99 per active user | 3,000 credits per user, pooled across the team                                                 |
-| Lindy Enterprise  | Custom                      | Adds HIPAA with a signed BAA, SSO, audit logs, dedicated support                               |
+| Plan              | Monthly price               | What you get                                                                    |
+| ----------------- | --------------------------- | ------------------------------------------------------------------------------- |
+| Construct Lite    | $9                          | Up to 2 agents (Construct and one more), 3 scheduled tasks, agent email address |
+| Construct Starter | $59                         | 6x Lite usage, up to 5 agents, 10 scheduled tasks                               |
+| Construct Pro     | $299                        | 32x Lite usage, up to 15 agents, 50 scheduled tasks, your own keys              |
+| Lindy Free        | $0                          | $50 in credits that last 7 days, no card                                        |
+| Lindy Team        | From $29.99 per active user | 3,000 credits per user, pooled across the team                                  |
+| Lindy Enterprise  | Custom                      | Adds HIPAA with a signed BAA, SSO, audit logs, dedicated support                |
 
 </ArticleTable>
 
@@ -180,7 +180,7 @@ Here is how the Construct side runs, as an illustrative walkthrough rather than 
 
 You do not have to give up Lindy. Start with the one recurring job that costs you the most credits, or the one your teammates need to see as a file.
 
-1. **Start on Lite for $9, or take the 7-day Pro trial** to test your own model keys and longer runs.
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test your own model keys.
 2. **Copy the instructions and Routine prompt** into a Construct chat, along with any Lindy memory you want to keep, and move the source files into the workspace.
 3. **Connect the apps** the job needs from the integration catalog, or add them as custom MCP tools.
 4. **Run it once and check the result** in Files.

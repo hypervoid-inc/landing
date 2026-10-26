@@ -479,7 +479,7 @@ export const postCards: Record<string, OgCard> = {
   },
   "blog-ai-agent-vs-zapier": {
     title: "Zapier tasks vs *agent steps*, priced",
-    deck: "A Zap caps at 100 steps; Construct Pro runs up to 1,000.",
+    deck: "A Zap caps at 100 steps; Construct plans its own at run time.",
     figure: {
       kind: "bars",
       label: "Monthly price",
@@ -515,7 +515,7 @@ export const postCards: Record<string, OgCard> = {
           text: "$299",
         },
       ],
-      note: "Zapier meters *tasks*; Construct meters steps per task",
+      note: "Zapier meters *tasks*; Construct is a fixed monthly price",
     },
   },
   "blog-ai-agent-with-its-own-computer": {
@@ -1526,7 +1526,7 @@ export const postCards: Record<string, OgCard> = {
   },
   "blog-construct-vs-zapier": {
     title: "Construct vs *Zapier*, Make and n8n",
-    deck: "Pro runs up to 1,000 steps per task for $299 a month.",
+    deck: "Plans start at $9 a month, priced per plan rather than per seat.",
     figure: {
       kind: "contrast",
       left: {
@@ -1544,7 +1544,7 @@ export const postCards: Record<string, OgCard> = {
         items: [
           "Works it out at run time",
           "Reads the odd input itself",
-          "Meters *steps per task*",
+          "Fixed *monthly price*",
         ],
       },
     },
@@ -2221,17 +2221,17 @@ export const postCards: Record<string, OgCard> = {
     eyebrow: "Research",
     figure: {
       kind: "statement",
-      big: "1,000",
-      unit: "steps",
-      text: "The longest run Pro allows. The study places every failure as a *share of the step budget*, so early and late mean the same on every plan.",
+      big: "9",
+      unit: "categories",
+      text: "Every step is filed under one tool category, from *Browser* to *Delegation*, so each failure lands on the tool the agent was using.",
       lines: [
         {
-          label: "Lite step budget",
-          value: "50 steps",
+          label: "Plans covered",
+          value: "Lite, Starter and Pro",
         },
         {
-          label: "Starter step budget",
-          value: "150 steps",
+          label: "Smallest cell shown",
+          value: "20 runs",
         },
       ],
     },
@@ -2570,21 +2570,21 @@ export const pageCards: Record<string, OgCard> = {
           brand: "Construct",
           price: "$9",
           unit: "/mo",
-          line: "2 agents, 50 steps per task",
+          line: "2 agents, 3 schedules",
         },
         {
           name: "Starter",
           brand: "Construct",
           price: "$59",
           unit: "/mo",
-          line: "5 agents, 150 steps per task",
+          line: "5 agents, 10 schedules",
         },
         {
           name: "Pro",
           brand: "Construct",
           price: "$299",
           unit: "/mo",
-          line: "15 agents, 1,000 steps, BYOK",
+          line: "15 agents, 50 schedules, BYOK",
         },
       ],
     },

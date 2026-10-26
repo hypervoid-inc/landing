@@ -581,9 +581,11 @@ export const brandName = {
  * Copy to reuse. Written from what the product does today, checked against
  * the pricing and FAQ on this site, and drawn from the launch on Product Hunt
  * and the founder-verified SaaSHub listing, whose older lines (a free plan,
- * launch discounts, a 7-day trial) are deliberately left behind. New users
- * get a free usage allowance (`v2/apps/api/src/domain/billing/free-allowance.ts`);
- * its size is never published, so the copy only says "free credits".
+ * launch discounts) are deliberately left behind. There are two ways to try
+ * it, and both are current. Every new user gets a free usage allowance with
+ * no time limit (`v2/apps/api/src/domain/billing/free-allowance.ts`); its size
+ * is never published, so the copy only says "free credits". Pro checkout also
+ * starts a 7-day trial.
  */
 
 /** Headlines already in use across the site, banners and launch. */
@@ -719,7 +721,7 @@ export const brandFaq: readonly BrandQuestion[] = [
   {
     question: "Can I try it for free?",
     answer:
-      "Yes. New users get free credits to try Construct Computer before choosing a plan. When the credits run out, a subscription keeps your agents working, starting with Lite at $9 a month.",
+      "Yes. New users get free credits to try Construct Computer before choosing a plan, with no time limit. When the credits run out, a subscription keeps your agents working, starting with Lite at $9 a month, and Pro starts with a 7-day trial.",
   },
   {
     question: "Does it keep working when my laptop is closed?",

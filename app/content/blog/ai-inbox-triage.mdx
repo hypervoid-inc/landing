@@ -48,7 +48,7 @@ The big vendors are adding the same guardrail. On September 23, 2026, Microsoft 
 
 ## What do you need?
 
-- **A Construct plan.** Lite ($9 a month) includes 3 scheduled tasks and up to 50 steps per task. A run that labels and drafts dozens of emails can need more steps than that; Starter ($59) allows 150 per task. See [pricing](/pricing/).
+- **A Construct plan.** Lite ($9 a month) includes 3 scheduled tasks. See [pricing](/pricing/).
 - **Gmail connected** from the App Store in Construct. Read our guide to [letting an AI agent use your Gmail safely](/blog/ai-agent-gmail-access-safely/) first; it covers which account to connect and how to limit which agents can use it.
 - **Three Gmail labels**, which the agent can create for you: Reply needed, FYI, and Later.
 - **Twenty minutes** to check the first two runs closely.
@@ -58,7 +58,7 @@ The big vendors are adding the same guardrail. On September 23, 2026, Microsoft 
 - **Drafts-only is a rule you give.** The Gmail connection can send and delete, with no read-only mode yet, so keep "never send, archive, trash, or delete" in memory and in every scheduled prompt, as the prompts below do.
 - **Your drafts are the review.** Scheduled runs do not pause for approval, so nothing goes out until you send a draft yourself.
 - **Triage runs on its schedule, not the moment mail arrives.** An agent job can repeat at most every 15 minutes; for most inboxes, one morning run plus an optional midday run is enough.
-- **Size the batch to the plan.** If a run stops at Lite's step limit, narrow the window to 12 hours or move to Starter, then ask the agent to finish the emails it did not reach.
+- **Keep the batch small.** If a run stops partway, narrow the window to 12 hours, then ask the agent to finish the emails it did not reach.
 - **Give it a week to learn your voice.** Early drafts sound generic. Corrections in memory, and examples of replies you liked, improve them.
 
 ## How do you set up AI email triage in Construct?
@@ -163,7 +163,7 @@ Judge it on your own inbox. At the end of the first five weekdays, check these f
 
 - **Label accuracy.** Open each label and count the emails you would have filed differently. Add a rule for each pattern you find.
 - **Drafts sent unchanged.** If you rewrite most of them, give the agent two or three replies you liked as examples of your voice.
-- **Steps used.** If any run stopped at the step limit, narrow the window or move to Starter.
+- **Finished runs.** If any run stopped partway, narrow the window.
 - **Unwanted actions.** Sent, Trash, and All Mail should show nothing from the agent beyond labels and drafts.
 - **Minutes saved.** Compare the time you spend reading drafts with the time the inbox used to take.
 
@@ -171,7 +171,7 @@ Judge it on your own inbox. At the end of the first five weekdays, check these f
 
 **Important mail landed in Later.** Add an explicit rule naming the sender or domain, and check that the Memories app shows the updated rules.
 
-**A run stopped partway.** It probably hit the plan's steps per task. Narrow the window to the last 12 hours, or move to Starter.
+**A run stopped partway.** Narrow the window to the last 12 hours, then ask the agent to finish the emails it did not reach.
 
 **Drafts appear as new emails instead of replies.** Ask for "a draft reply on the same thread, with the same subject" and check that the agent is replying to the latest message in it.
 

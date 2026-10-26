@@ -303,8 +303,8 @@ function CostResults({ result }: { result: CostResult }) {
       </div>
       <p className="mt-3 text-[12px] leading-5 text-[#526b75]">
         Monthly list prices from the pricing page. Plans differ in usage,
-        agents, steps per task, and scheduled tasks, and this calculator cannot
-        tell which plan your workload needs.
+        agents, and scheduled tasks, and this calculator cannot tell which plan
+        your workload needs.
       </p>
     </>
   );

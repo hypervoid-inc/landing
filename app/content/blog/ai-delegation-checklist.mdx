@@ -143,7 +143,6 @@ We make Construct, so here is how each group of the checklist maps to the produc
 | Inputs          | Files in the workspace, plus apps connected from the integration catalog               | A missing connection stops a workflow step with "Needs you", naming the app to connect                             |
 | Standing rules  | Memories, where each fact can be read, corrected or forgotten, with its history        | A wrong rule is corrected once and later runs use the corrected version                                            |
 | What done means | Output saved to workspace files as it is produced                                      | A run that stops early keeps the files it already wrote                                                            |
-| Step budget     | Up to 50 steps per task on Lite, 150 on Starter, 1,000 on Pro                          | A workflow step that runs out stops with "Needs you: it ran out of steps before finishing"                         |
 | Stop and ask    | The agent asks a question in the chat and waits                                        | In a workflow run, a question nobody answers stops that step and its reply says what it needs                      |
 | Review          | Activity: each action, what it touched, when, and the agent's reason, kept for 30 days | Export Activity as CSV or JSON for your own records                                                                |
 | Cannot undo     | Drafts, and the agent's own email address for internal mail                            | Workflows have no step that pauses for a person's approval, so keep sends as drafts                                |
@@ -151,11 +150,9 @@ We make Construct, so here is how each group of the checklist maps to the produc
 
 </ArticleTable>
 
-Three details change how you write the brief. First, the step budget is a hard edge for workflows: in chat and in a scheduled prompt, Construct can keep going on an unfinished task and then pauses with a button to continue, but a workflow step that hits the limit stops and waits for you. Size the job so it fits, or split it.
+Two details change how you write the brief. First, there is no approval step that pauses a workflow for a person. Workflows run their steps in order and none of those steps waits for a person to sign off, so the "draft only" line in your brief does that job. Outbound email from the agent's own address is also capped per day, which limits how far a mistake can travel but is no substitute for drafts.
 
-Second, there is no approval step that pauses a workflow for a person. Workflows run their steps in order and none of those steps waits for a person to sign off, so the "draft only" line in your brief does that job. Outbound email from the agent's own address is also capped per day, which limits how far a mistake can travel but is no substitute for drafts.
-
-Third, chat channels start closed. When you connect Slack, Telegram or Discord, access defaults to "Only people I allow", so a stranger in a shared channel cannot hand your agent a job.
+Second, chat channels start closed. When you connect Slack, Telegram or Discord, access defaults to "Only people I allow", so a stranger in a shared channel cannot hand your agent a job.
 
 ## The first 30 days
 
@@ -202,13 +199,13 @@ Week two is where most of the value starts, because the recurring job is the one
 
 Expand when a job has run four or more times with only small corrections, you are reviewing rather than redoing, and you can name the next job on your list. That is our rule of thumb, not a measured threshold.
 
-Change plans when a limit stops you, not the agent. Jobs that keep stopping at Lite's 50 steps fit Starter's 150. More than 3 schedules needs Starter (10) or Pro (50). Separate agents for separate areas of the business means more than Lite's 2. Your own model keys are Pro only. [How much an AI agent costs per month](/blog/how-much-does-an-ai-agent-cost/) shows where each plan runs out for a heavy user.
+Change plans when a limit stops you, not the agent. More than 3 schedules needs Starter (10) or Pro (50). Separate agents for separate areas of the business means more than Lite's 2. Your own model keys are Pro only. [How much an AI agent costs per month](/blog/how-much-does-an-ai-agent-cost/) shows where each plan runs out for a heavy user.
 
 Take a job back when you are still rewriting most of its output by week three. Move it to on demand, tighten the brief, and put each correction into Memories. A job that must react within seconds of an event in another app is a better fit for a trigger-based automation tool.
 
 ## How we checked this
 
-The Construct rows in this guide were checked against Construct's source code on October 26, 2026: plan limits, the step limit and its "Needs you" messages, the workflow model (steps run in order, none waits for a person's approval), the daily email cap, Activity retention and export, Memories correction and history, Stop and Stop all, and the default access setting for chat channels. Plan prices and limits match the [pricing page](/pricing/). Outside quotes were checked against the linked pages on October 26, 2026. Gartner's newsroom blocked our fetch, so its prediction is paraphrased from the release as cited in our earlier posts and as reported by IT Brief on June 25, 2025, without quotation marks.
+The Construct rows in this guide were checked against Construct's source code on October 26, 2026: plan limits, the "Needs you" messages, the workflow model (steps run in order, none waits for a person's approval), the daily email cap, Activity retention and export, Memories correction and history, Stop and Stop all, and the default access setting for chat channels. Plan prices and limits match the [pricing page](/pricing/). Outside quotes were checked against the linked pages on October 26, 2026. Gartner's newsroom blocked our fetch, so its prediction is paraphrased from the release as cited in our earlier posts and as reported by IT Brief on June 25, 2025, without quotation marks.
 
 ## Sources
 

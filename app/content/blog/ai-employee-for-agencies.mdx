@@ -58,7 +58,7 @@ For a five-person agency, a useful split looks like this:
 - **Clients see nothing unreviewed.** Construct's workflows do not pause for approval yet, so keep "do not send" in every report and brief prompt, and send approved work yourself, or from your connected Gmail once a person has approved the draft. The review queue in step 4 is your approval step.
 - **Client content is information, not instructions.** A client's email or a page the agent reads can contain text that looks like an instruction, so tell the agent to treat it as information. {/* TODO: link /blog/ai-agent-prompt-injection/ once it is live */}
 - **Keep Slack access to the people you choose.** Messaging settings default to "Only people I allow." If you share channels with clients, keep it that way; opening access to everyone gives unlisted people a read-only guest agent that cannot touch files, email, apps, the browser, or the terminal.
-- **Split long client lists.** Lite allows up to 50 steps per task and Starter 150, so more than a handful of clients goes into two scheduled jobs.
+- **Split long client lists.** Put more than a handful of clients into two scheduled jobs, with each report saved as it finishes, so a stopped run loses little.
 - **It prepares the words, numbers, and admin.** Construct does not answer calls or produce finished designs; your designers keep their tools, and the agent handles the work around them.
 - **The queue is your lasting record.** Activity shows what each agent did over a recent window and can be filtered and exported; the review queue records who approved what.
 
@@ -86,7 +86,7 @@ Draft this week's report for Acme. Use the CSV I uploaded to Files/clients/acme/
 
 Read it against the client's real dashboards. When it is right for one client, ask for all of them in one run, then save that run as a workflow. Construct can offer to save a successful run as a workflow draft; it never publishes or schedules one on its own. Once three Fridays come out clean, schedule it for Friday morning.
 
-Current workflows are linear: no branching, delays, or approval steps. A workflow that loops over clients does so inside an agent step, which means a big client list can hit the step budget. Lite allows up to 50 steps per task, Starter 150. If you have more than a handful of clients, split them into two scheduled jobs.
+Current workflows are linear: no branching, delays, or approval steps. A workflow that loops over clients does so inside an agent step, which means a big client list makes for a long run. If you have more than a handful of clients, split them into two scheduled jobs.
 
 ## Step 3: Turn kickoff notes into briefs
 
@@ -172,7 +172,7 @@ After a month you should have, per client, a folder of dated report drafts with 
 
 **The agent used last client's tone.** Each report run should name the client folder explicitly. Check the remembered rules for that client in Memories.
 
-**A run stopped partway through the client list.** It probably hit the step limit. Finished reports are already saved, so split the list into two jobs rather than rerunning everything.
+**A run stopped partway through the client list.** Finished reports are already saved, so split the list into two jobs rather than rerunning everything.
 
 **The queue app shows nothing.** Ask the agent to open the app and check its recent errors; it can repair the source and rebuild while the last good version stays in place.
 

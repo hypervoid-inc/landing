@@ -105,18 +105,15 @@ Then there is your time. OpenClaw's own docs say "Sandboxing and exec approvals 
 
 <ArticleTable caption="Construct plans and limits, from the pricing page and Construct's source code, October 26, 2026">
 
-| Limit                        | Lite          | Starter     | Pro          |
-| ---------------------------- | ------------- | ----------- | ------------ |
-| Price, monthly               | $9            | $59         | $299         |
-| Price, billed yearly         | $7.50 a month | $39 a month | $199 a month |
-| Model usage                  | Base          | 6x Lite     | 32x Lite     |
-| Agents                       | 2             | 5           | 15           |
-| Steps per task               | 50            | 150         | 1,000        |
-| Scheduled tasks              | 3             | 10          | 50           |
-| Parallel background jobs     | 2             | 4           | 8            |
-| Chats one agent runs at once | 1             | 5           | 15           |
-| Cloud storage                | 100 MB        | 1 GB        | 3 GB         |
-| Your own model keys          | No            | No          | Yes          |
+| Limit                | Lite          | Starter     | Pro          |
+| -------------------- | ------------- | ----------- | ------------ |
+| Price, monthly       | $9            | $59         | $299         |
+| Price, billed yearly | $7.50 a month | $39 a month | $199 a month |
+| Model usage          | Base          | 6x Lite     | 32x Lite     |
+| Agents               | 2             | 5           | 15           |
+| Scheduled tasks      | 3             | 10          | 50           |
+| Cloud storage        | 100 MB        | 1 GB        | 3 GB         |
+| Your own model keys  | No            | No          | Yes          |
 
 </ArticleTable>
 
@@ -126,7 +123,7 @@ When a window runs out, chat shows "Session usage limit reached" or "Monthly usa
 
 The included usage stretches as far as it does because of the model choice. Construct runs agent turns on Claude Haiku 5.5 first and falls back to DeepSeek V4.1 Flash, GLM-5.3-Flash and Gemini 3.8 Flash automatically when it cannot use Haiku. In our own test on October 25, 2026, 14 tasks run three times each, Haiku 5.5 passed 37 of 42 runs and Sonnet 5.5 passed 38, at 19 times the cost per success.
 
-The other limits that bite are concrete. Lite runs one chat per agent at a time: start a second while the first is still working and Construct refuses it and names the chat that is busy. Terminal commands currently stop after five minutes on every plan, so a long data job needs splitting. And the agent's own inbox has a daily sending limit, lower on Lite than on Starter and Pro. New accounts get a small one-time allowance on Lite's limits before choosing a plan, and Pro has a 7-day trial.
+The other limits that bite are concrete. Terminal commands currently stop after five minutes on every plan, so a long data job needs splitting. And the agent's own inbox has a daily sending limit, lower on Lite than on Starter and Pro. New accounts get a small one-time allowance on Lite's limits before choosing a plan, and Pro has a 7-day trial.
 
 ## How does it compare with a virtual assistant?
 
@@ -155,7 +152,7 @@ Cheapest on paper is rarely cheapest in a busy month. Price the week your agent 
 
 ## How we checked this
 
-Competitor prices and quotes were read on the vendors' own pages on October 26, 2026: Lindy, Manus (help center pricing marked "updated this week"), Viktor, CellCog's pricing, billing guide and terms, Claude, the X Subscription docs, Google's subscriptions and help pages, Trustpilot, and the API pricing pages for Anthropic, DeepSeek, Google and OpenAI. OpenAI's ChatGPT pages blocked our fetch, so its plan details rely on SiliconANGLE and Codersera. Construct's limits were checked in its source code on the same day: plan limits, the four-hour and monthly usage windows and their ratios, the limit messages, the scheduled-run behaviour, the Model source options, the model fallback order, concurrency and daily email caps, the five-minute command timeout, and the benchmark notes behind the model choice. The token table is arithmetic on stated assumptions, not a measured run.
+Competitor prices and quotes were read on the vendors' own pages on October 26, 2026: Lindy, Manus (help center pricing marked "updated this week"), Viktor, CellCog's pricing, billing guide and terms, Claude, the X Subscription docs, Google's subscriptions and help pages, Trustpilot, and the API pricing pages for Anthropic, DeepSeek, Google and OpenAI. OpenAI's ChatGPT pages blocked our fetch, so its plan details rely on SiliconANGLE and Codersera. Construct's limits were checked in its source code on the same day: plan limits, the four-hour and monthly usage windows and their ratios, the limit messages, the scheduled-run behaviour, the Model source options, the model fallback order, daily email caps, the five-minute command timeout, and the benchmark notes behind the model choice. The token table is arithmetic on stated assumptions, not a measured run.
 
 ## Sources
 

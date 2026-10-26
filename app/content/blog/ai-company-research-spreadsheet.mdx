@@ -39,7 +39,7 @@ That is why the column spec in step 2 asks for the billing period beside every p
 
 ## What you need
 
-1. **A Construct plan.** Any plan works. Each round of tool calls, such as searches, page fetches and file writes, is a step: Lite allows 50 steps per task, Starter 150 and Pro 1,000 ([pricing](/pricing/)). Batches of ten companies fit any plan.
+1. **A Construct plan.** Any plan works ([pricing](/pricing/)).
 2. **The list.** A CSV, a spreadsheet export or names pasted into chat. Name plus website is best, because names alone are ambiguous.
 3. **A column spec**, decided before the run. Five to eight columns is plenty for a first pass.
 4. **Optionally, a destination app** such as Google Sheets, Airtable or HubSpot, connected from Settings, Connections or from the connect card the agent shows in chat.
@@ -88,7 +88,7 @@ The pilot is good. Research the remaining companies with the same columns and ru
 
 </Prompt>
 
-Because each batch is written as it finishes, a run that stops at its step limit keeps every row already saved, and the next run picks up from the last company. For long lists, ask Construct to split the work across temporary helper agents: Lite runs 2 at once, Starter 4 and Pro 8. Helpers cannot connect apps or ask you questions, which does not matter for public research.
+Because each batch is written as it finishes, a run that stops partway keeps every row already saved, and the next run picks up from the last company. For long lists, ask Construct to split the work across temporary helper agents. Helpers cannot connect apps or ask you questions, which does not matter for public research.
 
 <Prompt>
 
@@ -154,7 +154,7 @@ If you need verified headcounts, funding rounds or contact emails at volume, a d
 
 ## How we checked this
 
-The worked example was filled by hand on 2026-10-26 from the three pricing pages linked in its table, reading their HTML. Construct behaviour was checked the same day in the v2 source: plan limits and parallel background jobs (`billing-constants`), what helper agents cannot do (`tools/leaf-deny.ts`), the CSV check on writes (`tools/native/files-csv-check.ts`), the sandbox's Python packages (`sandbox/Dockerfile`), the page fetch and browser tools (`tools/native/web-fetch.ts`, `browser.ts`) and the CSV preview in Files. Clay's pricing was read on clay.com the same day. We make Construct.
+The worked example was filled by hand on 2026-10-26 from the three pricing pages linked in its table, reading their HTML. Construct behaviour was checked the same day in the v2 source: plan limits (`billing-constants`), what helper agents cannot do (`tools/leaf-deny.ts`), the CSV check on writes (`tools/native/files-csv-check.ts`), the sandbox's Python packages (`sandbox/Dockerfile`), the page fetch and browser tools (`tools/native/web-fetch.ts`, `browser.ts`) and the CSV preview in Files. Clay's pricing was read on clay.com the same day. We make Construct.
 
 ## Sources
 

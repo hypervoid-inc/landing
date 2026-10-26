@@ -22,7 +22,7 @@ This guide gives you six criteria that predict whether a platform survives conta
 - **Memory you can inspect and correct.** Open what Construct has learned, fix one stale fact, or forget it, without wiping the rest.
 - **Reach for internal systems.** A live integration catalog for common business apps, plus custom MCP tools for systems with no public integration.
 - **A team workspace without seats.** Owner, Admin, and Member roles, no member limit, and usage that draws on the owner's plan.
-- **Published limits at a fixed monthly price.** Lite is $9 (2 agents including Construct, 50 steps per task, 3 scheduled tasks), Starter $59, Pro $299 with a 7-day trial, with no per-message billing.
+- **Published limits at a fixed monthly price.** Lite is $9 (2 agents including Construct, 3 scheduled tasks), Starter $59, Pro $299 with a 7-day trial, with no per-message billing.
 
 ## Why most AI agent pilots never reach production
 
@@ -70,7 +70,7 @@ A long chat history is not memory. The useful question is whether a platform can
 
 A published price answers less than it appears to. What predicts whether a plan fits a job is what gets metered: steps per task, scheduled tasks, concurrent background jobs, command runtime, and storage. Two platforms at the same monthly price can support very different workloads, and a plan that looks generous on paper can throttle a deep research task before it finishes.
 
-**How Construct answers:** fixed monthly plans with published limits and no per-message billing. Lite at $9 includes 2 agents (Construct and one more), 50 steps per task, and 3 scheduled tasks; Starter at $59 has 6x Lite's usage, 5 agents, 150 steps, and 10 scheduled tasks; Pro at $299 has 32x Lite's usage, 15 agents, up to 1,000 steps per task, 50 scheduled tasks, and bring-your-own-key support, with a 7-day trial. Each sandbox command can run for up to five minutes on every plan. See [current plans](/pricing/), and ask any vendor for the equivalent numbers rather than the headline price alone.
+**How Construct answers:** fixed monthly plans with published limits and no per-message billing. Lite at $9 includes 2 agents (Construct and one more) and 3 scheduled tasks; Starter at $59 has 6x Lite's usage, 5 agents, and 10 scheduled tasks; Pro at $299 has 32x Lite's usage, 15 agents, 50 scheduled tasks, and bring-your-own-key support, with a 7-day trial. Each sandbox command can run for up to five minutes on every plan. See [current plans](/pricing/), and ask any vendor for the equivalent numbers rather than the headline price alone.
 
 <BetaCta source="blog_inline_1" plan="pro" interval="month">Try Construct Pro free for 7 days</BetaCta>
 
@@ -89,7 +89,7 @@ Bring these questions into a vendor call before you commit time to a pilot. Each
 3. **Is "audit trail" a forensic log or a readable summary?** Construct: Activity is a readable record of each action with a short reason, stated as such, not an immutable forensic log.
 4. **Can we reach a system you do not already integrate with?** Construct: yes, through custom MCP servers, without waiting for first-party support.
 5. **Can the agent be wrong about something and be corrected without losing everything else it knows?** Construct: yes. It versions memory assertions, so a correction supersedes a stale fact while keeping the history of how it was learned.
-6. **What is metered, beyond the sticker price?** Construct: steps per task, scheduled tasks, agents, parallel background jobs, and storage, all published per plan. Ask for the same breakdown from any vendor you compare it against.
+6. **What is metered, beyond the sticker price?** Construct: model usage, scheduled tasks, agents, and storage, all published per plan. Ask for the same breakdown from any vendor you compare it against.
 
 ## A 6-point scorecard you can apply to any AI agent platform
 
@@ -101,7 +101,7 @@ Score each criterion against a specific platform before a pilot, not after. A pl
 | - | --------- | --------- | ----------- | ------------- |
 | 1 | Execution surfaces | Browser, terminal, files, apps, and its own email in one task | Chat plus a fixed plugin list | Browser, terminal, files, and connected-app actions in one task |
 | 2 | Memory | Inspect, correct, forget, or restore versioned assertions | Long chat history described as memory | Correctable, provenance-tracked assertions separate from raw history |
-| 3 | Pricing and limits | Fixed monthly plans with steps, agents, schedules, jobs, and storage published | Price with no usage detail | Price plus steps, runtime, concurrency, and storage limits stated plainly |
+| 3 | Pricing and limits | Fixed monthly plans with usage, agents, schedules, and storage published | Price with no usage detail | Price plus steps, runtime, concurrency, and storage limits stated plainly |
 | 4 | Connector coverage | Live integration catalog plus custom MCP | Fixed integration catalog only | Native catalog plus custom MCP or an equivalent extension path |
 | 5 | Audit trail | Activity records each action with a short reason, stated as a readable record | Vague "full audit trail" claim | Explicit statement of whether it is forensic or a bounded summary |
 | 6 | Human-in-the-loop controls | Interrupt, ask-for-input, and drafts for review before anything is sent | "Supervised" with no named mechanism | Named interrupt, ask-for-input, and approval behavior, with stated gaps |
@@ -142,7 +142,7 @@ A team piloting inbound lead qualification, for example, would run this scorecar
 
 You do not need to cancel anything to run the checklist side by side. Take the job your current tool handles least reliably.
 
-1. **Start on Lite for $9, or take the 7-day Pro trial** if you want to test longer runs or your own model keys.
+1. **Start on Lite for $9, or take the 7-day Pro trial** if you want to test your own model keys.
 2. **Copy the instructions** you gave your current agent into a Construct chat, and upload the source files to the workspace.
 3. **Connect the apps** the job needs from the integration catalog, or your own MCP server.
 4. **Run it once and score the result** against the six rows above.

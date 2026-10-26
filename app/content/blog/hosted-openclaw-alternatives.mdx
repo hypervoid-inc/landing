@@ -18,7 +18,7 @@ For founders and small teams who want the work done rather than an agent to oper
 
 ## Why choose Construct over a hosted OpenClaw?
 
-- **A fixed monthly price that covers the model.** Construct Lite is $9 a month for 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, and an agent email address. Plans include model usage within published limits, with no per-message billing.
+- **A fixed monthly price that covers the model.** Construct Lite is $9 a month for 2 agents (Construct and one more), 3 scheduled tasks, and an agent email address. Plans include model usage within published limits, with no per-message billing.
 - **Nothing to host, patch, or harden.** There is no gateway on the internet, no SSH, and no sandbox or exec-approval settings to get right. Shell commands run in a sandbox, and stored model keys and bot credentials are encrypted.
 - **Background work only when you schedule it.** Jobs on the Calendar run server-side at the times you set, with your laptop closed: 3 on Lite, 10 on Starter, 50 on Pro.
 - **Files your team can open.** Reports, spreadsheets, and scripts are saved to the workspace as they are produced, so a run that stops at step 30 keeps steps 1 to 29. Team workspaces have Owner, Admin, and Member roles and no member limit.
@@ -61,7 +61,7 @@ Three names we looked for did not make the list. KiloClaw, once Kilo's managed O
 
 | Tool                        | Starting price                                   | Billing unit                                  | Own computer?                                | Where it works                                                                      | Best for                                             |
 | --------------------------- | ------------------------------------------------ | --------------------------------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| Construct                   | $9 a month (Lite), model usage included          | Plan usage, agents, steps, schedules          | Persistent cloud workspace                   | Web, Slack, Telegram, Discord slash commands, its own email inbox                   | Small teams with recurring work and no server to run |
+| Construct                   | $9 a month (Lite), model usage included          | Plan usage, agents, schedules                 | Persistent cloud workspace                   | Web, Slack, Telegram, Discord slash commands, its own email inbox                   | Small teams with recurring work and no server to run |
 | Hostinger 1-Click OpenClaw  | $5.99 a month, paid upfront; renews at $11.99    | Hosting plan plus AI credits, or your own key | Isolated managed instance                    | WhatsApp, Telegram, Slack, and Discord per its FAQ                                  | The cheapest managed OpenClaw                        |
 | MyClaw                      | $29 monthly, or $199 a year ($16.60 a month)     | Hosting plan; AI tokens not included          | Private instance, 2 vCPU and 4 GB RAM        | Email, Telegram, WhatsApp, browser                                                  | OpenClaw or Hermes without a server                  |
 | Cloudways Managed AI Agents | Not published in the pages we reviewed           | Not documented in the sources we reviewed     | Dedicated managed instance                   | Slack, Discord, Telegram, WhatsApp                                                  | OpenClaw or Hermes from a large hosting company      |
@@ -140,7 +140,7 @@ What an OpenClaw user gets with it:
 
 An illustrative setup for the three jobs above: ask the agent to email you a morning briefing from its own address, to check three competitor pricing pages every Monday and save a dated CSV, and to draft replies to inbound email without sending. Check each first result, then schedule all three, which uses Lite's 3 scheduled tasks. Construct's workflows run straight through and do not pause for approval yet, so keep anything customer-facing as drafts that you send.
 
-**Price, checked October 11, 2026:** Lite is $9 a month for up to 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, and an agent email address. Starter is $59 with 6x Lite usage, up to 5 agents, 150 steps per task, and 10 scheduled tasks. Pro is $299 with 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, and bring-your-own keys, which you can use as a fallback after bundled limits or for every run. Pro has a 7-day trial ([Construct pricing](/pricing/)).
+**Price, checked October 11, 2026:** Lite is $9 a month for up to 2 agents (Construct and one more), 3 scheduled tasks, and an agent email address. Starter is $59 with 6x Lite usage, up to 5 agents, and 10 scheduled tasks. Pro is $299 with 32x Lite usage, up to 15 agents, 50 scheduled tasks, and bring-your-own keys, which you can use as a fallback after bundled limits or for every run. Pro has a 7-day trial ([Construct pricing](/pricing/)).
 
 ## What is the best managed OpenClaw hosting?
 
@@ -218,7 +218,7 @@ Here is how the Construct side runs, as an illustrative walkthrough rather than 
 
 You do not have to shut your claw down. Move the recurring job that costs you the most tokens or the most babysitting, and keep OpenClaw for the channels only it covers.
 
-1. **Start on Lite for $9, or take the 7-day Pro trial** to test longer runs and your own model keys.
+1. **Start on Lite for $9, or take the 7-day Pro trial** to test your own model keys.
 2. **Copy the instructions** your agent follows for that job into a Construct chat, and move its reference files into the workspace.
 3. **Connect the apps** the job needs from the integration catalog, or add a custom MCP tool.
 4. **Run it once and check the result** in Files.
