@@ -189,7 +189,7 @@ export function AffiliatesPage() {
             months
           </li>
           <li>
-            <Emph>Annual Pro at 50%:</Emph> $1,794 on the yearly charge
+            <Emph>Annual Pro at 50%:</Emph> $1,194 on the yearly charge
           </li>
           <li>
             Lite ($9) and Starter ($59) pay the same share on whatever plan they

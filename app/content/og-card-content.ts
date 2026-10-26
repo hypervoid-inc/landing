@@ -2477,7 +2477,7 @@ export const pageCards: Record<string, OgCard> = {
         },
         {
           label: "Annual Pro referral",
-          value: "$1,794",
+          value: "$1,194",
         },
         {
           label: "Partners after the first 25",
