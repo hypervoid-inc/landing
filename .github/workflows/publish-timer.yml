@@ -1,0 +1,54 @@
+name: Publish timer
+
+# GitHub starts this repo's scheduled runs hours late, so CI's quarter-hourly
+# check alone can publish a post a day after its time. This workflow sleeps
+# until the next post's go-live moment and then starts CI
+# (docs/scheduled-publishing.md). A job may run six hours at most, so a longer
+# wait hands over to a fresh run, and every CI run on main or the cron
+# restarts the chain if a hand-over is ever lost. The repo is public, so the
+# waiting is free.
+on:
+  workflow_run:
+    workflows: [CI]
+    branches: [main]
+    types: [completed]
+  schedule:
+    - cron: "35 */6 * * *"
+  workflow_dispatch:
+
+# A newer run plans from the latest posts, so it replaces any run still waiting.
+concurrency:
+  group: publish-timer
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  wait:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            app/content/blog
+            scripts/due-posts.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - id: plan
+        shell: bash
+        run: node scripts/due-posts.mjs --next | tee -a "$GITHUB_OUTPUT"
+      - if: steps.plan.outputs.action != 'stop'
+        run: sleep ${{ steps.plan.outputs.seconds }}
+      # The built-in token may start workflow_dispatch runs, unlike pushes.
+      - if: steps.plan.outputs.action == 'publish'
+        run: gh workflow run ci.yml --ref main
+      - if: steps.plan.outputs.action != 'stop'
+        run: gh workflow run publish-timer.yml --ref main

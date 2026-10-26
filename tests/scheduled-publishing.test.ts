@@ -9,7 +9,13 @@ import {
 } from "../app/content/resources";
 import { canonicalRoutes, upcomingRoutes } from "../app/lib/route-manifest";
 import { routeJsonLd } from "../app/lib/seo";
-import { dueSlugs, scheduleOf, unpublished } from "../scripts/due-posts.mjs";
+import {
+  dueSlugs,
+  nextPost,
+  scheduleOf,
+  timerPlan,
+  unpublished,
+} from "../scripts/due-posts.mjs";
 
 /**
  * Scheduled publishing: a finished post (`draft: false`) dated ahead stays out
@@ -113,5 +119,32 @@ describe("due post check", () => {
       "<urlset><url><loc>https://construct.computer/blog/early/</loc></url></urlset>";
     expect(unpublished(["early", "timed"], sitemap)).toEqual(["timed"]);
     expect(unpublished(["early"], sitemap)).toEqual([]);
+  });
+
+  it("finds the next finished post after now", () => {
+    expect(nextPost(posts, new Date("2026-11-03T12:00:00Z"))).toEqual({
+      slug: "timed",
+      at: new Date("2026-11-03T15:40:00Z"),
+    });
+    expect(nextPost(posts, new Date("2026-11-03T15:40:00Z"))).toBeUndefined();
+  });
+
+  it("plans the timer's wait: publish, hand over, or stop", () => {
+    const at = new Date("2026-11-03T15:40:00Z");
+    const hoursBefore = (hours: number) =>
+      new Date(at.getTime() - hours * 60 * 60 * 1000);
+    expect(timerPlan({ at }, hoursBefore(1))).toEqual({
+      action: "publish",
+      seconds: 3660,
+    });
+    expect(timerPlan({ at }, hoursBefore(10))).toEqual({
+      action: "relay",
+      seconds: 19800,
+    });
+    expect(timerPlan({ at }, hoursBefore(30))).toEqual({
+      action: "stop",
+      seconds: 0,
+    });
+    expect(timerPlan(undefined, at)).toEqual({ action: "stop", seconds: 0 });
   });
 });

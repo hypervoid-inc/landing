@@ -6,8 +6,9 @@ A finished post goes live by itself at its `published` date and `time`. Write it
 
 - A post is **live** when `draft: false` and its `published` date and optional `time` (`HH:MM`, UTC) are at or before the build's moment (`isLive` in `app/content/resources.ts`). Without a `time` it goes live with the first build of its day.
 - The build's moment is `contentDate` and `contentTime` (`app/content/content-date.ts`): now in UTC, fixed once per build in `vite.config.ts` so the prerendered HTML and the browser bundle agree.
-- `.github/workflows/ci.yml` checks every quarter hour (`scripts/due-posts.mjs`): when a post's moment has passed and the live sitemap does not list it yet, it runs the full build and deploys. It compares with the live site rather than a time window, so a delayed or skipped run is caught by the next one. A full rebuild also runs every day at 00:05 UTC.
-- GitHub starts scheduled runs late when it is busy, sometimes by hours, so treat `time` as "not before", not as an exact minute.
+- `.github/workflows/publish-timer.yml` publishes on time. It reads the next post's moment (`scripts/due-posts.mjs --next`), sleeps until a minute after it, and starts CI, which builds and deploys. A job lives six hours at most, so a longer wait hands over to a fresh run; a post more than 20 hours off is left to a later run, which every CI run on `main` and a six-hourly cron start.
+- GitHub starts this repo's cron runs hours late or skips them (on 2026-10-26 the daily run started at 04:17 and the quarter-hourly check ran once in eight hours), which is why the timer sleeps instead of polling. Expect a post a few minutes after its `time`.
+- As a backstop, `.github/workflows/ci.yml` also checks every quarter hour: when a post's moment has passed and the live sitemap does not list it yet, it runs the full build and deploys. It compares with the live site rather than a time window, so a late or skipped run is caught by the next one. A full rebuild also runs every day at 00:05 UTC.
 
 | Frontmatter                           | Result                                         |
 | ------------------------------------- | ---------------------------------------------- |
