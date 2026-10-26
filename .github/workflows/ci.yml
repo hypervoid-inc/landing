@@ -40,7 +40,8 @@ jobs:
         with:
           node-version: 24
       - id: check
-        run: node scripts/due-posts.mjs ${{ github.event.schedule == '5 0 * * *' && '--always' || '' }} >> "$GITHUB_OUTPUT"
+        shell: bash
+        run: node scripts/due-posts.mjs ${{ github.event.schedule == '5 0 * * *' && '--always' || '' }} | tee -a "$GITHUB_OUTPUT"
 
   ci:
     needs: due
