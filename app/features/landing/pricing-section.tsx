@@ -11,7 +11,14 @@ import {
   Timer,
   type LucideIcon,
 } from "lucide-react";
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 import { captureAnalytics } from "../analytics/analytics.client";
 import { readAttributionCookie } from "../analytics/campaign-attribution.client";
@@ -595,7 +602,15 @@ export function PricingSection({
   );
 }
 
+const subscribeNever = () => () => {};
+
 export function FaqSection() {
+  // False on the server and for the hydrating render, true after.
+  const hydrated = useSyncExternalStore(
+    subscribeNever,
+    () => true,
+    () => false,
+  );
   return (
     <section
       id="faq"
@@ -655,7 +670,13 @@ export function FaqSection() {
                   />
                 </Accordion.Trigger>
               </Accordion.Header>
-              <Accordion.Content className="faq-content">
+              {/* The prerendered page carries every answer, collapsed, for
+                  crawlers and agents that never run JavaScript. Once hydrated,
+                  closed answers unmount as before. */}
+              <Accordion.Content
+                className="faq-content"
+                {...(hydrated ? {} : { forceMount: true, hidden: true })}
+              >
                 <div className="faq-content-inner">
                   <p className="px-4 pb-3.5 text-[14px] leading-[19px] text-[#627c86] xl:px-[55px] xl:pb-7 xl:text-base xl:leading-[22px]">
                     {item.answer}
