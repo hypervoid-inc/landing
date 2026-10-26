@@ -1,0 +1,197 @@
+---
+title: "The best cheap LLM for AI agents: 11 setups through our production agent loop"
+seoTitle: "Best Cheap LLM for AI Agents: 11 Models Tested"
+description: "We ran 11 cheap model setups through Construct's agent loop on 11 real tasks: pass rate, cost per passed task and speed for GLM, DeepSeek, Gemini, Qwen and Kimi."
+pitch: "Construct tests the models behind your agent on tasks like yours before they run your work."
+published: "2026-11-10"
+time: "18:37"
+author: "ankush"
+tags: ["ai-agent", "benchmark", "engineering", "pricing"]
+kind: "article"
+draft: false
+---
+
+On our benchmark of 11 agent tasks, the best cheap LLMs for AI agents were GLM-5.3-Flash and Gemini 3.8 Flash, which both passed 19 of 22 runs. GLM-5.3-Flash was the cheapest per passed task by far, at $0.0036, and Gemini 3.8 Flash was the fastest of the leaders at 24 seconds of model time per task, with the best writing, at about nine times the cost. DeepSeek V4.1 Flash passed 18 of 22 at $0.0086 per pass and wrote nearly as well as Gemini, and it is the model we moved Construct's main agent to.
+
+We build Construct, an AI agent platform, and on October 23, 2026 we ran 11 model configurations through Construct's own agent loop: the production prompts, tools, tool executor and continuation logic, on 11 tasks shaped like real customer work, two runs each, with escalation to a stronger model switched off so every model stood alone. Every model and setting in this post is one we ran. The headline numbers:
+
+- The top pass rate was 19 of 22, shared by GLM-5.3-Flash at high effort and Gemini 3.8 Flash at low effort.
+- GLM-5.3-Flash cost $3.61 per 1,000 passed tasks. Qwen3.8 27B, which passed 18 of 22 like DeepSeek, cost $33.34 per 1,000.
+- Gemini 3.1 Flash-Lite was the fastest, at 12 seconds of model time per task, and passed 14 of 22.
+- gpt-oss-120b passed 10 of 22, the lowest.
+- All 242 runs together cost about $3.56 in model spend.
+
+<BetaCta source="blog_top" />
+
+## How we tested
+
+Construct's API repository has an agent benchmark, `benchmark:agent`, that runs whole tasks the way a real chat runs: the user's message, the agent's turn, the continuation judge that decides whether the agent should keep going, and another hop if it says yes. The agent loop, tool definitions, tool executor and continuation decision are production code. The web, the files and a Notion-shaped CRM are fixtures, so every run sees the same pages and a model can only cite a URL it actually fetched.
+
+We ran it live over our AI Gateway with these settings:
+
+1. Tasks: 11, described in the next section, each with its own pass check written against what the run left behind.
+2. Seeds: two runs per task per model, so 22 runs per configuration.
+3. Escalation off. In production, repeated tool failures can hand a turn to a stronger model. We disabled that so a pass belongs to the model under test.
+4. Effort: what we would actually run each model at. High for GLM, DeepSeek, Qwen, Kimi and gpt-oss; low for the Gemini Flash models. DeepSeek ran as two configurations, thinking at high and thinking off.
+5. Writing judge: on three writing and revision tasks, a fixed judge model, Gemini 3.8 Flash, scored the output from 1 to 5. The score is reported next to the pass, never part of it.
+6. Cost: each model's own spend at list price, with the cache hits it actually got. The judge's calls are excluded.
+
+Separately, we sent each model a 14-check probe straight to the gateway, three runs per check: tool arguments with date math, parallel calls, nested schemas with exact enum values, recovering from a tool error, asking when a request is ambiguous, not calling a tool when none is needed, finding a superseded fact deep in a long handbook, format rules, JSON extraction, schedule planning, pricing math, a logic puzzle, and two small coding tasks scored by running the code.
+
+## The 11 tasks
+
+Most of the tasks are rebuilt from real production conversations that took the most steps, with fictional companies and people:
+
+<ArticleTable caption="The 11 tasks in Construct's agent benchmark and what each run must do to pass">
+
+| Task                       | What the agent is asked to do                                                                                                        | Passes when                                                                                    |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| ci-five-companies          | A competitive report on five companies, every claim cited                                                                            | The report exists, names all five and cites only pages it fetched                              |
+| crm-leads-update           | Edit a Notion-shaped CRM whose property names differ from the user's words                                                           | Three new rows, one status change, the right duplicate archived, one date moved, nothing else  |
+| notion-bulk-insert         | Add 15 pasted leads to the same CRM, some with a Source link                                                                         | All 15 rows with the right properties in at most four calls                                    |
+| unsupported-app-connect    | "Give you access to my Medium", an app the integration catalog does not have                                                         | No connect card for the wrong app, and the reply tells the user                                |
+| sso-pricing-recommendation | Research where one page is stale, the pricing page has moved, SSO is a paid add-on, and one page tells agents to lie                 | The right price per row, the right recommendation, only fetched pages cited                    |
+| launch-plan-edit           | Update a launch plan from meeting notes                                                                                              | The plan says what the notes decided and nothing else changed                                  |
+| meeting-prep               | Our longest real turn, rebuilt: plan a 90-minute meeting from five documents that conflict, with a moved deadline and a dropped item | The agenda fits the slot with contingency, carries the moved deadline, cites the revised paper |
+| content-drafts             | Four social posts from a brand brief with hard rules (no dashes, no invented numbers, Canadian spelling, banned phrases)             | Four posts, every hard rule kept                                                               |
+| brief-cut-off              | A replacement brand brief pasted in, cut off mid-word                                                                                | The agent does not fill in the rest from the old brief, and asks                               |
+| feedback-revise            | "These posts are terrible" about posts that break the brief                                                                          | The posts are rewritten before any question, keeping every hard rule                           |
+| ask-first-starter          | The real onboarding starter for a founder who gave no context                                                                        | No web calls, no files, and a question                                                         |
+
+</ArticleTable>
+
+Two of them never failed on any model: launch-plan-edit and unsupported-app-connect. The rest separated the models.
+
+## Results
+
+<ArticleTable caption="Agent benchmark results by model configuration, 11 tasks x 2 runs, escalation off, 2026-10-23">
+
+| Model and effort                 | Passed | Cost per task | Cost per passed task | Model time per task | p90 model time | Writing judge (1 to 5) | Tool errors per task |
+| -------------------------------- | ------ | ------------- | -------------------- | ------------------- | -------------- | ---------------------- | -------------------- |
+| GLM-5.3-Flash, high              | 19/22  | $0.0031       | $0.0036              | 62.5 s              | 135.6 s        | 2.8                    | 0.77                 |
+| Gemini 3.8 Flash, low            | 19/22  | $0.0277       | $0.0321              | 24.0 s              | 38.1 s         | 4.7                    | 0.18                 |
+| DeepSeek V4.1 Flash, high        | 18/22  | $0.0070       | $0.0086              | 57.2 s              | 97.3 s         | 4.3                    | 0.86                 |
+| Qwen3.8 27B, high                | 18/22  | $0.0273       | $0.0333              | 126.8 s             | 189.3 s        | 3.5                    | 0.18                 |
+| Gemini 3.6 Flash, low            | 17/22  | $0.0233       | $0.0302              | 15.2 s              | 22.2 s         | 2.5                    | 0.50                 |
+| DeepSeek V4.1 Flash, no thinking | 16/22  | $0.0039       | $0.0053              | 29.7 s              | 50.2 s         | 2.2                    | 0.77                 |
+| GLM-5.3, high                    | 15/22  | $0.0194       | $0.0284              | 62.7 s              | 124.7 s        | 4.5                    | 0.23                 |
+| Gemini 3.1 Flash-Lite, low       | 14/22  | $0.0062       | $0.0098              | 12.0 s              | 17.7 s         | 1.8                    | 0.18                 |
+| Gemini 3.5 Flash-Lite, low       | 14/22  | $0.0104       | $0.0164              | 14.4 s              | 20.9 s         | 1.8                    | 0.64                 |
+| Kimi K2.6, high                  | 13/22  | $0.0195       | $0.0331              | 113.1 s             | 143.9 s        | 3.7                    | 0.41                 |
+| gpt-oss-120b, high               | 10/22  | $0.0138       | $0.0304              | 57.9 s              | 136.6 s        | 1.2                    | 0.18                 |
+
+</ArticleTable>
+
+Cost per passed task is cost per task times 22, divided by the passes, so a model that fails often pays for its failures. Model time is the time spent waiting on model calls inside a task, not the wall clock. Some tool errors are by design: a few fixture pages return a 404 on purpose, so zero is not always reachable.
+
+Two things in that table are easy to misread. Gemini 3.8 Flash read almost nothing from its prompt cache in this run (0.4% of input tokens over the gateway route we used), while GLM and DeepSeek read 81% and 88% from cache, so Gemini's cost here is an upper bound. And GLM-5.3, the bigger and pricier sibling, did worse than GLM-5.3-Flash on these tasks.
+
+## Where each model failed
+
+The pass table hides where the failures sit, and they cluster:
+
+<ArticleTable caption="Runs passed out of 2 on the six tasks that separated the models">
+
+| Model                            | meeting-prep | brief-cut-off | feedback-revise | sso-pricing | notion-bulk-insert | crm-leads-update |
+| -------------------------------- | ------------ | ------------- | --------------- | ----------- | ------------------ | ---------------- |
+| GLM-5.3-Flash, high              | 2            | 1             | 0               | 2           | 2                  | 2                |
+| Gemini 3.8 Flash, low            | 2            | 2             | 0               | 2           | 2                  | 1                |
+| DeepSeek V4.1 Flash, high        | 0            | 2             | 1               | 1           | 2                  | 2                |
+| Qwen3.8 27B, high                | 2            | 1             | 0               | 1           | 2                  | 2                |
+| Gemini 3.6 Flash, low            | 0            | 1             | 1               | 2           | 2                  | 2                |
+| DeepSeek V4.1 Flash, no thinking | 1            | 0             | 0               | 2           | 2                  | 2                |
+| GLM-5.3, high                    | 2            | 2             | 0               | 0           | 0                  | 1                |
+| Gemini 3.1 Flash-Lite, low       | 0            | 0             | 0               | 1           | 2                  | 2                |
+| Gemini 3.5 Flash-Lite, low       | 0            | 0             | 1               | 0           | 2                  | 2                |
+| Kimi K2.6, high                  | 2            | 1             | 0               | 1           | 2                  | 0                |
+| gpt-oss-120b, high               | 0            | 0             | 0               | 2           | 0                  | 0                |
+
+</ArticleTable>
+
+`feedback-revise` was the hardest task in the set: 3 passes in 22 attempts across all models. Told "these posts are terrible", the agent has to find the saved brief and rewrite the posts against it before asking anything, and 19 of the 22 attempts did not get there.
+
+`meeting-prep` split the field. GLM-5.3-Flash, Gemini 3.8 Flash, GLM-5.3, Qwen and Kimi passed both runs; DeepSeek at high effort, Gemini 3.6 Flash, both Flash-Lites and gpt-oss passed neither. It is the one place DeepSeek, our eventual pick, clearly lost.
+
+`notion-bulk-insert` is the result that changed our production setup. GLM-5.3 ended both runs with zero rows written, and gpt-oss-120b failed both too. GLM-5.3 was the model our agent escalated to after repeated tool failures, so the model we called in for tool trouble was worse at this tool work than the model it took over from.
+
+`brief-cut-off` caught the two Flash-Lite models, DeepSeek without thinking and gpt-oss: none of their runs handled a brief that ends mid-word by leaving the gap and asking. `crm-leads-update`, where the CRM's property names differ from the user's words, caught gpt-oss and Kimi in both runs.
+
+The Flash-Lite models also scored lowest on writing, 1.8 of 5.
+
+## The 14-check probe
+
+The probe is short single requests, and most thinking models came close to full marks on it, so it separates models less than the agent benchmark. It is most useful for speed and for spotting a model that cannot do one specific thing.
+
+<ArticleTable caption="Probe results: mean score across 14 checks, 3 runs each, and median time to a finished 300-word answer, 2026-10-23">
+
+| Model and effort                 | Overall | Tools | Reasoning | Coding | First token | 300-word answer |
+| -------------------------------- | ------- | ----- | --------- | ------ | ----------- | --------------- |
+| DeepSeek V4.1 Flash, high        | 0.99    | 1.00  | 1.00      | 1.00   | 1.8 s       | 21.9 s          |
+| Gemini 3.8 Flash, low            | 0.98    | 1.00  | 1.00      | 0.94   | 2.3 s       | 6.5 s           |
+| Gemini 3.6 Flash, low            | 0.97    | 1.00  | 1.00      | 0.96   | 2.1 s       | 4.6 s           |
+| GLM-5.3, high                    | 0.96    | 0.95  | 1.00      | 0.96   | 8.2 s       | 17.2 s          |
+| GLM-5.3-Flash, high              | 0.95    | 1.00  | 0.89      | 0.92   | 1.9 s       | 9.4 s           |
+| gpt-oss-120b, high               | 0.93    | 0.89  | 1.00      | 0.81   | 0.9 s       | 74.7 s          |
+| Gemini 3.5 Flash-Lite, low       | 0.92    | 1.00  | 0.78      | 0.89   | 1.6 s       | 3.0 s           |
+| Kimi K2.6, high                  | 0.88    | 1.00  | 1.00      | 0.50   | 1.8 s       | 42.4 s          |
+| Qwen3.8 27B, high                | 0.87    | 1.00  | 1.00      | 0.50   | 1.0 s       | 86.5 s          |
+| Gemini 3.1 Flash-Lite, low       | 0.84    | 1.00  | 0.44      | 0.96   | 1.7 s       | 3.2 s           |
+| DeepSeek V4.1 Flash, no thinking | 0.82    | 1.00  | 0.33      | 0.96   | 1.6 s       | 7.1 s           |
+
+</ArticleTable>
+
+The 300-word column is what a user actually waits for, hidden thinking included, and it reorders the field: Qwen3.8 27B and gpt-oss-120b take well over a minute, while the Gemini Flash models finish in under seven seconds. DeepSeek without thinking got full marks on tools and fell apart on reasoning (0.33), which is why it only gets chat lines and single lookups. Three checks were fixed after a first pass because they marked correct answers wrong (a logic puzzle with three valid answers, among them), and only the fixed versions are scored.
+
+## Prices, from the providers' own pages
+
+<ArticleTable caption="List prices per million tokens for the tested models, read from Cloudflare's, Google's and Anthropic's pricing pages on 2026-10-26">
+
+| Model                                        | Provider we ran it on | Input | Cached input | Output |
+| -------------------------------------------- | --------------------- | ----- | ------------ | ------ |
+| GLM-5.3-Flash                                | Workers AI            | $0.15 | $0.03        | $0.50  |
+| DeepSeek V4.1 Flash (1017)                   | Workers AI            | $0.30 | $0.006       | $1.20  |
+| gpt-oss-120b                                 | Workers AI            | $0.35 | not listed   | $0.75  |
+| Qwen3.8 27B                                  | Workers AI            | $0.45 | not listed   | $3.20  |
+| Kimi K2.6                                    | Workers AI            | $0.95 | $0.16        | $4.00  |
+| GLM-5.3                                      | Workers AI            | $1.40 | $0.26        | $4.40  |
+| Gemini 3.1 Flash-Lite                        | Google AI Studio      | $0.25 | $0.025       | $1.50  |
+| Gemini 3.5 Flash-Lite                        | Google AI Studio      | $0.30 | $0.03        | $2.50  |
+| Gemini 3.6 Flash and 3.8 Flash               | Google AI Studio      | $0.75 | $0.075       | $3.75  |
+| Claude Haiku 5.5 (prompts up to 100k tokens) | Anthropic             | $0.10 | $0.01        | $0.50  |
+
+</ArticleTable>
+
+Sources: [Workers AI pricing](https://developers.cloudflare.com/workers-ai/platform/pricing/) (page updated October 20, 2026), [Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing) (updated October 22, 2026) and [Claude pricing](https://platform.claude.com/docs/en/about-claude/pricing). Two price details change the math. Google lists Gemini 3.6 Flash and 3.8 Flash at double these rates from January 1, 2027. And Haiku 5.5 charges five times as much for any request whose prompt is over 100,000 tokens, cache reads included, which matters for an agent whose history grows through a long task.
+
+Price per token is a poor guide on its own. An agent re-sends most of its prompt on every step, so the cached input price is the one you mostly pay, and the discounts differ a lot: DeepSeek's cached input costs 2% of its full input price, Gemini's 10% and GLM-5.3-Flash's 20%. Kimi K2.6 costs six times GLM-5.3-Flash per input token and passed six fewer runs.
+
+<BetaCta source="blog_inline_1" />
+
+## What we picked and why
+
+On October 24 we moved Construct's main agent from GLM-5.3-Flash to DeepSeek V4.1 Flash at high effort. The bake-off had them one run apart on passes, but DeepSeek's writing judge score was 4.3 against 2.8 at a little over twice the cost per pass, and most of what people delegate ends in something a person reads. Before switching, we ran a larger paired test, 14 tasks with three runs each: DeepSeek passed 38 of 42 against GLM-5.3-Flash's 33, at a mean model time of 53 seconds against 98, with a writing score of 4.5 against 3.6.
+
+The rest of the setup, as it runs on October 26, is in our fleet configuration:
+
+- Main agent: Claude Haiku 5.5 first, then DeepSeek V4.1 Flash, then GLM-5.3-Flash, then Gemini 3.8 Flash. Haiku was not in this bake-off because our gateway had no Anthropic key yet. Once it did, a run on the same 14 tasks on October 25 had Haiku passing 37 of 42, in line with DeepSeek, at a mean model time of 27 seconds against DeepSeek's 69 and with half the tool errors. Its one weak task was feedback-revise. Claude Sonnet 5.5 passed 38 of 42 on the same tasks at 19 times Haiku's cost per success, which is not a trade a cheap tier can make. Haiku runs first until a monthly budget we set for it is used, and then turns fall through to DeepSeek.
+- GLM-5.3-Flash stays as overflow. Workers AI limits paid models to 20 requests a minute per account under standard billing ([Cloudflare](https://developers.cloudflare.com/workers-ai/platform/limits/)), and DeepSeek and GLM-5.3-Flash each have their own limit, so keeping both doubles what the main agent can take.
+- Escalation after tool failures no longer goes to GLM-5.3, because of the zero-row Notion inserts.
+- Delegated workers: Haiku 5.5, then Gemini 3.8 Flash. Both Flash-Lite models left the fleet on October 24 after passing 14 of 22 with the lowest writing scores.
+- Coding: GLM-5.3 stays for building apps in the sandbox, work this benchmark does not test.
+- Summaries, titles and other side tasks: DeepSeek V4.1 Flash with thinking off, which our probe timed at about 2.6 seconds a call.
+
+Every chain crosses providers, so an outage on one backend falls through to another. What the model choice means for what you pay is in [how much an AI agent costs](/blog/how-much-does-an-ai-agent-cost/). If you bring your own key, these are the same roles you set; the [Claude API key guide](/blog/claude-api-key-ai-agent/) covers that side.
+
+## What a 22-run benchmark cannot tell you
+
+Twenty-two runs per model is enough to see big gaps and not enough to rank close ones. A 95% interval on 19 of 22 runs from about 67% to 95%, and on 18 of 22 from about 61% to 93%, so GLM-5.3-Flash, Gemini 3.8 Flash, DeepSeek and Qwen at the top are statistically level. The bottom of the table is clearer: gpt-oss-120b at 10 of 22 is below the leaders on any reading.
+
+The writing judge is one model, Gemini 3.8 Flash, scoring three tasks, and it may favour its own family. It did score Gemini 3.6 Flash at 2.5 and both Flash-Lites at 1.8, so it is not simply rewarding Google models, but treat the judge column as a direction.
+
+Our tasks are our customers' kind of work: CRM edits, research with citations, documents and writing for founders and small teams. A coding agent or a support bot would need its own tasks. The fixtures remove web latency and bot-blocking, so real tasks take longer. Speeds are what Workers AI and Google served us that day, and the same model can be several times faster on its maker's own API. And it is one day: providers update models under the same name, which is why we keep a benchmark we can rerun whenever a model changes.
+
+Several cheap models we wanted to test, including MiniMax M3.1 Flash, MiMo V2.6 Flash, Qwen3.8 Flash-Next and GPT-6 Luna, were not reachable through our gateway, so they are not in this post.
+
+## How we checked this
+
+The benchmark and probe ran on October 23, 2026, through Construct's production agent code (`apps/api/benchmarks/agent` in our API repository) and our AI Gateway, with the settings above; the follow-up runs on October 24 and 25 used the same harness with three runs per task. The fleet described in "What we picked" is the configuration in our code on October 26, 2026. Prices were read from Cloudflare's, Google's and Anthropic's pricing pages on October 26, 2026. For how we test smaller model decisions inside the agent, see our [Clef and Jev benchmark](/blog/clef-vs-jev-benchmark/), and for why long tasks fail even with a good model, [your agent has a half-life](/blog/agent-task-half-life/).

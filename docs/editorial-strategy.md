@@ -13,16 +13,6 @@ Show what Construct can do, where each capability fits, and what its current bou
 
 For each new comparison, publish several first-party pieces that explain a Construct capability or a real operating pattern.
 
-### Exception: October to November 2026
-
-The launch calendar (59 posts, one every two days from Oct 1, 2026, then one a day from Oct 6 to Nov 30, 2026) runs 28 comparisons, 47%. OpenAI's Dots, Meta's Muse for Small Business, Google's Gemini Spark, xAI's Grok Bot and Claude Cowork's cloud version all launched in the weeks before it, and buyers are searching for alternatives and head-to-heads that do not exist yet. The rules that keep it inside this strategy:
-
-- Never three comparisons in a row on the calendar.
-- Every comparison has a dated Methodology with the "We build Construct" disclosure, and every competitor fact is sourced.
-- Review at the Nov 2, 2026 audit: if the comparison and list posts are not being cited, swap the remaining November comparisons for workflow guides and research before scheduling them.
-
-From December 2026 the mix above applies again.
-
 ## Content Pillars
 
 1. **Build with Construct:** workspace apps, internal tools, custom MCP, and reusable workflows.
@@ -31,18 +21,21 @@ From December 2026 the mix above applies again.
 4. **Operate across time:** recurring work, durable artifacts, team workspaces, and channels.
 5. **Choose Construct:** comparisons and alternatives pages that make the case for Construct with sourced facts, and a clear path for readers already using another agent.
 
-## Conversion Standard
+## Post Standard
 
-Every post sells Construct. The model is `app/content/blog/construct-vs-openai-dots.mdx`.
+Every post sells Construct by showing it do the job, in a page a buyer or an AI answer engine would cite because it says something specific and true the top results do not. Google's spam and reviews policies and the 2026 traffic losses at sites built on templated, self-ranking pages are why. The full reasoning and sources are in [blog-plan-2026-q4.md](blog-plan-2026-q4.md).
 
-- Construct leads: the first sentence says what Construct gives the reader, with its price or a number; tables list Construct first; rankings put Construct first.
-- Competitor coverage is short, factual, and sourced. No praise, vendor marketing quotes, or testimonials for competitors. Gaps are stated as "not documented in the sources we reviewed", never guessed.
-- No "where X wins" sections. At most three bullets of "When might X still fit?", late in the post.
-- The verdict says "Choose Construct" and gives the reasons.
-- Readers already using another agent get an "Add Construct in 15 minutes" section with numbered steps.
-- Three specific calls to action: top, after pricing or the reasons, and after the verdict.
-- Construct's limits appear only where a buyer would otherwise be misled, once, with the workaround.
-- Every claim stays true: no invented numbers, customers, or testimonials.
+- One query per post, checked against every live slug. If a live post already targets it, update that post instead.
+- Answer first: the opening sentences answer the query. Construct appears where it is part of the answer.
+- First-hand substance: product behaviour verified in the product source, our own data, real screenshots of the job described. An illustrative example is labelled and never stands in for a result. No promises of tests not yet run.
+- A short note on how the post was checked, with dates. Comparisons call it `## Methodology` and start with "We make Construct".
+- Every outside fact sourced inline to its primary source, with the date checked on prices and policies.
+- At most two calls to action in the body (`blog_top`, optionally `blog_inline_1`); the page adds its closing one.
+- Comparisons are neutral: one page per competitor, a section on when the other product is the better pick, no list ranked by us with Construct first by default.
+- No template reuse: structure follows the job. No stock closers, repeated product caveats or the same pitch in every post.
+- FAQs only when they add questions the body does not answer. FAQ rich results ended in May 2026.
+- Honest dates: `published` is the real go-live day, `updated` only on a substantive change, no year in a title unless the post is about that year.
+- Every claim stays true: no invented numbers, customers or testimonials.
 
 ## Article Standard
 
@@ -71,5 +64,7 @@ Wrap every prompt a reader can paste into Construct in `<Prompt>...</Prompt>` (M
 8. Connected apps, custom MCP, and permission boundaries (drafted: `ai-agent-custom-mcp`)
 
 ## Cadence
+
+Three or four posts a week on varied days and times (`time` in the frontmatter, see [scheduled-publishing.md](scheduled-publishing.md)), never two on one day, and no batch scheduling. A slot stays empty rather than take a post that misses the Post Standard above. The October 2026 calendar ran 47% comparisons at one a day; from November 2026 comparisons are at most one post in four.
 
 Publish the feature or workflow article first. Add a comparison only when readers need a genuine decision framework that the existing capability content cannot answer.

@@ -1,0 +1,183 @@
+---
+title: "How much does an AI agent cost per month?"
+seoTitle: "How Much Does an AI Agent Cost Per Month?"
+description: "AI agent pricing compared: credit plans from $8, big-lab subscriptions from $20 to $500, and self-hosting with a server plus tokens, with every plan's cap explained."
+pitch: "What credits, usage windows and tokens actually buy, with each vendor's published caps and Construct's own limits checked in its source code."
+published: "2026-11-04"
+time: "19:25"
+author: "nischal"
+tags: ["pricing", "ai-agent", "ai-employee", "small-business"]
+kind: "guide"
+draft: false
+---
+
+An AI agent that does real work costs between $8 and $500 a month on a subscription, or a $6 to $25 server plus model tokens if you run one yourself. Credit plans such as Lindy, Manus and Viktor sell a pot of credits; ChatGPT, Claude, Grok and Gemini put an agent inside plans from $20 to $500; and a self-hosted agent pays per token, which for a 30-step research task works out from under 10 cents on a small model to about $3.50 on a frontier one. The number on the pricing page matters less than the cap behind it, because the cap decides what a busy month costs.
+
+Construct's plans are $9, $59 and $299 a month with model usage included, metered in a four-hour window and a monthly allowance. The section on Construct below shows where a heavy user runs into each limit.
+
+<BetaCta source="blog_top" plan="lite" interval="month">
+  Start with Construct for $9
+</BetaCta>
+
+## The three ways to pay, side by side
+
+<ArticleTable caption="Three ways to pay for an AI agent, prices checked October 26, 2026">
+
+| How you pay                     | Typical monthly price                    | What runs out                              | Who it suits                                      |
+| ------------------------------- | ---------------------------------------- | ------------------------------------------ | ------------------------------------------------- |
+| Subscription with credits       | $8 to $100 to start, more per user       | Credits, which mostly expire each cycle    | Teams who want a product and accept variable cost |
+| Agent in a big-lab subscription | $20 to $500 per person                   | A usage window shared with your chat       | People already paying for that assistant          |
+| Self-hosting                    | $6 to $25 server, plus tokens, plus time | Your token budget and your patience        | Someone who can run and secure a server           |
+| Construct                       | $9, $59 or $299, no seat fees            | A four-hour window and a monthly allowance | Small teams with recurring work                   |
+
+</ArticleTable>
+
+We make Construct, so it is in the table. Every outside price on this page was read on the vendor's own page on October 26, 2026 unless we say otherwise.
+
+## Subscriptions with credits
+
+A credit is a vendor's own unit for "work done", and each vendor converts tasks into credits differently. Most do not let unused credits carry over.
+
+<ArticleTable caption="Credit-based AI agent plans, checked October 26, 2026">
+
+| Product | Cheapest paid plan        | Credits included       | Rollover                       | Free start                       |
+| ------- | ------------------------- | ---------------------- | ------------------------------ | -------------------------------- |
+| CellCog | $8 (Starter)              | 800 a month            | Valid 60 days after the period | Not documented                   |
+| Lindy   | $29.99 per active user    | 3,000 per user, pooled | No                             | $50 in credits for 7 days        |
+| Manus   | $20 (Pro)                 | 4,000 a month          | No                             | 300 credits a day                |
+| Viktor  | $100 per workspace (Team) | 40,000, shared         | For one month                  | Up to $100 in credits, no expiry |
+
+</ArticleTable>
+
+The fine print is where the cost moves. Lindy bills "every active user in your workspace", and "anyone who uses Lindy takes a seat", including someone who only @mentions it in Slack; top-ups are $10 per 1,000 credits ([Lindy pricing](https://www.lindy.ai/pricing)). Manus clears unused credits "on the original renewal date, even if you upgrade mid-cycle", and its always-on Cloud Computer is $30 or $50 a month on top ([Manus credit rules](https://help.manus.im/en/articles/11711097-what-are-the-rules-for-credits-consumption-and-how-can-i-obtain-them), [Manus pricing](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus), [Cloud Computer billing](https://help.manus.im/en/articles/15392078-understanding-cloud-computer-plans-and-billing)). Viktor is the most transparent: it says a quick task takes 100 to 300 credits and a complex workflow 500 to 1,500, so its $100 plan covers roughly 26 to 80 complex workflows a month ([Viktor pricing](https://viktor.com/pricing)). CellCog's terms say "We do not and cannot provide reliable cost estimates per task" and that "All payments made to CellCog are final and non-refundable" ([CellCog terms](https://cellcog.ai/support/terms-of-service), [billing guide](https://cellcog.ai/support/billing-guide)).
+
+The complaints follow the same line. Lindy has a 1.9 out of 5 TrustScore from 41 reviews, and one reviewer wrote on August 20, 2026, "I managed to kill my months credits (3000) in one day!" ([Trustpilot](https://www.trustpilot.com/review/lindy.ai)). Manus sits at 1.2 from 209 reviews; on October 6 a reviewer who had upgraded mid-cycle wrote that "When the next billing cycle started, 31,132 unused credits expired" ([Trustpilot](https://www.trustpilot.com/review/manus.im)).
+
+## An agent inside a big-lab subscription
+
+ChatGPT, Claude, Grok and Gemini now each include an agent that works in the background, priced as part of a personal subscription. The agent draws on the same usage allowance as your chat.
+
+<ArticleTable caption="Big-lab subscriptions that include a background agent, checked October 26, 2026">
+
+| Plan                        | Monthly price             | Agent included                                   | How usage is capped                                      |
+| --------------------------- | ------------------------- | ------------------------------------------------ | -------------------------------------------------------- |
+| ChatGPT Plus                | $20                       | No dot                                           | Plus allowance                                           |
+| ChatGPT Pro 100 / 200 / 500 | $100 / $200 / $500        | One dot, OpenAI's always-on agent                | Reported 5x, 10x and 25x Plus usage                      |
+| Claude Pro                  | $20 ($17 billed annually) | "Hand off and schedule tasks"                    | Rolling 5-hour window plus weekly limits                 |
+| Claude Max                  | $100 or $200              | Same, with 5x or 20x Pro usage                   | Same windows, larger                                     |
+| X Subscription Premium      | $30                       | Grok Bot (not on Free or the $8 Plus)            | 4x Plus usage, a weekly pool shared with Grok and Cursor |
+| X Super / Ultra             | $100 / $200               | Grok Bot                                         | 15x and 50x Plus usage                                   |
+| Google AI Pro               | $19.99                    | Tasks in Gemini, formerly Spark, where available | Plan limits                                              |
+| Google AI Ultra             | From $99.99               | Tasks in Gemini                                  | Plan limits                                              |
+
+</ArticleTable>
+
+ChatGPT's tiers come from reporting on OpenAI's September 29 announcements, because OpenAI's pages blocked our fetch: every Pro tier includes one dot, Pro subscribers in the EEA, Switzerland and the UK were excluded at launch, and the $200 plan dropped from 20x to 10x Plus usage for everyone on October 30, 2026 ([SiliconANGLE](https://siliconangle.com/2026/09/29/openai-launches-dots-always-on-ai-agents-in-chatgpt-with-their-own-cloud-computers/), [Codersera](https://codersera.com/blog/chatgpt-pro-500-plan-explained-2026/)). Claude's prices are on [claude.com/pricing](https://claude.com/pricing). xAI's tiers are on its [X Subscription pricing page](https://docs.x.ai/x-subscription/pricing), which says "Plus does not include Grok Bot". Google's subscriptions page lists Tasks in Gemini under Ultra only, while its help page says AI Pro or Ultra; both agree it is for personal accounts and not available in the EEA, Nigeria, Switzerland or the UK ([Google AI plans](https://gemini.google/us/subscriptions/), [Gemini Apps Help](https://support.google.com/gemini/answer/17094507)).
+
+These plans are good value if you already pay for the assistant. They are bought per person, the agent shares a cap with your everyday chat, and none of them is built for a team sharing one agent.
+
+## Self-hosting: a server, tokens and your time
+
+Open-source agents such as OpenClaw are free to download, so the bill has three parts: a server, the model tokens, and the hours you spend on setup and upkeep.
+
+A small server is cheap. DigitalOcean's 4 GiB droplet is $24 a month, Hostinger's KVM 2 is $8.79 a month on its introductory term and $14.99 after, and Hetzner lists a 4 GB server at €5.99, though its cost-optimized plans showed as unavailable when we checked ([DigitalOcean](https://www.digitalocean.com/pricing/droplets), [Hostinger](https://www.hostinger.com/vps-hosting), [Hetzner](https://www.hetzner.com/cloud)).
+
+Tokens are where the range is wide, because an agent sends the growing conversation back to the model at every step. Take a 30-step research task that averages 25,000 input tokens and 800 output tokens per step: 750,000 tokens in, 24,000 out. These are round numbers for the arithmetic, not a measured run, and prompt caching would lower the input cost.
+
+<ArticleTable caption="Token cost of one 30-step agent task at list prices, checked October 26, 2026">
+
+| Model               | Price per million tokens, in / out | One task | One task every weekday (22 a month) |
+| ------------------- | ---------------------------------- | -------- | ----------------------------------- |
+| Claude Haiku 5.5    | $0.10 / $0.50                      | $0.09    | $1.91                               |
+| DeepSeek V4.1 Flash | $0.30 / $1.20 at peak hours        | $0.25    | $5.58                               |
+| Gemini 3.8 Flash    | $0.75 / $3.75 until December 31    | $0.65    | $14.35                              |
+| Claude Sonnet 5.5   | $2 / $10                           | $1.74    | $38.28                              |
+| GPT-6.1 Sol         | $2 / $10                           | $1.74    | $38.28                              |
+| Claude Opus 5.5     | $4 / $20                           | $3.48    | $76.56                              |
+
+</ArticleTable>
+
+Prices are from [Anthropic](https://platform.claude.com/docs/en/about-claude/pricing), [DeepSeek](https://api-docs.deepseek.com/quick_start/pricing), [Google](https://ai.google.dev/gemini-api/docs/pricing) and [OpenAI](https://developers.openai.com/api/docs/pricing). Ten such tasks a day on Sonnet 5.5 would cost about $383 a month in tokens alone. OpenClaw 2.0 can also reuse an existing ChatGPT or Claude subscription instead of an API key, which turns the token bill into that plan's usage cap ([OpenClaw](https://openclaw.ai/blog/openclaw-2-accidentally)).
+
+Then there is your time. OpenClaw's own docs say "Sandboxing and exec approvals are off by default" ([OpenClaw](https://docs.openclaw.ai/start/why-openclaw)), so making it safe to connect to business accounts is part of the setup. If setup takes a day and upkeep an hour a month, price those hours at what your time is worth before you call self-hosting cheap. [Construct vs OpenClaw](/blog/construct-vs-openclaw/) covers that trade in detail.
+
+## What Construct costs, and where heavy users hit the limits
+
+<ArticleTable caption="Construct plans and limits, from the pricing page and Construct's source code, October 26, 2026">
+
+| Limit                        | Lite          | Starter     | Pro          |
+| ---------------------------- | ------------- | ----------- | ------------ |
+| Price, monthly               | $9            | $59         | $299         |
+| Price, billed yearly         | $7.50 a month | $39 a month | $199 a month |
+| Model usage                  | Base          | 6x Lite     | 32x Lite     |
+| Agents                       | 2             | 5           | 15           |
+| Steps per task               | 50            | 150         | 1,000        |
+| Scheduled tasks              | 3             | 10          | 50           |
+| Parallel background jobs     | 2             | 4           | 8            |
+| Chats one agent runs at once | 1             | 5           | 15           |
+| Cloud storage                | 100 MB        | 1 GB        | 3 GB         |
+| Your own model keys          | No            | No          | Yes          |
+
+</ArticleTable>
+
+Model usage is metered in two windows. One is a four-hour block aligned to UTC (midnight, 4am, 8am and so on); the other is the calendar month, also in UTC. A single four-hour window can use at most about a sixth of Lite's monthly allowance, an eighth of Starter's and a twelfth of Pro's. That is how a heavy user meets the limits: on Lite, an afternoon of back-to-back research can fill one window, and six afternoons like that use the month. Starter and Pro stretch the same pattern across more and larger windows. Usage is pooled on the workspace owner's plan, and there is no seat fee, so teammates draw on the same allowance.
+
+When a window runs out, chat shows "Session usage limit reached" or "Monthly usage limit reached" with the time it resets, and new turns wait until then. A scheduled run that falls inside a spent window fails and is recorded in its history, and the schedule stays on for the next one. There are no credit top-ups to buy. On Pro, a setting called Model source decides what happens instead: "Construct" uses only the included usage, "Mine as backup" switches to your own OpenRouter, OpenAI, Anthropic, Amazon Bedrock or xAI key once the included usage runs out, and "Only mine" always uses your key, with an optional monthly spend limit you set.
+
+The included usage stretches as far as it does because of the model choice. Construct runs agent turns on Claude Haiku 5.5 first and falls back to DeepSeek V4.1 Flash, GLM-5.3-Flash and Gemini 3.8 Flash automatically when it cannot use Haiku. In our own test on October 25, 2026, 14 tasks run three times each, Haiku 5.5 passed 37 of 42 runs and Sonnet 5.5 passed 38, at 19 times the cost per success.
+
+The other limits that bite are concrete. Lite runs one chat per agent at a time: start a second while the first is still working and Construct refuses it and names the chat that is busy. Terminal commands currently stop after five minutes on every plan, so a long data job needs splitting. And the agent's own inbox has a daily sending limit, lower on Lite than on Starter and Pro. New accounts get a small one-time allowance on Lite's limits before choosing a plan, and Pro has a 7-day trial.
+
+## How does it compare with a virtual assistant?
+
+If the alternative is a person, the agent's plan price is the small number. A virtual assistant working 20 hours a week at $15 an hour costs about $1,300 a month, and the real swing comes from how long it takes you to check the agent's work: at $50 an hour of your time and 78 agent tasks a month, each extra minute of review per task costs about $65. Try your own numbers:
+
+<CostCalculator />
+
+The rates behind the presets come from [Cherry Assistant's July 2026 breakdown](https://www.cherryassistant.com/blog/how-much-does-a-virtual-assistant-cost). [AI agent vs virtual assistant](/blog/ai-agent-vs-virtual-assistant/) covers which tasks suit each.
+
+## What is the cheapest AI agent?
+
+The cheapest paid plan we found is CellCog Starter at $8 a month for 800 credits, a dollar under Construct Lite. Billed yearly the two are close: CellCog Starter is $88 a year, about $7.33 a month, and Lite is $7.50 a month. CellCog says its AI employees get their own cloud computer and work in scheduled shifts, but its pages do not say which plans include that, and every payment is non-refundable ([CellCog AI employees](https://cellcog.ai/ai-employees)). Below that, the free options are Manus Free at 300 credits a day for small tasks, Viktor's up to $100 in credits that never expire, Lindy's $50 of credits for a week, and a self-hosted agent on Haiku 5.5, where a weekday research task costs about $2 a month in tokens plus a server and your time.
+
+Cheapest on paper is rarely cheapest in a busy month. Price the week your agent works hardest, in whatever unit the plan caps.
+
+## Estimate your own month in four steps
+
+1. List the jobs you would hand over and how often each runs. A daily digest is about 22 runs a month; a weekly report is 4 or 5.
+2. Find the unit each plan caps: credits, a usage window, tokens, or steps per task. Ask the vendor how many units one of your jobs uses, or run it once on a free tier and read the meter.
+3. Price your busiest week and multiply by four, and size the plan for that month.
+4. Add your review time. A job that takes 10 minutes to check every day costs you more than most plans.
+
+<BetaCta source="blog_inline_1" plan="pro" interval="month">
+  Try Construct Pro free for 7 days
+</BetaCta>
+
+## How we checked this
+
+Competitor prices and quotes were read on the vendors' own pages on October 26, 2026: Lindy, Manus (help center pricing marked "updated this week"), Viktor, CellCog's pricing, billing guide and terms, Claude, the X Subscription docs, Google's subscriptions and help pages, Trustpilot, and the API pricing pages for Anthropic, DeepSeek, Google and OpenAI. OpenAI's ChatGPT pages blocked our fetch, so its plan details rely on SiliconANGLE and Codersera. Construct's limits were checked in its source code on the same day: plan limits, the four-hour and monthly usage windows and their ratios, the limit messages, the scheduled-run behaviour, the Model source options, the model fallback order, concurrency and daily email caps, the five-minute command timeout, and the benchmark notes behind the model choice. The token table is arithmetic on stated assumptions, not a measured run.
+
+## Sources
+
+- [Lindy pricing](https://www.lindy.ai/pricing) and [Lindy on Trustpilot](https://www.trustpilot.com/review/lindy.ai)
+- Manus: [membership pricing](https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus), [credit rules](https://help.manus.im/en/articles/11711097-what-are-the-rules-for-credits-consumption-and-how-can-i-obtain-them), [Cloud Computer billing](https://help.manus.im/en/articles/15392078-understanding-cloud-computer-plans-and-billing), [Trustpilot](https://www.trustpilot.com/review/manus.im)
+- [Viktor pricing](https://viktor.com/pricing)
+- CellCog: [billing guide](https://cellcog.ai/support/billing-guide), [terms of service](https://cellcog.ai/support/terms-of-service), [AI employees](https://cellcog.ai/ai-employees)
+- [SiliconANGLE on ChatGPT Dots, September 29, 2026](https://siliconangle.com/2026/09/29/openai-launches-dots-always-on-ai-agents-in-chatgpt-with-their-own-cloud-computers/) and [Codersera on ChatGPT Pro tiers, September 30, 2026](https://codersera.com/blog/chatgpt-pro-500-plan-explained-2026/)
+- [Claude pricing](https://claude.com/pricing)
+- [X Subscription pricing](https://docs.x.ai/x-subscription/pricing)
+- [Google AI plans](https://gemini.google/us/subscriptions/) and [Gemini Apps Help: tasks](https://support.google.com/gemini/answer/17094507)
+- API pricing: [Anthropic](https://platform.claude.com/docs/en/about-claude/pricing), [DeepSeek](https://api-docs.deepseek.com/quick_start/pricing), [Google](https://ai.google.dev/gemini-api/docs/pricing), [OpenAI](https://developers.openai.com/api/docs/pricing)
+- Servers: [DigitalOcean](https://www.digitalocean.com/pricing/droplets), [Hostinger](https://www.hostinger.com/vps-hosting), [Hetzner](https://www.hetzner.com/cloud)
+- OpenClaw: [why OpenClaw](https://docs.openclaw.ai/start/why-openclaw) and [the 2.0 release post](https://openclaw.ai/blog/openclaw-2-accidentally)
+- [Cherry Assistant: virtual assistant costs, July 2026](https://www.cherryassistant.com/blog/how-much-does-a-virtual-assistant-cost)
+- [Construct pricing](/pricing/)
+
+## Related resources
+
+- [AI agent vs virtual assistant: cost and capabilities](/blog/ai-agent-vs-virtual-assistant/)
+- [How to use your Claude API key with an AI agent](/blog/claude-api-key-ai-agent/)
+- [Construct vs OpenClaw](/blog/construct-vs-openclaw/)
+- [Hosted OpenClaw alternatives](/blog/hosted-openclaw-alternatives/)
+- [How to run an AI agent on a schedule with your laptop closed](/blog/ai-agent-scheduled-tasks/)
+- [Pricing](/pricing/)

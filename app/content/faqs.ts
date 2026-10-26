@@ -178,7 +178,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How much does Grok Bot cost compared with Construct?",
       answer:
-        "Grok Bot has no standalone price. As of September 10, 2026, access comes with Cursor Pro at $20 a month or SuperGrok at $30 a month. Construct Lite costs $9 a month and includes 2 agents (Construct and one more), 3 scheduled tasks, and an agent email address. Starter is $59 with 10 scheduled tasks, and Pro is $299 with 50 scheduled tasks and your own model keys.",
+        "Grok Bot has no standalone price. Since October 12, 2026, new buyers get it with The X Subscription from Premium at $30 a month; Plus at $8 and Free do not include it, and older Cursor and SuperGrok plans keep it as legacy access. Construct Lite costs $9 a month and includes 2 agents (Construct and one more), 3 scheduled tasks, and an agent email address. Starter is $59 with 10 scheduled tasks, and Pro is $299 with 50 scheduled tasks and your own model keys.",
     },
     {
       question: "Can I use xAI model keys with Construct?",
@@ -193,7 +193,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "When does Grok Bot still make sense?",
       answer:
-        "When you already pay for Cursor Pro or SuperGrok and only want to try the included Bot allowance, when you prefer teaching a routine by demonstrating it, or when you want several named bots coordinating in shared threads. For recurring team work with files, schedules, your own model keys, and correctable memory, Construct fits better.",
+        "When you already pay for The X Subscription, or a legacy Cursor or SuperGrok plan, and only want to try the included Bot allowance, when you prefer teaching a routine by demonstrating it, or when you want several named bots coordinating in shared threads. For recurring team work with files, schedules, your own model keys, and correctable memory, Construct fits better.",
     },
   ],
   "running-ai-agents-on-cloudflare-not-vms": [
@@ -723,7 +723,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How much does an always-on AI agent cost?",
       answer:
-        "Construct starts at $9 a month with no other subscription needed. Most big-platform agents are bundled into subscriptions such as Claude Pro or Cursor Pro at $20, ChatGPT Pro from $100, or Perplexity Max at $200, and Simular's plan with an always-on machine is $500, checked on October 1, 2026.",
+        "Construct starts at $9 a month with no other subscription needed. Most big-platform agents are bundled into subscriptions such as Claude Pro at $20, Grok Bot with The X Subscription Premium at $30, ChatGPT Pro from $100, or Perplexity Max at $200, and Simular's plan with an always-on machine is $500, checked on October 1, 2026.",
     },
     {
       question: "What are the risks of giving an AI agent its own computer?",
@@ -897,7 +897,7 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "How much does Gemini Spark cost?",
       answer:
-        "Spark has no separate price and comes with a Google AI Pro or Ultra subscription. It launched for US Ultra subscribers, reported at $100 a month, and reached the Pro tier, about $20 a month in the US, in late July 2026. Construct starts at $9 a month on its own plan.",
+        "Google renamed Gemini Spark to Tasks in Gemini in October 2026. It has no separate price and comes with a Google AI Pro or Ultra subscription. It launched for US Ultra subscribers, reported at $100 a month, and reached the Pro tier, about $20 a month in the US, in late July 2026. Construct starts at $9 a month on its own plan.",
     },
     {
       question: "Can I use Construct alongside Gemini Spark?",
@@ -1038,12 +1038,12 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
     {
       question: "Which always-on AI agent is cheapest for a three-person team?",
       answer:
-        "Muse for Small Business is $0 on its free tier, but that buys three separate personal agents. Construct Starter is $59 a month for one shared team workspace with up to 5 agents and no per-seat fee. Claude Team Standard is $75 at $25 per seat, Cursor Teams with Grok Bot is $120 at $40 per user, and ChatGPT Business Premium with Dots is $375 at $125 per seat. These are subscription prices, not the cost of a finished job.",
+        "Muse for Small Business is $0 on its free tier, but that buys three separate personal agents. Construct Starter is $59 a month for one shared team workspace with up to 5 agents and no per-seat fee. Claude Team Standard is $75 at $25 per seat, Grok Bot on The X Subscription Premium is $90 at $30 per person, and ChatGPT Business Premium with Dots is $375 at $125 per seat. These are subscription prices, not the cost of a finished job.",
     },
     {
       question: "Is Grok Bot free, and how much does it cost?",
       answer:
-        "No. Cursor's free Hobby plan does not list Grok Bot. It comes with Cursor Individual at $20 a month or Cursor Teams at $40 per user, or as linked usage with SuperGrok, SuperGrok Plus, SuperGrok Heavy, or X Premium+. SuperGrok Lite does not include it, and usage resets weekly. xAI's pricing page refused our requests, so the post does not list SuperGrok prices.",
+        "No. Since October 12, 2026, Grok Bot comes with The X Subscription from Premium at $30 a month, then Super at $100 and Ultra at $200; Plus at $8 and the free tier do not include it. Existing Cursor and SuperGrok plans keep it as legacy access, and usage resets weekly.",
     },
     {
       question: "Is Meta Muse free for a small business?",
@@ -1444,178 +1444,6 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "Export the Activity CSV each week and store it yourself, have the agent append a line to a run log file in Files at the end of important jobs, and rely on the change history in connected systems such as your CRM or sent mail for actions that matter. For a tamper-evident record, keep those actions in a system of record that provides one.",
     },
   ],
-  "ai-company-research-spreadsheet": [
-    {
-      question: "Can AI research a list of companies into a spreadsheet?",
-      answer:
-        'Yes. Give Construct the list and a column spec, and it searches and fetches each company\'s public pages, fills one row per company, and saves a CSV in Files with a source link beside every fact. It writes "not found" or "conflicting" instead of guessing and records the date it checked each company. It runs on any plan from $9 a month, and the CSV opens as a table in Files.',
-    },
-    {
-      question: "Can ChatGPT research a list of companies?",
-      answer:
-        "A chatbot can answer questions about one company at a time, but citations are the weak point. When the Tow Center tested eight AI search tools, they answered more than 60 percent of queries incorrectly, and more than half of Gemini's and Grok 3's responses cited fabricated or broken URLs. A list also needs a file, not a thread, which is why Construct fetches each page, records the URL it read, and saves rows to a CSV.",
-    },
-    {
-      question: "How do I stop the AI from making up facts or sources?",
-      answer:
-        'Require a source URL beside every fact, tell the agent to write "not found" when it cannot find something, and to write "conflicting" with both links when sources disagree. Run a three-company pilot and click the source links. Then ask for a gap report that lists every fact without a URL, and send those rows back for another pass. Treat a missing URL as a failure, not a judgment call.',
-    },
-    {
-      question: "How many companies can AI research in one run?",
-      answer:
-        "It depends on the step limit, because every search, fetch, and file write is a step. Construct Lite allows up to 50 steps per task, Starter 150, and Pro up to 1,000, so longer lists run in batches of about 10 that are saved to Files as each one finishes. Helper agents can run batches side by side: 2 at once on Lite, 4 on Starter, and 8 on Pro.",
-    },
-    {
-      question: "What columns should a company research spreadsheet have?",
-      answer:
-        "Use one row per company and five to eight fact columns for a first pass, such as website, what they sell, headquarters country, pricing model, lowest published monthly price, and free trial. Put a source URL column beside each fact, add a checked date, and keep a notes column for conflicts. Limit answers to allowed values, so a column like pricing model does not come back in five phrasings.",
-    },
-    {
-      question:
-        "What happens if the research run stops partway through the list?",
-      answer:
-        "Nothing finished is lost. Construct appends each batch to the CSV in Files as soon as it is done, so the rows that were already researched stay saved. Check Files for the last saved batch, then ask the agent to continue from the next company instead of starting over. Activity and the chat's tool records show where the run stopped.",
-    },
-    {
-      question: "Can the results go into Google Sheets, Airtable, or HubSpot?",
-      answer:
-        "Yes. The CSV in Files stays the source of truth. You can download it, ask Construct for an Excel copy with clickable source links and frozen headers, or have the agent append rows to Google Sheets, create Airtable records, or create HubSpot companies through its integration catalog. Do that last, after you have checked the sheet, because research is read-only until then.",
-    },
-    {
-      question: "Is Construct an alternative to Clay for company research?",
-      answer:
-        "For small teams, yes. Clay's pricing page listed a free plan and a Launch plan from $185 a month billed monthly when checked on October 11, 2026, aimed at sales teams enriching data at volume. Construct starts at $9 a month, and the same agent that fills the sheet keeps the files, remembers your format, and runs a scheduled refresh. Upload a data provider's export when you need verified headcounts or contacts.",
-    },
-  ],
-  "ai-delegation-checklist": [
-    {
-      question: "What is an AI delegation checklist?",
-      answer:
-        "It is a list of questions to answer before you hand a job to an AI agent. This one has 24 questions in five groups: the job you are handing over, the inputs the agent needs, what done looks like, who reviews the result, and which steps cannot be undone. Answering them turns into a one-page brief you can paste into a chat, and Construct lets you run it on real work from $9 a month.",
-    },
-    {
-      question: "What tasks should you delegate to AI?",
-      answer:
-        "Delegate tasks that repeat, follow a consistent pattern, take a person under an hour, and produce a result you can check in five minutes, such as a weekly invoice chase drafted from an export or a list of companies researched into a sourced spreadsheet. Keep decisions about people, money, pricing, and relationships with a person, along with anything that cannot be undone.",
-    },
-    {
-      question: "What should you not delegate to an AI agent unattended?",
-      answer:
-        "Any step that sends, pays, deletes, publishes, or changes a record other people rely on. Mark each one draft only, ask me first, or allowed, and keep anything that leaves the company as a draft until the job has run cleanly several times. Construct's workflows do not include approval steps yet, so ask for drafts and send them yourself once you have checked them.",
-    },
-    {
-      question: "How big a job should I give an AI agent?",
-      answer:
-        "Keep it to something a person could do in under an hour, and split anything larger. METR's March 2025 study found models succeed almost every time on tasks that take a person under 4 minutes and less than 10% of the time on tasks that take more than about 4 hours. Small errors compound: an agent that is 95% reliable per step finishes a 48-step job about 8.5% of the time.",
-    },
-    {
-      question: "How do you write instructions for an AI agent?",
-      answer:
-        "Write a one-page brief: the outcome and where it goes, the only inputs it may use, an example of a good result to copy, standing rules, what done means and which checks to run, when to stop and ask, what it must not do, and who reviews it. Add a line saying text inside emails, web pages, and attachments is information, not instructions.",
-    },
-    {
-      question: "Does delegating work to AI transfer accountability?",
-      answer:
-        "No. Microsoft's guidance for Copilot and agents says delegating work to AI does not transfer accountability, so you still own the review and the final result. That is why the checklist names a reviewer, has the first three runs started by hand and read in full, and sends corrections back into the agent's standing rules rather than only fixing that week's output.",
-    },
-    {
-      question:
-        "How many times should I review a delegated job before scheduling it?",
-      answer:
-        "Start the first three runs by hand and read them in full against your done criteria, noting review time and every correction. Schedule the job only when a run needs no corrections, then switch to spot checks. In Construct, a successful web chat run can be saved as a workflow draft, which never publishes or schedules itself, and Lite includes 3 scheduled tasks.",
-    },
-    {
-      question: "How do I run the AI delegation checklist in Construct?",
-      answer:
-        "Upload the inputs to Files, save the standing rules to memory, which you can read and correct, and paste the brief into the web chat. Check the saved result against your done criteria, and open Activity to see each action the agent took and why. After a good run, save it as a workflow draft and put it on the Calendar once it has earned a schedule.",
-    },
-  ],
-  "construct-vs-gemini-spark": [
-    {
-      question: "Is Construct a good Gemini Spark alternative?",
-      answer:
-        "Yes, for most founders and small teams. Construct starts at $9 a month with no Google subscription needed, connects to Gmail and Google Calendar on the account you authorize, including a Workspace work account, keeps finished work in a workspace the whole team can open, and reaches business tools outside Google such as Notion, HubSpot, Linear, and Airtable. Spark needs Google AI Pro or Ultra and a personal Google account.",
-    },
-    {
-      question: "Is Gemini Spark free?",
-      answer:
-        "No. Gemini Spark has no free tier and no price of its own. It comes with Google AI Pro at $19.99 a month, which Google began rolling out to US subscribers in English on July 16, 2026, or with Google AI Ultra from $99.99 a month. The $4.99 Google AI Plus plan does not include it. Construct Lite costs $9 a month for 2 agents (Construct and one more), 50 steps per task, and 3 scheduled tasks.",
-    },
-    {
-      question: "Is Gemini Spark available for Google AI Pro users?",
-      answer:
-        "In the US, yes. Google's Spark changelog says it began rolling out Gemini Spark in English to Google AI Pro subscribers in the US on July 16, 2026, and the help page lists Pro or Ultra as the requirement. Google's US plan card still names Spark only under Ultra, and outside the US the Google pages we reviewed document Spark for Ultra subscribers only.",
-    },
-    {
-      question:
-        "Does Gemini Spark work with a Google Workspace business account?",
-      answer:
-        "Not today. Google's help page says Spark is not available when you sign in with a work or school Google Account. Google announced on May 19, 2026 that a Workspace preview for business customers is coming soon, but a date is not documented in the sources we reviewed. Construct connects Gmail and Google Calendar through its integration catalog with the account you authorize, so a Workspace admin may need to allow it.",
-    },
-    {
-      question: "Is Gemini Spark available in the UK or EU?",
-      answer:
-        "No. Google's help page lists Spark as available wherever Gemini Apps are supported, except in the European Economic Area, Nigeria, Switzerland, and the United Kingdom, and that list had not changed when we checked on October 11, 2026. Construct does not depend on a Google AI subscription, so Google's regional list does not apply to it. Confirm your country at checkout.",
-    },
-    {
-      question: "Can I use Construct alongside Gemini Spark?",
-      answer:
-        "Yes. Keep Spark for personal errands and give Construct the recurring team work. Start on Lite for $9 or the 7-day Pro trial, copy your Spark instructions into a Construct chat, save the Docs or Sheets it uses into the workspace, connect Gmail and Google Calendar, run the job once, and put it on the Calendar so it runs whether or not anyone is online.",
-    },
-    {
-      question: "When does Gemini Spark still make sense?",
-      answer:
-        "Spark fits if you run a one-person business from a personal Gmail account and already pay for Google AI Pro in the US, if your work lives almost entirely in Docs, Sheets, Slides, and Maps, or if you want a confirmation before every send and purchase built in, or need the agent to use your local Chrome or Mac.",
-    },
-    {
-      question: "Can I move from Gemini Spark to Construct?",
-      answer:
-        "There is no import. Spark's skills, schedules, and remote browser data do not transfer, and Google's help page says turning Spark off deletes its remote browser and remote code execution data, so save what you need first. Then copy your instructions into Construct, which saves them as memory you can read, connect your apps, and run the job once before scheduling it.",
-    },
-  ],
-  "ai-agent-slack-briefing": [
-    {
-      question: "How do I get an AI daily briefing in Slack?",
-      answer:
-        "In Construct, connect Google Calendar and Gmail, run the briefing prompt once in chat, ask the agent to remember the format, then schedule it for 7:45am every weekday. The scheduled run saves the briefing to Files/briefings/ and emails it from the agent's own address to a Slack channel's email address. You can also mention the agent in Slack and it replies with the briefing in a thread. It works on Lite at $9 a month.",
-    },
-    {
-      question: "Can you email a Slack channel?",
-      answer:
-        "Yes, on a paid Slack plan. Open the channel, click its name in the header, open the Automations tab, choose the option to send emails to the channel, and click Get email address. Any channel member can do this by default, and Slack owners and admins can turn it off. On the free plan, the Slackbot forwarding address sends mail to your own DM with Slackbot instead.",
-    },
-    {
-      question:
-        "Can a scheduled Construct job post directly into a Slack channel?",
-      answer:
-        "Not yet. A scheduled run's output lands in its chat in Construct with a notification, so the briefing reaches Slack through the channel's email address and appears there as a posted email. Slack channel email addresses need a paid Slack plan. On the free plan, mention the agent in Slack for the briefing, or send it to your personal Slackbot forwarding address.",
-    },
-    {
-      question: "What should a morning briefing include?",
-      answer:
-        "Four things: today's meetings with attendees and anything you were asked to prepare, email that needs a reply from you with the oldest first, what changed overnight in the files the team watches, and one decision waiting on you. Keep it under 200 words so it reads on a phone before the first call, and let the agent save a longer version to Files for anyone who wants detail.",
-    },
-    {
-      question: "Who can ask the agent for the briefing in Slack?",
-      answer:
-        "The installer always has full access, and you can add teammates to the Full access list in Settings, Messaging. The default, Only people I allow, ignores everyone else. With Everyone in the server, people not on the list get a read-only guest agent that can search the web but cannot use your connected apps, files, or email. Channel mentions run on the installer's account and plan usage.",
-    },
-    {
-      question: "Is Slack's Today view the same as an AI agent briefing?",
-      answer:
-        "No. Slack's Today view is a personal briefing inside Slack built from your Slack activity and a connected Google or Outlook calendar, and its May 2026 rollout covered Business+ and Enterprise plans. Construct's briefing reads your calendar, Gmail, and workspace files, posts one shared edition to a channel on paid Slack plans, answers on any Slack plan when mentioned, and saves every edition as a file.",
-    },
-    {
-      question: "Can I look up an old briefing later?",
-      answer:
-        "Yes. Each briefing is saved to Files/briefings/ by date, along with a sent copy in the agent's Email app and a history entry on the Calendar event. Later in the week you can mention the agent in Slack and ask what Monday's briefing said about a client, and it answers from the saved file rather than from memory of a chat.",
-    },
-    {
-      question: "What does a daily Slack briefing cost with Construct?",
-      answer:
-        "It runs on Lite at $9 a month, which includes 3 scheduled tasks and an agent email address, enough for one weekday briefing. Starter at $59 a month includes 10 scheduled tasks if you want a separate briefing per team. Slack's channel email addresses need a paid Slack plan, but asking the agent for the briefing in Slack works on any Slack plan.",
-    },
-  ],
   "viktor-alternatives": [
     {
       question: "What is the best Viktor AI alternative?",
@@ -1696,126 +1524,6 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "Yes. Keep Viktor for quick asks inside Slack and give Construct the recurring jobs whose files and schedules you need to keep. Start on Lite for $9 or the 7-day Pro trial, copy the job's instructions, connect the apps, install Construct in Slack, run the job once, and put it on the Calendar. There is no import from Viktor.",
     },
   ],
-  "ai-agent-browser-and-terminal": [
-    {
-      question:
-        "Can an AI agent use a browser and a terminal in the same task?",
-      answer:
-        "Yes. Construct's agent can open a live cloud browser for pages that need clicking and typing, save what it reads to a file, then run Python or shell commands in a Linux terminal on that file, all in one task you can watch and stop. It is available from the $9 Lite plan, and every intermediate result is saved as a file you can open.",
-    },
-    {
-      question: "Can an AI agent fill in web forms?",
-      answer:
-        "Yes. When a plain page fetch is not enough, Construct's agent starts a live cloud browser that clicks, types, picks from dropdowns, and reads the result, then returns a summary to the agent. CAPTCHAs, bot walls, and sites that forbid automation end the run, and the agent says so instead of guessing. Keep browser jobs read-only in the prompt until you trust them.",
-    },
-    {
-      question: "Can I watch and stop the agent's browser?",
-      answer:
-        "Yes. The Browser app shows the live page and a step list with notes, URLs, and screenshots, and Stop ends the run; later browser calls in that turn are refused, so a stopped run stays stopped. You can also interrupt the whole task from chat, and the Terminal app shows a read-only transcript of every command.",
-    },
-    {
-      question: "Does Construct's browser use my logins?",
-      answer:
-        "No. The browser runs in the cloud, not on your machine, and Construct does not hand it your logins, so plan for each run to start signed out. For tools you are signed into, connect them from the integration catalog instead, which is usually the more reliable path because a structured action does not depend on a page layout.",
-    },
-    {
-      question:
-        "How long can a terminal command or browser run take in Construct?",
-      answer:
-        "Five minutes each, on every plan today. Each terminal command has a two-minute default and a five-minute ceiling, and a browser run that has not finished within five minutes ends as timed out. The pricing page lists longer command runtimes for Starter and Pro, but the five-minute cap currently applies to all plans, so plan long jobs as short steps that save files.",
-    },
-    {
-      question: "What tools are installed in the agent's terminal?",
-      answer:
-        "Construct's Linux sandbox comes with Python 3 and pandas, matplotlib, openpyxl, python-docx, and python-pptx, plus PDF tools, LibreOffice, Tesseract, git, curl, jq, and ripgrep. Your own Files are mounted at /private and a team workspace's shared Files at /workspace, and the agent can run a single command as root when it needs to install something else.",
-    },
-    {
-      question: "Can a browser and terminal job run on a schedule?",
-      answer:
-        "Yes. Once a few runs have produced results you trust, ask the agent to put the same prompt on the Calendar. Scheduled jobs run in Construct's cloud with your laptop closed, and Lite includes 3 scheduled tasks. Save the job as a workflow too if teammates should be able to run it on demand.",
-    },
-  ],
-  "claude-cowork-alternatives": [
-    {
-      question: "What is the best Claude Cowork alternative for a team?",
-      answer:
-        "For founders and small teams, Construct. It starts at $9 a month, gives the whole team one shared workspace with Owner, Admin, and Member roles and no per-seat fee, saves finished work as files teammates can open, and runs Calendar schedules server-side. Anthropic's help center says Cowork sessions cannot be shared with others, and a team means Claude Team seats at $25 each per month.",
-    },
-    {
-      question: "Is Claude Cowork free?",
-      answer:
-        "No. Cowork is available on paid Claude plans only: Pro at $20 a month or $17 billed annually, Max from $100, Team, and Enterprise. The free alternatives are OpenClaw, which is open source and free but runs on your own machine with your own model costs, and Manus, whose free tier gives 300 credits a day. Construct starts at $9 a month.",
-    },
-    {
-      question: "Is there a free or open-source Claude Cowork alternative?",
-      answer:
-        "Yes. OpenClaw is MIT licensed with no subscription and no hosted tier. It runs on Mac, Windows, or Linux and talks to you on WhatsApp, Telegram, Slack, Discord, and more, but you pay for your own machine and model access and run and secure it yourself. Manus also has a free tier with 300 credits a day and 2 scheduled tasks.",
-    },
-    {
-      question: "Does Claude Cowork still need my computer to stay on?",
-      answer:
-        "Not for most work. Since October 6, 2026, new Cowork tasks on Pro and Max plans run in the cloud, and the Only on your computer setting was removed. Scheduled tasks run even when your computer is asleep. Claude reaches local folders only through the desktop app, and only while it is open. On Team and Enterprise, cloud Cowork is still in beta.",
-    },
-    {
-      question: "Can I keep using Claude models if I switch to Construct?",
-      answer:
-        "Yes, on Construct Pro. It supports your own keys for Anthropic, OpenAI, OpenRouter, Amazon Bedrock, and xAI, so you can use Claude through your own Anthropic key, as a fallback after bundled limits or for every run. Your keys bill you directly when they are used, and Pro has a 7-day free trial.",
-    },
-    {
-      question:
-        "What is the OpenAI, Google, or Microsoft alternative to Claude Cowork?",
-      answer:
-        "OpenAI's is ChatGPT Dots, included with ChatGPT Pro or a Business Premium seat, with reports differing on which Pro tier. Google's is Gemini Spark, for personal Google accounts on Google AI Pro or Ultra and unavailable in the EEA, UK, and Switzerland. Microsoft's is Copilot Cowork, which needs a Microsoft 365 Copilot license and bills usage at $0.01 per Copilot Credit.",
-    },
-    {
-      question: "How much does Claude Cowork cost for a team of five?",
-      answer:
-        "Five Claude Team Standard seats cost $125 a month at monthly billing, with Claude Tag usage billed on top for Slack channel work. At list prices, Construct Starter covers the same team for $59 a month with up to 5 agents and no member limit, which is $66 a month less. Allowances differ, so this is an illustrative comparison, not a measured test.",
-    },
-    {
-      question: "Can I use Construct alongside Claude Cowork?",
-      answer:
-        "Yes. Keep Cowork for your own one-off tasks and give Construct the recurring job your team needs to see. Start on Lite for $9 or the 7-day Pro trial, copy the prompt from your Cowork task, upload the files it uses, connect the apps, run it once, and put it on the Calendar. There is no import from Cowork.",
-    },
-  ],
-  "ai-lead-sourcing-hubspot": [
-    {
-      question: "Can an AI agent find leads and add them to HubSpot?",
-      answer:
-        "Yes. A Construct agent researches companies that match your written customer profile on a weekday schedule, searches HubSpot for each company and contact before creating anything, adds only the new ones with a note on where each was found, saves a dated list with sources to Files, and emails a summary to your Slack channel. It needs one scheduled task, which every plan includes.",
-    },
-    {
-      question: "How do I stop HubSpot creating duplicate companies?",
-      answer:
-        "Tell the agent to search HubSpot by website domain before creating a company, and by email before creating a contact, and to mark matches as existing. HubSpot deduplicates contacts by email, but its automatic deduplication by domain does not cover companies created through the API or third-party sync apps, which is the route any agent uses. The search-first rule is what prevents duplicates.",
-    },
-    {
-      question: "How do I get new HubSpot leads into Slack every morning?",
-      answer:
-        "A scheduled Construct run cannot post into Slack directly yet, so the agent emails a short summary from its own address to the Slack channel's email address. Slack offers channel email addresses on paid plans: open the channel, click its name, open Automations, and choose Get email address. Anyone on the allow list can then mention the agent in the thread to ask about a lead.",
-    },
-    {
-      question: "Which Construct plan do I need for AI lead generation?",
-      answer:
-        "Starter at $59 a month is the better fit, with 150 steps per task and 10 scheduled tasks, because researching each company takes several searches. Lite at $9 can run the job with a smaller daily batch, such as about three companies, raised while runs finish inside its 50 steps per task. Every plan includes the scheduled task the job needs.",
-    },
-    {
-      question: "How is this different from HubSpot's prospecting agent?",
-      answer:
-        "HubSpot's prospecting agent works inside HubSpot on Starter, Professional, and Enterprise editions and costs $1 in HubSpot Credits for each lead it recommends outreach for. Construct works from your own written profile across the open web, keeps a dated file with a source for every lead, sends a Slack summary, and costs a flat plan price however many leads it finds.",
-    },
-    {
-      question:
-        "Should I let the agent write to HubSpot on a schedule right away?",
-      answer:
-        "No. Run the research and the HubSpot step by hand for a week first, because scheduled runs create records without stopping for review. Keep never change or delete existing records in the prompt, block HubSpot under App access for agents that do not need it, and check one created company's domain, contact, association, and note before you schedule anything.",
-    },
-    {
-      question: "Will the agent guess email addresses for leads?",
-      answer:
-        "No. The prompts in this guide tell it to record a person's business email only when it is published on the company's own site and to leave it blank otherwise. Finding a lead is not consent to email them, so check the rules that apply to the people you contact before any outreach.",
-    },
-  ],
   "hermes-vs-openclaw-vs-managed": [
     {
       question:
@@ -1881,70 +1589,6 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "Lite allows up to 50 steps per task and Starter 150, so if you have more than a handful of clients, split them into two scheduled report jobs. Finished reports are saved as they are produced, so a run that stops partway keeps the ones it finished.",
     },
   ],
-  "ai-agent-linear-from-slack": [
-    {
-      question: "Can Construct update Linear issues from Slack?",
-      answer:
-        "Yes. Mention your Construct agent in Slack and it finds the right issues, changes status, assignee, or priority, adds comments, and replies in the thread with a link for each. It works on every plan from $9 a month once Linear is connected and Construct is added to Slack.",
-    },
-    {
-      question: "Why use Construct instead of Linear's own Slack integration?",
-      answer:
-        "Linear's integration files issues from a message, the /linear command, or an @Linear mention, and only Linear users in your Slack workspace can create issues with it. Construct handles a message that touches several issues, finds an issue from a description without its key, takes requests from teammates without Linear seats, and can update workspace files in the same request.",
-    },
-    {
-      question: "Can I use Construct alongside Linear's Slack integration?",
-      answer:
-        "Yes. Keep Linear's integration for filing a single issue from a single message, and mention Construct for standup notes, bulk updates, and requests that need judgment.",
-    },
-    {
-      question: "Can the agent read Slack channels to find updates on its own?",
-      answer:
-        "No. It sees messages that mention it, replies in threads those mentions start, and direct messages. Paste or write the update into the message you send it.",
-    },
-    {
-      question: "How do I stop the agent from changing the wrong issues?",
-      answer:
-        "Use issue keys when you have them, keep a conventions file in the workspace, and for bulk changes ask it to list the changes and wait for you to reply go. Construct's workflows do not pause for approval yet, so that step is an instruction; check the issues it reports. Keep never delete or archive in memory.",
-    },
-    {
-      question: "Whose name appears on Linear changes made by the agent?",
-      answer:
-        "Changes appear under the Linear account that connected Linear in Construct, not the Slack user who asked. Ask the agent to name the requester in its comments.",
-    },
-  ],
-  "ai-employee-cost-calculator": [
-    {
-      question: "Is Construct cheaper than a virtual assistant?",
-      answer:
-        "For the recurring, checkable share of a VA's work it can be. In the illustrative example, a 20 hour a week VA at $15 an hour costs about $1,300 a month; moving 30% of tasks to Construct leaves $910 of VA time, so adding Lite at $9 saves $381 and Starter at $59 saves $331 a month before about 3.9 hours of review.",
-    },
-    {
-      question: "Which Construct plan should I start on?",
-      answer:
-        "Start on the smallest plan that fits your longest task and your number of recurring jobs. Lite at $9 fits up to three recurring jobs of up to 50 steps each; Starter at $59 fits more recurring jobs, tasks of up to 150 steps, or separate agents; Pro at $299 is for runs of up to 1,000 steps, many scheduled jobs, or your own model keys, and has a 7-day free trial.",
-    },
-    {
-      question: "How much does a virtual assistant cost per month?",
-      answer:
-        "A VA working 20 hours a week at $15 an hour costs about $1,300 a month, the top of Cherry Assistant's published $350 to $1,300 range for part-time offshore work. Cherry Assistant lists offshore agency rates of $4 to $15 an hour and US or UK freelance rates of $18 to $40 an hour.",
-    },
-    {
-      question: "Can I use Construct alongside my virtual assistant?",
-      answer:
-        "Yes. Construct takes the recurring, checkable work and your VA keeps the relationship work and reviews what the agent produces. A team workspace has no member limit, so your VA can join as a member. If your VA does the review, enter their hourly rate as the reviewer's value.",
-    },
-    {
-      question: "How does review time change the comparison?",
-      answer:
-        "It is the input most likely to flip the answer. In the illustrative example, pricing review at $50 an hour turns Starter's $331 saving into $136, and at 10 minutes of review per task every Construct plan costs more than keeping the VA alone. Measure your review time on a few real runs before you rely on the result.",
-    },
-    {
-      question: "What does the calculator leave out?",
-      answer:
-        "It does not include setup time, whether your VA engagement can actually be reduced, whether your workload fits a plan's usage, quality differences such as a VA catching an awkward email, or hiring and turnover costs. Treat the result as a first-pass estimate.",
-    },
-  ],
   "perplexity-computer-alternatives": [
     {
       question: "Is Construct a good Perplexity Computer alternative?",
@@ -2002,127 +1646,6 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
       question: "How can I set up a job like [customer]'s in Construct?",
       answer:
         "Give Construct the same inputs you would give a person, run it once, and read the saved result. When the output is right twice in a row, put it on the Calendar, where it runs on Construct's servers with your laptop closed. Start on Lite at $9 a month or try Pro free for seven days.",
-    },
-  ],
-  "perplexity-computer-vs-cowork-vs-manus": [
-    {
-      question:
-        "Is Construct a good alternative to Perplexity Computer, Claude Cowork, or Manus for background work?",
-      answer:
-        "Yes, for founders and small teams. Construct starts at $9 a month with 3 scheduled tasks, its Calendar runs jobs on Construct's servers with your laptop closed, and every result is saved to a workspace file that next week's run builds on. On any plan, a team workspace lets colleagues open the same files with no per-seat fee, and Pro lets you bring your own model keys.",
-    },
-    {
-      question: "Which is cheapest for background work?",
-      answer:
-        "Construct Lite is $9 a month, a fixed monthly price with published plan limits. Manus is free to start, with Pro from $20 a month and an optional Cloud Computer from $30 a month. Claude Cowork comes with Claude Pro at $20 a month. Perplexity Computer's cloud agent was reported by TechCrunch as a Perplexity Max feature at $200 a month, with credits on top.",
-    },
-    {
-      question: "Do they keep working when my laptop is closed?",
-      answer:
-        "Yes. Construct's Calendar schedules run on its servers, Perplexity Computer runs entirely in the cloud, Claude Cowork's scheduled tasks run even when your computer is asleep, and Manus runs tasks in a cloud sandbox with an optional Cloud Computer that stays on.",
-    },
-    {
-      question: "Is Perplexity Computer available on the $20 Pro plan?",
-      answer:
-        "Reports differ, and Perplexity's own pages refused our requests. TechCrunch reported the cloud Computer as a Max feature at $200 a month, and a third-party cost guide says it is not available on Pro. Personal Computer, the Mac version, is available to Pro and Max subscribers, according to TechCrunch.",
-    },
-    {
-      question: "Can I use Construct alongside Cowork, Manus, or Perplexity?",
-      answer:
-        "Yes. Keep your current agent for one-off research and move a weekly job to Construct: start on Lite for $9 or the 7-day Pro trial, copy the prompt, move the files, connect the apps, run it once, and put it on the Calendar. There is no import. Construct's schedules are time-based, so for work that arrives as it happens, forward it from your own address to the agent's inbox, which starts a run.",
-    },
-    {
-      question:
-        "When does Manus, Perplexity Computer, or Cowork still make sense?",
-      answer:
-        "Manus fits when runs must start from Slack messages, ad performance, or Notion updates, or when you need a server that stays on. Perplexity Computer fits a single research task that should draw on many models, if you can budget $200 a month plus credits. Cowork fits a personal job for someone who already pays for Claude Pro. For a team's recurring jobs, Construct is the better fit.",
-    },
-  ],
-  "ai-agent-files-and-artifacts": [
-    {
-      question: "Where does an AI agent's work go in Construct?",
-      answer:
-        "It lands as files in a persistent workspace as the agent produces it: reports, spreadsheets, documents, designed PDFs, charts, and small internal apps. Lite includes 100 MB of storage for $9 a month, Starter 1 GB, and Pro 3 GB, and the next run can read what the last one saved.",
-    },
-    {
-      question: "Can Construct create PDF, Excel, Word, and PowerPoint files?",
-      answer:
-        "Yes. The agent can export a Markdown report to a designed PDF with page numbers and bookmarks, and it writes Excel, Word, and PowerPoint files with the document libraries installed in its terminal. You can preview those formats in the Files app.",
-    },
-    {
-      question: "Will the agent overwrite a file I edited?",
-      answer:
-        "No. The agent tracks which version of a file it last read, and if you change the file after that, its next write is refused as a conflict instead of replacing your edit.",
-    },
-    {
-      question: "Can my team see the files the agent creates?",
-      answer:
-        "Yes, in a team workspace. Files in the Team area are shared with members who have file access, each member keeps a private area, and individual files can be shared with the whole team or with specific people. Storage counts against the owner's plan.",
-    },
-    {
-      question: "What should I set up before relying on Construct Files?",
-      answer:
-        "Use dated filenames, since Files has no trash or version history, and add a standing instruction not to delete files. Connect Google Drive or Dropbox if you want final copies there, edit Office files by asking the agent for a new version, and pick a plan with enough storage for your archive.",
-    },
-  ],
-  "ai-agent-telegram-slack-discord": [
-    {
-      question:
-        "Can I message my Construct agent from Telegram, Slack, Discord, or email?",
-      answer:
-        "Yes. You connect Slack, Discord, and Telegram from Settings, then Messaging, and every plan from $9 a month includes the agent's own email address. The same agent, workspace, and memory answer on every channel, so a job started from your phone lands in the files you open on your laptop.",
-    },
-    {
-      question: "Who can talk to the agent once it is in Slack or Discord?",
-      answer:
-        "Each install starts at Only people I allow, so only the installer gets replies. You can add people to Full access, block people, or switch to Everyone in the server, where unlisted members get a read-only guest agent.",
-    },
-    {
-      question: "Can I send different channels to different agents?",
-      answer:
-        "Yes. Under Default agent you pick which agent answers on each platform, and Route specific channels sends one Slack or Discord channel to a different agent. Lite includes up to 2 agents (Construct and one more), Starter 5, and Pro 15.",
-    },
-    {
-      question: "Can other people assign work to the agent by email?",
-      answer:
-        "A job starts by email when the message comes from the address you use for your Construct account and passes sender authentication. Mail from anyone else is stored and shown in the inbox, and you can ask the agent to deal with it.",
-    },
-    {
-      question: "Do scheduled jobs post into Slack or Telegram?",
-      answer:
-        "Scheduled jobs deliver their results to the Construct web app with a notification. Use Slack, Telegram, and Discord to start work and get replies to what you asked, and ask the agent to save tables as files and reply with the link.",
-    },
-    {
-      question: "How do I stop a job I started from Slack?",
-      answer:
-        "Type @Construct /stop as plain text in the thread, or react with the cross mark emoji to a message in the thread. Typing @Construct /new starts a fresh session in that thread.",
-    },
-  ],
-  "manus-alternatives": [
-    {
-      question: "Is Construct a good Manus alternative for recurring work?",
-      answer:
-        "Yes. Construct runs recurring business work from a persistent cloud workspace starting at $9 a month on Lite, with 3 scheduled tasks, 2 agents (Construct and one more), and an agent email address. Finished files stay in the workspace between runs, so this week's report can compare against last week's, and Calendar schedules run server-side with your laptop closed.",
-    },
-    {
-      question: "How does Construct's pricing compare with Manus credits?",
-      answer:
-        "Construct is a monthly plan with published limits: Lite $9, Starter $59 with 10 scheduled tasks, and Pro $299 with 50 scheduled tasks and your own model keys. Manus spends credits on every run, unused monthly credits do not roll over, you cannot start a new task at zero credits, and a persistent Cloud Computer costs $30 or $50 a month extra.",
-    },
-    {
-      question: "Can I use Construct alongside Manus?",
-      answer:
-        "Yes. Keep Manus for one-off research and builds and move the one recurring job where credits or lost files hurt most. Start on Lite or the 7-day Pro trial, copy the task prompt, upload the files the job needs, connect the apps, run it once, and put it on the Calendar. There is no import from Manus.",
-    },
-    {
-      question: "Does Construct support event triggers like Manus?",
-      answer:
-        "Construct starts runs from the Calendar, by hand, or from an agent, not from events in other apps. For an event-driven job such as new CRM records, schedule a regular run that picks up everything new since the last file. Workflows do not pause for approval yet, so ask for drafts of anything customer-facing and send them yourself.",
-    },
-    {
-      question: "When does Manus still make sense?",
-      answer:
-        "Manus can still fit if a job must start the moment an event happens in a connected service, if you need a process such as a bot or server running 24/7 on a machine you rent, or if you mostly hand over one-off research and build tasks. For weekly work that should leave files your team can open, Construct is the better fit.",
     },
   ],
   "where-ai-agents-fail": [
@@ -2190,39 +1713,6 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "Some pricing pages vary by region, currency, billing toggle, or login. The agent records what its fetch or browser run saw, so note the region or currency you care about in competitors.csv, and use the exact price text column to check whether it captured monthly or annual pricing.",
     },
   ],
-  "ai-agent-prompt-injection": [
-    {
-      question: "Is Construct safe to use for reading email?",
-      answer:
-        "Construct limits what a fooled agent can do. Only mail from the owner's own authenticated address starts a task, automated mail is screened, daily sending is capped on the server, chat channels default to only people you allow, connected apps can be switched off per agent, and Activity records actions. It does not detect or filter injected text and its workflows have no approval step yet, so keep sends as drafts that a person sends.",
-    },
-    {
-      question: "What is prompt injection?",
-      answer:
-        "Prompt injection is when text an AI agent reads, such as an email, a web page, or a document, contains instructions that the agent then follows as if you had given them. The version that matters for agents is indirect prompt injection, where the attacker plants instructions somewhere the agent will read later.",
-    },
-    {
-      question: "Can prompt injection be fully prevented?",
-      answer:
-        "Not today. The UK's NCSC says prompt injection attacks may never be totally mitigated the way SQL injection can be, OWASP says it is unclear if there are fool proof methods of prevention, and Anthropic reported in August 2025 that its browser agent still fell for 11.2% of red-team attacks in autonomous mode with new defenses.",
-    },
-    {
-      question: "What is the lethal trifecta?",
-      answer:
-        "Simon Willison's name for an agent that combines access to your private data, exposure to untrusted content, and the ability to externally communicate. With all three, an attacker can trick the agent into sending your private data to them, so the safest design is to avoid that combination in a single job.",
-    },
-    {
-      question:
-        "How do I set up an email agent in Construct that a hostile email cannot steer?",
-      answer:
-        "Have vendors email the agent's own address, where their mail starts nothing. Run a scheduled job that summarizes new mail to a file, flags requests for bank details or invoice lists, and is told not to send. Use an agent with connected apps switched off, ask for drafts when you want a reply, send them yourself, and check Activity and memory afterward.",
-    },
-    {
-      question: "Is it safe to let an AI agent read my email?",
-      answer:
-        "Reading and summarizing is useful and relatively low risk if the job cannot also send, delete, or pay without a person checking. Start with summaries, add drafts, and keep a person on anything you could not undo.",
-    },
-  ],
   "sintra-alternatives": [
     {
       question: "Is Construct a good Sintra alternative?",
@@ -2288,99 +1778,6 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "Marblism fits when you need your phone answered on a business number. Sintra fits when you want ready-made marketing roles with Facebook comment replies. Lindy fits when you want per-action approvals in Slack or texting over iMessage and SMS. For recurring reports and cross-app jobs at one price for the team, Construct is the better fit.",
     },
   ],
-  "ai-agent-custom-mcp": [
-    {
-      question: "Can I connect my own MCP server to an AI agent in Construct?",
-      answer:
-        "Yes. Add the server's public HTTPS address in Apps with Add MCP, and the agent can discover and call up to 200 of its tools alongside the live integration catalog. You then choose which agents may use it, and the results land in workspace files your team can open.",
-    },
-    {
-      question:
-        "Why use Construct for custom MCP tools instead of wiring up an agent myself?",
-      answer:
-        "Construct validates every call against your tool's own schema before sending it, limits each server to the agents you pick, saves results to workspace files, and can run the job on the Calendar, re-checking access on every run. You do not have to host an agent or build tool discovery yourself.",
-    },
-    {
-      question: "What are the limits on custom MCP tools in Construct?",
-      answer:
-        "Each call has 15 seconds to answer and up to 512 KB of response, Construct reads up to 200 tools per server, redirects must stay on the same origin, and private or local network addresses are refused. For long jobs, return a job ID quickly and offer a second tool that checks status.",
-    },
-    {
-      question: "How do I stop an agent from using a custom MCP server?",
-      answer:
-        "Turn the server off in that agent's settings, or uninstall it from the workspace. Scheduled jobs and workflows re-check the install and the agent's access on every run, so the change applies from the next run.",
-    },
-    {
-      question: "Does Construct ask for approval before calling an MCP tool?",
-      answer:
-        "No. Construct does not ask before every tool call. You control access by choosing which servers are installed and which agents may use them, by building narrow, read-only tools where possible, and by telling the agent which write tools not to call until you say so.",
-    },
-    {
-      question:
-        "Can I add an API key or custom headers to a custom MCP connection?",
-      answer:
-        "Not yet. Construct sends a short-lived, Construct-signed bearer token with each call, and there is no field for your own API key or headers, so build servers that are safe to expose to a known caller: narrow, read-only where possible, and rate limited.",
-    },
-  ],
-  "hire-an-ai-employee": [
-    {
-      question: "How do I hire my first AI employee with Construct?",
-      answer:
-        "Start on Construct Lite at $9 a month or the 7-day Pro trial and stage it over 30 days: read-only research in week 1, one scheduled recurring job in week 2, jobs that write to your own systems in week 3, and outward-facing drafts in week 4, then decide on day 30.",
-    },
-    {
-      question: "Is an AI employee cheaper than a virtual assistant?",
-      answer:
-        "Construct starts at $9 a month, while a part-time offshore virtual assistant working 20 hours a week costs $350 to $1,300 a month by Cherry Assistant's published rates. The 30-day plan shows you which of your recurring jobs the agent can take.",
-    },
-    {
-      question: "Which jobs should an AI employee do first?",
-      answer:
-        "Pick jobs by reviewability. The best first job is one where a wrong answer is obvious and costs nothing, such as company research, summaries, or file analysis, with a source URL for every fact.",
-    },
-    {
-      question: "How do I supervise an AI employee day to day?",
-      answer:
-        "Check what ran, what it produced, whether it changed anything outside Files, whether it asked you anything, and whether anything is stuck. Construct's workflows do not pause for approval yet, so keep outward work as drafts you send yourself, read the Memories app weekly to remove stale rules, and stop a running job whenever something looks wrong.",
-    },
-    {
-      question: "When should I move from Lite to Starter or Pro?",
-      answer:
-        "Change plans when the limits stop you, not the agent. Lite has 50 steps per task, 3 scheduled tasks, and 2 agents (Construct and one more); Starter has 150 steps, 10 scheduled tasks, and 5 agents; Pro has up to 1,000 steps, 50 scheduled tasks, 15 agents, and bring your own model keys.",
-    },
-    {
-      question: "What if a job still needs heavy corrections by week 3?",
-      answer:
-        "Rescope it: move it back to on demand, tighten the instructions, and save the corrections to memory. Jobs that must react within seconds of an event belong in a trigger based automation tool; give Construct the recurring work that needs reading, judgment, and a saved result.",
-    },
-  ],
-  "construct-vs-manus": [
-    {
-      question: "Is Construct a good Manus alternative?",
-      answer:
-        "Yes, for recurring work. Construct gives every agent a persistent workspace with files, a browser, a terminal, and Calendar schedules from $9 a month, at a fixed price with published plan limits. Your team shares one workspace without seat fees, and you can read and correct what the agent remembers.",
-    },
-    {
-      question: "Is Construct cheaper than Manus?",
-      answer:
-        "For recurring work with files that persist, yes. Construct Lite is $9. Manus has a free plan and Pro from $20 in credits that do not roll over, and keeping working files on a machine between tasks means adding a Cloud Computer for $30 or $50 more. Manus Team starts at $20 per seat.",
-    },
-    {
-      question: "What is the main difference between Construct and Manus?",
-      answer:
-        "Manus runs each task in a sandbox that closes when the task completes, with a persistent Cloud Computer sold as an add-on. Construct keeps a persistent workspace on every plan, so this Monday's report can open last Monday's file.",
-    },
-    {
-      question: "Can I use Construct alongside Manus?",
-      answer:
-        "Yes. Keep Manus for one-off builds and give Construct the jobs that repeat. Copy an Automation prompt into Construct, move its files, connect the apps, run it once, and put it on the Calendar. There is no import, and an event-triggered Automation becomes a frequent schedule or an email you forward from your own address.",
-    },
-    {
-      question: "When does Manus still make sense?",
-      answer:
-        "When you want a free plan for occasional one-off research, decks, or sites, when a job must start the moment an event happens in a connected service, or when you need a bot or server running 24/7 or a public website with a custom domain.",
-    },
-  ],
   "construct-vs-perplexity-computer": [
     {
       question: "Is Construct a good Perplexity Computer alternative?",
@@ -2407,160 +1804,6 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
       question: "When does Perplexity Computer still make sense?",
       answer:
         "When the job is one deep research question where you want many models and premium data, when you want the agent on your own Mac or PC through Personal Computer, or when your company runs on Microsoft Teams.",
-    },
-  ],
-  "ai-coworker-vs-ai-employee": [
-    {
-      question: "Is Construct an AI employee or an AI coworker?",
-      answer:
-        "Construct is built as an AI employee: each agent has a persistent cloud workspace, its own email address, a Calendar of scheduled jobs that run with your laptop closed, and a team workspace. It also takes one off tasks in chat the way a coworker does, and can save a task that works as a workflow.",
-    },
-    {
-      question:
-        "What is the difference between an AI assistant, an AI coworker, and an AI employee?",
-      answer:
-        "An AI assistant answers when you ask, inside a conversation. An AI coworker takes tasks you hand it and works in your apps while you stay in the loop. An AI employee owns a recurring job that runs from a schedule, an email, or a message, in its own workspace, and leaves files and a history behind.",
-    },
-    {
-      question: "Which one do I need?",
-      answer:
-        "Keep the chat assistant you already have for quick answers, and hire an AI employee for the first job that recurs, needs its own identity, or is shared by a team. Because Construct also handles one off tasks, most small teams do not need a separate coworker product on top.",
-    },
-    {
-      question: "How much do they cost?",
-      answer:
-        "On October 1, 2026, assistants and coworkers bundled into chat plans started around $20 a month, such as Claude Pro with Cowork at $20 and Google AI Pro at $19.99. Products sold as AI employees started at $9 a month for Construct Lite, $29.99 per active user for Lindy Team, and $50 per workspace for Viktor.",
-    },
-    {
-      question: "When does an assistant or coworker still make sense?",
-      answer:
-        "When you only need quick answers and writing help you already pay for, when the work must happen in desktop apps or local files on your own computer, which Construct does not operate, or when your company wants the agent inside Microsoft 365.",
-    },
-    {
-      question: "How can I tell what a product really is?",
-      answer:
-        "Test whether it can start without you, where its output goes, whose identity it uses, what it remembers and whether you can correct it, who else can use it, what needs approval, and what happens when a run fails halfway.",
-    },
-  ],
-  "cheapest-ai-employee": [
-    {
-      question: "What is the cheapest AI employee?",
-      answer:
-        "Construct Lite at $9 a month, or $7.50 a month billed annually. It is the cheapest paid plan we found that gives an agent its own cloud workspace and runs scheduled work there with your laptop closed: up to 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, an agent email address, and workspace files where every result is saved.",
-    },
-    {
-      question: "Is Construct Lite better value than a $20 agent subscription?",
-      answer:
-        "For recurring business work, yes. The $20 options, such as Claude Pro, Google AI Pro, Cursor Pro with Grok Bot, Manus Pro, Muse Power, and ChatGPT Plus, bundle an agent into a chat or coding subscription bought per person. Construct Lite costs less, needs no other subscription, keeps jobs on a Calendar, and leaves files the next run can build on. Starter at $59 adds a team workspace with no per-seat fee.",
-    },
-    {
-      question:
-        "Can I use Construct alongside the AI subscription I already pay for?",
-      answer:
-        "Yes. Keep your chat subscription for conversations and move one recurring job to Construct: start on Lite for $9 or the 7-day Pro trial, copy your prompt, move the files, connect the apps, run it once, and put it on the Calendar. There is no import, so write your rules into the first instruction.",
-    },
-    {
-      question: "Does ChatGPT Plus include always-on agents?",
-      answer:
-        "No. ChatGPT Plus at $20 includes agent mode, which draws on the same rolling message cap as regular chat, but OpenAI's always-on dots need ChatGPT Pro or Business Premium, according to the third-party guides and launch coverage we could fetch.",
-    },
-    {
-      question: "What does a cheap AI agent plan leave out?",
-      answer:
-        "Usage caps, in units such as steps, credits, tokens, or weekly grants, and often team use, since most $20 agents are bought per person. Self-hosted agents add hosting and model costs, and some agents leave output in a chat thread rather than files the next run can build on. Construct publishes its limits per plan, and Starter at $59 gives 6x Lite's usage.",
-    },
-    {
-      question: "When does a free tier or automation tool still make sense?",
-      answer:
-        "Manus Free, or Meta Muse in the US, fits if you want to spend nothing while you experiment. Make or Zapier fit fixed data mapping between apps. A $20 bundle fits if you already pay for Claude, Google AI Pro, or Cursor and only want a personal assistant. For recurring work that should run on a schedule and leave files, Construct Lite is the cheapest fit.",
-    },
-  ],
-  "construct-vs-cellcog": [
-    {
-      question: "Is Construct a good CellCog alternative?",
-      answer:
-        "Yes, for recurring jobs. Construct runs them on a fixed $9 plan with 3 scheduled tasks, or 10 on Starter at $59, saves every result as a file in your workspace, takes work from Slack, Telegram, Discord, and email, lets you correct its memory, and accepts your own model keys on Pro.",
-    },
-    {
-      question: "Is Construct cheaper than CellCog?",
-      answer:
-        "For recurring work, yes. CellCog starts at $8 for 800 credits, but its own plan labels put a part-time AI employee at $160 a month and a full-time one at $500. Construct Lite is $9 with 3 scheduled tasks, at a fixed monthly price with published plan limits.",
-    },
-    {
-      question: "Does CellCog offer refunds?",
-      answer:
-        "No. CellCog's pricing page says all payments are final and non-refundable, including subscription fees, automatic renewals, and credit top-ups, so time any downgrade to the end of a billing period and use remaining credits first.",
-    },
-    {
-      question: "Can I use Construct alongside CellCog?",
-      answer:
-        "Yes. Keep a CellCog employee for phone calls or meetings and give Construct the recurring jobs. Copy the role brief for one job, move its documents into the workspace, connect the apps, run it once, and put it on the Calendar. There is no import.",
-    },
-    {
-      question: "When does CellCog still make sense?",
-      answer:
-        "When you need an AI employee that answers its own phone line or joins Google Meet and Zoom calls, when you need video, images, audio, or podcasts as output, or when you want one worker to plan its own shifts in your logged-in Chrome with approval cards.",
-    },
-  ],
-  "ai-follow-ups-crm-without-zapier": [
-    {
-      question:
-        "Can Construct handle customer follow-ups and CRM updates without Zapier?",
-      answer:
-        "Yes. Construct finds deals that have gone quiet, reads each one's last email thread, drafts a follow-up that answers what the customer said, and logs a note in your CRM from one prompt, starting at $9 a month. The emails stay drafts until you approve them.",
-    },
-    {
-      question: "Why use Construct instead of Zapier for follow-ups?",
-      answer:
-        "The hard part of a follow-up is judgment: which deals need a nudge and what to say. Construct reads each deal and thread and decides, writes drafts from the real conversation, and keeps a dated changes file of every CRM write. It starts at $9 a month, while Zapier Professional is $29.99 a month billed monthly.",
-    },
-    {
-      question: "Can I use Construct alongside my existing Zaps?",
-      answer:
-        "Yes. Keep the Zaps that create records on events, such as a new contact from a form, and give Construct the follow-ups that need reading. Give each one its own fields so they do not overwrite each other. There is no import; you describe the job to Construct in plain language.",
-    },
-    {
-      question: "When does Zapier still make sense?",
-      answer:
-        "For fixed, event-triggered jobs that must run the moment something happens, such as creating a contact when a form is submitted. Construct runs on demand or from the Calendar, as often as every 15 minutes, which suits a weekday morning follow-up pass.",
-    },
-    {
-      question: "Does Construct send follow-up emails automatically?",
-      answer:
-        "Only if you tell it to. Construct's workflows do not pause for approval yet, so the guide uses a standing rule that the agent never sends a customer email until you reply send for that draft, and the scheduled job is draft only.",
-    },
-    {
-      question: "How do I know what the agent changed in my CRM?",
-      answer:
-        "Ask it to save a dated changes file listing every CRM write it made, and use Activity, which records each action with a short reason for a limited window. Activity is a useful operating record, not a complete audit log.",
-    },
-  ],
-  "ai-search-recommends-ai-employees": [
-    {
-      question: "How was the AI search study run?",
-      answer:
-        "The same 60 buyer questions were asked on ChatGPT, Perplexity, Gemini, Google AI Mode, Claude, and Grok, each in its private or temporary mode and a fresh chat, on audit dates between September 30 and December 14, 2026. Every product named and every site cited was recorded.",
-    },
-    {
-      question: "What counts as a recommendation?",
-      answer:
-        "A product counts as recommended when the answer presents it as an option to use, such as in a list of suggestions or as the direct answer. Products only mentioned as a contrast, products named in the prompt itself, and answers to brand prompts do not count toward the rankings.",
-    },
-    {
-      question: "Is the study biased toward Construct?",
-      answer:
-        "Construct is in the category, so the post discloses that, publishes every prompt, marks the prompts that reflect how Construct describes the category, and reports Construct's results with and without them in the same tables as every other product.",
-    },
-    {
-      question: "Do AI engines test the products they recommend?",
-      answer:
-        "No. An AI engine summarises what has been written about products, weighted by what its search step found. A recommendation shows which products have the most findable writing behind them, so check the sources, the date, and the vendor's own pricing page before you buy.",
-    },
-    {
-      question:
-        "How can I check Construct for myself instead of relying on an AI answer?",
-      answer:
-        "Give it one job you repeat every week with the same inputs you would give a person, and read the saved file. Lite costs $9 a month with 2 agents (Construct and one more), 50 steps per task, and 3 scheduled tasks, and there is a seven day Pro trial. Finished work lands in workspace files and you can read and correct what it remembers.",
     },
   ],
   "ai-investor-update": [
@@ -2596,65 +1839,6 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
         "Any plan works. The scheduled job uses one of the 3 scheduled tasks included with Lite at $9 a month. If a busy week runs past Lite's 50 steps per task, narrow the scope or move to Starter with 150 steps.",
     },
   ],
-  "construct-computer-alternatives": [
-    {
-      question: "Should I switch from Construct to another AI agent?",
-      answer:
-        "For most founders and small teams, no. Construct gives a team an AI employee with its own cloud workspace, files, Calendar schedules, and email address from $9 a month with no per-seat fee. Switching means giving up a shared workspace with no member limit, files the next run builds on, memory you can inspect and correct, and on Pro, your own model keys.",
-    },
-    {
-      question: "What do I give up by choosing a Construct alternative?",
-      answer:
-        "It depends on the tool. Lindy is $29.99 per user and pauses credit-using actions when credits run out, ChatGPT dots need a Pro plan reported at $100 or $200 a month, Microsoft Copilot Cowork needs a $25.20 per-user license plus metered credits, Manus bills credits per task with a persistent server as a $30 or $50 add-on, and Gemini Spark needs a personal Google account. Construct starts at $9 for the whole workspace.",
-    },
-    {
-      question: "Can Construct ask for approval before it sends something?",
-      answer:
-        "Construct's workflows do not pause for approval yet. For anything customer-facing, ask for drafts in the instructions and send them yourself once you have checked them, and run a new job by hand a few times before you put it on the Calendar.",
-    },
-    {
-      question: "What should I try before switching away from Construct?",
-      answer:
-        "Move to Starter at $59 for 10 scheduled tasks and 150 steps per task, or try Pro free for 7 days for 50 schedules, up to 1,000 steps per task, and your own keys for OpenRouter, OpenAI, Anthropic, Amazon Bedrock, or xAI. Reach the agent from Slack, Telegram, Discord, or its own email address, and ask it to build a private workspace app when several people review the same output.",
-    },
-    {
-      question: "Can I use Construct alongside another agent?",
-      answer:
-        "Yes. Keep the tool you already pay for, such as Claude, ChatGPT, or Gemini, for your own desk work, and move one recurring team job to Construct: start on Lite for $9, copy your instructions, move the files, connect the apps, run it once, and put it on the Calendar. There is no import, so write your rules into the first instruction.",
-    },
-    {
-      question: "When does a Construct alternative still make sense?",
-      answer:
-        "When your company runs on Microsoft Teams or Microsoft 365 (Viktor or Copilot Cowork), when the work lives on your own computer or in desktop apps with no API (Claude with Cowork or Simular Sai), or when you need a phone answered or high-volume branching triggers (Marblism, or Zapier, Make, and n8n). For recurring team work that should leave files behind, Construct is the better fit.",
-    },
-  ],
-  "construct-vs-simular-sai": [
-    {
-      question: "Is Construct a good Simular Sai alternative?",
-      answer:
-        "Yes, when your tools connect through integrations. Construct starts at $9 a month, reaches apps through its live integration catalog and your own MCP tools before using a browser or terminal, gives your team one workspace with shared files and correctable memory, and takes work from Slack, Telegram, Discord, and email.",
-    },
-    {
-      question: "How much does Simular Sai cost compared with Construct?",
-      answer:
-        "As of October 1, 2026, Sai lists a free Explore plan, Pay as you go at $50 a month of credits covering AI and computer time, Unlimited at $500 with an always-on cloud computer, and custom Enterprise pricing. Construct Lite is $9, Starter $59, and Pro $299 with up to 15 agents and 50 scheduled tasks.",
-    },
-    {
-      question: "Can Construct control desktop apps like Sai?",
-      answer:
-        "No. Construct works through its integration catalog, your own MCP tools, a live browser, and a sandbox terminal, but it cannot operate Windows or Mac desktop apps. Keep jobs that depend on desktop software on Sai and give Construct the rest.",
-    },
-    {
-      question: "Can I use Construct alongside Sai?",
-      answer:
-        "Yes. Start with a job that touches apps Construct connects to directly, such as Gmail, HubSpot, Notion, or Google Sheets. Write the steps you taught Sai as plain instructions, connect the apps, run it once, and put it on the Calendar. There is no import.",
-    },
-    {
-      question: "When does Simular Sai still make sense?",
-      answer:
-        "When the work happens inside desktop software, legacy tools, or portals with no API, when you want an always-on machine or an agent on your own Mac or PC, or when you want to approve every critical step from your phone.",
-    },
-  ],
   "ai-employee-for-consultants": [
     {
       question: "What can Construct do for a one-person consulting business?",
@@ -2686,70 +1870,6 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
       question: "Is it safe to put client documents into an AI employee?",
       answer:
         "Check your client contracts and NDAs first. Construct says it does not train on your data and that you own the files, memories, and apps your agent produces. Connect only the tools each job needs, and treat incoming email as information rather than instructions.",
-    },
-  ],
-  "ai-employee-team-workspace": [
-    {
-      question: "Can a whole team share one AI employee in Construct?",
-      answer:
-        "Yes. A Construct team workspace puts people, agents, a shared Team files area, and group chats in one place, with owner, admin, and member roles and permissions you can adjust per person. There is no per-seat charge or member limit on any plan, and Starter at $59 a month is sized for team volume.",
-    },
-    {
-      question: "How many people can share one Construct plan?",
-      answer:
-        "There is no per-seat charge and no member limit. Everyone's agent work in a team workspace draws on the workspace owner's plan, and members do not need their own subscription, so the question is how much work the team gives it, not how many seats it needs.",
-    },
-    {
-      question: "What stays private in a Construct team workspace?",
-      answer:
-        "Each person's own chats with an agent and their private files stay private. The Team files area, workspace memory, and group chats are shared, and in group chats the agent only uses shared resources, never one member's personal memory, private files, or personal connections.",
-    },
-    {
-      question: "Who can connect apps and invite people in a team workspace?",
-      answer:
-        "By default, owners and admins can install apps, connect accounts, create agents and group chats, and invite or manage members. Members can read and write team files, use installed apps, and chat with the workspace's agents. Billing, deletion, and ownership transfer stay with the owner.",
-    },
-    {
-      question: "Can an admin see everything every member's agent did?",
-      answer:
-        "Activity is per person, so each member sees the work they started, and there is no combined admin feed today. Run work the whole team should review in a group chat, where the agent answers in front of everyone.",
-    },
-    {
-      question: "When does a different setup still make sense?",
-      answer:
-        "If you work alone, Construct's personal workspace is enough. A large company with strict identity and audit requirements should evaluate tools built for that, and a team that only needs answers rather than shared output may only need a chat assistant per person.",
-    },
-  ],
-  "is-construct-computer-safe": [
-    {
-      question: "Is Construct Computer safe to use?",
-      answer:
-        "Yes, for a small team's everyday work with a scoped setup. Construct does not train on your data, encrypts the model keys and chat-bot credentials it stores, deletes workspace data when you close your account, and publishes its sub-processors. The agent still acts through the accounts you connect, and there is no mandatory approval before every external action, so connect only what a job needs and ask for drafts of anything that leaves the workspace.",
-    },
-    {
-      question: "Does Construct train AI models on my data?",
-      answer:
-        "No. You own the files, memories, and apps your agent produces, and the licence you grant Construct covers storing, processing, and displaying that content only to run the service for you.",
-    },
-    {
-      question: "What can Construct's agent access?",
-      answer:
-        "Your workspace files, a Linux terminal sandbox, a cloud browser that does not carry your logins, its own email inbox, the apps and custom tools you connect, and the chat channels you install it in. Each surface has limits, such as per-agent app access, channel allow lists that fail closed, and email that only you can command.",
-    },
-    {
-      question: "Can Construct's agent be tricked by prompt injection?",
-      answer:
-        "The risk remains, as it does for any agent that reads outside content. Construct labels web pages, browser results, email, and tool results as external data whose instructions should not be followed, which reduces the risk without removing it. Keep agents that read untrusted content away from sending and updating records, and approve drafts yourself.",
-    },
-    {
-      question: "What is a safe way to start with Construct?",
-      answer:
-        "Start in a personal workspace with no connected apps and give it research and file work. Use the agent's own email address rather than your Gmail, connect one app when a real job needs it and turn it off for agents that do not, ask for drafts of anything that leaves the workspace, and schedule only what has worked on demand a few times.",
-    },
-    {
-      question: "What happens to my data if I close my Construct account?",
-      answer:
-        "Closing your account deletes your workspace files, memory, chat history, Activity, Calendar, and agent email. Export anything you want to keep first.",
     },
   ],
   "how-to-choose-an-ai-agent-platform-for-your-team": [
@@ -2882,6 +2002,304 @@ export const resourceFaqs: Record<string, readonly FaqItem[]> = {
       question: "How many agents can I run in Construct?",
       answer:
         "Up to 2 on Lite at $9 a month, 5 on Starter at $59, and 15 on Pro at $299, each including the built-in Construct agent.",
+    },
+  ],
+  "ai-agent-browser-and-terminal": [
+    {
+      question: "Can Construct's browser log in to my accounts?",
+      answer:
+        "Not by itself. Construct sends the browser only a goal and a start URL, with no saved profile, cookies or passwords, so each run starts signed out. For tools you are signed into, connect the app from the App Store and the agent uses a structured action instead.",
+    },
+    {
+      question: "How long can a Construct terminal command run?",
+      answer:
+        "Two minutes by default and up to five minutes, on every plan as of October 26, 2026. A longer job has to be split into smaller commands that save a file after each step.",
+    },
+    {
+      question: "Can I run two browser tasks at once in Construct?",
+      answer:
+        "Not with one agent. Each agent has one live browser run at a time, and a second request is refused until the first is stopped. Give the second site to another agent.",
+    },
+    {
+      question: "Do packages the agent installs stay installed?",
+      answer:
+        "Only until the container sleeps, 10 minutes after the last command. Files in /private and /workspace persist; anything else on the container disk, including /tmp and pip installs, does not.",
+    },
+  ],
+  "ai-agent-custom-mcp": [
+    {
+      question:
+        "Does Construct support MCP servers that need the initialize handshake?",
+      answer:
+        "Not as of October 26, 2026. Construct sends tools/list and tools/call as plain JSON-RPC POSTs with no initialize, session ID or protocol version header, and reads a single JSON reply. Servers that require a handshake, enforce the 2026-07-28 header rules or stream SSE replies will refuse or fail.",
+    },
+    {
+      question: "Can I give Construct an API key for my MCP server?",
+      answer:
+        "Not yet. There is no field for your own key or custom headers. Construct sends a 120-second token signed with its own secret, which your server cannot verify locally, so use a long random MCP path as the shared secret and keep the tools narrow.",
+    },
+    {
+      question:
+        "Why doesn't a new tool on my MCP server show up for the agent?",
+      answer:
+        "Construct caches the first 80 tools when you add the server, and agents search that cache. A tool added to the server later appears after you remove the server and add it again.",
+    },
+    {
+      question: "Can every member of a team workspace add an MCP server?",
+      answer:
+        "No. Installing apps is an owner and admin permission by default, and an owner can grant it to members.",
+    },
+  ],
+  "ai-agent-files-and-artifacts": [
+    {
+      question: "Does Construct have a trash or file version history?",
+      answer:
+        "Not as of October 26, 2026. Deleting a file in Files is permanent and an overwrite replaces the old contents. Workspace apps are the exception: their last 10 successful builds are kept and can be restored.",
+    },
+    {
+      question: "Can teammates see what my agent made?",
+      answer:
+        "Files in My files are yours and your agents'. Move a file to Team, or share it with specific people, and they can open it; files shared with them appear read-only under Shared.",
+    },
+    {
+      question: "How long does Construct keep the record of what an agent did?",
+      answer:
+        "Activity keeps rows for 30 days, or until a person's rows pass 10 MB, and can export them as CSV or JSON. The files themselves stay until someone deletes them.",
+    },
+    {
+      question: "What happens when workspace storage is full?",
+      answer:
+        "New writes are refused with a message saying storage is full, and nothing is deleted to make room. Storage counts against the workspace owner's plan: 100 MB on Lite, 1 GB on Starter, 3 GB on Pro.",
+    },
+  ],
+  "ai-agent-prompt-injection": [
+    {
+      question: "Can an AI agent be hacked through an email?",
+      answer:
+        "Yes, if it reads the email and can act. In October 2026 Salt Labs showed a single email with an encoded payload taking over a Manus session that held the user's Gmail token. The protection is limiting what the reading agent can reach and keeping a person in front of sends.",
+    },
+    {
+      question: "Does Construct filter prompt injection?",
+      answer:
+        "No. Construct does not scan content for injected instructions. It labels third-party results as external data, refuses to let strangers' email start tasks, gives unlisted chat users a read-only agent, and lets you keep sends as drafts you approve.",
+    },
+    {
+      question: "Can I tell my agent to ignore instructions in emails?",
+      answer:
+        "You can, and it helps, but it is not a control to rely on alone because a well-written injection can still persuade the model. Pair the instruction with an agent that has no connected apps and with drafts that a person sends.",
+    },
+  ],
+  "ai-agent-slack-briefing": [
+    {
+      question: "Is Slack AI recap available on the Pro plan?",
+      answer:
+        "No. As of October 26, 2026, Slack lists daily recaps on Business+ and Enterprise+ only. Pro includes on-click AI conversation summaries but not the morning recap.",
+    },
+    {
+      question:
+        "Can an AI agent post a scheduled message to a Slack channel without a Slack bot token?",
+      answer:
+        "Yes, on a paid Slack plan. Every channel can have an email address, and anything emailed to it is posted in the channel. Construct's scheduled briefing uses this route, since a scheduled run has no Slack conversation to reply in.",
+    },
+    {
+      question: "Can I get a daily Slack briefing on Slack's free plan?",
+      answer:
+        "Channel email addresses need a paid Slack plan, but the Slackbot forwarding address works on every plan and delivers to your own DM with Slackbot. You can also mention Construct in Slack and ask for the briefing on demand.",
+    },
+  ],
+  "ai-company-research-spreadsheet": [
+    {
+      question: "Why does AI research get SaaS prices wrong?",
+      answer:
+        "Pricing pages usually lead with the annual-billing price and keep the monthly price behind a toggle. A plain page fetch reads the default. In our check of Linear, Calendly and Airtable on October 26, 2026, all three led with the annual figure.",
+    },
+    {
+      question: "How much does Clay cost?",
+      answer:
+        "As of October 26, 2026, Clay's Launch plan is $185 a month billed monthly or $167 a month billed annually, made of 15,000 actions plus 2,500 data credits. The free plan includes 500 actions and 100 data credits a month.",
+    },
+    {
+      question: "How many companies can an AI agent research in one run?",
+      answer:
+        "It depends on the plan's steps per task, not a company count: 50 on Construct Lite, 150 on Starter and 1,000 on Pro. Batches of ten companies saved after each batch fit any plan.",
+    },
+  ],
+  "ai-delegation-checklist": [
+    {
+      question: "Should an AI employee send emails on its own?",
+      answer:
+        "Not at first. Keep anything that leaves the company as a draft until the job has several clean runs behind it, and keep it a draft for good if one bad message would be costly. In Construct, workflows have no step that pauses for a person's approval, so the draft-only rule in your brief is what keeps a person in the loop. Email from the agent's own address also has a daily sending limit, lower on Lite than on Starter and Pro.",
+    },
+    {
+      question: "How long does it take to onboard an AI employee?",
+      answer:
+        "Plan on about 30 days: read-only work you can check in week one, one scheduled job in week two, writes to systems you own in week three, and outward drafts in week four. Expand when a job has run four or more times with only small corrections.",
+    },
+    {
+      question: "What should you never delegate to an AI employee?",
+      answer:
+        "Decisions about people, pricing, money and relationships, anything you cannot undo, and any job where you could not say in advance what a good result looks like. Those stay with a person, with the agent preparing drafts or research at most.",
+    },
+  ],
+  "ai-employee-team-workspace": [
+    {
+      question: "Do teammates need their own Construct subscription?",
+      answer:
+        "No. Everything done in a team workspace runs on the owner's plan, including usage, agent and schedule limits. Creating a team workspace needs a paid plan or a new account's unused free allowance, and receiving ownership of one needs a paid plan.",
+    },
+    {
+      question: "Can a workspace admin read my private chats with an agent?",
+      answer:
+        "No. One-to-one chats belong to the person who had them, and each person's private files are in an area nobody else can browse. An admin can see that a members-only group exists, but joining it to read posts a notice in the group.",
+    },
+    {
+      question: "Does Construct support SSO or SCIM for teams?",
+      answer:
+        "Not as of October 2026. People sign in with Google, an emailed link or a password, and there is no SAML single sign-on or SCIM provisioning.",
+    },
+  ],
+  "ai-lead-sourcing-hubspot": [
+    {
+      question: "Does HubSpot deduplicate companies added through the API?",
+      answer:
+        "No. HubSpot's knowledge base says companies created through the API, including third-party sync apps, are not deduplicated by the company domain. Contacts are matched on email. An agent has to search by domain before it creates a company.",
+    },
+    {
+      question: "How much does HubSpot's Prospecting Agent cost?",
+      answer:
+        "HubSpot charges $1 for each lead the agent recommends for outreach, paid as 100 HubSpot Credits per lead, as of October 26, 2026. Its product page lists Starter, Professional and Enterprise; its April 2026 announcement lists Pro and Enterprise.",
+    },
+    {
+      question: "Can I stop an AI agent from deleting HubSpot records?",
+      answer:
+        "In Construct, app access is per agent and covers every action the HubSpot connection offers. Give the lead job its own agent, turn HubSpot off for the others, and once saved as a workflow, limit the agent step to the search, create, associate and note actions.",
+    },
+  ],
+  "how-much-does-an-ai-agent-cost": [
+    {
+      question: "Do AI agent credits roll over to the next month?",
+      answer:
+        "Mostly not. Lindy's and Manus's monthly credits expire at the end of each cycle, and Manus clears them on the renewal date even if you upgraded mid-cycle. Viktor's roll over for one month, and CellCog's stay valid for 60 days after the billing period. Construct has no credits: its monthly usage allowance resets on the first of the month (UTC), and unused usage does not carry over either.",
+    },
+    {
+      question: "Can I use my own API key to make an AI agent cheaper?",
+      answer:
+        "Sometimes. Construct Pro has a Model source setting that can switch to your own OpenRouter, OpenAI, Anthropic, Amazon Bedrock or xAI key once included usage runs out, or use only your key, with a monthly spend limit you set. Manus Flex accepts keys through OpenRouter, Fireworks or Modal, but other infrastructure still uses Manus credits. A self-hosted agent such as OpenClaw always runs on your own key or an existing ChatGPT or Claude subscription.",
+    },
+    {
+      question:
+        "What happens when an AI agent runs out of credits or usage mid-month?",
+      answer:
+        'It depends on the product. Manus will not start a new task at or below zero credits. Perplexity skips a scheduled task when credits run out and pauses it after repeated skips. Construct shows "Session usage limit reached" or "Monthly usage limit reached" with the reset time; a scheduled run that lands in a spent window fails and is recorded, and the schedule stays on for the next run.',
+    },
+  ],
+  "is-construct-computer-safe": [
+    {
+      question: "Does Construct Computer sell my data?",
+      answer:
+        "No. The privacy policy says Construct does not sell personal information. Your content is shared only with the sub-processors that run the service, such as Cloudflare for hosting and the model provider serving a request, and with apps you connect yourself.",
+    },
+    {
+      question: "Where does Construct Computer store my data?",
+      answer:
+        "Workspace data lives on Cloudflare (R2 for files, Durable Objects and D1 for chats and records), which processes it wherever it has capacity. Construct offers no choice of data region today. Analytics run on PostHog's EU cloud and billing on Dodo Payments in India.",
+    },
+    {
+      question: "Can I use Construct Computer without connecting my Gmail?",
+      answer:
+        "Yes. Every paid plan gives the agent its own address at construct-agent.xyz, and only mail from your own verified address can start a task there. Connecting Gmail is optional and gives the agent whatever that connection's Google scopes allow.",
+    },
+  ],
+  "manus-alternatives": [
+    {
+      question: "Is Manus still owned by Meta?",
+      answer:
+        "No. Manus says Meta acquired it on December 29, 2025. As part of the separation it deleted some users' data from August 23, 2026, and a Manus post dated September 1, 2026 says it has formally resumed independent operations.",
+    },
+    {
+      question: "Can you use your own API key with Manus?",
+      answer:
+        "Yes. Manus Flex, launched September 29, 2026, lets you power Manus with your own key through OpenRouter, Fireworks or Modal. Other services and infrastructure used in a task still consume Manus credits.",
+    },
+    {
+      question: "Do Manus credits roll over?",
+      answer:
+        "Monthly plan credits do not. They are cleared on the renewal date, even if you upgraded mid-cycle. Add-on credits carry over as long as you keep an active paid subscription.",
+    },
+    {
+      question: "What happens to a Manus Cloud Computer if you stop paying?",
+      answer:
+        "Manus shuts the virtual machine down and deletes its working files, installed tools and databases. Outputs that were delivered in chat stay in your chat history, so download anything else before you cancel.",
+    },
+  ],
+  "what-can-your-ai-agent-delete": [
+    {
+      question: "Why did an AI agent delete a production database?",
+      answer:
+        "In the cases on record (Replit in July 2025, DataTalks.Club and PocketOS in 2026) the agent held credentials that could delete production data and nothing stood between its decision and the command. Separate production from what the agent touches and keep backups it cannot reach.",
+    },
+    {
+      question: "Can I give an AI agent read-only access?",
+      answer:
+        "Only where the app itself offers it. Construct has no read-only switch on a connection, so connect a user or account with a view-only role in the app, and switch the app off in App access for every agent that does not need it.",
+    },
+    {
+      question: "Can a Construct agent delete my files?",
+      answer:
+        "Yes. An agent can delete workspace files and the delete is permanent, with no trash, and its terminal has the same files mounted with write access. Keep copies of anything you cannot lose outside Construct.",
+    },
+  ],
+  "make-your-website-readable-by-ai-agents": [
+    {
+      question:
+        "Should the Markdown version of a page be indexed by search engines?",
+      answer:
+        "No. We serve each Markdown twin with X-Robots-Tag: noindex and a canonical Link header pointing back to the HTML page, so search engines keep indexing the page itself. The one exception is when the homepage answers in Markdown at its own URL: there the middleware removes noindex, because that URL is the page.",
+    },
+    {
+      question: "Do AI crawlers run JavaScript?",
+      answer:
+        "Mostly not. Vercel's December 2024 study found that none of the major AI crawlers, GPTBot, ClaudeBot and PerplexityBot included, render JavaScript, so anything your page only shows after JavaScript runs is invisible to them. Our homepage FAQ answers were missing for exactly that reason until we rendered them on the server.",
+    },
+    {
+      question: "Which Cloudflare plans include Markdown for Agents?",
+      answer:
+        "Cloudflare's documentation, updated October 9, 2026, lists Markdown for Agents for Pro, Business and Enterprise plans and for SSL for SaaS customers at no extra cost. It converts HTML to Markdown for clients that send Accept: text/markdown, and it strips header, nav and footer elements, including a header inside main.",
+    },
+  ],
+  "cheap-llm-for-ai-agents": [
+    {
+      question: "Is DeepSeek V4.1 Flash good for AI agents?",
+      answer:
+        "In our October 23, 2026 benchmark it passed 18 of 22 runs at $0.0086 per passed task, with a writing score of 4.3 of 5, and in a larger follow-up it passed 38 of 42 against GLM-5.3-Flash's 33. Its weak spot was the long meeting-planning task, which it failed both times. Construct now runs it right after Claude Haiku 5.5 for main agent turns.",
+    },
+    {
+      question: "Is Gemini 3.8 Flash worth the price for an AI agent?",
+      answer:
+        "It tied for the top pass rate (19 of 22), was the fastest of the leaders at 24 seconds of model time per task and wrote best, but cost about nine times GLM-5.3-Flash per passed task in our run. Google's pricing page lists it at double the current rates from January 1, 2027, so check that before building on it.",
+    },
+    {
+      question: "Can a Flash-Lite model run an AI agent?",
+      answer:
+        "Not well in our tests. Gemini 3.1 and 3.5 Flash-Lite were the fastest models but passed 14 of 22 tasks and scored 1.8 of 5 on writing, and both left Construct's fleet on October 24, 2026. They are better suited to quick side jobs such as titles and short summaries.",
+    },
+  ],
+  "ai-search-recommends-ai-employees": [
+    {
+      question: "Which AI employee does ChatGPT recommend?",
+      answer:
+        "In our September 30, 2026 audit, ChatGPT named Zapier (22%), Lindy (21%) and Manus (19%) most often in answers to 50 buyer questions that did not mention them. It was also the engine most likely to cite news, with Reuters in 18% of its answers. One run per question, so treat these as a snapshot.",
+    },
+    {
+      question:
+        "Which sources does Google AI Mode cite for software recommendations?",
+      answer:
+        "In our audit Google AI Mode cited YouTube in 66% of its answers, Reddit in 28% and LinkedIn in 26%, far more than any other engine, alongside vendor sites such as lindy.ai and manus.im. It cited about 6.6 different sites per answer.",
+    },
+    {
+      question: "Do G2 and Capterra show up in AI answers about AI agents?",
+      answer:
+        "Rarely, in our data. Across 224 answers from six engines on September 30, 2026, G2 was cited once and Capterra and Trustpilot never. The review sites that were cited were mostly newer AI-tool directories. An audit of citations cannot show indirect influence, such as a model having read those reviews in training.",
     },
   ],
 };

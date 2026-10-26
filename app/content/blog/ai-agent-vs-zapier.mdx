@@ -1,8 +1,9 @@
 ---
 title: "AI Agent vs Zapier Automation"
-description: "Zapier runs a fixed trigger-action recipe. See how an AI agent plans its own steps instead, with a side-by-side of the same recurring workflow built both ways."
+seoTitle: "AI Agent vs Zapier: Running Zaps and Zapier Agents Usage"
+description: "Start a Zap from any AI agent or script with a Catch Hook webhook. Zapier Agents bill in activities, 400 a month on Free, and are moving into AI by Zapier."
 published: "2026-07-26"
-updated: "2026-10-01"
+updated: "2026-10-26"
 author: "ankush"
 tags: ["comparison", "zapier", "ai-agent", "automation"]
 kind: "article"
@@ -13,7 +14,9 @@ Construct gives you an AI agent that plans its own steps across your apps, a liv
 
 For founders and small teams whose recurring work involves reading, judgment, or research, Construct is the better choice. You describe the outcome once instead of building a tree of Paths, the agent handles the cases nobody wired for, and every finished file stays in a workspace your team can open next week. Already running Zaps? Keep the simple ones and give Construct the jobs that keep falling through.
 
-<BetaCta source="blog_top" plan="lite" interval="month">Start with Construct for $9</BetaCta>
+<BetaCta source="blog_top" plan="lite" interval="month">
+  Start with Construct for $9
+</BetaCta>
 
 ## Why choose Construct over a Zap?
 
@@ -44,19 +47,31 @@ Construct also carries context forward. Workspace files and inspectable long-ter
 
 <ArticleTable caption="Monthly prices for Construct and Zapier">
 
-| Plan                | Monthly price | What you get                                                                               |
-| ------------------- | ------------- | ------------------------------------------------------------------------------------------ |
-| Construct Lite      | $9            | Up to 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, agent email address                  |
-| Construct Starter   | $59           | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                      |
-| Construct Pro       | $299          | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your keys |
-| Zapier Professional | $29.99        | 750 tasks, unlimited multi-step Zaps                                                       |
-| Zapier Team         | $103.50       | 2,000 tasks                                                                                |
+| Plan                | Monthly price | What you get                                                                                       |
+| ------------------- | ------------- | -------------------------------------------------------------------------------------------------- |
+| Construct Lite      | $9            | Up to 2 agents (Construct and one more), 50 steps per task, 3 scheduled tasks, agent email address |
+| Construct Starter   | $59           | 6x Lite usage, up to 5 agents, 150 steps per task, 10 scheduled tasks                              |
+| Construct Pro       | $299          | 32x Lite usage, up to 15 agents, up to 1,000 steps per task, 50 scheduled tasks, your keys         |
+| Zapier Professional | $29.99        | 750 tasks, unlimited multi-step Zaps                                                               |
+| Zapier Team         | $103.50       | 2,000 tasks                                                                                        |
 
 </ArticleTable>
 
 Sources: [Construct pricing](/pricing/) and [Zapier pricing](https://zapier.com/pricing). Zapier prices were current as of this post's original publish date and can change; check Zapier's pricing page for the latest figures. Construct is priced per plan, not per seat: a team workspace has no member limit, and everyone's work draws on the owner's plan.
 
-<BetaCta source="blog_inline_1" plan="pro" interval="month">Try Construct Pro free for 7 days</BetaCta>
+<BetaCta source="blog_inline_1" plan="pro" interval="month">
+  Try Construct Pro free for 7 days
+</BetaCta>
+
+## Running Zaps from an agent, and how Zapier Agents are metered
+
+### How do I run Zapier Zaps from an AI agent or script?
+
+Start the Zap with the Webhooks by Zapier Catch Hook trigger. It gives you a unique URL, and any script or agent that sends a GET, PUT, or POST request to that URL starts the Zap. Webhook triggers are not on Zapier's Free plan ([Zapier, trigger Zaps from webhooks](https://help.zapier.com/hc/en-us/articles/8496288690317)). To let an AI client call app actions directly instead of a whole Zap, connect Zapier MCP: each successful tool call uses two tasks from your Zapier plan, and failed calls do not count ([Zapier MCP docs](https://docs.zapier.com/mcp/get-started/connect)).
+
+### How is Zapier Agents usage measured?
+
+In activities, not Zap tasks. Each trigger, action, knowledge-source answer, web search, browsing request, or Chrome extension message is one activity, with 400 a month and 10 per run on Free, and 1,500 a month and 40 per run on Pro ([Zapier, how Agents usage is measured](https://help.zapier.com/hc/en-us/articles/26559132765325)). That is changing: Zapier is moving Agents into AI by Zapier, a step in the Zap editor that "uses the same task-based pricing as the rest of Zapier" and pauses a run after 75 tasks by default, adjustable to 500. As of its October 1, 2026 update, Zapier had not set a date to turn off Agents ([Zapier, migrating from Agents to AI by Zapier](https://help.zapier.com/hc/en-us/articles/47402591569805)).
 
 ## The same recurring workflow, two ways
 
@@ -66,7 +81,7 @@ A concrete example makes the difference easier to see: a new lead lands in Gmail
 
 | Stage         | Run by Construct                                                                                                                            | Built in Zapier                                                                                                             |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Build effort  | One job description after the inbox, CRM connection, and schedule are set up                                                               | One multi-step Zap with Paths for anticipated cases, tested and maintained as its rules change                              |
+| Build effort  | One job description after the inbox, CRM connection, and schedule are set up                                                                | One multi-step Zap with Paths for anticipated cases, tested and maintained as its rules change                              |
 | Qualification | The agent reads the email in context and judges whether the lead qualifies, including cases the rules did not anticipate                    | A Filter step and a Paths branch encode the qualification rules in advance: company size field, keyword match, domain check |
 | CRM update    | The agent updates the CRM directly, and can check the sender's site or prior email history to fill a gap the message itself does not answer | A CRM action step maps fields from the trigger payload; a missing or unrecognized field needs its own Path to handle        |
 | Summary       | The agent emails a summary from its own address, in its own words, including why it judged the lead qualified                               | A Slack action step posts a fixed message template to a channel                                                             |

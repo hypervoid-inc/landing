@@ -1,85 +1,125 @@
 ---
-title: "Connect your own tools: custom MCP and permission boundaries"
-seoTitle: "AI Agent Custom MCP Tools: How to Connect Them Safely (2027)"
-description: "Add your own MCP server to Construct by URL, and set which agents can use it. Requirements, the 15-second call limit, permission boundaries, and gaps."
-published: "2026-11-20"
+title: "Connect a custom MCP server to Construct: limits, auth and risk"
+seoTitle: "Connect a Custom MCP Server to an AI Agent"
+description: "How to connect your own MCP server to Construct's AI agent: the exact requests it sends, its 15-second and 512 KB limits, who can call it, and how to secure it."
+pitch: "What Construct actually sends to your MCP server, the limits it enforces, and how to keep a public server safe."
+published: "2026-11-11"
+time: "17:21"
 author: "nischal"
 tags: ["ai-agent", "product", "governance"]
 kind: "guide"
-draft: true
+draft: false
 ---
 
-Construct connects your own tool server by URL: paste its HTTPS address into Apps, and the agent can discover and call up to 200 of its tools alongside the live integration catalog. Wiring the same thing up yourself means hosting an agent, building tool discovery, validating arguments, and re-checking access on every scheduled run before your first lookup works.
+To connect a custom MCP server to Construct, open the App Store, choose **Add MCP server** in your library, and enter the server's public HTTPS address and its MCP path (`/mcp` unless you changed it). Your agents can use its tools straight away, and you turn the server off per agent. Construct talks to the server in plain JSON-RPC over HTTPS: before each call it lists the tools, checks the arguments against the tool's own schema, then calls it, with 15 seconds and 512,000 bytes per request. It does not perform the `initialize` handshake, so the server has to answer without one.
 
-For founders and small teams, Construct is the simplest place to put an internal tool in front of an AI employee. It validates every call against your tool's own schema, lets you decide which agents may use the server, saves the results to workspace files your team can open, and runs the job on the Calendar while your laptop is closed. This guide walks through how it works, one tool built end to end, and the permission boundaries around it.
+The Model Context Protocol (MCP) is the open standard for exposing tools to AI applications: a server lists tools, each with a name, a description and a JSON Schema for its inputs, and a client calls them. This guide covers what Construct sends your server, what it expects back, who can call it, and what this autumn's MCP security problems mean for a server you put on the internet.
 
-<BetaCta source="blog_top">Connect your first tool to Construct</BetaCta>
+<BetaCta source="blog_top">Meet Construct</BetaCta>
 
-## Why do this in Construct?
+## Is a custom MCP server worth building?
 
-- **Add a server in one step, with no vendor review.** Paste the endpoint into Apps with Add MCP. Your server stays private to your workspace.
-- **Every call is checked before it is sent.** Construct fetches the current tool list and validates the arguments against that tool's input schema, then sends the call.
-- **You choose which agents can use it.** Each agent's settings list the installed apps it may use. Turn your server off for every agent that does not need it.
-- **Results land in files, not a chat thread.** The agent writes its table or report to workspace files, and a run that stops at step 30 keeps steps 1 to 29.
-- **It runs on a schedule, and access is re-checked each time.** Put the job on the Calendar and it runs server-side. Every run re-checks the install, the agent's access, and the tool's schema.
-- **Your tool sits next to the apps you already use.** The same agent can call your server and connected apps such as Gmail, Notion, Linear, or HubSpot in one task.
+Often it is not. Construct already connects apps such as Gmail, HubSpot, Notion, Linear and GitHub through its integration catalog, and an MCP server is one more service to host, secure and keep up. It is worth building when the system is yours and no catalog will ever list it, or when you want the agent to have a narrower interface than a whole account. A tool that can only look up an approval status is easier to reason about than a connected account that can read, send and delete.
 
-## What is custom MCP, and when do you need it?
+<ArticleTable caption="Which route fits the system you want the agent to reach">
 
-The Model Context Protocol (MCP) is an open standard for exposing tools to AI applications. A server lists its tools, each with a name, a description, and a JSON schema for its inputs, and an AI application calls them over JSON-RPC.
-
-Construct already connects to supported business apps through its live integration catalog, including Gmail, Google Calendar, Notion, Linear, Jira, GitHub, HubSpot, and Airtable. Custom MCP covers the rest:
-
-- the system is yours, such as an internal service or database, and no catalog will ever list it;
-- the catalog app exists but lacks the one action you need;
-- you want the agent to use a narrow, reviewed interface rather than a whole account.
-
-The third reason is the underrated one. A tool that can only "look up approval status" is easier to reason about than a connected account that can read, send, and delete.
-
-## How does custom MCP work in Construct?
-
-1. **Add the server.** In Apps, choose Add MCP and enter the endpoint URL, the MCP path (`/mcp` by default), and optionally an app ID. Adding apps is an owner or admin permission in a team workspace by default.
-2. **Construct reads the tool list.** It asks the server for its tools and keeps up to 200 of them. Tool names, descriptions, input schemas, and annotations such as `readOnlyHint` come from your server.
-3. **The agent discovers tools by need.** When a task needs something, the agent searches across installed apps and your server's tools by what they do, then loads the schema of the one it picked.
-4. **Each call is checked, then sent.** Construct fetches the current tool list, validates the arguments against that tool's input schema, and sends the call. The text in the result goes back to the agent.
-
-The current requirements, so you can build to them:
-
-<ArticleTable caption="Custom MCP requirements in Construct">
-
-| Requirement    | Current behavior                                                                                                                          |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Address        | Public HTTPS URL; private and local network addresses are refused                                                                         |
-| Transport      | JSON-RPC requests over HTTPS POST, answered with JSON                                                                                     |
-| Methods used   | Listing tools and calling tools                                                                                                           |
-| Time per call  | 15 seconds                                                                                                                                |
-| Response size  | Up to 512 KB                                                                                                                              |
-| Redirects      | Up to two, and only to the same origin                                                                                                    |
-| Tools read     | Up to 200 per server                                                                                                                      |
-| Result         | Text content is passed to the agent; structured content is passed as JSON when there is no text                                           |
-| Authentication | Construct sends a short-lived, Construct-signed bearer token with each call; there is no field yet for your own API key or custom headers |
+| The system                                       | Better route in Construct                                               |
+| ------------------------------------------------ | ----------------------------------------------------------------------- |
+| A SaaS app in the catalog with the action needed | Connect the app                                                         |
+| Your own service or database with an API         | A custom MCP server                                                     |
+| A website with no API                            | The [live browser](/blog/ai-agent-browser-and-terminal/)                |
+| People need a screen, not the agent              | A [workspace app](/blog/build-internal-tools-with-construct/)           |
+| A one-off export                                 | Import the file into Files and let the agent work on it in the terminal |
 
 </ArticleTable>
 
-{/* TODO: confirm whether servers that require an initialize handshake or answer with event streams work, and how a server can verify the Construct-signed call token */}
+## Adding the server and choosing who can use it
 
-## Before you start
+1. Open the App Store and go to your library. Choose **Add MCP server**.
+2. Enter the **Server URL**, for example `https://mcp.example.com`, and the **MCP path**. The path must stay on the same origin as the URL.
+3. Optionally set an **App ID**, which is how agents and the App Store refer to the server. Choose **Add server**.
+4. Open each agent in the Agents app and use **App access** to turn the server off for every agent that does not need it. New apps are allowed for every agent by default.
 
-A few things to set up deliberately so the first run works:
+In a team workspace, installing apps is an owner and admin permission by default, and an owner can grant it to members. Construct refuses private and local network addresses, requires HTTPS in production, and refuses an install from the Discord Activity, because the server would keep receiving call tokens after a Discord link was removed.
 
-- **Build for a known caller.** Construct sends a short-lived, Construct-signed bearer token with each call, and there is no field yet for your own API key or custom headers. Make the server narrow, read-only where possible, rate limited, and without bulk export tools. If the data is sensitive, keep it behind a server you can protect.
-- **Put the server on the public internet.** Construct refuses private and local network addresses, so a server on your laptop or office network needs a public HTTPS endpoint first.
-- **Expose tools.** Construct uses MCP tools. Resources, prompts, and requests from the server back to the user are not used, so wrap anything you need as a tool.
-- **Keep each call under 15 seconds.** For long jobs, return a job ID quickly and offer a second tool that checks status.
-- **Ask for drafts before writes.** Construct does not ask before every tool call, so tell the agent which tools not to call until you say so, as the approvals prompt below does.
+Two boundaries are worth knowing before you rely on App access. A [workflow](/use-cases/workflows/) runs as the person who owns it unless it names an agent, and then it can use every app installed for that person whatever an agent's App access says. And every scheduled run and every workflow step re-checks, at the moment it runs, that the server is still installed, that access is still granted and that the tool's schema still matches, so removing a server takes effect on the next run.
 
-Custom MCP is one of several ways Construct reaches your systems. If the app is already in the catalog with the action you need, connect it instead. If the system has a web interface but no API, the [live browser](/blog/ai-agent-browser-and-terminal/) can read it. If people need a screen rather than the agent, have Construct build a private [workspace app](/blog/build-internal-tools-with-construct/), which declares exactly which apps and HTTPS origins it may reach. For a one-off data pull, import the file into Files and let the agent work on it in the terminal ([where agent work goes](/blog/ai-agent-files-and-artifacts/)).
+## What Construct sends your server
 
-## A concrete job: an approvals lookup for client reports
+Right after you add the server, Construct asks it for its tool list in the background, allowing 3 seconds, and caches the first 80 tools with their descriptions and annotations. Agents search that cached list by matching what they need against tool names and descriptions. The cache is not refreshed on its own, so a tool you add to the server later will not appear in agent search until you remove the server and add it again. If the first fetch failed, Construct asks the server live on each search instead, and a server that does not answer contributes no tools.
 
-This example is illustrative, not a customer case. A small agency tracks client sign-off for reports in an internal service. Every Friday, someone checks which reports are approved before sending them.
+When the agent calls a tool, Construct makes two requests. First a `tools/list`, to get the current schema. It drops any tool whose input schema is not a JSON object, keeps the first 200, finds the tool by name and validates the agent's arguments against its schema (JSON Schema 2020-12). Arguments that do not match never reach your server. Then the call itself:
 
-**Build the smallest server.** Two tools are enough: one that reads, one that writes. Mark the reading tool as read-only so every system that respects MCP annotations knows the difference.
+```http
+POST /mcp HTTP/1.1
+Host: mcp.example.com
+Content-Type: application/json
+Authorization: Bearer <call token>
+x-construct-call-token: <call token>
+
+{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_approval_status","arguments":{"report_id":"R-1042"}}}
+```
+
+<ArticleTable caption="Construct's custom MCP client, as of October 26, 2026">
+
+| Rule                | Value                                                                  |
+| ------------------- | ---------------------------------------------------------------------- |
+| Time per request    | 15 seconds, and each tool call is two requests                         |
+| Response size       | 512,000 bytes                                                          |
+| Redirects           | Up to two, same origin only                                            |
+| Tools in search     | The first 80, cached when you add the server                           |
+| Tools per call      | The first 200 from the first page of a live `tools/list`               |
+| Reply format        | One JSON object in the body, not an event stream                       |
+| What the agent gets | The text content, or `structuredContent` as JSON when there is no text |
+| Server features     | Tools only; resources, prompts and elicitation are not used            |
+
+</ArticleTable>
+
+One behaviour catches people out. When your tool returns `isError: true`, the agent sees only "MCP tool returned an error", not your message. If you want the agent to read why something failed, such as "report not found", return it as an ordinary text result.
+
+## Which MCP spec versions work
+
+The current revision of the specification is [2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28), the stateless one: it removed the `initialize` handshake and protocol-level sessions, and every request now carries its protocol version in the body and in an `MCP-Protocol-Version` header. Revisions 2025-03-26 to 2025-11-25 used an `initialize` handshake and could assign an `Mcp-Session-Id` ([Streamable HTTP transport, 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http), checked October 26, 2026).
+
+Construct's client sends neither: no `initialize`, no session ID, no protocol version header and no `_meta` block. So, today:
+
+- A server that answers `tools/list` and `tools/call` POSTs with a single JSON reply, without demanding a handshake or protocol headers, works.
+- A server that requires `initialize` before other requests refuses Construct's calls.
+- A server that enforces the 2026-07-28 rules refuses them too, because that revision says a server must reject a POST without `MCP-Protocol-Version` unless it chooses to accept older clients.
+- A reply streamed as `text/event-stream` fails as invalid JSON.
+
+If you build on an MCP SDK, use its stateless, JSON-response mode and test that it accepts a bare POST like the one above before you add it to Construct.
+
+## Authentication: what the call token can and cannot do
+
+Each request carries the same token twice, as a bearer token and in `x-construct-call-token`. It is a JSON Web Token that lasts 120 seconds and names the user, the workspace and your app. Construct signs it with its own secret, which it does not publish, so your server cannot verify it locally. Its job is the other direction: Construct's gateway accepts it for 120 seconds, for that one app, and only while the user is still a workspace member allowed to use apps. With it your server can call its own tools back through Construct or use its own `AppData` folder in the user's Files. It cannot reach the user's other apps, inbox or files.
+
+There is no field yet for your own API key or custom headers. The one secret you can make Construct send is the URL itself: a long random MCP path such as `/mcp/7f3c9a...` behaves like a bearer URL. Rotate it if it leaks, and pair it with tools that are narrow, read-only where possible and rate limited.
+
+## Read-only hints, retries and consent
+
+Mark every tool that only reads with `"annotations": { "readOnlyHint": true }`, and do it before you add the server, since Construct reads the hint from the tool list it caches then. Construct treats such a tool as a lookup, which is the only kind of call it will retry after a transient failure, at most twice. Every other tool is treated as a write and runs once, so Construct never repeats a timed-out write on its own. The specification warns that annotations "should be considered untrusted, unless obtained from a trusted server" ([MCP specification, 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28)). Construct honours yours because you installed the server; a wrong hint on your own server costs you an extra call, so be accurate.
+
+The same section of the spec says tools "represent arbitrary code execution and must be treated with appropriate caution", and that hosts must obtain consent before invoking any tool. Construct does not ask before each call. The consent is structural: who may install a server, which agents may use it, and what you put in the prompt. Results from your server reach the agent marked as external data whose instructions it should not follow. Your tool names and descriptions are not marked that way, because the agent needs them to choose tools, which is one more reason to add only servers you control.
+
+<BetaCta source="blog_inline_1">Try Construct</BetaCta>
+
+## What went wrong across MCP this autumn
+
+Three MCP servers and gateways disclosed in September shared one failure: they were reachable over the network with no authentication. Run with its SSE transport, the MySQL MCP Server before 0.4.2 listened on every network interface with no authentication on its routes, rated CVSS 10.0 ([CVE-2026-59971](https://nvd.nist.gov/vuln/detail/CVE-2026-59971), published September 15, 2026). The GitLab MCP server `@zereight/mcp-gitlab` before 2.1.27 exposed every tool without authentication in SSE mode, including one that could read arbitrary local files, rated 9.8 ([CVE-2026-61560](https://nvd.nist.gov/vuln/detail/CVE-2026-61560)). The Bifrost gateway shipped with auth off, so one unauthenticated request could start a program on the host, rated 9.8 ([CVE-2026-90898](https://nvd.nist.gov/vuln/detail/CVE-2026-90898)).
+
+On October 21, LiteLLM 1.107.0 was published to PyPI and container registries with a credential stealer aimed at cloud keys, AI provider keys, SSH keys and browser cookies. Wiz reports about 49,000 PyPI downloads before the package was quarantined less than two hours later ([Wiz, October 21, 2026](https://www.wiz.io/blog/litellm-compromised-steals-credentials)).
+
+Here is how Construct's design changes that exposure, as the code stands:
+
+- Construct calls your server over HTTPS and never runs its code or its dependencies. A backdoored package in your server compromises your server, not the agent host. Construct's MCP client is its own small module with no MCP SDK dependency, and Construct does not use LiteLLM.
+- Construct only calls public URLs, which means your server is reachable from the internet, like those three servers were. Authenticate it with a secret path at minimum and keep its tools narrow.
+- A stolen call token is worth 120 seconds of access to your own app through Construct's gateway.
+- In the agent's terminal, commands run with no Construct credentials or connected-app tokens in their environment, and anything the agent installs is gone when the container sleeps. A malicious package could still read the files mounted in that container and reach the internet while it runs, so look at what the agent installs.
+
+## A minimal server to start from
+
+Two tools are enough for most first servers: one that reads and one that writes. The reading tool carries the read-only hint; the writing one does not, so Construct never retries it.
 
 ```json
 {
@@ -107,100 +147,24 @@ This example is illustrative, not a customer case. A small agency tracks client 
 }
 ```
 
-**Add it and limit who can use it.** Add the server in Apps. Then, in each agent's settings, turn it off for every agent that does not need it. In this agency only the reporting agent keeps it.
+Then give the agent the reading job and keep the write behind your own say-so:
 
-**Give the job.**
+<Prompt label="Weekly approvals lookup">
 
-<Prompt>
-
-For each report dated this week in the reports folder of every client in Team/clients, call get_approval_status. List approved and unapproved reports in a table and save it to Team/approvals/2027-01-22.md. Do not call mark_report_sent; I will tell you which ones to mark after I send them.
+For each report dated this week in Team/clients/\*/reports, call get_approval_status. Save a table of approved and unapproved reports to Team/approvals/YYYY-MM-DD.md with today's date. Do not call mark_report_sent; I will tell you which reports to mark after they are sent.
 
 </Prompt>
 
-**Check the result.** The table is in Files, and Activity shows one line per lookup, linked to the chat ([what Activity records](/blog/ai-agent-activity-log/)). When the account manager has sent the reports, a second message asks the agent to mark them.
+Each lookup appears in [Activity](/blog/ai-agent-activity-log/) with a link back to the chat.
 
-**Schedule it once it is boring.** Put the lookup on the Calendar for Friday mornings. Every scheduled run re-checks that the server is still installed, that the agent is still allowed to use it, and that the tool's schema still matches, so removing access takes effect on the next run, not after someone edits the schedule.
+## How we checked this
 
-We have not yet run this server against Construct and measured it.
-
-{/* TODO: deploy the two-tool approvals server, run the Friday lookup on a test workspace, and record setup time, call latency, and any schema or timeout errors; add screenshots of Add MCP and the agent's app settings */}
-
-<figure className="my-8">
-  <ArticleVideo
-    muted
-    playsInline
-    preload="none"
-    poster="/assets/landing/features/integrations-poster.webp"
-    width="1440"
-    height="960"
-    aria-label="Construct connected-app catalog demo"
-    aria-describedby="integrations-demo-description"
-    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
-  >
-    <source src="/assets/landing/features/integrations.mp4" type="video/mp4" />
-    <track
-      kind="captions"
-      src="/blog/ai-agent-custom-mcp/integrations-demo.vtt"
-      srcLang="en"
-      label="English"
-    />
-    Your browser does not support this video. The description below explains the
-    demo.
-  </ArticleVideo>
-  <figcaption
-    id="integrations-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
-    Silent product demo: Construct's live connected-app catalog with tools such
-    as Drive, Gmail, GitHub, and messaging channels. Custom MCP servers are
-    added from the same Apps area.
-  </figcaption>
-</figure>
-
-<BetaCta source="blog_inline_1" plan="pro" interval="month">Try Construct Pro free for 7 days</BetaCta>
-
-## What are the permission boundaries?
-
-The MCP specification is blunt about the stakes: "Tools represent arbitrary code execution and must be treated with appropriate caution" ([MCP specification, 2025-06-18](https://modelcontextprotocol.io/specification/2025-06-18)). The same section says hosts must obtain explicit user consent before invoking any tool. Construct does not ask before every tool call; the consent you give is choosing which servers are installed and which agents may use them. Here are the boundaries that exist today.
-
-- **Workspace install.** A server is installed for a workspace. In a team workspace, installing apps is an owner and admin permission by default, and an owner can grant or remove it.
-- **Per-agent access.** Each agent's settings list the installed apps it may use. Turning one off removes it from that agent's tool search and calls.
-- **Shared chats use shared tools only.** In a team group chat, the agent works with workspace-approved apps and team files, never one member's private files or personal connections.
-- **Guests get no tools.** If you open a Slack or Discord install to everyone, people who are not on its allow list get a read-only agent with web search and memory lookup, and no apps.
-- **Scheduled runs re-check access.** Calendar items and workflows store which tool to call, never credentials, and each run re-checks the install, the agent's access, and the current schema.
-- **Calls are not retried automatically.** Calls to connected apps and MCP tools run once, so a failed write is not quietly repeated.
-- **Results are treated as data.** Text coming back from MCP tools, like web pages and email, reaches the agent marked as external data whose instructions should not be followed. That reduces, but does not remove, the risk of a hostile result steering the agent. Our [prompt injection explainer](/blog/ai-agent-prompt-injection/) goes deeper.
-
-The biggest boundary is the one you design into the server. A tool that cannot delete cannot be talked into deleting.
-
-<ReadNext slug="build-internal-tools-with-construct" />
-
-## What to check in any agent's custom tool support
-
-If you are comparing products, ask each one these questions. Construct's answers are in bold.
-
-1. Can you add a server by URL without a vendor review? **Yes.**
-2. Can you restrict a server to specific agents? **Yes, per agent.**
-3. Who in a team can install one? **Owners and admins by default.**
-4. Are arguments validated before the call? **Yes, against the tool's own schema.**
-5. What are the time and size limits per call? **15 seconds and 512 KB.**
-6. How does the product authenticate to your server? **A Construct-signed token with each call; custom credentials are not supported yet.**
-7. Does it respect read-only annotations? **Yes, when a chat is saved as a workflow.**
-8. Do scheduled jobs re-check access each run? **Yes, every run.**
-
-## Give Construct its first custom tool
-
-Choose Construct when you want your own systems inside an AI employee's day without building the agent around them. It validates every call, limits each server to the agents you pick, keeps results in files your team can open, and runs the job on the Calendar.
-
-Your first job: take the internal lookup your team does most often by hand, expose it as one read-only tool, add it in Apps, allow it for one agent, and ask for a table saved to Files. Once that runs cleanly for a few weeks, add the matching write tool. Start on [Lite at $9](/pricing/), or try Pro free for seven days.
-
-<BetaCta source="blog_inline_2">Give Construct its first job</BetaCta>
+The install flow, client limits, request format, token claims and lifetime, gateway rules, retry policy and result framing were read from Construct's source on October 26, 2026, along with the App Store and Agents app labels. The specification text and transport rules were read from modelcontextprotocol.io the same day, and the CVE records from the NVD API. We make Construct.
 
 ## Related resources
 
 - [How Construct builds internal tools in your workspace](/blog/build-internal-tools-with-construct/)
-- [Prompt injection for small teams](/blog/ai-agent-prompt-injection/)
+- [How Construct's agent uses a browser and a terminal](/blog/ai-agent-browser-and-terminal/)
+- [AI agent prompt injection: what the 2026 attacks did](/blog/ai-agent-prompt-injection/)
 - [Activity log vs audit log](/blog/ai-agent-activity-log/)
-- [Browser and terminal in one supervised task](/blog/ai-agent-browser-and-terminal/)
-- [Message your AI agent from Telegram, Slack, Discord or email](/blog/ai-agent-telegram-slack-discord/)
-- [Internal tools in Construct](/use-cases/internal-tools/)
+- [Workflows in Construct](/use-cases/workflows/)

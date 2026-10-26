@@ -1,0 +1,207 @@
+---
+title: "How we made construct.computer readable by AI agents"
+seoTitle: "Make Your Website Readable by AI Agents: What We Shipped"
+description: "How to make a website readable by AI agents: Markdown twins, content negotiation, llms.txt, robots.txt signals and keyless APIs, with our real headers and sizes."
+pitch: "Construct's agents read the web for a living, so we made our own site the kind of page they can read."
+published: "2026-10-30"
+time: "15:43"
+author: "ankush"
+tags: ["ai-search", "engineering", "cloudflare", "infrastructure"]
+kind: "article"
+draft: false
+---
+
+To make a website readable by AI agents, give every page a clean Markdown version at a predictable URL, point to it from the HTML with a `Link` header, let a client ask for it with an `Accept: text/markdown` header, and make sure the words are in the HTML before any JavaScript runs. That is what we shipped on construct.computer on October 26, 2026, along with an `llms.txt`, a `robots.txt` that names the AI crawlers, and our free tools as JSON APIs that need no key.
+
+The payoff is in what an agent receives. Our pricing page is 81,770 bytes of HTML and 4,733 bytes of Markdown. None of this changes where we rank on Google, which says plainly that it needs no special files or Markdown for AI Overviews. It changes what an agent reads when it fetches one of our pages, which is the part we control.
+
+We build Construct, an AI agent platform whose agents spend much of their day reading other people's websites. This post is the engineering write-up: the code, the headers as they come back from production, the parts that did not work the first time, and what the evidence does and does not support.
+
+<BetaCta source="blog_top" />
+
+## What an agent gets when it fetches a page
+
+An agent reading the web has two ways in. A browser agent renders the page and reads the screen or the accessibility tree. A fetching agent (ChatGPT, Claude or Perplexity looking something up for a user, or a crawler building an index) downloads the HTML and works from the text. Vercel looked at the major AI crawlers in December 2024 and found that "none of the major AI crawlers currently render JavaScript", GPTBot, ClaudeBot and PerplexityBot included ([Vercel](https://vercel.com/blog/the-rise-of-the-ai-crawler)).
+
+That bit us before we did anything clever. Our homepage FAQ used a Radix accordion, which only renders an answer once it is opened. In the prerendered HTML the six questions were there and the six answers were not, so every crawler that skips JavaScript saw questions with no answers. The fix (commit 9a66a2c) mounts every answer, collapsed, in the server render, and the page looks and behaves the same.
+
+The second problem is size. A modern marketing page is mostly markup, scripts and inline styles. Here is the same content in three forms, measured on October 26:
+
+<ArticleTable caption="Uncompressed size of four construct.computer pages as HTML, as our Markdown twin and as Cloudflare's edge conversion, 2026-10-26">
+
+| Page                             | HTML          | Our Markdown twin | Twin's `X-Markdown-Tokens` | Cloudflare conversion |
+| -------------------------------- | ------------- | ----------------- | -------------------------- | --------------------- |
+| `/` (homepage)                   | 269,870 bytes | 11,258 bytes      | 2,812                      | (we serve our own)    |
+| `/pricing/`                      | 81,770 bytes  | 4,733 bytes       | 1,183                      | 12,518 bytes          |
+| `/use-cases/memory/`             | 35,092 bytes  | 3,460 bytes       | 865                        | 5,710 bytes           |
+| `/tools/zapier-cost-calculator/` | 60,073 bytes  | 7,878 bytes       | 1,970                      | 13,781 bytes          |
+
+</ArticleTable>
+
+The last column is what an agent gets today from any page but the homepage when it sends `Accept: text/markdown` to the page URL. It is bigger than our twin and, as we explain below, sometimes missing the headline.
+
+## A Markdown twin of every page
+
+Every page in our sitemap, 92 of them on October 26, now has a Markdown twin at its path plus `.md`: `/pricing/` is `/pricing.md` and the homepage is `/index.md`. The convention comes from the llms.txt proposal, which asks sites to "provide a clean markdown version of those pages at the same URL as the original page" with `.md` added ([llmstxt.org](https://llmstxt.org/)), and from the AEO Spec that Dualmark publishes ([Dualmark](https://dualmark.dev/docs/spec/overview)).
+
+We generate the twins at build time from the prerendered HTML, in `scripts/markdown-twins.mjs`, so a twin cannot drift from its page. The script reads the sitemap, parses each page with rehype, keeps only `<main>`, and converts it with remark. The rule for what stays is "what a screen reader announces on the desktop layout":
+
+1. Scripts, styles, SVGs, forms, dialogs, video and in-page `<nav>` go.
+2. Anything `aria-hidden`, `inert`, or an image without alt text goes.
+3. Elements Tailwind hides on desktop (`md:hidden` and its kin) go, so mobile copies of a block are not repeated.
+4. A collapsed disclosure stays, because an FAQ answer is still the page's text.
+5. An icon link is replaced by its `aria-label`, and every relative URL becomes absolute.
+6. Flex children with no whitespace between them get a space, or "Monthly" and "Annual" read as "MonthlyAnnual".
+
+Each twin starts with a small front matter block of `title`, `description` and `url`. The brand page is the one exception: its twin, `/brand.md`, is written from our brand data in code, so every file and usage rule is in it.
+
+One thing slipped through at first. The homepage twin repeated a Product Hunt badge that only shows on phones, because a plain CSS class hid it and our rule reads Tailwind's. The badge now carries `md:hidden` as well, which says the same thing in a form the converter understands.
+
+## Asking for Markdown, and the 406
+
+A twin at a known URL helps an agent that knows the convention. Content negotiation helps one that does not: the client sends an `Accept` header and the server picks the form. On Cloudflare Pages that runs in `functions/_middleware.ts`. It reads the q-values in `Accept` for `text/markdown` and `text/html`, serves Markdown when the client prefers it, and when the two tie (a bare `*/*`) it serves Markdown only to six user agents that read pages for answer engines: GPTBot, ChatGPT-User, ClaudeBot, Claude-User, Perplexity-User and CCBot. Search crawlers are left on HTML on purpose, because their results are built from the title, the cards and the structured data in it. The user agent is matched and never stored.
+
+Here is production, trimmed to the headers that matter:
+
+```bash
+$ curl -sI https://construct.computer/ -H 'Accept: text/markdown'
+HTTP/2 200
+content-type: text/markdown; charset=utf-8
+vary: Accept, User-Agent
+x-markdown-tokens: 2812
+x-aeo-version: 1.0
+
+$ curl -sI https://construct.computer/ -H 'Accept: */*' -A 'Mozilla/5.0 GPTBot/1.0'
+HTTP/2 200
+content-type: text/markdown; charset=utf-8
+
+$ curl -sI https://construct.computer/ -H 'Accept: */*' \
+    -A 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+HTTP/2 200
+content-type: text/html; charset=utf-8
+vary: Accept
+
+$ curl -si https://construct.computer/ -H 'Accept: image/png'
+HTTP/2 406
+content-type: text/plain; charset=utf-8
+link: </index.md>; rel="alternate"; type="text/markdown"
+
+This page is available as text/html or text/markdown.
+```
+
+The 406 came second (commit ab3b1e8). HTTP defines it for a request whose `Accept` rules out every form the server has ([RFC 9110](https://www.rfc-editor.org/rfc/rfc9110#name-406-not-acceptable)), and the AEO Spec asks for it. The middleware only refuses a URL that has a twin, so the JSON API behind the same middleware keeps answering clients that ask for JSON, and a browser, a wildcard or a request with no `Accept` header still gets the page.
+
+## The headers that say which copy is which
+
+Most of the work is in `public/_headers`, and most of it is about keeping two copies of a page from competing with each other:
+
+- Every page sends `Link: </pricing.md>; rel="alternate"; type="text/markdown"` and `Vary: Accept`, so a client that reads headers finds the twin without parsing HTML, and a cache keeps the two forms apart.
+- Every twin sends `X-Robots-Tag: noindex`, and the middleware adds `Link: <https://construct.computer/pricing/>; rel="canonical"`, so search engines keep indexing the page and not its copy.
+- When the homepage itself answers in Markdown, the middleware deletes that `noindex`. Dualmark's own library sets `noindex` on Markdown served at the canonical URL too, which would tell a search bot that happened to receive Markdown to drop the homepage. We wrote our own middleware partly for that reason.
+- `X-Markdown-Tokens` is an estimate, characters divided by four. It is there so an agent can decide whether a page fits its context before reading it.
+
+Cloudflare Pages has a few habits we learned the hard way. Two `_headers` blocks that match the same path replace each other instead of merging. A `! Header` line only removes headers set by rules above it. Placeholders work inside header values, so `/:page/` can send `</:page.md>`. The file stops at 100 rules. And `next(new Request(url))` inside a Function follows redirects unless you pass `redirect: "manual"`, which broke the 301 from our old `/brand/brand.md` until we did.
+
+## Cloudflare's Markdown for Agents, and what it drops
+
+Cloudflare converts HTML to Markdown at the edge for any client that sends `Accept: text/markdown`, on Pro, Business and Enterprise zones, and it is on for ours ([Cloudflare docs](https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/), updated October 9, 2026). It is why every page negotiates, not only the homepage: only `/`, `/api/*` and the `.md` files run our Function, and the rest are static files that Cloudflare converts on the way out.
+
+The documentation says non-content elements "such as headers, footers, navigation, scripts, and styles" are stripped. The catch is that it strips a `<header>` even when it sits inside `<main>`, and our use-case and tool pages put the hero in one. Here are the first lines of `/use-cases/memory/` both ways, before we changed that:
+
+```text
+Our twin, /use-cases/memory.md:
+
+  Memory
+
+  # Chat history is not memory you can audit
+
+  A long context window is not a memory system. It is a pile. ...
+
+Cloudflare's conversion of /use-cases/memory/:
+
+  ---
+  description: Preferences, decisions, and project context stay with ...
+  title: Chat history is not memory you can audit
+  image: https://construct.computer/og/use-cases-memory.jpg
+  ---
+
+  ## The cost of leaving it unencoded
+```
+
+The H1, the opening paragraph and the call to action are gone from the edge version. On `/pricing/` it keeps 32 image layers with no alt text, the parts of three mascots in a team illustration, and glues adjacent labels into "MonthlyAnnual4 months free". Our twin has neither problem, and every page links to it, but an agent that negotiates on a page other than the homepage gets Cloudflare's copy. Routing every page through our Function would fix that at the cost of a Function run on every page view; moving heroes out of `<header>` fixes it for free, which is what we did on `/brand/` first and then on the use-case and tool pages. On Dualmark's scorer the homepage gets 125 of 125 and the other pages 110, because only the homepage negotiates by user agent.
+
+## robots.txt, content signals and named crawlers
+
+Our `robots.txt` is generated in `app/lib/generated-content.ts`. It allows everything except the investor deck, and it gives ten crawlers their own group: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-User, PerplexityBot, Google-Extended, Applebot-Extended, Bingbot and CCBot. A crawler that matches a named group ignores the `*` group entirely, so every group repeats the same lines, including the content signal:
+
+```txt
+User-agent: GPTBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Disallow: /deck
+Allow: /
+```
+
+Content signals are Cloudflare's addition to `robots.txt`: `search`, `ai-input` (using the page to ground an answer) and `ai-train`. We say yes to all three, and we reproduce the policy text above them word for word, because a reworded copy would be a different licence ([Cloudflare](https://blog.cloudflare.com/content-signals-policy/)). Leaving a signal out does not grant it, so we state each one. Our reasoning: for a company our size, the bigger risk is that models have never heard of us.
+
+Two caveats apply. Content signals and robots rules are requests that a crawler can ignore. And OpenAI documents that ChatGPT-User acts on a user's behalf, so "robots.txt rules may not apply" to it, while GPTBot collects training data and OAI-SearchBot builds ChatGPT's search results ([OpenAI](https://developers.openai.com/api/docs/bots)). Blocking one of the three does not block the others.
+
+## llms.txt and llms-full.txt
+
+`/llms.txt` is the index: a one-paragraph summary, the free tools with their API endpoints, a brand section with the name rule and one pricing line, and every page with its description. It is 24,696 bytes. `/llms-full.txt` inlines the full text of every blog post, FAQ and tool reference into one 958,888-byte file, for a model that wants everything in one fetch. Both are generated from the same content as the site, so they cannot fall out of date.
+
+The pricing line is there for a reason. Software directories we checked were printing our yearly-billed rates, $39 and $199 a month, as if they were the monthly prices, and models repeat what directories say. One line, "From $9 a month; $7.50, $39 and $199 a month billed yearly", gives a model the right numbers to quote.
+
+Be clear-eyed about what llms.txt does. Google's guide to generative AI search says it ignores these files: creating one "will neither harm nor help your site's visibility or rankings in Google Search, as Google Search ignores them" ([Google Search Central](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide), updated July 10, 2026). SE Ranking's study of 216,524 pages found llms.txt had a negligible relationship with ChatGPT citations ([Search Engine Journal](https://www.searchenginejournal.com/new-data-top-factors-influencing-chatgpt-citations/561954/)). We keep ours because it costs nothing to generate and an agent that is already on the site can use it as a map.
+
+## Free tools an agent can call
+
+We publish three free tools, a [Zapier cost calculator](/tools/zapier-cost-calculator/), a Gmail filter generator and an MCP config generator. Each is also a JSON endpoint with no key and no account. `GET https://construct.computer/api/tools` lists them, a `GET` on one returns its input schema and an example, and a `POST` runs it:
+
+```bash
+$ curl -s -X POST https://construct.computer/api/tools/zapier-cost-calculator \
+    -H 'Content-Type: application/json' \
+    -d '{"zaps":[{"name":"Lead to CRM","action_steps":3,"runs_per_month":400}]}'
+{
+  "monthly_tasks": 1200,
+  "cheapest": { "plan": "Professional", "total_usd_per_month": 35.02, ... },
+  "covering_plan": { "plan": "Professional", "total_usd_per_month": 39, ... },
+  "prices_checked": "2026-10-11",
+  "source": "https://zapier.com/pricing"
+}
+```
+
+The errors are written for an agent too. Send `steps` instead of `action_steps` and the 400 names each wrong path and says "Fetch the endpoint without input for the schema", which is usually enough for a model to fix its call and retry. The homepage advertises all of this with `Link` headers for an API catalog (RFC 9727), an OpenAPI document and `llms.txt`.
+
+In a browser, the same tools are registered with WebMCP, a proposed standard for pages to expose tools to an agent ([Chrome for Developers](https://developer.chrome.com/docs/ai/webmcp)). Our code checks `document.modelContext` and the older `navigator.modelContext`, and only downloads the tool code when the browser has one, so a normal visitor fetches nothing extra. It runs under Chrome's origin trial, which starts in Chrome 149.
+
+## IndexNow on every deploy
+
+Agents that search before they fetch find pages through someone's index, and a new page is invisible until that index has crawled it. After every deploy, `scripts/indexnow.mjs` compares the sitemap that was live with the new one and submits the URLs whose `lastmod` changed to IndexNow, which shares a submission with Bing, Naver, Seznam, Yandex and Yep ([IndexNow](https://www.indexnow.org/faq)). Google does not take IndexNow and reads the sitemap instead. Bing says many LLMs ground their answers in the Bing index ([Bing Webmaster Blog](https://blogs.bing.com/webmaster/2025/12/Does-Duplicate-Content-Hurt-SEO-and-AI-Search-Visibility/)), which is why a ping to Bing is worth the ten lines of code. We could not use Cloudflare's Crawler Hints for this: it reports a URL on a cache miss, and Pages serves our HTML as dynamic, so it never sees one.
+
+<BetaCta source="blog_inline_1" />
+
+## What this does not do
+
+None of this moves rankings. Google's documentation for AI Overviews and AI Mode says "you don't need to create new machine readable files, AI text files, or markup to appear in these features" and "there are no additional requirements" ([Google Search Central](https://developers.google.com/search/docs/appearance/ai-features), updated December 10, 2025). Its newer guide adds Markdown to that list. Every page here still has to earn its place with what it says.
+
+A perfect Dualmark score means our headers follow a spec, and it says nothing about whether ChatGPT will cite us. When we put 60 buyer questions to six AI engines in September, the sites they cited most were vendor blogs, listicles, YouTube and Reddit. Being easy to read is a floor; being worth citing is a separate job.
+
+We also cannot tell you how many agents fetch the twins. We do not store user-agent strings in our analytics or logs, by policy, so the middleware matches a user agent and forgets it.
+
+What the work does buy is narrower and real. An agent that fetches a construct.computer page gets the words, the prices and the FAQ answers in a few thousand tokens instead of a quarter of a megabyte of markup, and an agent that wants to use one of our tools can call it without scraping a form.
+
+## If you want to do the same
+
+1. Fetch your pages with `curl` and no JavaScript. Fix anything that is missing from the raw HTML first; nothing else matters until that is right.
+2. Generate a Markdown version of each page from the rendered HTML at build time, at `/path.md`, and mark it `noindex` with a canonical link back to the page.
+3. Send `Link: </path.md>; rel="alternate"; type="text/markdown"` and `Vary: Accept` from every page.
+4. If you are on Cloudflare, turn on Markdown for Agents, then read what it makes of your pages. Move headings out of `<header>` elements inside `<main>`.
+5. Name the AI crawlers in `robots.txt`, repeat your rules in every group, and decide on content signals deliberately.
+6. Publish `llms.txt` as a map, without expecting it to change rankings.
+7. If you have anything an agent could use, give it an endpoint with a schema and errors that say how to fix the call.
+
+## How we checked this
+
+Everything about our own site comes from the code in our repository (commits f67d8c7, ab3b1e8 and 9a66a2c) and from requests to construct.computer on October 26, 2026; the sizes are uncompressed bytes as `curl` received them. The scores are from Dualmark's playground on the same day. Google's statements were read from Search Central on October 26, 2026, Cloudflare's from its developer docs (updated October 9, 2026) and OpenAI's from its crawler documentation the same day.
+
+For the infrastructure behind the product itself, see [why we run AI agents on Cloudflare instead of VMs](/blog/running-ai-agents-on-cloudflare-not-vms/).

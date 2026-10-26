@@ -321,8 +321,8 @@ export const postCards: Record<string, OgCard> = {
     },
   },
   "blog-ai-agent-files-and-artifacts": {
-    title: "Agent work that *outlasts the chat*",
-    deck: "Storage runs from 100 MB on Lite to 3 GB on Pro.",
+    title: "What your agent *leaves behind*",
+    deck: "Files stay until you delete them, app builds keep 10 versions, and there is no trash.",
     figure: {
       kind: "terminal",
       title: "Terminal - weekly client report",
@@ -330,9 +330,9 @@ export const postCards: Record<string, OgCard> = {
         "$ cd /workspace/clients/acme",
         "$ ls reports data",
         "data:",
-        "2027-01-04.csv",
+        "2026-11-16.csv",
         "reports:",
-        "2027-01-04-weekly.md  2027-01-04-weekly.pdf",
+        "2026-11-16-weekly.md 2026-11-16-weekly.pdf",
       ],
     },
   },
@@ -368,25 +368,6 @@ export const postCards: Record<string, OgCard> = {
           mark: "yes",
         },
       ],
-    },
-  },
-  "blog-ai-agent-linear-from-slack": {
-    title: "Update Linear *from a Slack thread*",
-    deck: "Teammates without Linear seats can file bugs through the agent, from $9.",
-    figure: {
-      kind: "message",
-      app: "Slack",
-      channel: "eng",
-      sender: "Construct",
-      time: "in thread",
-      pill: "Lists the changes, waits for your go",
-      lines: [
-        "*CSV export* for Acme: move to Done",
-        "*Safari checkout bug*: Blocked, comment why",
-        "*Onboarding emails*: comment, ready for review",
-        "Reply *go* and I'll make these changes",
-      ],
-      sources: ["Linear"],
     },
   },
   "blog-ai-agent-memory": {
@@ -464,24 +445,6 @@ export const postCards: Record<string, OgCard> = {
         "*Decide*: the one thing waiting on you",
       ],
       sources: ["Google Calendar", "Gmail", "Construct"],
-    },
-  },
-  "blog-ai-agent-telegram-slack-discord": {
-    title: "One agent, *five ways to reach it*",
-    deck: "Slack, Telegram, Discord, email and web, each locked to you until you open it.",
-    figure: {
-      kind: "chat",
-      app: "Telegram",
-      messages: [
-        {
-          from: "you",
-          text: "Check tomorrow's calendar for meetings with no agenda yet",
-        },
-        {
-          from: "agent",
-          text: "On it. The list lands *here*, and the run stays in your workspace.",
-        },
-      ],
     },
   },
   "blog-ai-agent-vs-virtual-assistant": {
@@ -575,18 +538,18 @@ export const postCards: Record<string, OgCard> = {
     },
   },
   "blog-ai-company-research-spreadsheet": {
-    title: "Company research with *a source per cell*",
-    deck: "A three-company pilot first, then batches of 10 saved as they finish.",
+    title: "Company research with *a source in every cell*",
+    deck: "Pricing pages lead with the yearly price; the sheet records which one it read.",
     figure: {
       kind: "sheet",
       file: "research/prospects.csv",
-      columns: ["Price source", "Lowest/mo"],
+      columns: ["Company", "Shown price", "Monthly billing"],
       rows: [
-        ["examplecompany.test/pricing", "$12"],
-        ["sampleinc.test/pricing", "not found"],
-        ["demolabs.test/pricing", "conflicting"],
+        ["Linear", "$10, billed yearly", "not found"],
+        ["Calendly", "$10 a seat", "$12"],
+        ["Airtable", "$20, billed annually", "not found"],
       ],
-      highlight: 0,
+      highlight: 1,
     },
   },
   "blog-ai-competitor-pricing-report": {
@@ -602,27 +565,6 @@ export const postCards: Record<string, OgCard> = {
         ["Demo Labs", "Limit changed", "5,000 credits", "3,000 credits"],
       ],
       highlight: 3,
-    },
-  },
-  "blog-ai-coworker-vs-ai-employee": {
-    title: "Coworker or employee? *Who starts the work*",
-    deck: "An assistant waits for you; an employee runs on a schedule.",
-    figure: {
-      kind: "chat",
-      messages: [
-        {
-          from: "you",
-          text: "Compare our five competitors' pricing pages with last week",
-        },
-        {
-          from: "agent",
-          text: "Last week's copies are in my files. I can run this *every Monday at 7am* and email the team.",
-        },
-        {
-          from: "you",
-          text: "Do that, so I never have to remember",
-        },
-      ],
     },
   },
   "blog-ai-delegation-checklist": {
@@ -683,41 +625,6 @@ export const postCards: Record<string, OgCard> = {
           text: "Email the team",
         },
       ],
-    },
-  },
-  "blog-ai-employee-cost-calculator": {
-    title: "Virtual assistant or AI agent, *by the month*",
-    deck: "Push review to 10 minutes a task and every plan costs more.",
-    figure: {
-      kind: "bars",
-      label: "Cost of the 30% share, per month",
-      rows: [
-        {
-          name: "VA, 30% share",
-          value: 390,
-          text: "$390",
-          icon: "UserAccount",
-        },
-        {
-          name: "Starter + review",
-          value: 254,
-          text: "$254",
-          brand: "Construct",
-        },
-        {
-          name: "Starter",
-          value: 59,
-          text: "$59",
-          brand: "Construct",
-        },
-        {
-          name: "Lite",
-          value: 9,
-          text: "$9",
-          brand: "Construct",
-        },
-      ],
-      note: "Review priced at $50 an hour: Starter still saves *$136*",
     },
   },
   "blog-ai-employee-for-agencies": {
@@ -792,107 +699,7 @@ export const postCards: Record<string, OgCard> = {
         "@mention me here and everyone sees the answer",
         "Private drafts stay in your own chats",
       ],
-      pill: "No per-seat charge, no member limit",
-    },
-  },
-  "blog-ai-follow-ups-crm-without-zapier": {
-    title: "Follow-ups and CRM notes, *no Zaps*",
-    deck: "$9 on Lite, against $29.99 a month for Zapier Professional.",
-    figure: {
-      kind: "flow",
-      nodes: [
-        {
-          id: "cal",
-          icon: "Calendar03",
-          label: "Weekdays",
-          col: 0,
-          row: 0,
-        },
-        {
-          id: "deals",
-          name: "HubSpot",
-          label: "Quiet 7 days",
-          col: 0,
-          row: 1,
-        },
-        {
-          id: "thread",
-          name: "Gmail",
-          label: "Last thread",
-          col: 0,
-          row: 2,
-        },
-        {
-          id: "agent",
-          name: "Construct",
-          label: "Agent",
-          col: 1,
-          row: 1,
-        },
-        {
-          id: "drafts",
-          name: "Gmail",
-          label: "Gmail drafts",
-          col: 2,
-          row: 1,
-        },
-        {
-          id: "you",
-          icon: "UserCheck01",
-          label: "You send",
-          col: 3,
-          row: 1,
-        },
-        {
-          id: "table",
-          icon: "Folder01",
-          label: "Table",
-          col: 2,
-          row: 0,
-        },
-        {
-          id: "note",
-          name: "HubSpot",
-          label: "Deal note",
-          col: 2,
-          row: 2,
-        },
-      ],
-      links: [
-        {
-          from: "cal",
-          to: "agent",
-        },
-        {
-          from: "deals",
-          to: "agent",
-        },
-        {
-          from: "thread",
-          to: "agent",
-        },
-        {
-          from: "agent",
-          to: "drafts",
-        },
-        {
-          from: "agent",
-          to: "table",
-        },
-        {
-          from: "drafts",
-          to: "you",
-        },
-        {
-          from: "you",
-          to: "note",
-          dashed: true,
-        },
-      ],
-      boundary: {
-        ids: ["drafts", "you"],
-        label: "Nothing sends without you",
-      },
+      pill: "The owner's plan covers everyone in it",
     },
   },
   "blog-ai-inbox-triage": {
@@ -934,7 +741,7 @@ export const postCards: Record<string, OgCard> = {
   },
   "blog-ai-lead-sourcing-hubspot": {
     title: "New HubSpot leads, *no duplicates*",
-    deck: "Runs weekdays at 6:30am; Starter at $59 fits ten companies a day.",
+    deck: "Runs weekdays at 6:30am and searches HubSpot before it creates anything.",
     figure: {
       kind: "flow",
       cols: 4,
@@ -1024,29 +831,21 @@ export const postCards: Record<string, OgCard> = {
     },
   },
   "blog-ai-search-recommends-ai-employees": {
-    title: "60 buyer questions, *six AI engines*",
-    deck: "Each asked in a fresh private chat, with every cited site recorded.",
+    title: "Who AI search *recommends* for AI employees",
+    deck: "264 answers from six AI engines to 60 buyer questions, September 30, 2026.",
     eyebrow: "Research",
     figure: {
-      kind: "chat",
-      messages: [
-        {
-          from: "you",
-          text: "best AI employee for solo founders",
-        },
-        {
-          from: "you",
-          text: "Lindy alternatives",
-        },
-        {
-          from: "you",
-          text: "AI that updates Linear issues from Slack messages",
-        },
-        {
-          from: "you",
-          text: "is construct.computer legit",
-        },
+      kind: "bars",
+      label: "Share of answers naming each product, %",
+      rows: [
+        { name: "Lindy", value: 33, text: "33%" },
+        { name: "Zapier", value: 25, text: "25%" },
+        { name: "n8n", value: 20, text: "20%" },
+        { name: "Manus", value: 20, text: "20%" },
+        { name: "Relevance AI", value: 16, text: "16%" },
+        { name: "Construct", value: 1, text: "3 of 219" },
       ],
+      note: "Each share leaves out the questions that name that product.",
     },
   },
   "blog-ai-workflow-automation": {
@@ -1318,163 +1117,6 @@ export const postCards: Record<string, OgCard> = {
       ],
     },
   },
-  "blog-cheapest-ai-employee": {
-    title: "The cheapest AI employee is *$9*",
-    deck: "At $20, every other agent comes bundled into a per-person plan.",
-    figure: {
-      kind: "bars",
-      label: "Monthly price, agent included",
-      rows: [
-        {
-          name: "Claude Pro",
-          value: 20,
-          text: "$20",
-        },
-        {
-          name: "Grok Bot",
-          value: 20,
-          text: "$20",
-        },
-        {
-          name: "Manus Pro",
-          value: 20,
-          text: "$20",
-        },
-        {
-          name: "Muse Power",
-          value: 20,
-          text: "$20",
-        },
-        {
-          name: "Gemini Spark",
-          value: 19.99,
-          text: "$19.99",
-        },
-        {
-          name: "Construct",
-          value: 9,
-          text: "$9",
-        },
-      ],
-      note: "Construct Lite: 2 agents, *3 scheduled tasks*",
-    },
-  },
-  "blog-claude-cowork-alternatives": {
-    title: "Claude Cowork alternatives, *priced for a team*",
-    deck: "Cowork sessions can't be shared, and each teammate needs a Claude seat.",
-    figure: {
-      kind: "bars",
-      label: "5-person team, one month, list prices",
-      rows: [
-        {
-          name: "Lindy Team",
-          value: 149.95,
-          text: "$149.95",
-        },
-        {
-          name: "Copilot",
-          value: 126,
-          text: "$126",
-        },
-        {
-          name: "Claude Team",
-          value: 125,
-          text: "$125",
-        },
-        {
-          name: "Manus Team",
-          value: 100,
-          text: "$100",
-        },
-        {
-          name: "Construct",
-          value: 59,
-          text: "$59",
-        },
-        {
-          name: "Viktor",
-          value: 50,
-          text: "$50",
-        },
-      ],
-      note: "Construct Starter is *$66 less* than five Claude Team seats",
-    },
-  },
-  "blog-construct-computer-alternatives": {
-    title: "Construct alternatives, and *what you give up*",
-    deck: "Most paid alternatives start at $20 to $50, often per person.",
-    figure: {
-      kind: "matrix",
-      columns: ["No seats", "Flat price", "Channels"],
-      rows: [
-        {
-          name: "Construct",
-          scores: [4, 4, 4],
-          price: "$9",
-        },
-        {
-          name: "Lindy",
-          scores: [0, 1, 3],
-          price: "$29.99/u",
-        },
-        {
-          name: "Viktor",
-          scores: [4, 1, 2],
-          price: "$50",
-        },
-        {
-          name: "Dots",
-          scores: [1, 3, 2],
-          price: "$100+",
-        },
-        {
-          name: "Cowork",
-          scores: [1, 3, 1],
-          price: "$20",
-        },
-        {
-          name: "Copilot",
-          scores: [0, 1, 1],
-          price: "$25.20/u",
-        },
-        {
-          name: "Simular Sai",
-          scores: [2, 0, 1],
-          price: "$0",
-        },
-      ],
-    },
-  },
-  "blog-construct-vs-cellcog": {
-    title: "Construct vs *CellCog*",
-    deck: "Keep CellCog for phone calls and meetings, Construct for recurring jobs.",
-    figure: {
-      kind: "versus",
-      rival: "CellCog",
-      rows: [
-        {
-          label: "Entry",
-          us: "$9 fixed",
-          them: "$8, 800 credits",
-        },
-        {
-          label: "Shift work",
-          us: "$9 on Lite",
-          them: "$160 a month",
-        },
-        {
-          label: "Reach it in",
-          us: "Slack, Discord",
-          them: "Phone, Zoom",
-        },
-        {
-          label: "Memory",
-          us: "Read and fix",
-          them: "Undocumented",
-        },
-      ],
-    },
-  },
   "blog-construct-vs-chatgpt": {
     title: "Construct vs *ChatGPT, Claude and Gemini*",
     deck: "Half dots mean their docs say it varies by product and plan.",
@@ -1619,31 +1261,6 @@ export const postCards: Record<string, OgCard> = {
       ],
     },
   },
-  "blog-construct-vs-gemini-spark": {
-    title: "Construct vs *Gemini Spark*",
-    deck: "Spark is also unavailable in the EEA, the UK, Switzerland and Nigeria.",
-    figure: {
-      kind: "versus",
-      rival: "Gemini Spark",
-      rows: [
-        {
-          label: "Starts at",
-          us: "$9",
-          them: "$19.99",
-        },
-        {
-          label: "Work account",
-          us: "Yes",
-          them: "Not supported",
-        },
-        {
-          label: "Team",
-          us: "No seat fees",
-          them: "Personal agent",
-        },
-      ],
-    },
-  },
   "blog-construct-vs-genspark-claw": {
     title: "Genspark Claw comes with *two bills*",
     deck: "Every message, scheduled run and Heartbeat check spends Genspark credits.",
@@ -1691,36 +1308,6 @@ export const postCards: Record<string, OgCard> = {
           label: "@mention",
           us: "No seat",
           them: "Takes a seat",
-        },
-      ],
-    },
-  },
-  "blog-construct-vs-manus": {
-    title: "Construct vs *Manus*",
-    deck: "Keep Manus for one-off builds; give Construct the jobs that repeat.",
-    figure: {
-      kind: "versus",
-      rival: "Manus",
-      rows: [
-        {
-          label: "Price",
-          us: "$9 fixed",
-          them: "$20 in credits",
-        },
-        {
-          label: "Unused credits",
-          us: "No credits",
-          them: "Do not roll over",
-        },
-        {
-          label: "Persistent files",
-          us: "Every plan",
-          them: "+$30 add-on",
-        },
-        {
-          label: "Team of 5",
-          us: "$59, no seats",
-          them: "$100 in seats",
         },
       ],
     },
@@ -1909,33 +1496,6 @@ export const postCards: Record<string, OgCard> = {
       },
     },
   },
-  "blog-construct-vs-simular-sai": {
-    title: "Construct vs *Simular Sai*",
-    deck: "Keep Sai for desktop software with no API, Construct for the rest.",
-    figure: {
-      kind: "contrast",
-      left: {
-        title: "Screen clicks",
-        name: "Simular Sai",
-        items: [
-          "$50 of credits to start",
-          "Always-on: $500 a month",
-          "Approvals by iMessage",
-          "Any app's interface",
-        ],
-      },
-      right: {
-        title: "Connections first",
-        name: "Construct",
-        items: [
-          "$9, published limits",
-          "Apps by integration first",
-          "Browser and terminal too",
-          "Slack, Telegram, Discord",
-        ],
-      },
-    },
-  },
   "blog-construct-vs-viktor": {
     title: "Construct vs *Viktor*",
     deck: "Viktor's $50 plan covers roughly 13 to 40 complex workflows a month.",
@@ -2097,40 +1657,6 @@ export const postCards: Record<string, OgCard> = {
       },
     },
   },
-  "blog-hire-an-ai-employee": {
-    title: "Your first AI hire, *in 30 days*",
-    deck: "$9 on Lite, or let the 7-day Pro trial cover week 1.",
-    figure: {
-      kind: "checklist",
-      title: "The 30-day plan",
-      items: [
-        {
-          text: "Week 1: read-only research",
-          mark: "yes",
-        },
-        {
-          text: "Week 2: one job on the Calendar",
-          mark: "yes",
-        },
-        {
-          text: "Week 3: writes you can undo",
-          mark: "yes",
-        },
-        {
-          text: "Week 4: drafts only, *you send*",
-          mark: "yes",
-        },
-        {
-          text: "Customer email in week 1",
-          mark: "no",
-        },
-        {
-          text: "Day 30: expand or rescope",
-          mark: "todo",
-        },
-      ],
-    },
-  },
   "blog-hosted-openclaw-alternatives": {
     title: "Hosted OpenClaw, or *an AI employee*",
     deck: "OpenClaw has no official hosted tier, so a third party runs it.",
@@ -2193,36 +1719,17 @@ export const postCards: Record<string, OgCard> = {
     },
   },
   "blog-is-construct-computer-safe": {
-    title: "Is Construct *safe* to hand work to?",
-    deck: "It names its 15 sub-processors on a public list.",
+    title: "Is Construct Computer *safe*?",
+    deck: "What it stores, what its agents reach, and every gap, checked in the source.",
     figure: {
       kind: "checklist",
-      title: "What Construct can and cannot do",
+      title: "What Construct does and does not do",
       items: [
-        {
-          text: "Train on your data",
-          mark: "no",
-        },
-        {
-          text: "Take orders from a stranger's email",
-          mark: "no",
-        },
-        {
-          text: "Save API keys or tokens to memory",
-          mark: "no",
-        },
-        {
-          text: "Use only the apps each agent is allowed",
-          mark: "yes",
-        },
-        {
-          text: "Re-check access on every scheduled run",
-          mark: "yes",
-        },
-        {
-          text: "Approval before sends: *ask for drafts*",
-          mark: "todo",
-        },
+        { text: "Train models on your content", mark: "no" },
+        { text: "Start work from a stranger's email", mark: "no" },
+        { text: "Encrypt stored keys with AES-GCM", mark: "yes" },
+        { text: "Switch apps off per agent", mark: "yes" },
+        { text: "Approval before sends: *ask for drafts*", mark: "todo" },
       ],
     },
   },
@@ -2352,46 +1859,19 @@ export const postCards: Record<string, OgCard> = {
     },
   },
   "blog-manus-alternatives": {
-    title: "Manus alternatives for *work that repeats*",
-    deck: "Manus bills credits per run; a machine that keeps files is $30 more.",
+    title: "Manus alternatives, and when *Manus still wins*",
+    deck: "Seven agents for repeat work, priced and billed side by side.",
     figure: {
-      kind: "matrix",
-      columns: ["Files kept", "No per-run credits", "No seats"],
+      kind: "versus",
+      rival: "Manus",
       rows: [
+        { label: "Entry price", us: "$9 a month", them: "$0, then $20" },
+        { label: "Billing", us: "Usage window", them: "Credits, no rollover" },
+        { label: "Own model key", us: "On Pro", them: "Through Flex" },
         {
-          name: "Construct",
-          scores: [4, 4, 4],
-          price: "$9/mo",
-        },
-        {
-          name: "Manus",
-          scores: [1, 0, 0],
-          price: "$20/mo",
-        },
-        {
-          name: "Cowork",
-          scores: [2, 3, 0],
-          price: "$20/mo",
-        },
-        {
-          name: "Perplexity",
-          scores: [1, 0, 0],
-          price: "Credits",
-        },
-        {
-          name: "Lindy",
-          scores: [0, 1, 0],
-          price: "$29.99/u",
-        },
-        {
-          name: "Viktor",
-          scores: [3, 1, 4],
-          price: "$50/mo",
-        },
-        {
-          name: "Runbear",
-          scores: [0, 1, 4],
-          price: "$99/mo",
+          label: "Storage",
+          us: "100 MB to 3 GB",
+          them: "70 GB, $30 extra",
         },
       ],
     },
@@ -2458,33 +1938,6 @@ export const postCards: Record<string, OgCard> = {
         {
           label: "Perplexity credits",
           value: "Personal to one account",
-        },
-      ],
-    },
-  },
-  "blog-perplexity-computer-vs-cowork-vs-manus": {
-    title: "Perplexity, Cowork or Manus *for background work*",
-    deck: "Manus is free to start; its always-on machine costs $30 a month more.",
-    figure: {
-      kind: "plans",
-      items: [
-        {
-          name: "Perplexity",
-          price: "$200",
-          unit: "/mo",
-          line: "Reported Max price; credits on top",
-        },
-        {
-          name: "Construct",
-          price: "$9",
-          unit: "/mo",
-          line: "Runs laptop closed, *results kept as files*",
-        },
-        {
-          name: "Claude Pro",
-          price: "$20",
-          unit: "/mo",
-          line: "Cowork work is seen by just you",
         },
       ],
     },
@@ -2841,6 +2294,82 @@ export const postCards: Record<string, OgCard> = {
           label: "Opus 5.5 input / output",
           value: "$4 / $20 per MTok",
         },
+      ],
+    },
+  },
+  "blog-how-much-does-an-ai-agent-cost": {
+    title: "What an AI agent *really costs* per month",
+    deck: "Entry prices for agent work, read on each vendor's page on October 26, 2026.",
+    figure: {
+      kind: "bars",
+      label: "Entry price, $ a month",
+      rows: [
+        { name: "CellCog", value: 8, text: "$8" },
+        { name: "Construct", value: 9, text: "$9" },
+        { name: "Claude", value: 20, text: "$20" },
+        { name: "Manus", value: 20, text: "$20" },
+        { name: "Lindy", value: 29.99, text: "$29.99 a user" },
+        { name: "Grok Bot", value: 30, text: "$30" },
+        { name: "ChatGPT Dots", value: 100, text: "$100" },
+      ],
+      note: "Entry plans only; credits, seats and tokens move the real bill.",
+    },
+  },
+  "blog-what-can-your-ai-agent-delete": {
+    title: "What can your AI agent *delete*?",
+    deck: "Seven steps to scope access before an agent can do what you cannot undo.",
+    figure: {
+      kind: "contrast",
+      left: {
+        title: "Cannot be undone",
+        items: [
+          "Delete a file or a record",
+          "Send an email",
+          "Run a destructive command",
+          "Change a customer's data",
+        ],
+      },
+      right: {
+        title: "The safer version",
+        name: "Construct",
+        items: [
+          "Copies somewhere the agent cannot reach",
+          "A draft that waits for Send",
+          "Reading and writing in separate jobs",
+          "App access off for agents that only read",
+        ],
+      },
+    },
+  },
+  "blog-make-your-website-readable-by-ai-agents": {
+    title: "Our site, *readable by AI agents*",
+    deck: "A Markdown twin of every page, negotiated by the Accept header.",
+    figure: {
+      kind: "terminal",
+      title: "Terminal - construct.computer",
+      lines: [
+        "$ SITE=https://construct.computer/",
+        "$ curl -sI -H 'Accept: text/markdown' $SITE",
+        "HTTP/2 200",
+        "content-type: text/markdown; charset=utf-8",
+        "x-markdown-tokens: 2812",
+        "$ curl -sI -H 'Accept: image/png' $SITE",
+        "HTTP/2 406",
+      ],
+    },
+  },
+  "blog-cheap-llm-for-ai-agents": {
+    title: "Cheap LLMs on *real agent tasks*",
+    deck: "11 configurations, 11 tasks, two runs each, through Construct's own agent loop.",
+    figure: {
+      kind: "statement",
+      big: "19/22",
+      unit: "passed",
+      text: "GLM-5.3-Flash and Gemini 3.8 Flash tied at the top, at very different prices.",
+      lines: [
+        { label: "GLM-5.3-Flash", value: "$0.0036 per pass" },
+        { label: "Gemini 3.8 Flash", value: "$0.032 per pass" },
+        { label: "DeepSeek V4.1 Flash", value: "18/22, $0.0086" },
       ],
     },
   },

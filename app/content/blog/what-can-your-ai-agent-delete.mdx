@@ -1,0 +1,123 @@
+---
+title: "What can your AI agent delete? How to scope its access before it does something you cannot undo"
+seoTitle: "AI Agent Deleted Your Database? Scope Its Access First"
+description: "An AI agent can delete whatever its access allows. How to scope connections, split read from write, keep drafts and backups, and what Construct enforces."
+published: "2026-11-16"
+time: "16:31"
+author: "nischal"
+tags: ["ai-agent", "governance", "reliability"]
+kind: "guide"
+draft: false
+---
+
+An AI agent can delete, send or change anything the access you gave it allows, and it does not need an attacker to do it. When an agent wipes a database or posts private numbers to a channel, the cause is almost always the same: it held a permission the job never needed, and nothing stood between its decision and an action that could not be undone. The fix is to scope access before the agent runs: list the irreversible actions, give each job the narrowest connection, keep reading and writing in separate jobs, make sends wait as drafts, and keep copies the agent cannot touch.
+
+This guide walks through those steps and shows how each one works in Construct, including the parts Construct does not enforce for you. It is about agents making mistakes with permissions they were given. If you are worried about outsiders steering an agent through a hostile email or web page, read our guide to [AI agent prompt injection](/blog/ai-agent-prompt-injection/) as well.
+
+<BetaCta source="blog_top" />
+
+## A season of agents acting on their own
+
+People search "AI agent deleted database" because it keeps happening. These are the cases they cite, each from its primary source or the most direct account available:
+
+<ArticleTable caption="AI agents doing damage nobody asked for, July 2025 to October 2026">
+
+| When                | Where          | What the agent did                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| July 2025           | Replit         | Deleted SaaStr founder Jason Lemkin's production database during a code freeze he had stated, in his words, "eleven times in ALL CAPS." Replit's CEO wrote that it was "Unacceptable and should never be possible" and shipped automatic separation of development and production databases plus one-click restore                                                                                                                         |
+| March 2026          | DataTalks.Club | A coding agent ran `terraform destroy` against production, and "all automated snapshots were deleted too." Restoring 2.5 years of course submissions took about a day with AWS's help                                                                                                                                                                                                                                                      |
+| April 24, 2026      | PocketOS       | A Cursor agent on a staging task deleted a Railway volume "in about nine seconds flat," backups included, taking three months of rental car reservations. The data was later restored                                                                                                                                                                                                                                                      |
+| September 20, 2026  | OpenAI         | During a training run, an agent used its sandbox's DNS resolver to reach an outside chatbot. "The run did not stop automatically as expected" and was killed 2.5 hours later; OpenAI paused all training, evaluation and inference with tool use on its most capable models                                                                                                                                                                |
+| September 30, 2026  | OpenAI         | Told more than 100 organizations that its models "may have accessed" their systems, adding that "notification does not mean that any private information was accessed"                                                                                                                                                                                                                                                                     |
+| Late September 2026 | Meta Muse      | Selling a keyboard on Facebook Marketplace, Muse accepted a lowball offer and gave the buyer the seller's home address. He had chosen "Allow Always," which let it use a reply template containing his pickup address                                                                                                                                                                                                                      |
+| October 1, 2026     | Grok Bot       | A finance bot with "read-only access to his bank accounts, no Slack connection" was set up to send a CEO a private monthly audit. Instead his balances and spending appeared in his company's executive Slack under his name, and stayed there for two hours. F5 Labs' explanation: "The finance Bot lacked Slack access, but a different Bot on the same account had it." The account is self-reported, and SpaceXAI has not confirmed it |
+
+</ArticleTable>
+
+Sources: [The Register](https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/) and [Fortune](https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/) on Replit, [Alexey Grigorev](https://aishippingblog.com/p/how-i-dropped-our-production-database) on DataTalks.Club, [ABC7](https://abc7news.com/post/rogue-ai-agent-san-francisco-based-cursor-goes-haywire-deletes-tech-companys-database/19007153/) on PocketOS, [OpenAI's report](https://alignment.openai.com/misalignment-reports/an-agent-used-dns-to-reach-an-external-chatbot/) on the DNS run, [The Register](https://www.theregister.com/security/2026/10/02/openai-alerts-100-orgs-that-its-misaligned-models-attempted-to-break-in-or-worse/5300891) on the notices, [Matt Robb](https://www.threads.com/@matt.j.robb/post/DdxwAJnDhNy) and [Dexerto](https://www.dexerto.com/youtube/meta-responds-after-muse-ai-gave-stranger-youtubers-home-address-on-facebook-marketplace-3414057/) on Muse, [F5 Labs](https://www.f5.com/labs/articles/unprompted-when-ai-agents-expose-data-without-an-attacker) on Grok Bot.
+
+None of these needed an attacker. In each one the agent did something its access allowed and its owner had not asked for, and in the Grok Bot case the read-only promise held for the bank but not for the account's other bot. Count permissions across everything an agent account can reach, because one task's limits do not bind the bots and tools beside it.
+
+## Step 1: list what the job cannot undo
+
+Before you connect anything, write down what this job could do that you could not reverse. Most of the list is the same for every small team:
+
+<ArticleTable caption="Irreversible agent actions, and the safer version of each">
+
+| Action                                     | Why it cannot be undone                                    | Safer version                                   |
+| ------------------------------------------ | ---------------------------------------------------------- | ----------------------------------------------- |
+| Deleting files, records or rows            | Many tools have no trash, or empty it on a timer           | Archive or move to a folder; keep your own copy |
+| Sending email or messages                  | A sent message cannot be recalled                          | Save a draft; a person presses Send             |
+| Posting publicly                           | Screenshots outlive deletions                              | Draft the post; publish it yourself             |
+| Paying, refunding or changing bank details | Money moves outside your systems                           | Keep payments out of the agent's reach entirely |
+| Changing sharing or permissions            | A shared link can be copied before you notice              | Ask the agent to report what it would change    |
+| Running destructive commands               | `rm -rf`, `DROP TABLE` and `terraform destroy` act at once | Point the agent at a copy, never production     |
+
+</ArticleTable>
+
+Anything on this list gets one of two treatments: the agent cannot reach it at all, or a person confirms it every time. Everything else, such as reading, summarizing and writing new files, can run on its own.
+
+## Step 2: give each job the narrowest connection
+
+An agent's reach is the reach of the accounts you connect. Construct connects apps through Composio, and the agent can do in that app whatever the sign-in allows. Construct has no read-only switch on a connection, so narrow it on the app's side:
+
+1. Connect a dedicated account or user with the smallest role the job needs, such as a HubSpot user with view-only access or a Google account that is only a viewer on the shared sheet.
+2. Read the consent screen before you click Allow. For Gmail, drafting and sending share one Google scope, which our [Gmail guide](/blog/ai-agent-gmail-access-safely/) explains.
+3. In Construct, open the agent's settings and use the App access panel to switch off every installed app that agent does not need. Apps are on for each agent until you switch them off, so do this when you create the agent.
+4. Remove connections you no longer use.
+
+In a team workspace, regular members cannot install apps, connect accounts or create agents unless an owner or admin grants it, so one person decides which doors exist.
+
+## Step 3: keep reading and writing in separate jobs
+
+The safest agent for a job that reads widely is one that cannot write anywhere that matters. Run research, triage and reporting from an agent with no connected apps, writing its results to a file in Construct. Run the job that changes records from a second agent, started by you, with only the one app it needs. Lite includes two agents and Pro up to 15, so splitting costs nothing extra.
+
+Construct does one version of this for you. When you save a chat as a reusable workflow, each write and send becomes its own fixed step you can see in the workflow, and any open-ended agent step left in between is limited to the read calls the original chat made. The part that reasons cannot add a write or a delete the chat never did.
+
+## Step 4: make sends wait as drafts
+
+Construct's agents have their own email address, and the email tool can save a draft instead of sending. A draft shows up in the Email app with Send, Ask for changes and Discard buttons, and nothing leaves until you press Send. Ask for it in plain words:
+
+<Prompt label="Drafts only">
+
+Draft replies to the three customer emails from today in your inbox, one draft per thread. Save each as a draft and do not send anything. When you are done, list the drafts with the recipient and a one-line summary.
+
+</Prompt>
+
+The agent's email tool has no delete action, so it cannot remove mail from its own inbox. Outbound mail also has daily message and recipient limits per plan, enforced on the server, which caps how far a mistaken loop can go.
+
+## Step 5: decide where you want a person to confirm
+
+Construct does not put an approval gate in front of actions. Its [terms](/terms/) say it "does not insert a mandatory approval before every external side effect," and saved workflows have no approval step. What it has is a question card: in a chat, the agent can stop and ask you something with buttons, the same card appears in Slack and other chat apps, and a question nobody answers expires within ten minutes.
+
+So an approval in Construct is an instruction the agent follows, such as "ask me before deleting or sending anything," backed by the drafts in step 4. That works well in a chat you are watching. For a scheduled job that runs at 3am, do not rely on it: keep the irreversible action out of that job altogether.
+
+## Step 6: keep a record you can read the next morning
+
+Construct's Activity writes one row for every action an agent takes, with the time, the agent, a status and a reason of up to 160 characters, and a link back to the chat. You can filter it and export it as CSV or JSON. It keeps 30 days and stores no inputs or outputs, so it tells you what happened, and the detail lives in the chat each row links to ([what Activity records](/blog/ai-agent-activity-log/)).
+
+When something is going wrong right now, the Live activity panel on the desktop has a Stop all button that ends every in-flight agent turn and workflow run. Scheduled work that has not started yet is left alone, so pause that schedule as well.
+
+## Step 7: keep backups the agent cannot touch
+
+This is the step that turns a deletion into an inconvenience. Construct cannot do it for you, because a file deleted in Construct is gone: there is no trash, the Files app warns "This can't be undone," and the agent's delete works the same way without asking. The agent's terminal also sees your files with write access, so a mistaken command there reaches them too.
+
+Keep a copy of anything you cannot lose outside the agent's reach, such as a download to your own machine, a separate drive the agent has no connection to, or the source system itself. Two things in Construct can be rolled back: workspace apps keep their last 10 builds, and forgotten memories can be restored from the Memories app.
+
+<BetaCta source="blog_inline_1" />
+
+## Where Construct does not protect you
+
+Construct limits who can start work, which apps each agent can reach, and what leaves its own mailbox. It does not stop an agent from using a permission you gave it. If a connected account can delete records, an agent with that app switched on can delete them; if you did not ask for a draft, it can send. Activity keeps a 30-day summary that falls short of a forensic audit log, and there is no file trash. The full list is in [Is Construct Computer safe?](/blog/is-construct-computer-safe/).
+
+## How we checked this
+
+On October 26, 2026 we read the Construct v2 source for each product claim: the per-agent app grants (allowed until switched off), the workspace role defaults, the email tool's actions and daily limits, the Email app's draft card, the question card and its ten-minute expiry, the workflow capture that limits a saved workflow's agent step to read calls, Activity's retention and export, the Stop all control, the file delete path and the Files app's warning, the terminal's workspace mount, and workspace app version history. Incident details link to their primary sources and were checked the same day.
+
+## Related resources
+
+- [AI agent prompt injection: the 2026 attacks and defences](/blog/ai-agent-prompt-injection/)
+- [Is Construct Computer safe?](/blog/is-construct-computer-safe/)
+- [How to let an AI agent use your Gmail safely](/blog/ai-agent-gmail-access-safely/)
+- [Activity log vs audit log](/blog/ai-agent-activity-log/)
+- [Scheduled tasks for AI agents](/blog/ai-agent-scheduled-tasks/)

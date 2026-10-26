@@ -1,182 +1,127 @@
 ---
-title: "Where your agent's work goes: files, reports and apps that outlast the chat"
-seoTitle: "AI Agent Persistent Files: Reports and Apps That Outlast the Chat"
-description: "Construct saves agent work as files, PDFs, spreadsheets and small apps in a workspace with 100 MB to 3 GB of storage. How it works, and its limits."
-published: "2026-11-11"
+title: "What your AI agent leaves behind, and how a team finds it"
+seoTitle: "AI Agent Persistent Files: Find, Share and Audit Output"
+description: "Where Construct's AI agent saves reports, files and apps, who can see them, what Activity records, and why Files has no trash or version history yet."
+pitch: "Every place a Construct agent's output lands, how long each one lasts, and how a team finds, shares and checks it."
+published: "2026-11-20"
+time: "15:23"
 author: "nischal"
 tags: ["ai-agent", "product", "internal-tools"]
 kind: "guide"
-draft: true
+draft: false
 ---
 
-Construct saves every report, spreadsheet, PDF, deck, chart, and small internal app your agent makes as a file in a persistent workspace, with 100 MB of storage on the $9 Lite plan, 1 GB on Starter, and 3 GB on Pro. When an answer lives only in a chat thread, a teammate cannot open it and next month's run cannot compare against it.
+Everything a Construct agent makes, from a weekly report to a chart or a cleaned spreadsheet, is saved as a file in the workspace's Files, the same files the agent's terminal reads and writes. A team finds that work in a shared Team area or in dated folders, shares single files with specific people, and traces each file back to the chat that produced it through Activity. Two things to know before you rely on it: Files has no trash and no version history today, so a delete or an overwrite is final, and storage comes from the workspace owner's plan (100 MB on Lite, 1 GB on Starter, 3 GB on Pro).
 
-For founders and small teams, that makes Construct the better place to hand off recurring work: files are saved as the agent produces them, the next run reads what the last one left, your edits are protected from being overwritten, and the whole team can open the result without your login.
+Agents that answer only in a chat thread leave nothing a teammate can open next week and nothing the next run can compare against. This guide lists every place Construct puts an agent's output, how long each one lasts, and how to set up a folder that stays useful after months of runs.
 
-<BetaCta source="blog_top" plan="lite" interval="month">Start with Construct for $9</BetaCta>
+<BetaCta source="blog_top">Meet Construct</BetaCta>
 
-## Why do this in Construct?
+## Everything a run can leave behind
 
-- **Work is saved as it is produced.** A run that stops at step 30 keeps steps 1 to 29 in Files, and the next run picks up from what exists.
-- **Real deliverables, not chat text.** Designed PDFs from Markdown, plus Excel, Word, and PowerPoint files written with the document libraries in the agent's terminal.
-- **Next week's run reads last week's file.** Comparisons are made against what was actually sent, not against the agent's recollection.
-- **Your edits are safe.** If you change a file after the agent last read it, its next write is refused as a conflict instead of replacing your edit.
-- **One place for the team.** A team workspace has a shared Team area, a private area for each member, and per-file sharing, with storage on the owner's plan.
-- **Apps when a document is not enough.** Construct can build a private workspace app, such as a review queue or tracker, from the same files.
+A single run can leave output in several places. This table is all of them, as the product works today.
 
-<BetaCta source="blog_inline_1" plan="pro" interval="month">Try Construct Pro free for 7 days</BetaCta>
+<ArticleTable caption="Where a Construct agent's output lands, and how long it lasts">
 
-## Why does it matter where an agent's work goes?
-
-Because a good answer that only exists in a chat thread is nearly as lost as no answer. Two weeks later nobody can find it, nobody else on the team has seen it, and next month's run cannot compare against it.
-
-Finding work is already a large cost before AI enters the picture. In Microsoft's 2023 Work Trend Index survey of 31,000 workers, "62% of survey respondents say they struggle with too much time spent searching for information in their workday" ([Microsoft Work Trend Index, May 9, 2023](https://www.microsoft.com/en-us/worklab/work-trend-index/will-ai-fix-work)). An agent that produces more output in more threads makes that worse unless the output has a home.
-
-A useful agent does three things with its work: saves it somewhere durable as it goes, names it so a person can find it, and reads it back next time. Construct does all three in the workspace's Files.
-
-## Where do Construct's files live?
-
-Every Construct workspace has a Files app, the same files the agent reads and writes.
-
-- **Private.** Your own files. In a personal workspace this is everything; in a team workspace each member has a private area nobody else can browse.
-- **Team.** In a team workspace, a shared area every member with file access can read, and members with write access can change.
-- **Shared with you.** Individual files a teammate has shared with the whole team or with specific people. You can open them, not edit them in place.
-
-The agent's terminal sees the same files: your private files at `/private` and the team area at `/workspace`. A script the agent runs writes straight into Files, so there is no export step between "the agent made it" and "you can open it."
-
-Files can be previewed on the desktop without downloading: PDF, Word, PowerPoint, CSV, Markdown, HTML, JSON, images, audio and video, and zip archives. Text and code open in an editor. Storage counts against the workspace owner's plan.
-
-{/* TODO: add a screenshot of the Files app showing Private, Team, and a dated reports folder */}
-
-## How does the agent create and protect files?
-
-The agent has a files tool that can read, write, edit, list, search, and delete, and a few actions that matter for real deliverables:
-
-- **Designed PDFs from Markdown.** The agent writes a report in Markdown and exports a PDF next to it, with a report or minimal style, page numbers, bookmarks from headings, and repeated table headers. Images in the Markdown appear as their description in the PDF, so keep charts as separate files.
-- **Office formats.** For Word, Excel, and PowerPoint files, the agent writes them with Python in the terminal, which has the standard document libraries installed, and LibreOffice for conversions.
-- **Imports.** The agent can download a file from an HTTPS link into Files (up to 25 MB), so a published dataset or a vendor's price sheet becomes a workspace file before anything else happens.
-- **Attachments in chat and email.** It can attach up to eight workspace files to a chat reply, and up to eight to an email from its native inbox.
-- **No silent overwrites.** The agent tracks which version of a file it last read. If you change the file after that, its next write is refused as a conflict instead of replacing your edit.
-
-Incoming material lands in Files too. When an email or a Slack, Telegram, or Discord message with attachments starts a task, the attachments are saved under an inbox folder in the workspace, so the agent works from a file rather than a message.
-
-## What about apps?
-
-Some outputs are better as a small tool than a document: a review queue, an intake form, a dashboard over last month's reports. Construct can build a private workspace app for that. Its source lives in `Apps/<app-id>/` in Files, its saved records in `AppData/<app-id>/`, and a successful build opens on your desktop. If a later edit fails to build, the last working version keeps running. Our guide to [how Construct builds internal tools](/blog/build-internal-tools-with-construct/) covers the permissions and the build lifecycle.
-
-<figure className="my-8">
-  <ArticleVideo
-    muted
-    playsInline
-    preload="none"
-    poster="/assets/landing/workflows/apps-poster.jpg"
-    width="1440"
-    height="960"
-    aria-label="Construct internal-app demo"
-    aria-describedby="internal-app-demo-description"
-    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
-  >
-    <source src="/assets/landing/workflows/apps.mp4" type="video/mp4" />
-    <track
-      kind="captions"
-      src="/blog/ai-agent-files-and-artifacts/internal-app-demo.vtt"
-      srcLang="en"
-      label="English"
-    />
-    Your browser does not support this video. The description below explains the
-    demo.
-  </ArticleVideo>
-  <figcaption
-    id="internal-app-demo-description"
-    className="mt-3 text-sm leading-6"
-  >
-    Silent product demo: Construct prepares a Lead Tracker app, opens its leads
-    view, and shows the form for adding a lead with contact details, status,
-    source, and notes. The app becomes a reusable interface inside the
-    workspace.
-  </figcaption>
-</figure>
-
-## Files, memory, or an app?
-
-Each kind of output has a natural home in Construct, and putting it in the right one is how work stays findable.
-
-<ArticleTable caption="Where each kind of agent output belongs in Construct">
-
-| Output                                 | Best home                     | Why                                                               |
-| -------------------------------------- | ----------------------------- | ----------------------------------------------------------------- |
-| A report, spreadsheet, deck, or PDF    | Files                         | You open it, share it, and compare it next time                   |
-| A stable fact or preference            | Memory                        | The agent recalls it before the next task, and you can correct it |
-| A queue or tracker people update       | Workspace app                 | People need a screen, not a document                              |
-| A repeated procedure                   | Workflow                      | The steps run the same way each time                              |
-| A live number, such as today's revenue | Neither, fetch it at run time | A saved figure is right only until it changes                     |
+| Output                                            | Where it lives                                     | How long it lasts                      |
+| ------------------------------------------------- | -------------------------------------------------- | -------------------------------------- |
+| Reports, CSVs, charts, Word, Excel and PowerPoint | The folder you name in My files or Team            | Until someone deletes it               |
+| PDFs exported from Markdown                       | Next to the Markdown file                          | Until someone deletes it               |
+| Files downloaded from a link (up to 25 MB)        | `downloads/` unless you name a folder              | Until someone deletes it               |
+| Workspace apps                                    | Source in `Apps/<id>/`, records in `AppData/<id>/` | The last 10 successful builds are kept |
+| Terminal commands and their full output           | The Terminal app                                   | Until you choose Clear                 |
+| Browser runs                                      | The Browser app: steps, screenshots, result        | Shown after the run ends               |
+| What the agent did, step by step                  | Activity                                           | 30 days, or 10 MB per person           |
 
 </ArticleTable>
 
-Our [memory guide](/blog/ai-agent-memory/) explains why large documents belong in Files rather than memory: memory holds the fact that a document matters, not its contents.
+The agent can also attach up to eight workspace files to a chat reply or to an email it sends from its own inbox. Those attachments are copies of files that stay in Files, so the folder remains the record.
 
-## Before you start
+## The three areas of Files
 
-Set up Files with these in mind and the first month goes smoothly:
+The Files app has three areas, and the agent works in the same ones:
 
-- **Keep final copies where your team already works.** Files is not a desktop sync drive. If your team lives in Google Drive or Dropbox, connect it from the integration catalog and ask the agent to place final copies there, while working files stay in Construct.
-- **Use dated filenames.** Files has no trash or version history, so an overwrite replaces the previous contents and a deleted file is gone. Dated filenames give you a history for free, and a standing instruction such as "never delete files" keeps it safe. {/* TODO: confirm Files has no trash or version history today */}
-- **Edit Office files through the agent.** Word, Excel, and PowerPoint files preview in Files; to change one, ask the agent for a new version or download it.
-- **Size the plan to the archive.** 100 MB on Lite fills quickly with PDFs and images. Starter's 1 GB or Pro's 3 GB suit a team archiving reports; see [pricing](/pricing/). Files are deleted when an account closes, so export what you need first.
+- My files is private to you and the agents you work with. In the terminal it is `/private`.
+- Team is shared with everyone in the workspace. In the terminal it is `/workspace`, and it is the only area mounted in the terminal when an agent works in a group chat, so commands run there cannot reach anyone's private files.
+- Shared lists single files teammates shared with you. It is read-only.
 
-## A concrete job: the weekly client report that builds on itself
+Because the terminal and Files are the same storage, a script the agent runs writes straight into a folder you can open, and a file you drop into Files is there for the agent's next command. Moving a finished report from My files to Team is one action, **Move to Team**, in the file's menu.
 
-This example is illustrative, not a customer case. A three-person marketing agency sends each client a short weekly report.
+When you upload a file whose name is already taken, Files asks whether to replace it or keep both, which saves the new one as `name (2).ext`. The agent gets a different protection. It remembers which version of a file it last read, and if you edit the file after that, its next write is refused with "File changed since last read, re-read and retry" instead of replacing your edit.
 
-**The request, once, in chat:**
+## Reports, PDFs and Office files
 
-<Prompt>
+The agent writes reports in Markdown and can export one, up to 256 KB of Markdown, as a designed PDF next to the source, attached to its reply by default. Keep charts as separate image files alongside the report. For Word, Excel and PowerPoint, it writes the file with Python in its terminal, which has python-docx, openpyxl and python-pptx installed, and uses LibreOffice to convert between formats. Our [browser and terminal guide](/blog/ai-agent-browser-and-terminal/) lists the full toolset and the five-minute command limit.
 
-Every Monday at 8am, for each client folder in Team/clients, read last week's report in reports/, pull this week's numbers from the connected analytics app, and write reports/YYYY-MM-DD-weekly.md comparing the two. Export it to PDF in the same folder. Save the raw numbers to data/YYYY-MM-DD.csv. Then post a one-line summary per client to me in chat. Do not email clients.
+Incoming material follows the same rule. A file at an HTTPS link becomes a workspace file before the agent works on it, so the source of a comparison is in the folder next to the result.
+
+## Apps the agent builds
+
+Some output is better as a small tool than a document: a review queue, an intake form, a tracker people update. Construct can build a private workspace app for that. Its source lives in `Apps/<id>/` in Files and its saved records in `AppData/<id>/`, so the app's data is as visible as any other file.
+
+<ArticleFigure
+  src="/assets/landing/workflows/apps-poster.jpg"
+  alt="A Lead Tracker app built in a Construct workspace, showing its add-lead form with name, company, email, phone, status, source, deal value and notes fields."
+  caption="A workspace app's form, from our product demo. Apps keep their saved records under AppData in Files."
+  width="1440"
+  height="960"
+/>
+
+Apps are the one kind of agent output with version history. Every successful build is kept, up to the last 10, and **Versions** in the app window's menu restores an earlier one. An app can be shared with the whole workspace, where a teammate's write through it asks them to confirm first, or by public link, which opens it read-only. Our guide to [how Construct builds internal tools](/blog/build-internal-tools-with-construct/) covers permissions and the build steps.
+
+<BetaCta source="blog_inline_1">Try Construct</BetaCta>
+
+## How a team finds the work later
+
+Three habits make a folder easy to search months later, and the product supports each one:
+
+1. Keep one folder per job, with dated files inside it. `Team/clients/acme/reports/2026-11-16-weekly.md` sorts itself, and the agent can find last week's file by name without being told.
+2. Search by name or by content. Files searches names. The agent's files tool can also search inside files, so "find the report that mentioned the Q3 discount" is a reasonable request.
+3. Start from Activity when you need to know why a file exists. Each Activity row names the agent, what it did and the file path it touched, and **Open task** takes you to the conversation that produced it.
+
+## Auditing what an agent did
+
+Activity is the record of what agents did: one row per action, with the agent, the action, a short reason, whether it succeeded, and the subject, such as a file path, a search query or a URL. It deliberately does not store tool inputs and outputs, so the content of a file lives in Files, not in the log. Rows are kept for 30 days or until a person's rows pass 10 MB, and you can export them as CSV or JSON, up to 50,000 rows at a time. Activity is per person: you see the rows for your own runs, and there is no workspace-wide feed of every member's agents. Our [activity log guide](/blog/ai-agent-activity-log/) compares this with a full audit log.
+
+For anything you need beyond 30 days, the files are the durable evidence. That is another reason to have the agent save its inputs (the downloaded source, the raw CSV) next to its outputs rather than only the final summary.
+
+## Deletes are permanent and overwrites are final
+
+Files has no trash and no version history. Deleting a file in the Files app shows "This can't be undone. Agents that use these files will no longer find them." A folder is deleted with everything inside it. When the agent deletes a file with its files tool, it is removed the same way, without a confirmation step. An overwrite replaces the previous contents.
+
+Three practices cover most of the risk:
+
+- Write a new dated file each run instead of overwriting one file.
+- Tell the agent in a standing instruction not to delete anything in a given folder; our guide to [what your AI agent can delete](/blog/what-can-your-ai-agent-delete/) covers the rest.
+- Keep final copies where your team already backs up work, such as a connected Google Drive, and use Files for the working set.
+
+When a member leaves a workspace, their private files are kept, and inviting them back restores access. Deleting a workspace or closing an account deletes its files, so download what you need first.
+
+## Storage and who pays for it
+
+Storage counts against the workspace owner's plan: 100 MB on Lite, 1 GB on Starter and 3 GB on Pro ([pricing](/pricing/)). The total covers every workspace that person owns, plus attachments on email the agents send. When it is full, writes are refused with a message saying so; nothing is deleted to make room. PDFs and images fill 100 MB quickly, so a team archiving weekly reports for several clients will want Starter or above.
+
+## Setting up a weekly report folder
+
+Here is a request that leaves a clean history behind. Adjust the folder and the data source to your own:
+
+<Prompt label="Weekly report that builds on itself">
+
+Every Monday at 8am, for each client folder in Team/clients, read the most recent file in reports/, pull this week's numbers from the connected analytics app, save them to data/YYYY-MM-DD.csv, and write reports/YYYY-MM-DD-weekly.md comparing the two weeks. Export the report to PDF in the same folder. Never overwrite or delete an existing file in Team/clients. Post a one-line summary per client to me in chat. Do not email clients.
 
 </Prompt>
 
-**What is left behind after the first run, for each client:**
+After a month, each client folder holds four dated reports, four PDFs and four CSVs, and next month's run compares against what was actually sent. An account manager who edits a report before sending it does not lose the edit to the next run, because each run writes a new dated file.
 
-- `Team/clients/acme/reports/2027-01-04-weekly.md` and the matching PDF
-- `Team/clients/acme/data/2027-01-04.csv`
-- An Activity row for each step, and the chat where the run happened
+## How we checked this
 
-**What the second run does differently.** It starts by reading the previous week's Markdown and CSV, so the comparison is against what was actually sent, not against the agent's recollection. If the second run fails halfway, the clients it finished keep their files, and the next run picks up from there.
-
-**Where a person stays in the loop.** An account manager opens each PDF, edits anything wrong, and sends it. Because the agent refuses to overwrite a file someone changed after it read it, those edits are safe from the next scheduled write. After a month, the folder is a clean history of every report, which is exactly what a client asks for at renewal.
-
-The same pattern works for a [weekly Slack briefing](/blog/ai-agent-slack-briefing/), a [company research spreadsheet](/blog/ai-company-research-spreadsheet/), or the [shipping rate check](/blog/ai-agent-browser-and-terminal/) from our browser and terminal guide. See also how an [agency might use an AI employee](/blog/ai-employee-for-agencies/).
-
-We have not yet run this four-week sequence on a real workspace.
-
-{/* TODO: run the weekly client report for four consecutive weeks on a test workspace with two client folders; record storage used, run time, and how often a human edit was needed; add a screenshot of the resulting folder */}
-
-## How to evaluate where any agent product puts its work
-
-If you are comparing agents, ask each one these questions.
-
-1. **Is there a file system you can browse,** or only attachments in a chat?
-2. **Does the next run read the last run's output** automatically, or do you paste it back in?
-3. **Can a teammate open the file** without your login?
-4. **What happens if you edit a file the agent is about to rewrite?**
-5. **Which formats can it produce properly:** PDF, Excel, Word, slides, charts?
-6. **How much storage, and whose plan pays for it?**
-7. **What happens to work from a run that fails halfway?**
-
-Construct's answers: yes; yes; yes, in a team workspace; the write is refused; all five; 100 MB to 3 GB on the owner's plan; and the finished steps stay in Files.
-
-## Give your next report a home
-
-Pick the one report you rebuild by hand every week, such as a client update, a pipeline summary, or a price check. Ask Construct to produce it as a dated Markdown file and PDF in a folder, then put it on the Calendar and ask the next run to compare against the last one. After a month, judge it by the folder. Start on [Lite for $9](/pricing/), or try Pro free for seven days.
-
-<BetaCta source="blog_inline_2">Give Construct its first report</BetaCta>
+The Files areas, menu labels and delete wording, the write-conflict rule, storage accounting, PDF export limits, workspace app versions and sharing, the terminal mounts, and Activity's fields, retention, export and scope were read from Construct's source on October 26, 2026. The screenshot is a frame from our product demo. We make Construct.
 
 ## Related resources
 
 - [How Construct builds internal tools in your workspace](/blog/build-internal-tools-with-construct/)
 - [AI agent memory you can control](/blog/ai-agent-memory/)
-- [Browser and terminal in one supervised task](/blog/ai-agent-browser-and-terminal/)
 - [Activity log vs audit log](/blog/ai-agent-activity-log/)
-- [What is an AI agent with its own computer?](/blog/ai-agent-with-its-own-computer/)
-- [Internal tools in Construct](/use-cases/internal-tools/)
+- [How Construct's agent uses a browser and a terminal](/blog/ai-agent-browser-and-terminal/)
+- [What can your AI agent delete?](/blog/what-can-your-ai-agent-delete/)
+- [Team workspaces in Construct](/use-cases/team-workspaces/)

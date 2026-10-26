@@ -1,177 +1,124 @@
 ---
-title: "Browser and terminal in one supervised task"
-seoTitle: "AI Agent With a Browser and Terminal in One Task (2026)"
-description: "Construct's AI agent uses a live cloud browser and a Linux terminal in one task, from $9 a month. What you can watch and stop, and the 5-minute limits."
-published: "2026-11-02"
+title: "How Construct's agent uses a browser and a terminal in one task"
+seoTitle: "AI Agent With a Browser and Terminal: How It Works"
+description: "How Construct's AI agent pairs a live cloud browser you can watch or take over with a Linux terminal: the limits, what persists, and what happens on failure."
+pitch: "The exact limits, handoffs and failure rules of Construct's browser and terminal, read from the product source."
+published: "2026-11-05"
+time: "20:05"
 author: "nischal"
 tags: ["ai-agent", "product", "workflow-automation"]
 kind: "guide"
 draft: false
 ---
 
-Construct gives your AI agent a live cloud browser and a Linux terminal in the same task, from $9 a month on Lite, so it can fill in a web form, save what it reads to a file, and analyze it in Python before you have opened a spreadsheet. Each browser run and each terminal command is capped at five minutes today, so you plan the job as short steps that save files as they go.
+An AI agent with a browser and a terminal can get data out of a website that only answers after you click through a form, then analyze it with real code and save the result as a file. In Construct, the agent tries a plain web search or page fetch first and starts a live cloud browser only when that fails or the page needs interaction. The browser run is capped at five minutes, you can watch it, take control of it or stop it, and it hands its findings to a Linux terminal through your workspace Files, where each command runs for up to five minutes.
 
-Doing the same job by hand means a browser tab, a copy and paste into a spreadsheet, and a formula you rebuild every month. For founders and small teams, Construct is the simplest way to hand that job over: the browser and the terminal pass work to each other through files you can open, you can watch and stop the browser at any point, every finished step is saved as it happens, and once the result is right, the job runs on the Calendar with your laptop closed.
+Vendors often sell this pairing under the name computer use agent. This guide covers how we built it in Construct and the limits you plan around. For the broader idea of an agent that keeps its own machine in the cloud, start with [what an AI agent with its own computer is](/blog/ai-agent-with-its-own-computer/).
 
-<BetaCta source="blog_top" plan="lite" interval="month">Start with Construct for $9</BetaCta>
+<BetaCta source="blog_top">Meet Construct</BetaCta>
 
-## Why do this in Construct?
+## When the agent opens a browser at all
 
-Construct puts both tools in one supervised task, with every intermediate result saved as a file you can open. In practice:
+A live browser is the slowest and most expensive way to read a web page, so Construct treats it as a fallback. The agent has to evaluate a search or fetch first and, when it calls the browser, state which of five reasons applies: the search failed, the page fetch failed, the site blocked the fetch, the results were not enough, or the page needs interaction such as a form, a dropdown or a login wall.
 
-- **Both halves of the job in one task.** The browser gets the messy data from forms and dropdowns; the terminal does the precise part, such as joins, checks, and charts.
-- **A plain fetch first, the browser only when needed.** For a simple page, Construct uses web search and a direct page fetch, which are faster and cheaper, and starts the live browser only when a page needs interaction or the fetch fails.
-- **You can watch it and stop it.** The Browser app shows the live page and a step list with notes, URLs, and screenshots. Stop ends the run.
-- **Every intermediate result is a file.** A run that stops at step 30 keeps steps 1 to 29 in Files, and the next run starts from what exists.
-- **The tools are already installed.** Python 3 with pandas, matplotlib, openpyxl, python-docx, and python-pptx, plus PDF tools, LibreOffice, Tesseract, git, curl, jq, and ripgrep.
-- **It runs on a schedule without you.** Calendar jobs run in Construct's cloud, so a monthly check happens whether or not anyone is online.
+Most reading never touches the browser. A pricing page, a press release or a documentation page comes back from a plain page fetch. The browser earns its place on a carrier's rate calculator, a public registry search with filters, or a supplier portal that renders its table only after you pick a region.
 
-<BetaCta source="blog_inline_1" plan="pro" interval="month">Try Construct Pro free for 7 days</BetaCta>
+Construct gives each agent one live browser run at a time. If the agent asks for a second one while the first is still going, the call is refused with a message to stop the first run. Work that needs several sites at once goes to a second agent.
 
-## Why does an AI agent need both a browser and a terminal?
+## What the live browser is, and what you can do while it runs
 
-Because most real jobs have a messy half and a precise half, and each tool is good at only one of them. The messy half is getting the data: a rate calculator that only answers after you fill in a form, a registry search with a dropdown, a pricing page that changes by region. The precise half is doing something reliable with it: joining it to last month's numbers, checking totals, drawing a chart, writing a file someone else can open.
+The browser is a remote browser session that Construct runs through Composio, the integrations provider listed on our [sub-processors page](/sub-processors/). Construct hands it a goal in plain language and an optional start URL, and a browser agent works toward that goal step by step. Construct checks on the run every 2.5 seconds.
 
-A browser is good at the first half and bad at the second. A terminal is the opposite. Put both in one task and the agent can hand data from one to the other through files, the way a person would.
+The Browser app on your Construct desktop opens with the run and shows three things:
 
-## Can an AI agent use a web browser to fill in forms?
+1. The remote screen, live, at the session's own 1920 by 824 proportions.
+2. A step list with the browser agent's note for each step, the URL it was on and a screenshot taken after the step.
+3. Two buttons: **Take control** and **Stop**.
 
-Yes. Construct's agent can open a live cloud browser that clicks, types, picks from dropdowns, and reads the result, when a plain page fetch is not enough. Here is how it works:
+The view starts read-only. Take control asks you to confirm, then sends your clicks and typing straight to the page while the agent keeps working in it. Give back control returns it. This is how you get past a cookie banner the agent keeps missing, or pick the right option in an ambiguous dropdown.
 
-- **It runs in the cloud, not on your machine.** The browser is a remote one that Construct drives. It is not your Chrome, and Construct does not hand it your logins, so plan for each run to start signed out.
-- **The agent gives it a goal.** For example, "fill in the calculator for a 5 kg parcel from Leeds to Berlin and read the rate table," with an optional start URL. The browser works toward that goal and returns a summary to the agent.
-- **You can watch it live.** The Browser app shows the live page while it runs, plus a step list with short notes, the URL at each step, and screenshots. The step list stays available after the run ends.
-- **You can stop it.** Stop ends the run. Later browser calls in that turn are refused, so a stopped run stays stopped.
-- **One at a time per agent.** Each agent has one live browser run at a time. To work several sites in parallel, give the extra sites to another agent; Lite includes 2.
-- **It is bounded.** A run that has not finished within five minutes ends as timed out, and the agent sees that it did.
+Stop ends the run. The agent is then told, in so many words, that you stopped it, that it must not start the browser again for this request, and that it should tell you what it finished and ask how to continue. After the run ends, the Browser app keeps the step list, the final screenshot and the result.
 
-## How does the agent's terminal work?
+## Logins, CAPTCHAs and what the browser cannot do
 
-The terminal is a Linux sandbox attached to your workspace that starts when the agent needs it and goes to sleep when idle, so you are not paying for a machine that sits on.
+Construct sends the browser a goal and a URL, nothing else. It passes no saved profile, cookies or passwords, so plan for every run to start signed out. If a tool needs your account, connect it from the App Store instead: a structured action against Gmail, HubSpot or Notion is more reliable than clicking through their interfaces, and it does not involve typing a password into a remote browser.
 
-- **Your files are mounted.** `/private` holds your own Files and `/workspace` holds a team workspace's shared Files. Both are durable and are the same files you see in the Files app. `/tmp` is scratch space and disappears when the sandbox sleeps.
-- **The shell keeps its place within a chat.** The working directory, exported variables, and an activated Python virtual environment carry over from one command to the next in the same chat.
-- **Commands run without root by default.** The agent can run a single command as root when it needs to install something, and the terminal marks that command clearly.
-- **Output is kept.** The Terminal app shows a read-only transcript, and the full output of each command is saved so you can open it later. You can clear those saved logs.
+Each run has five minutes. A run that has not finished by then ends as timed out, and Construct does not retry it automatically, because the same goal against the same page would most likely run out of time again. The agent gets back what the run got through before it ended (the last six steps with their URLs) so it can tell you where it stopped.
 
-## How do the browser and terminal hand work to each other?
+When the browser agent cannot get past a CAPTCHA or a bot wall, the run ends without success and the agent gets that failure back with the steps it managed. You can also take control and solve the CAPTCHA yourself while the run is live. What the agent reads from the page comes back to it marked as external data whose instructions it should not follow, the same way web pages, email and connected-app results are marked. That lowers the risk of a page steering the agent without removing it; our [prompt injection guide](/blog/ai-agent-prompt-injection/) covers what else to do.
 
-Through Files. The browser returns what it read as text to the agent. The agent writes that to a file, such as a CSV, and the terminal reads the file from `/private`. When the data is a downloadable file at an HTTPS link, the agent can skip the browser and import it straight into Files (up to 25 MB), then process it.
+## The terminal: a Linux sandbox with your files mounted
 
-That handoff is the point. Every intermediate result is a file you can open, so a run that stops halfway leaves its finished steps behind.
+The terminal is a Linux container that starts on the agent's first command and goes back to sleep after 10 minutes without one. Every command runs in bash as an ordinary user called `construct`. When something needs root, the agent sets a flag on that single command (there is no `sudo`), and the Terminal app labels it.
 
-<figure className="my-8">
-  <ArticleVideo
-    muted
-    playsInline
-    preload="none"
-    poster="/assets/landing/workflows/research-poster.jpg"
-    width="1440"
-    height="960"
-    aria-label="Construct research demo"
-    aria-describedby="research-demo-description"
-    className="h-auto w-full rounded-2xl border border-[#e5e7eb]"
-  >
-    <source src="/assets/landing/workflows/research.mp4" type="video/mp4" />
-    <track
-      kind="captions"
-      src="/blog/ai-agent-browser-and-terminal/research-demo.vtt"
-      srcLang="en"
-      label="English"
-    />
-    Your browser does not support this video. The description below explains the
-    demo.
-  </ArticleVideo>
-  <figcaption id="research-demo-description" className="mt-3 text-sm leading-6">
-    Silent product demo: Construct researches a topic in the product interface,
-    gathering sources and turning them into cited research saved in the
-    workspace.
-  </figcaption>
-</figure>
+Two folders are durable and are the same files you see in Files:
 
-## How long can a browser run or terminal command take?
+- `/private` holds your own files, and is mounted only in your one-to-one chats.
+- `/workspace` holds the team's shared files. In a group chat it is the only one mounted.
 
-Five minutes each, on every plan today. A browser run ends as timed out after five minutes, and each terminal command has a two-minute default and a five-minute ceiling, as our [privacy policy](/privacy/) notes. The pricing page lists longer command runtimes for Starter and Pro, but the five-minute cap currently applies to all plans.
+Everything else on the container's disk, including `/tmp`, is gone when the container sleeps.
 
-The workaround is to plan many short steps instead of one long one: ask the agent to save a file after each step, so the next step starts from it. A server or an hour-long scrape needs an always-on machine; our [explainer on agents with their own computer](/blog/ai-agent-with-its-own-computer/) compares those options.
+The image ships with Python 3 and pandas, matplotlib, openpyxl, python-docx, python-pptx, reportlab, pypdf, pdfplumber and markitdown, plus LibreOffice, Tesseract OCR, ocrmypdf, poppler, qpdf, git, curl, jq and ripgrep. The container can reach the internet, so the agent can `pip install` something else, but that install lives on the container disk and disappears when it sleeps. If a recurring job needs an extra package, put the install command in the job's prompt so each run starts with it.
 
-## Before you start
+## Terminal time limits and output
 
-A few things to set up deliberately so the first run goes cleanly:
+Each command gets a two-minute timeout by default, and the agent can raise it to five minutes. Five minutes is the ceiling on every plan today. When a command hits its limit, the agent is told the limit and whether a longer one is possible, and at five minutes it is told to split the work into smaller commands.
 
-- **Use connected apps for tools you are signed into.** The cloud browser does not have your accounts, so connect the tool from the integration catalog instead. A structured action is more reliable than clicking anyway.
-- **Expect hard blockers to stop the run.** CAPTCHAs, bot walls, and sites that forbid automation end a run, and the agent tells you rather than guessing the numbers.
-- **Set the boundary in the prompt.** The browser can act on pages without a separate approval step, so keep browser jobs to reading until you trust them: "read only, do not submit anything except the calculator."
+Within a chat, the shell keeps its working directory, exported variables and an activated Python virtual environment between commands. Construct stores that state outside the container, so it survives the container going to sleep, though a virtual environment in `/tmp` does not. Background processes do not survive: Construct clears leftover processes before every command, so a server started with `&` is gone by the next one. A process limit of 2,048 and 4,096 open files per command keep a runaway script from taking the container down.
 
-If the job is mainly code in a git repository, a coding agent is built for that; see [Construct vs coding agents](/blog/construct-vs-coding-agents/).
+The agent reads up to 16,000 characters of output per command. Past that it gets the start and the end, plus the path of a file with all of it. A command that streams more than 200,000 characters is stopped. The Terminal app shows every command and its full output, and keeps those logs until you choose Clear. If a command is stuck, Force stop ends the agent's current turn and kills the processes.
 
-## A concrete job: a monthly shipping rate check
+<ArticleTable caption="What persists between steps and runs in Construct">
 
-This example is illustrative, not a customer case or a timed test. A small online shop ships from the UK to five countries. Its carrier publishes rates only through a calculator form, and the shop wants to know each month whether any rate moved by more than 5%.
+| Thing                                        | How long it lasts                                             |
+| -------------------------------------------- | ------------------------------------------------------------- |
+| Files in `/private` and `/workspace`         | Until you delete them                                         |
+| Working directory, exports, virtual env path | For the rest of that chat                                     |
+| `/tmp`, packages installed with pip or apt   | Until the container sleeps, 10 minutes after the last command |
+| Background processes                         | Until the next command                                        |
+| Terminal output logs                         | Until you clear them                                          |
+| Browser logins and cookies                   | Not kept; each run starts from a goal and a URL               |
+| Browser step list and result                 | Shown in the Browser app after the run                        |
 
-**What you need.** A Construct workspace (Lite is enough for a monthly job; see [plans](/pricing/)), last month's rates saved as `Files/shipping/rates-2026-11.csv`, and the carrier's public calculator URL.
+</ArticleTable>
 
-**Step 1. Give the job in one message.**
+## How the browser and the terminal hand work to each other
 
-<Prompt>
+They never talk directly. The browser returns text to the agent, capped at 12,000 characters per run. The agent writes what it needs from that text into a file, a CSV for a table or Markdown for notes, using its files tool, which writes straight to storage without waking the container. The terminal then reads the same file from `/private` or `/workspace`.
 
-Open the carrier's rate calculator at the URL below in your browser. For each destination (France, Germany, Spain, Italy, Netherlands), enter a 2 kg parcel and a 5 kg parcel from Leeds, and read the standard and express rates. Save all 20 rates to Files/shipping/rates-2026-12.csv with columns destination, weight_kg, service, price_gbp. Then, in the terminal, compare that file with Files/shipping/rates-2026-11.csv, flag any change over 5%, save a chart to Files/shipping/rate-changes-2026-12.png, and write a one-page summary to Files/shipping/summary-2026-12.md. Do not email anyone.
+When the data is already a downloadable file, the browser is not needed. The agent can import any HTTPS link of up to 25 MB straight into Files (into `downloads/` unless you name a folder) and process it in the terminal.
+
+Going through Files costs a step compared with piping data between tools, and it buys a lot: every intermediate result is a file you can open, the next run can read last month's output from the same place, and a teammate can check the numbers without reading the chat.
+
+<BetaCta source="blog_inline_1">Try Construct</BetaCta>
+
+## What happens when a step fails halfway
+
+Construct marks every browser run and terminal command that started and then failed as possibly having done something. A browser run that clicked submit before it timed out may have submitted the form, and a script that died at minute five may have written half a file. Construct retries neither automatically. The agent gets the failure, the progress so far, and has to decide with you what to do next. Only calls that are known to be read-only, like a search, are retried, at most twice.
+
+Files written before the failure stay where they are. That is the practical reason to ask for one file per step in a long job: if step four fails, steps one to three are on disk, and the next attempt starts from them. When the terminal cannot start at all, for example because no container is free, nothing ran, so Construct retries the setup once and otherwise tells the agent to ask you to try again in a few minutes.
+
+## A job that needs both: a monthly rate check
+
+Here is the shape of a job that uses both halves. A shop shipping from Leeds to five countries checks a carrier's public rate calculator each month, which only shows prices after a form is filled in. Paste this into a chat with your own carrier's URL:
+
+<Prompt label="Monthly rate check">
+
+Open the carrier rate calculator at [URL] in the browser. For France, Germany, Spain, Italy and the Netherlands, enter a 2 kg and a 5 kg parcel from Leeds and read the standard and express prices. Do not submit anything other than the calculator. Save all 20 prices to Files/shipping/rates-2026-11.csv with columns destination, weight_kg, service, price_gbp. Then in the terminal compare it with Files/shipping/rates-2026-10.csv, list every change over 5%, save a chart to Files/shipping/changes-2026-11.png and write a short summary to Files/shipping/summary-2026-11.md.
 
 </Prompt>
 
-**Step 2. Watch the browser part.** Open the Browser app. You will see the calculator fill in and the step list grow. If the site shows a cookie wall or a CAPTCHA the browser cannot pass, the run ends and the agent tells you; it does not guess the numbers.
+The prompt sets the browser's boundary ("do not submit anything other than the calculator") because the browser can act on a page without asking you first. It also names every file, so the browser part and the terminal part can be checked separately: open the CSV and compare three prices against the carrier's site before trusting the comparison. Once a few months come out right, put the same prompt on the [Calendar](/blog/ai-agent-scheduled-tasks/) for the first weekday of the month.
 
-**Step 3. Read the terminal part.** The agent runs a short pandas script against the two CSV files. Open the Terminal app to see each command and its output, including the exact rows it flagged.
+## How we checked this
 
-**Step 4. Check the saved result.** Files now holds the new CSV, the chart, and the summary. Activity has one line per step, such as the browser visit and each terminal command, each linked back to this chat ([what Activity records](/blog/ai-agent-activity-log/)). Spot-check three or four rates against the carrier's site before you trust the comparison.
-
-**Step 5. Make it monthly.** Once two or three runs have produced numbers you trust, ask the agent to put the same prompt on the [Calendar](/use-cases/scheduling/) for the first weekday of each month. It uses one of Lite's 3 scheduled tasks, and it runs in Construct's cloud with your laptop closed; our guide to [running an agent on a schedule](/blog/ai-agent-scheduled-tasks/) covers the details. To let teammates run it on demand too, save it as a [workflow](/use-cases/workflows/).
-
-## How do you supervise an agent that browses and runs commands?
-
-In Construct, supervision means seeing everything and stopping anything:
-
-- **Watch** the live browser and the terminal transcript while the task runs.
-- **Stop** a browser run from the Browser app, or interrupt the whole task from chat.
-- **Answer questions.** If the agent is unsure, it can pause and ask you, and you answer in chat or in the channel you used.
-- **Review afterwards.** Activity, the saved browser steps, the saved terminal output, and the files themselves.
-
-Pages the browser reads can also contain text written to steer an AI. Construct marks content from web pages, the browser, and email as external data whose instructions should not be followed, which reduces the risk without removing it. Anthropic's own browser-agent testing shows why the caution is warranted: across 123 test cases, prompt injection attacks succeeded 23.6% of the time before its added mitigations and 11.2% after ([Anthropic, August 25, 2025](https://claude.com/blog/claude-for-chrome)). That was a different product, but the lesson carries: keep a browsing agent's reach small, and say "read only" in the prompt.
-
-<ReadNext slug="agent-task-half-life" />
-
-## How to evaluate browser and terminal agents in any product
-
-If you are comparing products, run these checks before trusting any agent with this kind of work. Developer sandboxes give you the parts to build this yourself; these questions apply either way.
-
-1. **Does it try a plain fetch before a full browser?** Browsing everything is slower and costs more.
-2. **Can you watch the browser live and stop it with one click?**
-3. **Is there a record after the run?** Steps, URLs, and screenshots, not just a final answer.
-4. **Where does terminal output go?** Saved and reopenable beats scrolled away.
-5. **What persists?** Files, shell state, logins, installed packages. Get a clear answer for each.
-6. **What are the time limits?** Per command and per browser run, in minutes.
-7. **What can the browser do without asking?** Reading, filling forms, submitting, purchasing.
-8. **What happens when it fails halfway?** You want the finished steps saved as files.
-
-Construct's answers: yes to 1 to 4 and 8; files persist, shell state persists within a chat, and the browser starts without your logins while signed-in tools go through connected apps; five minutes per command and per browser run; and you set the browser's boundary in the prompt.
-
-## Give Construct its first browser job
-
-Choose Construct when a job needs both a web page and real analysis: one agent reads the page, works the numbers in a terminal, saves every step as a file you can check, and repeats it on the Calendar. Pick the page you check by hand every month that needs a form or a click, such as a carrier's rate calculator, a supplier's price list, or a registry search. Ask Construct to read it, save the numbers to a dated CSV, compare them with last month's file in the terminal, and write a one-page summary. Judge the files it leaves behind, then put it on the Calendar. Start on [Lite for $9](/pricing/), or try Pro free for seven days.
-
-<BetaCta source="blog_inline_2">Give Construct its first browser job</BetaCta>
-
-## Sources
-
-- [Anthropic: Piloting Claude for Chrome (August 25, 2025)](https://claude.com/blog/claude-for-chrome)
-- [Construct pricing](/pricing/)
-- [Construct privacy policy, including the sandbox runtime cap](/privacy/)
+Every limit and behaviour in this guide was read from Construct's source on October 26, 2026: the browser tool and run loop, the sandbox executor and its timeout clamp, the container image, the Browser and Terminal apps, and the per-plan limits. The five-minute command ceiling applies to every plan as of that date. We make Construct, so we had the source to read; we did not test other products for this guide.
 
 ## Related resources
 
 - [What is an AI agent with its own computer?](/blog/ai-agent-with-its-own-computer/)
-- [Activity log vs audit log](/blog/ai-agent-activity-log/)
-- [How to run an AI agent on a schedule with your laptop closed](/blog/ai-agent-scheduled-tasks/)
 - [All our agents get computers, we pay for almost none](/blog/running-ai-agents-on-cloudflare-not-vms/)
-- [Your agent has a half-life](/blog/agent-task-half-life/)
-- [Research with sources you can review](/use-cases/research/)
+- [Activity log vs audit log](/blog/ai-agent-activity-log/)
+- [How to run an AI agent on a schedule](/blog/ai-agent-scheduled-tasks/)
+- [AI agent prompt injection: what the 2026 attacks did](/blog/ai-agent-prompt-injection/)
+- [Construct vs coding agents](/blog/construct-vs-coding-agents/)
