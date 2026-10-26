@@ -16,9 +16,10 @@ on:
     - cron: "35 */6 * * *"
   workflow_dispatch:
 
-# A newer run plans from the latest posts, so it replaces any run still waiting.
+# A newer run plans from the latest posts, so it replaces any run still waiting
+# on the same branch.
 concurrency:
-  group: publish-timer
+  group: publish-timer-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
