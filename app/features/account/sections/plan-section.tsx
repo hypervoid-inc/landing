@@ -10,6 +10,7 @@ import { cn } from "../../../lib/cn";
 import {
   annualMonthsFree,
   catalogIntervalView,
+  yearAtMonthlyPrice,
 } from "../../../platform/api/billing";
 import type {
   BillingInterval,
@@ -241,11 +242,20 @@ function PlanCard({
 }) {
   const view = catalogIntervalView(catalogPlan, interval);
   const price = formatMoney(view.price);
-  const listPrice = formatMoney(view.listPrice);
   const monthsFree =
     interval === "year"
       ? annualMonthsFree(catalogPlan.month.price, catalogPlan.year?.price)
       : null;
+  // Annual strikes twelve monthly payments, what "months free" counts from.
+  // Dodo's annual list price is back-solved from a whole-number discount
+  // ($109.75 less 18% for Lite), so it matches neither.
+  const listPrice = formatMoney(
+    interval === "year"
+      ? monthsFree != null
+        ? yearAtMonthlyPrice(catalogPlan.month.price)
+        : null
+      : view.listPrice,
+  );
   const display = view.display;
   const showApprox = display && display.source === "fx";
   const trialDays = view.trialDays ?? 0;

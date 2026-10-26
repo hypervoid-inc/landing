@@ -161,6 +161,14 @@ export function annualMonthsFree(
   return Math.max(1, Math.round(saved / monthly.amount));
 }
 
+/** Twelve monthly payments, the figure annual savings are measured against. */
+export function yearAtMonthlyPrice(
+  monthly: CatalogMoney | null | undefined,
+): CatalogMoney | null {
+  if (!monthly) return null;
+  return { amount: monthly.amount * 12, currency: monthly.currency };
+}
+
 export function annualMonthlyEquivalent(
   annual: CatalogMoney | null | undefined,
 ): CatalogMoney | null {

@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { checkoutPromoCode } from "./billing";
+import {
+  annualMonthsFree,
+  checkoutPromoCode,
+  yearAtMonthlyPrice,
+} from "./billing";
 
 describe("checkoutPromoCode", () => {
   it("drops LAUNCH20 unless the cart is Pro monthly", () => {
@@ -31,5 +35,19 @@ describe("checkoutPromoCode", () => {
     expect(checkoutPromoCode("FREEMONTH", "pro", "month")).toBe("FREEMONTH");
     expect(checkoutPromoCode("FREEMONTH", "pro", "year")).toBe("FREEMONTH");
     expect(checkoutPromoCode("FREEMONTH", "lite", "month")).toBe("FREEMONTH");
+  });
+});
+
+describe("yearAtMonthlyPrice", () => {
+  it("strikes the figure the months free are counted from", () => {
+    // Live Dodo, October 2026: Lite $9 monthly, $90 annual.
+    const month = { amount: 900, currency: "USD" };
+    const year = { amount: 9000, currency: "USD" };
+    expect(yearAtMonthlyPrice(month)).toEqual({ amount: 10800, currency: "USD" });
+    expect(annualMonthsFree(month, year)).toBe(2);
+  });
+
+  it("has nothing to strike without a monthly price", () => {
+    expect(yearAtMonthlyPrice(null)).toBeNull();
   });
 });
