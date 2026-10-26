@@ -9,7 +9,9 @@ import { pagePath, twinPath } from "../shared/markdown-twin";
  * - every `.md` response counts its tokens and names its page as canonical;
  * - a page that runs a Function anyway (`/`, see `_routes.json`) answers in
  *   Markdown to a client that prefers it, or to an answer engine's agent that
- *   takes either. The user agent is only matched, never stored.
+ *   takes either. The user agent is only matched, never stored. A client
+ *   that takes neither gets a 406. Only a page with a twin has the two forms
+ *   to choose between, so the API behind this middleware is never refused.
  *
  * Search crawlers are left out on purpose: they index the page, and the HTML
  * carries the title, cards and structured data their results are built from.
@@ -44,14 +46,28 @@ function quality(accept: string, type: string): number {
   return best.q;
 }
 
-export function prefersMarkdown(request: Request): boolean {
+function qualities(request: Request) {
   const accept = request.headers.get("Accept") || "*/*";
-  const markdown = quality(accept, "text/markdown");
-  const html = quality(accept, "text/html");
+  return {
+    markdown: quality(accept, "text/markdown"),
+    html: Math.max(
+      quality(accept, "text/html"),
+      quality(accept, "application/xhtml+xml"),
+    ),
+  };
+}
+
+export function prefersMarkdown(request: Request): boolean {
+  const { markdown, html } = qualities(request);
   if (markdown !== html) return markdown > html;
   return (
     markdown > 0 && answerAgents.test(request.headers.get("User-Agent") ?? "")
   );
+}
+
+export function acceptsNeither(request: Request): boolean {
+  const { markdown, html } = qualities(request);
+  return markdown === 0 && html === 0;
 }
 
 async function withTokens(
@@ -95,9 +111,26 @@ export const onRequest = async ({
     return response;
   }
 
-  if (!prefersMarkdown(request)) return next();
+  const refused = acceptsNeither(request);
+  if (!refused && !prefersMarkdown(request)) return next();
   const twin = await env.ASSETS.fetch(new URL(twinPath(url.pathname), url));
   if (!twin.ok) return next();
+  if (refused) {
+    await twin.body?.cancel();
+    return new Response(
+      method === "HEAD"
+        ? null
+        : "This page is available as text/html or text/markdown.\n",
+      {
+        status: 406,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          Link: `<${twinPath(url.pathname)}>; rel="alternate"; type="text/markdown"`,
+          Vary: "Accept",
+        },
+      },
+    );
+  }
   const response = await withTokens(twin, method);
   // This is the page's own URL, which stays indexable.
   response.headers.delete("X-Robots-Tag");

@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 import {
+  acceptsNeither,
   estimateTokens,
   onRequest,
   prefersMarkdown,
@@ -160,6 +161,19 @@ describe("markdown negotiation", () => {
     expect(prefersMarkdown(request({ Accept: "*/*" }))).toBe(false);
   });
 
+  it("refuses only a client that takes neither form", () => {
+    expect(acceptsNeither(request({ Accept: "image/png" }))).toBe(true);
+    expect(acceptsNeither(request({ Accept: "application/json" }))).toBe(true);
+    expect(acceptsNeither(request({ Accept: "text/*" }))).toBe(false);
+    expect(acceptsNeither(request({ Accept: "application/xhtml+xml" }))).toBe(
+      false,
+    );
+    expect(acceptsNeither(request({ Accept: "image/png, */*;q=0.1" }))).toBe(
+      false,
+    );
+    expect(acceptsNeither(request({}))).toBe(false);
+  });
+
   it("estimates at least one token", () => {
     expect(estimateTokens("")).toBe(1);
     expect(estimateTokens("a".repeat(400))).toBe(100);
@@ -250,5 +264,19 @@ describe("markdown middleware", () => {
     expect((await shell.response).headers.get("Content-Type")).toBe(
       "text/html",
     );
+  });
+
+  it("answers 406 to a client that takes neither, on a page only", async () => {
+    const page = await call("/", { headers: { Accept: "image/png" } }).response;
+    expect(page.status).toBe(406);
+    expect(page.headers.get("Vary")).toBe("Accept");
+    expect(page.headers.get("Link")).toBe(
+      '</index.md>; rel="alternate"; type="text/markdown"',
+    );
+
+    const api = await call("/api/health", {
+      headers: { Accept: "application/json" },
+    }).response;
+    expect(api.status).toBe(200);
   });
 });

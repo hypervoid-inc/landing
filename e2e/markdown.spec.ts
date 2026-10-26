@@ -57,6 +57,19 @@ test("answers the homepage in Markdown to agents that ask", async ({
   expect(browser.headers()["content-type"]).toMatch(/^text\/html/);
 });
 
+test("refuses a client that takes neither form, on pages only", async ({
+  request,
+}) => {
+  const page = await request.get("/", { headers: { Accept: "image/png" } });
+  expect(page.status()).toBe(406);
+  expect(page.headers().vary).toContain("Accept");
+
+  const api = await request.get("/api/health", {
+    headers: { Accept: "application/json" },
+  });
+  expect(api.status()).toBe(200);
+});
+
 test("moves the brand page's Markdown to its twin path", async ({
   request,
 }) => {
