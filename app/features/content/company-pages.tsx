@@ -23,6 +23,8 @@ export function AboutPage() {
           browser runs and a sandbox terminal, so work can finish while you do
           something else. Files saved in the workspace remain available after
           one conversation ends; live browser runs and shell state do not.
+          Construct Computer is not Construct 3, the game engine, or The
+          Construct, the robotics school.
         </p>
         <p>
           You assign an outcome and Construct decides which available tools are
@@ -82,8 +84,8 @@ export function AboutPage() {
             registry submissions are not yet active in the current platform.
           </li>
           <li>
-            One workspace accessible from the web, Slack, Telegram, Discord
-            slash commands, and a native inbox for agent email
+            One workspace accessible from the web, Slack, Telegram, Discord, and
+            a native inbox for agent email
           </li>
           <li>
             Parallel delegation lets the primary agent assign bounded research,
@@ -613,17 +615,17 @@ export function SupportPage() {
       </Section>
       <Section title="Access control & inbound messages">
         <p>
-          Your agent can receive messages from Slack and Telegram, while Discord
-          currently uses slash commands. Each platform has a configurable
-          policy: <Emph>open</Emph>, <Emph>approval required</Emph>,{" "}
-          <Emph>blocked</Emph>, or <Emph>closed</Emph>. Guests are blocked by
-          default. Only the approval-required mode places a sender in the
-          approval queue.
+          Your agent replies in Slack, Discord and Telegram when someone
+          mentions or messages it. Who it answers is set per install in
+          Settings: <Emph>Only people I allow</Emph>, the default, ignores
+          everyone else, and <Emph>Everyone in the server</Emph> gives people
+          you have not listed a read-only guest agent. Whoever installed it
+          always has full access, and anyone you block is ignored.
         </p>
         <p>
-          If the agent is not responding to an inbound message, check the
-          channel connection, access mode, trusted-user list, and approval
-          queue.
+          If the agent is not answering a message, check that the channel is
+          still connected, which access option it uses, and whether the sender
+          is on your list or blocked.
         </p>
       </Section>
       <Section title="Data & privacy requests">

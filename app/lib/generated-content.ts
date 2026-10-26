@@ -170,6 +170,8 @@ const summary = boilerplate.replace(
   `${brandName.full} is`,
   `${brandName.full} (${brandName.domain}) is`,
 );
+/** "Construct" alone finds other products; say which one this is. */
+const disambiguation = `${brandName.full} is not ${brandName.collides.join(", or ")}.`;
 
 const capabilities = [
   "Persistent files, inspectable memory, native email, schedules, and linear workflows",
@@ -543,7 +545,7 @@ function llmsIndex(): string {
         `- [${route.displayTitle ?? route.title}](${route.canonical}): ${route.description}`,
     )
     .join("\n");
-  return `# Construct Computer\n\n> ${summary}\n\n${llmsToolsSection()}\n${llmsBrandSection()}\n## Pages\n${pages}\n`;
+  return `# Construct Computer\n\n> ${summary}\n\n${disambiguation}\n\n${llmsToolsSection()}\n${llmsBrandSection()}\n## Pages\n${pages}\n`;
 }
 
 /**
@@ -576,6 +578,8 @@ function llmsFull(): string {
     "# Construct Computer - full product context",
     "",
     `> ${summary}`,
+    "",
+    disambiguation,
     "",
     "## Capabilities",
     "",
